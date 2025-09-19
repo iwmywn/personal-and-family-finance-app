@@ -1,0 +1,7 @@
+if [ -f pnpm-lock.yaml ] || [ -f package.json ]; then
+  echo "Checking if dependencies changed..."
+  git diff --name-only HEAD@{1} HEAD | grep -qE 'package\.json|pnpm-lock\.yaml' && {
+    echo "Detected dependency changes. Installing new packages..."
+    pnpm i
+  }
+fi
