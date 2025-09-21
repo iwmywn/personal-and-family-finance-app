@@ -9,7 +9,10 @@ import { session } from "@/lib/session"
 function redirectIfProtectedRoute(nextUrl: NextURL) {
   const { pathname, search } = nextUrl
 
-  if (pathname !== "/signin") {
+  if (
+    pathname !== "/signin" &&
+    !routes.ignoredRoutes.some((route) => pathname.startsWith(route))
+  ) {
     const redirectUrl = new URL(routes.signInRoute, nextUrl)
 
     if (routes.protectedRoutes.some((route) => pathname.startsWith(route))) {

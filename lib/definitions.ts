@@ -5,7 +5,6 @@ type BaseUser<T> = {
   fullName: string
   username: string
   password: string
-  avatar: string
 }
 
 export type User = BaseUser<string>
