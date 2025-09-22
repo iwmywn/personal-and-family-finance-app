@@ -9,7 +9,7 @@ import {
   EmptyStateDescription,
   EmptyStateHeader,
   EmptyStateIcon,
-} from "@/components/ui/empty-state"
+} from "@/components/custom-ui/empty-state"
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {

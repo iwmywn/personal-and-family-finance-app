@@ -1,5 +1,5 @@
 {
-  "name": "digital-business-card",
+  "name": "personal-financial-management",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -82,7 +82,7 @@
     "eslint-config-next": "15.5.3",
     "eslint-plugin-react-hooks": "5.2.0",
     "husky": "9.1.7",
-    "lint-staged": "16.1.6",
+    "lint-staged": "16.2.0",
     "only-allow": "1.2.1",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "0.6.14",

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Loading } from "@/components/loading"
+import { Spinner } from "@/components/ui/kibo-ui/spinner"
 import { cn } from "@/lib/utils"
 
 export function FormButton({
@@ -19,7 +19,9 @@ export function FormButton({
       type="submit"
       {...props}
     >
-      {isSubmitting ? <Loading /> : text}
+      <span className="flex items-center gap-2">
+        {isSubmitting && <Spinner />} {text}
+      </span>
     </Button>
   )
 }

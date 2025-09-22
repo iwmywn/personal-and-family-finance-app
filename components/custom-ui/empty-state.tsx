@@ -1,6 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 function EmptyState({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -8,11 +8,11 @@ function EmptyState({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="empty-state"
       className={cn(
         "flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed px-6 text-center md:px-16",
-        className,
+        className
       )}
       {...props}
     />
-  );
+  )
 }
 
 function EmptyStateIcon({ className, ...props }: React.ComponentProps<"div">) {
@@ -22,7 +22,7 @@ function EmptyStateIcon({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("bg-secondary rounded-full p-3", className)}
       {...props}
     />
-  );
+  )
 }
 
 function EmptyStateHeader({
@@ -35,7 +35,7 @@ function EmptyStateHeader({
       className={cn("text-lg font-semibold", className)}
       {...props}
     />
-  );
+  )
 }
 
 function EmptyStateDescription({
@@ -48,7 +48,7 @@ function EmptyStateDescription({
       className={cn("text-muted-foreground", className)}
       {...props}
     />
-  );
+  )
 }
 
 function EmptyStateAction({
@@ -61,7 +61,7 @@ function EmptyStateAction({
       className={cn("mt-2 flex flex-col gap-2 sm:flex-row", className)}
       {...props}
     />
-  );
+  )
 }
 
 export {
@@ -70,4 +70,4 @@ export {
   EmptyStateHeader,
   EmptyStateDescription,
   EmptyStateAction,
-};
+}

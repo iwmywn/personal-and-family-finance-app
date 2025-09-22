@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { PasswordInput } from "@/components/ui/password-input"
+import { PasswordInput } from "@/components/custom-ui/password-input"
 import { FormButton } from "@/components/form-button"
 
 export type SignInFormValues = z.infer<typeof signInSchema>
