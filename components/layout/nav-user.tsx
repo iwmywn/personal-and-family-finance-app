@@ -25,7 +25,7 @@ export function NavUser() {
       toast.error(error)
     } else {
       toast.success(success)
-      router.push("/")
+      router.push("/signin")
     }
   }
 

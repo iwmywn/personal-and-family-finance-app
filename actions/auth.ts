@@ -6,17 +6,27 @@ import bcrypt from "bcryptjs"
 import type { SignInFormValues } from "@/components/auth/signin-form"
 import { getUserById, getUserByUsername } from "@/lib/data"
 import { User } from "@/lib/definitions"
+import { verifyRecaptchaToken } from "@/lib/recaptcha"
 import { session } from "@/lib/session"
 
-export async function signIn(values: SignInFormValues) {
+export async function signIn(
+  values: SignInFormValues,
+  recaptchaToken: string | null
+) {
   try {
+    if (!recaptchaToken) return { error: "Missing recaptcha token!" }
+
     const parsedValues = signInSchema.safeParse(values)
 
     if (!parsedValues.success) return { error: "Invalid data provided!" }
 
     const { username, password } = parsedValues.data
-    const existingUser = await getUserByUsername(username)
+    const [verify, existingUser] = await Promise.all([
+      verifyRecaptchaToken(recaptchaToken),
+      getUserByUsername(username),
+    ])
 
+    if (!verify) return { error: "Captcha challenge failed!" }
     if (!existingUser) return { error: "Username or password is incorrect!" }
 
     const isPasswordValid = await bcrypt.compare(
