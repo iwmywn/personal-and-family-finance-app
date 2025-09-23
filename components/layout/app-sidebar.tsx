@@ -2,12 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import {
-  BadgePlus,
-  ChartColumnIncreasing,
-  CreditCard,
-  Kanban,
-} from "lucide-react"
+import { BadgePlus } from "lucide-react"
 
 import {
   Sidebar,
@@ -21,24 +16,9 @@ import { NavUser } from "@/components/layout/nav-user"
 
 export const nav = [
   {
-    title: "Create Card",
-    url: "/create",
+    title: "",
+    url: "/",
     icon: BadgePlus,
-  },
-  {
-    title: "Card Management",
-    url: "/management",
-    icon: Kanban,
-  },
-  {
-    title: "Analytics",
-    url: "/analytics",
-    icon: ChartColumnIncreasing,
-  },
-  {
-    title: "Subscription Plans",
-    url: "/subscription",
-    icon: CreditCard,
   },
 ]
 

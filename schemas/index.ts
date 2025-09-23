@@ -12,4 +12,49 @@ const signInSchema = z.object({
   password: basePasswordSchema,
 })
 
-export { signInSchema }
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().optional(),
+    newPassword: z.string().optional(),
+    confirmPassword: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    const { currentPassword, newPassword, confirmPassword } = data
+
+    const isChangingPassword = currentPassword || newPassword || confirmPassword
+
+    if (isChangingPassword) {
+      if (!currentPassword) {
+        ctx.addIssue({
+          path: ["currentPassword"],
+          message: "Current password is required.",
+          code: "custom",
+        })
+      }
+
+      if (!newPassword || !basePasswordSchema.safeParse(newPassword).success) {
+        ctx.addIssue({
+          path: ["newPassword"],
+          message:
+            "Password must be at least 8 characters long, include uppercase, lowercase, number and special character.",
+          code: "custom",
+        })
+      }
+
+      if (!confirmPassword) {
+        ctx.addIssue({
+          path: ["confirmPassword"],
+          message: "Please confirm your new password.",
+          code: "custom",
+        })
+      } else if (newPassword !== confirmPassword) {
+        ctx.addIssue({
+          path: ["confirmPassword"],
+          message: "Passwords do not match.",
+          code: "custom",
+        })
+      }
+    }
+  })
+
+export { signInSchema, passwordSchema }

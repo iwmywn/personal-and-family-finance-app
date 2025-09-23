@@ -19,7 +19,7 @@ export default function page() {
       <CardHeader>
         <CardTitle className="text-xl">Sign In</CardTitle>
         <CardDescription>
-          Enter your email and password to sign in to your account.
+          Enter your username and password to sign in to your account.
         </CardDescription>
       </CardHeader>
       <CardContent>

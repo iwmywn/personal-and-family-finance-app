@@ -22,18 +22,6 @@ const other = [
     title: "Settings",
     url: "/settings",
   },
-  {
-    title: "Payment Status",
-    url: "/subscription/status",
-  },
-  {
-    title: "Edit card",
-    url: "/edit",
-  },
-  {
-    title: "Notifications",
-    url: "/notifications",
-  },
 ]
 
 const ColorDialog =
