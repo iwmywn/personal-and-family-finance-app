@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { signInSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -28,7 +28,6 @@ export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const isProcessingRef = useRef<boolean>(false)
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -38,13 +37,11 @@ export function SignInForm() {
   })
   const router = useRouter()
 
-  const processSignIn = useCallback(
-    async (values: SignInFormValues, token: string) => {
-      if (isProcessingRef.current) return
+  const processSignIn = async (values: SignInFormValues, token: string) => {
+    if (isLoading) return
 
-      isProcessingRef.current = true
-      setIsLoading(true)
-
+    setIsLoading(true)
+    try {
       const { error } = await signIn(values, token)
 
       if (error) {
@@ -60,33 +57,28 @@ export function SignInForm() {
         form.reset()
         router.push(callbackUrl || "/home")
       }
-
+    } finally {
       setIsLoading(false)
       setRecaptchaToken(null)
-      isProcessingRef.current = false
-    },
-    [form, router]
-  )
+    }
+  }
 
-  const onSubmit = useCallback(
-    async (values: SignInFormValues) => {
-      if (isProcessingRef.current) return
+  const onSubmit = async (values: SignInFormValues) => {
+    if (isLoading) return
 
-      if (!recaptchaToken) {
-        setIsReCaptchaOpen(true)
-        return
-      }
+    if (!recaptchaToken) {
+      setIsReCaptchaOpen(true)
+      return
+    }
 
-      await processSignIn(values, recaptchaToken)
-    },
-    [recaptchaToken, processSignIn]
-  )
+    await processSignIn(values, recaptchaToken)
+  }
 
   useEffect(() => {
-    if (recaptchaToken && !isProcessingRef.current) {
+    if (recaptchaToken && !isLoading) {
       processSignIn(form.getValues(), recaptchaToken)
     }
-  }, [recaptchaToken, form, processSignIn])
+  }, [recaptchaToken])
 
   return (
     <>
@@ -142,7 +134,7 @@ export function SignInForm() {
       <ReCaptchaDialog
         open={isReCaptchaOpen}
         setOpen={setIsReCaptchaOpen}
-        setRecaptchaToken={(token) => setRecaptchaToken(token)}
+        setRecaptchaToken={setRecaptchaToken}
       />
     </>
   )

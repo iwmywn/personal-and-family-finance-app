@@ -29,7 +29,7 @@ function redirectTo(path: string, nextUrl: NextURL) {
   return NextResponse.redirect(new URL(path, nextUrl))
 }
 
-export async function middleware(req: NextRequest) {
+export default async function proxy(req: NextRequest) {
   const { nextUrl, cookies } = req
   const { pathname } = nextUrl
 

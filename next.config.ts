@@ -4,11 +4,11 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["simple-icons"],
     scrollRestoration: true,
-    ppr: true,
+    // cacheComponents: true,
     cpus: 1,
-    reactCompiler: true,
     inlineCss: true,
   },
+  reactCompiler: true,
 }
 
 export default nextConfig
