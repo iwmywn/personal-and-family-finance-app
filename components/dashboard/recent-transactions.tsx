@@ -1,7 +1,16 @@
 "use client"
 
+import { Receipt } from "lucide-react"
+
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 import { getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { formatCurrency, formatDate } from "@/lib/utils"
@@ -21,9 +30,19 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
       <CardContent>
         <div className="space-y-4">
           {recentTransactions.length === 0 ? (
-            <p className="text-center text-muted-foreground py-4">
-              Chưa có giao dịch nào
-            </p>
+            <Empty className="border border-dashed">
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <Receipt />
+                </EmptyMedia>
+                <EmptyTitle className="text-base">
+                  Không tìm thấy giao dịch
+                </EmptyTitle>
+                <EmptyDescription className="text-sm">
+                  Bắt đầu thêm giao dịch của bạn.
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
           ) : (
             recentTransactions.map((transaction) => (
               <div

@@ -180,11 +180,17 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                     Tỷ lệ tiết kiệm:
                   </span>
                   <span
-                    className={`text-sm font-medium ${
-                      savingsRate && parseFloat(savingsRate) >= 0
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
+                    className={`text-sm font-medium 
+                      ${
+                        savingsRate !== null
+                          ? parseFloat(savingsRate) > 0
+                            ? "text-green-600"
+                            : parseFloat(savingsRate) < 0
+                              ? "text-red-600"
+                              : ""
+                          : ""
+                      }
+                    `}
                   >
                     {savingsRate !== null ? `${savingsRate}%` : "Chưa có"}
                   </span>

@@ -29,16 +29,14 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
     <div className="grid gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
-            Thu nhập tháng này
-          </CardTitle>
+          <CardTitle className="font-medium">Thu nhập tháng này</CardTitle>
           <ArrowUpIcon className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-green-600">
             {formatCurrency(totalIncome)}
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             {currentMonthTransactions.filter((t) => t.type === "income").length}{" "}
             giao dịch
           </p>
@@ -47,16 +45,14 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
-            Chi tiêu tháng này
-          </CardTitle>
+          <CardTitle className="font-medium">Chi tiêu tháng này</CardTitle>
           <ArrowDownIcon className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold text-red-600">
             {formatCurrency(totalExpense)}
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             {
               currentMonthTransactions.filter((t) => t.type === "expense")
                 .length
@@ -68,19 +64,22 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Số dư tháng này</CardTitle>
+          <CardTitle className="font-medium">Số dư tháng này</CardTitle>
           <TrendingUpIcon
             className={`h-4 w-4 ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
           />
         </CardHeader>
         <CardContent>
           <div
-            className={`text-2xl font-bold ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
+            className={`text-2xl font-bold ${
+              balance > 0 ? "text-green-600" : balance < 0 ? "text-red-600" : ""
+            }`}
           >
             {formatCurrency(balance)}
           </div>
-          <p className="text-xs text-muted-foreground">
-            {balance >= 0 ? "Dương" : "Âm"} so với thu nhập
+          <p className="text-sm text-muted-foreground">
+            {balance > 0 ? "Dương" : balance < 0 ? "Âm" : "Cân bằng"} so với thu
+            nhập
           </p>
         </CardContent>
       </Card>
