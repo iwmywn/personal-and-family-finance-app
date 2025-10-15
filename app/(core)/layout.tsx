@@ -21,7 +21,12 @@ export default async function DashboardLayout({
           style={{ maxHeight: "calc(100vh - 1rem)" }}
         >
           <Header />
-          <section>{children}</section>
+          <section
+            className="h-full"
+            style={{ maxHeight: "calc(100vh - 4.85rem)" }}
+          >
+            {children}
+          </section>
         </div>
       </SidebarInset>
     </SidebarProvider>

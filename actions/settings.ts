@@ -1,15 +1,14 @@
 "use server"
 
-import { passwordSchema } from "@/schemas"
+import { passwordSchema, type PasswordFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
 
-import { SettingsFormValues } from "@/components/settings/account-form"
 import { getUserCollection } from "@/lib/collections"
 import { getUserById } from "@/lib/data"
 import { session } from "@/lib/session"
 
-export async function updatePassword(values: SettingsFormValues) {
+export async function updatePassword(values: PasswordFormValues) {
   try {
     const { userId } = await session.user.get()
 

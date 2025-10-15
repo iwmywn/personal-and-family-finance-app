@@ -156,6 +156,13 @@
     width: 100%;
     height: var(--bprogress-height);
   }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 }
 
 @layer base {

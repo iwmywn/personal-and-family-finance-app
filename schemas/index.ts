@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+import { ALL_CATEGORIES, TRANSACTION_TYPES } from "@/lib/categories"
+
 const basePasswordSchema = z
   .string()
   .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
@@ -56,5 +58,32 @@ const passwordSchema = z
       }
     }
   })
+
+export const transactionSchema = z.object({
+  type: z.enum(TRANSACTION_TYPES, {
+    message: "Please select transaction type.",
+  }),
+  category: z.enum(ALL_CATEGORIES, {
+    message: "Please select a category.",
+  }),
+  amount: z.number().min(0.01, {
+    message: "Amount must be greater than 0.",
+  }),
+  description: z
+    .string()
+    .min(1, {
+      message: "Description is required.",
+    })
+    .max(200, {
+      message: "Description must be less than 200 characters.",
+    }),
+  date: z.date({
+    message: "Please select a date.",
+  }),
+})
+
+export type SignInFormValues = z.infer<typeof signInSchema>
+export type PasswordFormValues = z.infer<typeof passwordSchema>
+export type TransactionFormValues = z.infer<typeof transactionSchema>
 
 export { signInSchema, passwordSchema }

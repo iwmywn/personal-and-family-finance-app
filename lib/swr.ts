@@ -1,10 +1,13 @@
-import useSWR from "swr"
+"use client"
 
-import { me } from "@/actions/auth"
-import type { User } from "@/lib/definitions"
+import useSWRImmutable from "swr/immutable"
+
+import { getUser } from "@/actions/auth"
+import { getTransactions } from "@/actions/transactions"
+import type { Transaction, User } from "@/lib/definitions"
 
 export function useUser() {
-  const { data, isLoading, mutate } = useSWR<
+  const { data, isLoading, mutate } = useSWRImmutable<
     | {
         error: string
         user?: undefined
@@ -13,20 +16,37 @@ export function useUser() {
         user: User
         error?: undefined
       }
-  >("me", me, {
-    keepPreviousData: true,
-  })
+  >("me", getUser)
 
-  const userResponse = data
   const user = data?.user
-  const isUserError = data?.error
+  const userError = data?.error
   const isUserLoading = isLoading
 
   return {
-    userResponse,
     user,
+    userError,
     isUserLoading,
-    isUserError,
+    mutate,
+  }
+}
+
+export function useTransactions() {
+  const { data, isLoading, mutate } = useSWRImmutable<
+    | { error: string; transactions?: undefined }
+    | {
+        transactions: Transaction[]
+        error?: undefined
+      }
+  >("transactions", getTransactions)
+
+  const transactions = data?.transactions
+  const transactionsError = data?.error
+  const isTransactionsLoading = isLoading
+
+  return {
+    transactions,
+    transactionsError,
+    isTransactionsLoading,
     mutate,
   }
 }

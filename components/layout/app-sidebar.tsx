@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { BadgePlus } from "lucide-react"
+import { ChartColumnIncreasing, Home, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -16,9 +16,19 @@ import { NavUser } from "@/components/layout/nav-user"
 
 export const nav = [
   {
-    title: "",
-    url: "/",
-    icon: BadgePlus,
+    title: "Trang chủ",
+    url: "/home",
+    icon: Home,
+  },
+  {
+    title: "Thống kê",
+    url: "/statistics",
+    icon: ChartColumnIncreasing,
+  },
+  {
+    title: "Giao dịch",
+    url: "/transactions",
+    icon: Wallet,
   },
 ]
 

@@ -1,9 +1,8 @@
 "use server"
 
-import { signInSchema } from "@/schemas"
+import { signInSchema, type SignInFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 
-import type { SignInFormValues } from "@/components/auth/signin-form"
 import { getUserById, getUserByUsername } from "@/lib/data"
 import { User } from "@/lib/definitions"
 import { verifyRecaptchaToken } from "@/lib/recaptcha"
@@ -55,7 +54,7 @@ export async function signOut() {
   }
 }
 
-export async function me() {
+export async function getUser() {
   try {
     const { userId } = await session.user.get()
 

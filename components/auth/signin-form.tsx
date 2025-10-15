@@ -1,12 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { signInSchema } from "@/schemas"
+import { signInSchema, type SignInFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import type { z } from "zod"
 
 import { signIn } from "@/actions/auth"
 import {
@@ -22,8 +21,6 @@ import { ReCaptchaDialog } from "@/components/auth/recaptcha-dialog"
 import { PasswordInput } from "@/components/custom-ui/password-input"
 import { FormButton } from "@/components/form-button"
 
-export type SignInFormValues = z.infer<typeof signInSchema>
-
 export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
@@ -37,33 +34,36 @@ export function SignInForm() {
   })
   const router = useRouter()
 
-  const processSignIn = async (values: SignInFormValues, token: string) => {
-    if (isLoading) return
+  const processSignIn = useCallback(
+    async (values: SignInFormValues, token: string) => {
+      if (isLoading) return
 
-    setIsLoading(true)
-    try {
-      const { error } = await signIn(values, token)
+      setIsLoading(true)
+      try {
+        const { error } = await signIn(values, token)
 
-      if (error) {
-        toast.error(error)
-      } else {
-        const searchParams = new URLSearchParams(window.location.search)
-        let callbackUrl = searchParams.get("next")
+        if (error) {
+          toast.error(error)
+        } else {
+          const searchParams = new URLSearchParams(window.location.search)
+          let callbackUrl = searchParams.get("next")
 
-        if (window.location.hash) {
-          callbackUrl = callbackUrl + window.location.hash
+          if (window.location.hash) {
+            callbackUrl = callbackUrl + window.location.hash
+          }
+
+          form.reset()
+          router.push(callbackUrl || "/home")
         }
-
-        form.reset()
-        router.push(callbackUrl || "/home")
+      } finally {
+        setIsLoading(false)
+        setRecaptchaToken(null)
       }
-    } finally {
-      setIsLoading(false)
-      setRecaptchaToken(null)
-    }
-  }
+    },
+    [isLoading, form, router]
+  )
 
-  const onSubmit = async (values: SignInFormValues) => {
+  function onSubmit(values: SignInFormValues) {
     if (isLoading) return
 
     if (!recaptchaToken) {
@@ -71,14 +71,14 @@ export function SignInForm() {
       return
     }
 
-    await processSignIn(values, recaptchaToken)
+    void processSignIn(values, recaptchaToken)
   }
 
   useEffect(() => {
     if (recaptchaToken && !isLoading) {
-      processSignIn(form.getValues(), recaptchaToken)
+      void processSignIn(form.getValues(), recaptchaToken)
     }
-  }, [recaptchaToken])
+  }, [recaptchaToken, isLoading, form, processSignIn])
 
   return (
     <>

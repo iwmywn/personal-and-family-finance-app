@@ -1,10 +1,9 @@
 "use client"
 
-import { passwordSchema } from "@/schemas"
+import { passwordSchema, type PasswordFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import type { z } from "zod"
 
 import { updatePassword } from "@/actions/settings"
 import {
@@ -18,10 +17,8 @@ import {
 import { PasswordInput } from "@/components/custom-ui/password-input"
 import { FormButton } from "@/components/form-button"
 
-export type SettingsFormValues = z.infer<typeof passwordSchema>
-
 export function AccountForm() {
-  const form = useForm<SettingsFormValues>({
+  const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
       currentPassword: "",
@@ -30,7 +27,7 @@ export function AccountForm() {
     },
   })
 
-  async function onSubmit(values: SettingsFormValues) {
+  async function onSubmit(values: PasswordFormValues) {
     const { success, error } = await updatePassword(values)
 
     if (error || !success) {
