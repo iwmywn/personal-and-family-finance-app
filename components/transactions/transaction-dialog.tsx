@@ -82,7 +82,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
       type: transaction?.type || "expense",
       amount: transaction?.amount || 0,
       description: transaction?.description || "",
-      category: transaction?.category,
+      category: transaction?.category || undefined,
       date: transaction?.date ? new Date(transaction.date) : new Date(),
     },
   })
@@ -141,9 +141,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
     const transactionType = type as "income" | "expense"
     setTransactionType(transactionType)
     form.setValue("type", transactionType)
-    if (!transaction) {
-      form.resetField("category")
-    }
+    form.resetField("category", { defaultValue: undefined })
   }
 
   return (
@@ -275,12 +273,16 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                   <FormLabel>Số tiền (VND)</FormLabel>
                   <FormControl>
                     <Input
-                      type="number"
+                      inputMode="numeric"
                       placeholder="0"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(Number.parseFloat(e.target.value) || 0)
+                      value={
+                        field.value ? field.value.toLocaleString("vi-VN") : ""
                       }
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/\./g, "")
+                        const numericValue = Number.parseInt(rawValue) || 0
+                        field.onChange(numericValue)
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
