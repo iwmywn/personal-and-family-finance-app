@@ -13,20 +13,22 @@ export async function updatePassword(values: PasswordFormValues) {
     const { userId } = await session.user.get()
 
     if (!userId) {
-      return { error: "Unauthorized! Please reload the page and try again." }
+      return {
+        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+      }
     }
 
     const parsedValues = passwordSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Invalid data provided!" }
+      return { error: "Dữ liệu không hợp lệ!" }
     }
 
     const { currentPassword, newPassword } = parsedValues.data
 
     const existingUser = await getUserById(userId)
     if (!existingUser) {
-      return { error: "User not found!" }
+      return { error: "Không tìm thấy người dùng!" }
     }
 
     let hashedPassword: string
@@ -38,7 +40,7 @@ export async function updatePassword(values: PasswordFormValues) {
       )
 
       if (!isPasswordValid) {
-        return { error: "Current password is incorrect!" }
+        return { error: "Mật khẩu hiện tại không đúng!" }
       }
 
       hashedPassword = await bcrypt.hash(newPassword, 10)
@@ -49,7 +51,7 @@ export async function updatePassword(values: PasswordFormValues) {
     const isSame = hashedPassword === existingUser.password
 
     if (isSame) {
-      return { success: "No changes were made." }
+      return { success: "Không có thay đổi nào được thực hiện." }
     }
 
     const userCollection = await getUserCollection()
@@ -63,9 +65,9 @@ export async function updatePassword(values: PasswordFormValues) {
       }
     )
 
-    return { success: "Your password has been changed." }
+    return { success: "Mật khẩu của bạn đã được thay đổi." }
   } catch (error) {
     console.error("Error updating password:", error)
-    return { error: "Failed to update password! Please try again later." }
+    return { error: "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau." }
   }
 }

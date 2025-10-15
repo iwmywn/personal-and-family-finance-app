@@ -36,19 +36,19 @@ export function NavUser() {
           <SidebarMenuItem>
             <SidebarMenuButton
               isActive={pathname === "/settings"}
-              tooltip="Settings"
+              tooltip="Cài đặt"
               asChild
             >
               <Link href="/settings">
                 <Settings />
-                Settings
+                Cài đặt
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Sign out" onClick={onSignOut}>
+            <SidebarMenuButton tooltip="Đăng xuất" onClick={onSignOut}>
               <LogOut />
-              Sign out
+              Đăng xuất
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

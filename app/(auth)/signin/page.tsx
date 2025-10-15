@@ -10,16 +10,16 @@ import {
 import { SignInForm } from "@/components/auth/signin-form"
 
 export function generateMetadata(): Metadata {
-  return { title: "Sign in" }
+  return { title: "Đăng nhập" }
 }
 
 export default function page() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">Sign In</CardTitle>
+        <CardTitle className="text-xl">Đăng nhập</CardTitle>
         <CardDescription>
-          Enter your username and password to sign in to your account.
+          Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.
         </CardDescription>
       </CardHeader>
       <CardContent>

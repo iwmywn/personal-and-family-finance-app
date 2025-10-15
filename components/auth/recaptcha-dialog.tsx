@@ -20,7 +20,7 @@ export function ReCaptchaDialog({
 }: ReCaptchaPopupProps) {
   const handleRecaptchaChange = async (token: string | null) => {
     if (!token) {
-      toast.error("CAPTCHA verification failed! Please try again.")
+      toast.error("Xác thực CAPTCHA thất bại! Vui lòng thử lại.")
       return
     }
 
@@ -29,7 +29,7 @@ export function ReCaptchaDialog({
   }
 
   const handleDialogClose = () => {
-    toast.error("Please complete the CAPTCHA!")
+    toast.error("Vui lòng hoàn thành xác thực CAPTCHA!")
     setOpen(false)
   }
 
@@ -37,12 +37,12 @@ export function ReCaptchaDialog({
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="w-fit">
         <VisuallyHidden>
-          <DialogTitle>CAPTCHA verification</DialogTitle>
+          <DialogTitle>Xác thực CAPTCHA</DialogTitle>
         </VisuallyHidden>
         <ReCAPTCHA
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA!}
           onChange={handleRecaptchaChange}
-          hl="en"
+          hl="vi"
           className="m-3"
         />
       </DialogContent>

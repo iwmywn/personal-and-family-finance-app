@@ -46,15 +46,16 @@ export function ColorDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" title="View Color Palette">
-          View color palette
+        <Button variant="outline" title="Xem bảng màu">
+          Xem bảng màu
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl">Color Palette & Tokens</DialogTitle>
+          <DialogTitle className="text-xl">Bảng màu & Token</DialogTitle>
           <DialogDescription>
-            Theme color tokens defined as CSS variables for consistent styling.
+            Token màu chủ đề được định nghĩa dưới dạng biến CSS để tạo kiểu nhất
+            quán.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

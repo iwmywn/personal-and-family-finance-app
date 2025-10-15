@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/empty"
 
 export const metadata: Metadata = {
-  title: "NOT FOUND",
+  title: "KHÔNG TÌM THẤY",
 }
 
 export default function NotFound() {
@@ -23,12 +23,12 @@ export default function NotFound() {
         <EmptyMedia variant="icon">
           <Ghost />
         </EmptyMedia>
-        <EmptyTitle>THE PAGE YOU ARE LOOKING FOR COULD NOT BE FOUND</EmptyTitle>
-        <EmptyDescription>This page does not exist.</EmptyDescription>
+        <EmptyTitle>KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM</EmptyTitle>
+        <EmptyDescription>Trang này không tồn tại.</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <Button asChild>
-          <Link href="/home">Go home</Link>
+          <Link href="/home">Về trang chủ</Link>
         </Button>
       </EmptyContent>
     </Empty>

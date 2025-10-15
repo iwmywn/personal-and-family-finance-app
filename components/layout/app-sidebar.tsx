@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import { ChartColumnIncreasing, Home, Wallet } from "lucide-react"
 
 import {
@@ -41,19 +40,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {...props}
     >
       <SidebarHeader>
-        <SidebarMenuButton size="lg" tooltip="iwmywn-pfm Home" asChild>
-          <Link href="/home">
-            <Image
-              src="/images/logo.png"
-              alt="iwmywn-pfm Logo"
-              width={32}
-              height={32}
-              className="rounded-lg"
-            />
-            <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold">PFM</span>
-            </div>
-          </Link>
+        <SidebarMenuButton size="lg" tooltip="Quản Lý Tài Chính Cá Nhân">
+          <Image
+            src="/images/logo.png"
+            alt="iwmywn-pfm Logo"
+            width={32}
+            height={32}
+            className="rounded-lg"
+          />
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-semibold">
+              Quản Lý Tài Chính Cá Nhân
+            </span>
+          </div>
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>

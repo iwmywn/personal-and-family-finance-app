@@ -6,11 +6,11 @@ const basePasswordSchema = z
   .string()
   .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
     message:
-      "Password must be at least 8 characters long, include uppercase, lowercase, number and special character.",
+      "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
   })
 
 const signInSchema = z.object({
-  username: z.string().min(1, { message: "Username is required." }),
+  username: z.string().min(1, { message: "Tên người dùng là bắt buộc." }),
   password: basePasswordSchema,
 })
 
@@ -29,7 +29,7 @@ const passwordSchema = z
       if (!currentPassword) {
         ctx.addIssue({
           path: ["currentPassword"],
-          message: "Current password is required.",
+          message: "Mật khẩu hiện tại là bắt buộc.",
           code: "custom",
         })
       }
@@ -38,7 +38,7 @@ const passwordSchema = z
         ctx.addIssue({
           path: ["newPassword"],
           message:
-            "Password must be at least 8 characters long, include uppercase, lowercase, number and special character.",
+            "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
           code: "custom",
         })
       }
@@ -46,13 +46,13 @@ const passwordSchema = z
       if (!confirmPassword) {
         ctx.addIssue({
           path: ["confirmPassword"],
-          message: "Please confirm your new password.",
+          message: "Vui lòng xác nhận mật khẩu mới của bạn.",
           code: "custom",
         })
       } else if (newPassword !== confirmPassword) {
         ctx.addIssue({
           path: ["confirmPassword"],
-          message: "Passwords do not match.",
+          message: "Mật khẩu không khớp.",
           code: "custom",
         })
       }
@@ -61,24 +61,24 @@ const passwordSchema = z
 
 export const transactionSchema = z.object({
   type: z.enum(TRANSACTION_TYPES, {
-    message: "Please select transaction type.",
+    message: "Vui lòng chọn loại giao dịch.",
   }),
   category: z.enum(ALL_CATEGORIES, {
-    message: "Please select a category.",
+    message: "Vui lòng chọn danh mục.",
   }),
   amount: z.number().min(0.01, {
-    message: "Amount must be greater than 0.",
+    message: "Số tiền phải lớn hơn 0.",
   }),
   description: z
     .string()
     .min(1, {
-      message: "Description is required.",
+      message: "Mô tả là bắt buộc.",
     })
     .max(200, {
-      message: "Description must be less than 200 characters.",
+      message: "Mô tả phải ít hơn 200 ký tự.",
     }),
   date: z.date({
-    message: "Please select a date.",
+    message: "Vui lòng chọn ngày.",
   }),
 })
 

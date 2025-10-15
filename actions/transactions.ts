@@ -11,13 +11,15 @@ export async function createTransaction(values: TransactionFormValues) {
     const { userId } = await session.user.get()
 
     if (!userId) {
-      return { error: "Unauthorized! Please reload the page and try again." }
+      return {
+        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+      }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Invalid data provided!" }
+      return { error: "Dữ liệu không hợp lệ!" }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -32,12 +34,12 @@ export async function createTransaction(values: TransactionFormValues) {
     })
 
     if (!result.acknowledged)
-      return { error: "Transaction creation failed! Try again later." }
+      return { error: "Tạo giao dịch thất bại! Thử lại sau." }
 
-    return { success: "Transaction saved.", error: undefined }
+    return { success: "Giao dịch đã được lưu.", error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
-    return { error: "Failed to create transaction. Please try again." }
+    return { error: "Tạo giao dịch thất bại. Vui lòng thử lại sau." }
   }
 }
 
@@ -49,13 +51,15 @@ export async function updateTransaction(
     const { userId } = await session.user.get()
 
     if (!userId) {
-      return { error: "Unauthorized! Please reload the page and try again." }
+      return {
+        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+      }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Invalid data provided!" }
+      return { error: "Dữ liệu không hợp lệ!" }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -67,7 +71,7 @@ export async function updateTransaction(
 
     if (!existingTransaction) {
       return {
-        error: "Transaction not found or you don't have permission to edit it!",
+        error: "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!",
       }
     }
 
@@ -85,10 +89,10 @@ export async function updateTransaction(
       }
     )
 
-    return { success: "Transaction saved.", error: undefined }
+    return { success: "Giao dịch đã được lưu.", error: undefined }
   } catch (error) {
     console.error("Error updating transaction:", error)
-    return { error: "Failed to update transaction! Please try again later." }
+    return { error: "Cập nhật giao dịch thất bại! Vui lòng thử lại sau." }
   }
 }
 
@@ -97,7 +101,9 @@ export async function deleteTransaction(transactionId: string) {
     const { userId } = await session.user.get()
 
     if (!userId) {
-      return { error: "Unauthorized! Please reload the page and try again." }
+      return {
+        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+      }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -109,8 +115,7 @@ export async function deleteTransaction(transactionId: string) {
 
     if (!existingTransaction) {
       return {
-        error:
-          "Transaction not found or you don't have permission to delete it!",
+        error: "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!",
       }
     }
 
@@ -119,10 +124,10 @@ export async function deleteTransaction(transactionId: string) {
       userId,
     })
 
-    return { success: "Transaction deleted." }
+    return { success: "Giao dịch đã được xóa." }
   } catch (error) {
     console.error("Error deleting transaction:", error)
-    return { error: "Failed to delete transaction! Please try again later." }
+    return { error: "Xóa giao dịch thất bại! Vui lòng thử lại sau." }
   }
 }
 
@@ -131,7 +136,9 @@ export async function getTransactions() {
     const { userId } = await session.user.get()
 
     if (!userId) {
-      return { error: "Unauthorized! Please reload the page and try again." }
+      return {
+        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+      }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -150,6 +157,6 @@ export async function getTransactions() {
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)
-    return { error: "Failed to fetch transactions! Please try again later." }
+    return { error: "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau." }
   }
 }

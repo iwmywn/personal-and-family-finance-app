@@ -10,15 +10,15 @@ import {
 import { AccountForm } from "@/components/settings/account-form"
 
 export const metadata: Metadata = {
-  title: "Settings",
+  title: "Cài đặt",
 }
 
 export default function page() {
   return (
     <Card className="rounded-lg">
       <CardHeader>
-        <CardTitle className="text-xl">Change Password</CardTitle>
-        <CardDescription>Change your password.</CardDescription>
+        <CardTitle className="text-xl">Đổi mật khẩu</CardTitle>
+        <CardDescription>Thay đổi mật khẩu của bạn.</CardDescription>
       </CardHeader>
       <CardContent>
         <AccountForm />

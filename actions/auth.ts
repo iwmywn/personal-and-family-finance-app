@@ -13,11 +13,11 @@ export async function signIn(
   recaptchaToken: string | null
 ) {
   try {
-    if (!recaptchaToken) return { error: "Missing recaptcha token!" }
+    if (!recaptchaToken) return { error: "Thiếu token recaptcha!" }
 
     const parsedValues = signInSchema.safeParse(values)
 
-    if (!parsedValues.success) return { error: "Invalid data provided!" }
+    if (!parsedValues.success) return { error: "Dữ liệu không hợp lệ!" }
 
     const { username, password } = parsedValues.data
     const [verify, existingUser] = await Promise.all([
@@ -25,32 +25,34 @@ export async function signIn(
       getUserByUsername(username),
     ])
 
-    if (!verify) return { error: "Captcha challenge failed!" }
-    if (!existingUser) return { error: "Username or password is incorrect!" }
+    if (!verify) return { error: "Xác thực Captcha thất bại!" }
+    if (!existingUser)
+      return { error: "Tên người dùng hoặc mật khẩu không đúng!" }
 
     const isPasswordValid = await bcrypt.compare(
       password,
       existingUser.password
     )
 
-    if (!isPasswordValid) return { error: "Username or password is incorrect!" }
+    if (!isPasswordValid)
+      return { error: "Tên người dùng hoặc mật khẩu không đúng!" }
 
     await session.user.create(existingUser._id.toString())
 
     return { error: undefined }
   } catch (error) {
     console.error("Error signing in: ", error)
-    return { error: "Failed to sign in! Please try again later." }
+    return { error: "Đăng nhập thất bại! Vui lòng thử lại sau." }
   }
 }
 
 export async function signOut() {
   try {
     await session.user.delete()
-    return { success: "You need to sign back in.", error: undefined }
+    return { success: "Bạn cần đăng nhập lại.", error: undefined }
   } catch (error) {
     console.error("Error signing out: ", error)
-    return { error: "Failed to sign out! Please try again later." }
+    return { error: "Đăng xuất thất bại! Vui lòng thử lại sau." }
   }
 }
 
@@ -59,18 +61,22 @@ export async function getUser() {
     const { userId } = await session.user.get()
 
     if (!userId) {
-      return { error: "Unauthorized! Please reload the page and try again." }
+      return {
+        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+      }
     }
 
     const existingUser = await getUserById(userId)
 
-    if (!existingUser) return { error: "User not found!" }
+    if (!existingUser) return { error: "Không tìm thấy người dùng!" }
 
     const user = { ...existingUser, _id: existingUser._id.toString() } as User
 
     return { user }
   } catch (error) {
-    console.error("Error fetching me: ", error)
-    return { error: "Failed to fetch me! Please try again later." }
+    console.error("Error fetching user: ", error)
+    return {
+      error: "Không thể tải thông tin người dùng! Vui lòng thử lại sau.",
+    }
   }
 }

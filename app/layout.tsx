@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | iwmywn - pfm",
     default: "iwmywn - pfm",
   },
-  description: "iwmywn personal income and expense management application",
+  description: "Ứng dụng quản lý thu chi cá nhân Hoàng Anh Tuấn",
 }
 
 export default function RootLayout({
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="vi" suppressHydrationWarning>
       <body className={`${nunito.className}`}>
         <ThemeProvider
           attribute="class"

@@ -90,7 +90,7 @@ export function SignInForm() {
               name="username"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="username">Username</FormLabel>
+                  <FormLabel htmlFor="username">Tên người dùng</FormLabel>
                   <FormControl>
                     <Input
                       id="username"
@@ -110,7 +110,7 @@ export function SignInForm() {
               render={({ field }) => (
                 <FormItem className="grid gap-2">
                   <div className="flex items-center justify-between">
-                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormLabel htmlFor="password">Mật khẩu</FormLabel>
                   </div>
                   <FormControl>
                     <PasswordInput
@@ -126,7 +126,7 @@ export function SignInForm() {
             />
             <FormButton
               isSubmitting={isLoading || form.formState.isSubmitting}
-              text="Sign in"
+              text="Đăng nhập"
             />
           </div>
         </form>

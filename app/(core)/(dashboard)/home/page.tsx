@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import HomePage from "@/components/homepage"
 
 export function generateMetadata(): Metadata {
-  return { title: "Home" }
+  return { title: "Trang chủ" }
 }
 
 export default function home() {

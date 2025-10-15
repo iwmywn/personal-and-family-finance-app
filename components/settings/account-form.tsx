@@ -48,7 +48,7 @@ export function AccountForm() {
           name="currentPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="currentPassword">Current Password</FormLabel>
+              <FormLabel htmlFor="currentPassword">Mật khẩu hiện tại</FormLabel>
               <FormControl>
                 <PasswordInput
                   id="currentPassword"
@@ -69,7 +69,7 @@ export function AccountForm() {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="newPassword">New Password</FormLabel>
+                  <FormLabel htmlFor="newPassword">Mật khẩu mới</FormLabel>
                   <FormControl>
                     <PasswordInput
                       id="newPassword"
@@ -91,7 +91,7 @@ export function AccountForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="confirmPassword">
-                    Confirm New Password
+                    Xác nhận mật khẩu mới
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
@@ -111,7 +111,7 @@ export function AccountForm() {
         <div className="flex flex-row-reverse">
           <FormButton
             isSubmitting={form.formState.isSubmitting}
-            text="Save changes"
+            text="Lưu thay đổi"
           />
         </div>
       </form>

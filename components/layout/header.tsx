@@ -19,7 +19,7 @@ import { DashboardThemeToggle } from "@/components/mode-toggle"
 
 const other = [
   {
-    title: "Settings",
+    title: "Cài đặt",
     url: "/settings",
   },
 ]
@@ -51,10 +51,10 @@ export function Header() {
           <BreadcrumbList>
             <BreadcrumbItem>
               {pathname === "/home" ? (
-                <BreadcrumbPage>Home</BreadcrumbPage>
+                <BreadcrumbPage>Trang chủ</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>
-                  <Link href="/home">Home</Link>
+                  <Link href="/home">Trang chủ</Link>
                 </BreadcrumbLink>
               )}
             </BreadcrumbItem>
