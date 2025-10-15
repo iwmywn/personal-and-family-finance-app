@@ -172,8 +172,22 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={transactionType} onValueChange={handleTypeChange}>
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="expense">Chi tiêu</TabsTrigger>
-                <TabsTrigger value="income">Thu nhập</TabsTrigger>
+                <TabsTrigger
+                  disabled={
+                    transaction && transaction.type === "income" && true
+                  }
+                  value="expense"
+                >
+                  Chi tiêu
+                </TabsTrigger>
+                <TabsTrigger
+                  disabled={
+                    transaction && transaction.type === "expense" && true
+                  }
+                  value="income"
+                >
+                  Thu nhập
+                </TabsTrigger>
               </TabsList>
 
               <TabsContent value="expense" className="space-y-4">
