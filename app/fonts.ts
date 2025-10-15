@@ -1,9 +1,9 @@
-import { Nunito } from "next/font/google"
+import { Montserrat } from "next/font/google"
 
-const nunito = Nunito({
+const montserrat = Montserrat({
   subsets: ["latin", "vietnamese"],
   display: "swap",
   fallback: ["var(--font-sans)"],
 })
 
-export { nunito }
+export { montserrat }
