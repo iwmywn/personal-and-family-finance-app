@@ -1,12 +1,12 @@
 "use server"
 
-import type { TransactionFormValues } from "@/schemas"
+import { transactionSchema, type TransactionFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 
 import { getTransactionCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
-export async function createTransaction(data: TransactionFormValues) {
+export async function createTransaction(values: TransactionFormValues) {
   try {
     const { userId } = await session.user.get()
 
@@ -14,15 +14,21 @@ export async function createTransaction(data: TransactionFormValues) {
       return { error: "Unauthorized! Please reload the page and try again." }
     }
 
+    const parsedValues = transactionSchema.safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: "Invalid data provided!" }
+    }
+
     const transactionsCollection = await getTransactionCollection()
 
     const result = await transactionsCollection.insertOne({
-      userId: userId,
-      type: data.type,
-      category: data.category,
-      amount: data.amount,
-      description: data.description,
-      date: data.date,
+      userId,
+      type: values.type,
+      category: values.category,
+      amount: values.amount,
+      description: values.description,
+      date: values.date,
     })
 
     if (!result.acknowledged)
@@ -37,13 +43,19 @@ export async function createTransaction(data: TransactionFormValues) {
 
 export async function updateTransaction(
   transactionId: string,
-  data: TransactionFormValues
+  values: TransactionFormValues
 ) {
   try {
     const { userId } = await session.user.get()
 
     if (!userId) {
       return { error: "Unauthorized! Please reload the page and try again." }
+    }
+
+    const parsedValues = transactionSchema.safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: "Invalid data provided!" }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -63,11 +75,11 @@ export async function updateTransaction(
       { _id: new ObjectId(transactionId), userId },
       {
         $set: {
-          type: data.type,
-          category: data.category,
-          amount: data.amount,
-          description: data.description,
-          date: data.date,
+          type: values.type,
+          category: values.category,
+          amount: values.amount,
+          description: values.description,
+          date: values.date,
           updatedAt: new Date(),
         },
       }
