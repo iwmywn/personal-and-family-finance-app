@@ -58,15 +58,15 @@ interface TransactionDialogProps {
 }
 
 const incomeCategories = getCategoriesByType("income").map((category) => ({
-  value: category,
   label: getCategoryLabel(category),
   description: getCategoryDescription(category),
+  category,
 }))
 
 const expenseCategories = getCategoriesByType("expense").map((category) => ({
-  value: category,
   label: getCategoryLabel(category),
   description: getCategoryDescription(category),
+  category,
 }))
 
 export function TransactionDialog({ transaction }: TransactionDialogProps) {
@@ -82,7 +82,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
       type: transaction?.type || "expense",
       amount: transaction?.amount || 0,
       description: transaction?.description || "",
-      category: transaction?.category || "essential",
+      category: transaction?.category,
       date: transaction?.date ? new Date(transaction.date) : new Date(),
     },
   })
@@ -127,7 +127,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
           type: transactionType,
           amount: 0,
           description: "",
-          category: transactionType === "income" ? "salary_bonus" : "essential",
+          category: undefined,
           date: new Date(),
         })
         setOpen(false)
@@ -141,10 +141,8 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
     const transactionType = type as "income" | "expense"
     setTransactionType(transactionType)
     form.setValue("type", transactionType)
-    if (transactionType === "income") {
-      form.setValue("category", "salary_bonus")
-    } else {
-      form.setValue("category", "essential")
+    if (!transaction) {
+      form.resetField("category")
     }
   }
 
@@ -194,7 +192,9 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                         <FormControl>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Chọn danh mục chi tiêu">
-                              {getCategoryLabel(field.value)}
+                              {field.value
+                                ? getCategoryLabel(field.value)
+                                : null}
                             </SelectValue>
                           </SelectTrigger>
                         </FormControl>
@@ -204,17 +204,12 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                             maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                           }}
                         >
-                          {expenseCategories.map((category) => (
-                            <SelectItem
-                              key={category.value}
-                              value={category.value}
-                            >
+                          {expenseCategories.map((c) => (
+                            <SelectItem key={c.category} value={c.category}>
                               <div className="flex flex-col">
-                                <span className="font-medium ">
-                                  {category.label}
-                                </span>
+                                <span className="font-medium ">{c.label}</span>
                                 <span className="text-muted-foreground">
-                                  {category.description}
+                                  {c.description}
                                 </span>
                               </div>
                             </SelectItem>
@@ -241,7 +236,9 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                         <FormControl>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Chọn danh mục thu nhập">
-                              {getCategoryLabel(field.value)}
+                              {field.value
+                                ? getCategoryLabel(field.value)
+                                : null}
                             </SelectValue>
                           </SelectTrigger>
                         </FormControl>
@@ -251,17 +248,12 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                             maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                           }}
                         >
-                          {incomeCategories.map((category) => (
-                            <SelectItem
-                              key={category.value}
-                              value={category.value}
-                            >
+                          {incomeCategories.map((c) => (
+                            <SelectItem key={c.category} value={c.category}>
                               <div className="flex flex-col">
-                                <span className="font-medium">
-                                  {category.label}
-                                </span>
+                                <span className="font-medium">{c.label}</span>
                                 <span className="text-muted-foreground">
-                                  {category.description}
+                                  {c.description}
                                 </span>
                               </div>
                             </SelectItem>

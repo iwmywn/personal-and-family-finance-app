@@ -48,7 +48,7 @@ export async function updateTransaction(
 
     const transactionsCollection = await getTransactionCollection()
 
-    const existingTransaction = await transactionsCollection.deleteOne({
+    const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
       userId,
     })

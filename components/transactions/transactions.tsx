@@ -83,8 +83,18 @@ export default function Transactions() {
   const allCategories = Array.from(new Set(transactions.map((t) => t.category)))
 
   return (
-    <>
-      <Card ref={registerRef} className="mb-4">
+    <div className="space-y-4">
+      <div ref={registerRef} className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold">Giao dịch</h2>
+          <p className="text-muted-foreground text-sm">
+            Quản lý tất cả giao dịch thu chi của bạn.
+          </p>
+        </div>
+        <TransactionDialog />
+      </div>
+
+      <Card ref={registerRef}>
         <CardContent>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
             <div className="relative flex-1">
@@ -146,7 +156,7 @@ export default function Transactions() {
               style={{
                 minHeight: isMobile
                   ? "250px"
-                  : `calc(100vh - ${calculatedHeight}px - 10.5rem)`,
+                  : `calc(100vh - ${calculatedHeight}px - 11.5rem)`,
               }}
             >
               <EmptyHeader>
@@ -165,7 +175,7 @@ export default function Transactions() {
             <div
               className="overflow-auto [&>div]:overflow-x-visible!"
               style={{
-                maxHeight: `calc(100vh - ${calculatedHeight}px - 10.5rem)`,
+                maxHeight: `calc(100vh - ${calculatedHeight}px - 11.5rem)`,
               }}
             >
               <Table>
@@ -233,6 +243,6 @@ export default function Transactions() {
           )}
         </CardContent>
       </Card>
-    </>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 
-import { montserrat } from "@/app/fonts"
+import { nunito } from "@/app/fonts"
 
 import "./globals.css"
 
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${montserrat.className}`}>
+      <body className={`${nunito.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
