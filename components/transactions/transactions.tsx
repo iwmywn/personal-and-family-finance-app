@@ -155,7 +155,7 @@ export default function Transactions() {
               className="border border-dashed"
               style={{
                 minHeight: isMobile
-                  ? "250px"
+                  ? "300px"
                   : `calc(100vh - ${calculatedHeight}px - 11.5rem)`,
               }}
             >
@@ -175,17 +175,19 @@ export default function Transactions() {
             <div
               className="overflow-auto [&>div]:overflow-x-visible!"
               style={{
-                maxHeight: `calc(100vh - ${calculatedHeight}px - 11.5rem)`,
+                maxHeight: isMobile
+                  ? "300px"
+                  : `calc(100vh - ${calculatedHeight}px - 11.5rem)`,
               }}
             >
               <Table>
                 <TableHeader>
                   <TableRow className="[&_th]:bg-card [&_th]:sticky [&_th]:top-0">
                     <TableHead>Ngày</TableHead>
-                    <TableHead>Mô tả</TableHead>
-                    <TableHead>Danh mục</TableHead>
-                    <TableHead>Loại</TableHead>
-                    <TableHead>Số tiền</TableHead>
+                    <TableHead className="text-center">Mô tả</TableHead>
+                    <TableHead className="text-center">Danh mục</TableHead>
+                    <TableHead className="text-center">Loại</TableHead>
+                    <TableHead className="text-center">Số tiền</TableHead>
                     <TableHead className="text-right">Thao tác</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -193,15 +195,15 @@ export default function Transactions() {
                   {filteredTransactions.map((transaction) => (
                     <TableRow key={transaction._id.toString()}>
                       <TableCell>{formatDate(transaction.date)}</TableCell>
-                      <TableCell className="font-medium">
+                      <TableCell className="text-center wrap-anywhere min-w-48 max-w-72 whitespace-normal">
                         {transaction.description}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-center">
                         <Badge variant="outline">
                           {getCategoryLabel(transaction.category)}
                         </Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-center">
                         <Badge
                           className={
                             transaction.type === "income"
@@ -214,7 +216,7 @@ export default function Transactions() {
                             : "Chi tiêu"}
                         </Badge>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-center">
                         <span
                           className={`font-semibold ${
                             transaction.type === "income"

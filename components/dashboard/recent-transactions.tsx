@@ -44,46 +44,54 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
               </EmptyHeader>
             </Empty>
           ) : (
-            recentTransactions.map((transaction) => (
-              <div
-                key={transaction._id}
-                className="flex items-center justify-between"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="flex flex-col gap-1">
-                    <Badge
-                      variant={
-                        transaction.type === "income" ? "default" : "secondary"
-                      }
-                      className={
+            recentTransactions.map((transaction, index) => (
+              <>
+                <div
+                  key={transaction._id}
+                  className="flex items-center justify-between"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="flex flex-col gap-1">
+                      <Badge
+                        variant={
+                          transaction.type === "income"
+                            ? "default"
+                            : "secondary"
+                        }
+                        className={
+                          transaction.type === "income"
+                            ? "bg-green-100 text-green-800 hover:bg-green-200"
+                            : "bg-red-100 text-red-800 hover:bg-red-200"
+                        }
+                      >
+                        {getCategoryLabel(transaction.category)}
+                      </Badge>
+                      <p className="text-sm max-w-3/4">
+                        {transaction.description}
+                      </p>
+                      <span className="text-xs text-muted-foreground">
+                        {formatDate(transaction.date)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p
+                      className={`text-sm ${
                         transaction.type === "income"
-                          ? "bg-green-100 text-green-800 hover:bg-green-200"
-                          : "bg-red-100 text-red-800 hover:bg-red-200"
-                      }
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
                     >
-                      {getCategoryLabel(transaction.category)}
-                    </Badge>
-                    <p className="text-sm font-medium">
-                      {transaction.description}
+                      {transaction.type === "income" ? "+" : "-"}
+                      {formatCurrency(transaction.amount)}
                     </p>
-                    <span className="text-xs text-muted-foreground">
-                      {formatDate(transaction.date)}
-                    </span>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p
-                    className={`text-sm font-medium ${
-                      transaction.type === "income"
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {transaction.type === "income" ? "+" : "-"}
-                    {formatCurrency(transaction.amount)}
-                  </p>
-                </div>
-              </div>
+
+                {index !== recentTransactions.length - 1 && (
+                  <div className="border border-dashed shrink-0 w-full border-t bg-black/15" />
+                )}
+              </>
             ))
           )}
         </div>

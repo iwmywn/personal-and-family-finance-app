@@ -90,9 +90,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   <span className="text-sm text-muted-foreground">
                     Tổng giao dịch:
                   </span>
-                  <span className="text-sm font-medium">
-                    {currentMonthCount}
-                  </span>
+                  <span className="text-sm">{currentMonthCount}</span>
                 </div>
               </TooltipTrigger>
               <TooltipContent
@@ -110,7 +108,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   <span className="text-sm text-muted-foreground">
                     Giao dịch cao nhất:
                   </span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm">
                     {highestTransaction !== null
                       ? `${formatCurrency(highestTransaction.amount)} (${
                           highestTransaction.type === "income" ? "thu" : "chi"
@@ -134,7 +132,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   <span className="text-sm text-muted-foreground">
                     Giao dịch thấp nhất:
                   </span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm">
                     {lowestTransaction !== null
                       ? `${formatCurrency(lowestTransaction.amount)} (${
                           lowestTransaction.type === "income" ? "thu" : "chi"
@@ -158,7 +156,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   <span className="text-sm text-muted-foreground">
                     Chi TB/giao dịch:
                   </span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm">
                     {avgExpense !== null
                       ? formatCurrency(avgExpense)
                       : "Chưa có"}
@@ -181,7 +179,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                     Tỷ lệ tiết kiệm:
                   </span>
                   <span
-                    className={`text-sm font-medium 
+                    className={`text-sm 
                       ${
                         savingsRate !== null
                           ? parseFloat(savingsRate) > 0
@@ -213,7 +211,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   <span className="text-sm text-muted-foreground">
                     Danh mục phổ biến:
                   </span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm">
                     {popularCategory
                       ? getCategoryLabel(popularCategory)
                       : "Chưa có"}

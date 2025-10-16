@@ -162,7 +162,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
           <Button>Thêm giao dịch</Button>
         )}
       </DialogTrigger>
-      <DialogContent ref={registerRef} className="max-h-[85vh]">
+      <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {transaction ? "Chỉnh sửa giao dịch" : "Thêm giao dịch mới"}
