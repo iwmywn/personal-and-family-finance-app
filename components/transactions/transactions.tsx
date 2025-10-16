@@ -19,7 +19,12 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
-import { Input } from "@/components/ui/input"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group"
 import {
   Select,
   SelectContent,
@@ -141,24 +146,27 @@ export default function Transactions() {
       <Card ref={registerRef}>
         <CardContent>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
+            <InputGroup>
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+              <InputGroupInput
                 placeholder="Tìm kiếm giao dịch..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
               />
               {searchTerm && (
-                <Button
-                  variant="ghost"
-                  className="absolute right-0 top-1/2 -translate-y-1/2"
-                  onClick={() => setSearchTerm("")}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    className="rounded-full"
+                    size="icon-xs"
+                    onClick={() => setSearchTerm("")}
+                  >
+                    <X />
+                  </InputGroupButton>
+                </InputGroupAddon>
               )}
-            </div>
+            </InputGroup>
             <Select value={filterMonth} onValueChange={setFilterMonth}>
               <SelectTrigger className="w-full md:w-fit">
                 <SelectValue placeholder="Tháng" />
