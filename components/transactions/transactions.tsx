@@ -280,7 +280,7 @@ export default function Transactions() {
                 <EmptyDescription>
                   {transactions.length === 0
                     ? "Bắt đầu thêm giao dịch của bạn."
-                    : "Thử tìm kiếm với từ khóa khác."}
+                    : "Hãy thử từ khóa hoặc bộ lọc khác."}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
