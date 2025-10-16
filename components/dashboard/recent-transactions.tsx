@@ -50,7 +50,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                   key={transaction._id}
                   className="flex items-center justify-between"
                 >
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3 max-w-3/4">
                     <div className="flex flex-col gap-1">
                       <Badge
                         variant={
@@ -66,9 +66,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                       >
                         {getCategoryLabel(transaction.category)}
                       </Badge>
-                      <p className="text-sm max-w-3/4">
-                        {transaction.description}
-                      </p>
+                      <p className="text-sm">{transaction.description}</p>
                       <span className="text-xs text-muted-foreground">
                         {formatDate(transaction.date)}
                       </span>
