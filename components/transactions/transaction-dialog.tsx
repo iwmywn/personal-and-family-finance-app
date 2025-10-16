@@ -90,25 +90,30 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
 
   const { transactions, mutate } = useTransactions()
 
-  const onSubmit = async (data: TransactionFormValues) => {
+  async function onSubmit(values: TransactionFormValues) {
     setIsLoading(true)
 
     if (transaction) {
-      const { success, error } = await updateTransaction(transaction._id, data)
+      const { success, error } = await updateTransaction(
+        transaction._id,
+        values
+      )
 
       if (error || !success) {
         toast.error(error)
       } else {
         mutate({
           transactions: transactions!.map((t) =>
-            t._id === transaction._id ? { ...t, ...data, date: data.date } : t
+            t._id === transaction._id
+              ? { ...t, ...values, date: values.date }
+              : t
           ),
         })
         toast.success(success)
         setOpen(false)
       }
     } else {
-      const { success, error } = await createTransaction(data)
+      const { success, error } = await createTransaction(values)
 
       if (error || !success) {
         toast.error(error)
@@ -119,7 +124,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
             {
               _id: `temp-id`,
               userId: "temp-user",
-              ...data,
+              ...values,
             },
           ],
         })

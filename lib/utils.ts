@@ -18,11 +18,15 @@ export function formatDate(date: string | Date) {
   return format(new Date(date), "dd MMM yyyy", { locale: vi })
 }
 
-export function isCurrentMonth(dateString: string | Date) {
-  const date = new Date(dateString)
+export function isCurrentMonth(inputDate: Date) {
+  const date = new Date(inputDate)
   const now = new Date()
   return (
     date.getMonth() === now.getMonth() &&
     date.getFullYear() === now.getFullYear()
   )
+}
+
+export const normalizeToUTCDate = (date: Date) => {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
 }

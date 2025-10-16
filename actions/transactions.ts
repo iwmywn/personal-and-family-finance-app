@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb"
 
 import { getTransactionCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
+import { normalizeToUTCDate } from "@/lib/utils"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {
@@ -30,7 +31,7 @@ export async function createTransaction(values: TransactionFormValues) {
       category: values.category,
       amount: values.amount,
       description: values.description,
-      date: values.date,
+      date: normalizeToUTCDate(values.date),
     })
 
     if (!result.acknowledged)
@@ -83,7 +84,7 @@ export async function updateTransaction(
           category: values.category,
           amount: values.amount,
           description: values.description,
-          date: values.date,
+          date: normalizeToUTCDate(values.date),
         },
       }
     )
