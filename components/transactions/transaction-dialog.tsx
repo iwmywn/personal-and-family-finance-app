@@ -384,21 +384,8 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                 Hủy
               </Button>
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? (
-                  transaction ? (
-                    <>
-                      <Spinner /> Đang cập nhật
-                    </>
-                  ) : (
-                    <>
-                      <Spinner /> Đang thêm
-                    </>
-                  )
-                ) : transaction ? (
-                  "Cập nhật"
-                ) : (
-                  "Thêm giao dịch"
-                )}
+                {isLoading && <Spinner />}{" "}
+                {transaction ? "Cập nhật" : "Thêm giao dịch"}
               </Button>
             </div>
           </form>
