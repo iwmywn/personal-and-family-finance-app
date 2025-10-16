@@ -19,7 +19,8 @@ export function QuickStats({ transactions }: QuickStatsProps) {
   const currentMonthTransactions = transactions.filter((t) =>
     isCurrentMonth(t.date)
   )
-  // Tổng giao dịch tháng này:
+
+  // Tổng giao dịch:
   const currentMonthCount = currentMonthTransactions.length
 
   // Giao dịch cao nhất:
@@ -87,7 +88,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
                   <span className="text-sm text-muted-foreground">
-                    Tổng giao dịch tháng này:
+                    Tổng giao dịch:
                   </span>
                   <span className="text-sm font-medium">
                     {currentMonthCount}

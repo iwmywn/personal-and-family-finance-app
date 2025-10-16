@@ -25,7 +25,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
   return (
     <Card className="relative py-0 pb-6">
       <CardHeader className="sticky top-0 bg-card pt-6">
-        <CardTitle>Giao dịch gần đây</CardTitle>
+        <CardTitle>10 giao dịch gần đây</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

@@ -84,7 +84,6 @@ export async function updateTransaction(
           amount: values.amount,
           description: values.description,
           date: values.date,
-          updatedAt: new Date(),
         },
       }
     )
