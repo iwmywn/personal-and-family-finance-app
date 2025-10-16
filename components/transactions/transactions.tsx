@@ -43,12 +43,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import {
   EXPENSE_CATEGORIES,
+  getCategoryDescription,
   getCategoryLabel,
   INCOME_CATEGORIES,
 } from "@/lib/categories"
@@ -305,9 +312,18 @@ export default function Transactions() {
                         {transaction.description}
                       </TableCell>
                       <TableCell className="text-center">
-                        <Badge variant="outline">
-                          {getCategoryLabel(transaction.category)}
-                        </Badge>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Badge variant="outline">
+                                {getCategoryLabel(transaction.category)}
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {getCategoryDescription(transaction.category)}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableCell>
                       <TableCell className="text-center">
                         <Badge

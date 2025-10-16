@@ -163,4 +163,9 @@
     align-items: center;
     height: 100%;
   }
+
+  [data-slot="tooltip-content"] {
+    text-align: center;
+    max-width: calc(100vw - 6.25rem);
+  }
 }

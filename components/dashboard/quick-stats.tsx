@@ -93,10 +93,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   <span className="text-sm">{currentMonthCount}</span>
                 </div>
               </TooltipTrigger>
-              <TooltipContent
-                className="text-center"
-                style={{ maxWidth: "calc(100vw - 100px)" }}
-              >
+              <TooltipContent>
                 Tổng số giao dịch (cả thu và chi) bạn đã thực hiện trong tháng
                 hiện tại. Giúp theo dõi tần suất giao dịch của bạn.
               </TooltipContent>
@@ -117,10 +114,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   </span>
                 </div>
               </TooltipTrigger>
-              <TooltipContent
-                className="text-center"
-                style={{ maxWidth: "calc(100vw - 100px)" }}
-              >
+              <TooltipContent>
                 Giao dịch có giá trị lớn nhất trong tháng (có thể là thu hoặc
                 chi). Giúp nhận diện các khoản tiền lớn bất thường.
               </TooltipContent>
@@ -141,10 +135,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   </span>
                 </div>
               </TooltipTrigger>
-              <TooltipContent
-                className="text-center"
-                style={{ maxWidth: "calc(100vw - 100px)" }}
-              >
+              <TooltipContent>
                 Giao dịch có giá trị nhỏ nhất trong tháng (có thể là thu hoặc
                 chi). Giúp nhận diện các khoản chi nhỏ lẻ thường xuyên.
               </TooltipContent>
@@ -163,10 +154,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   </span>
                 </div>
               </TooltipTrigger>
-              <TooltipContent
-                className="text-center"
-                style={{ maxWidth: "calc(100vw - 100px)" }}
-              >
+              <TooltipContent>
                 Số tiền trung bình mỗi lần chi tiêu (Tổng chi / Số giao dịch
                 chi). Giúp bạn nhận biết quy mô chi tiêu trung bình của mình.
               </TooltipContent>
@@ -195,10 +183,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   </span>
                 </div>
               </TooltipTrigger>
-              <TooltipContent
-                className="text-center"
-                style={{ maxWidth: "calc(100vw - 100px)" }}
-              >
+              <TooltipContent>
                 Tỷ lệ phần trăm số tiền bạn tiết kiệm được so với thu nhập ((Thu
                 - Chi) / Thu × 100%). Tỷ lệ càng cao càng tốt, nên duy trì trên
                 20%.
@@ -218,10 +203,7 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                   </span>
                 </div>
               </TooltipTrigger>
-              <TooltipContent
-                className="text-center"
-                style={{ maxWidth: "calc(100vw - 100px)" }}
-              >
+              <TooltipContent>
                 Danh mục có số lượng giao dịch nhiều nhất trong tháng. Giúp bạn
                 nhận biết lĩnh vực chi tiêu hoặc thu nhập chính của mình.
               </TooltipContent>
