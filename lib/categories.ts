@@ -2,14 +2,14 @@ import type { TransactionCategory, TransactionType } from "./definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const
 
-const INCOME_CATEGORIES = [
+export const INCOME_CATEGORIES = [
   "salary_bonus",
   "business_sales",
   "investment",
   "other_income",
 ] as const
 
-const EXPENSE_CATEGORIES = [
+export const EXPENSE_CATEGORIES = [
   "essential",
   "education_development",
   "entertainment_shopping",

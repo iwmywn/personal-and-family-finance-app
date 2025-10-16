@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Receipt, Search } from "lucide-react"
+import { Receipt, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -22,7 +23,10 @@ import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -39,7 +43,11 @@ import { DeleteTransactionDialog } from "@/components/transactions/delete-transa
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { getCategoryLabel } from "@/lib/categories"
+import {
+  EXPENSE_CATEGORIES,
+  getCategoryLabel,
+  INCOME_CATEGORIES,
+} from "@/lib/categories"
 import { useTransactions, useUser } from "@/lib/swr"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
@@ -48,6 +56,8 @@ export default function Transactions() {
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
   const [searchTerm, setSearchTerm] = useState<string>("")
+  const [filterMonth, setFilterMonth] = useState<string>("all")
+  const [filterYear, setFilterYear] = useState<string>("all")
   const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
     "all"
   )
@@ -74,13 +84,47 @@ export default function Transactions() {
     const matchesSearch = transaction.description
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
+
+    const transactionDate = new Date(transaction.date)
+    const matchesMonth =
+      filterMonth === "all" ||
+      transactionDate.getMonth() + 1 === parseInt(filterMonth)
+    const matchesYear =
+      filterYear === "all" ||
+      transactionDate.getFullYear() === parseInt(filterYear)
+
     const matchesType = filterType === "all" || transaction.type === filterType
+
     const matchesCategory =
       filterCategory === "all" || transaction.category === filterCategory
-    return matchesSearch && matchesType && matchesCategory
+
+    return (
+      matchesSearch &&
+      matchesMonth &&
+      matchesYear &&
+      matchesType &&
+      matchesCategory
+    )
   })
 
-  const allCategories = Array.from(new Set(transactions.map((t) => t.category)))
+  const allMonths = [
+    { value: "1", label: "Tháng 1" },
+    { value: "2", label: "Tháng 2" },
+    { value: "3", label: "Tháng 3" },
+    { value: "4", label: "Tháng 4" },
+    { value: "5", label: "Tháng 5" },
+    { value: "6", label: "Tháng 6" },
+    { value: "7", label: "Tháng 7" },
+    { value: "8", label: "Tháng 8" },
+    { value: "9", label: "Tháng 9" },
+    { value: "10", label: "Tháng 10" },
+    { value: "11", label: "Tháng 11" },
+    { value: "12", label: "Tháng 12" },
+  ]
+
+  const allYears = Array.from(
+    new Set(transactions.map((t) => new Date(t.date).getFullYear()))
+  ).sort((a, b) => b - a)
 
   return (
     <div className="space-y-4">
@@ -105,33 +149,88 @@ export default function Transactions() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
               />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  className="absolute right-0 top-1/2 -translate-y-1/2"
+                  onClick={() => setSearchTerm("")}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
             </div>
+            <Select value={filterMonth} onValueChange={setFilterMonth}>
+              <SelectTrigger className="w-full md:w-fit">
+                <SelectValue placeholder="Tháng" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả tháng</SelectItem>
+                  <SelectSeparator />
+                  {allMonths.map((month) => (
+                    <SelectItem key={month.value} value={month.value}>
+                      {month.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select value={filterYear} onValueChange={setFilterYear}>
+              <SelectTrigger className="w-full md:w-fit">
+                <SelectValue placeholder="Năm" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả năm</SelectItem>
+                  <SelectSeparator />
+                  {allYears.map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
             <Select
               value={filterType}
               onValueChange={(value: "all" | "income" | "expense") =>
                 setFilterType(value)
               }
             >
-              <SelectTrigger className="w-full md:w-40">
+              <SelectTrigger className="w-full md:w-fit">
                 <SelectValue placeholder="Loại giao dịch" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tất cả</SelectItem>
-                <SelectItem value="income">Thu nhập</SelectItem>
-                <SelectItem value="expense">Chi tiêu</SelectItem>
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả loại giao dịch</SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="income">Thu nhập</SelectItem>
+                  <SelectItem value="expense">Chi tiêu</SelectItem>
+                </SelectGroup>
               </SelectContent>
             </Select>
             <Select value={filterCategory} onValueChange={setFilterCategory}>
-              <SelectTrigger className="w-full md:w-40">
+              <SelectTrigger className="w-full md:w-fit">
                 <SelectValue placeholder="Danh mục" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tất cả danh mục</SelectItem>
-                {allCategories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {getCategoryLabel(category)}
-                  </SelectItem>
-                ))}
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả danh mục</SelectItem>
+                  <SelectSeparator />
+                  <SelectLabel>Chi tiêu</SelectLabel>
+                  {EXPENSE_CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {getCategoryLabel(category)}
+                    </SelectItem>
+                  ))}
+                  <SelectSeparator />
+                  <SelectLabel>Thu nhập</SelectLabel>
+                  {INCOME_CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {getCategoryLabel(category)}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
               </SelectContent>
             </Select>
           </div>
