@@ -154,9 +154,9 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {transaction ? (
-          <div className="h-full w-full px-2 py-1.5">Chỉnh sửa giao dịch</div>
+          <div className="h-full w-full px-2 py-1.5">Chỉnh sửa</div>
         ) : (
-          <Button>Thêm giao dịch</Button>
+          <Button>Thêm</Button>
         )}
       </DialogTrigger>
       <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">

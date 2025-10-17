@@ -53,7 +53,7 @@ export function DeleteTransactionDialog({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <div className="h-full w-full px-2 py-1.5">Xóa giao dịch</div>
+        <div className="h-full w-full px-2 py-1.5">Xóa</div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
