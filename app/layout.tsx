@@ -11,8 +11,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | iwmywn - pfm",
-    default: "iwmywn - pfm",
+    template: "%s | PFM",
+    default: "PFM",
   },
   description: "Ứng dụng quản lý thu chi cá nhân Hoàng Anh Tuấn",
 }

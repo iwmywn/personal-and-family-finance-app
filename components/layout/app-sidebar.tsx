@@ -43,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenuButton size="lg" tooltip="Quản Lý Tài Chính Cá Nhân">
           <Image
             src="/images/logo.png"
-            alt="iwmywn-pfm Logo"
+            alt="PFM Logo"
             width={32}
             height={32}
             className="rounded-lg"
