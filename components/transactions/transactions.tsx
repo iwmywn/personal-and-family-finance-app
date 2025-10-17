@@ -333,23 +333,26 @@ export default function Transactions() {
             >
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
-                  <TableRow>
+                  <TableRow className="[&>th]:text-center">
                     <TableHead>Ngày</TableHead>
-                    <TableHead className="text-center">Mô tả</TableHead>
-                    <TableHead className="text-center">Loại</TableHead>
-                    <TableHead className="text-center">Danh mục</TableHead>
-                    <TableHead className="text-center">Số tiền</TableHead>
-                    <TableHead className="text-right">Thao tác</TableHead>
+                    <TableHead>Mô tả</TableHead>
+                    <TableHead>Loại</TableHead>
+                    <TableHead>Danh mục</TableHead>
+                    <TableHead>Số tiền</TableHead>
+                    <TableHead>Thao tác</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredTransactions.map((transaction) => (
-                    <TableRow key={transaction._id.toString()}>
+                    <TableRow
+                      key={transaction._id.toString()}
+                      className="[&>td]:text-center"
+                    >
                       <TableCell>{formatDate(transaction.date)}</TableCell>
-                      <TableCell className="text-center wrap-anywhere min-w-48 max-w-72 whitespace-normal">
+                      <TableCell className="wrap-anywhere min-w-48 max-w-72 whitespace-normal">
                         {transaction.description}
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell>
                         <Badge
                           className={
                             transaction.type === "income"
@@ -362,7 +365,7 @@ export default function Transactions() {
                             : "Chi tiêu"}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell>
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
@@ -376,7 +379,7 @@ export default function Transactions() {
                           </Tooltip>
                         </TooltipProvider>
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell>
                         <span
                           className={`font-semibold ${
                             transaction.type === "income"
@@ -388,14 +391,12 @@ export default function Transactions() {
                           {formatCurrency(transaction.amount)}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end space-x-1">
-                          <TransactionDialog transaction={transaction} />
-                          <DeleteTransactionDialog
-                            transactionId={transaction._id}
-                            transactionDescription={transaction.description}
-                          />
-                        </div>
+                      <TableCell className="space-x-2">
+                        <TransactionDialog transaction={transaction} />
+                        <DeleteTransactionDialog
+                          transactionId={transaction._id}
+                          transactionDescription={transaction.description}
+                        />
                       </TableCell>
                     </TableRow>
                   ))}
