@@ -84,8 +84,8 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
       : null
 
   return (
-    <Card className="relative py-0 pb-6">
-      <CardHeader ref={registerRef} className="sticky top-0 bg-card pt-6">
+    <Card className="relative overflow-hidden py-0 pb-6">
+      <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
         <CardTitle>Thống kê nhanh</CardTitle>
       </CardHeader>
       <CardContent
@@ -101,7 +101,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Tổng giao dịch:
                   </span>
                   <span className="text-sm">{currentMonthCount}</span>
@@ -118,7 +118,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Giao dịch cao nhất:
                   </span>
                   <span className="text-sm">
@@ -141,7 +141,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Giao dịch thấp nhất:
                   </span>
                   <span className="text-sm">
@@ -164,7 +164,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Chi TB/giao dịch:
                   </span>
                   <span className="text-sm">
@@ -185,21 +185,19 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Tỷ lệ tiết kiệm:
                   </span>
                   <span
-                    className={`text-sm 
-                      ${
-                        savingsRate !== null
-                          ? parseFloat(savingsRate) > 0
-                            ? "text-green-600"
-                            : parseFloat(savingsRate) < 0
-                              ? "text-red-600"
-                              : ""
-                          : ""
-                      }
-                    `}
+                    className={`text-sm ${
+                      savingsRate !== null
+                        ? parseFloat(savingsRate) > 0
+                          ? "text-green-600"
+                          : parseFloat(savingsRate) < 0
+                            ? "text-red-600"
+                            : ""
+                        : ""
+                    } `}
                   >
                     {savingsRate !== null ? `${savingsRate}%` : "Chưa có"}
                   </span>
@@ -217,7 +215,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Danh mục phổ biến:
                   </span>
                   <span className="text-sm">

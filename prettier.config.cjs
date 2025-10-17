@@ -1,8 +1,8 @@
 /** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').PluginOptions} */
 module.exports = {
   plugins: [
-    "prettier-plugin-tailwindcss",
     "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss",
   ],
   tabWidth: 2,
   useTabs: false,
@@ -18,7 +18,6 @@ module.exports = {
     "^@/actions/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",
-    // "^@/constants/(.*)$",
     "^@/hooks/(.*)$",
     "^@/lib/(.*)$",
     "^@/schemas/(.*)$",
@@ -26,10 +25,5 @@ module.exports = {
     "",
     "^[./]",
   ],
-  importOrderSeparation: false,
-  importOrderSortSpecifiers: true,
-  importOrderBuiltinModulesToTop: true,
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
-  importOrderMergeDuplicateImports: true,
-  importOrderCombineTypeAndValueImports: true,
 }

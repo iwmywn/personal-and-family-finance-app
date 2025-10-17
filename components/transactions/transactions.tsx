@@ -317,7 +317,7 @@ export default function Transactions() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
-                  Hiển thị cột
+                  Tùy chỉnh cột
                   <ChevronDownIcon className="size-4 opacity-50" />
                 </Button>
               </DropdownMenuTrigger>
@@ -374,7 +374,7 @@ export default function Transactions() {
             </Empty>
           ) : (
             <div
-              className="overflow-auto [&>div]:overflow-x-visible! border rounded-md"
+              className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
               style={{
                 maxHeight: isMobile
                   ? "300px"
@@ -399,7 +399,7 @@ export default function Transactions() {
                       className="[&>td]:text-center"
                     >
                       <TableCell>{formatDate(transaction.date)}</TableCell>
-                      <TableCell className="wrap-anywhere min-w-48 max-w-72 whitespace-normal">
+                      <TableCell className="max-w-72 min-w-48 wrap-anywhere whitespace-normal">
                         {transaction.description}
                       </TableCell>
                       {showTypeCol && (

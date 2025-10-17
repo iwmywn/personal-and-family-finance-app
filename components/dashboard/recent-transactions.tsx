@@ -33,8 +33,8 @@ export function RecentTransactions({
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
   return (
-    <Card className="relative py-0 pb-6">
-      <CardHeader ref={registerRef} className="sticky top-0 bg-card pt-6 ">
+    <Card className="relative overflow-hidden py-0 pb-6">
+      <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
         <CardTitle>10 giao dịch gần đây</CardTitle>
       </CardHeader>
       <CardContent
@@ -45,9 +45,9 @@ export function RecentTransactions({
             : `calc(100vh - 10rem - ${offsetHeight}px - ${calculatedHeight}px)`,
         }}
       >
-        <div className="space-y-4 h-full">
+        <div className="h-full space-y-4">
           {recentTransactions.length === 0 ? (
-            <Empty className="border border-dashed h-full">
+            <Empty className="h-full border border-dashed">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <Receipt />
@@ -64,7 +64,7 @@ export function RecentTransactions({
             recentTransactions.map((transaction, index) => (
               <Fragment key={transaction._id}>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3 max-w-3/4">
+                  <div className="flex max-w-3/4 items-center space-x-3">
                     <div className="flex flex-col gap-1">
                       <Badge
                         className={
@@ -76,7 +76,7 @@ export function RecentTransactions({
                         {getCategoryLabel(transaction.category)}
                       </Badge>
                       <p className="text-sm">{transaction.description}</p>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-muted-foreground text-xs">
                         {formatDate(transaction.date)}
                       </span>
                     </div>

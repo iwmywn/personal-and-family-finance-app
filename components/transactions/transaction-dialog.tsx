@@ -222,7 +222,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                           {expenseCategories.map((c) => (
                             <SelectItem key={c.category} value={c.category}>
                               <div className="flex flex-col">
-                                <span className="font-medium ">{c.label}</span>
+                                <span className="font-medium">{c.label}</span>
                                 <span className="text-muted-foreground">
                                   {c.description}
                                 </span>

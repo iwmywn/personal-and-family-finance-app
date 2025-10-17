@@ -36,7 +36,7 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
           <div className="text-2xl text-green-600">
             {formatCurrency(totalIncome)}
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {currentMonthTransactions.filter((t) => t.type === "income").length}{" "}
             giao dịch
           </p>
@@ -52,7 +52,7 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
           <div className="text-2xl text-red-600">
             {formatCurrency(totalExpense)}
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {
               currentMonthTransactions.filter((t) => t.type === "expense")
                 .length
@@ -77,7 +77,7 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
           >
             {formatCurrency(balance)}
           </div>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {balance > 0 ? "Dương" : balance < 0 ? "Âm" : "Cân bằng"} so với thu
             nhập
           </p>
