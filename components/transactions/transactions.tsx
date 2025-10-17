@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Receipt, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -137,6 +138,21 @@ export default function Transactions() {
     new Set(transactions.map((t) => new Date(t.date).getFullYear()))
   ).sort((a, b) => b - a)
 
+  const handleResetFilters = () => {
+    setSearchTerm("")
+    setFilterMonth("all")
+    setFilterYear("all")
+    setFilterType("all")
+    setFilterCategory("all")
+  }
+
+  const hasActiveFilters =
+    searchTerm !== "" ||
+    filterMonth !== "all" ||
+    filterYear !== "all" ||
+    filterType !== "all" ||
+    filterCategory !== "all"
+
   return (
     <div className="space-y-4">
       <div ref={registerRef} className="flex items-center justify-between">
@@ -152,7 +168,7 @@ export default function Transactions() {
       <Card ref={registerRef}>
         <CardContent>
           <div className="flex flex-col gap-4 md:flex-row md:items-center">
-            <InputGroup>
+            <InputGroup className={`${searchTerm !== "" && "border-primary"}`}>
               <InputGroupAddon>
                 <Search />
               </InputGroupAddon>
@@ -174,7 +190,9 @@ export default function Transactions() {
               )}
             </InputGroup>
             <Select value={filterMonth} onValueChange={setFilterMonth}>
-              <SelectTrigger className="w-full md:w-fit">
+              <SelectTrigger
+                className={`w-full md:w-fit ${filterMonth !== "all" && "border-primary"}`}
+              >
                 <SelectValue placeholder="Tháng" />
               </SelectTrigger>
               <SelectContent>
@@ -190,7 +208,9 @@ export default function Transactions() {
               </SelectContent>
             </Select>
             <Select value={filterYear} onValueChange={setFilterYear}>
-              <SelectTrigger className="w-full md:w-fit">
+              <SelectTrigger
+                className={`w-full md:w-fit ${filterYear !== "all" && "border-primary"}`}
+              >
                 <SelectValue placeholder="Năm" />
               </SelectTrigger>
               <SelectContent>
@@ -211,7 +231,9 @@ export default function Transactions() {
                 setFilterType(value)
               }
             >
-              <SelectTrigger className="w-full md:w-fit">
+              <SelectTrigger
+                className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
+              >
                 <SelectValue placeholder="Loại giao dịch" />
               </SelectTrigger>
               <SelectContent>
@@ -224,7 +246,9 @@ export default function Transactions() {
               </SelectContent>
             </Select>
             <Select value={filterCategory} onValueChange={setFilterCategory}>
-              <SelectTrigger className="w-full md:w-fit">
+              <SelectTrigger
+                className={`w-full md:w-fit ${filterCategory !== "all" && "border-primary"}`}
+              >
                 <SelectValue placeholder="Danh mục" />
               </SelectTrigger>
               <SelectContent>
@@ -247,6 +271,16 @@ export default function Transactions() {
                 </SelectGroup>
               </SelectContent>
             </Select>
+            {hasActiveFilters && (
+              <Button
+                variant="outline"
+                size="default"
+                onClick={handleResetFilters}
+                className="w-full md:w-fit"
+              >
+                Đặt lại
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
