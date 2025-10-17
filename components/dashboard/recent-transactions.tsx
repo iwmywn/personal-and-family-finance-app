@@ -11,6 +11,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
+import { Separator } from "@/components/ui/separator"
 import { getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { formatCurrency, formatDate } from "@/lib/utils"
@@ -86,9 +87,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                   </div>
                 </div>
 
-                {index !== recentTransactions.length - 1 && (
-                  <div className="border border-dashed shrink-0 w-full border-t bg-black/15" />
-                )}
+                {index !== recentTransactions.length - 1 && <Separator />}
               </>
             ))
           )}

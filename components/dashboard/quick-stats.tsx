@@ -1,6 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
 import {
   Tooltip,
   TooltipContent,
@@ -99,6 +100,8 @@ export function QuickStats({ transactions }: QuickStatsProps) {
               </TooltipContent>
             </Tooltip>
 
+            <Separator />
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
@@ -119,6 +122,8 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                 chi). Giúp nhận diện các khoản tiền lớn bất thường.
               </TooltipContent>
             </Tooltip>
+
+            <Separator />
 
             <Tooltip>
               <TooltipTrigger asChild>
@@ -141,6 +146,8 @@ export function QuickStats({ transactions }: QuickStatsProps) {
               </TooltipContent>
             </Tooltip>
 
+            <Separator />
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex justify-between">
@@ -159,6 +166,8 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                 chi). Giúp bạn nhận biết quy mô chi tiêu trung bình của mình.
               </TooltipContent>
             </Tooltip>
+
+            <Separator />
 
             <Tooltip>
               <TooltipTrigger asChild>
@@ -189,6 +198,8 @@ export function QuickStats({ transactions }: QuickStatsProps) {
                 20%.
               </TooltipContent>
             </Tooltip>
+
+            <Separator />
 
             <Tooltip>
               <TooltipTrigger asChild>
