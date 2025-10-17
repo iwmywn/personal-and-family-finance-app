@@ -1,17 +1,25 @@
 "use client"
 
 import { useState } from "react"
-import { Receipt, Search, X } from "lucide-react"
+import type { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
+import { ChevronDownIcon, Receipt, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   Empty,
   EmptyDescription,
@@ -63,6 +71,8 @@ import {
 import { useTransactions, useUser } from "@/lib/swr"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
+type Checked = DropdownMenuCheckboxItemProps["checked"]
+
 export default function Transactions() {
   const isMobile = useMediaQuery("(max-width: 767px)")
   const { user, isUserLoading } = useUser()
@@ -75,6 +85,9 @@ export default function Transactions() {
   )
   const [filterCategory, setFilterCategory] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const [showTypeCol, setShowTypeCol] = useState<Checked>(true)
+  const [showCategoryCol, setShowCategoryCol] = useState<Checked>(true)
+  const [showAmountCol, setShowAmountCol] = useState<Checked>(true)
 
   if (isUserLoading || isTransactionsLoading) {
     return (
@@ -299,6 +312,45 @@ export default function Transactions() {
           <CardDescription>
             Xem chi tiết tất cả các giao dịch của bạn.
           </CardDescription>
+          <CardAction>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  Hiển thị cột
+                  <ChevronDownIcon className="size-4 opacity-50" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuCheckboxItem disabled>
+                  Ngày
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem disabled>
+                  Mô tả
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={showTypeCol}
+                  onCheckedChange={setShowTypeCol}
+                >
+                  Loại
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={showCategoryCol}
+                  onCheckedChange={setShowCategoryCol}
+                >
+                  Danh mục
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={showAmountCol}
+                  onCheckedChange={setShowAmountCol}
+                >
+                  Số tiền
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem disabled>
+                  Thao tác
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </CardAction>
         </CardHeader>
         <CardContent>
           {filteredTransactions.length === 0 ? (
@@ -336,9 +388,9 @@ export default function Transactions() {
                   <TableRow className="[&>th]:text-center">
                     <TableHead>Ngày</TableHead>
                     <TableHead>Mô tả</TableHead>
-                    <TableHead>Loại</TableHead>
-                    <TableHead>Danh mục</TableHead>
-                    <TableHead>Số tiền</TableHead>
+                    {showTypeCol && <TableHead>Loại</TableHead>}
+                    {showCategoryCol && <TableHead>Danh mục</TableHead>}
+                    {showAmountCol && <TableHead>Số tiền</TableHead>}
                     <TableHead>Thao tác</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -352,45 +404,51 @@ export default function Transactions() {
                       <TableCell className="wrap-anywhere min-w-48 max-w-72 whitespace-normal">
                         {transaction.description}
                       </TableCell>
-                      <TableCell>
-                        <Badge
-                          className={
-                            transaction.type === "income"
-                              ? "badge-income"
-                              : "badge-expense"
-                          }
-                        >
-                          {transaction.type === "income"
-                            ? "Thu nhập"
-                            : "Chi tiêu"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Badge variant="outline">
-                                {getCategoryLabel(transaction.category)}
-                              </Badge>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              {getCategoryDescription(transaction.category)}
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableCell>
-                      <TableCell>
-                        <span
-                          className={`font-semibold ${
-                            transaction.type === "income"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          {transaction.type === "income" ? "+" : "-"}
-                          {formatCurrency(transaction.amount)}
-                        </span>
-                      </TableCell>
+                      {showTypeCol && (
+                        <TableCell>
+                          <Badge
+                            className={
+                              transaction.type === "income"
+                                ? "badge-income"
+                                : "badge-expense"
+                            }
+                          >
+                            {transaction.type === "income"
+                              ? "Thu nhập"
+                              : "Chi tiêu"}
+                          </Badge>
+                        </TableCell>
+                      )}
+                      {showCategoryCol && (
+                        <TableCell>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Badge variant="outline">
+                                  {getCategoryLabel(transaction.category)}
+                                </Badge>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {getCategoryDescription(transaction.category)}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </TableCell>
+                      )}
+                      {showAmountCol && (
+                        <TableCell>
+                          <span
+                            className={`font-semibold ${
+                              transaction.type === "income"
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            {transaction.type === "income" ? "+" : "-"}
+                            {formatCurrency(transaction.amount)}
+                          </span>
+                        </TableCell>
+                      )}
                       <TableCell className="space-x-2">
                         <TransactionDialog transaction={transaction} />
                         <DeleteTransactionDialog
