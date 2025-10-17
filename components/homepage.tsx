@@ -33,10 +33,12 @@ export default function HomePage() {
     <div className="space-y-4">
       <div ref={registerRef} className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold">Xin chào, {user.fullName}!</h2>
-          <p className="text-muted-foreground text-sm">
+          <div className="text-xl font-semibold">
+            Xin chào, {user.fullName}!
+          </div>
+          <div className="text-muted-foreground text-sm">
             Quản lý tài chính cá nhân của bạn.
-          </p>
+          </div>
         </div>
         <TransactionDialog />
       </div>

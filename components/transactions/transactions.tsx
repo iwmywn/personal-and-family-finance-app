@@ -157,10 +157,10 @@ export default function Transactions() {
     <div className="space-y-4">
       <div ref={registerRef} className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold">Giao dịch</h2>
-          <p className="text-muted-foreground text-sm">
+          <div className="text-xl font-semibold">Giao dịch</div>
+          <div className="text-muted-foreground text-sm">
             Quản lý tất cả giao dịch thu chi của bạn.
-          </p>
+          </div>
         </div>
         <TransactionDialog />
       </div>
@@ -293,16 +293,12 @@ export default function Transactions() {
         </CardContent>
       </Card>
 
-      <Card className="rounded-lg">
+      <Card>
         <CardHeader ref={registerRef}>
-          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
-            <div>
-              <CardTitle className="text-lg">Lịch sử giao dịch</CardTitle>
-              <CardDescription>
-                Xem chi tiết tất cả các giao dịch của bạn.
-              </CardDescription>
-            </div>
-          </div>
+          <CardTitle>Lịch sử giao dịch</CardTitle>
+          <CardDescription>
+            Xem chi tiết tất cả các giao dịch của bạn.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {filteredTransactions.length === 0 ? (

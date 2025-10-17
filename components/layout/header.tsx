@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { nav } from "@/components/layout/app-sidebar"
-import { DashboardThemeToggle } from "@/components/mode-toggle"
 
 const other = [
   {
@@ -73,7 +72,6 @@ export function Header() {
       </div>
       <div className="flex items-center gap-2">
         <ColorDialog />
-        <DashboardThemeToggle />
       </div>
     </header>
   )
