@@ -298,8 +298,8 @@ export default function Transactions() {
                   <TableRow className="[&_th]:bg-card [&_th]:sticky [&_th]:top-0">
                     <TableHead>Ngày</TableHead>
                     <TableHead className="text-center">Mô tả</TableHead>
-                    <TableHead className="text-center">Danh mục</TableHead>
                     <TableHead className="text-center">Loại</TableHead>
+                    <TableHead className="text-center">Danh mục</TableHead>
                     <TableHead className="text-center">Số tiền</TableHead>
                     <TableHead className="text-right">Thao tác</TableHead>
                   </TableRow>
@@ -310,6 +310,19 @@ export default function Transactions() {
                       <TableCell>{formatDate(transaction.date)}</TableCell>
                       <TableCell className="text-center wrap-anywhere min-w-48 max-w-72 whitespace-normal">
                         {transaction.description}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <Badge
+                          className={
+                            transaction.type === "income"
+                              ? "badge-income"
+                              : "badge-expense"
+                          }
+                        >
+                          {transaction.type === "income"
+                            ? "Thu nhập"
+                            : "Chi tiêu"}
+                        </Badge>
                       </TableCell>
                       <TableCell className="text-center">
                         <TooltipProvider>
@@ -324,19 +337,6 @@ export default function Transactions() {
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <Badge
-                          className={
-                            transaction.type === "income"
-                              ? "bg-green-100 text-green-800 hover:bg-green-200"
-                              : "bg-red-100 text-red-800 hover:bg-red-200"
-                          }
-                        >
-                          {transaction.type === "income"
-                            ? "Thu nhập"
-                            : "Chi tiêu"}
-                        </Badge>
                       </TableCell>
                       <TableCell className="text-center">
                         <span
