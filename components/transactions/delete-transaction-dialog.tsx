@@ -53,10 +53,7 @@ export function DeleteTransactionDialog({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Trash2 className="h-4 w-4" />
-          <span className="sr-only">Xóa giao dịch</span>
-        </Button>
+        <div className="h-full w-full px-2 py-1.5">Xóa giao dịch</div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

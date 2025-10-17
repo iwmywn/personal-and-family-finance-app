@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import type { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
-import { ChevronDownIcon, Receipt, Search, X } from "lucide-react"
+import { ChevronDownIcon, MoreVertical, Receipt, Search, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -18,6 +18,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -345,9 +346,6 @@ export default function Transactions() {
                 >
                   Số tiền
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={true} disabled>
-                  Thao tác
-                </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </CardAction>
@@ -391,7 +389,7 @@ export default function Transactions() {
                     {showTypeCol && <TableHead>Loại</TableHead>}
                     {showCategoryCol && <TableHead>Danh mục</TableHead>}
                     {showAmountCol && <TableHead>Số tiền</TableHead>}
-                    <TableHead>Thao tác</TableHead>
+                    <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -450,11 +448,36 @@ export default function Transactions() {
                         </TableCell>
                       )}
                       <TableCell className="space-x-2">
-                        <TransactionDialog transaction={transaction} />
-                        <DeleteTransactionDialog
-                          transactionId={transaction._id}
-                          transactionDescription={transaction.description}
-                        />
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              className="dark:hover:bg-input/50"
+                              variant="ghost"
+                              size="icon"
+                            >
+                              <MoreVertical />
+                              <span className="sr-only">Mở menu</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuItem
+                              className="cursor-pointer p-0"
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <TransactionDialog transaction={transaction} />
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="cursor-pointer p-0"
+                              variant="destructive"
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <DeleteTransactionDialog
+                                transactionId={transaction._id}
+                                transactionDescription={transaction.description}
+                              />
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </TableCell>
                     </TableRow>
                   ))}
