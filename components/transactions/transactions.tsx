@@ -321,10 +321,10 @@ export default function Transactions() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuCheckboxItem disabled>
+                <DropdownMenuCheckboxItem checked={true} disabled>
                   Ngày
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem disabled>
+                <DropdownMenuCheckboxItem checked={true} disabled>
                   Mô tả
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
@@ -345,7 +345,7 @@ export default function Transactions() {
                 >
                   Số tiền
                 </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem disabled>
+                <DropdownMenuCheckboxItem checked={true} disabled>
                   Thao tác
                 </DropdownMenuCheckboxItem>
               </DropdownMenuContent>
