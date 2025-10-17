@@ -11,7 +11,7 @@ type BaseUser<T> = {
 
 type BaseTransaction<T> = {
   _id: T
-  userId: string
+  userId: T
   type: TransactionType
   category: TransactionCategory
   amount: number

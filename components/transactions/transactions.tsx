@@ -167,8 +167,16 @@ export default function Transactions() {
 
       <Card ref={registerRef}>
         <CardContent>
-          <div className="flex flex-col gap-4 md:flex-row md:items-center">
-            <InputGroup className={`${searchTerm !== "" && "border-primary"}`}>
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 ${
+              hasActiveFilters
+                ? "lg:grid-cols-[1fr_auto_auto_auto_auto_auto]"
+                : "lg:grid-cols-[1fr_auto_auto_auto_auto]"
+            } gap-4`}
+          >
+            <InputGroup
+              className={`sm:col-span-2 lg:col-span-1 ${searchTerm !== "" && "border-primary"}`}
+            >
               <InputGroupAddon>
                 <Search />
               </InputGroupAddon>
@@ -191,7 +199,7 @@ export default function Transactions() {
             </InputGroup>
             <Select value={filterMonth} onValueChange={setFilterMonth}>
               <SelectTrigger
-                className={`w-full md:w-fit ${filterMonth !== "all" && "border-primary"}`}
+                className={`w-full lg:w-fit ${filterMonth !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder="Tháng" />
               </SelectTrigger>
@@ -209,7 +217,7 @@ export default function Transactions() {
             </Select>
             <Select value={filterYear} onValueChange={setFilterYear}>
               <SelectTrigger
-                className={`w-full md:w-fit ${filterYear !== "all" && "border-primary"}`}
+                className={`w-full lg:w-fit ${filterYear !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder="Năm" />
               </SelectTrigger>
@@ -232,7 +240,7 @@ export default function Transactions() {
               }
             >
               <SelectTrigger
-                className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
+                className={`w-full lg:w-fit ${filterType !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder="Loại giao dịch" />
               </SelectTrigger>
@@ -247,7 +255,7 @@ export default function Transactions() {
             </Select>
             <Select value={filterCategory} onValueChange={setFilterCategory}>
               <SelectTrigger
-                className={`w-full md:w-fit ${filterCategory !== "all" && "border-primary"}`}
+                className={`w-full lg:w-fit ${filterCategory !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder="Danh mục" />
               </SelectTrigger>
@@ -276,7 +284,7 @@ export default function Transactions() {
                 variant="outline"
                 size="default"
                 onClick={handleResetFilters}
-                className="w-full md:w-fit"
+                className="sm:col-span-2 lg:col-span-1 lg:w-fit"
               >
                 Đặt lại
               </Button>
@@ -320,7 +328,7 @@ export default function Transactions() {
             </Empty>
           ) : (
             <div
-              className="overflow-auto [&>div]:overflow-x-visible!"
+              className="overflow-auto [&>div]:overflow-x-visible! border rounded-md"
               style={{
                 maxHeight: isMobile
                   ? "300px"
@@ -328,8 +336,8 @@ export default function Transactions() {
               }}
             >
               <Table>
-                <TableHeader>
-                  <TableRow className="[&_th]:bg-card [&_th]:sticky [&_th]:top-0">
+                <TableHeader className="bg-muted sticky top-0">
+                  <TableRow>
                     <TableHead>Ngày</TableHead>
                     <TableHead className="text-center">Mô tả</TableHead>
                     <TableHead className="text-center">Loại</TableHead>

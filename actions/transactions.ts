@@ -26,7 +26,7 @@ export async function createTransaction(values: TransactionFormValues) {
     const transactionsCollection = await getTransactionCollection()
 
     const result = await transactionsCollection.insertOne({
-      userId,
+      userId: new ObjectId(userId),
       type: values.type,
       category: values.category,
       amount: values.amount,
@@ -67,7 +67,7 @@ export async function updateTransaction(
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
-      userId,
+      userId: new ObjectId(userId),
     })
 
     if (!existingTransaction) {
@@ -77,7 +77,7 @@ export async function updateTransaction(
     }
 
     await transactionsCollection.updateOne(
-      { _id: new ObjectId(transactionId), userId },
+      { _id: new ObjectId(transactionId), userId: new ObjectId(userId) },
       {
         $set: {
           type: values.type,
@@ -110,7 +110,7 @@ export async function deleteTransaction(transactionId: string) {
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
-      userId,
+      userId: new ObjectId(userId),
     })
 
     if (!existingTransaction) {
@@ -121,7 +121,7 @@ export async function deleteTransaction(transactionId: string) {
 
     await transactionsCollection.deleteOne({
       _id: new ObjectId(transactionId),
-      userId,
+      userId: new ObjectId(userId),
     })
 
     return { success: "Giao dịch đã được xóa." }
@@ -144,7 +144,7 @@ export async function getTransactions() {
     const transactionsCollection = await getTransactionCollection()
 
     const transactions = await transactionsCollection
-      .find({ userId })
+      .find({ userId: new ObjectId(userId) })
       .sort({ date: -1 })
       .toArray()
 

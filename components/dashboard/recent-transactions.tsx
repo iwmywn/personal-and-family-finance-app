@@ -1,5 +1,6 @@
 "use client"
 
+import { Fragment } from "react"
 import { Receipt } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -12,26 +13,41 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { Separator } from "@/components/ui/separator"
+import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface RecentTransactionsProps {
   transactions: Transaction[]
+  offsetHeight: number
 }
 
-export function RecentTransactions({ transactions }: RecentTransactionsProps) {
+export function RecentTransactions({
+  transactions,
+  offsetHeight,
+}: RecentTransactionsProps) {
+  const isMobile = useMediaQuery("(max-width: 767px)")
   const recentTransactions = transactions.slice(0, 10)
+  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
   return (
     <Card className="relative py-0 pb-6">
-      <CardHeader className="sticky top-0 bg-card pt-6">
+      <CardHeader ref={registerRef} className="sticky top-0 bg-card pt-6 ">
         <CardTitle>10 giao dịch gần đây</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+      <CardContent
+        className="h-full overflow-y-auto"
+        style={{
+          maxHeight: isMobile
+            ? "300px"
+            : `calc(100vh - 10rem - ${offsetHeight}px - ${calculatedHeight}px)`,
+        }}
+      >
+        <div className="space-y-4 h-full">
           {recentTransactions.length === 0 ? (
-            <Empty className="border border-dashed">
+            <Empty className="border border-dashed h-full">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <Receipt />
@@ -46,19 +62,11 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
             </Empty>
           ) : (
             recentTransactions.map((transaction, index) => (
-              <>
-                <div
-                  key={transaction._id}
-                  className="flex items-center justify-between"
-                >
+              <Fragment key={transaction._id}>
+                <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3 max-w-3/4">
                     <div className="flex flex-col gap-1">
                       <Badge
-                        variant={
-                          transaction.type === "income"
-                            ? "default"
-                            : "secondary"
-                        }
                         className={
                           transaction.type === "income"
                             ? "badge-income"
@@ -88,7 +96,7 @@ export function RecentTransactions({ transactions }: RecentTransactionsProps) {
                 </div>
 
                 {index !== recentTransactions.length - 1 && <Separator />}
-              </>
+              </Fragment>
             ))
           )}
         </div>

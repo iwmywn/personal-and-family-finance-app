@@ -8,15 +8,21 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
 import type { Transaction, TransactionCategory } from "@/lib/definitions"
 import { formatCurrency, isCurrentMonth } from "@/lib/utils"
 
 interface QuickStatsProps {
   transactions: Transaction[]
+  offsetHeight: number
 }
 
-export function QuickStats({ transactions }: QuickStatsProps) {
+export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
+  const isMobile = useMediaQuery("(max-width: 767px)")
+  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+
   const currentMonthTransactions = transactions.filter((t) =>
     isCurrentMonth(t.date)
   )
@@ -79,10 +85,17 @@ export function QuickStats({ transactions }: QuickStatsProps) {
 
   return (
     <Card className="relative py-0 pb-6">
-      <CardHeader className="sticky top-0 bg-card pt-6">
+      <CardHeader ref={registerRef} className="sticky top-0 bg-card pt-6">
         <CardTitle>Thống kê nhanh</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent
+        className="h-full overflow-y-auto"
+        style={{
+          maxHeight: isMobile
+            ? "fit-content"
+            : `calc(100vh - 10rem - ${offsetHeight}px - ${calculatedHeight}px)`,
+        }}
+      >
         <TooltipProvider>
           <div className="space-y-4">
             <Tooltip>
