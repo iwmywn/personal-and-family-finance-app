@@ -62,7 +62,7 @@ export function DeleteTransactionDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>Hủy</AlertDialogCancel>
+          <AlertDialogCancel>Hủy</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
             {isLoading && <Spinner />} Xóa
           </AlertDialogAction>

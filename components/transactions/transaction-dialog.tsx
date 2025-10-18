@@ -14,8 +14,10 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -383,20 +385,15 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
               )}
             />
 
-            <div className="flex justify-end gap-2 pt-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setOpen(false)}
-                disabled={isLoading}
-              >
-                Hủy
-              </Button>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Hủy</Button>
+              </DialogClose>
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Spinner />}{" "}
                 {transaction ? "Cập nhật" : "Thêm giao dịch"}
               </Button>
-            </div>
+            </DialogFooter>
           </form>
         </Form>
       </DialogContent>
