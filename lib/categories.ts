@@ -12,17 +12,17 @@ export const INCOME_CATEGORIES = [
 
 export const EXPENSE_CATEGORIES = [
   "food_beverage",
-  "housing",
   "transportation",
-  "healthcare_insurance",
-  "education_development",
-  "entertainment_leisure",
   "personal_care",
   "shopping",
   "family_support",
+  "housing",
+  "healthcare_insurance",
+  "education_development",
+  "entertainment_leisure",
   "social_gifts",
-  "debt_payment",
   "savings_investment",
+  "debt_payment",
   "other_expense",
 ] as const
 
@@ -75,31 +75,9 @@ const CATEGORY_CONFIG: CategoryConfigType = {
     description: "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,...",
     type: "expense",
   },
-  housing: {
-    label: "Nhà ở & Tiện ích",
-    description:
-      "Tiền thuê, điện, nước, gas, internet, điện thoại, phí quản lý,...",
-    type: "expense",
-  },
   transportation: {
     label: "Di chuyển",
     description: "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe,...",
-    type: "expense",
-  },
-  healthcare_insurance: {
-    label: "Y tế & Bảo hiểm",
-    description: "Khám chữa bệnh, thuốc men, bảo hiểm y tế/nhân thọ,...",
-    type: "expense",
-  },
-  education_development: {
-    label: "Giáo dục & Phát triển",
-    description:
-      "Học phí, sách vở, khóa học online/offline, chứng chỉ, hội thảo,...",
-    type: "expense",
-  },
-  entertainment_leisure: {
-    label: "Giải trí & Thư giãn",
-    description: "Du lịch, phim ảnh, âm nhạc, game, gym, sở thích,...",
     type: "expense",
   },
   personal_care: {
@@ -118,20 +96,42 @@ const CATEGORY_CONFIG: CategoryConfigType = {
     description: "Tiền gửi bố mẹ, hỗ trợ anh chị em, người thân,...",
     type: "expense",
   },
+  housing: {
+    label: "Nhà ở & Tiện ích",
+    description:
+      "Tiền thuê, điện, nước, gas, internet, điện thoại, phí quản lý,...",
+    type: "expense",
+  },
+  healthcare_insurance: {
+    label: "Y tế & Bảo hiểm",
+    description: "Khám chữa bệnh, thuốc men, bảo hiểm y tế/nhân thọ,...",
+    type: "expense",
+  },
+  education_development: {
+    label: "Giáo dục & Phát triển",
+    description:
+      "Học phí, sách vở, khóa học online/offline, chứng chỉ, hội thảo,...",
+    type: "expense",
+  },
+  entertainment_leisure: {
+    label: "Giải trí & Thư giãn",
+    description: "Du lịch, phim ảnh, âm nhạc, game, gym, sở thích,...",
+    type: "expense",
+  },
   social_gifts: {
     label: "Giao lưu & Quà tặng",
     description: "Đám cưới, ma chay, sinh nhật, quà tặng bạn bè, hội họp,...",
-    type: "expense",
-  },
-  debt_payment: {
-    label: "Trả nợ",
-    description: "Trả nợ vay ngân hàng, thẻ tín dụng, nợ cá nhân,...",
     type: "expense",
   },
   savings_investment: {
     label: "Tiết kiệm & Đầu tư",
     description:
       "Gửi tiết kiệm, mua chứng khoán, quỹ đầu tư, bất động sản, crypto, quỹ khẩn cấp,...",
+    type: "expense",
+  },
+  debt_payment: {
+    label: "Trả nợ",
+    description: "Trả nợ vay ngân hàng, thẻ tín dụng, nợ cá nhân,...",
     type: "expense",
   },
   other_expense: {
