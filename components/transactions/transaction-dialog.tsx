@@ -4,7 +4,7 @@ import { useState } from "react"
 import { transactionSchema, type TransactionFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
-import { CalendarIcon, Edit } from "lucide-react"
+import { CalendarIcon } from "lucide-react"
 import { vi } from "react-day-picker/locale"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -49,7 +49,6 @@ import {
 } from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import {
   getCategoriesByType,

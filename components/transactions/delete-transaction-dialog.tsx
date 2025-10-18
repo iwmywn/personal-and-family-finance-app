@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { deleteTransaction } from "@/actions/transactions"
@@ -16,7 +15,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { useTransactions } from "@/lib/swr"
 

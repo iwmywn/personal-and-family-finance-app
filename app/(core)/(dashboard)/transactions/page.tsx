@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 
-import Transactions from "@/components/transactions/transactions"
+import TransactionFilters from "@/components/transactions/transaction-filters"
 
 export function generateMetadata(): Metadata {
   return { title: "Giao dịch" }
 }
 
 export default function page() {
-  return <Transactions />
+  return <TransactionFilters />
 }
