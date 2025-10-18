@@ -67,7 +67,12 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
 
   const balance = monthlyIncome - monthlyExpense
   const savingsRate =
-    monthlyIncome > 0 ? ((balance / monthlyIncome) * 100).toFixed(1) : null
+    monthlyIncome > 0
+      ? Number(((balance / monthlyIncome) * 100).toFixed(1)).toLocaleString(
+          "fullwide",
+          { useGrouping: false }
+        )
+      : null
 
   // Danh mục phổ biến:
   const popularCategory: TransactionCategory | null =
@@ -121,7 +126,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
                   <span className="text-muted-foreground text-sm">
                     Giao dịch cao nhất:
                   </span>
-                  <span className="text-sm">
+                  <span className="max-w-1/4 text-sm wrap-anywhere">
                     {highestTransaction !== null
                       ? `${formatCurrency(highestTransaction.amount)} (${
                           highestTransaction.type === "income" ? "thu" : "chi"
@@ -144,7 +149,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
                   <span className="text-muted-foreground text-sm">
                     Giao dịch thấp nhất:
                   </span>
-                  <span className="text-sm">
+                  <span className="max-w-1/4 text-sm wrap-anywhere">
                     {lowestTransaction !== null
                       ? `${formatCurrency(lowestTransaction.amount)} (${
                           lowestTransaction.type === "income" ? "thu" : "chi"
@@ -167,7 +172,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
                   <span className="text-muted-foreground text-sm">
                     Chi TB/giao dịch:
                   </span>
-                  <span className="text-sm">
+                  <span className="max-w-1/4 text-sm wrap-anywhere">
                     {avgExpense !== null
                       ? formatCurrency(avgExpense)
                       : "Chưa có"}
@@ -189,7 +194,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
                     Tỷ lệ tiết kiệm:
                   </span>
                   <span
-                    className={`text-sm ${
+                    className={`max-w-1/4 text-sm wrap-anywhere ${
                       savingsRate !== null
                         ? parseFloat(savingsRate) > 0
                           ? "text-green-600"

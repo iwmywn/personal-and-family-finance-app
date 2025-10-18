@@ -33,7 +33,7 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
           <ArrowUpIcon className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl text-green-600">
+          <div className="text-2xl wrap-anywhere text-green-600">
             {formatCurrency(totalIncome)}
           </div>
           <p className="text-muted-foreground text-sm">
@@ -49,7 +49,7 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
           <ArrowDownIcon className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl text-red-600">
+          <div className="text-2xl wrap-anywhere text-red-600">
             {formatCurrency(totalExpense)}
           </div>
           <p className="text-muted-foreground text-sm">
@@ -71,7 +71,7 @@ export function TransactionSummary({ transactions }: TransactionSummaryProps) {
         </CardHeader>
         <CardContent>
           <div
-            className={`text-2xl ${
+            className={`text-2xl wrap-anywhere ${
               balance > 0 ? "text-green-600" : balance < 0 ? "text-red-600" : ""
             }`}
           >

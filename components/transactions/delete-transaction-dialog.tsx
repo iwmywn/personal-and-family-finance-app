@@ -58,7 +58,7 @@ export function DeleteTransactionDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Xóa giao dịch</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogDescription className="wrap-anywhere">
             Bạn có chắc chắn muốn xóa giao dịch &quot;{transactionDescription}
             &quot;? Hành động này không thể hoàn tác.
           </AlertDialogDescription>

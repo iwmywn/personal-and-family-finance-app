@@ -434,7 +434,7 @@ export default function Transactions() {
                         </TableCell>
                       )}
                       {showAmountCol && (
-                        <TableCell>
+                        <TableCell className="max-w-72 min-w-48 wrap-anywhere whitespace-normal">
                           <span
                             className={`font-semibold ${
                               transaction.type === "income"

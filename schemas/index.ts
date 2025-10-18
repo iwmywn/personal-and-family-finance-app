@@ -66,16 +66,21 @@ export const transactionSchema = z.object({
   category: z.enum(ALL_CATEGORIES, {
     message: "Vui lòng chọn danh mục.",
   }),
-  amount: z.number().min(0.01, {
-    message: "Số tiền phải lớn hơn 0.",
-  }),
+  amount: z
+    .number()
+    .min(0.01, {
+      message: "Số tiền phải lớn hơn 0.",
+    })
+    .max(100000000000, {
+      message: "Số tiền tối đa là 100 tỉ.",
+    }),
   description: z
     .string()
     .min(1, {
       message: "Mô tả là bắt buộc.",
     })
     .max(200, {
-      message: "Mô tả phải ít hơn 200 ký tự.",
+      message: "Mô tả tối đa là 200 ký tự.",
     }),
   date: z.date({
     message: "Vui lòng chọn ngày.",

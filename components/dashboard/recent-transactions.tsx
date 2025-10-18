@@ -75,15 +75,17 @@ export function RecentTransactions({
                       >
                         {getCategoryLabel(transaction.category)}
                       </Badge>
-                      <p className="text-sm">{transaction.description}</p>
+                      <p className="text-sm wrap-anywhere">
+                        {transaction.description}
+                      </p>
                       <span className="text-muted-foreground text-xs">
                         {formatDate(transaction.date)}
                       </span>
                     </div>
                   </div>
-                  <div className="text-right">
+                  <div className="max-w-1/4 text-right">
                     <p
-                      className={`text-sm ${
+                      className={`text-sm wrap-anywhere ${
                         transaction.type === "income"
                           ? "text-green-600"
                           : "text-red-600"

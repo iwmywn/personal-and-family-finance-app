@@ -30,6 +30,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -314,11 +320,18 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                 <FormItem>
                   <FormLabel>Mô tả</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Nhập mô tả cho giao dịch..."
-                      className="resize-none"
-                      {...field}
-                    />
+                    <InputGroup>
+                      <InputGroupTextarea
+                        placeholder="Nhập mô tả cho giao dịch..."
+                        maxLength={200}
+                        {...field}
+                      />
+                      <InputGroupAddon align="block-end">
+                        <InputGroupText className="text-muted-foreground text-xs">
+                          {field.value?.length || 0}/200
+                        </InputGroupText>
+                      </InputGroupAddon>
+                    </InputGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
