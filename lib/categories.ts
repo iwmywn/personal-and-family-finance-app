@@ -17,8 +17,8 @@ export const EXPENSE_CATEGORIES = [
   "healthcare_insurance",
   "education_development",
   "entertainment_leisure",
-  "personal_care_shopping",
-  "shopping_household",
+  "personal_care",
+  "shopping",
   "family_support",
   "social_gifts",
   "debt_payment",
@@ -102,16 +102,15 @@ const CATEGORY_CONFIG: CategoryConfigType = {
     description: "Du lịch, phim ảnh, âm nhạc, game, gym, sở thích,...",
     type: "expense",
   },
-  personal_care_shopping: {
-    label: "Chăm sóc & Mua sắm",
-    description:
-      "Quần áo, giày dép, mỹ phẩm, phụ kiện, đồ điện tử, cắt tóc, làm móng, spa, massage,...",
+  personal_care: {
+    label: "Chăm sóc",
+    description: "Cắt tóc, làm móng, spa, massage, nhuộm tóc, chăm sóc da,...",
     type: "expense",
   },
-  shopping_household: {
-    label: "Đồ gia dụng",
+  shopping: {
+    label: "Mua sắm",
     description:
-      "Nồi niêu, bát đĩa, chăn màn, tủ lạnh, tivi, dụng cụ vệ sinh,...",
+      "Quần áo, giày dép, mỹ phẩm, phụ kiện, đồ điện tử, đồ gia dụng,...",
     type: "expense",
   },
   family_support: {
