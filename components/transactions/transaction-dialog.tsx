@@ -79,13 +79,13 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
   const [open, setOpen] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [transactionType, setTransactionType] = useState<"income" | "expense">(
-    transaction?.type || "expense"
+    "income"
   )
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      type: transaction?.type || "expense",
+      type: transaction?.type || "income",
       amount: transaction?.amount || 0,
       description: transaction?.description || "",
       category: transaction?.category || undefined,
@@ -182,65 +182,21 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger
                   disabled={
-                    transaction && transaction.type === "income" && true
-                  }
-                  value="expense"
-                >
-                  Chi tiêu
-                </TabsTrigger>
-                <TabsTrigger
-                  disabled={
                     transaction && transaction.type === "expense" && true
                   }
                   value="income"
                 >
                   Thu nhập
                 </TabsTrigger>
+                <TabsTrigger
+                  disabled={
+                    transaction && transaction.type === "income" && true
+                  }
+                  value="expense"
+                >
+                  Chi tiêu
+                </TabsTrigger>
               </TabsList>
-
-              <TabsContent value="expense" className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Danh mục chi tiêu</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Chọn danh mục chi tiêu">
-                              {field.value
-                                ? getCategoryLabel(field.value)
-                                : null}
-                            </SelectValue>
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent
-                          align="start"
-                          style={{
-                            maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
-                          }}
-                        >
-                          {expenseCategories.map((c) => (
-                            <SelectItem key={c.category} value={c.category}>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{c.label}</span>
-                                <span className="text-muted-foreground">
-                                  {c.description}
-                                </span>
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </TabsContent>
 
               <TabsContent value="income" className="space-y-4">
                 <FormField
@@ -269,6 +225,50 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                           }}
                         >
                           {incomeCategories.map((c) => (
+                            <SelectItem key={c.category} value={c.category}>
+                              <div className="flex flex-col">
+                                <span className="font-medium">{c.label}</span>
+                                <span className="text-muted-foreground">
+                                  {c.description}
+                                </span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </TabsContent>
+
+              <TabsContent value="expense" className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Danh mục chi tiêu</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Chọn danh mục chi tiêu">
+                              {field.value
+                                ? getCategoryLabel(field.value)
+                                : null}
+                            </SelectValue>
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent
+                          align="start"
+                          style={{
+                            maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
+                          }}
+                        >
+                          {expenseCategories.map((c) => (
                             <SelectItem key={c.category} value={c.category}>
                               <div className="flex flex-col">
                                 <span className="font-medium">{c.label}</span>

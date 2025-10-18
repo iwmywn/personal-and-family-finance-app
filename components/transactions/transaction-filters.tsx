@@ -231,6 +231,12 @@ export default function TransactionFilters() {
                 <SelectGroup>
                   <SelectItem value="all">Tất cả danh mục</SelectItem>
                   <SelectSeparator />
+                  <SelectLabel>Thu nhập</SelectLabel>
+                  {INCOME_CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {getCategoryLabel(category)}
+                    </SelectItem>
+                  ))}
                   <SelectLabel>Chi tiêu</SelectLabel>
                   {EXPENSE_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
@@ -238,12 +244,6 @@ export default function TransactionFilters() {
                     </SelectItem>
                   ))}
                   <SelectSeparator />
-                  <SelectLabel>Thu nhập</SelectLabel>
-                  {INCOME_CATEGORIES.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category)}
-                    </SelectItem>
-                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
