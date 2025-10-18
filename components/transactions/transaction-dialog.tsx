@@ -83,6 +83,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
   const [transactionType, setTransactionType] = useState<"income" | "expense">(
     "income"
   )
+  const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
@@ -345,7 +346,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Ngày giao dịch</FormLabel>
-                  <Popover>
+                  <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -367,12 +368,18 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"
+                      onInteractOutside={(e) => {
+                        e.preventDefault()
+                      }}
                     >
                       <Calendar
                         locale={vi}
                         mode="single"
                         selected={field.value}
-                        onSelect={field.onChange}
+                        onSelect={(date) => {
+                          field.onChange(date)
+                          setCalendarOpen(false)
+                        }}
                         disabled={(date) =>
                           date > new Date() || date < new Date("1900-01-01")
                         }
