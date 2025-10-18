@@ -28,7 +28,7 @@ export function RecentTransactions({
   transactions,
   offsetHeight,
 }: RecentTransactionsProps) {
-  const isMobile = useMediaQuery("(max-width: 767px)")
+  const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const recentTransactions = transactions.slice(0, 10)
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
@@ -40,7 +40,7 @@ export function RecentTransactions({
       <CardContent
         className="h-full overflow-y-auto"
         style={{
-          maxHeight: isMobile
+          maxHeight: isMediumScreens
             ? "300px"
             : `calc(100vh - 10rem - ${offsetHeight}px - ${calculatedHeight}px)`,
         }}

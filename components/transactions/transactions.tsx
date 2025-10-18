@@ -75,7 +75,7 @@ import { formatCurrency, formatDate } from "@/lib/utils"
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 export default function Transactions() {
-  const isMobile = useMediaQuery("(max-width: 767px)")
+  const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
   const [searchTerm, setSearchTerm] = useState<string>("")
@@ -355,7 +355,7 @@ export default function Transactions() {
             <Empty
               className="border border-dashed"
               style={{
-                minHeight: isMobile
+                minHeight: isLargeScreens
                   ? "300px"
                   : `calc(100vh - ${calculatedHeight}px - 11.5rem)`,
               }}
@@ -376,7 +376,7 @@ export default function Transactions() {
             <div
               className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
               style={{
-                maxHeight: isMobile
+                maxHeight: isLargeScreens
                   ? "300px"
                   : `calc(100vh - ${calculatedHeight}px - 11.5rem)`,
               }}

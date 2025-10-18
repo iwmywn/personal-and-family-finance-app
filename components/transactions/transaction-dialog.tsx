@@ -172,7 +172,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
           </DialogTitle>
           <DialogDescription>
             {transaction
-              ? "Cập nhật thông tin giao dịch"
+              ? "Cập nhật thông tin giao dịch."
               : "Thêm thu nhập hoặc chi tiêu của bạn để theo dõi tài chính cá nhân."}
           </DialogDescription>
         </DialogHeader>

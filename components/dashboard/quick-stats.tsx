@@ -20,7 +20,7 @@ interface QuickStatsProps {
 }
 
 export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
-  const isMobile = useMediaQuery("(max-width: 767px)")
+  const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
   const currentMonthTransactions = transactions.filter((t) =>
@@ -96,7 +96,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
       <CardContent
         className="h-full overflow-y-auto"
         style={{
-          maxHeight: isMobile
+          maxHeight: isMediumScreens
             ? "fit-content"
             : `calc(100vh - 10rem - ${offsetHeight}px - ${calculatedHeight}px)`,
         }}

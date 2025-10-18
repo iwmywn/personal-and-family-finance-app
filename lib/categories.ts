@@ -4,17 +4,26 @@ export const TRANSACTION_TYPES = ["income", "expense"] as const
 
 export const INCOME_CATEGORIES = [
   "salary_bonus",
-  "business_sales",
-  "investment",
+  "business_freelance",
+  "investment_passive",
+  "gift_support",
   "other_income",
 ] as const
 
 export const EXPENSE_CATEGORIES = [
-  "essential",
+  "food_beverage",
+  "housing",
+  "transportation",
+  "healthcare_insurance",
   "education_development",
-  "entertainment_shopping",
-  "family_social",
-  "personal_finance",
+  "entertainment_leisure",
+  "personal_care",
+  "shopping_personal",
+  "shopping_household",
+  "family_support",
+  "social_gifts",
+  "debt_payment",
+  "savings_investment",
   "other_expense",
 ] as const
 
@@ -32,60 +41,106 @@ type CategoryConfigType = {
 }
 
 const CATEGORY_CONFIG: CategoryConfigType = {
-  // Income categories
+  // Incomes
   salary_bonus: {
     label: "Lương & Thưởng",
-    description: "Lương chính, thưởng hiệu suất, thưởng lễ tết",
-    type: "income",
-  },
-  business_sales: {
-    label: "Kinh doanh / Bán hàng",
-    description: "Doanh thu bán hàng, dịch vụ, freelance",
-    type: "income",
-  },
-  investment: {
-    label: "Đầu tư",
     description:
-      "Lãi tiết kiệm ngân hàng, cổ tức, chứng khoán, bất động sản cho thuê",
+      "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp",
+    type: "income",
+  },
+  business_freelance: {
+    label: "Kinh doanh & Freelance",
+    description: "Doanh thu bán hàng, dịch vụ, freelance, hợp đồng ngắn hạn",
+    type: "income",
+  },
+  investment_passive: {
+    label: "Đầu tư & Thu nhập thụ động",
+    description: "Lãi tiết kiệm, cổ tức, lãi trái phiếu, cho thuê, bản quyền",
+    type: "income",
+  },
+  gift_support: {
+    label: "Quà tặng & Hỗ trợ",
+    description: "Quà tặng tiền mặt, hỗ trợ từ gia đình, tiền mừng",
     type: "income",
   },
   other_income: {
     label: "Thu nhập khác",
-    description:
-      "Quà tặng, hỗ trợ gia đình, tiền hoàn trả, bán đồ cũ, giải thưởng",
+    description: "Tiền hoàn trả, bán đồ cũ, giải thưởng, các khoản bất ngờ",
     type: "income",
   },
-  // Expense categories
-  essential: {
-    label: "Nhu cầu thiết yếu",
+  // Expenses
+  food_beverage: {
+    label: "Ăn uống",
+    description: "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối",
+    type: "expense",
+  },
+  housing: {
+    label: "Nhà ở & Tiện ích",
     description:
-      "Ăn uống, nhà ở (thuê nhà, điện nước), đi lại (xăng, xe bus), y tế & bảo hiểm",
+      "Tiền thuê, điện, nước, gas, internet, điện thoại, phí quản lý",
+    type: "expense",
+  },
+  transportation: {
+    label: "Di chuyển",
+    description: "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe",
+    type: "expense",
+  },
+  healthcare_insurance: {
+    label: "Y tế & Bảo hiểm",
+    description: "Khám chữa bệnh, thuốc men, bảo hiểm y tế/nhân thọ",
     type: "expense",
   },
   education_development: {
     label: "Giáo dục & Phát triển",
-    description: "Học phí, sách vở, khóa học, kỹ năng",
-    type: "expense",
-  },
-  entertainment_shopping: {
-    label: "Giải trí & Mua sắm",
-    description: "Mua sắm cá nhân, du lịch, phim nhạc, game, hội họp bạn bè",
-    type: "expense",
-  },
-  family_social: {
-    label: "Gia đình & Xã hội",
     description:
-      "Tiền gửi gia đình, hỗ trợ người thân, quà tặng, đám cưới, ma chay",
+      "Học phí, sách vở, khóa học online/offline, chứng chỉ, hội thảo",
     type: "expense",
   },
-  personal_finance: {
-    label: "Tài chính cá nhân",
-    description: "Trả nợ (vay, thẻ tín dụng), đầu tư lại, dự phòng khẩn cấp",
+  entertainment_leisure: {
+    label: "Giải trí & Thư giãn",
+    description: "Du lịch, phim ảnh, âm nhạc, game, gym, sở thích",
+    type: "expense",
+  },
+  personal_care: {
+    label: "Chăm sóc cá nhân",
+    description: "Cắt tóc, làm móng, spa, massage, nhuộm tóc,...",
+    type: "expense",
+  },
+  shopping_personal: {
+    label: "Mua sắm cá nhân",
+    description: "Quần áo, giày dép, mỹ phẩm, phụ kiện",
+    type: "expense",
+  },
+  shopping_household: {
+    label: "Đồ gia dụng",
+    description: "Nồi niêu, bát đĩa, chăn màn, tủ lạnh, tivi, dụng cụ vệ sinh",
+    type: "expense",
+  },
+  family_support: {
+    label: "Hỗ trợ gia đình",
+    description: "Tiền gửi bố mẹ, hỗ trợ anh chị em, người thân",
+    type: "expense",
+  },
+  social_gifts: {
+    label: "Giao lưu & Quà tặng",
+    description: "Đám cưới, ma chay, sinh nhật, quà tặng bạn bè, hội họp",
+    type: "expense",
+  },
+  debt_payment: {
+    label: "Trả nợ",
+    description: "Trả nợ vay ngân hàng, thẻ tín dụng, nợ cá nhân",
+    type: "expense",
+  },
+  savings_investment: {
+    label: "Tiết kiệm & Đầu tư",
+    description:
+      "Gửi tiết kiệm, mua chứng khoán, quỹ đầu tư, bất động sản, crypto, quỹ khẩn cấp",
     type: "expense",
   },
   other_expense: {
     label: "Chi phí khác",
-    description: "Các khoản bất ngờ (mất đồ, sửa chữa, phạt)",
+    description:
+      "Sửa chữa đột xuất, phạt nguội, mất mát, chi phí không xác định",
     type: "expense",
   },
 } as const
