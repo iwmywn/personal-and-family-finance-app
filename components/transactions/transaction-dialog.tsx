@@ -224,7 +224,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                               <SelectItem key={c.category} value={c.category}>
                                 <div className="flex flex-col">
                                   <span className="font-medium">{c.label}</span>
-                                  <span className="text-muted-foreground">
+                                  <span className="text-muted-foreground wrap-anywhere">
                                     {c.description}
                                   </span>
                                 </div>
@@ -247,7 +247,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                                           <span className="font-medium">
                                             {c.label}
                                           </span>
-                                          <span className="text-muted-foreground">
+                                          <span className="text-muted-foreground wrap-anywhere">
                                             {c.description}
                                           </span>
                                         </div>
@@ -307,7 +307,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                               <SelectItem key={c.category} value={c.category}>
                                 <div className="flex flex-col">
                                   <span className="font-medium">{c.label}</span>
-                                  <span className="text-muted-foreground">
+                                  <span className="text-muted-foreground wrap-anywhere">
                                     {c.description}
                                   </span>
                                 </div>
@@ -330,7 +330,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                                           <span className="font-medium">
                                             {c.label}
                                           </span>
-                                          <span className="text-muted-foreground">
+                                          <span className="text-muted-foreground wrap-anywhere">
                                             {c.description}
                                           </span>
                                         </div>

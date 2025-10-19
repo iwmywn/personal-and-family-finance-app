@@ -162,7 +162,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     if (transactionCount > 0) {
       return {
-        error: `Không thể xóa danh mục này. Có ${transactionCount} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.`,
+        error: `Không thể xóa danh mục. Có ${transactionCount} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.`,
       }
     }
 
