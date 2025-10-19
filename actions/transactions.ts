@@ -38,7 +38,7 @@ export async function createTransaction(values: TransactionFormValues) {
     if (!result.acknowledged)
       return { error: "Tạo giao dịch thất bại! Thử lại sau." }
 
-    return { success: "Giao dịch đã được lưu.", error: undefined }
+    return { success: "Giao dịch đã được tạo.", error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
     return { error: "Tạo giao dịch thất bại. Vui lòng thử lại sau." }
@@ -90,7 +90,7 @@ export async function updateTransaction(
       }
     )
 
-    return { success: "Giao dịch đã được lưu.", error: undefined }
+    return { success: "Giao dịch đã được cập nhật.", error: undefined }
   } catch (error) {
     console.error("Error updating transaction:", error)
     return { error: "Cập nhật giao dịch thất bại! Vui lòng thử lại sau." }
