@@ -8,7 +8,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -118,22 +117,15 @@ export function CategoriesTable({
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                          <DropdownMenuItem
-                            className="cursor-pointer p-0"
-                            onSelect={(e) => e.preventDefault()}
-                          >
+                          <div className="dropdown-menu-item">
                             <CategoryDialog category={category} />
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            className="cursor-pointer p-0"
-                            variant="destructive"
-                            onSelect={(e) => e.preventDefault()}
-                          >
+                          </div>
+                          <div className="dropdown-menu-item text-destructive hover:bg-destructive/10">
                             <DeleteCategoryDialog
                               categoryId={category._id}
                               categoryLabel={category.label}
                             />
-                          </DropdownMenuItem>
+                          </div>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

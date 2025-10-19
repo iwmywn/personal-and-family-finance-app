@@ -436,9 +436,6 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"
-                      onInteractOutside={(e) => {
-                        e.preventDefault()
-                      }}
                     >
                       <Calendar
                         locale={vi}

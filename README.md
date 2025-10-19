@@ -1,3 +1,4 @@
 my personal financial management app
 
-- [] remove savings_investment
+- [] viết lại giao diện khi trả về undefined data
+

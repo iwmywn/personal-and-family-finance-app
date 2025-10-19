@@ -18,7 +18,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -231,22 +230,15 @@ export function TransactionsTable({
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                          <DropdownMenuItem
-                            className="cursor-pointer p-0"
-                            onSelect={(e) => e.preventDefault()}
-                          >
+                          <div className="dropdown-menu-item">
                             <TransactionDialog transaction={transaction} />
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            className="cursor-pointer p-0"
-                            variant="destructive"
-                            onSelect={(e) => e.preventDefault()}
-                          >
+                          </div>
+                          <div className="dropdown-menu-item text-destructive hover:bg-destructive/10">
                             <DeleteTransactionDialog
                               transactionId={transaction._id}
                               transactionDescription={transaction.description}
                             />
-                          </DropdownMenuItem>
+                          </div>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
