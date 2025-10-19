@@ -54,7 +54,7 @@ import {
 } from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FormLink } from "@/components/form-link"
+import { FormLink } from "@/components/custom/form-link"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { getCategoriesWithDetails, getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"

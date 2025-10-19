@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { ReCaptchaDialog } from "@/components/auth/recaptcha-dialog"
-import { PasswordInput } from "@/components/custom-ui/password-input"
-import { FormButton } from "@/components/form-button"
+import { FormButton } from "@/components/custom/form-button"
+import { PasswordInput } from "@/components/custom/password-input"
 
 export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)

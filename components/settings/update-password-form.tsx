@@ -14,8 +14,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { PasswordInput } from "@/components/custom-ui/password-input"
-import { FormButton } from "@/components/form-button"
+import { FormButton } from "@/components/custom/form-button"
+import { PasswordInput } from "@/components/custom/password-input"
 
 export function UpdatePasswordForm() {
   const form = useForm<PasswordFormValues>({
