@@ -70,6 +70,7 @@ export const RelativeTime = ({
   dateFormatOptions,
   timeFormatOptions,
   className,
+  children,
   ...props
 }: RelativeTimeProps) => {
   const [time, setTime] = useControllableState<Date>({
@@ -98,7 +99,9 @@ export const RelativeTime = ({
         timeFormatOptions,
       }}
     >
-      <div className={cn("grid gap-2", className)} {...props} />
+      <div className={cn("grid gap-2", className)} {...props}>
+        {children}
+      </div>
     </RelativeTimeContext.Provider>
   )
 }
@@ -120,6 +123,7 @@ const RelativeTimeZoneContext = createContext<RelativeTimeZoneContextType>({
 export const RelativeTimeZone = ({
   zone,
   className,
+  children,
   ...props
 }: RelativeTimeZoneProps) => (
   <RelativeTimeZoneContext.Provider value={{ zone }}>
@@ -129,7 +133,9 @@ export const RelativeTimeZone = ({
         className
       )}
       {...props}
-    />
+    >
+      {children}
+    </div>
   </RelativeTimeZoneContext.Provider>
 )
 
