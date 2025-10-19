@@ -129,7 +129,10 @@ export default function TransactionFilters() {
 
   return (
     <div className="space-y-4">
-      <div ref={registerRef} className="flex items-center justify-between">
+      <div
+        ref={registerRef}
+        className="flex items-center justify-between gap-2"
+      >
         <div>
           <div className="text-xl font-semibold">Giao dịch</div>
           <div className="text-muted-foreground text-sm">
