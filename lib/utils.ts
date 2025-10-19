@@ -15,7 +15,7 @@ export function formatCurrency(amount: number) {
 }
 
 export function formatDate(date: string | Date) {
-  return format(new Date(date), "dd MMM yyyy", { locale: vi })
+  return format(new Date(date), "EEEEE, dd/MM/yyyy", { locale: vi })
 }
 
 export function isCurrentMonth(inputDate: Date) {

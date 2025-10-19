@@ -14,6 +14,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import {
+  RelativeTime,
+  RelativeTimeZone,
+  RelativeTimeZoneDate,
+  RelativeTimeZoneDisplay,
+  RelativeTimeZoneLabel,
+} from "@/components/kibo-ui/relative-time"
 import { nav } from "@/components/layout/app-sidebar"
 
 const other = [
@@ -71,6 +78,27 @@ export function Header() {
         </Breadcrumb>
       </div>
       <div className="flex items-center gap-2">
+        <RelativeTime
+          defaultTime={new Date()}
+          dateFormatOptions={{
+            weekday: "short",
+            day: "numeric",
+            month: "numeric",
+            year: "numeric",
+          }}
+          timeFormatOptions={{
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          }}
+        >
+          <RelativeTimeZone zone="Asia/Ho_Chi_Minh">
+            <RelativeTimeZoneLabel>VN</RelativeTimeZoneLabel>
+            <RelativeTimeZoneDate />
+            <RelativeTimeZoneDisplay className="pl-0" />
+          </RelativeTimeZone>
+        </RelativeTime>
         <ColorDialog />
       </div>
     </header>
