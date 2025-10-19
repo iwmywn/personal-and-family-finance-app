@@ -36,14 +36,8 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { CustomCategory } from "@/lib/definitions"
 import { useCustomCategories } from "@/lib/swr"
 
@@ -55,7 +49,9 @@ export function CategoryDialog({ category }: CategoryDialogProps) {
   const [open, setOpen] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { categories: customCategories, mutate } = useCustomCategories()
-
+  const [categoryType, setCategoryType] = useState<"income" | "expense">(
+    category?.type || "income"
+  )
   const form = useForm<CustomCategoryFormValues>({
     resolver: zodResolver(customCategorySchema),
     defaultValues: {
@@ -93,13 +89,13 @@ export function CategoryDialog({ category }: CategoryDialogProps) {
       } else {
         mutate({
           categories: [
-            ...customCategories!,
             {
               _id: `temp-id`,
               userId: "temp-user",
               categoryId: `custom_${values.type}_temp`,
               ...values,
             },
+            ...customCategories!,
           ],
         })
         toast.success(success)
@@ -108,11 +104,18 @@ export function CategoryDialog({ category }: CategoryDialogProps) {
           label: "",
           description: "",
         })
+        setCategoryType("income")
         setOpen(false)
       }
     }
 
     setIsLoading(false)
+  }
+
+  const handleTypeChange = (type: string) => {
+    const categoryType = type as "income" | "expense"
+    setCategoryType(categoryType)
+    form.setValue("type", categoryType)
   }
 
   return (
@@ -138,31 +141,22 @@ export function CategoryDialog({ category }: CategoryDialogProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Loại danh mục</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    disabled={!!category}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Chọn loại danh mục" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="income">Thu nhập</SelectItem>
-                      <SelectItem value="expense">Chi tiêu</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <Tabs value={categoryType} onValueChange={handleTypeChange}>
+              <TabsList className="w-full">
+                <TabsTrigger
+                  disabled={category && category.type === "expense" && true}
+                  value="income"
+                >
+                  Thu nhập
+                </TabsTrigger>
+                <TabsTrigger
+                  disabled={category && category.type === "income" && true}
+                  value="expense"
+                >
+                  Chi tiêu
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
 
             <FormField
               control={form.control}

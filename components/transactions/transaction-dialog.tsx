@@ -117,12 +117,12 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
       } else {
         mutate({
           transactions: [
-            ...transactions!,
             {
               _id: `temp-id`,
               userId: "temp-user",
               ...values,
             },
+            ...transactions!,
           ],
         })
         toast.success(success)
@@ -133,6 +133,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
           category: "",
           date: new Date(),
         })
+        setTransactionType("income")
         setOpen(false)
       }
     }
@@ -171,7 +172,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={transactionType} onValueChange={handleTypeChange}>
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="w-full">
                 <TabsTrigger
                   disabled={
                     transaction && transaction.type === "expense" && true
