@@ -3,8 +3,9 @@
 import useSWRImmutable from "swr/immutable"
 
 import { getUser } from "@/actions/auth"
+import { getCustomCategories } from "@/actions/categories"
 import { getTransactions } from "@/actions/transactions"
-import type { Transaction, User } from "@/lib/definitions"
+import type { CustomCategory, Transaction, User } from "@/lib/definitions"
 
 export function useUser() {
   const { data, isLoading, mutate } = useSWRImmutable<
@@ -47,6 +48,27 @@ export function useTransactions() {
     transactions,
     transactionsError,
     isTransactionsLoading,
+    mutate,
+  }
+}
+
+export function useCustomCategories() {
+  const { data, isLoading, mutate } = useSWRImmutable<
+    | { error: string; categories?: undefined }
+    | {
+        categories: CustomCategory[]
+        error?: undefined
+      }
+  >("custom-categories", getCustomCategories)
+
+  const categories = data?.categories
+  const categoriesError = data?.error
+  const isCategoriesLoading = isLoading
+
+  return {
+    categories,
+    categoriesError,
+    isCategoriesLoading,
     mutate,
   }
 }

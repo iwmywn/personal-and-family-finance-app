@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { ChartColumnIncreasing, Home, Wallet } from "lucide-react"
+import { ChartColumnIncreasing, FolderOpen, Home, Wallet } from "lucide-react"
 
 import {
   Sidebar,
@@ -28,6 +28,11 @@ export const nav = [
     title: "Giao dịch",
     url: "/transactions",
     icon: Wallet,
+  },
+  {
+    title: "Danh mục",
+    url: "/categories",
+    icon: FolderOpen,
   },
 ]
 

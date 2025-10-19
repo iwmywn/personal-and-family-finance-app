@@ -59,13 +59,42 @@ const passwordSchema = z
     }
   })
 
+export const customCategorySchema = z.object({
+  categoryId: z.string().optional(),
+  type: z.enum(TRANSACTION_TYPES, {
+    message: "Vui lòng chọn loại danh mục.",
+  }),
+  label: z
+    .string()
+    .min(1, {
+      message: "Tên danh mục là bắt buộc.",
+    })
+    .max(50, {
+      message: "Tên danh mục tối đa là 50 ký tự.",
+    }),
+  description: z
+    .string()
+    .min(1, {
+      message: "Mô tả là bắt buộc.",
+    })
+    .max(200, {
+      message: "Mô tả tối đa là 200 ký tự.",
+    }),
+})
+
 export const transactionSchema = z.object({
   type: z.enum(TRANSACTION_TYPES, {
     message: "Vui lòng chọn loại giao dịch.",
   }),
-  category: z.enum(ALL_CATEGORIES, {
-    message: "Vui lòng chọn danh mục.",
-  }),
+  category: z
+    .string()
+    .min(1, { message: "Vui lòng chọn danh mục." })
+    .refine(
+      (val) =>
+        (ALL_CATEGORIES as readonly string[]).includes(val) ||
+        val.startsWith("custom_"),
+      { message: "Vui lòng chọn danh mục." }
+    ),
   amount: z
     .number()
     .min(0.01, {
@@ -90,5 +119,6 @@ export const transactionSchema = z.object({
 export type SignInFormValues = z.infer<typeof signInSchema>
 export type PasswordFormValues = z.infer<typeof passwordSchema>
 export type TransactionFormValues = z.infer<typeof transactionSchema>
+export type CustomCategoryFormValues = z.infer<typeof customCategorySchema>
 
 export { signInSchema, passwordSchema }

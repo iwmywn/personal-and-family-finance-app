@@ -30,11 +30,13 @@ import {
   getCategoryLabel,
   INCOME_CATEGORIES,
 } from "@/lib/categories"
-import { useTransactions, useUser } from "@/lib/swr"
+import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 
 export default function TransactionFilters() {
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
+  const { categories: customCategories, isCategoriesLoading } =
+    useCustomCategories()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
@@ -44,7 +46,7 @@ export default function TransactionFilters() {
   const [filterCategory, setFilterCategory] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
-  if (isUserLoading || isTransactionsLoading) {
+  if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {
     return (
       <div className="center">
         <Spinner className="size-8" />
@@ -58,6 +60,10 @@ export default function TransactionFilters() {
 
   if (!transactions) {
     return <div className="center">Không thể tải giao dịch!</div>
+  }
+
+  if (!customCategories) {
+    return <div className="center">Không thể tải danh mục!</div>
   }
 
   const filteredTransactions = transactions.filter((transaction) => {
@@ -237,13 +243,32 @@ export default function TransactionFilters() {
                       {getCategoryLabel(category)}
                     </SelectItem>
                   ))}
+                  {customCategories
+                    ?.filter((c) => c.type === "income")
+                    .map((category) => (
+                      <SelectItem
+                        key={category._id}
+                        value={category.categoryId}
+                      >
+                        {category.label}
+                      </SelectItem>
+                    ))}
                   <SelectLabel>Chi tiêu</SelectLabel>
                   {EXPENSE_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
                     </SelectItem>
                   ))}
-                  <SelectSeparator />
+                  {customCategories
+                    ?.filter((c) => c.type === "expense")
+                    .map((category) => (
+                      <SelectItem
+                        key={category._id}
+                        value={category.categoryId}
+                      >
+                        {category.label}
+                      </SelectItem>
+                    ))}
                 </SelectGroup>
               </SelectContent>
             </Select>

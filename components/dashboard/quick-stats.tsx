@@ -12,6 +12,7 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
 import type { Transaction, TransactionCategory } from "@/lib/definitions"
+import { useCustomCategories } from "@/lib/swr"
 import { formatCurrency, isCurrentMonth } from "@/lib/utils"
 
 interface QuickStatsProps {
@@ -22,6 +23,7 @@ interface QuickStatsProps {
 export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const { categories: customCategories } = useCustomCategories()
 
   const currentMonthTransactions = transactions.filter((t) =>
     isCurrentMonth(t.date)
@@ -225,7 +227,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
                   </span>
                   <span className="text-sm">
                     {popularCategory
-                      ? getCategoryLabel(popularCategory)
+                      ? getCategoryLabel(popularCategory, customCategories)
                       : "Chưa có"}
                   </span>
                 </div>

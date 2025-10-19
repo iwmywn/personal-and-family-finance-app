@@ -1,7 +1,13 @@
 const authRoutes = ["/signin"]
 const signInRoute = "/signin"
 const DEFAULT_SIGNIN_REDIRECT = "/home"
-const protectedRoutes = ["/home", "/statistics", "/settings"]
+const protectedRoutes = [
+  "/home",
+  "/statistics",
+  "/transactions",
+  "/categories",
+  "/settings",
+]
 const ignoredRoutes = ["/images/"]
 
 export {

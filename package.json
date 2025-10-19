@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prepare": "husky",
     "format": "prettier --write .",
     "release": "iwmywn-release"
@@ -53,6 +54,7 @@
     "iron-session": "8.0.4",
     "lucide-react": "0.546.0",
     "mongodb": "6.20.0",
+    "nanoid": "5.1.6",
     "next": "15.5.6",
     "next-themes": "0.4.6",
     "react": "19.2.0",
@@ -84,6 +86,7 @@
     "eslint": "9",
     "eslint-config-next": "15.5.6",
     "eslint-plugin-react-hooks": "7.0.0",
+    "eslint-plugin-unused-imports": "4.2.0",
     "husky": "9.1.7",
     "lint-staged": "16.2.4",
     "only-allow": "1.2.1",

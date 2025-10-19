@@ -48,6 +48,7 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
+import { useCustomCategories } from "@/lib/swr"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface TransactionsTableProps {
@@ -68,6 +69,7 @@ export function TransactionsTable({
   const [showTypeCol, setShowTypeCol] = useState<Checked>(true)
   const [showCategoryCol, setShowCategoryCol] = useState<Checked>(true)
   const [showAmountCol, setShowAmountCol] = useState<Checked>(true)
+  const { categories: customCategories } = useCustomCategories()
 
   return (
     <Card>
@@ -186,11 +188,17 @@ export function TransactionsTable({
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Badge variant="outline">
-                                {getCategoryLabel(transaction.category)}
+                                {getCategoryLabel(
+                                  transaction.category,
+                                  customCategories
+                                )}
                               </Badge>
                             </TooltipTrigger>
                             <TooltipContent>
-                              {getCategoryDescription(transaction.category)}
+                              {getCategoryDescription(
+                                transaction.category,
+                                customCategories
+                              )}
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>

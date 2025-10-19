@@ -4,6 +4,7 @@ import { transactionSchema, type TransactionFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 
 import { getTransactionCollection } from "@/lib/collections"
+import { Transaction } from "@/lib/definitions"
 import { session } from "@/lib/session"
 import { normalizeToUTCDate } from "@/lib/utils"
 
@@ -153,7 +154,7 @@ export async function getTransactions() {
         ...transaction,
         _id: transaction._id.toString(),
         userId: transaction.userId.toString(),
-      })),
+      })) as Transaction[],
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)

@@ -17,7 +17,7 @@ export default function page() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl">Đăng nhập</CardTitle>
+        <CardTitle>Đăng nhập</CardTitle>
         <CardDescription>
           Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.
         </CardDescription>

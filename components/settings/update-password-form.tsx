@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { updatePassword } from "@/actions/settings"
+import { updatePassword } from "@/actions/settings/account"
 import {
   Form,
   FormControl,
@@ -17,7 +17,7 @@ import {
 import { PasswordInput } from "@/components/custom-ui/password-input"
 import { FormButton } from "@/components/form-button"
 
-export function AccountForm() {
+export function UpdatePasswordForm() {
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {

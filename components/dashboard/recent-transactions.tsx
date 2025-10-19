@@ -17,6 +17,7 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
+import { useCustomCategories } from "@/lib/swr"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface RecentTransactionsProps {
@@ -30,6 +31,7 @@ export function RecentTransactions({
 }: RecentTransactionsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const recentTransactions = transactions.slice(0, 10)
+  const { categories: customCategories } = useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
   return (
@@ -73,7 +75,10 @@ export function RecentTransactions({
                             : "badge-expense"
                         }
                       >
-                        {getCategoryLabel(transaction.category)}
+                        {getCategoryLabel(
+                          transaction.category,
+                          customCategories
+                        )}
                       </Badge>
                       <p className="text-sm wrap-anywhere">
                         {transaction.description}

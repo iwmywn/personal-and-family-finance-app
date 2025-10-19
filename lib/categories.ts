@@ -142,14 +142,44 @@ const CATEGORY_CONFIG: CategoryConfigType = {
   },
 } as const
 
-export function getCategoriesByType(type: TransactionType) {
-  return type === "income" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES
+export function getCategoriesWithDetails(type: TransactionType) {
+  return Object.entries(CATEGORY_CONFIG)
+    .filter(([_, config]) => config.type === type)
+    .map(([category, config]) => ({
+      label: config.label,
+      description: config.description,
+      category: category as TransactionCategory,
+    }))
 }
 
-export function getCategoryLabel(category: TransactionCategory) {
-  return CATEGORY_CONFIG[category].label
+export function getCategoryLabel(
+  category: TransactionCategory,
+  customCategories?: Array<{
+    categoryId: string
+    label: string
+    description: string
+  }>
+) {
+  if (category in CATEGORY_CONFIG) {
+    return CATEGORY_CONFIG[category as keyof typeof CATEGORY_CONFIG].label
+  }
+  return (
+    customCategories?.find((c) => c.categoryId === category)?.label || category
+  )
 }
 
-export function getCategoryDescription(category: TransactionCategory) {
-  return CATEGORY_CONFIG[category].description
+export function getCategoryDescription(
+  category: TransactionCategory,
+  customCategories?: Array<{
+    categoryId: string
+    label: string
+    description: string
+  }>
+) {
+  if (category in CATEGORY_CONFIG) {
+    return CATEGORY_CONFIG[category as keyof typeof CATEGORY_CONFIG].description
+  }
+  return (
+    customCategories?.find((c) => c.categoryId === category)?.description || ""
+  )
 }

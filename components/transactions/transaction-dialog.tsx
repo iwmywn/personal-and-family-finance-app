@@ -25,6 +25,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -45,37 +46,24 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { FormLink } from "@/components/form-link"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
-import {
-  getCategoriesByType,
-  getCategoryDescription,
-  getCategoryLabel,
-} from "@/lib/categories"
+import { getCategoriesWithDetails, getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
-import { useTransactions } from "@/lib/swr"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { cn } from "@/lib/utils"
 
 interface TransactionDialogProps {
   transaction?: Transaction
 }
-
-const incomeCategories = getCategoriesByType("income").map((category) => ({
-  label: getCategoryLabel(category),
-  description: getCategoryDescription(category),
-  category,
-}))
-
-const expenseCategories = getCategoriesByType("expense").map((category) => ({
-  label: getCategoryLabel(category),
-  description: getCategoryDescription(category),
-  category,
-}))
 
 export function TransactionDialog({ transaction }: TransactionDialogProps) {
   const [open, setOpen] = useState<boolean>(false)
@@ -91,12 +79,13 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
       type: transaction?.type || "income",
       amount: transaction?.amount || 0,
       description: transaction?.description || "",
-      category: transaction?.category || undefined,
+      category: transaction?.category || "",
       date: transaction?.date ? new Date(transaction.date) : new Date(),
     },
   })
 
   const { transactions, mutate } = useTransactions()
+  const { categories: customCategories } = useCustomCategories()
 
   async function onSubmit(values: TransactionFormValues) {
     setIsLoading(true)
@@ -141,7 +130,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
           type: transactionType,
           amount: 0,
           description: "",
-          category: undefined,
+          category: "",
           date: new Date(),
         })
         setOpen(false)
@@ -155,7 +144,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
     const transactionType = type as "income" | "expense"
     setTransactionType(transactionType)
     form.setValue("type", transactionType)
-    form.resetField("category", { defaultValue: undefined })
+    form.resetField("category", { defaultValue: "" })
   }
 
   return (
@@ -216,7 +205,10 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Chọn danh mục thu nhập">
                               {field.value
-                                ? getCategoryLabel(field.value)
+                                ? getCategoryLabel(
+                                    field.value,
+                                    customCategories
+                                  )
                                 : null}
                             </SelectValue>
                           </SelectTrigger>
@@ -227,18 +219,54 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                             maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                           }}
                         >
-                          {incomeCategories.map((c) => (
-                            <SelectItem key={c.category} value={c.category}>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{c.label}</span>
-                                <span className="text-muted-foreground">
-                                  {c.description}
-                                </span>
-                              </div>
-                            </SelectItem>
-                          ))}
+                          <SelectGroup>
+                            {getCategoriesWithDetails("income").map((c) => (
+                              <SelectItem key={c.category} value={c.category}>
+                                <div className="flex flex-col">
+                                  <span className="font-medium">{c.label}</span>
+                                  <span className="text-muted-foreground">
+                                    {c.description}
+                                  </span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                            {customCategories &&
+                              customCategories.filter(
+                                (c) => c.type === "income"
+                              ).length > 0 && (
+                                <>
+                                  <SelectLabel>Danh mục tùy chỉnh</SelectLabel>
+                                  {customCategories
+                                    .filter((c) => c.type === "income")
+                                    .map((c) => (
+                                      <SelectItem
+                                        key={c._id}
+                                        value={c.categoryId}
+                                      >
+                                        <div className="flex flex-col">
+                                          <span className="font-medium">
+                                            {c.label}
+                                          </span>
+                                          <span className="text-muted-foreground">
+                                            {c.description}
+                                          </span>
+                                        </div>
+                                      </SelectItem>
+                                    ))}
+                                </>
+                              )}
+                          </SelectGroup>
                         </SelectContent>
                       </Select>
+                      <FormDescription>
+                        Không tìm thấy danh mục phù hợp?{" "}
+                        <FormLink
+                          href="/categories"
+                          className="text-foreground/85"
+                        >
+                          Tạo danh mục tùy chỉnh
+                        </FormLink>
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -260,7 +288,10 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Chọn danh mục chi tiêu">
                               {field.value
-                                ? getCategoryLabel(field.value)
+                                ? getCategoryLabel(
+                                    field.value,
+                                    customCategories
+                                  )
                                 : null}
                             </SelectValue>
                           </SelectTrigger>
@@ -271,18 +302,54 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
                             maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                           }}
                         >
-                          {expenseCategories.map((c) => (
-                            <SelectItem key={c.category} value={c.category}>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{c.label}</span>
-                                <span className="text-muted-foreground">
-                                  {c.description}
-                                </span>
-                              </div>
-                            </SelectItem>
-                          ))}
+                          <SelectGroup>
+                            {getCategoriesWithDetails("expense").map((c) => (
+                              <SelectItem key={c.category} value={c.category}>
+                                <div className="flex flex-col">
+                                  <span className="font-medium">{c.label}</span>
+                                  <span className="text-muted-foreground">
+                                    {c.description}
+                                  </span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                            {customCategories &&
+                              customCategories.filter(
+                                (c) => c.type === "expense"
+                              ).length > 0 && (
+                                <>
+                                  <SelectLabel>Danh mục tùy chỉnh</SelectLabel>
+                                  {customCategories
+                                    .filter((c) => c.type === "expense")
+                                    .map((c) => (
+                                      <SelectItem
+                                        key={c._id}
+                                        value={c.categoryId}
+                                      >
+                                        <div className="flex flex-col">
+                                          <span className="font-medium">
+                                            {c.label}
+                                          </span>
+                                          <span className="text-muted-foreground">
+                                            {c.description}
+                                          </span>
+                                        </div>
+                                      </SelectItem>
+                                    ))}
+                                </>
+                              )}
+                          </SelectGroup>
                         </SelectContent>
                       </Select>
+                      <FormDescription>
+                        Không tìm thấy danh mục phù hợp?{" "}
+                        <FormLink
+                          href="/categories"
+                          className="text-foreground/85"
+                        >
+                          Tạo danh mục tùy chỉnh
+                        </FormLink>
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
