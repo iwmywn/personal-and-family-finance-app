@@ -127,7 +127,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
         })
         toast.success(success)
         form.reset({
-          type: transactionType,
+          type: "income",
           amount: 0,
           description: "",
           category: "",
