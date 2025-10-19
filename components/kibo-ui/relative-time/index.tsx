@@ -169,7 +169,11 @@ export const RelativeTimeZoneDate = ({
   const { zone } = useContext(RelativeTimeZoneContext)
   const display = formatDate(time, zone, dateFormatOptions)
 
-  return <div {...props}>{display}</div>
+  return (
+    <div className={cn(className)} {...props}>
+      {display}
+    </div>
+  )
 }
 
 export type RelativeTimeZoneLabelProps = HTMLAttributes<HTMLDivElement>
