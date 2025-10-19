@@ -69,7 +69,7 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
   const [open, setOpen] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [transactionType, setTransactionType] = useState<"income" | "expense">(
-    "income"
+    transaction?.type || "income"
   )
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()

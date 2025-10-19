@@ -195,8 +195,6 @@ export async function getCustomCategories() {
       .sort({ _id: -1 })
       .toArray()
 
-    console.log(categories)
-
     return {
       categories: categories.map((category) => ({
         ...category,
