@@ -43,7 +43,7 @@ export default function TransactionFilters() {
   const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
     "all"
   )
-  const [filterCategory, setFilterCategory] = useState<string>("all")
+  const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
@@ -83,7 +83,8 @@ export default function TransactionFilters() {
     const matchesType = filterType === "all" || transaction.type === filterType
 
     const matchesCategory =
-      filterCategory === "all" || transaction.category === filterCategory
+      filterCategoryKey === "all" ||
+      transaction.categoryKey === filterCategoryKey
 
     return (
       matchesSearch &&
@@ -118,7 +119,7 @@ export default function TransactionFilters() {
     setFilterMonth("all")
     setFilterYear("all")
     setFilterType("all")
-    setFilterCategory("all")
+    setFilterCategoryKey("all")
   }
 
   const hasActiveFilters =
@@ -126,7 +127,7 @@ export default function TransactionFilters() {
     filterMonth !== "all" ||
     filterYear !== "all" ||
     filterType !== "all" ||
-    filterCategory !== "all"
+    filterCategoryKey !== "all"
 
   return (
     <>
@@ -231,9 +232,12 @@ export default function TransactionFilters() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Select value={filterCategory} onValueChange={setFilterCategory}>
+              <Select
+                value={filterCategoryKey}
+                onValueChange={setFilterCategoryKey}
+              >
                 <SelectTrigger
-                  className={`w-full lg:w-fit ${filterCategory !== "all" && "border-primary"}`}
+                  className={`w-full lg:w-fit ${filterCategoryKey !== "all" && "border-primary"}`}
                 >
                   <SelectValue placeholder="Danh mục" />
                 </SelectTrigger>
