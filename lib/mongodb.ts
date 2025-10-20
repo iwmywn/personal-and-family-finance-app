@@ -1,6 +1,6 @@
 import {
-  Collection,
   MongoClient,
+  type Collection,
   type MongoClientOptions,
   type OptionalId,
 } from "mongodb"
@@ -22,19 +22,23 @@ if (!globalThis._mongoClientPromise) {
 
 const clientPromise: Promise<MongoClient> = globalThis._mongoClientPromise
 
-async function connectToDatabase() {
+export async function connect() {
+  const client = await clientPromise
   const dbName = process.env.DB_NAME
   if (!dbName) {
     throw new Error("Environment variable DB_NAME is not set")
   }
+  return { client, db: client.db(dbName) }
+}
 
+export async function disconnect() {
   const client = await clientPromise
-  return client.db(dbName)
+  await client.close()
 }
 
 export async function collection<T>(
   collectionName: string
 ): Promise<Collection<OptionalId<T>>> {
-  const db = await connectToDatabase()
+  const { db } = await connect()
   return db.collection<OptionalId<T>>(collectionName)
 }
