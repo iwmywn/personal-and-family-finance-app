@@ -22,7 +22,6 @@ vi.mock("@/lib/session", () => ({ session: mockSession }))
 vi.mock("@/lib/recaptcha", () => ({
   verifyRecaptchaToken: mockVerifyRecaptchaToken,
 }))
-vi.mock("@/lib/data")
 
 describe("Auth Actions", () => {
   beforeEach(() => {
@@ -131,7 +130,7 @@ describe("Auth Actions", () => {
     it("should return user data when authenticated", async () => {
       const testUser = await createTestUser()
       await insertTestUser(testUser)
-      createMockSession(testUserId)
+      createMockSession(testUser._id.toString())
 
       const result = await getUser()
 

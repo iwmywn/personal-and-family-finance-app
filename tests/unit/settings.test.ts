@@ -14,7 +14,6 @@ import {
 import { updatePassword } from "@/actions/settings/account"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
-vi.mock("@/lib/data")
 
 describe("Settings Actions", () => {
   beforeEach(() => {
