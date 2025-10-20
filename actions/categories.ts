@@ -40,19 +40,19 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     }
 
     const shortId = nanoid(8)
-    const categoryId = `custom_${values.type}_${shortId}`
+    const categoryKey = `custom_${values.type}_${shortId}`
 
-    const duplicateCategoryId = await categoriesCollection.findOne({
-      categoryId,
+    const duplicateCategoryKey = await categoriesCollection.findOne({
+      categoryKey,
     })
 
-    if (duplicateCategoryId) {
-      return { error: "Lỗi tạo ID danh mục. Vui lòng thử lại." }
+    if (duplicateCategoryKey) {
+      return { error: "Lỗi tạo key danh mục. Vui lòng thử lại." }
     }
 
     const result = await categoriesCollection.insertOne({
       userId: new ObjectId(userId),
-      categoryId,
+      categoryKey,
       type: values.type,
       label: values.label,
       description: values.description,
@@ -157,7 +157,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     const transactionCount = await transactionsCollection.countDocuments({
       userId: new ObjectId(userId),
-      category: existingCategory.categoryId,
+      categoryKey: existingCategory.categoryKey,
     })
 
     if (transactionCount > 0) {

@@ -60,7 +60,7 @@ const passwordSchema = z
   })
 
 export const customCategorySchema = z.object({
-  categoryId: z.string().optional(),
+  categoryKey: z.string().optional(),
   type: z.enum(TRANSACTION_TYPES, {
     message: "Vui lòng chọn loại danh mục.",
   }),
@@ -86,7 +86,7 @@ export const transactionSchema = z.object({
   type: z.enum(TRANSACTION_TYPES, {
     message: "Vui lòng chọn loại giao dịch.",
   }),
-  category: z
+  categoryKey: z
     .string()
     .min(1, { message: "Vui lòng chọn danh mục." })
     .refine(

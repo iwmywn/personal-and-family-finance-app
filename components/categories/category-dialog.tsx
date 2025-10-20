@@ -96,7 +96,7 @@ export function CategoryDialog({
             {
               _id: `temp-id`,
               userId: "temp-user",
-              categoryId: `custom_${values.type}_temp`,
+              categoryKey: `custom_${values.type}_temp`,
               ...values,
             },
             ...customCategories!,

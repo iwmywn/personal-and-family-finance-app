@@ -194,14 +194,14 @@ export function TransactionsTable({
                               <TooltipTrigger asChild>
                                 <Badge variant="outline">
                                   {getCategoryLabel(
-                                    transaction.category,
+                                    transaction.categoryKey,
                                     customCategories
                                   )}
                                 </Badge>
                               </TooltipTrigger>
                               <TooltipContent>
                                 {getCategoryDescription(
-                                  transaction.category,
+                                  transaction.categoryKey,
                                   customCategories
                                 )}
                               </TooltipContent>

@@ -1,4 +1,4 @@
-import type { TransactionCategory, TransactionType } from "./definitions"
+import type { TransactionCategoryKey, TransactionType } from "./definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const
 
@@ -148,14 +148,14 @@ export function getCategoriesWithDetails(type: TransactionType) {
     .map(([category, config]) => ({
       label: config.label,
       description: config.description,
-      category: category as TransactionCategory,
+      category: category as TransactionCategoryKey,
     }))
 }
 
 export function getCategoryLabel(
-  category: TransactionCategory,
+  category: TransactionCategoryKey,
   customCategories?: Array<{
-    categoryId: string
+    categoryKey: string
     label: string
     description: string
   }>
@@ -164,14 +164,14 @@ export function getCategoryLabel(
     return CATEGORY_CONFIG[category as keyof typeof CATEGORY_CONFIG].label
   }
   return (
-    customCategories?.find((c) => c.categoryId === category)?.label || category
+    customCategories?.find((c) => c.categoryKey === category)?.label || category
   )
 }
 
 export function getCategoryDescription(
-  category: TransactionCategory,
+  category: TransactionCategoryKey,
   customCategories?: Array<{
-    categoryId: string
+    categoryKey: string
     label: string
     description: string
   }>
@@ -180,6 +180,6 @@ export function getCategoryDescription(
     return CATEGORY_CONFIG[category as keyof typeof CATEGORY_CONFIG].description
   }
   return (
-    customCategories?.find((c) => c.categoryId === category)?.description || ""
+    customCategories?.find((c) => c.categoryKey === category)?.description || ""
   )
 }

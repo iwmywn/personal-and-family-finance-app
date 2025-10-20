@@ -83,7 +83,7 @@ export function TransactionDialog({
       type: transaction?.type || "income",
       amount: transaction?.amount || 0,
       description: transaction?.description || "",
-      category: transaction?.category || "",
+      categoryKey: transaction?.categoryKey || "",
       date: transaction?.date ? new Date(transaction.date) : new Date(),
     },
   })
@@ -134,7 +134,7 @@ export function TransactionDialog({
           type: "income",
           amount: 0,
           description: "",
-          category: "",
+          categoryKey: "",
           date: new Date(),
         })
         setTransactionType("income")
@@ -149,7 +149,7 @@ export function TransactionDialog({
     const transactionType = type as "income" | "expense"
     setTransactionType(transactionType)
     form.setValue("type", transactionType)
-    form.resetField("category", { defaultValue: "" })
+    form.resetField("categoryKey", { defaultValue: "" })
   }
 
   return (
@@ -191,7 +191,7 @@ export function TransactionDialog({
               <TabsContent value="income" className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="category"
+                  name="categoryKey"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Danh mục thu nhập</FormLabel>
@@ -239,7 +239,7 @@ export function TransactionDialog({
                                     .map((c) => (
                                       <SelectItem
                                         key={c._id}
-                                        value={c.categoryId}
+                                        value={c.categoryKey}
                                       >
                                         <div className="flex flex-col">
                                           <span className="font-medium">
@@ -274,7 +274,7 @@ export function TransactionDialog({
               <TabsContent value="expense" className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="category"
+                  name="categoryKey"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Danh mục chi tiêu</FormLabel>
@@ -322,7 +322,7 @@ export function TransactionDialog({
                                     .map((c) => (
                                       <SelectItem
                                         key={c._id}
-                                        value={c.categoryId}
+                                        value={c.categoryKey}
                                       >
                                         <div className="flex flex-col">
                                           <span className="font-medium">

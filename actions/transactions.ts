@@ -29,7 +29,7 @@ export async function createTransaction(values: TransactionFormValues) {
     const result = await transactionsCollection.insertOne({
       userId: new ObjectId(userId),
       type: values.type,
-      category: values.category,
+      categoryKey: values.categoryKey,
       amount: values.amount,
       description: values.description,
       date: normalizeToUTCDate(values.date),
@@ -82,7 +82,7 @@ export async function updateTransaction(
       {
         $set: {
           type: values.type,
-          category: values.category,
+          categoryKey: values.categoryKey,
           amount: values.amount,
           description: values.description,
           date: normalizeToUTCDate(values.date),

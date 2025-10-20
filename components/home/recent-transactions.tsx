@@ -76,7 +76,7 @@ export function RecentTransactions({
                         }
                       >
                         {getCategoryLabel(
-                          transaction.category,
+                          transaction.categoryKey,
                           customCategories
                         )}
                       </Badge>

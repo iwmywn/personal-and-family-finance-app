@@ -11,7 +11,7 @@ import {
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
-import type { Transaction, TransactionCategory } from "@/lib/definitions"
+import type { Transaction, TransactionCategoryKey } from "@/lib/definitions"
 import { useCustomCategories } from "@/lib/swr"
 import { formatCurrency, isCurrentMonth } from "@/lib/utils"
 
@@ -77,17 +77,17 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
       : null
 
   // Danh mục phổ biến:
-  const popularCategory: TransactionCategory | null =
+  const popularCategory: TransactionCategoryKey | null =
     currentMonthTransactions.length > 0
       ? (Object.entries(
           currentMonthTransactions.reduce(
             (acc, t) => {
-              acc[t.category] = (acc[t.category] || 0) + 1
+              acc[t.categoryKey] = (acc[t.categoryKey] || 0) + 1
               return acc
             },
             {} as Record<string, number>
           )
-        ).sort(([, a], [, b]) => b - a)[0]?.[0] as TransactionCategory)
+        ).sort(([, a], [, b]) => b - a)[0]?.[0] as TransactionCategoryKey)
       : null
 
   return (

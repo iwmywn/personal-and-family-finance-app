@@ -13,7 +13,7 @@ type BaseTransaction<T> = {
   _id: T
   userId: T
   type: TransactionType
-  category: TransactionCategory
+  categoryKey: TransactionCategoryKey
   amount: number
   description: string
   date: Date
@@ -22,14 +22,14 @@ type BaseTransaction<T> = {
 type BaseCustomCategory<T> = {
   _id: T
   userId: T
-  categoryId: string
+  categoryKey: string
   type: TransactionType
   label: string
   description: string
 }
 
 export type TransactionType = (typeof TRANSACTION_TYPES)[number]
-export type TransactionCategory = (typeof ALL_CATEGORIES)[number] | string
+export type TransactionCategoryKey = (typeof ALL_CATEGORIES)[number] | string
 
 export type User = BaseUser<string>
 export type DBUser = BaseUser<ObjectId>

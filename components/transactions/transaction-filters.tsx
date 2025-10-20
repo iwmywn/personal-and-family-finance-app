@@ -252,7 +252,7 @@ export default function TransactionFilters() {
                       .map((category) => (
                         <SelectItem
                           key={category._id}
-                          value={category.categoryId}
+                          value={category.categoryKey}
                         >
                           {category.label}
                         </SelectItem>
@@ -268,7 +268,7 @@ export default function TransactionFilters() {
                       .map((category) => (
                         <SelectItem
                           key={category._id}
-                          value={category.categoryId}
+                          value={category.categoryKey}
                         >
                           {category.label}
                         </SelectItem>
