@@ -34,6 +34,7 @@ export default function CategoryFilters() {
     "all"
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
   if (isUserLoading || isCategoriesLoading) {
     return (
@@ -68,87 +69,91 @@ export default function CategoryFilters() {
   const hasActiveFilters = searchTerm !== "" || filterType !== "all"
 
   return (
-    <div className="space-y-4">
-      <div
-        ref={registerRef}
-        className="flex items-center justify-between gap-2"
-      >
-        <div>
-          <div className="text-xl font-semibold">Danh mục tùy chỉnh</div>
-          <div className="text-muted-foreground text-sm">
-            Quản lý các danh mục tùy chỉnh cho giao dịch của bạn.
+    <>
+      <div className="space-y-4">
+        <div
+          ref={registerRef}
+          className="flex items-center justify-between gap-2"
+        >
+          <div>
+            <div className="text-xl font-semibold">Danh mục tùy chỉnh</div>
+            <div className="text-muted-foreground text-sm">
+              Quản lý các danh mục tùy chỉnh cho giao dịch của bạn.
+            </div>
           </div>
+          <Button onClick={() => setIsEditOpen(true)}>Thêm</Button>
         </div>
-        <CategoryDialog />
+        <Card ref={registerRef}>
+          <CardContent>
+            <div
+              className={`grid grid-cols-1 ${
+                hasActiveFilters
+                  ? "md:grid-cols-[1fr_auto_auto]"
+                  : "md:grid-cols-[1fr_auto]"
+              } gap-4`}
+            >
+              <InputGroup
+                className={`${searchTerm !== "" && "border-primary"}`}
+              >
+                <InputGroupAddon>
+                  <Search />
+                </InputGroupAddon>
+                <InputGroupInput
+                  placeholder="Tìm kiếm danh mục..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {searchTerm && (
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupButton
+                      className="rounded-full"
+                      size="icon-xs"
+                      onClick={() => setSearchTerm("")}
+                    >
+                      <X />
+                    </InputGroupButton>
+                  </InputGroupAddon>
+                )}
+              </InputGroup>
+              <Select
+                value={filterType}
+                onValueChange={(value: "all" | "income" | "expense") =>
+                  setFilterType(value)
+                }
+              >
+                <SelectTrigger
+                  className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
+                >
+                  <SelectValue placeholder="Loại danh mục" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tất cả loại danh mục</SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="income">Thu nhập</SelectItem>
+                  <SelectItem value="expense">Chi tiêu</SelectItem>
+                </SelectContent>
+              </Select>
+              {hasActiveFilters && (
+                <Button
+                  variant="outline"
+                  size="default"
+                  onClick={handleResetFilters}
+                  className="w-full md:w-fit"
+                >
+                  Đặt lại
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+        <CategoriesTable
+          customCategories={customCategories}
+          filteredCategories={filteredCategories}
+          offsetHeight={calculatedHeight}
+        />
       </div>
 
-      <Card ref={registerRef}>
-        <CardContent>
-          <div
-            className={`grid grid-cols-1 ${
-              hasActiveFilters
-                ? "md:grid-cols-[1fr_auto_auto]"
-                : "md:grid-cols-[1fr_auto]"
-            } gap-4`}
-          >
-            <InputGroup className={`${searchTerm !== "" && "border-primary"}`}>
-              <InputGroupAddon>
-                <Search />
-              </InputGroupAddon>
-              <InputGroupInput
-                placeholder="Tìm kiếm danh mục..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              {searchTerm && (
-                <InputGroupAddon align="inline-end">
-                  <InputGroupButton
-                    className="rounded-full"
-                    size="icon-xs"
-                    onClick={() => setSearchTerm("")}
-                  >
-                    <X />
-                  </InputGroupButton>
-                </InputGroupAddon>
-              )}
-            </InputGroup>
-            <Select
-              value={filterType}
-              onValueChange={(value: "all" | "income" | "expense") =>
-                setFilterType(value)
-              }
-            >
-              <SelectTrigger
-                className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
-              >
-                <SelectValue placeholder="Loại danh mục" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tất cả loại danh mục</SelectItem>
-                <SelectSeparator />
-                <SelectItem value="income">Thu nhập</SelectItem>
-                <SelectItem value="expense">Chi tiêu</SelectItem>
-              </SelectContent>
-            </Select>
-            {hasActiveFilters && (
-              <Button
-                variant="outline"
-                size="default"
-                onClick={handleResetFilters}
-                className="w-full md:w-fit"
-              >
-                Đặt lại
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      <CategoriesTable
-        customCategories={customCategories}
-        filteredCategories={filteredCategories}
-        offsetHeight={calculatedHeight}
-      />
-    </div>
+      <CategoryDialog open={isEditOpen} setOpen={setIsEditOpen} />
+    </>
   )
 }

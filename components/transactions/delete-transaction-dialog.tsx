@@ -13,7 +13,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
 import { useTransactions } from "@/lib/swr"
@@ -21,11 +20,15 @@ import { useTransactions } from "@/lib/swr"
 interface DeleteTransactionDialogProps {
   transactionId: string
   transactionDescription: string
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
 export function DeleteTransactionDialog({
   transactionId,
   transactionDescription,
+  open,
+  setOpen,
 }: DeleteTransactionDialogProps) {
   const { transactions, mutate } = useTransactions()
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -49,10 +52,7 @@ export function DeleteTransactionDialog({
   }
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <div className="h-full w-full px-2 py-1.5">Xóa</div>
-      </AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Xóa giao dịch</AlertDialogTitle>

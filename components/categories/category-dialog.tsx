@@ -19,7 +19,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -43,10 +42,15 @@ import { useCustomCategories } from "@/lib/swr"
 
 interface CategoryDialogProps {
   category?: CustomCategory
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
-export function CategoryDialog({ category }: CategoryDialogProps) {
-  const [open, setOpen] = useState<boolean>(false)
+export function CategoryDialog({
+  category,
+  open,
+  setOpen,
+}: CategoryDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { categories: customCategories, mutate } = useCustomCategories()
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
@@ -120,13 +124,6 @@ export function CategoryDialog({ category }: CategoryDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {category ? (
-          <div className="h-full w-full px-2 py-1.5">Chỉnh sửa</div>
-        ) : (
-          <Button>Thêm</Button>
-        )}
-      </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>

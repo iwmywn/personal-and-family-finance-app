@@ -20,7 +20,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -63,10 +62,15 @@ import { cn } from "@/lib/utils"
 
 interface TransactionDialogProps {
   transaction?: Transaction
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
-export function TransactionDialog({ transaction }: TransactionDialogProps) {
-  const [open, setOpen] = useState<boolean>(false)
+export function TransactionDialog({
+  transaction,
+  open,
+  setOpen,
+}: TransactionDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [transactionType, setTransactionType] = useState<"income" | "expense">(
     transaction?.type || "income"
@@ -150,13 +154,6 @@ export function TransactionDialog({ transaction }: TransactionDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        {transaction ? (
-          <div className="h-full w-full px-2 py-1.5">Chỉnh sửa</div>
-        ) : (
-          <Button>Thêm</Button>
-        )}
-      </DialogTrigger>
       <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>

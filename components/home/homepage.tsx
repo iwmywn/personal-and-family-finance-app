@@ -1,5 +1,8 @@
 "use client"
 
+import { useState } from "react"
+
+import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { QuickStats } from "@/components/home/quick-stats"
 import { RecentTransactions } from "@/components/home/recent-transactions"
@@ -14,6 +17,7 @@ export default function HomePage() {
   const { categories: customCategories, isCategoriesLoading } =
     useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
   if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {
     return (
@@ -36,36 +40,38 @@ export default function HomePage() {
   }
 
   return (
-    <div className="space-y-4">
-      <div
-        ref={registerRef}
-        className="flex items-center justify-between gap-2"
-      >
-        <div>
-          <div className="text-xl font-semibold">
-            Xin chào, {user.fullName}!
+    <>
+      <div className="space-y-4">
+        <div
+          ref={registerRef}
+          className="flex items-center justify-between gap-2"
+        >
+          <div>
+            <div className="text-xl font-semibold">
+              Xin chào, {user.fullName}!
+            </div>
+            <div className="text-muted-foreground text-sm">
+              Quản lý tài chính cá nhân của bạn.
+            </div>
           </div>
-          <div className="text-muted-foreground text-sm">
-            Quản lý tài chính cá nhân của bạn.
-          </div>
+          <Button onClick={() => setIsEditOpen(true)}>Thêm</Button>
         </div>
-        <TransactionDialog />
+        <div ref={registerRef}>
+          <TransactionSummary transactions={transactions} />
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <RecentTransactions
+            transactions={transactions}
+            offsetHeight={calculatedHeight}
+          />
+          <QuickStats
+            transactions={transactions}
+            offsetHeight={calculatedHeight}
+          />
+        </div>
       </div>
 
-      <div ref={registerRef}>
-        <TransactionSummary transactions={transactions} />
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <RecentTransactions
-          transactions={transactions}
-          offsetHeight={calculatedHeight}
-        />
-        <QuickStats
-          transactions={transactions}
-          offsetHeight={calculatedHeight}
-        />
-      </div>
-    </div>
+      <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
+    </>
   )
 }

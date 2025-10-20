@@ -13,7 +13,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
 import { useCustomCategories } from "@/lib/swr"
@@ -21,11 +20,15 @@ import { useCustomCategories } from "@/lib/swr"
 interface DeleteCategoryDialogProps {
   categoryId: string
   categoryLabel: string
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
 export function DeleteCategoryDialog({
   categoryId,
   categoryLabel,
+  open,
+  setOpen,
 }: DeleteCategoryDialogProps) {
   const { categories: customCategories, mutate } = useCustomCategories()
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -49,10 +52,7 @@ export function DeleteCategoryDialog({
   }
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <div className="h-full w-full px-2 py-1.5">Xóa</div>
-      </AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Xóa danh mục</AlertDialogTitle>
