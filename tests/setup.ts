@@ -1,24 +1,23 @@
-import { MongoMemoryServer } from "mongodb-memory-server"
 import { afterAll, afterEach, beforeAll } from "vitest"
-
-import { connect, disconnect } from "@/lib/mongodb"
+import { MongoMemoryServer } from "mongodb-memory-server"
 
 let mongoServer: MongoMemoryServer
 
 beforeAll(async () => {
-  // Start MongoDB Memory Server
   mongoServer = await MongoMemoryServer.create()
   const mongoUri = mongoServer.getUri()
 
-  // Set environment variable for MongoDB connection
+  // Set environment variable BEFORE any mongodb imports
   process.env.MONGODB_URI = mongoUri
+  process.env.DB_NAME = "test-db"
 
-  // Connect to the in-memory database
+  // Now import and connect
+  const { connect } = await import("@/lib/mongodb")
   await connect()
 })
 
 afterEach(async () => {
-  // Clear all collections after each test
+  const { connect } = await import("@/lib/mongodb")
   const { db } = await connect()
   const collections = await db.listCollections().toArray()
 
@@ -28,7 +27,7 @@ afterEach(async () => {
 })
 
 afterAll(async () => {
-  // Disconnect and stop MongoDB Memory Server
+  const { disconnect } = await import("@/lib/mongodb")
   await disconnect()
   await mongoServer.stop()
 })

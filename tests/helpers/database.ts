@@ -6,12 +6,6 @@ import {
   getUserCollection,
 } from "@/lib/collections"
 import { DBCustomCategory, DBTransaction, DBUser } from "@/lib/definitions"
-import { connect } from "@/lib/mongodb"
-
-export const getDb = async () => {
-  const { db } = await connect()
-  return db
-}
 
 export const insertTestUser = async (user: DBUser) => {
   const collection = await getUserCollection()

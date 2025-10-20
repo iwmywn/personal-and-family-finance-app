@@ -1,23 +1,22 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
+import { insertTestTransaction } from "@/tests/helpers/database"
+import {
+  createTestTransaction,
+  testUserId,
+  validTransactionValues,
+} from "@/tests/helpers/test-data"
+import {
+  clearMockSession,
+  createMockSession,
+  mockSession,
+} from "@/tests/mocks/session.mock"
 import {
   createTransaction,
   deleteTransaction,
   getTransactions,
   updateTransaction,
 } from "@/actions/transactions"
-
-import { insertTestTransaction } from "../helpers/database"
-import {
-  createTestTransaction,
-  testUserId,
-  validTransactionValues,
-} from "../helpers/test-data"
-import {
-  clearMockSession,
-  createMockSession,
-  mockSession,
-} from "../mocks/session.mock"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 

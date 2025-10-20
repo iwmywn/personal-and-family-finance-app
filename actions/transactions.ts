@@ -66,6 +66,12 @@ export async function updateTransaction(
 
     const transactionsCollection = await getTransactionCollection()
 
+    if (!ObjectId.isValid(transactionId)) {
+      return {
+        error: "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!",
+      }
+    }
+
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
       userId: new ObjectId(userId),
@@ -108,6 +114,12 @@ export async function deleteTransaction(transactionId: string) {
     }
 
     const transactionsCollection = await getTransactionCollection()
+
+    if (!ObjectId.isValid(transactionId)) {
+      return {
+        error: "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!",
+      }
+    }
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),

@@ -1,18 +1,17 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { updatePassword } from "@/actions/settings/account"
-
-import { insertTestUser } from "../helpers/database"
+import { insertTestUser } from "@/tests/helpers/database"
 import {
   createTestUser,
   testUserId,
   validPasswordValues,
-} from "../helpers/test-data"
+} from "@/tests/helpers/test-data"
 import {
   clearMockSession,
   createMockSession,
   mockSession,
-} from "../mocks/session.mock"
+} from "@/tests/mocks/session.mock"
+import { updatePassword } from "@/actions/settings/account"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 vi.mock("@/lib/data")
@@ -76,7 +75,7 @@ describe("Settings Actions", () => {
 
       const result = await updatePassword({
         currentPassword: "TestPassword123!",
-        newPassword: "weak", // Weak password
+        newPassword: "weak",
       })
 
       expect(result.error).toBe("Dữ liệu không hợp lệ!")

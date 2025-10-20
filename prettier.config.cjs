@@ -13,8 +13,10 @@ module.exports = {
   importOrder: [
     "^(react/(.*)$)|^(react$)",
     "^(next/(.*)$)|^(next$)",
+    "^(vitest/(.*)$)|^(vitest$)",
     "<THIRD_PARTY_MODULES>",
     "",
+    "^@/tests/(.*)$",
     "^@/actions/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",

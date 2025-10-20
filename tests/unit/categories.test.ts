@@ -1,28 +1,27 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import {
-  createCustomCategory,
-  deleteCustomCategory,
-  getCustomCategories,
-  updateCustomCategory,
-} from "@/actions/categories"
-
-import {
   countCategories,
   insertTestCategory,
   insertTestTransaction,
-} from "../helpers/database"
+} from "@/tests/helpers/database"
 import {
   createTestCategory,
   createTestTransaction,
   testUserId,
   validCategoryValues,
-} from "../helpers/test-data"
+} from "@/tests/helpers/test-data"
 import {
   clearMockSession,
   createMockSession,
   mockSession,
-} from "../mocks/session.mock"
+} from "@/tests/mocks/session.mock"
+import {
+  createCustomCategory,
+  deleteCustomCategory,
+  getCustomCategories,
+  updateCustomCategory,
+} from "@/actions/categories"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 

@@ -1,26 +1,27 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { getUser, signIn, signOut } from "@/actions/auth"
-
-import { insertTestUser } from "../helpers/database"
+import { insertTestUser } from "@/tests/helpers/database"
 import {
   createTestUser,
   testUserId,
   validSignInValues,
-} from "../helpers/test-data"
+} from "@/tests/helpers/test-data"
 import {
   clearRecaptchaMock,
+  mockVerifyRecaptchaToken,
   setRecaptchaSuccess,
-} from "../mocks/recaptcha.mock"
+} from "@/tests/mocks/recaptcha.mock"
 import {
   clearMockSession,
   createMockSession,
   mockSession,
-} from "../mocks/session.mock"
+} from "@/tests/mocks/session.mock"
+import { getUser, signIn, signOut } from "@/actions/auth"
 
-// Mock dependencies
 vi.mock("@/lib/session", () => ({ session: mockSession }))
-vi.mock("@/lib/recaptcha", () => ({ verifyRecaptchaToken: vi.fn() }))
+vi.mock("@/lib/recaptcha", () => ({
+  verifyRecaptchaToken: mockVerifyRecaptchaToken,
+}))
 vi.mock("@/lib/data")
 
 describe("Auth Actions", () => {
