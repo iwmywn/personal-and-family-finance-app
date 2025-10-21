@@ -1,5 +1,3 @@
-import { beforeEach, describe, expect, it, vi } from "vitest"
-
 import { insertTestUser } from "@/tests/helpers/database"
 import { user, validPasswordValues } from "@/tests/helpers/test-data"
 import { mockSession } from "@/tests/mocks/session.mock"
