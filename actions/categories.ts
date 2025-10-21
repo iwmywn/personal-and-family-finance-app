@@ -89,6 +89,12 @@ export async function updateCustomCategory(
 
     const categoriesCollection = await getCategoryCollection()
 
+    if (!ObjectId.isValid(categoryId)) {
+      return {
+        error: "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!",
+      }
+    }
+
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
       userId: new ObjectId(userId),
@@ -143,6 +149,12 @@ export async function deleteCustomCategory(categoryId: string) {
       getCategoryCollection(),
       getTransactionCollection(),
     ])
+
+    if (!ObjectId.isValid(categoryId)) {
+      return {
+        error: "Không tìm thấy danh mục hoặc bạn không có quyền xóa!",
+      }
+    }
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
