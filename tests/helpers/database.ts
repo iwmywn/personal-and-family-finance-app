@@ -9,20 +9,17 @@ import { DBCustomCategory, DBTransaction, DBUser } from "@/lib/definitions"
 
 export const insertTestUser = async (user: DBUser) => {
   const collection = await getUserCollection()
-  const result = await collection.insertOne(user)
-  return result.insertedId.toString()
+  await collection.insertOne(user)
 }
 
 export const insertTestTransaction = async (transaction: DBTransaction) => {
   const collection = await getTransactionCollection()
-  const result = await collection.insertOne(transaction)
-  return result.insertedId.toString()
+  await collection.insertOne(transaction)
 }
 
 export const insertTestCategory = async (category: DBCustomCategory) => {
   const collection = await getCategoryCollection()
-  const result = await collection.insertOne(category)
-  return result.insertedId.toString()
+  await collection.insertOne(category)
 }
 
 export const findUserById = async (userId: string) => {

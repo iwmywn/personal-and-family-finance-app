@@ -7,15 +7,3 @@ export const mockSession = {
     delete: vi.fn(),
   },
 }
-
-export const createMockSession = (userId: string) => {
-  const id = userId
-  mockSession.user.get.mockResolvedValue({ userId: id })
-  return id
-}
-
-export const clearMockSession = () => {
-  mockSession.user.get.mockClear()
-  mockSession.user.create.mockClear()
-  mockSession.user.delete.mockClear()
-}

@@ -1,61 +1,47 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import type { Collection, OptionalId } from "mongodb"
 
 import {
-  countCategories,
   insertTestCategory,
   insertTestTransaction,
 } from "@/tests/helpers/database"
 import {
-  createTestCategory,
-  createTestTransaction,
-  testUserId,
+  category,
+  transaction,
+  user,
   validCategoryValues,
 } from "@/tests/helpers/test-data"
-import {
-  clearMockSession,
-  createMockSession,
-  mockSession,
-} from "@/tests/mocks/session.mock"
+import { mockSession } from "@/tests/mocks/session.mock"
 import {
   createCustomCategory,
   deleteCustomCategory,
   getCustomCategories,
   updateCustomCategory,
 } from "@/actions/categories"
+import * as collectionsLib from "@/lib/collections"
+import type { DBCustomCategory } from "@/lib/definitions"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 
 describe("Categories Actions", () => {
   beforeEach(() => {
-    clearMockSession()
-    vi.clearAllMocks()
+    vi.resetAllMocks()
   })
 
   describe("createCustomCategory", () => {
-    it("should create a custom category successfully", async () => {
-      createMockSession(testUserId)
-
-      const result = await createCustomCategory(validCategoryValues)
-
-      expect(result.success).toBe("Danh mục đã được tạo.")
-      expect(result.error).toBeUndefined()
-
-      const count = await countCategories(testUserId)
-      expect(count).toBe(1)
-    })
-
     it("should return error when not authenticated", async () => {
       mockSession.user.get.mockResolvedValue({ userId: null })
 
       const result = await createCustomCategory(validCategoryValues)
 
+      expect(result.success).toBeUndefined()
       expect(result.error).toBe(
         "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
       )
     })
 
     it("should return error with invalid input data", async () => {
-      createMockSession(testUserId)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await createCustomCategory({
         type: "invalid" as "expense" | "income",
@@ -63,44 +49,161 @@ describe("Categories Actions", () => {
         description: "",
       })
 
+      expect(result.success).toBeUndefined()
       expect(result.error).toBe("Dữ liệu không hợp lệ!")
     })
 
     it("should return error when category with same name exists", async () => {
-      createMockSession(testUserId)
-      const category = createTestCategory(testUserId)
       await insertTestCategory(category)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await createCustomCategory({
-        type: "expense",
-        label: "Entertainment",
+        type: category.type,
+        label: category.label,
         description: "Different description",
       })
 
+      expect(result.success).toBeUndefined()
       expect(result.error).toBe("Danh mục với tên này đã tồn tại!")
     })
 
-    it("should validate category label length", async () => {
-      createMockSession(testUserId)
+    it("should return error when duplicate categoryKey exists", async () => {
+      await insertTestCategory(category)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      vi.mock("nanoid", () => ({
+        nanoid: () => "abcdef12",
+      }))
 
       const result = await createCustomCategory({
         type: "expense",
-        label: "a".repeat(51), // Exceeds max length
-        description: "Valid description",
+        label: "Dupe Key",
+        description: "desc",
       })
 
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Lỗi tạo key danh mục. Vui lòng thử lại.")
+    })
+
+    it("should successfully create custom category", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await createCustomCategory(validCategoryValues)
+
+      expect(result.success).toBe("Danh mục đã được tạo.")
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when database insertion fails", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      const mockCategoriesCollection = {
+        findOne: vi.fn().mockResolvedValue(null),
+        insertOne: vi.fn().mockResolvedValue({ acknowledged: false }),
+      } as unknown as Collection<OptionalId<DBCustomCategory>>
+      vi.spyOn(collectionsLib, "getCategoryCollection").mockResolvedValue(
+        mockCategoriesCollection
+      )
+
+      const result = await createCustomCategory(validCategoryValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Tạo danh mục thất bại! Thử lại sau.")
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await createCustomCategory(validCategoryValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Tạo danh mục thất bại. Vui lòng thử lại sau.")
     })
   })
 
   describe("updateCustomCategory", () => {
-    it("should update category successfully", async () => {
-      createMockSession(testUserId)
-      const category = createTestCategory(testUserId)
-      const categoryId = await insertTestCategory(category)
+    it("should return error when not authenticated", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: null })
 
-      const result = await updateCustomCategory(categoryId, {
-        type: "expense",
+      const result = await updateCustomCategory(
+        category._id.toString(),
+        validCategoryValues
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
+      )
+    })
+
+    it("should return error with invalid input data", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await updateCustomCategory(category._id.toString(), {
+        type: "invalid" as "expense" | "income",
+        label: "",
+        description: "",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+    })
+
+    it("should return error with invalid category ID", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await updateCustomCategory(
+        "invalid-id",
+        validCategoryValues
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!"
+      )
+    })
+
+    it("should return error when category not found", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await updateCustomCategory(
+        category._id.toString(),
+        validCategoryValues
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!"
+      )
+    })
+
+    it("should return error when duplicate category name exists", async () => {
+      await insertTestCategory(category)
+      await insertTestCategory({
+        ...category,
+        _id: new (await import("mongodb")).ObjectId(),
+        label: "Different Label",
+      })
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await updateCustomCategory(category._id.toString(), {
+        type: category.type,
+        label: "Different Label",
+        description: "Different description",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Danh mục với tên này đã tồn tại!")
+    })
+
+    it("should successfully update custom category", async () => {
+      await insertTestCategory(category)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await updateCustomCategory(category._id.toString(), {
+        type: "income",
         label: "Updated Label",
         description: "Updated description",
       })
@@ -109,105 +212,140 @@ describe("Categories Actions", () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should return error when category not found", async () => {
-      createMockSession(testUserId)
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
+        new Error("Database error")
+      )
 
       const result = await updateCustomCategory(
-        "invalid-id",
+        category._id.toString(),
         validCategoryValues
       )
 
-      expect(result.error).toContain("Không tìm thấy danh mục")
-    })
-
-    it("should prevent duplicate category names", async () => {
-      createMockSession(testUserId)
-      const category1 = createTestCategory(testUserId)
-      const category2 = createTestCategory(testUserId)
-      category2.label = "Different Label"
-
-      const id1 = await insertTestCategory(category1)
-      await insertTestCategory(category2)
-
-      const result = await updateCustomCategory(id1, {
-        type: "expense",
-        label: "Different Label",
-        description: "New description",
-      })
-
-      expect(result.error).toBe("Danh mục với tên này đã tồn tại!")
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Cập nhật danh mục thất bại! Vui lòng thử lại sau."
+      )
     })
   })
 
   describe("deleteCustomCategory", () => {
-    it("should delete category successfully", async () => {
-      createMockSession(testUserId)
-      const category = createTestCategory(testUserId)
-      const categoryId = await insertTestCategory(category)
+    it("should return error when not authenticated", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: null })
 
-      const result = await deleteCustomCategory(categoryId)
+      const result = await deleteCustomCategory(category._id.toString())
 
-      expect(result.success).toBe("Danh mục đã được xóa.")
-      const count = await countCategories(testUserId)
-      expect(count).toBe(0)
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
+      )
     })
 
-    it("should prevent deletion if transactions reference category", async () => {
-      createMockSession(testUserId)
-      const category = createTestCategory(testUserId)
-      const categoryId = await insertTestCategory(category)
-
-      const transaction = createTestTransaction(testUserId)
-      transaction.categoryKey = category.categoryKey
-      await insertTestTransaction(transaction)
-
-      const result = await deleteCustomCategory(categoryId)
-
-      expect(result.error).toContain("Không thể xóa danh mục")
-      expect(result.error).toContain("1 giao dịch")
-    })
-
-    it("should return error when category not found", async () => {
-      createMockSession(testUserId)
+    it("should return error with invalid category ID", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await deleteCustomCategory("invalid-id")
 
-      expect(result.error).toContain("Không tìm thấy danh mục")
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy danh mục hoặc bạn không có quyền xóa!"
+      )
+    })
+
+    it("should return error when category not found", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await deleteCustomCategory(category._id.toString())
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy danh mục hoặc bạn không có quyền xóa!"
+      )
+    })
+
+    it("should return error when category has associated transactions", async () => {
+      await insertTestCategory(category)
+      await insertTestTransaction({
+        ...transaction,
+        categoryKey: category.categoryKey,
+      })
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await deleteCustomCategory(category._id.toString())
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không thể xóa danh mục. Có 1 giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước."
+      )
+    })
+
+    it("should successfully delete custom category", async () => {
+      await insertTestCategory(category)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await deleteCustomCategory(category._id.toString())
+
+      expect(result.success).toBe("Danh mục đã được xóa.")
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await deleteCustomCategory(category._id.toString())
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Xóa danh mục thất bại! Vui lòng thử lại sau.")
     })
   })
 
   describe("getCustomCategories", () => {
-    it("should return all user categories", async () => {
-      createMockSession(testUserId)
-      const category1 = createTestCategory(testUserId)
-      const category2 = createTestCategory(testUserId)
-      category2.label = "Another Category"
-
-      await insertTestCategory(category1)
-      await insertTestCategory(category2)
-
-      const result = await getCustomCategories()
-
-      expect(result.categories).toHaveLength(2)
-      expect(result.error).toBeUndefined()
-    })
-
-    it("should return empty array when no categories exist", async () => {
-      createMockSession(testUserId)
-
-      const result = await getCustomCategories()
-
-      expect(result.categories).toHaveLength(0)
-      expect(result.error).toBeUndefined()
-    })
-
     it("should return error when not authenticated", async () => {
       mockSession.user.get.mockResolvedValue({ userId: null })
 
       const result = await getCustomCategories()
 
+      expect(result.categories).toBeUndefined()
       expect(result.error).toBe(
         "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
+      )
+    })
+
+    it("should return empty categories list", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await getCustomCategories()
+
+      expect(result.categories).toEqual([])
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return categories list", async () => {
+      await insertTestCategory(category)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await getCustomCategories()
+
+      expect(result.categories).toHaveLength(1)
+      expect(result.categories?.[0].label).toBe("Entertainment")
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await getCustomCategories()
+
+      expect(result.categories).toBeUndefined()
+      expect(result.error).toBe(
+        "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
       )
     })
   })

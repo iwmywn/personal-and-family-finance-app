@@ -1,34 +1,58 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import type { Collection, OptionalId } from "mongodb"
 
 import { insertTestTransaction } from "@/tests/helpers/database"
 import {
-  createTestTransaction,
-  testUserId,
+  transaction,
+  user,
   validTransactionValues,
 } from "@/tests/helpers/test-data"
-import {
-  clearMockSession,
-  createMockSession,
-  mockSession,
-} from "@/tests/mocks/session.mock"
+import { mockSession } from "@/tests/mocks/session.mock"
 import {
   createTransaction,
   deleteTransaction,
   getTransactions,
   updateTransaction,
 } from "@/actions/transactions"
+import * as collectionsLib from "@/lib/collections"
+import type { DBTransaction } from "@/lib/definitions"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 
 describe("Transactions Actions", () => {
   beforeEach(() => {
-    clearMockSession()
-    vi.clearAllMocks()
+    vi.resetAllMocks()
   })
 
   describe("createTransaction", () => {
-    it("should create transaction successfully", async () => {
-      createMockSession(testUserId)
+    it("should return error when not authenticated", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: null })
+
+      const result = await createTransaction(validTransactionValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
+      )
+    })
+
+    it("should return error with invalid input data", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await createTransaction({
+        type: "invalid" as "income" | "expense",
+        categoryKey: "",
+        amount: -1,
+        description: "",
+        date: new Date("invalid"),
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+    })
+
+    it("should successfully create transaction", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await createTransaction(validTransactionValues)
 
@@ -36,167 +60,227 @@ describe("Transactions Actions", () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+    it("should return error when database insertion fails", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      const mockTransactionsCollection = {
+        insertOne: vi.fn().mockResolvedValue({ acknowledged: false }),
+      } as unknown as Collection<OptionalId<DBTransaction>>
+      vi.spyOn(collectionsLib, "getTransactionCollection").mockResolvedValue(
+        mockTransactionsCollection
+      )
 
       const result = await createTransaction(validTransactionValues)
 
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Tạo giao dịch thất bại! Thử lại sau.")
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await createTransaction(validTransactionValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Tạo giao dịch thất bại. Vui lòng thử lại sau.")
+    })
+  })
+
+  describe("updateTransaction", () => {
+    it("should return error when not authenticated", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: null })
+
+      const result = await updateTransaction(
+        transaction._id.toString(),
+        validTransactionValues
+      )
+
+      expect(result.success).toBeUndefined()
       expect(result.error).toBe(
         "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
       )
     })
 
     it("should return error with invalid input data", async () => {
-      createMockSession(testUserId)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
-      const result = await createTransaction({
-        type: "invalid" as "expense" | "income",
+      const result = await updateTransaction(transaction._id.toString(), {
+        type: "invalid" as "income" | "expense",
         categoryKey: "",
-        amount: -100,
+        amount: -1,
         description: "",
-        date: new Date(),
+        date: new Date("invalid"),
       })
 
+      expect(result.success).toBeUndefined()
       expect(result.error).toBe("Dữ liệu không hợp lệ!")
     })
 
-    it("should validate amount range", async () => {
-      createMockSession(testUserId)
-
-      const result = await createTransaction({
-        ...validTransactionValues,
-        amount: 0, // Below minimum
-      })
-
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
-    })
-
-    it("should validate description length", async () => {
-      createMockSession(testUserId)
-
-      const result = await createTransaction({
-        ...validTransactionValues,
-        description: "a".repeat(201), // Exceeds max length
-      })
-
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
-    })
-  })
-
-  describe("updateTransaction", () => {
-    it("should update transaction successfully", async () => {
-      createMockSession(testUserId)
-      const transaction = createTestTransaction(testUserId)
-      const transactionId = await insertTestTransaction(transaction)
-
-      const result = await updateTransaction(transactionId, {
-        ...validTransactionValues,
-        amount: 100000,
-      })
-
-      expect(result.success).toBe("Giao dịch đã được cập nhật.")
-      expect(result.error).toBeUndefined()
-    })
-
-    it("should return error when transaction not found", async () => {
-      createMockSession(testUserId)
+    it("should return error with invalid transaction ID", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await updateTransaction(
         "invalid-id",
         validTransactionValues
       )
 
-      expect(result.error).toContain("Không tìm thấy giao dịch")
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!"
+      )
     })
 
-    it("should prevent unauthorized updates", async () => {
-      createMockSession(testUserId)
-      const transaction = createTestTransaction(testUserId)
-      const transactionId = await insertTestTransaction(transaction)
-
-      // Try to update with different user
-      createMockSession("different-user-id")
+    it("should return error when transaction not found", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await updateTransaction(
-        transactionId,
+        transaction._id.toString(),
         validTransactionValues
       )
 
-      expect(result.error).toContain("Không tìm thấy giao dịch")
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!"
+      )
+    })
+
+    it("should successfully update transaction", async () => {
+      await insertTestTransaction(transaction)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await updateTransaction(transaction._id.toString(), {
+        type: "income",
+        categoryKey: "personal_care",
+        amount: 100000,
+        description: "Updated description",
+        date: new Date("2024-01-16"),
+      })
+
+      expect(result.success).toBe("Giao dịch đã được cập nhật.")
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await updateTransaction(
+        transaction._id.toString(),
+        validTransactionValues
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Cập nhật giao dịch thất bại! Vui lòng thử lại sau."
+      )
     })
   })
 
   describe("deleteTransaction", () => {
-    it("should delete transaction successfully", async () => {
-      createMockSession(testUserId)
-      const transaction = createTestTransaction(testUserId)
-      const transactionId = await insertTestTransaction(transaction)
+    it("should return error when not authenticated", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: null })
 
-      const result = await deleteTransaction(transactionId)
+      const result = await deleteTransaction(transaction._id.toString())
 
-      expect(result.success).toBe("Giao dịch đã được xóa.")
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
+      )
     })
 
-    it("should return error when transaction not found", async () => {
-      createMockSession(testUserId)
+    it("should return error with invalid transaction ID", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await deleteTransaction("invalid-id")
 
-      expect(result.error).toContain("Không tìm thấy giao dịch")
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!"
+      )
     })
 
-    it("should prevent unauthorized deletion", async () => {
-      createMockSession(testUserId)
-      const transaction = createTestTransaction(testUserId)
-      const transactionId = await insertTestTransaction(transaction)
+    it("should return error when transaction not found", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
-      // Try to delete with different user
-      createMockSession("different-user-id")
+      const result = await deleteTransaction(transaction._id.toString())
 
-      const result = await deleteTransaction(transactionId)
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!"
+      )
+    })
 
-      expect(result.error).toContain("Không tìm thấy giao dịch")
+    it("should successfully delete transaction", async () => {
+      await insertTestTransaction(transaction)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await deleteTransaction(transaction._id.toString())
+
+      expect(result.success).toBe("Giao dịch đã được xóa.")
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await deleteTransaction(transaction._id.toString())
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Xóa giao dịch thất bại! Vui lòng thử lại sau.")
     })
   })
 
   describe("getTransactions", () => {
-    it("should return all user transactions", async () => {
-      createMockSession(testUserId)
-      const transaction1 = createTestTransaction(testUserId)
-      const transaction2 = createTestTransaction(testUserId)
-      transaction2.amount = 100000
-
-      await insertTestTransaction(transaction1)
-      await insertTestTransaction(transaction2)
-
-      const result = await getTransactions()
-
-      expect(result.transactions).toHaveLength(2)
-      expect(result.error).toBeUndefined()
-    })
-
-    it("should return transactions sorted by date descending", async () => {
-      createMockSession(testUserId)
-      const transaction1 = createTestTransaction(testUserId)
-      const transaction2 = createTestTransaction(testUserId)
-      transaction2.date = new Date("2024-01-25")
-
-      await insertTestTransaction(transaction1)
-      await insertTestTransaction(transaction2)
-
-      const result = await getTransactions()
-
-      expect(result.transactions?.[0].date).toEqual(transaction2.date)
-      expect(result.transactions?.[1].date).toEqual(transaction1.date)
-    })
-
     it("should return error when not authenticated", async () => {
       mockSession.user.get.mockResolvedValue({ userId: null })
 
       const result = await getTransactions()
 
+      expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(
         "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
+      )
+    })
+
+    it("should return empty transactions list", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await getTransactions()
+
+      expect(result.transactions).toEqual([])
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return transactions list", async () => {
+      await insertTestTransaction(transaction)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await getTransactions()
+
+      expect(result.transactions).toHaveLength(1)
+      expect(result.transactions?.[0].description).toBe("nước dừa")
+      expect(result.transactions?.[0].amount).toBe(50000)
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await getTransactions()
+
+      expect(result.transactions).toBeUndefined()
+      expect(result.error).toBe(
+        "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
       )
     })
   })

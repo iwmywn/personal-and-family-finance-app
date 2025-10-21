@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { insertTestUser } from "@/tests/helpers/database"
-import { user1, validSignInValues } from "@/tests/helpers/test-data"
+import { user, validSignInValues } from "@/tests/helpers/test-data"
 import {
   mockVerifyRecaptchaToken,
   setRecaptchaSuccess,
@@ -52,7 +52,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error with incorrect password", async () => {
-      await insertTestUser(user1)
+      await insertTestUser(user)
       setRecaptchaSuccess(true)
 
       const result = await signIn(
@@ -64,7 +64,7 @@ describe("Auth Actions", () => {
     })
 
     it("should successfully sign in with valid credentials", async () => {
-      await insertTestUser(user1)
+      await insertTestUser(user)
       setRecaptchaSuccess(true)
 
       const result = await signIn(validSignInValues, "valid-token")
@@ -94,7 +94,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when session creation fails", async () => {
-      await insertTestUser(user1)
+      await insertTestUser(user)
       setRecaptchaSuccess(true)
       mockSession.user.create.mockRejectedValue(new Error("Session error"))
 
@@ -137,7 +137,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when user not found in database", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user1._id.toString() })
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await getUser()
 
@@ -146,14 +146,14 @@ describe("Auth Actions", () => {
     })
 
     it("should return user data when authenticated", async () => {
-      await insertTestUser(user1)
-      mockSession.user.get.mockResolvedValue({ userId: user1._id.toString() })
+      await insertTestUser(user)
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await getUser()
 
       expect(result.user).toBeDefined()
-      expect(result.user?.fullName).toBe("Test User 1")
-      expect(result.user?.username).toBe("testuser1")
+      expect(result.user?.fullName).toBe("Test User")
+      expect(result.user?.username).toBe("testuser")
       expect(result.error).toBeUndefined()
     })
 
@@ -169,7 +169,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when getUserById throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user1._id.toString() })
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
       vi.spyOn(dataLib, "getUserById").mockRejectedValue(
         new Error("Database error")
       )
