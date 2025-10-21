@@ -14,6 +14,15 @@ beforeAll(async () => {
   await connect()
 })
 
+afterAll(async () => {
+  await disconnect()
+  await mongoServer.stop()
+})
+
+beforeEach(() => {
+  vi.resetAllMocks()
+})
+
 afterEach(async () => {
   const db = await connect()
   const collections = await db.listCollections().toArray()
@@ -21,9 +30,4 @@ afterEach(async () => {
   for (const collection of collections) {
     await db.collection(collection.name).deleteMany({})
   }
-})
-
-afterAll(async () => {
-  await disconnect()
-  await mongoServer.stop()
 })

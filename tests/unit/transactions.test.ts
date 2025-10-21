@@ -1,31 +1,24 @@
-import type { Collection, OptionalId } from "mongodb"
-
 import { insertTestTransaction } from "@/tests/helpers/database"
+import { transaction, validTransactionValues } from "@/tests/helpers/test-data"
 import {
-  transaction,
-  user,
-  validTransactionValues,
-} from "@/tests/helpers/test-data"
-import { mockSession } from "@/tests/mocks/session.mock"
+  mockTransactionCollectionError,
+  setupTransactionCollectionMock,
+} from "@/tests/mocks/collections.mock"
+import {
+  mockAuthenticatedUser,
+  mockUnauthenticatedUser,
+} from "@/tests/mocks/session.mock"
 import {
   createTransaction,
   deleteTransaction,
   getTransactions,
   updateTransaction,
 } from "@/actions/transactions"
-import * as collectionsLib from "@/lib/collections"
-import type { DBTransaction } from "@/lib/definitions"
-
-vi.mock("@/lib/session", () => ({ session: mockSession }))
 
 describe("Transactions Actions", () => {
-  beforeEach(() => {
-    vi.resetAllMocks()
-  })
-
   describe("createTransaction", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await createTransaction(validTransactionValues)
 
@@ -36,7 +29,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error with invalid input data", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await createTransaction({
         type: "invalid" as "income" | "expense",
@@ -51,13 +44,11 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error when database insertion fails", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      const mockTransactionsCollection = {
-        insertOne: vi.fn().mockResolvedValue({ acknowledged: false }),
-      } as unknown as Collection<OptionalId<DBTransaction>>
-      vi.spyOn(collectionsLib, "getTransactionCollection").mockResolvedValue(
-        mockTransactionsCollection
-      )
+      mockAuthenticatedUser()
+      const mockTransactionsCollection = setupTransactionCollectionMock()
+      mockTransactionsCollection.insertOne.mockResolvedValue({
+        acknowledged: false,
+      })
 
       const result = await createTransaction(validTransactionValues)
 
@@ -66,7 +57,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should successfully create transaction", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await createTransaction(validTransactionValues)
 
@@ -75,10 +66,8 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockTransactionCollectionError()
 
       const result = await createTransaction(validTransactionValues)
 
@@ -89,7 +78,7 @@ describe("Transactions Actions", () => {
 
   describe("updateTransaction", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await updateTransaction(
         transaction._id.toString(),
@@ -103,7 +92,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error with invalid input data", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateTransaction(transaction._id.toString(), {
         type: "invalid" as "income" | "expense",
@@ -118,7 +107,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error with invalid transaction ID", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateTransaction(
         "invalid-id",
@@ -132,7 +121,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error when transaction not found", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateTransaction(
         transaction._id.toString(),
@@ -147,7 +136,7 @@ describe("Transactions Actions", () => {
 
     it("should successfully update transaction", async () => {
       await insertTestTransaction(transaction)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateTransaction(transaction._id.toString(), {
         type: "income",
@@ -162,10 +151,8 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockTransactionCollectionError()
 
       const result = await updateTransaction(
         transaction._id.toString(),
@@ -181,7 +168,7 @@ describe("Transactions Actions", () => {
 
   describe("deleteTransaction", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await deleteTransaction(transaction._id.toString())
 
@@ -192,7 +179,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error with invalid transaction ID", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await deleteTransaction("invalid-id")
 
@@ -203,7 +190,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error when transaction not found", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await deleteTransaction(transaction._id.toString())
 
@@ -215,7 +202,7 @@ describe("Transactions Actions", () => {
 
     it("should successfully delete transaction", async () => {
       await insertTestTransaction(transaction)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await deleteTransaction(transaction._id.toString())
 
@@ -224,10 +211,8 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockTransactionCollectionError()
 
       const result = await deleteTransaction(transaction._id.toString())
 
@@ -238,7 +223,7 @@ describe("Transactions Actions", () => {
 
   describe("getTransactions", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await getTransactions()
 
@@ -249,7 +234,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return empty transactions list", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await getTransactions()
 
@@ -259,7 +244,7 @@ describe("Transactions Actions", () => {
 
     it("should return transactions list", async () => {
       await insertTestTransaction(transaction)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await getTransactions()
 
@@ -270,10 +255,8 @@ describe("Transactions Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockTransactionCollectionError()
 
       const result = await getTransactions()
 

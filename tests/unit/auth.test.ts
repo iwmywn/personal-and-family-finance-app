@@ -1,23 +1,20 @@
 import { insertTestUser } from "@/tests/helpers/database"
 import { user, validSignInValues } from "@/tests/helpers/test-data"
+import { mockUserCollectionError } from "@/tests/mocks/collections.mock"
 import {
-  mockVerifyRecaptchaToken,
-  setRecaptchaSuccess,
+  mockRecaptchaError,
+  mockRecaptchaFailure,
+  mockRecaptchaSuccess,
 } from "@/tests/mocks/recaptcha.mock"
-import { mockSession } from "@/tests/mocks/session.mock"
+import {
+  mockAuthenticatedUser,
+  mockSignOutFailure,
+  mockSignOutSuccess,
+  mockUnauthenticatedUser,
+} from "@/tests/mocks/session.mock"
 import { getUser, signIn, signOut } from "@/actions/auth"
-import * as collectionsLib from "@/lib/collections"
-
-vi.mock("@/lib/session", () => ({ session: mockSession }))
-vi.mock("@/lib/recaptcha", () => ({
-  verifyRecaptchaToken: mockVerifyRecaptchaToken,
-}))
 
 describe("Auth Actions", () => {
-  beforeEach(() => {
-    vi.resetAllMocks()
-  })
-
   describe("signIn", () => {
     it("should return error when recaptcha token is missing", async () => {
       const result = await signIn(validSignInValues, null)
@@ -26,7 +23,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error with invalid input data", async () => {
-      setRecaptchaSuccess(true)
+      mockRecaptchaSuccess()
 
       const result = await signIn({ username: "", password: "" }, "valid-token")
 
@@ -34,7 +31,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when recaptcha verification fails", async () => {
-      setRecaptchaSuccess(false)
+      mockRecaptchaFailure()
 
       const result = await signIn(validSignInValues, "invalid-token")
 
@@ -42,7 +39,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when user does not exist", async () => {
-      setRecaptchaSuccess(true)
+      mockRecaptchaSuccess()
 
       const result = await signIn(validSignInValues, "valid-token")
 
@@ -51,7 +48,7 @@ describe("Auth Actions", () => {
 
     it("should return error with incorrect password", async () => {
       await insertTestUser(user)
-      setRecaptchaSuccess(true)
+      mockRecaptchaSuccess()
 
       const result = await signIn(
         { username: "testuser", password: "WrongPassword123!" },
@@ -63,7 +60,7 @@ describe("Auth Actions", () => {
 
     it("should successfully sign in with valid credentials", async () => {
       await insertTestUser(user)
-      setRecaptchaSuccess(true)
+      mockRecaptchaSuccess()
 
       const result = await signIn(validSignInValues, "valid-token")
 
@@ -71,9 +68,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when recaptcha verification throws error", async () => {
-      mockVerifyRecaptchaToken.mockRejectedValue(
-        new Error("Recaptcha service error")
-      )
+      mockRecaptchaError()
 
       const result = await signIn(validSignInValues, "valid-token")
 
@@ -81,10 +76,8 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      setRecaptchaSuccess(true)
-      vi.spyOn(collectionsLib, "getUserCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockRecaptchaSuccess()
+      mockUserCollectionError()
 
       const result = await signIn(validSignInValues, "valid-token")
 
@@ -94,7 +87,7 @@ describe("Auth Actions", () => {
 
   describe("signOut", () => {
     it("should successfully sign out", async () => {
-      mockSession.user.delete.mockResolvedValue(undefined)
+      mockSignOutSuccess()
 
       const result = await signOut()
 
@@ -103,7 +96,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when sign out fails", async () => {
-      mockSession.user.delete.mockRejectedValue(new Error("Session error"))
+      mockSignOutFailure()
 
       const result = await signOut()
 
@@ -114,7 +107,7 @@ describe("Auth Actions", () => {
 
   describe("getUser", () => {
     it("should return error when user is not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await getUser()
 
@@ -125,7 +118,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when user not found in database", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await getUser()
 
@@ -135,7 +128,7 @@ describe("Auth Actions", () => {
 
     it("should return user data when authenticated", async () => {
       await insertTestUser(user)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await getUser()
 
@@ -146,10 +139,8 @@ describe("Auth Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getUserCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockUserCollectionError()
 
       const result = await getUser()
 

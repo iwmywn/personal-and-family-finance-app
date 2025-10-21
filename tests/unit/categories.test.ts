@@ -1,4 +1,4 @@
-import { ObjectId, type Collection, type OptionalId } from "mongodb"
+import { ObjectId } from "mongodb"
 
 import {
   insertTestCategory,
@@ -7,29 +7,28 @@ import {
 import {
   category,
   transaction,
-  user,
   validCategoryValues,
 } from "@/tests/helpers/test-data"
-import { mockSession } from "@/tests/mocks/session.mock"
+import {
+  mockCategoryCollectionError,
+  mockTransactionCollectionError,
+  setupCategoryCollectionMock,
+} from "@/tests/mocks/collections.mock"
+import {
+  mockAuthenticatedUser,
+  mockUnauthenticatedUser,
+} from "@/tests/mocks/session.mock"
 import {
   createCustomCategory,
   deleteCustomCategory,
   getCustomCategories,
   updateCustomCategory,
 } from "@/actions/categories"
-import * as collectionsLib from "@/lib/collections"
-import type { DBCustomCategory } from "@/lib/definitions"
-
-vi.mock("@/lib/session", () => ({ session: mockSession }))
 
 describe("Categories Actions", () => {
-  beforeEach(() => {
-    vi.resetAllMocks()
-  })
-
   describe("createCustomCategory", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await createCustomCategory(validCategoryValues)
 
@@ -40,7 +39,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return error with invalid input data", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await createCustomCategory({
         type: "invalid" as "expense" | "income",
@@ -54,7 +53,7 @@ describe("Categories Actions", () => {
 
     it("should return error when category with same name exists", async () => {
       await insertTestCategory(category)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await createCustomCategory({
         type: category.type,
@@ -68,7 +67,7 @@ describe("Categories Actions", () => {
 
     it("should return error when duplicate categoryKey exists", async () => {
       await insertTestCategory(category)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       vi.mock("nanoid", () => ({
         nanoid: () => "abcdef12",
@@ -85,14 +84,12 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when database insertion fails", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      const mockCategoriesCollection = {
-        findOne: vi.fn().mockResolvedValue(null),
-        insertOne: vi.fn().mockResolvedValue({ acknowledged: false }),
-      } as unknown as Collection<OptionalId<DBCustomCategory>>
-      vi.spyOn(collectionsLib, "getCategoryCollection").mockResolvedValue(
-        mockCategoriesCollection
-      )
+      mockAuthenticatedUser()
+      const mockCategoriesCollection = setupCategoryCollectionMock()
+      mockCategoriesCollection.findOne.mockResolvedValue(null)
+      mockCategoriesCollection.insertOne.mockResolvedValue({
+        acknowledged: false,
+      })
 
       const result = await createCustomCategory(validCategoryValues)
 
@@ -101,7 +98,7 @@ describe("Categories Actions", () => {
     })
 
     it("should successfully create custom category", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await createCustomCategory(validCategoryValues)
 
@@ -110,10 +107,8 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockCategoryCollectionError()
 
       const result = await createCustomCategory(validCategoryValues)
 
@@ -124,7 +119,7 @@ describe("Categories Actions", () => {
 
   describe("updateCustomCategory", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await updateCustomCategory(
         category._id.toString(),
@@ -138,7 +133,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return error with invalid input data", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateCustomCategory(category._id.toString(), {
         type: "invalid" as "expense" | "income",
@@ -151,7 +146,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return error with invalid category ID", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateCustomCategory(
         "invalid-id",
@@ -165,7 +160,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when category not found", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateCustomCategory(
         category._id.toString(),
@@ -185,7 +180,7 @@ describe("Categories Actions", () => {
         _id: new ObjectId("68f795d4bdcc3c9a30717977"),
         label: "Different Label",
       })
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateCustomCategory(category._id.toString(), {
         type: category.type,
@@ -199,7 +194,7 @@ describe("Categories Actions", () => {
 
     it("should successfully update custom category", async () => {
       await insertTestCategory(category)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updateCustomCategory(category._id.toString(), {
         type: "income",
@@ -212,10 +207,8 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockCategoryCollectionError()
 
       const result = await updateCustomCategory(
         category._id.toString(),
@@ -231,7 +224,7 @@ describe("Categories Actions", () => {
 
   describe("deleteCustomCategory", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await deleteCustomCategory(category._id.toString())
 
@@ -242,7 +235,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return error with invalid category ID", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await deleteCustomCategory("invalid-id")
 
@@ -253,7 +246,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when category not found", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await deleteCustomCategory(category._id.toString())
 
@@ -269,7 +262,7 @@ describe("Categories Actions", () => {
         ...transaction,
         categoryKey: category.categoryKey,
       })
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await deleteCustomCategory(category._id.toString())
 
@@ -281,7 +274,7 @@ describe("Categories Actions", () => {
 
     it("should successfully delete custom category", async () => {
       await insertTestCategory(category)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await deleteCustomCategory(category._id.toString())
 
@@ -290,10 +283,8 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockCategoryCollectionError()
 
       const result = await deleteCustomCategory(category._id.toString())
 
@@ -302,10 +293,8 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockTransactionCollectionError()
 
       const result = await deleteCustomCategory(category._id.toString())
 
@@ -316,7 +305,7 @@ describe("Categories Actions", () => {
 
   describe("getCustomCategories", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await getCustomCategories()
 
@@ -327,7 +316,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return empty categories list", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await getCustomCategories()
 
@@ -337,7 +326,7 @@ describe("Categories Actions", () => {
 
     it("should return categories list", async () => {
       await insertTestCategory(category)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await getCustomCategories()
 
@@ -347,10 +336,8 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockCategoryCollectionError()
 
       const result = await getCustomCategories()
 

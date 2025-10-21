@@ -1,19 +1,16 @@
 import { insertTestUser } from "@/tests/helpers/database"
 import { user, validPasswordValues } from "@/tests/helpers/test-data"
-import { mockSession } from "@/tests/mocks/session.mock"
+import { mockUserCollectionError } from "@/tests/mocks/collections.mock"
+import {
+  mockAuthenticatedUser,
+  mockUnauthenticatedUser,
+} from "@/tests/mocks/session.mock"
 import { updatePassword } from "@/actions/settings/account"
-import * as collectionsLib from "@/lib/collections"
-
-vi.mock("@/lib/session", () => ({ session: mockSession }))
 
 describe("Settings Actions", () => {
-  beforeEach(() => {
-    vi.resetAllMocks()
-  })
-
   describe("updatePassword", () => {
     it("should return error when not authenticated", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: null })
+      mockUnauthenticatedUser()
 
       const result = await updatePassword(validPasswordValues)
 
@@ -24,7 +21,7 @@ describe("Settings Actions", () => {
     })
 
     it("should return error with invalid input data", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updatePassword({
         currentPassword: "TestPassword123!",
@@ -37,7 +34,7 @@ describe("Settings Actions", () => {
     })
 
     it("should return error when user not found", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updatePassword(validPasswordValues)
 
@@ -47,7 +44,7 @@ describe("Settings Actions", () => {
 
     it("should return error with incorrect current password", async () => {
       await insertTestUser(user)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updatePassword({
         currentPassword: "WrongPassword123!",
@@ -61,7 +58,7 @@ describe("Settings Actions", () => {
 
     it("should return success when no changes are made", async () => {
       await insertTestUser(user)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updatePassword({
         currentPassword: "",
@@ -75,7 +72,7 @@ describe("Settings Actions", () => {
 
     it("should successfully update password", async () => {
       await insertTestUser(user)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      mockAuthenticatedUser()
 
       const result = await updatePassword(validPasswordValues)
 
@@ -84,10 +81,8 @@ describe("Settings Actions", () => {
     })
 
     it("should return error when database operation throws error", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(collectionsLib, "getUserCollection").mockRejectedValue(
-        new Error("Database error")
-      )
+      mockAuthenticatedUser()
+      mockUserCollectionError()
 
       const result = await updatePassword(validPasswordValues)
 
