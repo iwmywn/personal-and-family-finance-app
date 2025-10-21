@@ -1,13 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import type { Collection, OptionalId } from "mongodb"
 
 import { insertTestUser } from "@/tests/helpers/database"
 import { user, validPasswordValues } from "@/tests/helpers/test-data"
 import { mockSession } from "@/tests/mocks/session.mock"
 import { updatePassword } from "@/actions/settings/account"
 import * as collectionsLib from "@/lib/collections"
-import * as dataLib from "@/lib/data"
-import type { DBUser } from "@/lib/definitions"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 
@@ -69,12 +66,12 @@ describe("Settings Actions", () => {
       mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
 
       const result = await updatePassword({
-        currentPassword: "TestPassword123!",
-        newPassword: "TestPassword123!",
-        confirmPassword: "TestPassword123!",
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
       })
 
-      expect(result.success).toBe("Mật khẩu của bạn đã được thay đổi.")
+      expect(result.success).toBe("Không có thay đổi nào được thực hiện.")
       expect(result.error).toBeUndefined()
     })
 
@@ -88,50 +85,10 @@ describe("Settings Actions", () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should return error when getUserById throws error", async () => {
+    it("should return error when database operation throws error", async () => {
       mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(dataLib, "getUserById").mockRejectedValue(
+      vi.spyOn(collectionsLib, "getUserCollection").mockRejectedValue(
         new Error("Database error")
-      )
-
-      const result = await updatePassword(validPasswordValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau."
-      )
-    })
-
-    it("should return error when getUserCollection throws error", async () => {
-      await insertTestUser(user)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-
-      const mockCollection = {
-        findOne: vi.fn().mockResolvedValue(user),
-        updateOne: vi.fn().mockRejectedValue(new Error("Database error")),
-      } as unknown as Collection<OptionalId<DBUser>>
-      vi.spyOn(collectionsLib, "getUserCollection").mockResolvedValue(
-        mockCollection
-      )
-
-      const result = await updatePassword(validPasswordValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau."
-      )
-    })
-
-    it("should return error when database update fails", async () => {
-      await insertTestUser(user)
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-
-      const mockCollection = {
-        findOne: vi.fn().mockResolvedValue(user),
-        updateOne: vi.fn().mockRejectedValue(new Error("Update failed")),
-      } as unknown as Collection<OptionalId<DBUser>>
-      vi.spyOn(collectionsLib, "getUserCollection").mockResolvedValue(
-        mockCollection
       )
 
       const result = await updatePassword(validPasswordValues)

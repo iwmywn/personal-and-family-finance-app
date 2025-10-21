@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import type { Collection, OptionalId } from "mongodb"
+import { ObjectId, type Collection, type OptionalId } from "mongodb"
 
 import {
   insertTestCategory,
@@ -85,15 +85,6 @@ describe("Categories Actions", () => {
       expect(result.error).toBe("Lỗi tạo key danh mục. Vui lòng thử lại.")
     })
 
-    it("should successfully create custom category", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-
-      const result = await createCustomCategory(validCategoryValues)
-
-      expect(result.success).toBe("Danh mục đã được tạo.")
-      expect(result.error).toBeUndefined()
-    })
-
     it("should return error when database insertion fails", async () => {
       mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
       const mockCategoriesCollection = {
@@ -108,6 +99,15 @@ describe("Categories Actions", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Tạo danh mục thất bại! Thử lại sau.")
+    })
+
+    it("should successfully create custom category", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await createCustomCategory(validCategoryValues)
+
+      expect(result.success).toBe("Danh mục đã được tạo.")
+      expect(result.error).toBeUndefined()
     })
 
     it("should return error when database operation throws error", async () => {
@@ -183,7 +183,7 @@ describe("Categories Actions", () => {
       await insertTestCategory(category)
       await insertTestCategory({
         ...category,
-        _id: new (await import("mongodb")).ObjectId(),
+        _id: new ObjectId("68f795d4bdcc3c9a30717977"),
         label: "Different Label",
       })
       mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
@@ -293,6 +293,18 @@ describe("Categories Actions", () => {
     it("should return error when database operation throws error", async () => {
       mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
       vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(
+        new Error("Database error")
+      )
+
+      const result = await deleteCustomCategory(category._id.toString())
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Xóa danh mục thất bại! Vui lòng thử lại sau.")
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+      vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(
         new Error("Database error")
       )
 

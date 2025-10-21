@@ -2,8 +2,8 @@ import * as React from "react"
 
 export function useDynamicSizeAuto() {
   const elementsRef = React.useRef<Set<HTMLElement>>(new Set())
-  const [calculatedWidth, setCalculatedWidth] = React.useState(0)
-  const [calculatedHeight, setCalculatedHeight] = React.useState(0)
+  const [calculatedWidth, setCalculatedWidth] = React.useState<number>(0)
+  const [calculatedHeight, setCalculatedHeight] = React.useState<number>(0)
 
   const calculateSize = React.useCallback(() => {
     let totalWidth = 0

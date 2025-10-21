@@ -5,7 +5,6 @@ import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
 
 import { getUserCollection } from "@/lib/collections"
-import { getUserById } from "@/lib/data"
 import { session } from "@/lib/session"
 
 export async function updatePassword(values: PasswordFormValues) {
@@ -26,7 +25,11 @@ export async function updatePassword(values: PasswordFormValues) {
 
     const { currentPassword, newPassword } = parsedValues.data
 
-    const existingUser = await getUserById(userId)
+    const userCollection = await getUserCollection()
+    const existingUser = await userCollection.findOne({
+      _id: new ObjectId(userId),
+    })
+
     if (!existingUser) {
       return { error: "Không tìm thấy người dùng!" }
     }
@@ -53,8 +56,6 @@ export async function updatePassword(values: PasswordFormValues) {
     if (isSame) {
       return { success: "Không có thay đổi nào được thực hiện." }
     }
-
-    const userCollection = await getUserCollection()
 
     await userCollection.updateOne(
       { _id: new ObjectId(userId) },

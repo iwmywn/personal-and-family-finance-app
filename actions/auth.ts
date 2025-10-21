@@ -2,8 +2,9 @@
 
 import { signInSchema, type SignInFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
+import { ObjectId } from "mongodb"
 
-import { getUserById, getUserByUsername } from "@/lib/data"
+import { getUserCollection } from "@/lib/collections"
 import { User } from "@/lib/definitions"
 import { verifyRecaptchaToken } from "@/lib/recaptcha"
 import { session } from "@/lib/session"
@@ -20,10 +21,11 @@ export async function signIn(
     if (!parsedValues.success) return { error: "Dữ liệu không hợp lệ!" }
 
     const { username, password } = parsedValues.data
-    const [verify, existingUser] = await Promise.all([
+    const [verify, userCollection] = await Promise.all([
       verifyRecaptchaToken(recaptchaToken),
-      getUserByUsername(username),
+      getUserCollection(),
     ])
+    const existingUser = await userCollection.findOne({ username })
 
     if (!verify) return { error: "Xác thực Captcha thất bại!" }
     if (!existingUser)
@@ -66,7 +68,10 @@ export async function getUser() {
       }
     }
 
-    const existingUser = await getUserById(userId)
+    const userCollection = await getUserCollection()
+    const existingUser = await userCollection.findOne({
+      _id: new ObjectId(userId),
+    })
 
     if (!existingUser) return { error: "Không tìm thấy người dùng!" }
 

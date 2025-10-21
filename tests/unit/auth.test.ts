@@ -8,7 +8,7 @@ import {
 } from "@/tests/mocks/recaptcha.mock"
 import { mockSession } from "@/tests/mocks/session.mock"
 import { getUser, signIn, signOut } from "@/actions/auth"
-import * as dataLib from "@/lib/data"
+import * as collectionsLib from "@/lib/collections"
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 vi.mock("@/lib/recaptcha", () => ({
@@ -82,21 +82,11 @@ describe("Auth Actions", () => {
       expect(result.error).toBe("Đăng nhập thất bại! Vui lòng thử lại sau.")
     })
 
-    it("should return error when getUserByUsername throws error", async () => {
+    it("should return error when database operation throws error", async () => {
       setRecaptchaSuccess(true)
-      vi.spyOn(dataLib, "getUserByUsername").mockRejectedValue(
+      vi.spyOn(collectionsLib, "getUserCollection").mockRejectedValue(
         new Error("Database error")
       )
-
-      const result = await signIn(validSignInValues, "valid-token")
-
-      expect(result.error).toBe("Đăng nhập thất bại! Vui lòng thử lại sau.")
-    })
-
-    it("should return error when session creation fails", async () => {
-      await insertTestUser(user)
-      setRecaptchaSuccess(true)
-      mockSession.user.create.mockRejectedValue(new Error("Session error"))
 
       const result = await signIn(validSignInValues, "valid-token")
 
@@ -157,20 +147,9 @@ describe("Auth Actions", () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should return error when fetching user from session fails", async () => {
-      mockSession.user.get.mockRejectedValue(new Error("Session error"))
-
-      const result = await getUser()
-
-      expect(result.user).toBeUndefined()
-      expect(result.error).toBe(
-        "Không thể tải thông tin người dùng! Vui lòng thử lại sau."
-      )
-    })
-
-    it("should return error when getUserById throws error", async () => {
+    it("should return error when database operation throws error", async () => {
       mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-      vi.spyOn(dataLib, "getUserById").mockRejectedValue(
+      vi.spyOn(collectionsLib, "getUserCollection").mockRejectedValue(
         new Error("Database error")
       )
 

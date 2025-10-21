@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb"
-
 import {
   getCategoryCollection,
   getTransactionCollection,
@@ -20,19 +18,4 @@ export const insertTestTransaction = async (transaction: DBTransaction) => {
 export const insertTestCategory = async (category: DBCustomCategory) => {
   const collection = await getCategoryCollection()
   await collection.insertOne(category)
-}
-
-export const findUserById = async (userId: string) => {
-  const collection = await getUserCollection()
-  return collection.findOne({ _id: new ObjectId(userId) })
-}
-
-export const countTransactions = async (userId: string) => {
-  const collection = await getTransactionCollection()
-  return collection.countDocuments({ userId: new ObjectId(userId) })
-}
-
-export const countCategories = async (userId: string) => {
-  const collection = await getCategoryCollection()
-  return collection.countDocuments({ userId: new ObjectId(userId) })
 }

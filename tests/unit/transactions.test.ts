@@ -51,15 +51,6 @@ describe("Transactions Actions", () => {
       expect(result.error).toBe("Dữ liệu không hợp lệ!")
     })
 
-    it("should successfully create transaction", async () => {
-      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
-
-      const result = await createTransaction(validTransactionValues)
-
-      expect(result.success).toBe("Giao dịch đã được tạo.")
-      expect(result.error).toBeUndefined()
-    })
-
     it("should return error when database insertion fails", async () => {
       mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
       const mockTransactionsCollection = {
@@ -73,6 +64,15 @@ describe("Transactions Actions", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Tạo giao dịch thất bại! Thử lại sau.")
+    })
+
+    it("should successfully create transaction", async () => {
+      mockSession.user.get.mockResolvedValue({ userId: user._id.toString() })
+
+      const result = await createTransaction(validTransactionValues)
+
+      expect(result.success).toBe("Giao dịch đã được tạo.")
+      expect(result.error).toBeUndefined()
     })
 
     it("should return error when database operation throws error", async () => {
