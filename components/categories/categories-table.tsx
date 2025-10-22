@@ -97,7 +97,7 @@ export function CategoriesTable({
                       <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
                         {category.label}
                       </TableCell>
-                      <TableCell className="max-w-72 min-w-52 wrap-anywhere whitespace-normal">
+                      <TableCell className="max-w-md min-w-52 wrap-anywhere whitespace-normal">
                         {category.description}
                       </TableCell>
                       <TableCell>
