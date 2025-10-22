@@ -72,7 +72,7 @@ describe("Transactions Actions", () => {
       const result = await createTransaction(validTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Tạo giao dịch thất bại. Vui lòng thử lại sau.")
+      expect(result.error).toBe("Tạo giao dịch thất bại! Vui lòng thử lại sau.")
     })
   })
 
@@ -115,9 +115,7 @@ describe("Transactions Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!"
-      )
+      expect(result.error).toBe("Transaction ID không hợp lệ!")
     })
 
     it("should return error when transaction not found", async () => {
@@ -184,9 +182,7 @@ describe("Transactions Actions", () => {
       const result = await deleteTransaction("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!"
-      )
+      expect(result.error).toBe("Transaction ID không hợp lệ!")
     })
 
     it("should return error when transaction not found", async () => {

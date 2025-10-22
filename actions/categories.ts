@@ -64,7 +64,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     return { success: "Danh mục đã được tạo.", error: undefined }
   } catch (error) {
     console.error("Error creating custom category:", error)
-    return { error: "Tạo danh mục thất bại. Vui lòng thử lại sau." }
+    return { error: "Tạo danh mục thất bại! Vui lòng thử lại sau." }
   }
 }
 
@@ -87,13 +87,13 @@ export async function updateCustomCategory(
       return { error: "Dữ liệu không hợp lệ!" }
     }
 
-    const categoriesCollection = await getCategoryCollection()
-
     if (!ObjectId.isValid(categoryId)) {
       return {
-        error: "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!",
+        error: "Category ID không hợp lệ!",
       }
     }
+
+    const categoriesCollection = await getCategoryCollection()
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
@@ -145,16 +145,16 @@ export async function deleteCustomCategory(categoryId: string) {
       }
     }
 
+    if (!ObjectId.isValid(categoryId)) {
+      return {
+        error: "Category ID không hợp lệ!",
+      }
+    }
+
     const [categoriesCollection, transactionsCollection] = await Promise.all([
       getCategoryCollection(),
       getTransactionCollection(),
     ])
-
-    if (!ObjectId.isValid(categoryId)) {
-      return {
-        error: "Không tìm thấy danh mục hoặc bạn không có quyền xóa!",
-      }
-    }
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),

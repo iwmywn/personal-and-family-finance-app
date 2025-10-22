@@ -41,7 +41,7 @@ export async function createTransaction(values: TransactionFormValues) {
     return { success: "Giao dịch đã được tạo.", error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
-    return { error: "Tạo giao dịch thất bại. Vui lòng thử lại sau." }
+    return { error: "Tạo giao dịch thất bại! Vui lòng thử lại sau." }
   }
 }
 
@@ -64,13 +64,13 @@ export async function updateTransaction(
       return { error: "Dữ liệu không hợp lệ!" }
     }
 
-    const transactionsCollection = await getTransactionCollection()
-
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!",
+        error: "Transaction ID không hợp lệ!",
       }
     }
+
+    const transactionsCollection = await getTransactionCollection()
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
@@ -113,13 +113,13 @@ export async function deleteTransaction(transactionId: string) {
       }
     }
 
-    const transactionsCollection = await getTransactionCollection()
-
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!",
+        error: "Transaction ID không hợp lệ!",
       }
     }
+
+    const transactionsCollection = await getTransactionCollection()
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),

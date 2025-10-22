@@ -113,7 +113,7 @@ describe("Categories Actions", () => {
       const result = await createCustomCategory(validCategoryValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Tạo danh mục thất bại. Vui lòng thử lại sau.")
+      expect(result.error).toBe("Tạo danh mục thất bại! Vui lòng thử lại sau.")
     })
   })
 
@@ -154,9 +154,7 @@ describe("Categories Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!"
-      )
+      expect(result.error).toBe("Category ID không hợp lệ!")
     })
 
     it("should return error when category not found", async () => {
@@ -240,9 +238,7 @@ describe("Categories Actions", () => {
       const result = await deleteCustomCategory("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không tìm thấy danh mục hoặc bạn không có quyền xóa!"
-      )
+      expect(result.error).toBe("Category ID không hợp lệ!")
     })
 
     it("should return error when category not found", async () => {
