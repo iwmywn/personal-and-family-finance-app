@@ -14,7 +14,7 @@ export function useUser() {
         user?: undefined
       }
     | {
-        user: User
+        user: Omit<User, "password">
         error?: undefined
       }
   >("me", getUser)

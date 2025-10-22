@@ -69,13 +69,17 @@ export async function getUser() {
     }
 
     const userCollection = await getUserCollection()
-    const existingUser = await userCollection.findOne({
-      _id: new ObjectId(userId),
-    })
+    const existingUser = await userCollection.findOne(
+      { _id: new ObjectId(userId) },
+      { projection: { password: 0 } }
+    )
 
     if (!existingUser) return { error: "Không tìm thấy người dùng!" }
 
-    const user = { ...existingUser, _id: existingUser._id.toString() } as User
+    const user = { ...existingUser, _id: existingUser._id.toString() } as Omit<
+      User,
+      "password"
+    >
 
     return { user }
   } catch (error) {
