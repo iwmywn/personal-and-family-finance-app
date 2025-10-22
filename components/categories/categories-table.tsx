@@ -94,10 +94,10 @@ export function CategoriesTable({
                 <TableBody>
                   {filteredCategories.map((category) => (
                     <TableRow key={category._id} className="[&>td]:text-center">
-                      <TableCell className="max-w-36 min-w-24 wrap-anywhere whitespace-normal">
+                      <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
                         {category.label}
                       </TableCell>
-                      <TableCell className="max-w-72 min-w-48 wrap-anywhere whitespace-normal">
+                      <TableCell className="max-w-72 min-w-52 wrap-anywhere whitespace-normal">
                         {category.description}
                       </TableCell>
                       <TableCell>

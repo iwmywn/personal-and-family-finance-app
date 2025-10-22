@@ -169,7 +169,7 @@ export function TransactionsTable({
                       className="[&>td]:text-center"
                     >
                       <TableCell>{formatDate(transaction.date)}</TableCell>
-                      <TableCell className="max-w-72 min-w-48 wrap-anywhere whitespace-normal">
+                      <TableCell className="max-w-72 min-w-52 wrap-anywhere whitespace-normal">
                         {transaction.description}
                       </TableCell>
                       {showTypeCol && (
@@ -210,7 +210,7 @@ export function TransactionsTable({
                         </TableCell>
                       )}
                       {showAmountCol && (
-                        <TableCell className="max-w-72 min-w-48 wrap-anywhere whitespace-normal">
+                        <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
                           <span
                             className={`font-semibold ${
                               transaction.type === "income"
