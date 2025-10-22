@@ -5,9 +5,9 @@ import {
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
 } from "@/tests/mocks/session.mock"
-import { updatePassword } from "@/actions/settings/account"
+import { updatePassword } from "@/actions/account"
 
-describe("Settings Actions", () => {
+describe("Account Actions", () => {
   describe("updatePassword", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()

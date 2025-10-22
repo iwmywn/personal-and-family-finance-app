@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { updatePassword } from "@/actions/settings/account"
+import { updatePassword } from "@/actions/account"
 import {
   Form,
   FormControl,
