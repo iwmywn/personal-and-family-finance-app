@@ -152,6 +152,79 @@ export function TransactionDialog({
     form.resetField("categoryKey", { defaultValue: "" })
   }
 
+  const renderCategorySelect = (type: "income" | "expense") => {
+    const typeLabel = type === "income" ? "thu nhập" : "chi tiêu"
+    const placeholder = `Chọn danh mục ${typeLabel}`
+
+    return (
+      <FormField
+        control={form.control}
+        name="categoryKey"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Danh mục {typeLabel}</FormLabel>
+            <Select onValueChange={field.onChange} value={field.value}>
+              <FormControl>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={placeholder}>
+                    {field.value
+                      ? getCategoryLabel(field.value, customCategories)
+                      : null}
+                  </SelectValue>
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent
+                align="start"
+                style={{
+                  maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
+                }}
+              >
+                <SelectGroup>
+                  {getCategoriesWithDetails(type).map((c) => (
+                    <SelectItem key={c.category} value={c.category}>
+                      <div className="flex flex-col">
+                        <span className="font-medium">{c.label}</span>
+                        <span className="text-muted-foreground wrap-anywhere">
+                          {c.description}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                  {customCategories &&
+                    customCategories.filter((c) => c.type === type).length >
+                      0 && (
+                      <>
+                        <SelectLabel>Danh mục tùy chỉnh</SelectLabel>
+                        {customCategories
+                          .filter((c) => c.type === type)
+                          .map((c) => (
+                            <SelectItem key={c._id} value={c.categoryKey}>
+                              <div className="flex flex-col">
+                                <span className="font-medium">{c.label}</span>
+                                <span className="text-muted-foreground wrap-anywhere">
+                                  {c.description}
+                                </span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                      </>
+                    )}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <FormDescription>
+              Không tìm thấy danh mục phù hợp?{" "}
+              <FormLink href="/categories" className="text-foreground/85">
+                Tạo danh mục tùy chỉnh
+              </FormLink>
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    )
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
@@ -189,169 +262,11 @@ export function TransactionDialog({
               </TabsList>
 
               <TabsContent value="income" className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="categoryKey"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Danh mục thu nhập</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Chọn danh mục thu nhập">
-                              {field.value
-                                ? getCategoryLabel(
-                                    field.value,
-                                    customCategories
-                                  )
-                                : null}
-                            </SelectValue>
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent
-                          align="start"
-                          style={{
-                            maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
-                          }}
-                        >
-                          <SelectGroup>
-                            {getCategoriesWithDetails("income").map((c) => (
-                              <SelectItem key={c.category} value={c.category}>
-                                <div className="flex flex-col">
-                                  <span className="font-medium">{c.label}</span>
-                                  <span className="text-muted-foreground wrap-anywhere">
-                                    {c.description}
-                                  </span>
-                                </div>
-                              </SelectItem>
-                            ))}
-                            {customCategories &&
-                              customCategories.filter(
-                                (c) => c.type === "income"
-                              ).length > 0 && (
-                                <>
-                                  <SelectLabel>Danh mục tùy chỉnh</SelectLabel>
-                                  {customCategories
-                                    .filter((c) => c.type === "income")
-                                    .map((c) => (
-                                      <SelectItem
-                                        key={c._id}
-                                        value={c.categoryKey}
-                                      >
-                                        <div className="flex flex-col">
-                                          <span className="font-medium">
-                                            {c.label}
-                                          </span>
-                                          <span className="text-muted-foreground wrap-anywhere">
-                                            {c.description}
-                                          </span>
-                                        </div>
-                                      </SelectItem>
-                                    ))}
-                                </>
-                              )}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      <FormDescription>
-                        Không tìm thấy danh mục phù hợp?{" "}
-                        <FormLink
-                          href="/categories"
-                          className="text-foreground/85"
-                        >
-                          Tạo danh mục tùy chỉnh
-                        </FormLink>
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {renderCategorySelect("income")}
               </TabsContent>
 
               <TabsContent value="expense" className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="categoryKey"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Danh mục chi tiêu</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Chọn danh mục chi tiêu">
-                              {field.value
-                                ? getCategoryLabel(
-                                    field.value,
-                                    customCategories
-                                  )
-                                : null}
-                            </SelectValue>
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent
-                          align="start"
-                          style={{
-                            maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
-                          }}
-                        >
-                          <SelectGroup>
-                            {getCategoriesWithDetails("expense").map((c) => (
-                              <SelectItem key={c.category} value={c.category}>
-                                <div className="flex flex-col">
-                                  <span className="font-medium">{c.label}</span>
-                                  <span className="text-muted-foreground wrap-anywhere">
-                                    {c.description}
-                                  </span>
-                                </div>
-                              </SelectItem>
-                            ))}
-                            {customCategories &&
-                              customCategories.filter(
-                                (c) => c.type === "expense"
-                              ).length > 0 && (
-                                <>
-                                  <SelectLabel>Danh mục tùy chỉnh</SelectLabel>
-                                  {customCategories
-                                    .filter((c) => c.type === "expense")
-                                    .map((c) => (
-                                      <SelectItem
-                                        key={c._id}
-                                        value={c.categoryKey}
-                                      >
-                                        <div className="flex flex-col">
-                                          <span className="font-medium">
-                                            {c.label}
-                                          </span>
-                                          <span className="text-muted-foreground wrap-anywhere">
-                                            {c.description}
-                                          </span>
-                                        </div>
-                                      </SelectItem>
-                                    ))}
-                                </>
-                              )}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                      <FormDescription>
-                        Không tìm thấy danh mục phù hợp?{" "}
-                        <FormLink
-                          href="/categories"
-                          className="text-foreground/85"
-                        >
-                          Tạo danh mục tùy chỉnh
-                        </FormLink>
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {renderCategorySelect("expense")}
               </TabsContent>
             </Tabs>
 
