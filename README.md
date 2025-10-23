@@ -1,1 +1,1 @@
-my personal financial management app
+my personal & family financial management app
