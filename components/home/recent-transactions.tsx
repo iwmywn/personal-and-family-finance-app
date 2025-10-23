@@ -16,21 +16,17 @@ import { Separator } from "@/components/ui/separator"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
-import type { Transaction } from "@/lib/definitions"
-import { useCustomCategories } from "@/lib/swr"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface RecentTransactionsProps {
-  transactions: Transaction[]
   offsetHeight: number
 }
 
-export function RecentTransactions({
-  transactions,
-  offsetHeight,
-}: RecentTransactionsProps) {
+export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
-  const recentTransactions = transactions.slice(0, 10)
+  const { transactions } = useTransactions()
+  const recentTransactions = transactions!.slice(0, 10)
   const { categories: customCategories } = useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
@@ -66,7 +62,7 @@ export function RecentTransactions({
             recentTransactions.map((transaction, index) => (
               <Fragment key={transaction._id}>
                 <div className="flex items-center justify-between">
-                  <div className="flex max-w-3/4 items-center space-x-3">
+                  <div className="flex max-w-2/4 items-center space-x-3">
                     <div className="flex flex-col gap-1">
                       <Badge
                         className={
@@ -80,16 +76,16 @@ export function RecentTransactions({
                           customCategories
                         )}
                       </Badge>
-                      <p className="text-sm wrap-anywhere">
+                      <div className="text-sm wrap-anywhere">
                         {transaction.description}
-                      </p>
-                      <span className="text-muted-foreground text-xs">
+                      </div>
+                      <div className="text-muted-foreground text-xs">
                         {formatDate(transaction.date)}
-                      </span>
+                      </div>
                     </div>
                   </div>
-                  <div className="max-w-1/4 text-right">
-                    <p
+                  <div className="max-w-2/4 text-right">
+                    <div
                       className={`text-sm wrap-anywhere ${
                         transaction.type === "income"
                           ? "text-green-600"
@@ -98,7 +94,7 @@ export function RecentTransactions({
                     >
                       {transaction.type === "income" ? "+" : "-"}
                       {formatCurrency(transaction.amount)}
-                    </p>
+                    </div>
                   </div>
                 </div>
 

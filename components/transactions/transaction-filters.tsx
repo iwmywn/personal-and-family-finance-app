@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -42,33 +42,44 @@ export function TransactionFilters() {
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
-  const filteredTransactions = transactions!.filter((transaction) => {
-    const matchesSearch = transaction.description
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+  const filteredTransactions = useMemo(() => {
+    return transactions!.filter((transaction) => {
+      const matchesSearch = transaction.description
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
 
-    const transactionDate = new Date(transaction.date)
-    const matchesMonth =
-      filterMonth === "all" ||
-      transactionDate.getMonth() + 1 === parseInt(filterMonth)
-    const matchesYear =
-      filterYear === "all" ||
-      transactionDate.getFullYear() === parseInt(filterYear)
+      const transactionDate = new Date(transaction.date)
+      const matchesMonth =
+        filterMonth === "all" ||
+        transactionDate.getMonth() + 1 === parseInt(filterMonth)
 
-    const matchesType = filterType === "all" || transaction.type === filterType
+      const matchesYear =
+        filterYear === "all" ||
+        transactionDate.getFullYear() === parseInt(filterYear)
 
-    const matchesCategory =
-      filterCategoryKey === "all" ||
-      transaction.categoryKey === filterCategoryKey
+      const matchesType =
+        filterType === "all" || transaction.type === filterType
 
-    return (
-      matchesSearch &&
-      matchesMonth &&
-      matchesYear &&
-      matchesType &&
-      matchesCategory
-    )
-  })
+      const matchesCategory =
+        filterCategoryKey === "all" ||
+        transaction.categoryKey === filterCategoryKey
+
+      return (
+        matchesSearch &&
+        matchesMonth &&
+        matchesYear &&
+        matchesType &&
+        matchesCategory
+      )
+    })
+  }, [
+    transactions,
+    searchTerm,
+    filterMonth,
+    filterYear,
+    filterType,
+    filterCategoryKey,
+  ])
 
   const allMonths = [
     { value: "1", label: "Tháng 1" },

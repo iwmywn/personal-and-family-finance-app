@@ -22,6 +22,7 @@ export default async function DashboardLayout({
         >
           <Header />
           <section
+            id="page-content"
             className="h-full"
             style={{ maxHeight: "calc(100vh - 4.85rem)" }}
           >

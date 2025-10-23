@@ -41,14 +41,12 @@ export function StatisticsFilters() {
   })
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
-  const [filterPeriod, setFilterPeriod] = useState<string>("all")
 
   const handleResetFilters = () => {
     setSelectedDate(undefined)
     setDateRange({ from: undefined, to: undefined })
     setFilterMonth("all")
     setFilterYear("all")
-    setFilterPeriod("all")
   }
 
   const hasActiveFilters =
@@ -56,8 +54,7 @@ export function StatisticsFilters() {
     dateRange.from ||
     dateRange.to ||
     filterMonth !== "all" ||
-    filterYear !== "all" ||
-    filterPeriod !== "all"
+    filterYear !== "all"
 
   const allMonths = [
     { value: "1", label: "Tháng 1" },
@@ -75,13 +72,7 @@ export function StatisticsFilters() {
   ]
 
   const allYears = Array.from(
-    new Set([
-      new Date().getFullYear(),
-      new Date().getFullYear() - 1,
-      new Date().getFullYear() - 2,
-      new Date().getFullYear() - 3,
-      new Date().getFullYear() - 4,
-    ])
+    new Set(transactions!.map((t) => new Date(t.date).getFullYear()))
   ).sort((a, b) => b - a)
 
   const handleDateChange = (date: Date | undefined) => {
@@ -90,7 +81,6 @@ export function StatisticsFilters() {
       setDateRange({ from: undefined, to: undefined })
       setFilterMonth("all")
       setFilterYear("all")
-      setFilterPeriod("all")
     }
   }
 
@@ -103,7 +93,6 @@ export function StatisticsFilters() {
       setSelectedDate(undefined)
       setFilterMonth("all")
       setFilterYear("all")
-      setFilterPeriod("all")
     }
   }
 
@@ -112,7 +101,6 @@ export function StatisticsFilters() {
     if (month !== "all") {
       setSelectedDate(undefined)
       setDateRange({ from: undefined, to: undefined })
-      setFilterPeriod("all")
     }
   }
 
@@ -121,7 +109,6 @@ export function StatisticsFilters() {
     if (year !== "all") {
       setSelectedDate(undefined)
       setDateRange({ from: undefined, to: undefined })
-      setFilterPeriod("all")
     }
   }
 
@@ -129,64 +116,29 @@ export function StatisticsFilters() {
     return transactions!.filter((transaction) => {
       const transactionDate = new Date(transaction.date)
 
-      if (selectedDate) {
-        return (
-          transactionDate.getDate() === selectedDate.getDate() &&
+      const matchesSelectedDate = selectedDate
+        ? transactionDate.getDate() === selectedDate.getDate() &&
           transactionDate.getMonth() === selectedDate.getMonth() &&
           transactionDate.getFullYear() === selectedDate.getFullYear()
-        )
-      }
+        : true
 
-      if (dateRange.from && transactionDate < dateRange.from) return false
-      if (dateRange.to && transactionDate > dateRange.to) return false
+      const matchesDateRange =
+        (!dateRange.from || transactionDate >= dateRange.from) &&
+        (!dateRange.to || transactionDate <= dateRange.to)
 
-      if (dateRange.from || dateRange.to) return true
+      const matchesMonth =
+        filterMonth === "all" ||
+        transactionDate.getMonth() + 1 === parseInt(filterMonth)
 
-      if (
-        filterMonth !== "all" &&
-        transactionDate.getMonth() + 1 !== parseInt(filterMonth)
+      const matchesYear =
+        filterYear === "all" ||
+        transactionDate.getFullYear() === parseInt(filterYear)
+
+      return (
+        matchesSelectedDate && matchesDateRange && matchesMonth && matchesYear
       )
-        return false
-
-      if (
-        filterYear !== "all" &&
-        transactionDate.getFullYear() !== parseInt(filterYear)
-      )
-        return false
-
-      if (filterPeriod !== "all") {
-        const now = new Date()
-        switch (filterPeriod) {
-          case "thisMonth":
-            return (
-              transactionDate.getMonth() === now.getMonth() &&
-              transactionDate.getFullYear() === now.getFullYear()
-            )
-          case "lastMonth":
-            const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1)
-            return (
-              transactionDate.getMonth() === lastMonth.getMonth() &&
-              transactionDate.getFullYear() === lastMonth.getFullYear()
-            )
-          case "thisYear":
-            return transactionDate.getFullYear() === now.getFullYear()
-          case "lastYear":
-            return transactionDate.getFullYear() === now.getFullYear() - 1
-          default:
-            return true
-        }
-      }
-
-      return true
     })
-  }, [
-    transactions,
-    selectedDate,
-    dateRange,
-    filterMonth,
-    filterYear,
-    filterPeriod,
-  ])
+  }, [transactions, selectedDate, dateRange, filterMonth, filterYear])
 
   const summaryStats = useMemo(() => {
     const incomeTransactions = filteredTransactions.filter(

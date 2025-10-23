@@ -39,12 +39,13 @@ export function StatisticsPage() {
       <div className="space-y-4">
         <div className="header">
           <div>
-            <div className="header-title">Phân tích</div>
-            <div className="header-description">
+            <div className="title">Phân tích</div>
+            <div className="description">
               Phân tích chi tiết về thu chi của bạn.
             </div>
           </div>
         </div>
+
         <StatisticsFilters />
       </div>
 

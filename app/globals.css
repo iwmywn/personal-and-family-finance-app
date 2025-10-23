@@ -174,15 +174,31 @@
     @apply bg-red-100! text-red-800! hover:bg-red-200!;
   }
 
-  .header {
-    @apply bg-primary-foreground sticky top-11 z-50 flex items-center justify-between gap-2;
+  #page-content {
+    .header {
+      @apply bg-primary-foreground sticky top-11 z-50 flex items-center justify-between gap-2;
+
+      .title {
+        @apply text-xl font-semibold;
+      }
+
+      .description {
+        @apply text-muted-foreground text-sm;
+      }
+    }
   }
 
-  .header-title {
-    @apply text-xl font-semibold;
-  }
+  .quick-stats-content {
+    .row {
+      @apply grid grid-cols-2 items-center text-sm;
 
-  .header-description {
-    @apply text-muted-foreground text-sm;
+      .left {
+        @apply text-muted-foreground;
+      }
+
+      .right {
+        @apply justify-self-end text-right wrap-anywhere;
+      }
+    }
   }
 }

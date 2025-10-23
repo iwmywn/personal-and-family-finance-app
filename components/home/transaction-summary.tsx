@@ -3,15 +3,12 @@
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import type { Transaction } from "@/lib/definitions"
+import { useTransactions } from "@/lib/swr"
 import { formatCurrency, isCurrentMonth } from "@/lib/utils"
 
-interface TransactionSummaryProps {
-  transactions: Transaction[]
-}
-
-export function TransactionSummary({ transactions }: TransactionSummaryProps) {
-  const currentMonthTransactions = transactions.filter((t) =>
+export function TransactionSummary() {
+  const { transactions } = useTransactions()
+  const currentMonthTransactions = transactions!.filter((t) =>
     isCurrentMonth(t.date)
   )
 

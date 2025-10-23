@@ -40,13 +40,14 @@ export default function CategoriesPage() {
       <div className="space-y-4">
         <div className="header">
           <div>
-            <div className="header-title">Danh mục tùy chỉnh</div>
-            <div className="header-description">
+            <div className="title">Danh mục tùy chỉnh</div>
+            <div className="description">
               Quản lý các danh mục tùy chỉnh cho giao dịch của bạn.
             </div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>Thêm</Button>
         </div>
+
         <CategoryFilters />
       </div>
 

@@ -44,25 +44,20 @@ export default function HomePage() {
       <div className="space-y-4">
         <div ref={registerRef} className="header">
           <div>
-            <div className="header-title">Xin chào, {user.fullName}!</div>
-            <div className="header-description">
+            <div className="title">Xin chào, {user.fullName}!</div>
+            <div className="description">
               Quản lý tài chính cá nhân của bạn.
             </div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>Thêm</Button>
         </div>
+
         <div ref={registerRef}>
-          <TransactionSummary transactions={transactions} />
+          <TransactionSummary />
         </div>
         <div className="grid gap-4 md:grid-cols-2">
-          <RecentTransactions
-            transactions={transactions}
-            offsetHeight={calculatedHeight}
-          />
-          <QuickStats
-            transactions={transactions}
-            offsetHeight={calculatedHeight}
-          />
+          <RecentTransactions offsetHeight={calculatedHeight} />
+          <QuickStats offsetHeight={calculatedHeight} />
         </div>
       </div>
 

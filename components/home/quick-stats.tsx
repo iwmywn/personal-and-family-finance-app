@@ -11,21 +11,21 @@ import {
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
-import type { Transaction, TransactionCategoryKey } from "@/lib/definitions"
-import { useCustomCategories } from "@/lib/swr"
+import type { TransactionCategoryKey } from "@/lib/definitions"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency, isCurrentMonth } from "@/lib/utils"
 
 interface QuickStatsProps {
-  transactions: Transaction[]
   offsetHeight: number
 }
 
-export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
+export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const { categories: customCategories } = useCustomCategories()
+  const { transactions } = useTransactions()
 
-  const currentMonthTransactions = transactions.filter((t) =>
+  const currentMonthTransactions = transactions!.filter((t) =>
     isCurrentMonth(t.date)
   )
 
@@ -104,14 +104,12 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
         }}
       >
         <TooltipProvider>
-          <div className="space-y-4">
+          <div className="quick-stats-content space-y-4">
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground text-sm">
-                    Tổng giao dịch:
-                  </span>
-                  <span className="text-sm">{currentMonthCount}</span>
+                <div className="row">
+                  <div className="left">Tổng giao dịch:</div>
+                  <div className="right">{currentMonthCount}</div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -124,17 +122,15 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground text-sm">
-                    Giao dịch cao nhất:
-                  </span>
-                  <span className="max-w-1/4 text-sm wrap-anywhere">
+                <div className="row">
+                  <div className="left">Giao dịch cao nhất:</div>
+                  <div className="right">
                     {highestTransaction !== null
                       ? `${formatCurrency(highestTransaction.amount)} (${
                           highestTransaction.type === "income" ? "thu" : "chi"
                         })`
                       : "Chưa có"}
-                  </span>
+                  </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -147,17 +143,15 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground text-sm">
-                    Giao dịch thấp nhất:
-                  </span>
-                  <span className="max-w-1/4 text-sm wrap-anywhere">
+                <div className="row">
+                  <div className="left">Giao dịch thấp nhất:</div>
+                  <div className="right">
                     {lowestTransaction !== null
                       ? `${formatCurrency(lowestTransaction.amount)} (${
                           lowestTransaction.type === "income" ? "thu" : "chi"
                         })`
                       : "Chưa có"}
-                  </span>
+                  </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -170,15 +164,13 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground text-sm">
-                    Chi TB/giao dịch:
-                  </span>
-                  <span className="max-w-1/4 text-sm wrap-anywhere">
+                <div className="row">
+                  <div className="left">Chi TB/giao dịch:</div>
+                  <div className="right">
                     {avgExpense !== null
                       ? formatCurrency(avgExpense)
                       : "Chưa có"}
-                  </span>
+                  </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -191,12 +183,10 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground text-sm">
-                    Tỷ lệ tiết kiệm:
-                  </span>
-                  <span
-                    className={`max-w-1/4 text-sm wrap-anywhere ${
+                <div className="row">
+                  <div className="left">Tỷ lệ tiết kiệm:</div>
+                  <div
+                    className={`right ${
                       savingsRate !== null
                         ? parseFloat(savingsRate) > 0
                           ? "text-green-600"
@@ -207,7 +197,7 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
                     } `}
                   >
                     {savingsRate !== null ? `${savingsRate}%` : "Chưa có"}
-                  </span>
+                  </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
@@ -221,15 +211,13 @@ export function QuickStats({ transactions, offsetHeight }: QuickStatsProps) {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground text-sm">
-                    Danh mục phổ biến:
-                  </span>
-                  <span className="text-sm">
+                <div className="row">
+                  <div className="left">Danh mục phổ biến:</div>
+                  <div className="right">
                     {popularCategory
                       ? getCategoryLabel(popularCategory, customCategories)
                       : "Chưa có"}
-                  </span>
+                  </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>

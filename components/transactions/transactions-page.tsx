@@ -40,8 +40,8 @@ export default function TransactionsPage() {
       <div className="space-y-4">
         <div className="header">
           <div>
-            <div className="header-title">Giao dịch</div>
-            <div className="header-description">
+            <div className="title">Giao dịch</div>
+            <div className="description">
               Quản lý tất cả giao dịch thu chi của bạn.
             </div>
           </div>
