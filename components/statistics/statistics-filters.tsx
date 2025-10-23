@@ -1,12 +1,11 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { format } from "date-fns"
 import { vi } from "date-fns/locale"
-import { Calendar } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Calendar as CalendarComponent } from "@/components/ui/calendar"
+import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Popover,
@@ -25,7 +24,7 @@ import {
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
 import { useTransactions } from "@/lib/swr"
-import { cn } from "@/lib/utils"
+import { formatDate } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
@@ -77,11 +76,10 @@ export function StatisticsFilters() {
 
   const handleDateChange = (date: Date | undefined) => {
     setSelectedDate(date)
-    if (date) {
-      setDateRange({ from: undefined, to: undefined })
-      setFilterMonth("all")
-      setFilterYear("all")
-    }
+    setDateRange({ from: undefined, to: undefined })
+    setFilterMonth("all")
+    setFilterYear("all")
+    setIsDatePickerOpen(false)
   }
 
   const handleDateRangeChange = (range: {
@@ -89,11 +87,10 @@ export function StatisticsFilters() {
     to: Date | undefined
   }) => {
     setDateRange(range)
-    if (range.from || range.to) {
-      setSelectedDate(undefined)
-      setFilterMonth("all")
-      setFilterYear("all")
-    }
+    setSelectedDate(undefined)
+    setFilterMonth("all")
+    setFilterYear("all")
+    setIsDateRangeOpen(false)
   }
 
   const handleMonthChange = (month: string) => {
@@ -180,28 +177,19 @@ export function StatisticsFilters() {
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !selectedDate && "text-muted-foreground"
-                  )}
+                  className={`w-full justify-between font-normal ${selectedDate && "border-primary!"}`}
                 >
-                  <Calendar className="mr-2 h-4 w-4" />
-                  {selectedDate
-                    ? format(selectedDate, "dd/MM/yyyy", { locale: vi })
-                    : "Chọn ngày"}
+                  {selectedDate ? formatDate(selectedDate) : "Chọn ngày"}
+                  <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <CalendarComponent
+                <Calendar
                   autoFocus
                   mode="single"
                   selected={selectedDate}
-                  onSelect={(date) => {
-                    handleDateChange(date)
-                    if (date) {
-                      setIsDatePickerOpen(false)
-                    }
-                  }}
+                  captionLayout="dropdown"
+                  onSelect={(date) => handleDateChange(date)}
                   locale={vi}
                 />
               </PopoverContent>
@@ -211,41 +199,36 @@ export function StatisticsFilters() {
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !dateRange.from && "text-muted-foreground"
-                  )}
+                  className={`w-full justify-between font-normal ${dateRange.from && "border-primary!"}`}
                 >
-                  <Calendar className="mr-2 h-4 w-4" />
                   {dateRange.from ? (
                     dateRange.to ? (
                       <>
-                        {format(dateRange.from, "dd/MM/yyyy", { locale: vi })} -{" "}
-                        {format(dateRange.to, "dd/MM/yyyy", { locale: vi })}
+                        {formatDate(dateRange.from)} -{" "}
+                        {formatDate(dateRange.to)}
                       </>
                     ) : (
-                      format(dateRange.from, "dd/MM/yyyy", { locale: vi })
+                      formatDate(dateRange.from)
                     )
                   ) : (
                     "Chọn khoảng thời gian"
                   )}
+                  <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <CalendarComponent
+                <Calendar
                   autoFocus
                   mode="range"
                   defaultMonth={dateRange.from}
                   selected={dateRange}
-                  onSelect={(range) => {
+                  captionLayout="dropdown"
+                  onSelect={(range) =>
                     handleDateRangeChange({
                       from: range?.from,
                       to: range?.to,
                     })
-                    if (range?.from && range?.to) {
-                      setIsDateRangeOpen(false)
-                    }
-                  }}
+                  }
                   numberOfMonths={2}
                   locale={vi}
                 />

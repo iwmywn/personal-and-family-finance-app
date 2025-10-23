@@ -40,7 +40,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
         style={{
           maxHeight: isMediumScreens
             ? "300px"
-            : `calc(100vh - 10rem - ${offsetHeight}px - ${calculatedHeight}px)`,
+            : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
         }}
       >
         <div className="h-full space-y-4">

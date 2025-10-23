@@ -29,7 +29,6 @@ import {
 } from "@/components/ui/table"
 import { CategoryDialog } from "@/components/categories/category-dialog"
 import { DeleteCategoryDialog } from "@/components/categories/delete-category-dialog"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import type { CustomCategory } from "@/lib/definitions"
 import { useCustomCategories } from "@/lib/swr"
 
@@ -43,7 +42,6 @@ export function CategoriesTable({
   offsetHeight,
 }: CategoriesTableProps) {
   const { categories: customCategories } = useCustomCategories()
-  const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedCategory, setSelectedCategory] =
     useState<CustomCategory | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -56,9 +54,7 @@ export function CategoriesTable({
           {filteredCategories.length === 0 ? (
             <Empty
               style={{
-                minHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 13rem)`,
+                minHeight: `calc(100vh - ${offsetHeight}px - 12.5rem)`,
               }}
             >
               <EmptyHeader>
@@ -77,9 +73,7 @@ export function CategoriesTable({
             <div
               className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
               style={{
-                maxHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 13rem)`,
+                maxHeight: `calc(100vh - ${offsetHeight}px - 12.5rem)`,
               }}
             >
               <Table>

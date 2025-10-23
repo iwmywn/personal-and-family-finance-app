@@ -353,6 +353,7 @@ export function TransactionDialog({
                         locale={vi}
                         mode="single"
                         selected={field.value}
+                        captionLayout="dropdown"
                         onSelect={(date) => {
                           field.onChange(date)
                           setCalendarOpen(false)

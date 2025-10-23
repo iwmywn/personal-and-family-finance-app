@@ -126,7 +126,7 @@ export function TransactionsTable({
               style={{
                 minHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14.5rem)`,
+                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14rem)`,
               }}
             >
               <EmptyHeader>
@@ -147,7 +147,7 @@ export function TransactionsTable({
               style={{
                 maxHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14.5rem)`,
+                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14rem)`,
               }}
             >
               <Table>

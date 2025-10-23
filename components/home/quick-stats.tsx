@@ -100,7 +100,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
         style={{
           maxHeight: isMediumScreens
             ? "fit-content"
-            : `calc(100vh - 10rem - ${offsetHeight}px - ${calculatedHeight}px)`,
+            : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
         }}
       >
         <TooltipProvider>
