@@ -175,7 +175,7 @@
   }
 
   .header {
-    @apply bg-primary-foreground sticky top-13 z-1 flex items-center justify-between gap-2;
+    @apply bg-primary-foreground sticky top-11 z-50 flex items-center justify-between gap-2;
   }
 
   .header-title {

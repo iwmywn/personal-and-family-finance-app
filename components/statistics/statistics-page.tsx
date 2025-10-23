@@ -47,6 +47,7 @@ export function StatisticsPage() {
         </div>
         <StatisticsFilters />
       </div>
+
       <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>
   )

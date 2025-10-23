@@ -43,7 +43,7 @@ export function Header() {
   )
 
   return (
-    <header className="bg-primary-foreground/75 sticky top-0 z-50 flex shrink-0 items-center justify-between py-2 backdrop-blur-xs backdrop-saturate-150">
+    <header className="bg-primary-foreground sticky top-0 z-50 flex shrink-0 items-center justify-between py-2 backdrop-blur-xs backdrop-saturate-150">
       <div className="flex items-center gap-2">
         <SidebarTrigger className="-ml-1" />
         <Breadcrumb>

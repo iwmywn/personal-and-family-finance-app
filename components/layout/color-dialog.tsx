@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -46,9 +45,9 @@ export function ColorDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" title="Xem bảng màu">
-          Xem bảng màu
-        </Button>
+        <div className="cursor-pointer rounded-md border px-2 text-sm">
+          Bảng màu
+        </div>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
