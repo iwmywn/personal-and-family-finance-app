@@ -16,7 +16,12 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await disconnect()
-  await mongoServer.stop()
+  if (mongoServer) {
+    await mongoServer.stop()
+  }
+
+  delete process.env.MONGODB_URI
+  delete process.env.DB_NAME
 })
 
 beforeEach(() => {
