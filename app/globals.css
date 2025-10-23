@@ -173,4 +173,16 @@
   .badge-expense {
     @apply bg-red-100! text-red-800! hover:bg-red-200!;
   }
+
+  .header {
+    @apply bg-primary-foreground sticky top-13 z-1 flex items-center justify-between gap-2;
+  }
+
+  .header-title {
+    @apply text-xl font-semibold;
+  }
+
+  .header-description {
+    @apply text-muted-foreground text-sm;
+  }
 }

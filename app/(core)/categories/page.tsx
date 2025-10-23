@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 
-import CategoryFilters from "@/components/categories/category-filters"
+import CategoriesPage from "@/components/categories/categories-page"
 
 export function generateMetadata(): Metadata {
   return { title: "Danh mục" }
 }
 
 export default function page() {
-  return <CategoryFilters />
+  return <CategoriesPage />
 }

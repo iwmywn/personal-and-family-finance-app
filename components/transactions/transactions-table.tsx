@@ -48,11 +48,10 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
-import { useCustomCategories } from "@/lib/swr"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface TransactionsTableProps {
-  transactions: Transaction[]
   filteredTransactions: Transaction[]
   offsetHeight: number
 }
@@ -60,10 +59,10 @@ interface TransactionsTableProps {
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 export function TransactionsTable({
-  transactions,
   filteredTransactions,
   offsetHeight,
 }: TransactionsTableProps) {
+  const { transactions } = useTransactions()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const [showTypeCol, setShowTypeCol] = useState<Checked>(true)
@@ -127,7 +126,7 @@ export function TransactionsTable({
               style={{
                 minHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 11.5rem)`,
+                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14.5rem)`,
               }}
             >
               <EmptyHeader>
@@ -136,7 +135,7 @@ export function TransactionsTable({
                 </EmptyMedia>
                 <EmptyTitle>Không tìm thấy giao dịch</EmptyTitle>
                 <EmptyDescription>
-                  {transactions.length === 0
+                  {transactions!.length === 0
                     ? "Bắt đầu thêm giao dịch của bạn."
                     : "Hãy thử từ khóa hoặc bộ lọc khác."}
                 </EmptyDescription>
@@ -148,7 +147,7 @@ export function TransactionsTable({
               style={{
                 maxHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 11.5rem)`,
+                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14.5rem)`,
               }}
             >
               <Table>

@@ -31,18 +31,18 @@ import { CategoryDialog } from "@/components/categories/category-dialog"
 import { DeleteCategoryDialog } from "@/components/categories/delete-category-dialog"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { CustomCategory } from "@/lib/definitions"
+import { useCustomCategories } from "@/lib/swr"
 
 interface CategoriesTableProps {
-  customCategories: CustomCategory[]
   filteredCategories: CustomCategory[]
   offsetHeight: number
 }
 
 export function CategoriesTable({
-  customCategories,
   filteredCategories,
   offsetHeight,
 }: CategoriesTableProps) {
+  const { categories: customCategories } = useCustomCategories()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedCategory, setSelectedCategory] =
     useState<CustomCategory | null>(null)
@@ -58,7 +58,7 @@ export function CategoriesTable({
               style={{
                 minHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 10rem)`,
+                  : `calc(100vh - ${offsetHeight}px - 13rem)`,
               }}
             >
               <EmptyHeader>
@@ -67,7 +67,7 @@ export function CategoriesTable({
                 </EmptyMedia>
                 <EmptyTitle>Không có danh mục nào</EmptyTitle>
                 <EmptyDescription>
-                  {customCategories.length === 0
+                  {customCategories!.length === 0
                     ? "Bạn chưa tạo danh mục tùy chỉnh nào. Hãy thêm danh mục đầu tiên!"
                     : "Không tìm thấy danh mục nào phù hợp với bộ lọc của bạn."}
                 </EmptyDescription>
@@ -79,7 +79,7 @@ export function CategoriesTable({
               style={{
                 maxHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 10rem)`,
+                  : `calc(100vh - ${offsetHeight}px - 13rem)`,
               }}
             >
               <Table>

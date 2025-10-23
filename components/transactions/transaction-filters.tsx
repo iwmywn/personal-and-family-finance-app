@@ -21,8 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Spinner } from "@/components/ui/spinner"
-import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import {
@@ -30,13 +28,11 @@ import {
   getCategoryLabel,
   INCOME_CATEGORIES,
 } from "@/lib/categories"
-import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
 
-export default function TransactionFilters() {
-  const { user, isUserLoading } = useUser()
-  const { transactions, isTransactionsLoading } = useTransactions()
-  const { categories: customCategories, isCategoriesLoading } =
-    useCustomCategories()
+export function TransactionFilters() {
+  const { transactions } = useTransactions()
+  const { categories: customCategories } = useCustomCategories()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
@@ -45,29 +41,8 @@ export default function TransactionFilters() {
   )
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
-  if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {
-    return (
-      <div className="center">
-        <Spinner className="size-8" />
-      </div>
-    )
-  }
-
-  if (!user) {
-    return <div className="center">Không thể tải thông tin người dùng!</div>
-  }
-
-  if (!transactions) {
-    return <div className="center">Không thể tải giao dịch!</div>
-  }
-
-  if (!customCategories) {
-    return <div className="center">Không thể tải danh mục!</div>
-  }
-
-  const filteredTransactions = transactions.filter((transaction) => {
+  const filteredTransactions = transactions!.filter((transaction) => {
     const matchesSearch = transaction.description
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
@@ -111,7 +86,7 @@ export default function TransactionFilters() {
   ]
 
   const allYears = Array.from(
-    new Set(transactions.map((t) => new Date(t.date).getFullYear()))
+    new Set(transactions!.map((t) => new Date(t.date).getFullYear()))
   ).sort((a, b) => b - a)
 
   const handleResetFilters = () => {
@@ -131,176 +106,159 @@ export default function TransactionFilters() {
 
   return (
     <>
-      <div className="space-y-4">
-        <div
-          ref={registerRef}
-          className="flex items-center justify-between gap-2"
-        >
-          <div>
-            <div className="text-xl font-semibold">Giao dịch</div>
-            <div className="text-muted-foreground text-sm">
-              Quản lý tất cả giao dịch thu chi của bạn.
-            </div>
-          </div>
-          <Button onClick={() => setIsEditOpen(true)}>Thêm</Button>
-        </div>
-        <Card ref={registerRef}>
-          <CardContent>
-            <div
-              className={`grid grid-cols-1 sm:grid-cols-2 ${
-                hasActiveFilters
-                  ? "lg:grid-cols-[1fr_auto_auto_auto_auto_auto]"
-                  : "lg:grid-cols-[1fr_auto_auto_auto_auto]"
-              } gap-4`}
+      <Card ref={registerRef}>
+        <CardContent>
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 ${
+              hasActiveFilters
+                ? "lg:grid-cols-[1fr_auto_auto_auto_auto_auto]"
+                : "lg:grid-cols-[1fr_auto_auto_auto_auto]"
+            } gap-4`}
+          >
+            <InputGroup
+              className={`sm:col-span-2 lg:col-span-1 ${searchTerm !== "" && "border-primary"}`}
             >
-              <InputGroup
-                className={`sm:col-span-2 lg:col-span-1 ${searchTerm !== "" && "border-primary"}`}
-              >
-                <InputGroupAddon>
-                  <Search />
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+              <InputGroupInput
+                placeholder="Tìm kiếm giao dịch..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    className="rounded-full"
+                    size="icon-xs"
+                    onClick={() => setSearchTerm("")}
+                  >
+                    <X />
+                  </InputGroupButton>
                 </InputGroupAddon>
-                <InputGroupInput
-                  placeholder="Tìm kiếm giao dịch..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && (
-                  <InputGroupAddon align="inline-end">
-                    <InputGroupButton
-                      className="rounded-full"
-                      size="icon-xs"
-                      onClick={() => setSearchTerm("")}
-                    >
-                      <X />
-                    </InputGroupButton>
-                  </InputGroupAddon>
-                )}
-              </InputGroup>
-              <Select value={filterMonth} onValueChange={setFilterMonth}>
-                <SelectTrigger
-                  className={`w-full lg:w-fit ${filterMonth !== "all" && "border-primary"}`}
-                >
-                  <SelectValue placeholder="Tháng" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="all">Tất cả tháng</SelectItem>
-                    <SelectSeparator />
-                    {allMonths.map((month) => (
-                      <SelectItem key={month.value} value={month.value}>
-                        {month.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Select value={filterYear} onValueChange={setFilterYear}>
-                <SelectTrigger
-                  className={`w-full lg:w-fit ${filterYear !== "all" && "border-primary"}`}
-                >
-                  <SelectValue placeholder="Năm" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="all">Tất cả năm</SelectItem>
-                    <SelectSeparator />
-                    {allYears.map((year) => (
-                      <SelectItem key={year} value={year.toString()}>
-                        {year}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Select
-                value={filterType}
-                onValueChange={(value: "all" | "income" | "expense") =>
-                  setFilterType(value)
-                }
-              >
-                <SelectTrigger
-                  className={`w-full lg:w-fit ${filterType !== "all" && "border-primary"}`}
-                >
-                  <SelectValue placeholder="Loại giao dịch" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="all">Tất cả loại giao dịch</SelectItem>
-                    <SelectSeparator />
-                    <SelectItem value="income">Thu nhập</SelectItem>
-                    <SelectItem value="expense">Chi tiêu</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Select
-                value={filterCategoryKey}
-                onValueChange={setFilterCategoryKey}
-              >
-                <SelectTrigger
-                  className={`w-full lg:w-fit ${filterCategoryKey !== "all" && "border-primary"}`}
-                >
-                  <SelectValue placeholder="Danh mục" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="all">Tất cả danh mục</SelectItem>
-                    <SelectSeparator />
-                    <SelectLabel>Thu nhập</SelectLabel>
-                    {INCOME_CATEGORIES.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {getCategoryLabel(category)}
-                      </SelectItem>
-                    ))}
-                    {customCategories
-                      ?.filter((c) => c.type === "income")
-                      .map((category) => (
-                        <SelectItem
-                          key={category._id}
-                          value={category.categoryKey}
-                        >
-                          {category.label}
-                        </SelectItem>
-                      ))}
-                    <SelectLabel>Chi tiêu</SelectLabel>
-                    {EXPENSE_CATEGORIES.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {getCategoryLabel(category)}
-                      </SelectItem>
-                    ))}
-                    {customCategories
-                      ?.filter((c) => c.type === "expense")
-                      .map((category) => (
-                        <SelectItem
-                          key={category._id}
-                          value={category.categoryKey}
-                        >
-                          {category.label}
-                        </SelectItem>
-                      ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              {hasActiveFilters && (
-                <Button
-                  variant="outline"
-                  size="default"
-                  onClick={handleResetFilters}
-                  className="sm:col-span-2 lg:col-span-1 lg:w-fit"
-                >
-                  Đặt lại
-                </Button>
               )}
-            </div>
-          </CardContent>
-        </Card>
-        <TransactionsTable
-          transactions={transactions}
-          filteredTransactions={filteredTransactions}
-          offsetHeight={calculatedHeight}
-        />
-      </div>
+            </InputGroup>
+            <Select value={filterMonth} onValueChange={setFilterMonth}>
+              <SelectTrigger
+                className={`w-full lg:w-fit ${filterMonth !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder="Tháng" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả tháng</SelectItem>
+                  <SelectSeparator />
+                  {allMonths.map((month) => (
+                    <SelectItem key={month.value} value={month.value}>
+                      {month.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select value={filterYear} onValueChange={setFilterYear}>
+              <SelectTrigger
+                className={`w-full lg:w-fit ${filterYear !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder="Năm" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả năm</SelectItem>
+                  <SelectSeparator />
+                  {allYears.map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              value={filterType}
+              onValueChange={(value: "all" | "income" | "expense") =>
+                setFilterType(value)
+              }
+            >
+              <SelectTrigger
+                className={`w-full lg:w-fit ${filterType !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder="Loại giao dịch" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả loại giao dịch</SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="income">Thu nhập</SelectItem>
+                  <SelectItem value="expense">Chi tiêu</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select
+              value={filterCategoryKey}
+              onValueChange={setFilterCategoryKey}
+            >
+              <SelectTrigger
+                className={`w-full lg:w-fit ${filterCategoryKey !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder="Danh mục" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">Tất cả danh mục</SelectItem>
+                  <SelectSeparator />
+                  <SelectLabel>Thu nhập</SelectLabel>
+                  {INCOME_CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {getCategoryLabel(category)}
+                    </SelectItem>
+                  ))}
+                  {customCategories
+                    ?.filter((c) => c.type === "income")
+                    .map((category) => (
+                      <SelectItem
+                        key={category._id}
+                        value={category.categoryKey}
+                      >
+                        {category.label}
+                      </SelectItem>
+                    ))}
+                  <SelectLabel>Chi tiêu</SelectLabel>
+                  {EXPENSE_CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {getCategoryLabel(category)}
+                    </SelectItem>
+                  ))}
+                  {customCategories
+                    ?.filter((c) => c.type === "expense")
+                    .map((category) => (
+                      <SelectItem
+                        key={category._id}
+                        value={category.categoryKey}
+                      >
+                        {category.label}
+                      </SelectItem>
+                    ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {hasActiveFilters && (
+              <Button
+                variant="outline"
+                onClick={handleResetFilters}
+                className="sm:col-span-2 lg:col-span-1 lg:w-fit"
+              >
+                Đặt lại
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
-      <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <TransactionsTable
+        filteredTransactions={filteredTransactions}
+        offsetHeight={calculatedHeight}
+      />
     </>
   )
 }
