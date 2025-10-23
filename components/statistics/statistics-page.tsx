@@ -1,7 +1,10 @@
 "use client"
 
+import { useState } from "react"
+
 import { Spinner } from "@/components/ui/spinner"
 import { StatisticsFilters } from "@/components/statistics/statistics-filters"
+import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 
 export function StatisticsPage() {
@@ -9,6 +12,7 @@ export function StatisticsPage() {
   const { transactions, isTransactionsLoading } = useTransactions()
   const { categories: customCategories, isCategoriesLoading } =
     useCustomCategories()
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
   if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {
     return (
@@ -31,17 +35,19 @@ export function StatisticsPage() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="header">
-        <div>
-          <div className="header-title">Phân tích</div>
-          <div className="header-description">
-            Phân tích chi tiết về thu chi của bạn.
+    <>
+      <div className="space-y-4">
+        <div className="header">
+          <div>
+            <div className="header-title">Phân tích</div>
+            <div className="header-description">
+              Phân tích chi tiết về thu chi của bạn.
+            </div>
           </div>
         </div>
+        <StatisticsFilters />
       </div>
-
-      <StatisticsFilters />
-    </div>
+      <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
+    </>
   )
 }

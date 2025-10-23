@@ -11,10 +11,10 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | PFM",
-    default: "PFM",
+    template: "%s | PFFA",
+    default: "PFFA",
   },
-  description: "Ứng dụng quản lý thu chi cá nhân Hoàng Anh Tuấn",
+  description: "Ứng dụng quản lý tài chính cá nhân và gia đình",
 }
 
 export default function RootLayout({

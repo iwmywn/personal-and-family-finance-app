@@ -39,22 +39,25 @@ export const nav = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
-      className="pr-0 group-data-[state=collapsed]:pr-[0.5625rem]"
+      className="pr-0 group-data-[state=collapsed]:pr-2.25"
       variant="floating"
       collapsible="icon"
       {...props}
     >
       <SidebarHeader>
-        <SidebarMenuButton size="lg" tooltip="Quản Lý Tài Chính Cá Nhân">
+        <SidebarMenuButton
+          size="lg"
+          tooltip="Quản Lý Tài Chính Cá Nhân Và Gia Đình"
+        >
           <Image
             src="/images/logo.png"
-            alt="PFM Logo"
+            alt="PFFA Logo"
             width={32}
             height={32}
             className="rounded-lg"
           />
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">PFM</span>
+            <span className="truncate font-semibold">PFFA</span>
           </div>
         </SidebarMenuButton>
       </SidebarHeader>
