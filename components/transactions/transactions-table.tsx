@@ -1,22 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import type { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
-import { ChevronDownIcon, MoreVertical, Receipt } from "lucide-react"
+import { MoreVertical, Receipt } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
@@ -44,7 +35,6 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
@@ -56,7 +46,7 @@ interface TransactionsTableProps {
   offsetHeight: number
 }
 
-type Checked = DropdownMenuCheckboxItemProps["checked"]
+// type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 export function TransactionsTable({
   filteredTransactions,
@@ -64,10 +54,10 @@ export function TransactionsTable({
 }: TransactionsTableProps) {
   const { transactions } = useTransactions()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const [showTypeCol, setShowTypeCol] = useState<Checked>(true)
-  const [showCategoryCol, setShowCategoryCol] = useState<Checked>(true)
-  const [showAmountCol, setShowAmountCol] = useState<Checked>(true)
+  // const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  // const [showTypeCol, setShowTypeCol] = useState<Checked>(true)
+  // const [showCategoryCol, setShowCategoryCol] = useState<Checked>(true)
+  // const [showAmountCol, setShowAmountCol] = useState<Checked>(true)
   const { customCategories } = useCustomCategories()
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
@@ -77,7 +67,7 @@ export function TransactionsTable({
   return (
     <>
       <Card>
-        <CardHeader ref={registerRef}>
+        {/* <CardHeader ref={registerRef}>
           <CardTitle>Lịch sử giao dịch</CardTitle>
           <CardDescription>
             Xem chi tiết tất cả các giao dịch của bạn.
@@ -118,7 +108,7 @@ export function TransactionsTable({
               </DropdownMenuContent>
             </DropdownMenu>
           </CardAction>
-        </CardHeader>
+        </CardHeader> */}
         <CardContent>
           {filteredTransactions.length === 0 ? (
             <Empty
@@ -126,7 +116,7 @@ export function TransactionsTable({
               style={{
                 minHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14rem)`,
+                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
               }}
             >
               <EmptyHeader>
@@ -147,7 +137,7 @@ export function TransactionsTable({
               style={{
                 maxHeight: isLargeScreens
                   ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - ${calculatedHeight}px - 14rem)`,
+                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
               }}
             >
               <Table>
@@ -155,9 +145,9 @@ export function TransactionsTable({
                   <TableRow className="[&>th]:text-center">
                     <TableHead>Ngày</TableHead>
                     <TableHead>Mô tả</TableHead>
-                    {showTypeCol && <TableHead>Loại</TableHead>}
-                    {showCategoryCol && <TableHead>Danh mục</TableHead>}
-                    {showAmountCol && <TableHead>Số tiền</TableHead>}
+                    <TableHead>Loại</TableHead>
+                    <TableHead>Danh mục</TableHead>
+                    <TableHead>Số tiền</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -171,57 +161,51 @@ export function TransactionsTable({
                       <TableCell className="max-w-md min-w-52 wrap-anywhere whitespace-normal">
                         {transaction.description}
                       </TableCell>
-                      {showTypeCol && (
-                        <TableCell>
-                          <Badge
-                            className={
-                              transaction.type === "income"
-                                ? "badge-income"
-                                : "badge-expense"
-                            }
-                          >
-                            {transaction.type === "income"
-                              ? "Thu nhập"
-                              : "Chi tiêu"}
-                          </Badge>
-                        </TableCell>
-                      )}
-                      {showCategoryCol && (
-                        <TableCell>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Badge variant="outline">
-                                  {getCategoryLabel(
-                                    transaction.categoryKey,
-                                    customCategories
-                                  )}
-                                </Badge>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                {getCategoryDescription(
+                      <TableCell>
+                        <Badge
+                          className={
+                            transaction.type === "income"
+                              ? "badge-income"
+                              : "badge-expense"
+                          }
+                        >
+                          {transaction.type === "income"
+                            ? "Thu nhập"
+                            : "Chi tiêu"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Badge variant="outline">
+                                {getCategoryLabel(
                                   transaction.categoryKey,
                                   customCategories
                                 )}
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </TableCell>
-                      )}
-                      {showAmountCol && (
-                        <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
-                          <span
-                            className={`font-semibold ${
-                              transaction.type === "income"
-                                ? "text-green-600"
-                                : "text-red-600"
-                            }`}
-                          >
-                            {transaction.type === "income" ? "+" : "-"}
-                            {formatCurrency(transaction.amount)}
-                          </span>
-                        </TableCell>
-                      )}
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {getCategoryDescription(
+                                transaction.categoryKey,
+                                customCategories
+                              )}
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableCell>
+                      <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
+                        <span
+                          className={`font-semibold ${
+                            transaction.type === "income"
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }`}
+                        >
+                          {transaction.type === "income" ? "+" : "-"}
+                          {formatCurrency(transaction.amount)}
+                        </span>
+                      </TableCell>
                       <TableCell className="space-x-2">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>

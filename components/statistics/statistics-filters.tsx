@@ -41,20 +41,6 @@ export function StatisticsFilters() {
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
 
-  const handleResetFilters = () => {
-    setSelectedDate(undefined)
-    setDateRange({ from: undefined, to: undefined })
-    setFilterMonth("all")
-    setFilterYear("all")
-  }
-
-  const hasActiveFilters =
-    selectedDate ||
-    dateRange.from ||
-    dateRange.to ||
-    filterMonth !== "all" ||
-    filterYear !== "all"
-
   const allMonths = [
     { value: "1", label: "Tháng 1" },
     { value: "2", label: "Tháng 2" },
@@ -73,6 +59,20 @@ export function StatisticsFilters() {
   const allYears = Array.from(
     new Set(transactions!.map((t) => new Date(t.date).getFullYear()))
   ).sort((a, b) => b - a)
+
+  const hasActiveFilters =
+    selectedDate ||
+    dateRange.from ||
+    dateRange.to ||
+    filterMonth !== "all" ||
+    filterYear !== "all"
+
+  const handleResetFilters = () => {
+    setSelectedDate(undefined)
+    setDateRange({ from: undefined, to: undefined })
+    setFilterMonth("all")
+    setFilterYear("all")
+  }
 
   const handleDateChange = (date: Date | undefined) => {
     setSelectedDate(date)

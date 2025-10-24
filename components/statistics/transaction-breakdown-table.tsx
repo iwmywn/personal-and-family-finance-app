@@ -4,13 +4,7 @@ import { useMemo } from "react"
 import { Receipt } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import {
   Empty,
   EmptyDescription,
@@ -81,12 +75,12 @@ export function TransactionBreakdownTable({
 
   return (
     <Card>
-      <CardHeader>
+      {/* <CardHeader>
         <CardTitle>Thống kê theo danh mục</CardTitle>
         <CardDescription>
           Phân tích chi tiết theo từng danh mục.
         </CardDescription>
-      </CardHeader>
+      </CardHeader> */}
       <CardContent>
         {filteredTransactions.length === 0 ? (
           <Empty className="border" style={{ minHeight: "300px" }}>
@@ -157,6 +151,7 @@ export function TransactionBreakdownTable({
                             : "text-red-600"
                         }
                       >
+                        {stat.type === "income" ? "+" : "-"}
                         {formatCurrency(stat.total)}
                       </span>
                     </TableCell>
