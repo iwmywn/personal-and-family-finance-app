@@ -112,6 +112,11 @@ export function StatisticsFilters() {
   const filteredTransactions = useMemo(() => {
     return transactions!.filter((transaction) => {
       const transactionDate = new Date(transaction.date)
+      const transactionDateOnly = new Date(
+        transactionDate.getFullYear(),
+        transactionDate.getMonth(),
+        transactionDate.getDate()
+      )
 
       const matchesSelectedDate = selectedDate
         ? transactionDate.getDate() === selectedDate.getDate() &&
@@ -120,8 +125,8 @@ export function StatisticsFilters() {
         : true
 
       const matchesDateRange =
-        (!dateRange.from || transactionDate >= dateRange.from) &&
-        (!dateRange.to || transactionDate <= dateRange.to)
+        (!dateRange.from || transactionDateOnly >= dateRange.from) &&
+        (!dateRange.to || transactionDateOnly <= dateRange.to)
 
       const matchesMonth =
         filterMonth === "all" ||
@@ -195,7 +200,15 @@ export function StatisticsFilters() {
               </PopoverContent>
             </Popover>
 
-            <Popover open={isDateRangeOpen} onOpenChange={setIsDateRangeOpen}>
+            <Popover
+              open={isDateRangeOpen}
+              onOpenChange={(open) => {
+                if (!open && dateRange.from && !dateRange.to) {
+                  return
+                }
+                setIsDateRangeOpen(open)
+              }}
+            >
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
@@ -217,21 +230,50 @@ export function StatisticsFilters() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  autoFocus
-                  mode="range"
-                  defaultMonth={dateRange.from}
-                  selected={dateRange}
-                  captionLayout="dropdown"
-                  onSelect={(range) =>
-                    handleDateRangeChange({
-                      from: range?.from,
-                      to: range?.to,
-                    })
-                  }
-                  numberOfMonths={2}
-                  locale={vi}
-                />
+                <div className="flex flex-col p-4 sm:flex-row">
+                  <div>
+                    <div className="mb-2 text-center text-sm font-medium">
+                      Từ ngày
+                    </div>
+                    <Calendar
+                      autoFocus
+                      mode="single"
+                      selected={dateRange.from}
+                      defaultMonth={dateRange.from || new Date()}
+                      captionLayout="dropdown"
+                      onSelect={(date) => {
+                        setDateRange((prev) => ({
+                          from: date,
+                          to:
+                            prev.to && date && date > prev.to
+                              ? undefined
+                              : prev.to,
+                        }))
+                      }}
+                      locale={vi}
+                    />
+                  </div>
+                  <div>
+                    <div className="mb-2 text-center text-sm font-medium">
+                      Đến ngày
+                    </div>
+                    <Calendar
+                      mode="single"
+                      selected={dateRange.to}
+                      defaultMonth={dateRange.to || new Date()}
+                      captionLayout="dropdown"
+                      onSelect={(date) => {
+                        if (date && dateRange.from && date >= dateRange.from) {
+                          handleDateRangeChange({
+                            from: dateRange.from,
+                            to: date,
+                          })
+                        }
+                      }}
+                      locale={vi}
+                    />
+                  </div>
+                </div>
               </PopoverContent>
             </Popover>
 
