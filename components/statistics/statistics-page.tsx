@@ -39,9 +39,9 @@ export function StatisticsPage() {
       <div className="space-y-4">
         <div className="header">
           <div>
-            <div className="title">Phân tích</div>
+            <div className="title">Thống kê</div>
             <div className="description">
-              Phân tích chi tiết về thu chi của bạn.
+              Thống kê tất cả giao dịch thu chi của bạn.
             </div>
           </div>
         </div>
