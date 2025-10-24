@@ -122,7 +122,7 @@ export function TransactionsTable({
         <CardContent>
           {filteredTransactions.length === 0 ? (
             <Empty
-              className="border border-dashed"
+              className="border"
               style={{
                 minHeight: isLargeScreens
                   ? "300px"

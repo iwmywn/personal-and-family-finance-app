@@ -45,7 +45,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
       >
         <div className="h-full space-y-4">
           {recentTransactions.length === 0 ? (
-            <Empty className="h-full border border-dashed">
+            <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <Receipt />

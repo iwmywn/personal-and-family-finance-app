@@ -3,40 +3,16 @@
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/ui/spinner"
 import { CategoryDialog } from "@/components/categories/category-dialog"
 import { CategoryFilters } from "@/components/categories/category-filters"
-import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
+import { BasePage } from "@/components/layout/base-page"
 
 export default function CategoriesPage() {
-  const { user, isUserLoading } = useUser()
-  const { transactions, isTransactionsLoading } = useTransactions()
-  const { customCategories, isCategoriesLoading } = useCustomCategories()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-
-  if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {
-    return (
-      <div className="center">
-        <Spinner className="size-8" />
-      </div>
-    )
-  }
-
-  if (!user) {
-    return <div className="center">Không thể tải thông tin người dùng!</div>
-  }
-
-  if (!transactions) {
-    return <div className="center">Không thể tải giao dịch!</div>
-  }
-
-  if (!customCategories) {
-    return <div className="center">Không thể tải danh mục!</div>
-  }
 
   return (
     <>
-      <div className="space-y-4">
+      <BasePage>
         <div className="header">
           <div>
             <div className="title">Danh mục</div>
@@ -48,7 +24,7 @@ export default function CategoriesPage() {
         </div>
 
         <CategoryFilters />
-      </div>
+      </BasePage>
 
       <CategoryDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

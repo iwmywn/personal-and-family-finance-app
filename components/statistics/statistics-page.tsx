@@ -2,40 +2,16 @@
 
 import { useState } from "react"
 
-import { Spinner } from "@/components/ui/spinner"
+import { BasePage } from "@/components/layout/base-page"
 import { StatisticsFilters } from "@/components/statistics/statistics-filters"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
-import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 
 export function StatisticsPage() {
-  const { user, isUserLoading } = useUser()
-  const { transactions, isTransactionsLoading } = useTransactions()
-  const { customCategories, isCategoriesLoading } = useCustomCategories()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-
-  if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {
-    return (
-      <div className="center">
-        <Spinner className="size-8" />
-      </div>
-    )
-  }
-
-  if (!user) {
-    return <div className="center">Không thể tải thông tin người dùng!</div>
-  }
-
-  if (!transactions) {
-    return <div className="center">Không thể tải giao dịch!</div>
-  }
-
-  if (!customCategories) {
-    return <div className="center">Không thể tải danh mục!</div>
-  }
 
   return (
     <>
-      <div className="space-y-4">
+      <BasePage>
         <div className="header">
           <div>
             <div className="title">Thống kê</div>
@@ -46,7 +22,7 @@ export function StatisticsPage() {
         </div>
 
         <StatisticsFilters />
-      </div>
+      </BasePage>
 
       <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

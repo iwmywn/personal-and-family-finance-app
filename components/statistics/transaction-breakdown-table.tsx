@@ -89,10 +89,7 @@ export function TransactionBreakdownTable({
       </CardHeader>
       <CardContent>
         {filteredTransactions.length === 0 ? (
-          <Empty
-            className="border border-dashed"
-            style={{ minHeight: "300px" }}
-          >
+          <Empty className="border" style={{ minHeight: "300px" }}>
             <EmptyHeader>
               <EmptyMedia variant="icon">
                 <Receipt />
