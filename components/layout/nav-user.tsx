@@ -13,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { clearSWRCache } from "@/lib/swr"
 
 export function NavUser() {
   const router = useRouter()
@@ -26,6 +27,7 @@ export function NavUser() {
     } else {
       toast.success(success)
       router.push("/signin")
+      setTimeout(() => clearSWRCache(), 3000)
     }
   }
 

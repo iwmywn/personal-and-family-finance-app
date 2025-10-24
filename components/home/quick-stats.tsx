@@ -104,7 +104,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
         }}
       >
         <TooltipProvider>
-          <div className="quick-stats-content space-y-4">
+          <div id="quick-stats-content" className="space-y-4">
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">

@@ -17,7 +17,7 @@ export default function AuthLayout({
   const isDark = currentTheme === "dark"
 
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center p-6 md:p-10">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden p-6 md:p-10">
       {mounted && (
         <Particles
           color={isDark ? "#ffffff" : "#000000"}

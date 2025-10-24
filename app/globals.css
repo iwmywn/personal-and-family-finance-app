@@ -188,7 +188,7 @@
     }
   }
 
-  .quick-stats-content {
+  #quick-stats-content {
     .row {
       @apply grid grid-cols-2 items-center text-sm;
 
