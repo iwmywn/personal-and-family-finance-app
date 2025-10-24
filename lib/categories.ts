@@ -1,4 +1,8 @@
-import type { TransactionCategoryKey, TransactionType } from "./definitions"
+import type {
+  CustomCategory,
+  TransactionCategoryKey,
+  TransactionType,
+} from "@/lib/definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const
 
@@ -145,41 +149,39 @@ const CATEGORY_CONFIG: CategoryConfigType = {
 export function getCategoriesWithDetails(type: TransactionType) {
   return Object.entries(CATEGORY_CONFIG)
     .filter(([_, config]) => config.type === type)
-    .map(([category, config]) => ({
+    .map(([categoryKey, config]) => ({
       label: config.label,
       description: config.description,
-      category: category as TransactionCategoryKey,
+      categoryKey: categoryKey as TransactionCategoryKey,
     }))
 }
 
-export function getCategoryLabel(
-  category: TransactionCategoryKey,
-  customCategories?: Array<{
-    categoryKey: string
-    label: string
-    description: string
-  }>
+function getCategoryProperty(
+  categoryKey: TransactionCategoryKey,
+  property: "label" | "description",
+  customCategories?: CustomCategory[]
 ) {
-  if (category in CATEGORY_CONFIG) {
-    return CATEGORY_CONFIG[category as keyof typeof CATEGORY_CONFIG].label
+  if (categoryKey in CATEGORY_CONFIG) {
+    return CATEGORY_CONFIG[categoryKey as keyof typeof CATEGORY_CONFIG][
+      property
+    ]
   }
   return (
-    customCategories?.find((c) => c.categoryKey === category)?.label || category
+    customCategories?.find((c) => c.categoryKey === categoryKey)?.[property] ||
+    ""
   )
 }
 
-export function getCategoryDescription(
-  category: TransactionCategoryKey,
-  customCategories?: Array<{
-    categoryKey: string
-    label: string
-    description: string
-  }>
+export function getCategoryLabel(
+  categoryKey: TransactionCategoryKey,
+  customCategories?: CustomCategory[]
 ) {
-  if (category in CATEGORY_CONFIG) {
-    return CATEGORY_CONFIG[category as keyof typeof CATEGORY_CONFIG].description
-  }
-  return (
-    customCategories?.find((c) => c.categoryKey === category)?.description || ""
-  )
+  return getCategoryProperty(categoryKey, "label", customCategories)
+}
+
+export function getCategoryDescription(
+  categoryKey: TransactionCategoryKey,
+  customCategories?: CustomCategory[]
+) {
+  return getCategoryProperty(categoryKey, "description", customCategories)
 }

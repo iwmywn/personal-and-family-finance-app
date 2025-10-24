@@ -181,7 +181,7 @@ export function TransactionDialog({
               >
                 <SelectGroup>
                   {getCategoriesWithDetails(type).map((c) => (
-                    <SelectItem key={c.category} value={c.category}>
+                    <SelectItem key={c.categoryKey} value={c.categoryKey}>
                       <div className="flex flex-col">
                         <span className="font-medium">{c.label}</span>
                         <span className="text-muted-foreground wrap-anywhere">
