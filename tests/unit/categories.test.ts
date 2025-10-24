@@ -305,7 +305,7 @@ describe("Categories Actions", () => {
 
       const result = await getCustomCategories()
 
-      expect(result.categories).toBeUndefined()
+      expect(result.customCategories).toBeUndefined()
       expect(result.error).toBe(
         "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
       )
@@ -316,7 +316,7 @@ describe("Categories Actions", () => {
 
       const result = await getCustomCategories()
 
-      expect(result.categories).toEqual([])
+      expect(result.customCategories).toEqual([])
       expect(result.error).toBeUndefined()
     })
 
@@ -326,8 +326,8 @@ describe("Categories Actions", () => {
 
       const result = await getCustomCategories()
 
-      expect(result.categories).toHaveLength(1)
-      expect(result.categories?.[0].label).toBe("Entertainment")
+      expect(result.customCategories).toHaveLength(1)
+      expect(result.customCategories?.[0].label).toBe("Entertainment")
       expect(result.error).toBeUndefined()
     })
 
@@ -337,7 +337,7 @@ describe("Categories Actions", () => {
 
       const result = await getCustomCategories()
 
-      expect(result.categories).toBeUndefined()
+      expect(result.customCategories).toBeUndefined()
       expect(result.error).toBe(
         "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
       )

@@ -52,7 +52,7 @@ export function CategoryDialog({
   setOpen,
 }: CategoryDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { categories: customCategories, mutate } = useCustomCategories()
+  const { customCategories, mutate } = useCustomCategories()
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
     category?.type || "income"
   )
@@ -78,7 +78,7 @@ export function CategoryDialog({
         toast.error(error)
       } else {
         mutate({
-          categories: customCategories!.map((c) =>
+          customCategories: customCategories!.map((c) =>
             c._id === category._id ? { ...c, ...values } : c
           ),
         })
@@ -92,7 +92,7 @@ export function CategoryDialog({
         toast.error(error)
       } else {
         mutate({
-          categories: [
+          customCategories: [
             {
               _id: `temp-id`,
               userId: "temp-user",

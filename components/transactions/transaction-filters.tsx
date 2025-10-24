@@ -32,7 +32,7 @@ import { useCustomCategories, useTransactions } from "@/lib/swr"
 
 export function TransactionFilters() {
   const { transactions } = useTransactions()
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")

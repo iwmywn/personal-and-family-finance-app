@@ -10,8 +10,7 @@ import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 export function StatisticsPage() {
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
-  const { categories: customCategories, isCategoriesLoading } =
-    useCustomCategories()
+  const { customCategories, isCategoriesLoading } = useCustomCategories()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
   if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {

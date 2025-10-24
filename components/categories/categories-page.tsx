@@ -11,8 +11,7 @@ import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 export default function CategoriesPage() {
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
-  const { categories: customCategories, isCategoriesLoading } =
-    useCustomCategories()
+  const { customCategories, isCategoriesLoading } = useCustomCategories()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 
   if (isUserLoading || isTransactionsLoading || isCategoriesLoading) {
@@ -40,7 +39,7 @@ export default function CategoriesPage() {
       <div className="space-y-4">
         <div className="header">
           <div>
-            <div className="title">Danh mục tùy chỉnh</div>
+            <div className="title">Danh mục</div>
             <div className="description">
               Quản lý các danh mục tùy chỉnh cho giao dịch của bạn.
             </div>

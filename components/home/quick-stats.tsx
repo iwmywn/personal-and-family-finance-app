@@ -22,7 +22,7 @@ interface QuickStatsProps {
 export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
   const { transactions } = useTransactions()
 
   const currentMonthTransactions = transactions!.filter((t) =>

@@ -14,8 +14,7 @@ import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 export default function HomePage() {
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
-  const { categories: customCategories, isCategoriesLoading } =
-    useCustomCategories()
+  const { customCategories, isCategoriesLoading } = useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
 

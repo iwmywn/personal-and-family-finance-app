@@ -44,7 +44,7 @@ interface TransactionBreakdownTableProps {
 export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
   const categoryStats = useMemo(() => {
     const stats = new Map<
       string,

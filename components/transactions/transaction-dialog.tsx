@@ -89,7 +89,7 @@ export function TransactionDialog({
   })
 
   const { transactions, mutate } = useTransactions()
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
 
   async function onSubmit(values: TransactionFormValues) {
     setIsLoading(true)

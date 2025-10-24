@@ -41,7 +41,7 @@ export function CategoriesTable({
   filteredCategories,
   offsetHeight,
 }: CategoriesTableProps) {
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
   const [selectedCategory, setSelectedCategory] =
     useState<CustomCategory | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)

@@ -68,7 +68,7 @@ export function TransactionsTable({
   const [showTypeCol, setShowTypeCol] = useState<Checked>(true)
   const [showCategoryCol, setShowCategoryCol] = useState<Checked>(true)
   const [showAmountCol, setShowAmountCol] = useState<Checked>(true)
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)

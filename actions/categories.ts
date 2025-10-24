@@ -208,7 +208,7 @@ export async function getCustomCategories() {
       .toArray()
 
     return {
-      categories: categories.map((category) => ({
+      customCategories: categories.map((category) => ({
         ...category,
         _id: category._id.toString(),
         userId: category.userId.toString(),

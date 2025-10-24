@@ -27,7 +27,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { transactions } = useTransactions()
   const recentTransactions = transactions!.slice(0, 10)
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
   return (

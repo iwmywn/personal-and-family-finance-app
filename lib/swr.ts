@@ -54,19 +54,19 @@ export function useTransactions() {
 
 export function useCustomCategories() {
   const { data, isLoading, mutate } = useSWRImmutable<
-    | { error: string; categories?: undefined }
+    | { error: string; customCategories?: undefined }
     | {
-        categories: CustomCategory[]
+        customCategories: CustomCategory[]
         error?: undefined
       }
   >("custom-categories", getCustomCategories)
 
-  const categories = data?.categories
+  const customCategories = data?.customCategories
   const categoriesError = data?.error
   const isCategoriesLoading = isLoading
 
   return {
-    categories,
+    customCategories,
     categoriesError,
     isCategoriesLoading,
     mutate,

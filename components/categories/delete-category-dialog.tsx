@@ -30,7 +30,7 @@ export function DeleteCategoryDialog({
   open,
   setOpen,
 }: DeleteCategoryDialogProps) {
-  const { categories: customCategories, mutate } = useCustomCategories()
+  const { customCategories, mutate } = useCustomCategories()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -44,7 +44,7 @@ export function DeleteCategoryDialog({
       toast.error(error)
     } else {
       mutate({
-        categories: customCategories!.filter((c) => c._id !== categoryId),
+        customCategories: customCategories!.filter((c) => c._id !== categoryId),
       })
       toast.success(success)
     }

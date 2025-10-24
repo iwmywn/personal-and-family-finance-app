@@ -24,7 +24,7 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useCustomCategories } from "@/lib/swr"
 
 export function CategoryFilters() {
-  const { categories: customCategories } = useCustomCategories()
+  const { customCategories } = useCustomCategories()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
     "all"
