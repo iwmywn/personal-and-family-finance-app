@@ -30,13 +30,9 @@ import {
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
-import {
-  EXPENSE_CATEGORIES,
-  getCategoryLabel,
-  INCOME_CATEGORIES,
-} from "@/lib/categories"
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { formatDate } from "@/lib/utils"
+import { formatDate, getCategoryLabel } from "@/lib/utils"
 
 export function TransactionFilters() {
   const { transactions } = useTransactions()
@@ -326,7 +322,7 @@ export function TransactionFilters() {
               </PopoverContent>
             </Popover>
 
-            <Select value={filterMonth} onValueChange={setFilterMonth}>
+            <Select value={filterMonth} onValueChange={handleMonthChange}>
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
@@ -345,7 +341,7 @@ export function TransactionFilters() {
               </SelectContent>
             </Select>
 
-            <Select value={filterYear} onValueChange={setFilterYear}>
+            <Select value={filterYear} onValueChange={handleYearChange}>
               <SelectTrigger
                 className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >

@@ -1,9 +1,3 @@
-import type {
-  CustomCategory,
-  TransactionCategoryKey,
-  TransactionType,
-} from "@/lib/definitions"
-
 export const TRANSACTION_TYPES = ["income", "expense"] as const
 
 export const INCOME_CATEGORIES = [
@@ -43,7 +37,7 @@ type CategoryConfigType = {
   }
 }
 
-const CATEGORY_CONFIG: CategoryConfigType = {
+export const CATEGORY_CONFIG: CategoryConfigType = {
   // Incomes
   salary_bonus: {
     label: "Lương & Thưởng",
@@ -145,43 +139,3 @@ const CATEGORY_CONFIG: CategoryConfigType = {
     type: "expense",
   },
 } as const
-
-export function getCategoriesWithDetails(type: TransactionType) {
-  return Object.entries(CATEGORY_CONFIG)
-    .filter(([_, config]) => config.type === type)
-    .map(([categoryKey, config]) => ({
-      label: config.label,
-      description: config.description,
-      categoryKey: categoryKey as TransactionCategoryKey,
-    }))
-}
-
-function getCategoryProperty(
-  categoryKey: TransactionCategoryKey,
-  property: "label" | "description",
-  customCategories?: CustomCategory[]
-) {
-  if (categoryKey in CATEGORY_CONFIG) {
-    return CATEGORY_CONFIG[categoryKey as keyof typeof CATEGORY_CONFIG][
-      property
-    ]
-  }
-  return (
-    customCategories?.find((c) => c.categoryKey === categoryKey)?.[property] ||
-    ""
-  )
-}
-
-export function getCategoryLabel(
-  categoryKey: TransactionCategoryKey,
-  customCategories?: CustomCategory[]
-) {
-  return getCategoryProperty(categoryKey, "label", customCategories)
-}
-
-export function getCategoryDescription(
-  categoryKey: TransactionCategoryKey,
-  customCategories?: CustomCategory[]
-) {
-  return getCategoryProperty(categoryKey, "description", customCategories)
-}

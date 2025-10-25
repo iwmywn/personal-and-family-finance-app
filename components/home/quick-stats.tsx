@@ -10,10 +10,9 @@ import {
 } from "@/components/ui/tooltip"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { getCategoryLabel } from "@/lib/categories"
 import type { TransactionCategoryKey } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { formatCurrency, isCurrentMonth } from "@/lib/utils"
+import { formatCurrency, getCategoryLabel, isCurrentMonth } from "@/lib/utils"
 
 interface QuickStatsProps {
   offsetHeight: number

@@ -26,10 +26,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction, TransactionCategoryKey } from "@/lib/definitions"
 import { useCustomCategories } from "@/lib/swr"
-import { formatCurrency } from "@/lib/utils"
+import {
+  formatCurrency,
+  getCategoryDescription,
+  getCategoryLabel,
+} from "@/lib/utils"
 
 interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]
