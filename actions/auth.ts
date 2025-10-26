@@ -40,12 +40,7 @@ export async function signIn(
 
     if (!isPasswordValid) return { error: t("signInError") }
 
-    await session.user.create(existingUser._id.toString())
-
-    // Set user's locale in localStorage for future use
-    if (existingUser.locale) {
-      // This will be handled on client side after redirect
-    }
+    await session.user.create(existingUser._id.toString(), existingUser.locale)
 
     return { error: undefined }
   } catch (error) {

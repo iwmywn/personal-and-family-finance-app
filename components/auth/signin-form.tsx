@@ -54,22 +54,6 @@ export function SignInForm() {
             callbackUrl = callbackUrl + window.location.hash
           }
 
-          // Get user locale and set in localStorage
-          const getUserLocale = async () => {
-            try {
-              const response = await fetch("/api/user")
-              if (response.ok) {
-                const user = await response.json()
-                if (user?.locale) {
-                  localStorage.setItem("locale", user.locale)
-                }
-              }
-            } catch (err) {
-              console.error("Error getting user locale:", err)
-            }
-          }
-
-          getUserLocale()
           form.reset()
           router.push(callbackUrl || "/home")
         }

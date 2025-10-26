@@ -1,12 +1,14 @@
 "use server"
 
+import { Locale, locales } from "@/i18n/config"
+import { setUserLocale } from "@/i18n/locale"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
 import { getUserCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
-export async function updateLocale(locale: string) {
+export async function updateLocale(locale: Locale) {
   try {
     const t = await getTranslations("settings")
 
@@ -18,8 +20,7 @@ export async function updateLocale(locale: string) {
       }
     }
 
-    // Validate locale
-    if (!["vi", "en"].includes(locale)) {
+    if (!locales.includes(locale)) {
       return { error: t("languageUpdateFailed") }
     }
 
@@ -40,6 +41,11 @@ export async function updateLocale(locale: string) {
         },
       }
     )
+
+    const s = await session.user.get()
+    s.locale = locale
+
+    await Promise.all([s.save(), setUserLocale(locale)])
 
     return { success: t("languageUpdated") }
   } catch (error) {

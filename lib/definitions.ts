@@ -1,3 +1,4 @@
+import { Locale } from "@/i18n/config"
 import type { ObjectId } from "mongodb"
 
 import { ALL_CATEGORIES, TRANSACTION_TYPES } from "@/lib/categories"
@@ -7,7 +8,7 @@ type BaseUser<T> = {
   fullName: string
   username: string
   password: string
-  locale?: string // 'vi' | 'en', default 'vi'
+  locale: Locale
 }
 
 type BaseTransaction<T> = {

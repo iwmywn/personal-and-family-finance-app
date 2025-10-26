@@ -301,5 +301,10 @@
     "october": "Tháng 10",
     "november": "Tháng 11",
     "december": "Tháng 12"
+  },
+  "error": {
+    "title": "Đã xảy ra lỗi!",
+    "tryAgain": "Thử lại",
+    "backToHome": "Về trang chủ"
   }
 }

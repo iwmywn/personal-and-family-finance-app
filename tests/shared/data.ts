@@ -7,6 +7,7 @@ export const mockUser = {
   fullName: "Test User",
   username: "testuser",
   password: "$2a$10$uqIvouPdI5gzN95l3ct/zeOHzSICyxyRJJ7lCIqLbvUtKcqs4gRPe", //TestPassword123!
+  locale: "en",
 }
 
 export const mockCustomCategory = {

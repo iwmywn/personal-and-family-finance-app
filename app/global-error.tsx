@@ -1,5 +1,7 @@
 "use client"
 
+import { useLocale, useTranslations } from "next-intl"
+
 import { Button } from "@/components/ui/button"
 import { nunito } from "@/app/fonts"
 
@@ -10,13 +12,16 @@ export default function GlobalError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const locale = useLocale()
+  const t = useTranslations("error")
+
   return (
-    <html>
+    <html lang={locale}>
       <body className={`${nunito.className}`}>
         <main className="flex h-screen flex-col items-center justify-center gap-2 px-6 text-center md:px-16">
-          <h2 className="text-lg font-semibold">Đã xảy ra lỗi!</h2>
+          <h2 className="text-lg font-semibold">{t("title")}</h2>
           <p>{error.message}</p>
-          <Button onClick={() => reset()}>Thử lại</Button>
+          <Button onClick={() => reset()}>{t("tryAgain")}</Button>
         </main>
       </body>
     </html>

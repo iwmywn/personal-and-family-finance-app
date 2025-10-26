@@ -2,6 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { Locale } from "@/i18n/config"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -21,21 +22,20 @@ export function LanguageSelector() {
   const [isPending, startTransition] = useTransition()
   const { user, mutate } = useUser()
 
-  async function handleLocaleChange(locale: string) {
+  async function handleLocaleChange(locale: Locale) {
     startTransition(async () => {
       const result = await updateLocale(locale)
 
       if (result.error) {
         toast.error(result.error)
       } else {
-        toast.success(result.success)
-        localStorage.setItem("locale", locale)
         mutate({
           user: {
             ...user!,
             locale: locale,
           },
         })
+        toast.success(result.success)
         router.refresh()
       }
     })

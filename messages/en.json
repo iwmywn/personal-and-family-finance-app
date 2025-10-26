@@ -301,5 +301,10 @@
     "october": "October",
     "november": "November",
     "december": "December"
+  },
+  "error": {
+    "title": "An error occurred!",
+    "tryAgain": "Try Again",
+    "backToHome": "Back to Home"
   }
 }
