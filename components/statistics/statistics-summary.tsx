@@ -6,8 +6,8 @@ import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Transaction } from "@/lib/definitions"
-import { formatCurrency } from "@/lib/utils/formatting"
-import { calculateSummaryStats } from "@/lib/utils/statistics"
+import { calculateSummaryStats } from "@/lib/statistics"
+import { formatCurrency } from "@/lib/utils"
 
 interface StatisticsSummaryProps {
   filteredTransactions: Transaction[]

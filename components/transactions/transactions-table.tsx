@@ -37,13 +37,10 @@ import {
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import {
-  getCategoryDescription,
-  getCategoryLabel,
-} from "@/lib/utils/categories"
-import { formatCurrency, formatDate } from "@/lib/utils/formatting"
+import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface TransactionsTableProps {
   filteredTransactions: Transaction[]

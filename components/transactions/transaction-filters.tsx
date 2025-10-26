@@ -31,12 +31,14 @@ import {
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories"
+import {
+  EXPENSE_CATEGORIES,
+  getCategoryLabel,
+  INCOME_CATEGORIES,
+} from "@/lib/categories"
+import { filterTransactions } from "@/lib/filters"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { getCategoryLabel } from "@/lib/utils/categories"
-import { filterTransactions } from "@/lib/utils/filters"
-import { formatDate } from "@/lib/utils/formatting"
-import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
+import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
 
 export function TransactionFilters() {
   const { transactions } = useTransactions()

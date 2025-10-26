@@ -56,13 +56,10 @@ import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormLink } from "@/components/custom/form-link"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { getCategoriesWithDetails, getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { cn } from "@/lib/utils"
-import {
-  getCategoriesWithDetails,
-  getCategoryLabel,
-} from "@/lib/utils/categories"
 
 interface TransactionDialogProps {
   transaction?: Transaction

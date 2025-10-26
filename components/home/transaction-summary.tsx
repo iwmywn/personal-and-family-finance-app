@@ -5,12 +5,12 @@ import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useTransactions } from "@/lib/swr"
-import { formatCurrency } from "@/lib/utils/formatting"
 import {
   calculateSummaryStats,
   getCurrentMonthTransactions,
-} from "@/lib/utils/statistics"
+} from "@/lib/statistics"
+import { useTransactions } from "@/lib/swr"
+import { formatCurrency } from "@/lib/utils"
 
 export function TransactionSummary() {
   const { transactions } = useTransactions()

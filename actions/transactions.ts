@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server"
 import { getTransactionCollection } from "@/lib/collections"
 import { Transaction } from "@/lib/definitions"
 import { session } from "@/lib/session"
-import { normalizeToUTCDate } from "@/lib/utils/date"
+import { normalizeToUTCDate } from "@/lib/utils"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {

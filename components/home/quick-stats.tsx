@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/tooltip"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { getCategoryLabel } from "@/lib/categories"
+import { calculateQuickStats } from "@/lib/statistics"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { getCategoryLabel } from "@/lib/utils/categories"
-import { formatCurrency } from "@/lib/utils/formatting"
-import { calculateQuickStats } from "@/lib/utils/statistics"
+import { formatCurrency } from "@/lib/utils"
 
 interface QuickStatsProps {
   offsetHeight: number

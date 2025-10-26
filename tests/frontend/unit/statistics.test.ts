@@ -4,7 +4,7 @@ import {
   calculateQuickStats,
   calculateSummaryStats,
   getCurrentMonthTransactions,
-} from "@/lib/utils/statistics"
+} from "@/lib/statistics"
 
 describe("Statistics Helpers", () => {
   afterEach(() => {

@@ -1,9 +1,9 @@
-import { CustomCategory } from "@/lib/definitions"
 import {
   getCategoriesWithDetails,
   getCategoryDescription,
   getCategoryLabel,
-} from "@/lib/utils/categories"
+} from "@/lib/categories"
+import { CustomCategory } from "@/lib/definitions"
 
 vi.mock("@/lib/categories", () => ({
   CATEGORY_CONFIG: {

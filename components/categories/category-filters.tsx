@@ -22,8 +22,8 @@ import {
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { filterCustomCategories } from "@/lib/filters"
 import { useCustomCategories } from "@/lib/swr"
-import { filterCustomCategories } from "@/lib/utils/filters"
 
 export function CategoryFilters() {
   const { customCategories } = useCustomCategories()
