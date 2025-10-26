@@ -153,7 +153,6 @@
     "noCategoriesFound": "No categories found",
     "noCategoriesDescription": "You haven't created any custom categories yet. Add your first category!",
     "noCategoriesFiltered": "No categories match your current filters.",
-    "categoryName": "Category Name",
     "description": "Description",
     "type": "Type",
     "openMenu": "Open menu",
@@ -288,5 +287,19 @@
       "title": "UNABLE TO LOAD CATEGORIES DATA",
       "description": "An error occurred while loading categories. Please try again later."
     }
+  },
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
   }
 }

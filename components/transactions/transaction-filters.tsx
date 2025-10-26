@@ -42,6 +42,7 @@ export function TransactionFilters() {
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
   const t = useTranslations("transactions")
+  const tMonths = useTranslations("months")
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -61,7 +62,7 @@ export function TransactionFilters() {
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
-  const allMonths = getMonthsConfig()
+  const allMonths = getMonthsConfig(tMonths)
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =

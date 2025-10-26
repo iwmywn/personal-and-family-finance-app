@@ -153,7 +153,6 @@
     "noCategoriesFound": "Không có danh mục nào",
     "noCategoriesDescription": "Bạn chưa tạo danh mục tùy chỉnh nào. Hãy thêm danh mục đầu tiên!",
     "noCategoriesFiltered": "Không tìm thấy danh mục nào phù hợp với bộ lọc của bạn.",
-    "categoryName": "Tên danh mục",
     "description": "Mô tả",
     "type": "Loại",
     "openMenu": "Mở menu",
@@ -288,5 +287,19 @@
       "title": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
       "description": "Đã xảy ra lỗi khi tải danh mục. Vui lòng thử lại sau."
     }
+  },
+  "months": {
+    "january": "Tháng 1",
+    "february": "Tháng 2",
+    "march": "Tháng 3",
+    "april": "Tháng 4",
+    "may": "Tháng 5",
+    "june": "Tháng 6",
+    "july": "Tháng 7",
+    "august": "Tháng 8",
+    "september": "Tháng 9",
+    "october": "Tháng 10",
+    "november": "Tháng 11",
+    "december": "Tháng 12"
   }
 }

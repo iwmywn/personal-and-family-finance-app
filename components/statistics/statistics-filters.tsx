@@ -32,6 +32,7 @@ import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
   const t = useTranslations("statistics")
+  const tMonths = useTranslations("months")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
@@ -45,7 +46,7 @@ export function StatisticsFilters() {
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
 
-  const allMonths = getMonthsConfig()
+  const allMonths = getMonthsConfig(tMonths)
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
