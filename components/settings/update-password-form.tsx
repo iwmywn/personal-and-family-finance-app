@@ -2,6 +2,7 @@
 
 import { passwordSchema, type PasswordFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -18,6 +19,7 @@ import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
 
 export function UpdatePasswordForm() {
+  const t = useTranslations("settings")
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
@@ -48,7 +50,9 @@ export function UpdatePasswordForm() {
           name="currentPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="currentPassword">Mật khẩu hiện tại</FormLabel>
+              <FormLabel htmlFor="currentPassword">
+                {t("currentPassword")}
+              </FormLabel>
               <FormControl>
                 <PasswordInput
                   id="currentPassword"
@@ -69,7 +73,9 @@ export function UpdatePasswordForm() {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="newPassword">Mật khẩu mới</FormLabel>
+                  <FormLabel htmlFor="newPassword">
+                    {t("newPassword")}
+                  </FormLabel>
                   <FormControl>
                     <PasswordInput
                       id="newPassword"
@@ -91,7 +97,7 @@ export function UpdatePasswordForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="confirmPassword">
-                    Xác nhận mật khẩu mới
+                    {t("confirmPassword")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
@@ -111,7 +117,7 @@ export function UpdatePasswordForm() {
         <div className="flex flex-row-reverse">
           <FormButton
             isSubmitting={form.formState.isSubmitting}
-            text="Lưu thay đổi"
+            text={t("updatePassword")}
           />
         </div>
       </form>

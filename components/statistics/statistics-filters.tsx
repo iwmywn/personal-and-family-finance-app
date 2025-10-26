@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { vi } from "date-fns/locale"
 import { ChevronDownIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -30,6 +31,7 @@ import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
+  const t = useTranslations("statistics")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
@@ -121,7 +123,7 @@ export function StatisticsFilters() {
                   variant="outline"
                   className={`w-full justify-between font-normal ${selectedDate && "border-primary!"}`}
                 >
-                  {selectedDate ? formatDate(selectedDate) : "Chọn ngày"}
+                  {selectedDate ? formatDate(selectedDate) : t("selectDate")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -161,7 +163,7 @@ export function StatisticsFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    "Chọn khoảng thời gian"
+                    t("selectDateRange")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -170,7 +172,7 @@ export function StatisticsFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Từ ngày
+                      {t("from")}
                     </div>
                     <Calendar
                       autoFocus
@@ -192,7 +194,7 @@ export function StatisticsFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Đến ngày
+                      {t("to")}
                     </div>
                     <Calendar
                       mode="single"
@@ -218,11 +220,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Tháng" />
+                <SelectValue placeholder={t("month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả tháng</SelectItem>
+                  <SelectItem value="all">{t("allMonths")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -237,11 +239,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Năm" />
+                <SelectValue placeholder={t("year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả năm</SelectItem>
+                  <SelectItem value="all">{t("allYears")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -258,7 +260,7 @@ export function StatisticsFilters() {
                 onClick={handleResetFilters}
                 className="sm:col-span-2 lg:col-span-1"
               >
-                Đặt lại
+                {t("reset")}
               </Button>
             )}
           </div>

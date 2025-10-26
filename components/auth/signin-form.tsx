@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { signInSchema, type SignInFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -25,6 +26,7 @@ export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const t = useTranslations("auth")
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -52,6 +54,22 @@ export function SignInForm() {
             callbackUrl = callbackUrl + window.location.hash
           }
 
+          // Get user locale and set in localStorage
+          const getUserLocale = async () => {
+            try {
+              const response = await fetch("/api/user")
+              if (response.ok) {
+                const user = await response.json()
+                if (user?.locale) {
+                  localStorage.setItem("locale", user.locale)
+                }
+              }
+            } catch (err) {
+              console.error("Error getting user locale:", err)
+            }
+          }
+
+          getUserLocale()
           form.reset()
           router.push(callbackUrl || "/home")
         }
@@ -90,7 +108,7 @@ export function SignInForm() {
               name="username"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="username">Tên người dùng</FormLabel>
+                  <FormLabel htmlFor="username">{t("username")}</FormLabel>
                   <FormControl>
                     <Input
                       id="username"
@@ -110,7 +128,7 @@ export function SignInForm() {
               render={({ field }) => (
                 <FormItem className="grid gap-2">
                   <div className="flex items-center justify-between">
-                    <FormLabel htmlFor="password">Mật khẩu</FormLabel>
+                    <FormLabel htmlFor="password">{t("password")}</FormLabel>
                   </div>
                   <FormControl>
                     <PasswordInput
@@ -126,7 +144,7 @@ export function SignInForm() {
             />
             <FormButton
               isSubmitting={isLoading || form.formState.isSubmitting}
-              text="Đăng nhập"
+              text={t("signInButton")}
             />
           </div>
         </form>

@@ -7,6 +7,7 @@ type BaseUser<T> = {
   fullName: string
   username: string
   password: string
+  locale?: string // 'vi' | 'en', default 'vi'
 }
 
 type BaseTransaction<T> = {

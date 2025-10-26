@@ -3,24 +3,26 @@
 import { passwordSchema, type PasswordFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
+import { getTranslations } from "next-intl/server"
 
 import { getUserCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
 export async function updatePassword(values: PasswordFormValues) {
   try {
+    const t = await getTranslations("auth")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: t("accessDenied"),
       }
     }
 
     const parsedValues = passwordSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Dữ liệu không hợp lệ!" }
+      return { error: t("invalidData") }
     }
 
     const { currentPassword, newPassword } = parsedValues.data
@@ -31,7 +33,7 @@ export async function updatePassword(values: PasswordFormValues) {
     })
 
     if (!existingUser) {
-      return { error: "Không tìm thấy người dùng!" }
+      return { error: t("userNotFound") }
     }
 
     let hashedPassword: string
@@ -43,7 +45,7 @@ export async function updatePassword(values: PasswordFormValues) {
       )
 
       if (!isPasswordValid) {
-        return { error: "Mật khẩu hiện tại không đúng!" }
+        return { error: t("passwordIncorrect") }
       }
 
       hashedPassword = await bcrypt.hash(newPassword, 10)
@@ -54,7 +56,7 @@ export async function updatePassword(values: PasswordFormValues) {
     const isSame = hashedPassword === existingUser.password
 
     if (isSame) {
-      return { success: "Không có thay đổi nào được thực hiện." }
+      return { success: t("noChanges") }
     }
 
     await userCollection.updateOne(
@@ -66,9 +68,10 @@ export async function updatePassword(values: PasswordFormValues) {
       }
     )
 
-    return { success: "Mật khẩu của bạn đã được thay đổi." }
+    return { success: t("passwordUpdated") }
   } catch (error) {
     console.error("Error updating password:", error)
-    return { error: "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau." }
+    const t = await getTranslations("auth")
+    return { error: t("passwordUpdateFailed") }
   }
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { MoreVertical, Tag } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -46,6 +47,7 @@ export function CategoriesTable({
     useState<CustomCategory | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
+  const t = useTranslations("categories")
 
   return (
     <>
@@ -61,11 +63,11 @@ export function CategoriesTable({
                 <EmptyMedia variant="icon">
                   <Tag />
                 </EmptyMedia>
-                <EmptyTitle>Không có danh mục nào</EmptyTitle>
+                <EmptyTitle>{t("noCategoriesFound")}</EmptyTitle>
                 <EmptyDescription>
                   {customCategories!.length === 0
-                    ? "Bạn chưa tạo danh mục tùy chỉnh nào. Hãy thêm danh mục đầu tiên!"
-                    : "Không tìm thấy danh mục nào phù hợp với bộ lọc của bạn."}
+                    ? t("noCategoriesDescription")
+                    : t("noCategoriesFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -79,9 +81,9 @@ export function CategoriesTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>Tên danh mục</TableHead>
-                    <TableHead>Mô tả</TableHead>
-                    <TableHead>Loại</TableHead>
+                    <TableHead>{t("categoryName")}</TableHead>
+                    <TableHead>{t("description")}</TableHead>
+                    <TableHead>{t("type")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -102,7 +104,9 @@ export function CategoriesTable({
                               : "badge-expense"
                           }
                         >
-                          {category.type === "income" ? "Thu nhập" : "Chi tiêu"}
+                          {category.type === "income"
+                            ? t("income")
+                            : t("expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -114,7 +118,7 @@ export function CategoriesTable({
                               size="icon"
                             >
                               <MoreVertical />
-                              <span className="sr-only">Mở menu</span>
+                              <span className="sr-only">{t("openMenu")}</span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -125,7 +129,7 @@ export function CategoriesTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              Chỉnh sửa
+                              {t("edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -135,7 +139,7 @@ export function CategoriesTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              Xóa
+                              {t("delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

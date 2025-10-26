@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { Receipt } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -43,6 +44,7 @@ export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
   const { customCategories } = useCustomCategories()
+  const t = useTranslations("statistics")
 
   const categoryStats = useMemo(() => {
     return calculateCategoryStats(filteredTransactions)
@@ -63,9 +65,9 @@ export function TransactionBreakdownTable({
               <EmptyMedia variant="icon">
                 <Receipt />
               </EmptyMedia>
-              <EmptyTitle>Không có giao dịch</EmptyTitle>
+              <EmptyTitle>{t("noTransactions")}</EmptyTitle>
               <EmptyDescription>
-                Không có giao dịch nào để phân tích.
+                {t("noTransactionsDescription")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -74,10 +76,10 @@ export function TransactionBreakdownTable({
             <Table>
               <TableHeader className="bg-muted sticky top-0">
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>Danh mục</TableHead>
-                  <TableHead>Loại</TableHead>
-                  <TableHead>Số giao dịch</TableHead>
-                  <TableHead>Tổng tiền</TableHead>
+                  <TableHead>{t("category")}</TableHead>
+                  <TableHead>{t("type")}</TableHead>
+                  <TableHead>{t("transactionCount")}</TableHead>
+                  <TableHead>{t("totalAmount")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -114,7 +116,7 @@ export function TransactionBreakdownTable({
                             : "badge-expense"
                         }
                       >
-                        {stat.type === "income" ? "Thu nhập" : "Chi tiêu"}
+                        {stat.type === "income" ? t("income") : t("expense")}
                       </Badge>
                     </TableCell>
                     <TableCell>{stat.count}</TableCell>

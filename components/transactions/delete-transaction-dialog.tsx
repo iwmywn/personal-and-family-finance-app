@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import { deleteTransaction } from "@/actions/transactions"
@@ -30,6 +31,7 @@ export function DeleteTransactionDialog({
   open,
   setOpen,
 }: DeleteTransactionDialogProps) {
+  const t = useTranslations()
   const { transactions, mutate } = useTransactions()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -55,16 +57,19 @@ export function DeleteTransactionDialog({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa giao dịch</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("transactions.deleteTransactionTitle")}
+          </AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            Bạn có chắc chắn muốn xóa giao dịch &quot;{transactionDescription}
-            &quot;? Hành động này không thể hoàn tác.
+            {t("transactions.deleteTransactionDescription", {
+              description: transactionDescription,
+            })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Hủy</AlertDialogCancel>
+          <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} Xóa
+            {isLoading && <Spinner />} {t("common.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

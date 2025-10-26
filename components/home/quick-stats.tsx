@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -24,6 +26,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const { customCategories } = useCustomCategories()
   const { transactions } = useTransactions()
+  const t = useTranslations("home")
 
   const {
     currentMonthCount,
@@ -37,7 +40,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
       <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
-        <CardTitle>Thống kê nhanh</CardTitle>
+        <CardTitle>{t("quickStats")}</CardTitle>
       </CardHeader>
       <CardContent
         className="h-full overflow-y-auto"
@@ -52,14 +55,11 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">
-                  <div className="left">Tổng giao dịch:</div>
+                  <div className="left">{t("totalTransactions")}:</div>
                   <div className="right">{currentMonthCount}</div>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                Tổng số giao dịch (cả thu và chi) bạn đã thực hiện trong tháng
-                hiện tại. Giúp theo dõi tần suất giao dịch của bạn.
-              </TooltipContent>
+              <TooltipContent>{t("totalTransactionsTooltip")}</TooltipContent>
             </Tooltip>
 
             <Separator />
@@ -67,20 +67,19 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">
-                  <div className="left">Giao dịch cao nhất:</div>
+                  <div className="left">{t("highestTransaction")}:</div>
                   <div className="right">
                     {highestTransaction !== null
                       ? `${formatCurrency(highestTransaction.amount)} (${
-                          highestTransaction.type === "income" ? "thu" : "chi"
+                          highestTransaction.type === "income"
+                            ? t("income")
+                            : t("expense")
                         })`
-                      : "Chưa có"}
+                      : t("noData")}
                   </div>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                Giao dịch có giá trị lớn nhất trong tháng (có thể là thu hoặc
-                chi). Giúp nhận diện các khoản tiền lớn bất thường.
-              </TooltipContent>
+              <TooltipContent>{t("highestTransactionTooltip")}</TooltipContent>
             </Tooltip>
 
             <Separator />
@@ -88,20 +87,19 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">
-                  <div className="left">Giao dịch thấp nhất:</div>
+                  <div className="left">{t("lowestTransaction")}:</div>
                   <div className="right">
                     {lowestTransaction !== null
                       ? `${formatCurrency(lowestTransaction.amount)} (${
-                          lowestTransaction.type === "income" ? "thu" : "chi"
+                          lowestTransaction.type === "income"
+                            ? t("income")
+                            : t("expense")
                         })`
-                      : "Chưa có"}
+                      : t("noData")}
                   </div>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                Giao dịch có giá trị nhỏ nhất trong tháng (có thể là thu hoặc
-                chi). Giúp nhận diện các khoản chi nhỏ lẻ thường xuyên.
-              </TooltipContent>
+              <TooltipContent>{t("lowestTransactionTooltip")}</TooltipContent>
             </Tooltip>
 
             <Separator />
@@ -109,18 +107,15 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">
-                  <div className="left">Chi TB/giao dịch:</div>
+                  <div className="left">{t("avgExpense")}:</div>
                   <div className="right">
                     {avgExpense !== null
                       ? formatCurrency(avgExpense)
-                      : "Chưa có"}
+                      : t("noData")}
                   </div>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                Số tiền trung bình mỗi lần chi tiêu (Tổng chi / Số giao dịch
-                chi). Giúp bạn nhận biết quy mô chi tiêu trung bình của mình.
-              </TooltipContent>
+              <TooltipContent>{t("avgExpenseTooltip")}</TooltipContent>
             </Tooltip>
 
             <Separator />
@@ -128,7 +123,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">
-                  <div className="left">Tỷ lệ tiết kiệm:</div>
+                  <div className="left">{t("savingsRate")}:</div>
                   <div
                     className={`right ${
                       savingsRate !== null
@@ -140,15 +135,11 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                         : ""
                     } `}
                   >
-                    {savingsRate !== null ? `${savingsRate}%` : "Chưa có"}
+                    {savingsRate !== null ? `${savingsRate}%` : t("noData")}
                   </div>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                Tỷ lệ phần trăm số tiền bạn tiết kiệm được so với thu nhập ((Thu
-                - Chi) / Thu × 100%). Tỷ lệ càng cao càng tốt, nên duy trì trên
-                20%.
-              </TooltipContent>
+              <TooltipContent>{t("savingsRateTooltip")}</TooltipContent>
             </Tooltip>
 
             <Separator />
@@ -156,20 +147,17 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">
-                  <div className="left">Danh mục phổ biến:</div>
+                  <div className="left">{t("popularCategory")}:</div>
                   <div className="right">
                     {popularCategory.length > 0
                       ? popularCategory
                           .map((key) => getCategoryLabel(key, customCategories))
                           .join(", ")
-                      : "Chưa có"}
+                      : t("noData")}
                   </div>
                 </div>
               </TooltipTrigger>
-              <TooltipContent>
-                Các danh mục có tổng số tiền cao nhất trong tháng. Giúp bạn nhận
-                biết lĩnh vực chi tiêu hoặc nguồn thu lớn nhất của mình.
-              </TooltipContent>
+              <TooltipContent>{t("popularCategoryTooltip")}</TooltipContent>
             </Tooltip>
           </div>
         </TooltipProvider>

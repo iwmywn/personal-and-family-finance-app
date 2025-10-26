@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { ChartColumnIncreasing, FolderOpen, Home, Wallet } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import {
   Sidebar,
@@ -12,31 +12,17 @@ import {
 } from "@/components/ui/sidebar"
 import { Nav } from "@/components/layout/nav"
 import { NavUser } from "@/components/layout/nav-user"
-
-export const nav = [
-  {
-    title: "Trang chủ",
-    url: "/home",
-    icon: Home,
-  },
-  {
-    title: "Thống kê",
-    url: "/statistics",
-    icon: ChartColumnIncreasing,
-  },
-  {
-    title: "Giao dịch",
-    url: "/transactions",
-    icon: Wallet,
-  },
-  {
-    title: "Danh mục",
-    url: "/categories",
-    icon: FolderOpen,
-  },
-]
+import { nav } from "@/lib/nav"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const t = useTranslations("navigation")
+  const tCommon = useTranslations("common")
+
+  const translatedNav = nav.map((item) => ({
+    ...item,
+    title: t(item.title),
+  }))
+
   return (
     <Sidebar
       className="pr-0 group-data-[state=collapsed]:pr-2.25"
@@ -45,24 +31,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {...props}
     >
       <SidebarHeader>
-        <SidebarMenuButton
-          size="lg"
-          tooltip="Quản Lý Tài Chính Cá Nhân Và Gia Đình"
-        >
+        <SidebarMenuButton size="lg" tooltip={tCommon("appDescription")}>
           <Image
             src="/images/logo.png"
-            alt="PFFA Logo"
+            alt={`${tCommon("appName")} Logo`}
             width={32}
             height={32}
             className="rounded-lg"
           />
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">PFFA</span>
+            <span className="truncate font-semibold">{tCommon("appName")}</span>
           </div>
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
-        <Nav nav={nav} />
+        <Nav nav={translatedNav} />
       </SidebarContent>
       <SidebarFooter className="p-0">
         <NavUser />

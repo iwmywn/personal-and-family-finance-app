@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useTransactions } from "@/lib/swr"
@@ -13,6 +14,7 @@ import {
 
 export function TransactionSummary() {
   const { transactions } = useTransactions()
+  const t = useTranslations("home")
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions!)
 
@@ -26,7 +28,7 @@ export function TransactionSummary() {
     <div className="grid gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Thu nhập tháng này</CardTitle>
+          <CardTitle>{t("monthlyIncome")}</CardTitle>
           <ArrowUpIcon className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -35,14 +37,14 @@ export function TransactionSummary() {
           </div>
           <p className="text-muted-foreground text-sm">
             {currentMonthTransactions.filter((t) => t.type === "income").length}{" "}
-            giao dịch
+            {t("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Chi tiêu tháng này</CardTitle>
+          <CardTitle>{t("monthlyExpense")}</CardTitle>
           <ArrowDownIcon className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -54,14 +56,14 @@ export function TransactionSummary() {
               currentMonthTransactions.filter((t) => t.type === "expense")
                 .length
             }{" "}
-            giao dịch
+            {t("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Số dư tháng này</CardTitle>
+          <CardTitle>{t("monthlyBalance")}</CardTitle>
           <TrendingUpIcon
             className={`h-4 w-4 ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
           />
@@ -75,8 +77,12 @@ export function TransactionSummary() {
             {formatCurrency(balance)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {balance > 0 ? "Dương" : balance < 0 ? "Âm" : "Cân bằng"} so với thu
-            nhập
+            {balance > 0
+              ? t("positive")
+              : balance < 0
+                ? t("negative")
+                : t("balanced")}{" "}
+            {t("comparedToIncome")}
           </p>
         </CardContent>
       </Card>

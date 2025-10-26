@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { vi } from "date-fns/locale"
 import { ChevronDownIcon, Search, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -40,6 +41,7 @@ import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
 export function TransactionFilters() {
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
+  const t = useTranslations("transactions")
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -155,7 +157,7 @@ export function TransactionFilters() {
                 <Search />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder="Tìm kiếm giao dịch..."
+                placeholder={t("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -178,7 +180,7 @@ export function TransactionFilters() {
                   variant="outline"
                   className={`w-full justify-between font-normal md:row-start-2 ${selectedDate && "border-primary!"}`}
                 >
-                  {selectedDate ? formatDate(selectedDate) : "Chọn ngày"}
+                  {selectedDate ? formatDate(selectedDate) : t("selectDate")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -218,7 +220,7 @@ export function TransactionFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    "Chọn khoảng thời gian"
+                    t("selectDateRange")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -227,7 +229,7 @@ export function TransactionFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Từ ngày
+                      {t("from")}
                     </div>
                     <Calendar
                       autoFocus
@@ -249,7 +251,7 @@ export function TransactionFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Đến ngày
+                      {t("to")}
                     </div>
                     <Calendar
                       mode="single"
@@ -275,11 +277,11 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Tháng" />
+                <SelectValue placeholder={t("month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả tháng</SelectItem>
+                  <SelectItem value="all">{t("allMonths")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -294,11 +296,11 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Năm" />
+                <SelectValue placeholder={t("year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả năm</SelectItem>
+                  <SelectItem value="all">{t("allYears")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -318,14 +320,16 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Loại giao dịch" />
+                <SelectValue placeholder={t("transactionType")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả loại giao dịch</SelectItem>
+                  <SelectItem value="all">
+                    {t("allTransactionTypes")}
+                  </SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="income">Thu nhập</SelectItem>
-                  <SelectItem value="expense">Chi tiêu</SelectItem>
+                  <SelectItem value="income">{t("income")}</SelectItem>
+                  <SelectItem value="expense">{t("expense")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -337,13 +341,13 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Danh mục" />
+                <SelectValue placeholder={t("category")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả danh mục</SelectItem>
+                  <SelectItem value="all">{t("allCategories")}</SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>Thu nhập</SelectLabel>
+                  <SelectLabel>{t("income")}</SelectLabel>
                   {INCOME_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
@@ -359,7 +363,7 @@ export function TransactionFilters() {
                         {category.label}
                       </SelectItem>
                     ))}
-                  <SelectLabel>Chi tiêu</SelectLabel>
+                  <SelectLabel>{t("expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
@@ -385,7 +389,7 @@ export function TransactionFilters() {
                 onClick={handleResetFilters}
                 className="col-span-full 2xl:col-auto 2xl:row-start-2"
               >
-                Đặt lại
+                {t("reset")}
               </Button>
             )}
           </div>

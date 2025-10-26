@@ -2,6 +2,7 @@
 
 import { transactionSchema, type TransactionFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
+import { getTranslations } from "next-intl/server"
 
 import { getTransactionCollection } from "@/lib/collections"
 import { Transaction } from "@/lib/definitions"
@@ -10,18 +11,19 @@ import { normalizeToUTCDate } from "@/lib/utils/date"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {
+    const t = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: t("accessDenied"),
       }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Dữ liệu không hợp lệ!" }
+      return { error: t("invalidData") }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -35,13 +37,13 @@ export async function createTransaction(values: TransactionFormValues) {
       date: normalizeToUTCDate(values.date),
     })
 
-    if (!result.acknowledged)
-      return { error: "Tạo giao dịch thất bại! Thử lại sau." }
+    if (!result.acknowledged) return { error: t("transactionAddFailed") }
 
-    return { success: "Giao dịch đã được tạo.", error: undefined }
+    return { success: t("transactionAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
-    return { error: "Tạo giao dịch thất bại! Vui lòng thử lại sau." }
+    const t = await getTranslations("transactions")
+    return { error: t("transactionAddFailed") }
   }
 }
 
@@ -50,23 +52,24 @@ export async function updateTransaction(
   values: TransactionFormValues
 ) {
   try {
+    const t = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: t("accessDenied"),
       }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Dữ liệu không hợp lệ!" }
+      return { error: t("invalidData") }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: "Transaction ID không hợp lệ!",
+        error: t("invalidTransactionId"),
       }
     }
 
@@ -79,7 +82,7 @@ export async function updateTransaction(
 
     if (!existingTransaction) {
       return {
-        error: "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!",
+        error: t("transactionNotFoundOrNoPermission"),
       }
     }
 
@@ -96,26 +99,28 @@ export async function updateTransaction(
       }
     )
 
-    return { success: "Giao dịch đã được cập nhật.", error: undefined }
+    return { success: t("transactionUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating transaction:", error)
-    return { error: "Cập nhật giao dịch thất bại! Vui lòng thử lại sau." }
+    const t = await getTranslations("transactions")
+    return { error: t("transactionUpdateFailed") }
   }
 }
 
 export async function deleteTransaction(transactionId: string) {
   try {
+    const t = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: t("accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: "Transaction ID không hợp lệ!",
+        error: t("invalidTransactionId"),
       }
     }
 
@@ -128,7 +133,7 @@ export async function deleteTransaction(transactionId: string) {
 
     if (!existingTransaction) {
       return {
-        error: "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!",
+        error: t("transactionNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -137,20 +142,22 @@ export async function deleteTransaction(transactionId: string) {
       userId: new ObjectId(userId),
     })
 
-    return { success: "Giao dịch đã được xóa." }
+    return { success: t("transactionDeleted") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
-    return { error: "Xóa giao dịch thất bại! Vui lòng thử lại sau." }
+    const t = await getTranslations("transactions")
+    return { error: t("transactionDeleteFailed") }
   }
 }
 
 export async function getTransactions() {
   try {
+    const t = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: t("accessDenied"),
       }
     }
 
@@ -170,6 +177,7 @@ export async function getTransactions() {
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)
-    return { error: "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau." }
+    const t = await getTranslations("transactions")
+    return { error: t("transactionFetchFailed") }
   }
 }

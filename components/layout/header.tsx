@@ -4,6 +4,7 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Slash } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import {
   Breadcrumb,
@@ -14,11 +15,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { nav } from "@/components/layout/app-sidebar"
+import { nav } from "@/lib/nav"
 
 const other = [
   {
-    title: "Cài đặt",
+    title: "settings",
     url: "/settings",
   },
 ]
@@ -36,6 +37,7 @@ const ColorDialog =
 
 export function Header() {
   const pathname = usePathname()
+  const t = useTranslations("navigation")
 
   const allNavItems = [...nav, ...other]
   const foundItem = allNavItems.find(
@@ -50,10 +52,10 @@ export function Header() {
           <BreadcrumbList>
             <BreadcrumbItem>
               {pathname === "/home" ? (
-                <BreadcrumbPage>Trang chủ</BreadcrumbPage>
+                <BreadcrumbPage>{t("home")}</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>
-                  <Link href="/home">Trang chủ</Link>
+                  <Link href="/home">{t("home")}</Link>
                 </BreadcrumbLink>
               )}
             </BreadcrumbItem>
@@ -63,7 +65,9 @@ export function Header() {
                   <Slash />
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{foundItem?.title}</BreadcrumbPage>
+                  <BreadcrumbPage>
+                    {foundItem ? t(foundItem.title) : ""}
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </>
             )}

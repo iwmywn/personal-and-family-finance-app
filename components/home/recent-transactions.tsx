@@ -2,6 +2,7 @@
 
 import { Fragment } from "react"
 import { Receipt } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -29,16 +30,17 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const recentTransactions = transactions!.slice(0, 10)
   const { customCategories } = useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const t = useTranslations("home")
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
       <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
-        <CardTitle>10 giao dịch gần đây</CardTitle>
+        <CardTitle>{t("recentTransactions")}</CardTitle>
       </CardHeader>
       <CardContent
-        className="h-full overflow-y-auto"
+        className="overflow-y-auto"
         style={{
-          maxHeight: isMediumScreens
+          height: isMediumScreens
             ? "300px"
             : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
         }}
@@ -51,10 +53,10 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                   <Receipt />
                 </EmptyMedia>
                 <EmptyTitle className="text-base">
-                  Không tìm thấy giao dịch
+                  {t("noTransactions")}
                 </EmptyTitle>
                 <EmptyDescription className="text-sm">
-                  Bắt đầu thêm giao dịch của bạn.
+                  {t("startAddingTransactions")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>

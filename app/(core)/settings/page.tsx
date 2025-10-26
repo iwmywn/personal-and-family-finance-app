@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 
 import {
   Card,
@@ -9,31 +10,47 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { BasePage } from "@/components/layout/base-page"
 import { DashboardThemeToggle } from "@/components/mode-toggle"
+import { LanguageSelector } from "@/components/settings/language-selector"
 import { UpdatePasswordForm } from "@/components/settings/update-password-form"
 
-export const metadata: Metadata = {
-  title: "Cài đặt",
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("settings")
+
+  return {
+    title: t("title"),
+  }
 }
 
-export default function page() {
+export default async function page() {
+  const t = await getTranslations("settings")
+
   return (
-    <>
+    <BasePage>
       <Tabs defaultValue="general">
         <TabsList className="w-full">
-          <TabsTrigger value="general">Chung</TabsTrigger>
-          <TabsTrigger value="account">Tài khoản</TabsTrigger>
+          <TabsTrigger value="general">{t("general")}</TabsTrigger>
+          <TabsTrigger value="account">{t("account")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Giao diện</CardTitle>
-              <CardDescription>
-                Chọn chủ đề hiển thị cho ứng dụng.
-              </CardDescription>
+              <CardTitle>{t("appearance")}</CardTitle>
+              <CardDescription>{t("appearanceDescription")}</CardDescription>
               <CardAction>
                 <DashboardThemeToggle />
+              </CardAction>
+            </CardHeader>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("language")}</CardTitle>
+              <CardDescription>{t("languageDescription")}</CardDescription>
+              <CardAction>
+                <LanguageSelector />
               </CardAction>
             </CardHeader>
           </Card>
@@ -42,8 +59,10 @@ export default function page() {
         <TabsContent value="account" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Đổi mật khẩu</CardTitle>
-              <CardDescription>Thay đổi mật khẩu của bạn.</CardDescription>
+              <CardTitle>{t("changePassword")}</CardTitle>
+              <CardDescription>
+                {t("changePasswordDescription")}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <UpdatePasswordForm />
@@ -51,6 +70,6 @@ export default function page() {
           </Card>
         </TabsContent>
       </Tabs>
-    </>
+    </BasePage>
   )
 }

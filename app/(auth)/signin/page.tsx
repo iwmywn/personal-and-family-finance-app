@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 
 import {
   Card,
@@ -9,18 +10,19 @@ import {
 } from "@/components/ui/card"
 import { SignInForm } from "@/components/auth/signin-form"
 
-export function generateMetadata(): Metadata {
-  return { title: "Đăng nhập" }
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("auth")
+  return { title: t("signIn") }
 }
 
-export default function page() {
+export default async function page() {
+  const t = await getTranslations("auth")
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Đăng nhập</CardTitle>
-        <CardDescription>
-          Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.
-        </CardDescription>
+        <CardTitle>{t("signIn")}</CardTitle>
+        <CardDescription>{t("signInDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <SignInForm />

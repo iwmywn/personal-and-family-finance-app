@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { Search, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -31,6 +32,7 @@ export function CategoryFilters() {
     "all"
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const t = useTranslations("categories")
 
   const filteredCategories = useMemo(() => {
     return filterCustomCategories(customCategories!, {
@@ -62,7 +64,7 @@ export function CategoryFilters() {
                 <Search />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder="Tìm kiếm danh mục..."
+                placeholder={t("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -87,13 +89,13 @@ export function CategoryFilters() {
               <SelectTrigger
                 className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Loại danh mục" />
+                <SelectValue placeholder={t("categoryType")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tất cả loại danh mục</SelectItem>
+                <SelectItem value="all">{t("allCategoryTypes")}</SelectItem>
                 <SelectSeparator />
-                <SelectItem value="income">Thu nhập</SelectItem>
-                <SelectItem value="expense">Chi tiêu</SelectItem>
+                <SelectItem value="income">{t("income")}</SelectItem>
+                <SelectItem value="expense">{t("expense")}</SelectItem>
               </SelectContent>
             </Select>
             {hasActiveFilters && (
@@ -103,7 +105,7 @@ export function CategoryFilters() {
                 onClick={handleResetFilters}
                 className="w-full md:w-fit"
               >
-                Đặt lại
+                {t("reset")}
               </Button>
             )}
           </div>
