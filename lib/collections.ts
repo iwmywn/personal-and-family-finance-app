@@ -1,5 +1,5 @@
+import { collection } from "@/lib/db"
 import type { DBCustomCategory, DBTransaction, DBUser } from "@/lib/definitions"
-import { collection } from "@/lib/mongodb"
 
 export function getUserCollection() {
   return collection<DBUser>("users")

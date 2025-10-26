@@ -1,23 +1,23 @@
-import { insertTestUser } from "@/tests/helpers/database"
-import { user, validSignInValues } from "@/tests/helpers/test-data"
-import { mockUserCollectionError } from "@/tests/mocks/collections.mock"
+import { insertTestUser } from "@/tests/backend/helpers/database"
+import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockRecaptchaError,
   mockRecaptchaFailure,
   mockRecaptchaSuccess,
-} from "@/tests/mocks/recaptcha.mock"
+} from "@/tests/backend/mocks/recaptcha.mock"
 import {
   mockAuthenticatedUser,
   mockSignOutFailure,
   mockSignOutSuccess,
   mockUnauthenticatedUser,
-} from "@/tests/mocks/session.mock"
+} from "@/tests/backend/mocks/session.mock"
+import { mockUser, mockValidSignInValues } from "@/tests/shared/data"
 import { getUser, signIn, signOut } from "@/actions/auth"
 
 describe("Auth Actions", () => {
   describe("signIn", () => {
     it("should return error when recaptcha token is missing", async () => {
-      const result = await signIn(validSignInValues, null)
+      const result = await signIn(mockValidSignInValues, null)
 
       expect(result.error).toBe("Thiếu token recaptcha!")
     })
@@ -33,7 +33,7 @@ describe("Auth Actions", () => {
     it("should return error when recaptcha verification fails", async () => {
       mockRecaptchaFailure()
 
-      const result = await signIn(validSignInValues, "invalid-token")
+      const result = await signIn(mockValidSignInValues, "invalid-token")
 
       expect(result.error).toBe("Xác thực Captcha thất bại!")
     })
@@ -41,13 +41,13 @@ describe("Auth Actions", () => {
     it("should return error when user does not exist", async () => {
       mockRecaptchaSuccess()
 
-      const result = await signIn(validSignInValues, "valid-token")
+      const result = await signIn(mockValidSignInValues, "valid-token")
 
       expect(result.error).toBe("Tên người dùng hoặc mật khẩu không đúng!")
     })
 
     it("should return error with incorrect password", async () => {
-      await insertTestUser(user)
+      await insertTestUser(mockUser)
       mockRecaptchaSuccess()
 
       const result = await signIn(
@@ -59,10 +59,10 @@ describe("Auth Actions", () => {
     })
 
     it("should successfully sign in with valid credentials", async () => {
-      await insertTestUser(user)
+      await insertTestUser(mockUser)
       mockRecaptchaSuccess()
 
-      const result = await signIn(validSignInValues, "valid-token")
+      const result = await signIn(mockValidSignInValues, "valid-token")
 
       expect(result.error).toBeUndefined()
     })
@@ -70,7 +70,7 @@ describe("Auth Actions", () => {
     it("should return error when recaptcha verification throws error", async () => {
       mockRecaptchaError()
 
-      const result = await signIn(validSignInValues, "valid-token")
+      const result = await signIn(mockValidSignInValues, "valid-token")
 
       expect(result.error).toBe("Đăng nhập thất bại! Vui lòng thử lại sau.")
     })
@@ -79,7 +79,7 @@ describe("Auth Actions", () => {
       mockRecaptchaSuccess()
       mockUserCollectionError()
 
-      const result = await signIn(validSignInValues, "valid-token")
+      const result = await signIn(mockValidSignInValues, "valid-token")
 
       expect(result.error).toBe("Đăng nhập thất bại! Vui lòng thử lại sau.")
     })
@@ -127,7 +127,7 @@ describe("Auth Actions", () => {
     })
 
     it("should return user data when authenticated", async () => {
-      await insertTestUser(user)
+      await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
       const result = await getUser()

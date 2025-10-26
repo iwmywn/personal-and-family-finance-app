@@ -5,8 +5,8 @@ import { ObjectId } from "mongodb"
 
 import { getTransactionCollection } from "@/lib/collections"
 import { Transaction } from "@/lib/definitions"
+import { normalizeToUTCDate } from "@/lib/helpers/date"
 import { session } from "@/lib/session"
-import { normalizeToUTCDate } from "@/lib/utils"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {
@@ -158,7 +158,7 @@ export async function getTransactions() {
 
     const transactions = await transactionsCollection
       .find({ userId: new ObjectId(userId) })
-      .sort({ date: -1 })
+      .sort({ date: -1, _id: -1 })
       .toArray()
 
     return {

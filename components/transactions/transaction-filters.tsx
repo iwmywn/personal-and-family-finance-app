@@ -31,8 +31,11 @@ import {
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories"
+import { getCategoryLabel } from "@/lib/helpers/categories"
+import { filterTransactions } from "@/lib/helpers/filters"
+import { formatDate } from "@/lib/helpers/formatting"
+import { getMonthsConfig, getUniqueYears } from "@/lib/helpers/transactions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { formatDate, getCategoryLabel } from "@/lib/utils"
 
 export function TransactionFilters() {
   const { transactions } = useTransactions()
@@ -56,24 +59,8 @@ export function TransactionFilters() {
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
-  const allMonths = [
-    { value: "1", label: "Tháng 1" },
-    { value: "2", label: "Tháng 2" },
-    { value: "3", label: "Tháng 3" },
-    { value: "4", label: "Tháng 4" },
-    { value: "5", label: "Tháng 5" },
-    { value: "6", label: "Tháng 6" },
-    { value: "7", label: "Tháng 7" },
-    { value: "8", label: "Tháng 8" },
-    { value: "9", label: "Tháng 9" },
-    { value: "10", label: "Tháng 10" },
-    { value: "11", label: "Tháng 11" },
-    { value: "12", label: "Tháng 12" },
-  ]
-
-  const allYears = Array.from(
-    new Set(transactions!.map((t) => new Date(t.date).getFullYear()))
-  ).sort((a, b) => b - a)
+  const allMonths = getMonthsConfig()
+  const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
     searchTerm !== "" ||
@@ -131,52 +118,14 @@ export function TransactionFilters() {
   }
 
   const filteredTransactions = useMemo(() => {
-    return transactions!.filter((transaction) => {
-      const matchesSearch = transaction.description
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-
-      const transactionDate = new Date(transaction.date)
-      const transactionDateOnly = new Date(
-        transactionDate.getFullYear(),
-        transactionDate.getMonth(),
-        transactionDate.getDate()
-      )
-
-      const matchesSelectedDate = selectedDate
-        ? transactionDate.getDate() === selectedDate.getDate() &&
-          transactionDate.getMonth() === selectedDate.getMonth() &&
-          transactionDate.getFullYear() === selectedDate.getFullYear()
-        : true
-
-      const matchesDateRange =
-        (!dateRange.from || transactionDateOnly >= dateRange.from) &&
-        (!dateRange.to || transactionDateOnly <= dateRange.to)
-
-      const matchesMonth =
-        filterMonth === "all" ||
-        transactionDate.getMonth() + 1 === parseInt(filterMonth)
-
-      const matchesYear =
-        filterYear === "all" ||
-        transactionDate.getFullYear() === parseInt(filterYear)
-
-      const matchesType =
-        filterType === "all" || transaction.type === filterType
-
-      const matchesCategory =
-        filterCategoryKey === "all" ||
-        transaction.categoryKey === filterCategoryKey
-
-      return (
-        matchesSearch &&
-        matchesSelectedDate &&
-        matchesDateRange &&
-        matchesMonth &&
-        matchesYear &&
-        matchesType &&
-        matchesCategory
-      )
+    return filterTransactions(transactions!, {
+      searchTerm,
+      selectedDate,
+      dateRange,
+      filterMonth,
+      filterYear,
+      filterType,
+      filterCategoryKey,
     })
   }, [
     transactions,

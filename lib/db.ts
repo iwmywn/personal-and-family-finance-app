@@ -14,8 +14,8 @@ declare global {
 let db: Db | undefined
 
 function getConnectionConfig() {
-  if (!process.env.MONGODB_URI) {
-    throw new Error("Environment variable MONGODB_URI is not set")
+  if (!process.env.DB_URI) {
+    throw new Error("Environment variable DB_URI is not set")
   }
 
   if (!process.env.DB_NAME) {
@@ -23,7 +23,7 @@ function getConnectionConfig() {
   }
 
   return {
-    uri: process.env.MONGODB_URI,
+    uri: process.env.DB_URI,
     dbName: process.env.DB_NAME,
   }
 }

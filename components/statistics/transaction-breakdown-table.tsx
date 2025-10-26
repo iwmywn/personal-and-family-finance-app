@@ -26,13 +26,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Transaction, TransactionCategoryKey } from "@/lib/definitions"
-import { useCustomCategories } from "@/lib/swr"
+import { Transaction } from "@/lib/definitions"
 import {
-  formatCurrency,
   getCategoryDescription,
   getCategoryLabel,
-} from "@/lib/utils"
+} from "@/lib/helpers/categories"
+import { formatCurrency } from "@/lib/helpers/formatting"
+import { calculateCategoryStats } from "@/lib/helpers/statistics"
+import { useCustomCategories } from "@/lib/swr"
 
 interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]
@@ -42,39 +43,10 @@ export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
   const { customCategories } = useCustomCategories()
+
   const categoryStats = useMemo(() => {
-    const stats = new Map<
-      string,
-      { count: number; total: number; type: "income" | "expense" }
-    >()
-
-    filteredTransactions.forEach((transaction) => {
-      const categoryKey = transaction.categoryKey
-      const current = stats.get(categoryKey) || {
-        count: 0,
-        total: 0,
-        type: transaction.type,
-      }
-      stats.set(categoryKey, {
-        count: current.count + 1,
-        total: current.total + transaction.amount,
-        type: transaction.type,
-      })
-    })
-
-    return Array.from(stats.entries())
-      .map(([categoryKey, data]) => ({
-        categoryKey,
-        categoryLabel: getCategoryLabel(
-          categoryKey as TransactionCategoryKey,
-          customCategories
-        ),
-        count: data.count,
-        total: data.total,
-        type: data.type,
-      }))
-      .sort((a, b) => b.total - a.total)
-  }, [filteredTransactions, customCategories])
+    return calculateCategoryStats(filteredTransactions)
+  }, [filteredTransactions])
 
   return (
     <Card>

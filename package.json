@@ -13,7 +13,9 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "release": "iwmywn-release",
-    "test": "vitest"
+    "test": "vitest",
+    "test:fe": "vitest --project frontend",
+    "test:be": "vitest --project backend"
   },
   "dependencies": {
     "@bprogress/next": "3.2.12",

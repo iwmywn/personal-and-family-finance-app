@@ -1,30 +1,31 @@
 "use client"
 
+import { useMemo } from "react"
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { formatCurrency } from "@/lib/utils"
+import { Transaction } from "@/lib/definitions"
+import { formatCurrency } from "@/lib/helpers/formatting"
+import { calculateSummaryStats } from "@/lib/helpers/statistics"
 
 interface StatisticsSummaryProps {
-  stats: {
-    income: number
-    expenses: number
-    netWorth: number
-    transactionCount: number
-    incomeCount: number
-    expenseCount: number
-  }
+  filteredTransactions: Transaction[]
 }
 
-export function StatisticsSummary({ stats }: StatisticsSummaryProps) {
+export function StatisticsSummary({
+  filteredTransactions,
+}: StatisticsSummaryProps) {
+  const summaryStats = useMemo(() => {
+    return calculateSummaryStats(filteredTransactions)
+  }, [filteredTransactions])
   const {
-    income,
-    expenses,
-    netWorth,
+    totalIncome,
+    totalExpense,
+    balance,
     transactionCount,
     incomeCount,
     expenseCount,
-  } = stats
+  } = summaryStats
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -35,7 +36,7 @@ export function StatisticsSummary({ stats }: StatisticsSummaryProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl wrap-anywhere text-green-600">
-            {formatCurrency(income)}
+            {formatCurrency(totalIncome)}
           </div>
           <p className="text-muted-foreground text-sm">
             {incomeCount} giao dịch
@@ -50,7 +51,7 @@ export function StatisticsSummary({ stats }: StatisticsSummaryProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl wrap-anywhere text-red-600">
-            {formatCurrency(expenses)}
+            {formatCurrency(totalExpense)}
           </div>
           <p className="text-muted-foreground text-sm">
             {expenseCount} giao dịch
@@ -62,24 +63,20 @@ export function StatisticsSummary({ stats }: StatisticsSummaryProps) {
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle>Số dư</CardTitle>
           <TrendingUpIcon
-            className={`h-4 w-4 ${netWorth >= 0 ? "text-green-600" : "text-red-600"}`}
+            className={`h-4 w-4 ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
           />
         </CardHeader>
         <CardContent>
           <div
             className={`text-2xl wrap-anywhere ${
-              netWorth > 0
-                ? "text-green-600"
-                : netWorth < 0
-                  ? "text-red-600"
-                  : ""
+              balance > 0 ? "text-green-600" : balance < 0 ? "text-red-600" : ""
             }`}
           >
-            {formatCurrency(netWorth)}
+            {formatCurrency(balance)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {netWorth > 0 ? "Dương" : netWorth < 0 ? "Âm" : "Cân bằng"} so với
-            thu nhập
+            {balance > 0 ? "Dương" : balance < 0 ? "Âm" : "Cân bằng"} so với thu
+            nhập
           </p>
         </CardContent>
       </Card>

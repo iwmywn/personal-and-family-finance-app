@@ -1,13 +1,16 @@
-import { insertTestTransaction } from "@/tests/helpers/database"
-import { transaction, validTransactionValues } from "@/tests/helpers/test-data"
+import { insertTestTransaction } from "@/tests/backend/helpers/database"
 import {
   mockTransactionCollectionError,
   setupTransactionCollectionMock,
-} from "@/tests/mocks/collections.mock"
+} from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
-} from "@/tests/mocks/session.mock"
+} from "@/tests/backend/mocks/session.mock"
+import {
+  mockTransaction,
+  mockValidTransactionValues,
+} from "@/tests/shared/data"
 import {
   createTransaction,
   deleteTransaction,
@@ -20,7 +23,7 @@ describe("Transactions Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await createTransaction(validTransactionValues)
+      const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -50,7 +53,7 @@ describe("Transactions Actions", () => {
         acknowledged: false,
       })
 
-      const result = await createTransaction(validTransactionValues)
+      const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Tạo giao dịch thất bại! Thử lại sau.")
@@ -59,7 +62,7 @@ describe("Transactions Actions", () => {
     it("should successfully create transaction", async () => {
       mockAuthenticatedUser()
 
-      const result = await createTransaction(validTransactionValues)
+      const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBe("Giao dịch đã được tạo.")
       expect(result.error).toBeUndefined()
@@ -69,7 +72,7 @@ describe("Transactions Actions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await createTransaction(validTransactionValues)
+      const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Tạo giao dịch thất bại! Vui lòng thử lại sau.")
@@ -81,8 +84,8 @@ describe("Transactions Actions", () => {
       mockUnauthenticatedUser()
 
       const result = await updateTransaction(
-        transaction._id.toString(),
-        validTransactionValues
+        mockTransaction._id.toString(),
+        mockValidTransactionValues
       )
 
       expect(result.success).toBeUndefined()
@@ -94,7 +97,7 @@ describe("Transactions Actions", () => {
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
 
-      const result = await updateTransaction(transaction._id.toString(), {
+      const result = await updateTransaction(mockTransaction._id.toString(), {
         type: "invalid" as "income" | "expense",
         categoryKey: "",
         amount: -1,
@@ -111,7 +114,7 @@ describe("Transactions Actions", () => {
 
       const result = await updateTransaction(
         "invalid-id",
-        validTransactionValues
+        mockValidTransactionValues
       )
 
       expect(result.success).toBeUndefined()
@@ -122,8 +125,8 @@ describe("Transactions Actions", () => {
       mockAuthenticatedUser()
 
       const result = await updateTransaction(
-        transaction._id.toString(),
-        validTransactionValues
+        mockTransaction._id.toString(),
+        mockValidTransactionValues
       )
 
       expect(result.success).toBeUndefined()
@@ -133,10 +136,10 @@ describe("Transactions Actions", () => {
     })
 
     it("should successfully update transaction", async () => {
-      await insertTestTransaction(transaction)
+      await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await updateTransaction(transaction._id.toString(), {
+      const result = await updateTransaction(mockTransaction._id.toString(), {
         type: "income",
         categoryKey: "personal_care",
         amount: 100000,
@@ -153,8 +156,8 @@ describe("Transactions Actions", () => {
       mockTransactionCollectionError()
 
       const result = await updateTransaction(
-        transaction._id.toString(),
-        validTransactionValues
+        mockTransaction._id.toString(),
+        mockValidTransactionValues
       )
 
       expect(result.success).toBeUndefined()
@@ -168,7 +171,7 @@ describe("Transactions Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await deleteTransaction(transaction._id.toString())
+      const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -188,7 +191,7 @@ describe("Transactions Actions", () => {
     it("should return error when transaction not found", async () => {
       mockAuthenticatedUser()
 
-      const result = await deleteTransaction(transaction._id.toString())
+      const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -197,10 +200,10 @@ describe("Transactions Actions", () => {
     })
 
     it("should successfully delete transaction", async () => {
-      await insertTestTransaction(transaction)
+      await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await deleteTransaction(transaction._id.toString())
+      const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBe("Giao dịch đã được xóa.")
       expect(result.error).toBeUndefined()
@@ -210,7 +213,7 @@ describe("Transactions Actions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await deleteTransaction(transaction._id.toString())
+      const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Xóa giao dịch thất bại! Vui lòng thử lại sau.")
@@ -239,7 +242,7 @@ describe("Transactions Actions", () => {
     })
 
     it("should return transactions list", async () => {
-      await insertTestTransaction(transaction)
+      await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
       const result = await getTransactions()

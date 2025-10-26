@@ -3,21 +3,21 @@ import { ObjectId } from "mongodb"
 import {
   insertTestCategory,
   insertTestTransaction,
-} from "@/tests/helpers/database"
-import {
-  category,
-  transaction,
-  validCategoryValues,
-} from "@/tests/helpers/test-data"
+} from "@/tests/backend/helpers/database"
 import {
   mockCategoryCollectionError,
   mockTransactionCollectionError,
   setupCategoryCollectionMock,
-} from "@/tests/mocks/collections.mock"
+} from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
-} from "@/tests/mocks/session.mock"
+} from "@/tests/backend/mocks/session.mock"
+import {
+  mockCustomCategory,
+  mockTransaction,
+  mockValidCategoryValues,
+} from "@/tests/shared/data"
 import {
   createCustomCategory,
   deleteCustomCategory,
@@ -30,7 +30,7 @@ describe("Categories Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await createCustomCategory(validCategoryValues)
+      const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -52,12 +52,12 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when category with same name exists", async () => {
-      await insertTestCategory(category)
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
       const result = await createCustomCategory({
-        type: category.type,
-        label: category.label,
+        type: mockCustomCategory.type,
+        label: mockCustomCategory.label,
         description: "Different description",
       })
 
@@ -66,7 +66,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when duplicate categoryKey exists", async () => {
-      await insertTestCategory(category)
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
       vi.mock("nanoid", () => ({
@@ -91,7 +91,7 @@ describe("Categories Actions", () => {
         acknowledged: false,
       })
 
-      const result = await createCustomCategory(validCategoryValues)
+      const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Tạo danh mục thất bại! Thử lại sau.")
@@ -100,7 +100,7 @@ describe("Categories Actions", () => {
     it("should successfully create custom category", async () => {
       mockAuthenticatedUser()
 
-      const result = await createCustomCategory(validCategoryValues)
+      const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBe("Danh mục đã được tạo.")
       expect(result.error).toBeUndefined()
@@ -110,7 +110,7 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const result = await createCustomCategory(validCategoryValues)
+      const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Tạo danh mục thất bại! Vui lòng thử lại sau.")
@@ -122,8 +122,8 @@ describe("Categories Actions", () => {
       mockUnauthenticatedUser()
 
       const result = await updateCustomCategory(
-        category._id.toString(),
-        validCategoryValues
+        mockCustomCategory._id.toString(),
+        mockValidCategoryValues
       )
 
       expect(result.success).toBeUndefined()
@@ -135,11 +135,14 @@ describe("Categories Actions", () => {
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
 
-      const result = await updateCustomCategory(category._id.toString(), {
-        type: "invalid" as "expense" | "income",
-        label: "",
-        description: "",
-      })
+      const result = await updateCustomCategory(
+        mockCustomCategory._id.toString(),
+        {
+          type: "invalid" as "expense" | "income",
+          label: "",
+          description: "",
+        }
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Dữ liệu không hợp lệ!")
@@ -150,7 +153,7 @@ describe("Categories Actions", () => {
 
       const result = await updateCustomCategory(
         "invalid-id",
-        validCategoryValues
+        mockValidCategoryValues
       )
 
       expect(result.success).toBeUndefined()
@@ -161,8 +164,8 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
 
       const result = await updateCustomCategory(
-        category._id.toString(),
-        validCategoryValues
+        mockCustomCategory._id.toString(),
+        mockValidCategoryValues
       )
 
       expect(result.success).toBeUndefined()
@@ -172,33 +175,39 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when duplicate category name exists", async () => {
-      await insertTestCategory(category)
+      await insertTestCategory(mockCustomCategory)
       await insertTestCategory({
-        ...category,
+        ...mockCustomCategory,
         _id: new ObjectId("68f795d4bdcc3c9a30717977"),
         label: "Different Label",
       })
       mockAuthenticatedUser()
 
-      const result = await updateCustomCategory(category._id.toString(), {
-        type: category.type,
-        label: "Different Label",
-        description: "Different description",
-      })
+      const result = await updateCustomCategory(
+        mockCustomCategory._id.toString(),
+        {
+          type: mockCustomCategory.type,
+          label: "Different Label",
+          description: "Different description",
+        }
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Danh mục với tên này đã tồn tại!")
     })
 
     it("should successfully update custom category", async () => {
-      await insertTestCategory(category)
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
-      const result = await updateCustomCategory(category._id.toString(), {
-        type: "income",
-        label: "Updated Label",
-        description: "Updated description",
-      })
+      const result = await updateCustomCategory(
+        mockCustomCategory._id.toString(),
+        {
+          type: "income",
+          label: "Updated Label",
+          description: "Updated description",
+        }
+      )
 
       expect(result.success).toBe("Danh mục đã được cập nhật.")
       expect(result.error).toBeUndefined()
@@ -209,8 +218,8 @@ describe("Categories Actions", () => {
       mockCategoryCollectionError()
 
       const result = await updateCustomCategory(
-        category._id.toString(),
-        validCategoryValues
+        mockCustomCategory._id.toString(),
+        mockValidCategoryValues
       )
 
       expect(result.success).toBeUndefined()
@@ -224,7 +233,9 @@ describe("Categories Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await deleteCustomCategory(category._id.toString())
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -244,7 +255,9 @@ describe("Categories Actions", () => {
     it("should return error when category not found", async () => {
       mockAuthenticatedUser()
 
-      const result = await deleteCustomCategory(category._id.toString())
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -253,14 +266,16 @@ describe("Categories Actions", () => {
     })
 
     it("should return error when category has associated transactions", async () => {
-      await insertTestCategory(category)
+      await insertTestCategory(mockCustomCategory)
       await insertTestTransaction({
-        ...transaction,
-        categoryKey: category.categoryKey,
+        ...mockTransaction,
+        categoryKey: mockCustomCategory.categoryKey,
       })
       mockAuthenticatedUser()
 
-      const result = await deleteCustomCategory(category._id.toString())
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -269,10 +284,12 @@ describe("Categories Actions", () => {
     })
 
     it("should successfully delete custom category", async () => {
-      await insertTestCategory(category)
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
-      const result = await deleteCustomCategory(category._id.toString())
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
 
       expect(result.success).toBe("Danh mục đã được xóa.")
       expect(result.error).toBeUndefined()
@@ -282,7 +299,9 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const result = await deleteCustomCategory(category._id.toString())
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Xóa danh mục thất bại! Vui lòng thử lại sau.")
@@ -292,7 +311,9 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await deleteCustomCategory(category._id.toString())
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Xóa danh mục thất bại! Vui lòng thử lại sau.")
@@ -321,7 +342,7 @@ describe("Categories Actions", () => {
     })
 
     it("should return categories list", async () => {
-      await insertTestCategory(category)
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
       const result = await getCustomCategories()

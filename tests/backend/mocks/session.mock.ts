@@ -1,4 +1,4 @@
-import { user } from "@/tests/helpers/test-data"
+import { mockUser } from "@/tests/shared/data"
 
 const mockSession = {
   user: {
@@ -11,7 +11,9 @@ const mockSession = {
 
 vi.mock("@/lib/session", () => ({ session: mockSession }))
 
-export const mockAuthenticatedUser = (userId: string = user._id.toString()) => {
+export const mockAuthenticatedUser = (
+  userId: string = mockUser._id.toString()
+) => {
   mockSession.user.get.mockResolvedValue({ userId })
 }
 

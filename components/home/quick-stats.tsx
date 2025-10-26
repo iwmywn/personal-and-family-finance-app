@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/tooltip"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import type { TransactionCategoryKey } from "@/lib/definitions"
+import { getCategoryLabel } from "@/lib/helpers/categories"
+import { formatCurrency } from "@/lib/helpers/formatting"
+import { calculateQuickStats } from "@/lib/helpers/statistics"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { formatCurrency, getCategoryLabel, isCurrentMonth } from "@/lib/utils"
 
 interface QuickStatsProps {
   offsetHeight: number
@@ -24,70 +25,14 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const { customCategories } = useCustomCategories()
   const { transactions } = useTransactions()
 
-  const currentMonthTransactions = transactions!.filter((t) =>
-    isCurrentMonth(t.date)
-  )
-
-  // Tổng giao dịch:
-  const currentMonthCount = currentMonthTransactions.length
-
-  // Giao dịch cao nhất:
-  const highestTransaction =
-    currentMonthTransactions.length > 0
-      ? currentMonthTransactions.reduce((max, t) =>
-          t.amount > max.amount ? t : max
-        )
-      : null
-
-  // Giao dịch thấp nhất:
-  const lowestTransaction =
-    currentMonthTransactions.length > 0
-      ? currentMonthTransactions.reduce((min, t) =>
-          t.amount < min.amount ? t : min
-        )
-      : null
-
-  // Chi TB/giao dịch:
-  const expenseTransactions = currentMonthTransactions.filter(
-    (t) => t.type === "expense"
-  )
-  const avgExpense =
-    expenseTransactions.length > 0
-      ? expenseTransactions.reduce((sum, t) => sum + t.amount, 0) /
-        expenseTransactions.length
-      : null
-
-  // Tỷ lệ tiết kiệm:
-  const monthlyIncome = currentMonthTransactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0)
-
-  const monthlyExpense = currentMonthTransactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0)
-
-  const balance = monthlyIncome - monthlyExpense
-  const savingsRate =
-    monthlyIncome > 0
-      ? Number(((balance / monthlyIncome) * 100).toFixed(1)).toLocaleString(
-          "fullwide",
-          { useGrouping: false }
-        )
-      : null
-
-  // Danh mục phổ biến:
-  const popularCategory: TransactionCategoryKey | null =
-    currentMonthTransactions.length > 0
-      ? (Object.entries(
-          currentMonthTransactions.reduce(
-            (acc, t) => {
-              acc[t.categoryKey] = (acc[t.categoryKey] || 0) + 1
-              return acc
-            },
-            {} as Record<string, number>
-          )
-        ).sort(([, a], [, b]) => b - a)[0]?.[0] as TransactionCategoryKey)
-      : null
+  const {
+    currentMonthCount,
+    highestTransaction,
+    lowestTransaction,
+    avgExpense,
+    savingsRate,
+    popularCategory,
+  } = calculateQuickStats(transactions!)
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
@@ -213,15 +158,17 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 <div className="row">
                   <div className="left">Danh mục phổ biến:</div>
                   <div className="right">
-                    {popularCategory
-                      ? getCategoryLabel(popularCategory, customCategories)
+                    {popularCategory.length > 0
+                      ? popularCategory
+                          .map((key) => getCategoryLabel(key, customCategories))
+                          .join(", ")
                       : "Chưa có"}
                   </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                Danh mục có số lượng giao dịch nhiều nhất trong tháng. Giúp bạn
-                nhận biết lĩnh vực chi tiêu hoặc thu nhập chính của mình.
+                Các danh mục có tổng số tiền cao nhất trong tháng. Giúp bạn nhận
+                biết lĩnh vực chi tiêu hoặc nguồn thu lớn nhất của mình.
               </TooltipContent>
             </Tooltip>
           </div>

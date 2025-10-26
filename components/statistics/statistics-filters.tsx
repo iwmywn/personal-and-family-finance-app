@@ -23,8 +23,10 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
+import { filterTransactions } from "@/lib/helpers/filters"
+import { formatDate } from "@/lib/helpers/formatting"
+import { getMonthsConfig, getUniqueYears } from "@/lib/helpers/transactions"
 import { useTransactions } from "@/lib/swr"
-import { formatDate } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
@@ -41,24 +43,8 @@ export function StatisticsFilters() {
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
 
-  const allMonths = [
-    { value: "1", label: "Tháng 1" },
-    { value: "2", label: "Tháng 2" },
-    { value: "3", label: "Tháng 3" },
-    { value: "4", label: "Tháng 4" },
-    { value: "5", label: "Tháng 5" },
-    { value: "6", label: "Tháng 6" },
-    { value: "7", label: "Tháng 7" },
-    { value: "8", label: "Tháng 8" },
-    { value: "9", label: "Tháng 9" },
-    { value: "10", label: "Tháng 10" },
-    { value: "11", label: "Tháng 11" },
-    { value: "12", label: "Tháng 12" },
-  ]
-
-  const allYears = Array.from(
-    new Set(transactions!.map((t) => new Date(t.date).getFullYear()))
-  ).sort((a, b) => b - a)
+  const allMonths = getMonthsConfig()
+  const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
     selectedDate ||
@@ -110,62 +96,13 @@ export function StatisticsFilters() {
   }
 
   const filteredTransactions = useMemo(() => {
-    return transactions!.filter((transaction) => {
-      const transactionDate = new Date(transaction.date)
-      const transactionDateOnly = new Date(
-        transactionDate.getFullYear(),
-        transactionDate.getMonth(),
-        transactionDate.getDate()
-      )
-
-      const matchesSelectedDate = selectedDate
-        ? transactionDate.getDate() === selectedDate.getDate() &&
-          transactionDate.getMonth() === selectedDate.getMonth() &&
-          transactionDate.getFullYear() === selectedDate.getFullYear()
-        : true
-
-      const matchesDateRange =
-        (!dateRange.from || transactionDateOnly >= dateRange.from) &&
-        (!dateRange.to || transactionDateOnly <= dateRange.to)
-
-      const matchesMonth =
-        filterMonth === "all" ||
-        transactionDate.getMonth() + 1 === parseInt(filterMonth)
-
-      const matchesYear =
-        filterYear === "all" ||
-        transactionDate.getFullYear() === parseInt(filterYear)
-
-      return (
-        matchesSelectedDate && matchesDateRange && matchesMonth && matchesYear
-      )
+    return filterTransactions(transactions!, {
+      selectedDate,
+      dateRange,
+      filterMonth,
+      filterYear,
     })
   }, [transactions, selectedDate, dateRange, filterMonth, filterYear])
-
-  const summaryStats = useMemo(() => {
-    const incomeTransactions = filteredTransactions.filter(
-      (t) => t.type === "income"
-    )
-    const expenseTransactions = filteredTransactions.filter(
-      (t) => t.type === "expense"
-    )
-
-    const income = incomeTransactions.reduce((sum, t) => sum + t.amount, 0)
-    const expenses = expenseTransactions.reduce((sum, t) => sum + t.amount, 0)
-    const netWorth = income - expenses
-    const transactionCount = filteredTransactions.length
-    const incomeCount = incomeTransactions.length
-    const expenseCount = expenseTransactions.length
-
-    return {
-      income,
-      expenses,
-      netWorth,
-      transactionCount,
-      incomeCount,
-      expenseCount,
-    }
-  }, [filteredTransactions])
 
   return (
     <div className="space-y-4">
@@ -328,7 +265,7 @@ export function StatisticsFilters() {
         </CardContent>
       </Card>
 
-      <StatisticsSummary stats={summaryStats} />
+      <StatisticsSummary filteredTransactions={filteredTransactions} />
 
       <TransactionBreakdownTable filteredTransactions={filteredTransactions} />
     </div>

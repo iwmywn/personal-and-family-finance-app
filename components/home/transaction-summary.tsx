@@ -1,26 +1,26 @@
 "use client"
 
+import { useMemo } from "react"
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { formatCurrency } from "@/lib/helpers/formatting"
+import {
+  calculateSummaryStats,
+  getCurrentMonthTransactions,
+} from "@/lib/helpers/statistics"
 import { useTransactions } from "@/lib/swr"
-import { formatCurrency, isCurrentMonth } from "@/lib/utils"
 
 export function TransactionSummary() {
   const { transactions } = useTransactions()
-  const currentMonthTransactions = transactions!.filter((t) =>
-    isCurrentMonth(t.date)
-  )
 
-  const totalIncome = currentMonthTransactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0)
+  const currentMonthTransactions = getCurrentMonthTransactions(transactions!)
 
-  const totalExpense = currentMonthTransactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0)
+  const summaryStats = useMemo(() => {
+    return calculateSummaryStats(currentMonthTransactions)
+  }, [currentMonthTransactions])
 
-  const balance = totalIncome - totalExpense
+  const { totalIncome, totalExpense, balance } = summaryStats
 
   return (
     <div className="grid gap-4 md:grid-cols-3">

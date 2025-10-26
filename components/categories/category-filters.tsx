@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { filterCustomCategories } from "@/lib/helpers/filters"
 import { useCustomCategories } from "@/lib/swr"
 
 export function CategoryFilters() {
@@ -31,14 +32,12 @@ export function CategoryFilters() {
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
-  const filteredCategories = customCategories!.filter((category) => {
-    const matchesFilter = filterType === "all" || category.type === filterType
-    const matchesSearch = category.label
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-
-    return matchesFilter && matchesSearch
-  })
+  const filteredCategories = useMemo(() => {
+    return filterCustomCategories(customCategories!, {
+      searchTerm,
+      filterType,
+    })
+  }, [customCategories, searchTerm, filterType])
 
   const handleResetFilters = () => {
     setSearchTerm("")

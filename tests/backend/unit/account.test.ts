@@ -1,10 +1,10 @@
-import { insertTestUser } from "@/tests/helpers/database"
-import { user, validPasswordValues } from "@/tests/helpers/test-data"
-import { mockUserCollectionError } from "@/tests/mocks/collections.mock"
+import { insertTestUser } from "@/tests/backend/helpers/database"
+import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
-} from "@/tests/mocks/session.mock"
+} from "@/tests/backend/mocks/session.mock"
+import { mockUser, mockValidPasswordValues } from "@/tests/shared/data"
 import { updatePassword } from "@/actions/account"
 
 describe("Account Actions", () => {
@@ -12,7 +12,7 @@ describe("Account Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await updatePassword(validPasswordValues)
+      const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -36,14 +36,14 @@ describe("Account Actions", () => {
     it("should return error when user not found", async () => {
       mockAuthenticatedUser()
 
-      const result = await updatePassword(validPasswordValues)
+      const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Không tìm thấy người dùng!")
     })
 
     it("should return error with incorrect current password", async () => {
-      await insertTestUser(user)
+      await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
       const result = await updatePassword({
@@ -57,7 +57,7 @@ describe("Account Actions", () => {
     })
 
     it("should return success when no changes are made", async () => {
-      await insertTestUser(user)
+      await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
       const result = await updatePassword({
@@ -71,10 +71,10 @@ describe("Account Actions", () => {
     })
 
     it("should successfully update password", async () => {
-      await insertTestUser(user)
+      await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
-      const result = await updatePassword(validPasswordValues)
+      const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBe("Mật khẩu của bạn đã được thay đổi.")
       expect(result.error).toBeUndefined()
@@ -84,7 +84,7 @@ describe("Account Actions", () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
 
-      const result = await updatePassword(validPasswordValues)
+      const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
