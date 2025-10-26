@@ -1,5 +1,5 @@
 import { mockTransactions } from "@/tests/shared/data"
-import { getMonthsConfig, getUniqueYears } from "@/lib/helpers/transactions"
+import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
 
 describe("Transaction Helpers", () => {
   describe("getUniqueYears", () => {

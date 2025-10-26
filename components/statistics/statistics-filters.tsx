@@ -23,10 +23,10 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
-import { filterTransactions } from "@/lib/helpers/filters"
-import { formatDate } from "@/lib/helpers/formatting"
-import { getMonthsConfig, getUniqueYears } from "@/lib/helpers/transactions"
 import { useTransactions } from "@/lib/swr"
+import { filterTransactions } from "@/lib/utils/filters"
+import { formatDate } from "@/lib/utils/formatting"
+import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()

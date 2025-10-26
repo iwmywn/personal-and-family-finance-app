@@ -15,9 +15,9 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { getCategoryLabel } from "@/lib/helpers/categories"
-import { formatCurrency, formatDate } from "@/lib/helpers/formatting"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
+import { getCategoryLabel } from "@/lib/utils/categories"
+import { formatCurrency, formatDate } from "@/lib/utils/formatting"
 
 interface RecentTransactionsProps {
   offsetHeight: number

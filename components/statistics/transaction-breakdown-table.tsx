@@ -27,13 +27,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Transaction } from "@/lib/definitions"
+import { useCustomCategories } from "@/lib/swr"
 import {
   getCategoryDescription,
   getCategoryLabel,
-} from "@/lib/helpers/categories"
-import { formatCurrency } from "@/lib/helpers/formatting"
-import { calculateCategoryStats } from "@/lib/helpers/statistics"
-import { useCustomCategories } from "@/lib/swr"
+} from "@/lib/utils/categories"
+import { formatCurrency } from "@/lib/utils/formatting"
+import { calculateCategoryStats } from "@/lib/utils/statistics"
 
 interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]

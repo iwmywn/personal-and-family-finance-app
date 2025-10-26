@@ -5,8 +5,8 @@ import { ObjectId } from "mongodb"
 
 import { getTransactionCollection } from "@/lib/collections"
 import { Transaction } from "@/lib/definitions"
-import { normalizeToUTCDate } from "@/lib/helpers/date"
 import { session } from "@/lib/session"
+import { normalizeToUTCDate } from "@/lib/utils/date"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {

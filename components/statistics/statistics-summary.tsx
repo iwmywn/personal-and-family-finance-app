@@ -5,8 +5,8 @@ import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Transaction } from "@/lib/definitions"
-import { formatCurrency } from "@/lib/helpers/formatting"
-import { calculateSummaryStats } from "@/lib/helpers/statistics"
+import { formatCurrency } from "@/lib/utils/formatting"
+import { calculateSummaryStats } from "@/lib/utils/statistics"
 
 interface StatisticsSummaryProps {
   filteredTransactions: Transaction[]

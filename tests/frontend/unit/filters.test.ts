@@ -1,5 +1,5 @@
 import { mockCustomCategories, mockTransactions } from "@/tests/shared/data"
-import * as Filters from "@/lib/helpers/filters"
+import * as Filters from "@/lib/utils/filters"
 
 describe("Filter Helpers", () => {
   describe("filterTransactions", () => {

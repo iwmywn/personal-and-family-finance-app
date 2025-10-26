@@ -3,7 +3,7 @@ import {
   getCategoriesWithDetails,
   getCategoryDescription,
   getCategoryLabel,
-} from "@/lib/helpers/categories"
+} from "@/lib/utils/categories"
 
 vi.mock("@/lib/categories", () => ({
   CATEGORY_CONFIG: {

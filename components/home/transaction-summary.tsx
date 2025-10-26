@@ -4,12 +4,12 @@ import { useMemo } from "react"
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { formatCurrency } from "@/lib/helpers/formatting"
+import { useTransactions } from "@/lib/swr"
+import { formatCurrency } from "@/lib/utils/formatting"
 import {
   calculateSummaryStats,
   getCurrentMonthTransactions,
-} from "@/lib/helpers/statistics"
-import { useTransactions } from "@/lib/swr"
+} from "@/lib/utils/statistics"
 
 export function TransactionSummary() {
   const { transactions } = useTransactions()

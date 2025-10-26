@@ -1,4 +1,4 @@
-import { normalizeToUTCDate } from "@/lib/helpers/date"
+import { normalizeToUTCDate } from "@/lib/utils/date"
 
 describe("Date Helpers", () => {
   describe("normalizeToUTCDate", () => {

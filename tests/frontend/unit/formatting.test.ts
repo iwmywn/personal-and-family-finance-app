@@ -1,4 +1,4 @@
-import { formatCurrency, formatDate } from "@/lib/helpers/formatting"
+import { formatCurrency, formatDate } from "@/lib/utils/formatting"
 
 describe("Formatting Helpers", () => {
   describe("formatCurrency", () => {

@@ -56,12 +56,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormLink } from "@/components/custom/form-link"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import type { Transaction } from "@/lib/definitions"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
+import { cn } from "@/lib/utils"
 import {
   getCategoriesWithDetails,
   getCategoryLabel,
-} from "@/lib/helpers/categories"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { cn } from "@/lib/utils"
+} from "@/lib/utils/categories"
 
 interface TransactionDialogProps {
   transaction?: Transaction
