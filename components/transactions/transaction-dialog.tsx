@@ -59,7 +59,7 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { getCategoriesWithDetails, getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { cn } from "@/lib/utils"
+import { cn, normalizeToUTCDate } from "@/lib/utils"
 
 interface TransactionDialogProps {
   transaction?: Transaction
@@ -98,10 +98,10 @@ export function TransactionDialog({
     setIsLoading(true)
 
     if (transaction) {
-      const { success, error } = await updateTransaction(
-        transaction._id,
-        values
-      )
+      const { success, error } = await updateTransaction(transaction._id, {
+        ...values,
+        date: normalizeToUTCDate(values.date),
+      })
 
       if (error || !success) {
         toast.error(error)
@@ -117,7 +117,10 @@ export function TransactionDialog({
         setOpen(false)
       }
     } else {
-      const { success, error } = await createTransaction(values)
+      const { success, error } = await createTransaction({
+        ...values,
+        date: normalizeToUTCDate(values.date),
+      })
 
       if (error || !success) {
         toast.error(error)

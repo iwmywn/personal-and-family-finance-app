@@ -4,8 +4,9 @@ import { getTranslations } from "next-intl/server"
 import CategoriesPage from "@/components/categories/categories-page"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("categories")
-  return { title: t("title") }
+  const tCategories = await getTranslations("categories")
+
+  return { title: tCategories("title") }
 }
 
 export default function page() {

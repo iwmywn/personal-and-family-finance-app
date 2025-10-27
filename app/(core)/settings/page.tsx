@@ -16,29 +16,31 @@ import { LanguageSelector } from "@/components/settings/language-selector"
 import { UpdatePasswordForm } from "@/components/settings/update-password-form"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("settings")
+  const tSettings = await getTranslations("settings")
 
   return {
-    title: t("title"),
+    title: tSettings("title"),
   }
 }
 
 export default async function page() {
-  const t = await getTranslations("settings")
+  const tSettings = await getTranslations("settings")
 
   return (
     <BasePage>
       <Tabs defaultValue="general">
         <TabsList className="w-full">
-          <TabsTrigger value="general">{t("general")}</TabsTrigger>
-          <TabsTrigger value="account">{t("account")}</TabsTrigger>
+          <TabsTrigger value="general">{tSettings("general")}</TabsTrigger>
+          <TabsTrigger value="account">{tSettings("account")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>{t("appearance")}</CardTitle>
-              <CardDescription>{t("appearanceDescription")}</CardDescription>
+              <CardTitle>{tSettings("appearance")}</CardTitle>
+              <CardDescription>
+                {tSettings("appearanceDescription")}
+              </CardDescription>
               <CardAction>
                 <DashboardThemeToggle />
               </CardAction>
@@ -47,8 +49,10 @@ export default async function page() {
 
           <Card>
             <CardHeader>
-              <CardTitle>{t("language")}</CardTitle>
-              <CardDescription>{t("languageDescription")}</CardDescription>
+              <CardTitle>{tSettings("language")}</CardTitle>
+              <CardDescription>
+                {tSettings("languageDescription")}
+              </CardDescription>
               <CardAction>
                 <LanguageSelector />
               </CardAction>
@@ -59,9 +63,9 @@ export default async function page() {
         <TabsContent value="account" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>{t("changePassword")}</CardTitle>
+              <CardTitle>{tSettings("changePassword")}</CardTitle>
               <CardDescription>
-                {t("changePasswordDescription")}
+                {tSettings("changePasswordDescription")}
               </CardDescription>
             </CardHeader>
             <CardContent>

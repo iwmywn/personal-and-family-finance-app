@@ -7,23 +7,22 @@ import { getTranslations } from "next-intl/server"
 import { getTransactionCollection } from "@/lib/collections"
 import { Transaction } from "@/lib/definitions"
 import { session } from "@/lib/session"
-import { normalizeToUTCDate } from "@/lib/utils"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {
-    const t = await getTranslations("transactions")
+    const tTransactions = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tTransactions("accessDenied"),
       }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: t("invalidData") }
+      return { error: tTransactions("invalidData") }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -34,16 +33,17 @@ export async function createTransaction(values: TransactionFormValues) {
       categoryKey: values.categoryKey,
       amount: values.amount,
       description: values.description,
-      date: normalizeToUTCDate(values.date),
+      date: values.date,
     })
 
-    if (!result.acknowledged) return { error: t("transactionAddFailed") }
+    if (!result.acknowledged)
+      return { error: tTransactions("transactionAddFailed") }
 
-    return { success: t("transactionAdded"), error: undefined }
+    return { success: tTransactions("transactionAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
-    const t = await getTranslations("transactions")
-    return { error: t("transactionAddFailed") }
+    const tTransactions = await getTranslations("transactions")
+    return { error: tTransactions("transactionAddFailed") }
   }
 }
 
@@ -52,24 +52,24 @@ export async function updateTransaction(
   values: TransactionFormValues
 ) {
   try {
-    const t = await getTranslations("transactions")
+    const tTransactions = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tTransactions("accessDenied"),
       }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: t("invalidData") }
+      return { error: tTransactions("invalidData") }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: t("invalidTransactionId"),
+        error: tTransactions("invalidTransactionId"),
       }
     }
 
@@ -82,7 +82,7 @@ export async function updateTransaction(
 
     if (!existingTransaction) {
       return {
-        error: t("transactionNotFoundOrNoPermission"),
+        error: tTransactions("transactionNotFoundOrNoPermission"),
       }
     }
 
@@ -94,33 +94,33 @@ export async function updateTransaction(
           categoryKey: values.categoryKey,
           amount: values.amount,
           description: values.description,
-          date: normalizeToUTCDate(values.date),
+          date: values.date,
         },
       }
     )
 
-    return { success: t("transactionUpdated"), error: undefined }
+    return { success: tTransactions("transactionUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating transaction:", error)
-    const t = await getTranslations("transactions")
-    return { error: t("transactionUpdateFailed") }
+    const tTransactions = await getTranslations("transactions")
+    return { error: tTransactions("transactionUpdateFailed") }
   }
 }
 
 export async function deleteTransaction(transactionId: string) {
   try {
-    const t = await getTranslations("transactions")
+    const tTransactions = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tTransactions("accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: t("invalidTransactionId"),
+        error: tTransactions("invalidTransactionId"),
       }
     }
 
@@ -133,7 +133,7 @@ export async function deleteTransaction(transactionId: string) {
 
     if (!existingTransaction) {
       return {
-        error: t("transactionNotFoundOrNoPermissionDelete"),
+        error: tTransactions("transactionNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -142,22 +142,22 @@ export async function deleteTransaction(transactionId: string) {
       userId: new ObjectId(userId),
     })
 
-    return { success: t("transactionDeleted") }
+    return { success: tTransactions("transactionDeleted") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
-    const t = await getTranslations("transactions")
-    return { error: t("transactionDeleteFailed") }
+    const tTransactions = await getTranslations("transactions")
+    return { error: tTransactions("transactionDeleteFailed") }
   }
 }
 
 export async function getTransactions() {
   try {
-    const t = await getTranslations("transactions")
+    const tTransactions = await getTranslations("transactions")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tTransactions("accessDenied"),
       }
     }
 
@@ -177,7 +177,7 @@ export async function getTransactions() {
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)
-    const t = await getTranslations("transactions")
-    return { error: t("transactionFetchFailed") }
+    const tTransactions = await getTranslations("transactions")
+    return { error: tTransactions("transactionFetchFailed") }
   }
 }

@@ -14,19 +14,19 @@ import { session } from "@/lib/session"
 
 export async function createCustomCategory(values: CustomCategoryFormValues) {
   try {
-    const t = await getTranslations("categories")
+    const tCategories = await getTranslations("categories")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tCategories("accessDenied"),
       }
     }
 
     const parsedValues = customCategorySchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: t("invalidData") }
+      return { error: tCategories("invalidData") }
     }
 
     const categoriesCollection = await getCategoryCollection()
@@ -38,7 +38,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     })
 
     if (existingCategory) {
-      return { error: t("categoryExists") }
+      return { error: tCategories("categoryExists") }
     }
 
     const shortId = nanoid(8)
@@ -49,7 +49,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     })
 
     if (duplicateCategoryKey) {
-      return { error: t("categoryKeyError") }
+      return { error: tCategories("categoryKeyError") }
     }
 
     const result = await categoriesCollection.insertOne({
@@ -60,13 +60,13 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
       description: values.description,
     })
 
-    if (!result.acknowledged) return { error: t("categoryAddFailed") }
+    if (!result.acknowledged) return { error: tCategories("categoryAddFailed") }
 
-    return { success: t("categoryAdded"), error: undefined }
+    return { success: tCategories("categoryAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating custom category:", error)
-    const t = await getTranslations("categories")
-    return { error: t("categoryAddFailed") }
+    const tCategories = await getTranslations("categories")
+    return { error: tCategories("categoryAddFailed") }
   }
 }
 
@@ -75,24 +75,24 @@ export async function updateCustomCategory(
   values: CustomCategoryFormValues
 ) {
   try {
-    const t = await getTranslations("categories")
+    const tCategories = await getTranslations("categories")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tCategories("accessDenied"),
       }
     }
 
     const parsedValues = customCategorySchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: t("invalidData") }
+      return { error: tCategories("invalidData") }
     }
 
     if (!ObjectId.isValid(categoryId)) {
       return {
-        error: t("invalidCategoryId"),
+        error: tCategories("invalidCategoryId"),
       }
     }
 
@@ -105,7 +105,7 @@ export async function updateCustomCategory(
 
     if (!existingCategory) {
       return {
-        error: t("categoryNotFoundOrNoPermission"),
+        error: tCategories("categoryNotFoundOrNoPermission"),
       }
     }
 
@@ -117,7 +117,7 @@ export async function updateCustomCategory(
     })
 
     if (duplicateCategory) {
-      return { error: t("categoryExists") }
+      return { error: tCategories("categoryExists") }
     }
 
     await categoriesCollection.updateOne(
@@ -131,28 +131,28 @@ export async function updateCustomCategory(
       }
     )
 
-    return { success: t("categoryUpdated"), error: undefined }
+    return { success: tCategories("categoryUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating custom category:", error)
-    const t = await getTranslations("categories")
-    return { error: t("categoryUpdateFailed") }
+    const tCategories = await getTranslations("categories")
+    return { error: tCategories("categoryUpdateFailed") }
   }
 }
 
 export async function deleteCustomCategory(categoryId: string) {
   try {
-    const t = await getTranslations("categories")
+    const tCategories = await getTranslations("categories")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tCategories("accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(categoryId)) {
       return {
-        error: t("invalidCategoryId"),
+        error: tCategories("invalidCategoryId"),
       }
     }
 
@@ -168,7 +168,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     if (!existingCategory) {
       return {
-        error: t("categoryNotFoundOrNoPermissionDelete"),
+        error: tCategories("categoryNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -179,7 +179,9 @@ export async function deleteCustomCategory(categoryId: string) {
 
     if (transactionCount > 0) {
       return {
-        error: t("categoryInUseWithCount", { count: transactionCount }),
+        error: tCategories("categoryInUseWithCount", {
+          count: transactionCount,
+        }),
       }
     }
 
@@ -188,22 +190,22 @@ export async function deleteCustomCategory(categoryId: string) {
       userId: new ObjectId(userId),
     })
 
-    return { success: t("categoryDeleted") }
+    return { success: tCategories("categoryDeleted") }
   } catch (error) {
     console.error("Error deleting custom category:", error)
-    const t = await getTranslations("categories")
-    return { error: t("categoryDeleteFailed") }
+    const tCategories = await getTranslations("categories")
+    return { error: tCategories("categoryDeleteFailed") }
   }
 }
 
 export async function getCustomCategories() {
   try {
-    const t = await getTranslations("categories")
+    const tCategories = await getTranslations("categories")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tCategories("accessDenied"),
       }
     }
 
@@ -223,9 +225,9 @@ export async function getCustomCategories() {
     }
   } catch (error) {
     console.error("Error fetching custom categories:", error)
-    const t = await getTranslations("categories")
+    const tCategories = await getTranslations("categories")
     return {
-      error: t("categoryFetchFailed"),
+      error: tCategories("categoryFetchFailed"),
     }
   }
 }

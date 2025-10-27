@@ -4,8 +4,9 @@ import { getTranslations } from "next-intl/server"
 import HomePage from "@/components/home/homepage"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("home")
-  return { title: t("title") }
+  const tHome = await getTranslations("home")
+
+  return { title: tHome("title") }
 }
 
 export default function home() {

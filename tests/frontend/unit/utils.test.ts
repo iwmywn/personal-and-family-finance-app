@@ -8,6 +8,16 @@ import {
 } from "@/lib/utils"
 
 describe("Utils", () => {
+  const originalTZ = process.env.TZ
+
+  beforeAll(() => {
+    process.env.TZ = "Asia/Ho_Chi_Minh"
+  })
+
+  afterAll(() => {
+    process.env.TZ = originalTZ
+  })
+
   describe("normalizeToUTCDate", () => {
     it("should normalize date to UTC", () => {
       const date = new Date("2024-01-15T10:30:00Z")
@@ -27,7 +37,7 @@ describe("Utils", () => {
     })
 
     it("should handle different timezones", () => {
-      const date = new Date("2024-01-15T23:30:00+05:00")
+      const date = new Date("2024-01-16T06:35:00+07:00")
       const result = normalizeToUTCDate(date)
       expect(result.getUTCFullYear()).toBe(2024)
       expect(result.getUTCMonth()).toBe(0)
@@ -70,16 +80,6 @@ describe("Utils", () => {
   })
 
   describe("formatDate", () => {
-    const originalTZ = process.env.TZ
-
-    beforeEach(() => {
-      process.env.TZ = "Asia/Ho_Chi_Minh"
-    })
-
-    afterEach(() => {
-      process.env.TZ = originalTZ
-    })
-
     it("should format Date object correctly", () => {
       const date = new Date("2024-01-15T00:00:00.000+00:00")
       const result = formatDate(date)

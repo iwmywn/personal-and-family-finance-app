@@ -12,14 +12,14 @@ import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("common")
+  const tCommon = await getTranslations("common")
 
   return {
     title: {
       template: "%s | PFFA",
       default: "PFFA",
     },
-    description: t("appDescription"),
+    description: tCommon("appDescription"),
   }
 }
 

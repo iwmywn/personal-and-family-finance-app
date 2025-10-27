@@ -41,8 +41,9 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
         className="overflow-y-auto"
         style={{
           height: isMediumScreens
-            ? "300px"
+            ? "auto"
             : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
+          maxHeight: isMediumScreens ? "300px" : "none",
         }}
       >
         <div className="h-full space-y-4">

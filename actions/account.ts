@@ -10,19 +10,19 @@ import { session } from "@/lib/session"
 
 export async function updatePassword(values: PasswordFormValues) {
   try {
-    const t = await getTranslations("auth")
+    const tAuth = await getTranslations("auth")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: t("accessDenied"),
+        error: tAuth("accessDenied"),
       }
     }
 
     const parsedValues = passwordSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: t("invalidData") }
+      return { error: tAuth("invalidData") }
     }
 
     const { currentPassword, newPassword } = parsedValues.data
@@ -33,7 +33,7 @@ export async function updatePassword(values: PasswordFormValues) {
     })
 
     if (!existingUser) {
-      return { error: t("userNotFound") }
+      return { error: tAuth("userNotFound") }
     }
 
     let hashedPassword: string
@@ -45,7 +45,7 @@ export async function updatePassword(values: PasswordFormValues) {
       )
 
       if (!isPasswordValid) {
-        return { error: t("passwordIncorrect") }
+        return { error: tAuth("passwordIncorrect") }
       }
 
       hashedPassword = await bcrypt.hash(newPassword, 10)
@@ -56,7 +56,7 @@ export async function updatePassword(values: PasswordFormValues) {
     const isSame = hashedPassword === existingUser.password
 
     if (isSame) {
-      return { success: t("noChanges") }
+      return { success: tAuth("noChanges") }
     }
 
     await userCollection.updateOne(
@@ -68,10 +68,10 @@ export async function updatePassword(values: PasswordFormValues) {
       }
     )
 
-    return { success: t("passwordUpdated") }
+    return { success: tAuth("passwordUpdated") }
   } catch (error) {
     console.error("Error updating password:", error)
-    const t = await getTranslations("auth")
-    return { error: t("passwordUpdateFailed") }
+    const tAuth = await getTranslations("auth")
+    return { error: tAuth("passwordUpdateFailed") }
   }
 }
