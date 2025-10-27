@@ -16,7 +16,7 @@ interface StatisticsSummaryProps {
 export function StatisticsSummary({
   filteredTransactions,
 }: StatisticsSummaryProps) {
-  const t = useTranslations("statistics")
+  const tStatistics = useTranslations("statistics")
   const summaryStats = useMemo(() => {
     return calculateSummaryStats(filteredTransactions)
   }, [filteredTransactions])
@@ -33,7 +33,7 @@ export function StatisticsSummary({
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("totalIncome")}</CardTitle>
+          <CardTitle>{tStatistics("totalIncome")}</CardTitle>
           <ArrowUpIcon className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -41,14 +41,14 @@ export function StatisticsSummary({
             {formatCurrency(totalIncome)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {incomeCount} {t("transactions")}
+            {incomeCount} {tStatistics("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("totalExpense")}</CardTitle>
+          <CardTitle>{tStatistics("totalExpense")}</CardTitle>
           <ArrowDownIcon className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -56,14 +56,14 @@ export function StatisticsSummary({
             {formatCurrency(totalExpense)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {expenseCount} {t("transactions")}
+            {expenseCount} {tStatistics("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("balance")}</CardTitle>
+          <CardTitle>{tStatistics("balance")}</CardTitle>
           <TrendingUpIcon
             className={`h-4 w-4 ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
           />
@@ -78,18 +78,18 @@ export function StatisticsSummary({
           </div>
           <p className="text-muted-foreground text-sm">
             {balance > 0
-              ? t("positive")
+              ? tStatistics("positive")
               : balance < 0
-                ? t("negative")
-                : t("balanced")}{" "}
-            {t("comparedToIncome")}
+                ? tStatistics("negative")
+                : tStatistics("balanced")}{" "}
+            {tStatistics("comparedToIncome")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("transactionCount")}</CardTitle>
+          <CardTitle>{tStatistics("transactionCount")}</CardTitle>
           <TrendingUpIcon className="h-4 w-4 text-blue-600" />
         </CardHeader>
         <CardContent>
@@ -97,7 +97,7 @@ export function StatisticsSummary({
             {transactionCount.toLocaleString("vi-VN")}
           </div>
           <p className="text-muted-foreground text-sm">
-            {t("totalTransactions")}
+            {tStatistics("totalTransactions")}
           </p>
         </CardContent>
       </Card>

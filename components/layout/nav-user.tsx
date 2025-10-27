@@ -19,7 +19,7 @@ import { clearSWRCache } from "@/lib/swr"
 export function NavUser() {
   const router = useRouter()
   const pathname = usePathname()
-  const t = useTranslations("navigation")
+  const tNavigation = useTranslations("navigation")
 
   async function onSignOut() {
     const { success, error } = await signOut()
@@ -40,19 +40,22 @@ export function NavUser() {
           <SidebarMenuItem>
             <SidebarMenuButton
               isActive={pathname === "/settings"}
-              tooltip={t("settings")}
+              tooltip={tNavigation("settings")}
               asChild
             >
               <Link href="/settings">
                 <Settings />
-                {t("settings")}
+                {tNavigation("settings")}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip={t("signOut")} onClick={onSignOut}>
+            <SidebarMenuButton
+              tooltip={tNavigation("signOut")}
+              onClick={onSignOut}
+            >
               <LogOut />
-              {t("signOut")}
+              {tNavigation("signOut")}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

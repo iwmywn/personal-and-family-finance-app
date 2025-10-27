@@ -37,7 +37,7 @@ const ColorDialog =
 
 export function Header() {
   const pathname = usePathname()
-  const t = useTranslations("navigation")
+  const tNavigation = useTranslations("navigation")
 
   const allNavItems = [...nav, ...other]
   const foundItem = allNavItems.find(
@@ -52,10 +52,10 @@ export function Header() {
           <BreadcrumbList>
             <BreadcrumbItem>
               {pathname === "/home" ? (
-                <BreadcrumbPage>{t("home")}</BreadcrumbPage>
+                <BreadcrumbPage>{tNavigation("home")}</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>
-                  <Link href="/home">{t("home")}</Link>
+                  <Link href="/home">{tNavigation("home")}</Link>
                 </BreadcrumbLink>
               )}
             </BreadcrumbItem>
@@ -66,7 +66,7 @@ export function Header() {
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>
                   <BreadcrumbPage>
-                    {foundItem ? t(foundItem.title) : ""}
+                    {foundItem ? tNavigation(foundItem.title) : ""}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </>

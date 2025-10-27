@@ -31,7 +31,8 @@ export function DeleteTransactionDialog({
   open,
   setOpen,
 }: DeleteTransactionDialogProps) {
-  const t = useTranslations()
+  const tTransactions = useTranslations("transactions")
+  const tCommon = useTranslations("common")
   const { transactions, mutate } = useTransactions()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -58,18 +59,18 @@ export function DeleteTransactionDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {t("transactions.deleteTransactionTitle")}
+            {tTransactions("deleteTransactionTitle")}
           </AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            {t("transactions.deleteTransactionDescription", {
+            {tTransactions("deleteTransactionDescription", {
               description: transactionDescription,
             })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
+          <AlertDialogCancel>{tCommon("cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} {t("common.delete")}
+            {isLoading && <Spinner />} {tCommon("delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

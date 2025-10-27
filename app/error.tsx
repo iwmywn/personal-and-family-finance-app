@@ -11,7 +11,7 @@ export default function Error({
 }: {
   error: Error & { digest?: string }
 }) {
-  const t = useTranslations("error")
+  const tError = useTranslations("error")
 
   useEffect(() => {
     console.error(error)
@@ -19,9 +19,9 @@ export default function Error({
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-2 px-6 text-center md:px-16">
-      <h2 className="text-lg font-semibold">{t("title")}</h2>
+      <h2 className="text-lg font-semibold">{tError("title")}</h2>
       <Button className="mt-2" asChild>
-        <Link href="/home">{t("backToHome")}</Link>
+        <Link href="/home">{tError("backToHome")}</Link>
       </Button>
     </div>
   )

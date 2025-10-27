@@ -15,12 +15,12 @@ import { NavUser } from "@/components/layout/nav-user"
 import { nav } from "@/lib/nav"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const t = useTranslations("navigation")
+  const tNavigation = useTranslations("navigation")
   const tCommon = useTranslations("common")
 
   const translatedNav = nav.map((item) => ({
     ...item,
-    title: t(item.title),
+    title: tNavigation(item.title),
   }))
 
   return (

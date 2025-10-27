@@ -17,7 +17,7 @@ import {
 import { useUser } from "@/lib/swr"
 
 export function LanguageSelector() {
-  const t = useTranslations("settings")
+  const tSettings = useTranslations("settings")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const { user, mutate } = useUser()
@@ -49,7 +49,7 @@ export function LanguageSelector() {
         disabled={isPending}
       >
         <SelectTrigger>
-          <SelectValue placeholder={t("language")} />
+          <SelectValue placeholder={tSettings("language")} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="vi">Tiếng Việt</SelectItem>

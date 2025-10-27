@@ -10,7 +10,7 @@ import { BasePage } from "@/components/layout/base-page"
 
 export default function CategoriesPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const t = useTranslations("categories")
+  const tCategories = useTranslations("categories")
   const tCommon = useTranslations("common")
 
   return (
@@ -18,8 +18,8 @@ export default function CategoriesPage() {
       <BasePage>
         <div className="header">
           <div>
-            <div className="title">{t("title")}</div>
-            <div className="description">{t("pageDescription")}</div>
+            <div className="title">{tCategories("title")}</div>
+            <div className="description">{tCategories("pageDescription")}</div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>{tCommon("add")}</Button>
         </div>

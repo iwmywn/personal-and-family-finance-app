@@ -54,7 +54,7 @@ export function TransactionsTable({
   const { transactions } = useTransactions()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const { customCategories } = useCustomCategories()
-  const t = useTranslations("transactions")
+  const tTransactions = useTranslations("transactions")
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -77,11 +77,11 @@ export function TransactionsTable({
                 <EmptyMedia variant="icon">
                   <Receipt />
                 </EmptyMedia>
-                <EmptyTitle>{t("noTransactionsFound")}</EmptyTitle>
+                <EmptyTitle>{tTransactions("noTransactionsFound")}</EmptyTitle>
                 <EmptyDescription>
                   {transactions!.length === 0
-                    ? t("startAddingTransactions")
-                    : t("tryDifferentFilters")}
+                    ? tTransactions("startAddingTransactions")
+                    : tTransactions("tryDifferentFilters")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -97,11 +97,11 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("date")}</TableHead>
-                    <TableHead>{t("description")}</TableHead>
-                    <TableHead>{t("type")}</TableHead>
-                    <TableHead>{t("category")}</TableHead>
-                    <TableHead>{t("amount")}</TableHead>
+                    <TableHead>{tTransactions("date")}</TableHead>
+                    <TableHead>{tTransactions("description")}</TableHead>
+                    <TableHead>{tTransactions("type")}</TableHead>
+                    <TableHead>{tTransactions("category")}</TableHead>
+                    <TableHead>{tTransactions("amount")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -124,8 +124,8 @@ export function TransactionsTable({
                           }
                         >
                           {transaction.type === "income"
-                            ? t("income")
-                            : t("expense")}
+                            ? tTransactions("income")
+                            : tTransactions("expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -169,7 +169,9 @@ export function TransactionsTable({
                               size="icon"
                             >
                               <MoreVertical />
-                              <span className="sr-only">{t("openMenu")}</span>
+                              <span className="sr-only">
+                                {tTransactions("openMenu")}
+                              </span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -180,7 +182,7 @@ export function TransactionsTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {t("edit")}
+                              {tTransactions("edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -190,7 +192,7 @@ export function TransactionsTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {t("delete")}
+                              {tTransactions("delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

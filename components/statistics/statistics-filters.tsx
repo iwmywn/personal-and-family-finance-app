@@ -30,7 +30,7 @@ import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
-  const t = useTranslations("statistics")
+  const tStatistics = useTranslations("statistics")
   const tMonths = useTranslations("months")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -123,7 +123,9 @@ export function StatisticsFilters() {
                   variant="outline"
                   className={`w-full justify-between font-normal ${selectedDate && "border-primary!"}`}
                 >
-                  {selectedDate ? formatDate(selectedDate) : t("selectDate")}
+                  {selectedDate
+                    ? formatDate(selectedDate)
+                    : tStatistics("selectDate")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -163,7 +165,7 @@ export function StatisticsFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    t("selectDateRange")
+                    tStatistics("selectDateRange")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -172,7 +174,7 @@ export function StatisticsFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("from")}
+                      {tStatistics("from")}
                     </div>
                     <Calendar
                       autoFocus
@@ -194,7 +196,7 @@ export function StatisticsFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("to")}
+                      {tStatistics("to")}
                     </div>
                     <Calendar
                       mode="single"
@@ -220,11 +222,13 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("month")} />
+                <SelectValue placeholder={tStatistics("month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{t("allMonths")}</SelectItem>
+                  <SelectItem value="all">
+                    {tStatistics("allMonths")}
+                  </SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -239,11 +243,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("year")} />
+                <SelectValue placeholder={tStatistics("year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{t("allYears")}</SelectItem>
+                  <SelectItem value="all">{tStatistics("allYears")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -260,7 +264,7 @@ export function StatisticsFilters() {
                 onClick={handleResetFilters}
                 className="sm:col-span-2 lg:col-span-1"
               >
-                {t("reset")}
+                {tStatistics("reset")}
               </Button>
             )}
           </div>

@@ -9,15 +9,15 @@ import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 
 export function StatisticsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const t = useTranslations("statistics")
+  const tStatistics = useTranslations("statistics")
 
   return (
     <>
       <BasePage>
         <div className="header">
           <div>
-            <div className="title">{t("title")}</div>
-            <div className="description">{t("description")}</div>
+            <div className="title">{tStatistics("title")}</div>
+            <div className="description">{tStatistics("description")}</div>
           </div>
         </div>
 

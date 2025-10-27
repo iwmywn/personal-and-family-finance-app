@@ -47,7 +47,7 @@ export function CategoriesTable({
     useState<CustomCategory | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-  const t = useTranslations("categories")
+  const tCategories = useTranslations("categories")
 
   return (
     <>
@@ -63,11 +63,11 @@ export function CategoriesTable({
                 <EmptyMedia variant="icon">
                   <Tag />
                 </EmptyMedia>
-                <EmptyTitle>{t("noCategoriesFound")}</EmptyTitle>
+                <EmptyTitle>{tCategories("noCategoriesFound")}</EmptyTitle>
                 <EmptyDescription>
                   {customCategories!.length === 0
-                    ? t("noCategoriesDescription")
-                    : t("noCategoriesFiltered")}
+                    ? tCategories("noCategoriesDescription")
+                    : tCategories("noCategoriesFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -81,9 +81,9 @@ export function CategoriesTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("categoryName")}</TableHead>
-                    <TableHead>{t("description")}</TableHead>
-                    <TableHead>{t("type")}</TableHead>
+                    <TableHead>{tCategories("categoryName")}</TableHead>
+                    <TableHead>{tCategories("description")}</TableHead>
+                    <TableHead>{tCategories("type")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -105,8 +105,8 @@ export function CategoriesTable({
                           }
                         >
                           {category.type === "income"
-                            ? t("income")
-                            : t("expense")}
+                            ? tCategories("income")
+                            : tCategories("expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -118,7 +118,9 @@ export function CategoriesTable({
                               size="icon"
                             >
                               <MoreVertical />
-                              <span className="sr-only">{t("openMenu")}</span>
+                              <span className="sr-only">
+                                {tCategories("openMenu")}
+                              </span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -129,7 +131,7 @@ export function CategoriesTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {t("edit")}
+                              {tCategories("edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -139,7 +141,7 @@ export function CategoriesTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {t("delete")}
+                              {tCategories("delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

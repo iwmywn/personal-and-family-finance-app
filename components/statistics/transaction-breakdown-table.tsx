@@ -41,7 +41,7 @@ export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
   const { customCategories } = useCustomCategories()
-  const t = useTranslations("statistics")
+  const tStatistics = useTranslations("statistics")
 
   const categoryStats = useMemo(() => {
     return calculateCategoryStats(filteredTransactions)
@@ -62,9 +62,9 @@ export function TransactionBreakdownTable({
               <EmptyMedia variant="icon">
                 <Receipt />
               </EmptyMedia>
-              <EmptyTitle>{t("noTransactions")}</EmptyTitle>
+              <EmptyTitle>{tStatistics("noTransactions")}</EmptyTitle>
               <EmptyDescription>
-                {t("noTransactionsDescription")}
+                {tStatistics("noTransactionsDescription")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -73,10 +73,10 @@ export function TransactionBreakdownTable({
             <Table>
               <TableHeader className="bg-muted sticky top-0">
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>{t("category")}</TableHead>
-                  <TableHead>{t("type")}</TableHead>
-                  <TableHead>{t("transactionCount")}</TableHead>
-                  <TableHead>{t("totalAmount")}</TableHead>
+                  <TableHead>{tStatistics("category")}</TableHead>
+                  <TableHead>{tStatistics("type")}</TableHead>
+                  <TableHead>{tStatistics("transactionCount")}</TableHead>
+                  <TableHead>{tStatistics("totalAmount")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -113,7 +113,9 @@ export function TransactionBreakdownTable({
                             : "badge-expense"
                         }
                       >
-                        {stat.type === "income" ? t("income") : t("expense")}
+                        {stat.type === "income"
+                          ? tStatistics("income")
+                          : tStatistics("expense")}
                       </Badge>
                     </TableCell>
                     <TableCell>{stat.count}</TableCell>

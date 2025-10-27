@@ -15,7 +15,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 
 export function BasePage({ children }: { children: ReactNode }) {
-  const t = useTranslations("basePage")
+  const tBasePage = useTranslations("basePage")
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
   const { customCategories, isCategoriesLoading } = useCustomCategories()
@@ -35,8 +35,10 @@ export function BasePage({ children }: { children: ReactNode }) {
           <EmptyMedia variant="icon">
             <Ghost />
           </EmptyMedia>
-          <EmptyTitle>{t("userDataError.title")}</EmptyTitle>
-          <EmptyDescription>{t("userDataError.description")}</EmptyDescription>
+          <EmptyTitle>{tBasePage("userDataError.title")}</EmptyTitle>
+          <EmptyDescription>
+            {tBasePage("userDataError.description")}
+          </EmptyDescription>
         </EmptyHeader>
       </Empty>
     )
@@ -49,9 +51,9 @@ export function BasePage({ children }: { children: ReactNode }) {
           <EmptyMedia variant="icon">
             <Ghost />
           </EmptyMedia>
-          <EmptyTitle>{t("transactionsDataError.title")}</EmptyTitle>
+          <EmptyTitle>{tBasePage("transactionsDataError.title")}</EmptyTitle>
           <EmptyDescription>
-            {t("transactionsDataError.description")}
+            {tBasePage("transactionsDataError.description")}
           </EmptyDescription>
         </EmptyHeader>
       </Empty>
@@ -65,9 +67,9 @@ export function BasePage({ children }: { children: ReactNode }) {
           <EmptyMedia variant="icon">
             <Ghost />
           </EmptyMedia>
-          <EmptyTitle>{t("categoriesDataError.title")}</EmptyTitle>
+          <EmptyTitle>{tBasePage("categoriesDataError.title")}</EmptyTitle>
           <EmptyDescription>
-            {t("categoriesDataError.description")}
+            {tBasePage("categoriesDataError.description")}
           </EmptyDescription>
         </EmptyHeader>
       </Empty>

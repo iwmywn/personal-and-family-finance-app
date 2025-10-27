@@ -32,7 +32,7 @@ export function CategoryFilters() {
     "all"
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const t = useTranslations("categories")
+  const tCategories = useTranslations("categories")
 
   const filteredCategories = useMemo(() => {
     return filterCustomCategories(customCategories!, {
@@ -64,7 +64,7 @@ export function CategoryFilters() {
                 <Search />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder={t("searchPlaceholder")}
+                placeholder={tCategories("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -89,13 +89,17 @@ export function CategoryFilters() {
               <SelectTrigger
                 className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("categoryType")} />
+                <SelectValue placeholder={tCategories("categoryType")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">{t("allCategoryTypes")}</SelectItem>
+                <SelectItem value="all">
+                  {tCategories("allCategoryTypes")}
+                </SelectItem>
                 <SelectSeparator />
-                <SelectItem value="income">{t("income")}</SelectItem>
-                <SelectItem value="expense">{t("expense")}</SelectItem>
+                <SelectItem value="income">{tCategories("income")}</SelectItem>
+                <SelectItem value="expense">
+                  {tCategories("expense")}
+                </SelectItem>
               </SelectContent>
             </Select>
             {hasActiveFilters && (
@@ -105,7 +109,7 @@ export function CategoryFilters() {
                 onClick={handleResetFilters}
                 className="w-full md:w-fit"
               >
-                {t("reset")}
+                {tCategories("reset")}
               </Button>
             )}
           </div>
