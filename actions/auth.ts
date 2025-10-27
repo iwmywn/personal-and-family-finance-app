@@ -1,6 +1,6 @@
 "use server"
 
-import { signInSchema, type SignInFormValues } from "@/schemas"
+import { createSignInSchema, type SignInFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
@@ -17,6 +17,8 @@ export async function signIn(
   try {
     const tAuthBE = await getTranslations("auth.be")
     const tCommonBE = await getTranslations("common.be")
+    const tSchemasSignIn = await getTranslations("schemas.signIn")
+    const signInSchema = createSignInSchema(tSchemasSignIn)
 
     if (!recaptchaToken) return { error: tAuthBE("recaptchaMissing") }
 

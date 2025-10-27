@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { signInSchema, type SignInFormValues } from "@/schemas"
+import { createSignInSchema, type SignInFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -27,8 +27,10 @@ export function SignInForm() {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const tAuthFE = useTranslations("auth.fe")
+  const tSchemasSignIn = useTranslations("schemas.signIn")
+  const schema = createSignInSchema(tSchemasSignIn)
   const form = useForm<SignInFormValues>({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       username: "",
       password: "",

@@ -1,6 +1,6 @@
 "use client"
 
-import { passwordSchema, type PasswordFormValues } from "@/schemas"
+import { createPasswordSchema, type PasswordFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -21,8 +21,10 @@ import { PasswordInput } from "@/components/custom/password-input"
 export function UpdatePasswordForm() {
   const tSettingsFE = useTranslations("settings.fe")
   const tCommonFE = useTranslations("common.fe")
+  const tSchemasPassword = useTranslations("schemas.password")
+  const schema = createPasswordSchema(tSchemasPassword)
   const form = useForm<PasswordFormValues>({
-    resolver: zodResolver(passwordSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       currentPassword: "",
       newPassword: "",

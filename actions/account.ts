@@ -1,6 +1,6 @@
 "use server"
 
-import { passwordSchema, type PasswordFormValues } from "@/schemas"
+import { createPasswordSchema, type PasswordFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
@@ -12,6 +12,8 @@ export async function updatePassword(values: PasswordFormValues) {
   try {
     const tSettingsBE = await getTranslations("settings.be")
     const tCommonBE = await getTranslations("common.be")
+    const tSchemasPassword = await getTranslations("schemas.password")
+    const passwordSchema = createPasswordSchema(tSchemasPassword)
     const { userId } = await session.user.get()
 
     if (!userId) {

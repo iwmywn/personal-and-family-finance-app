@@ -1,6 +1,6 @@
 "use server"
 
-import { customCategorySchema, type CustomCategoryFormValues } from "@/schemas"
+import { createCategorySchema, type CustomCategoryFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { nanoid } from "nanoid"
 import { getTranslations } from "next-intl/server"
@@ -16,6 +16,8 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
   try {
     const tCategoriesBE = await getTranslations("categories.be")
     const tCommonBE = await getTranslations("common.be")
+    const tSchemasCategory = await getTranslations("schemas.category")
+    const customCategorySchema = createCategorySchema(tSchemasCategory)
     const { userId } = await session.user.get()
 
     if (!userId) {
@@ -79,6 +81,8 @@ export async function updateCustomCategory(
   try {
     const tCategoriesBE = await getTranslations("categories.be")
     const tCommonBE = await getTranslations("common.be")
+    const tSchema = await getTranslations("Schemas.Category")
+    const customCategorySchema = createCategorySchema(tSchema)
     const { userId } = await session.user.get()
 
     if (!userId) {

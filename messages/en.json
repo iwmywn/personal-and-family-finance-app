@@ -234,5 +234,33 @@
     "title": "An error occurred!",
     "tryAgain": "Try Again",
     "backToHome": "Back to Home"
+  },
+  "schemas": {
+    "signIn": {
+      "usernameRequired": "Username is required.",
+      "passwordRequired": "Password must be at least 8 characters long, including uppercase, lowercase, numbers, and special characters."
+    },
+    "password": {
+      "currentPasswordRequired": "Current password is required.",
+      "newPasswordRequired": "New password must be at least 8 characters long, including uppercase, lowercase, numbers, and special characters.",
+      "confirmPasswordRequired": "Please confirm your new password.",
+      "passwordsNotMatch": "Passwords do not match."
+    },
+    "transaction": {
+      "transactionTypeRequired": "Please select transaction type.",
+      "categoryRequired": "Please select a category.",
+      "amountRequired": "Amount must be greater than 0.",
+      "amountMaxLength": "Amount must not exceed 100 billion.",
+      "descriptionRequired": "Description is required.",
+      "descriptionMaxLength": "Description must not exceed 200 characters.",
+      "dateRequired": "Please select a date."
+    },
+    "category": {
+      "categoryTypeRequired": "Please select category type.",
+      "categoryNameRequired": "Category name is required.",
+      "categoryNameMaxLength": "Category name must not exceed 50 characters.",
+      "categoryDescriptionRequired": "Description is required.",
+      "categoryDescriptionMaxLength": "Description must not exceed 200 characters."
+    }
   }
 }

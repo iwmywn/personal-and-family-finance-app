@@ -1,6 +1,6 @@
 "use server"
 
-import { transactionSchema, type TransactionFormValues } from "@/schemas"
+import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
@@ -12,6 +12,8 @@ export async function createTransaction(values: TransactionFormValues) {
   try {
     const tTransactionsBE = await getTranslations("transactions.be")
     const tCommonBE = await getTranslations("common.be")
+    const tSchemasTransaction = await getTranslations("schemas.transaction")
+    const transactionSchema = createTransactionSchema(tSchemasTransaction)
     const { userId } = await session.user.get()
 
     if (!userId) {
@@ -55,6 +57,8 @@ export async function updateTransaction(
   try {
     const tTransactionsBE = await getTranslations("transactions.be")
     const tCommonBE = await getTranslations("common.be")
+    const tSchema = await getTranslations("Schemas.Transaction")
+    const transactionSchema = createTransactionSchema(tSchema)
     const { userId } = await session.user.get()
 
     if (!userId) {

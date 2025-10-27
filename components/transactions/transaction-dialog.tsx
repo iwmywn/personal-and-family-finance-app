@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { transactionSchema, type TransactionFormValues } from "@/schemas"
+import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
@@ -80,8 +80,10 @@ export function TransactionDialog({
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
+  const tSchemasTransaction = useTranslations("schemas.transaction")
+  const schema = createTransactionSchema(tSchemasTransaction)
   const form = useForm<TransactionFormValues>({
-    resolver: zodResolver(transactionSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       type: transaction?.type || "income",
       amount: transaction?.amount || 0,
