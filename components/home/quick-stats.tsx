@@ -70,13 +70,17 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
               <TooltipTrigger asChild>
                 <div className="row">
                   <div className="left">{tHomeFE("highestTransaction")}:</div>
-                  <div className="right">
+                  <div
+                    className={`right ${
+                      highestTransaction !== null
+                        ? highestTransaction.type === "income"
+                          ? "text-green-600"
+                          : "text-red-600"
+                        : ""
+                    }`}
+                  >
                     {highestTransaction !== null
-                      ? `${formatCurrency(highestTransaction.amount)} (${
-                          highestTransaction.type === "income"
-                            ? tHomeFE("income")
-                            : tHomeFE("expense")
-                        })`
+                      ? `${formatCurrency(highestTransaction.amount)}`
                       : tHomeFE("noData")}
                   </div>
                 </div>
@@ -92,13 +96,17 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
               <TooltipTrigger asChild>
                 <div className="row">
                   <div className="left">{tHomeFE("lowestTransaction")}:</div>
-                  <div className="right">
+                  <div
+                    className={`right ${
+                      lowestTransaction !== null
+                        ? lowestTransaction.type === "income"
+                          ? "text-green-600"
+                          : "text-red-600"
+                        : ""
+                    }`}
+                  >
                     {lowestTransaction !== null
-                      ? `${formatCurrency(lowestTransaction.amount)} (${
-                          lowestTransaction.type === "income"
-                            ? tHomeFE("income")
-                            : tHomeFE("expense")
-                        })`
+                      ? `${formatCurrency(lowestTransaction.amount)}`
                       : tHomeFE("noData")}
                   </div>
                 </div>

@@ -78,9 +78,7 @@ export function TransactionsTable({
                 <EmptyMedia variant="icon">
                   <Receipt />
                 </EmptyMedia>
-                <EmptyTitle>
-                  {tTransactionsFE("noTransactionsFound")}
-                </EmptyTitle>
+                <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
                 <EmptyDescription>
                   {transactions!.length === 0
                     ? tCommonFE("startAddingTransactions")
@@ -101,7 +99,7 @@ export function TransactionsTable({
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
                     <TableHead>{tTransactionsFE("date")}</TableHead>
-                    <TableHead>{tTransactionsFE("description")}</TableHead>
+                    <TableHead>{tCommonFE("description")}</TableHead>
                     <TableHead>{tCommonFE("type")}</TableHead>
                     <TableHead>{tCommonFE("category")}</TableHead>
                     <TableHead>{tTransactionsFE("amount")}</TableHead>
@@ -212,13 +210,13 @@ export function TransactionsTable({
       {selectedTransaction && (
         <>
           <TransactionDialog
-            key={selectedTransaction._id}
+            key={selectedTransaction._id + "TransactionDialog"}
             transaction={selectedTransaction}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
           <DeleteTransactionDialog
-            key={selectedTransaction._id}
+            key={selectedTransaction._id + "DeleteTransactionDialog"}
             transactionId={selectedTransaction._id}
             transactionDescription={selectedTransaction.description}
             open={isDeleteOpen}

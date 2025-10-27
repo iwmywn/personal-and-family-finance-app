@@ -159,13 +159,13 @@ export function CategoriesTable({
       {selectedCategory && (
         <>
           <CategoryDialog
-            key={selectedCategory._id}
+            key={selectedCategory._id + "CategoryDialog"}
             category={selectedCategory}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
           <DeleteCategoryDialog
-            key={selectedCategory._id}
+            key={selectedCategory._id + "DeleteCategoryDialog"}
             categoryId={selectedCategory._id}
             categoryLabel={selectedCategory.label}
             open={isDeleteOpen}

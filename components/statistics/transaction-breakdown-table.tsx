@@ -64,7 +64,7 @@ export function TransactionBreakdownTable({
               <EmptyMedia variant="icon">
                 <Receipt />
               </EmptyMedia>
-              <EmptyTitle>{tStatisticsFE("noTransactions")}</EmptyTitle>
+              <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
               <EmptyDescription>
                 {transactions!.length === 0
                   ? tCommonFE("startAddingTransactions")

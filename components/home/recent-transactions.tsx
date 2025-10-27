@@ -55,7 +55,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                   <Receipt />
                 </EmptyMedia>
                 <EmptyTitle className="text-base">
-                  {tHomeFE("noTransactions")}
+                  {tCommonFE("noTransactionsFound")}
                 </EmptyTitle>
                 <EmptyDescription className="text-sm">
                   {tCommonFE("startAddingTransactions")}
