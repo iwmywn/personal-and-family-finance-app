@@ -2,7 +2,6 @@ import { mockTransactions } from "@/tests/shared/data"
 import {
   formatCurrency,
   formatDate,
-  getMonthsConfig,
   getUniqueYears,
   normalizeToUTCDate,
 } from "@/lib/utils"
@@ -110,15 +109,6 @@ describe("Utils", () => {
       const singleYear = mockTransactions.slice(1, 3)
       const result = getUniqueYears(singleYear)
       expect(result).toEqual([2024])
-    })
-  })
-
-  describe("getMonthsConfig", () => {
-    it("should return months configuration", () => {
-      const result = getMonthsConfig()
-      expect(result).toHaveLength(12)
-      expect(result[0]).toEqual({ value: "1", label: "Tháng 1" })
-      expect(result[11]).toEqual({ value: "12", label: "Tháng 12" })
     })
   })
 })

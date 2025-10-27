@@ -1,14 +1,9 @@
-import { mockCategoryConfig } from "@/tests/shared/data"
 import {
   getCategoriesWithDetails,
   getCategoryDescription,
   getCategoryLabel,
 } from "@/lib/categories"
 import { CustomCategory } from "@/lib/definitions"
-
-vi.mock("@/lib/categories", () => ({
-  CATEGORY_CONFIG: mockCategoryConfig,
-}))
 
 describe("Category Helpers", () => {
   describe("getCategoriesWithDetails", () => {

@@ -1,8 +1,14 @@
 import { ObjectId } from "mongodb"
 
-import type { CustomCategory, Transaction } from "@/lib/definitions"
+import type {
+  CustomCategory,
+  DBCustomCategory,
+  DBTransaction,
+  DBUser,
+  Transaction,
+} from "@/lib/definitions"
 
-export const mockUser = {
+export const mockUser: DBUser = {
   _id: new ObjectId("68f712e4cda4897217a05a1c"),
   fullName: "Test User",
   username: "testuser",
@@ -10,7 +16,7 @@ export const mockUser = {
   locale: "en",
 }
 
-export const mockCustomCategory = {
+export const mockCustomCategory: DBCustomCategory = {
   _id: new ObjectId("68f732914e63e5aa249cc173"),
   userId: mockUser._id,
   categoryKey: "custom_expense_abcdef12",
@@ -19,7 +25,7 @@ export const mockCustomCategory = {
   description: "Movies and games",
 }
 
-export const mockTransaction = {
+export const mockTransaction: DBTransaction = {
   _id: new ObjectId("68f73357357d93dcbaae8106"),
   userId: mockUser._id,
   type: "expense" as "income" | "expense",
@@ -128,28 +134,3 @@ export const mockCustomCategories: CustomCategory[] = [
     description: "Custom transport category",
   },
 ]
-
-export const mockCategoryConfig = {
-  salary_bonus: {
-    label: "Lương & Thưởng",
-    description:
-      "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp,...",
-    type: "income",
-  },
-  business_freelance: {
-    label: "Kinh doanh & Freelance",
-    description:
-      "Doanh thu bán hàng, dịch vụ, freelance, hợp đồng ngắn hạn,...",
-    type: "income",
-  },
-  food_beverage: {
-    label: "Ăn uống",
-    description: "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,...",
-    type: "expense",
-  },
-  transportation: {
-    label: "Di chuyển",
-    description: "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe,...",
-    type: "expense",
-  },
-}

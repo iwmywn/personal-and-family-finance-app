@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
 import {
   mockTransactionCollectionError,
@@ -23,16 +25,18 @@ describe("Transactions Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
+
+      const tCommonBE = await getTranslations("common.be")
 
       const result = await createTransaction({
         type: "invalid" as "income" | "expense",
@@ -43,7 +47,7 @@ describe("Transactions Actions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+      expect(result.error).toBe(tCommonBE("invalidData"))
     })
 
     it("should return error when database insertion fails", async () => {
@@ -53,18 +57,22 @@ describe("Transactions Actions", () => {
         acknowledged: false,
       })
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Tạo giao dịch thất bại! Thử lại sau.")
+      expect(result.error).toBe(tTransactionsBE("transactionAddFailed"))
     })
 
     it("should successfully create transaction", async () => {
       mockAuthenticatedUser()
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await createTransaction(mockValidTransactionValues)
 
-      expect(result.success).toBe("Giao dịch đã được tạo.")
+      expect(result.success).toBe(tTransactionsBE("transactionAdded"))
       expect(result.error).toBeUndefined()
     })
 
@@ -72,10 +80,12 @@ describe("Transactions Actions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Tạo giao dịch thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tTransactionsBE("transactionAddFailed"))
     })
   })
 
@@ -83,19 +93,21 @@ describe("Transactions Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await updateTransaction(
         mockTransaction._id.toString(),
         mockValidTransactionValues
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
+
+      const tCommonBE = await getTranslations("common.be")
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
         type: "invalid" as "income" | "expense",
@@ -106,11 +118,13 @@ describe("Transactions Actions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+      expect(result.error).toBe(tCommonBE("invalidData"))
     })
 
     it("should return error with invalid transaction ID", async () => {
       mockAuthenticatedUser()
+
+      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await updateTransaction(
         "invalid-id",
@@ -118,11 +132,13 @@ describe("Transactions Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Transaction ID không hợp lệ!")
+      expect(result.error).toBe(tTransactionsBE("invalidTransactionId"))
     })
 
     it("should return error when transaction not found", async () => {
       mockAuthenticatedUser()
+
+      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await updateTransaction(
         mockTransaction._id.toString(),
@@ -131,13 +147,15 @@ describe("Transactions Actions", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!"
+        tTransactionsBE("transactionNotFoundOrNoPermission")
       )
     })
 
     it("should successfully update transaction", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
+
+      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
         type: "income",
@@ -147,13 +165,15 @@ describe("Transactions Actions", () => {
         date: new Date("2024-01-16"),
       })
 
-      expect(result.success).toBe("Giao dịch đã được cập nhật.")
+      expect(result.success).toBe(tTransactionsBE("transactionUpdated"))
       expect(result.error).toBeUndefined()
     })
 
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
+
+      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await updateTransaction(
         mockTransaction._id.toString(),
@@ -161,9 +181,7 @@ describe("Transactions Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Cập nhật giao dịch thất bại! Vui lòng thử lại sau."
-      )
+      expect(result.error).toBe(tTransactionsBE("transactionUpdateFailed"))
     })
   })
 
@@ -171,31 +189,35 @@ describe("Transactions Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error with invalid transaction ID", async () => {
       mockAuthenticatedUser()
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await deleteTransaction("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Transaction ID không hợp lệ!")
+      expect(result.error).toBe(tTransactionsBE("invalidTransactionId"))
     })
 
     it("should return error when transaction not found", async () => {
       mockAuthenticatedUser()
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!"
+        tTransactionsBE("transactionNotFoundOrNoPermissionDelete")
       )
     })
 
@@ -203,9 +225,11 @@ describe("Transactions Actions", () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await deleteTransaction(mockTransaction._id.toString())
 
-      expect(result.success).toBe("Giao dịch đã được xóa.")
+      expect(result.success).toBe(tTransactionsBE("transactionDeleted"))
       expect(result.error).toBeUndefined()
     })
 
@@ -213,10 +237,12 @@ describe("Transactions Actions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Xóa giao dịch thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tTransactionsBE("transactionDeleteFailed"))
     })
   })
 
@@ -224,12 +250,12 @@ describe("Transactions Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await getTransactions()
 
       expect(result.transactions).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return empty transactions list", async () => {
@@ -257,12 +283,12 @@ describe("Transactions Actions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
+      const tTransactionsBE = await getTranslations("transactions.be")
+
       const result = await getTransactions()
 
       expect(result.transactions).toBeUndefined()
-      expect(result.error).toBe(
-        "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
-      )
+      expect(result.error).toBe(tTransactionsBE("transactionFetchFailed"))
     })
   })
 })

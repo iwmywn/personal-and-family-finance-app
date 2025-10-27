@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb"
+import { getTranslations } from "next-intl/server"
 
 import {
   insertTestCategory,
@@ -30,16 +31,18 @@ describe("Categories Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
+
+      const tCommonBE = await getTranslations("common.be")
 
       const result = await createCustomCategory({
         type: "invalid" as "expense" | "income",
@@ -48,12 +51,14 @@ describe("Categories Actions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+      expect(result.error).toBe(tCommonBE("invalidData"))
     })
 
     it("should return error when category with same name exists", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
+
+      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await createCustomCategory({
         type: mockCustomCategory.type,
@@ -62,7 +67,7 @@ describe("Categories Actions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Danh mục với tên này đã tồn tại!")
+      expect(result.error).toBe(tCategoriesBE("categoryExists"))
     })
 
     it("should return error when duplicate categoryKey exists", async () => {
@@ -73,6 +78,8 @@ describe("Categories Actions", () => {
         nanoid: () => "abcdef12",
       }))
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await createCustomCategory({
         type: "expense",
         label: "Dupe Key",
@@ -80,7 +87,7 @@ describe("Categories Actions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Lỗi tạo key danh mục. Vui lòng thử lại.")
+      expect(result.error).toBe(tCategoriesBE("categoryKeyError"))
     })
 
     it("should return error when database insertion fails", async () => {
@@ -91,18 +98,22 @@ describe("Categories Actions", () => {
         acknowledged: false,
       })
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Tạo danh mục thất bại! Thử lại sau.")
+      expect(result.error).toBe(tCategoriesBE("categoryAddFailed"))
     })
 
     it("should successfully create custom category", async () => {
       mockAuthenticatedUser()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await createCustomCategory(mockValidCategoryValues)
 
-      expect(result.success).toBe("Danh mục đã được tạo.")
+      expect(result.success).toBe(tCategoriesBE("categoryAdded"))
       expect(result.error).toBeUndefined()
     })
 
@@ -110,10 +121,12 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Tạo danh mục thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tCategoriesBE("categoryAddFailed"))
     })
   })
 
@@ -121,19 +134,21 @@ describe("Categories Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         mockValidCategoryValues
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
+
+      const tCommonBE = await getTranslations("common.be")
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
@@ -145,11 +160,13 @@ describe("Categories Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+      expect(result.error).toBe(tCommonBE("invalidData"))
     })
 
     it("should return error with invalid category ID", async () => {
       mockAuthenticatedUser()
+
+      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await updateCustomCategory(
         "invalid-id",
@@ -157,11 +174,13 @@ describe("Categories Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Category ID không hợp lệ!")
+      expect(result.error).toBe(tCategoriesBE("invalidCategoryId"))
     })
 
     it("should return error when category not found", async () => {
       mockAuthenticatedUser()
+
+      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
@@ -169,9 +188,7 @@ describe("Categories Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!"
-      )
+      expect(result.error).toBe(tCategoriesBE("categoryNotFoundOrNoPermission"))
     })
 
     it("should return error when duplicate category name exists", async () => {
@@ -183,6 +200,8 @@ describe("Categories Actions", () => {
       })
       mockAuthenticatedUser()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         {
@@ -193,12 +212,14 @@ describe("Categories Actions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Danh mục với tên này đã tồn tại!")
+      expect(result.error).toBe(tCategoriesBE("categoryExists"))
     })
 
     it("should successfully update custom category", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
+
+      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
@@ -209,7 +230,7 @@ describe("Categories Actions", () => {
         }
       )
 
-      expect(result.success).toBe("Danh mục đã được cập nhật.")
+      expect(result.success).toBe(tCategoriesBE("categoryUpdated"))
       expect(result.error).toBeUndefined()
     })
 
@@ -217,15 +238,15 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         mockValidCategoryValues
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Cập nhật danh mục thất bại! Vui lòng thử lại sau."
-      )
+      expect(result.error).toBe(tCategoriesBE("categoryUpdateFailed"))
     })
   })
 
@@ -233,27 +254,31 @@ describe("Categories Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error with invalid category ID", async () => {
       mockAuthenticatedUser()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await deleteCustomCategory("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Category ID không hợp lệ!")
+      expect(result.error).toBe(tCategoriesBE("invalidCategoryId"))
     })
 
     it("should return error when category not found", async () => {
       mockAuthenticatedUser()
+
+      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
@@ -261,7 +286,7 @@ describe("Categories Actions", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        "Không tìm thấy danh mục hoặc bạn không có quyền xóa!"
+        tCategoriesBE("categoryNotFoundOrNoPermissionDelete")
       )
     })
 
@@ -273,13 +298,15 @@ describe("Categories Actions", () => {
       })
       mockAuthenticatedUser()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        "Không thể xóa danh mục. Có 1 giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước."
+        tCategoriesBE("categoryInUseWithCount", { count: 1 })
       )
     })
 
@@ -287,11 +314,13 @@ describe("Categories Actions", () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
 
-      expect(result.success).toBe("Danh mục đã được xóa.")
+      expect(result.success).toBe(tCategoriesBE("categoryDeleted"))
       expect(result.error).toBeUndefined()
     })
 
@@ -299,24 +328,28 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Xóa danh mục thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tCategoriesBE("categoryDeleteFailed"))
     })
 
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Xóa danh mục thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tCategoriesBE("categoryDeleteFailed"))
     })
   })
 
@@ -324,12 +357,12 @@ describe("Categories Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await getCustomCategories()
 
       expect(result.customCategories).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return empty categories list", async () => {
@@ -356,12 +389,12 @@ describe("Categories Actions", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
+      const tCategoriesBE = await getTranslations("categories.be")
+
       const result = await getCustomCategories()
 
       expect(result.customCategories).toBeUndefined()
-      expect(result.error).toBe(
-        "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
-      )
+      expect(result.error).toBe(tCategoriesBE("categoryFetchFailed"))
     })
   })
 })
