@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { MoreVertical, Tag } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -46,6 +47,8 @@ export function CategoriesTable({
     useState<CustomCategory | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
+  const tCategoriesFE = useTranslations("categories.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   return (
     <>
@@ -61,11 +64,11 @@ export function CategoriesTable({
                 <EmptyMedia variant="icon">
                   <Tag />
                 </EmptyMedia>
-                <EmptyTitle>Không có danh mục nào</EmptyTitle>
+                <EmptyTitle>{tCategoriesFE("noCategoriesFound")}</EmptyTitle>
                 <EmptyDescription>
                   {customCategories!.length === 0
-                    ? "Bạn chưa tạo danh mục tùy chỉnh nào. Hãy thêm danh mục đầu tiên!"
-                    : "Không tìm thấy danh mục nào phù hợp với bộ lọc của bạn."}
+                    ? tCategoriesFE("noCategoriesDescription")
+                    : tCategoriesFE("noCategoriesFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -79,9 +82,9 @@ export function CategoriesTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>Tên danh mục</TableHead>
-                    <TableHead>Mô tả</TableHead>
-                    <TableHead>Loại</TableHead>
+                    <TableHead>{tCategoriesFE("categoryName")}</TableHead>
+                    <TableHead>{tCommonFE("description")}</TableHead>
+                    <TableHead>{tCommonFE("type")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -102,7 +105,9 @@ export function CategoriesTable({
                               : "badge-expense"
                           }
                         >
-                          {category.type === "income" ? "Thu nhập" : "Chi tiêu"}
+                          {category.type === "income"
+                            ? tCommonFE("income")
+                            : tCommonFE("expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -114,7 +119,9 @@ export function CategoriesTable({
                               size="icon"
                             >
                               <MoreVertical />
-                              <span className="sr-only">Mở menu</span>
+                              <span className="sr-only">
+                                {tCategoriesFE("openMenu")}
+                              </span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -125,7 +132,7 @@ export function CategoriesTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              Chỉnh sửa
+                              {tCommonFE("edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -135,7 +142,7 @@ export function CategoriesTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              Xóa
+                              {tCommonFE("delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -152,13 +159,13 @@ export function CategoriesTable({
       {selectedCategory && (
         <>
           <CategoryDialog
-            key={selectedCategory._id}
+            key={selectedCategory._id + "CategoryDialog"}
             category={selectedCategory}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
           <DeleteCategoryDialog
-            key={selectedCategory._id}
+            key={selectedCategory._id + "DeleteCategoryDialog"}
             categoryId={selectedCategory._id}
             categoryLabel={selectedCategory.label}
             open={isDeleteOpen}

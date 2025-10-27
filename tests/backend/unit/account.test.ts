@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
@@ -12,16 +14,18 @@ describe("Account Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
+
+      const tCommonBE = await getTranslations("common.be")
 
       const result = await updatePassword({
         currentPassword: "TestPassword123!",
@@ -30,21 +34,25 @@ describe("Account Actions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+      expect(result.error).toBe(tCommonBE("invalidData"))
     })
 
     it("should return error when user not found", async () => {
       mockAuthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Không tìm thấy người dùng!")
+      expect(result.error).toBe(tCommonBE("userNotFound"))
     })
 
     it("should return error with incorrect current password", async () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
+
+      const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updatePassword({
         currentPassword: "WrongPassword123!",
@@ -53,12 +61,14 @@ describe("Account Actions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Mật khẩu hiện tại không đúng!")
+      expect(result.error).toBe(tSettingsBE("passwordIncorrect"))
     })
 
     it("should return success when no changes are made", async () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
+
+      const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updatePassword({
         currentPassword: "",
@@ -66,7 +76,7 @@ describe("Account Actions", () => {
         confirmPassword: "",
       })
 
-      expect(result.success).toBe("Không có thay đổi nào được thực hiện.")
+      expect(result.success).toBe(tSettingsBE("noChanges"))
       expect(result.error).toBeUndefined()
     })
 
@@ -74,9 +84,11 @@ describe("Account Actions", () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
+      const tSettingsBE = await getTranslations("settings.be")
+
       const result = await updatePassword(mockValidPasswordValues)
 
-      expect(result.success).toBe("Mật khẩu của bạn đã được thay đổi.")
+      expect(result.success).toBe(tSettingsBE("passwordUpdated"))
       expect(result.error).toBeUndefined()
     })
 
@@ -84,12 +96,12 @@ describe("Account Actions", () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
 
+      const tSettingsBE = await getTranslations("settings.be")
+
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau."
-      )
+      expect(result.error).toBe(tSettingsBE("passwordUpdateFailed"))
     })
   })
 })

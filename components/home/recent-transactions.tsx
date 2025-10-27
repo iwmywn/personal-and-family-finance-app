@@ -2,6 +2,7 @@
 
 import { Fragment } from "react"
 import { Receipt } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,9 +16,9 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { getCategoryLabel } from "@/lib/categories"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { getCategoryLabel } from "@/lib/utils/categories"
-import { formatCurrency, formatDate } from "@/lib/utils/formatting"
+import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface RecentTransactionsProps {
   offsetHeight: number
@@ -29,18 +30,21 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const recentTransactions = transactions!.slice(0, 10)
   const { customCategories } = useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const tHomeFE = useTranslations("home.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
       <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
-        <CardTitle>10 giao dịch gần đây</CardTitle>
+        <CardTitle>{tHomeFE("recentTransactions")}</CardTitle>
       </CardHeader>
       <CardContent
-        className="h-full overflow-y-auto"
+        className="overflow-y-auto"
         style={{
-          maxHeight: isMediumScreens
-            ? "300px"
+          height: isMediumScreens
+            ? "auto"
             : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
+          maxHeight: isMediumScreens ? "300px" : "none",
         }}
       >
         <div className="h-full space-y-4">
@@ -51,10 +55,10 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                   <Receipt />
                 </EmptyMedia>
                 <EmptyTitle className="text-base">
-                  Không tìm thấy giao dịch
+                  {tCommonFE("noTransactionsFound")}
                 </EmptyTitle>
                 <EmptyDescription className="text-sm">
-                  Bắt đầu thêm giao dịch của bạn.
+                  {tCommonFE("startAddingTransactions")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>

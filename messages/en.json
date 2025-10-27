@@ -1,0 +1,238 @@
+{
+  "common": {
+    "fe": {
+      "appName": "PFFA",
+      "appDescription": "Personal and Family Finance Application",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "update": "Update",
+      "add": "Add",
+      "save": "Save",
+      "edit": "Edit",
+      "reset": "Reset",
+      "income": "Income",
+      "expense": "Expense",
+      "type": "Type",
+      "category": "Category",
+      "from": "From",
+      "to": "To",
+      "selectDate": "Select Date",
+      "selectDateRange": "Select Date Range",
+      "month": "Month",
+      "allMonths": "All Months",
+      "year": "Year",
+      "allYears": "All Years",
+      "description": "Description",
+      "noTransactionsFound": "No transactions found",
+      "startAddingTransactions": "Start adding your transactions.",
+      "noTransactionsFiltered": "No transactions match your filter."
+    },
+    "be": {
+      "accessDenied": "Access denied! Please refresh the page and try again.",
+      "invalidData": "Invalid data!",
+      "userNotFound": "User not found!"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "statistics": "Statistics",
+    "transactions": "Transactions",
+    "categories": "Categories",
+    "settings": "Settings",
+    "signOut": "Sign Out"
+  },
+  "auth": {
+    "fe": {
+      "signIn": "Sign In",
+      "username": "Username",
+      "password": "Password",
+      "signInDescription": "Enter your username and password to sign in to your account."
+    },
+    "be": {
+      "signInError": "Invalid username or password!",
+      "signInFailed": "Sign in failed! Please try again later.",
+      "signOutSuccess": "You need to sign back in.",
+      "signOutFailed": "Sign out failed! Please try again later.",
+      "userFetchFailed": "Failed to load user information! Please try again later.",
+      "recaptchaMissing": "Missing recaptcha token!",
+      "recaptchaFailed": "Recaptcha verification failed!"
+    }
+  },
+  "home": {
+    "fe": {
+      "title": "Home",
+      "description": "Manage your personal finances.",
+      "welcome": "Welcome",
+      "quickStats": "Quick Stats",
+      "recentTransactions": "Recent Transactions",
+      "totalTransactions": "Total Transactions",
+      "highestTransaction": "Highest Transaction",
+      "lowestTransaction": "Lowest Transaction",
+      "avgExpense": "Avg Expense/Transaction",
+      "savingsRate": "Savings Rate",
+      "popularCategory": "Popular Category",
+      "noData": "No data",
+      "totalTransactionsTooltip": "Total number of transactions (both income and expenses) you've made this month. Helps track your transaction frequency.",
+      "highestTransactionTooltip": "Transaction with the highest value this month (could be income or expense). Helps identify unusual large amounts.",
+      "lowestTransactionTooltip": "Transaction with the lowest value this month (could be income or expense). Helps identify frequent small expenses.",
+      "avgExpenseTooltip": "Average amount per expense transaction (Total expenses / Number of expense transactions). Helps you understand your average spending scale.",
+      "savingsRateTooltip": "Percentage of money you save compared to income ((Income - Expenses) / Income × 100%). Higher is better, should maintain above 20%.",
+      "popularCategoryTooltip": "Category with the highest total amount this month. Helps you identify your biggest spending area or income source.",
+      "monthlyIncome": "This Month's Income",
+      "monthlyExpense": "This Month's Expenses",
+      "monthlyBalance": "This Month's Balance",
+      "transactions": "transactions",
+      "positive": "Positive",
+      "negative": "Negative",
+      "balanced": "Balanced",
+      "comparedToIncome": "compared to income"
+    }
+  },
+  "basePage": {
+    "userDataError": {
+      "title": "UNABLE TO LOAD USER DATA",
+      "description": "An error occurred while loading user information! Please try again later."
+    },
+    "transactionsDataError": {
+      "title": "UNABLE TO LOAD TRANSACTIONS DATA",
+      "description": "An error occurred while loading transactions! Please try again later."
+    },
+    "categoriesDataError": {
+      "title": "UNABLE TO LOAD CATEGORIES DATA",
+      "description": "An error occurred while loading categories! Please try again later."
+    }
+  },
+  "statistics": {
+    "fe": {
+      "title": "Statistics",
+      "description": "Analyze your financial data with detailed statistics and insights.",
+      "totalIncome": "Total Income",
+      "totalExpense": "Total Expense",
+      "balance": "Balance",
+      "transactionCount": "Transaction Count",
+      "totalAmount": "Total Amount",
+      "transactions": "transactions",
+      "totalTransactions": "Total Transactions",
+      "positive": "Positive",
+      "negative": "Negative",
+      "balanced": "Balanced",
+      "comparedToIncome": "compared to income"
+    }
+  },
+  "transactions": {
+    "fe": {
+      "title": "Transactions",
+      "description": "Manage your income and expenses to track your personal finances.",
+      "addTransaction": "Add Transaction",
+      "editTransaction": "Edit Transaction",
+      "addTransactionDescription": "Add your income or expenses to track your personal finances.",
+      "editTransactionDescription": "Update transaction information.",
+      "selectCategory": "Select {type} category",
+      "descriptionPlaceholder": "Enter transaction description...",
+      "date": "Transaction Date",
+      "transactionType": "Transaction Type",
+      "allTransactionTypes": "All Transaction Types",
+      "allCategories": "All Categories",
+      "searchPlaceholder": "Search transactions...",
+      "openMenu": "Open menu",
+      "customCategories": "Custom Categories",
+      "noCategoryFound": "Can't find a suitable category?",
+      "amount": "Amount",
+      "createCustomCategory": "Create custom category",
+      "deleteTransactionTitle": "Delete Transaction",
+      "deleteTransactionDescription": "Are you sure you want to delete the transaction \"{description}\"? This action cannot be undone."
+    },
+    "be": {
+      "transactionAdded": "Transaction added.",
+      "transactionUpdated": "Transaction updated.",
+      "transactionDeleted": "Transaction deleted.",
+      "transactionAddFailed": "Failed to add transaction! Please try again later.",
+      "transactionUpdateFailed": "Failed to update transaction! Please try again later.",
+      "transactionDeleteFailed": "Failed to delete transaction! Please try again later.",
+      "invalidTransactionId": "Invalid transaction ID!",
+      "transactionNotFoundOrNoPermission": "Transaction not found or you don't have permission to edit!",
+      "transactionNotFoundOrNoPermissionDelete": "Transaction not found or you don't have permission to delete!",
+      "transactionFetchFailed": "Failed to load transactions! Please try again later."
+    }
+  },
+  "categories": {
+    "fe": {
+      "title": "Categories",
+      "description": "Manage custom categories for your transactions.",
+      "addCategory": "Add Category",
+      "editCategory": "Edit Category",
+      "addCategoryDescription": "Add a custom category for your transactions.",
+      "editCategoryDescription": "Update category information.",
+      "categoryName": "Name",
+      "categoryNamePlaceholder": "Enter category name...",
+      "categoryDescriptionPlaceholder": "Enter category description...",
+      "categoryType": "Category Type",
+      "searchPlaceholder": "Search categories...",
+      "allCategoryTypes": "All category types",
+      "noCategoriesFound": "No categories found",
+      "noCategoriesDescription": "You haven't created any custom categories yet. Add your first category!",
+      "noCategoriesFiltered": "No categories match your current filters.",
+      "openMenu": "Open menu",
+      "deleteCategoryTitle": "Delete Category",
+      "deleteCategoryDescription": "Are you sure you want to delete the category \"{label}\"? This action cannot be undone."
+    },
+    "be": {
+      "categoryAdded": "Category added.",
+      "categoryUpdated": "Category updated.",
+      "categoryDeleted": "Category deleted.",
+      "categoryAddFailed": "Failed to add category! Please try again later.",
+      "categoryUpdateFailed": "Failed to update category! Please try again later.",
+      "categoryDeleteFailed": "Failed to delete category! Please try again later.",
+      "categoryExists": "Category with this name already exists!",
+      "categoryKeyError": "Error creating category key. Please try again.",
+      "invalidCategoryId": "Invalid category ID!",
+      "categoryNotFoundOrNoPermission": "Category not found or you don't have permission to edit!",
+      "categoryNotFoundOrNoPermissionDelete": "Category not found or you don't have permission to delete!",
+      "categoryInUseWithCount": "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first.",
+      "categoryFetchFailed": "Failed to load custom categories! Please try again later."
+    }
+  },
+  "settings": {
+    "fe": {
+      "title": "Settings",
+      "general": "General",
+      "account": "Account",
+      "appearance": "Appearance",
+      "appearanceDescription": "Choose the display theme for the application.",
+      "language": "Language",
+      "languageDescription": "Choose the language for the application.",
+      "changePassword": "Change Password",
+      "changePasswordDescription": "Change your password.",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "be": {
+      "passwordIncorrect": "Current password is incorrect!",
+      "noChanges": "No changes were made.",
+      "passwordUpdated": "Your password has been changed.",
+      "languageUpdated": "Language updated.",
+      "passwordUpdateFailed": "Password update failed! Please try again later.",
+      "languageUpdateFailed": "Failed to update language! Please try again later."
+    }
+  },
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  },
+  "appError": {
+    "title": "An error occurred!",
+    "tryAgain": "Try Again",
+    "backToHome": "Back to Home"
+  }
+}

@@ -2,11 +2,12 @@
 
 import { useMemo } from "react"
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Transaction } from "@/lib/definitions"
-import { formatCurrency } from "@/lib/utils/formatting"
-import { calculateSummaryStats } from "@/lib/utils/statistics"
+import { calculateSummaryStats } from "@/lib/statistics"
+import { formatCurrency } from "@/lib/utils"
 
 interface StatisticsSummaryProps {
   filteredTransactions: Transaction[]
@@ -15,6 +16,7 @@ interface StatisticsSummaryProps {
 export function StatisticsSummary({
   filteredTransactions,
 }: StatisticsSummaryProps) {
+  const tStatisticsFE = useTranslations("statistics.fe")
   const summaryStats = useMemo(() => {
     return calculateSummaryStats(filteredTransactions)
   }, [filteredTransactions])
@@ -31,7 +33,7 @@ export function StatisticsSummary({
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Tổng thu nhập</CardTitle>
+          <CardTitle>{tStatisticsFE("totalIncome")}</CardTitle>
           <ArrowUpIcon className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -39,14 +41,14 @@ export function StatisticsSummary({
             {formatCurrency(totalIncome)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {incomeCount} giao dịch
+            {incomeCount} {tStatisticsFE("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Tổng chi tiêu</CardTitle>
+          <CardTitle>{tStatisticsFE("totalExpense")}</CardTitle>
           <ArrowDownIcon className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -54,14 +56,14 @@ export function StatisticsSummary({
             {formatCurrency(totalExpense)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {expenseCount} giao dịch
+            {expenseCount} {tStatisticsFE("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Số dư</CardTitle>
+          <CardTitle>{tStatisticsFE("balance")}</CardTitle>
           <TrendingUpIcon
             className={`h-4 w-4 ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
           />
@@ -75,22 +77,28 @@ export function StatisticsSummary({
             {formatCurrency(balance)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {balance > 0 ? "Dương" : balance < 0 ? "Âm" : "Cân bằng"} so với thu
-            nhập
+            {balance > 0
+              ? tStatisticsFE("positive")
+              : balance < 0
+                ? tStatisticsFE("negative")
+                : tStatisticsFE("balanced")}{" "}
+            {tStatisticsFE("comparedToIncome")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Số giao dịch</CardTitle>
+          <CardTitle>{tStatisticsFE("transactionCount")}</CardTitle>
           <TrendingUpIcon className="h-4 w-4 text-blue-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl wrap-anywhere text-blue-600">
             {transactionCount.toLocaleString("vi-VN")}
           </div>
-          <p className="text-muted-foreground text-sm">Tổng số giao dịch</p>
+          <p className="text-muted-foreground text-sm">
+            {tStatisticsFE("totalTransactions")}
+          </p>
         </CardContent>
       </Card>
     </div>

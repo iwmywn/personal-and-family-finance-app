@@ -1,5 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { NextIntlClientProvider } from "next-intl"
+import { getLocale, getMessages, getTranslations } from "next-intl/server"
 
 import { nunito } from "@/app/fonts"
 
@@ -9,33 +11,41 @@ import { Toaster } from "@/components/ui/sonner"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | PFFA",
-    default: "PFFA",
-  },
-  description: "Ứng dụng quản lý tài chính cá nhân và gia đình",
+export async function generateMetadata(): Promise<Metadata> {
+  const tCommonFE = await getTranslations("common.fe")
+
+  return {
+    title: {
+      template: "%s | PFFA",
+      default: "PFFA",
+    },
+    description: tCommonFE("appDescription"),
+  }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const [messages, locale] = await Promise.all([getMessages(), getLocale()])
+
   return (
-    <html lang="vi" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${nunito.className}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ProgressProvider>
-            <Toaster richColors closeButton />
-            {children}
-          </ProgressProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ProgressProvider>
+              <Toaster richColors closeButton />
+              {children}
+            </ProgressProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

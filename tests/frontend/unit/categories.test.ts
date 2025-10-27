@@ -1,36 +1,9 @@
-import { CustomCategory } from "@/lib/definitions"
 import {
   getCategoriesWithDetails,
   getCategoryDescription,
   getCategoryLabel,
-} from "@/lib/utils/categories"
-
-vi.mock("@/lib/categories", () => ({
-  CATEGORY_CONFIG: {
-    salary_bonus: {
-      label: "Lương & Thưởng",
-      description:
-        "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp,...",
-      type: "income",
-    },
-    business_freelance: {
-      label: "Kinh doanh & Freelance",
-      description:
-        "Doanh thu bán hàng, dịch vụ, freelance, hợp đồng ngắn hạn,...",
-      type: "income",
-    },
-    food_beverage: {
-      label: "Ăn uống",
-      description: "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,...",
-      type: "expense",
-    },
-    transportation: {
-      label: "Di chuyển",
-      description: "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe,...",
-      type: "expense",
-    },
-  },
-}))
+} from "@/lib/categories"
+import { CustomCategory } from "@/lib/definitions"
 
 describe("Category Helpers", () => {
   describe("getCategoriesWithDetails", () => {

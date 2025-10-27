@@ -2,6 +2,7 @@
 
 import { useMemo } from "react"
 import { Receipt } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -26,14 +27,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
-import { useCustomCategories } from "@/lib/swr"
-import {
-  getCategoryDescription,
-  getCategoryLabel,
-} from "@/lib/utils/categories"
-import { formatCurrency } from "@/lib/utils/formatting"
-import { calculateCategoryStats } from "@/lib/utils/statistics"
+import { calculateCategoryStats } from "@/lib/statistics"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
+import { formatCurrency } from "@/lib/utils"
 
 interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]
@@ -42,7 +40,10 @@ interface TransactionBreakdownTableProps {
 export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
+  const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
+  const tStatisticsFE = useTranslations("statistics.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   const categoryStats = useMemo(() => {
     return calculateCategoryStats(filteredTransactions)
@@ -63,9 +64,11 @@ export function TransactionBreakdownTable({
               <EmptyMedia variant="icon">
                 <Receipt />
               </EmptyMedia>
-              <EmptyTitle>Không có giao dịch</EmptyTitle>
+              <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
               <EmptyDescription>
-                Không có giao dịch nào để phân tích.
+                {transactions!.length === 0
+                  ? tCommonFE("startAddingTransactions")
+                  : tCommonFE("noTransactionsFiltered")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -74,10 +77,10 @@ export function TransactionBreakdownTable({
             <Table>
               <TableHeader className="bg-muted sticky top-0">
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>Danh mục</TableHead>
-                  <TableHead>Loại</TableHead>
-                  <TableHead>Số giao dịch</TableHead>
-                  <TableHead>Tổng tiền</TableHead>
+                  <TableHead>{tCommonFE("category")}</TableHead>
+                  <TableHead>{tCommonFE("type")}</TableHead>
+                  <TableHead>{tStatisticsFE("transactionCount")}</TableHead>
+                  <TableHead>{tStatisticsFE("totalAmount")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -114,7 +117,9 @@ export function TransactionBreakdownTable({
                             : "badge-expense"
                         }
                       >
-                        {stat.type === "income" ? "Thu nhập" : "Chi tiêu"}
+                        {stat.type === "income"
+                          ? tCommonFE("income")
+                          : tCommonFE("expense")}
                       </Badge>
                     </TableCell>
                     <TableCell>{stat.count}</TableCell>

@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { LogOut, Settings } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import { signOut } from "@/actions/auth"
@@ -18,6 +19,7 @@ import { clearSWRCache } from "@/lib/swr"
 export function NavUser() {
   const router = useRouter()
   const pathname = usePathname()
+  const tNavigation = useTranslations("navigation")
 
   async function onSignOut() {
     const { success, error } = await signOut()
@@ -38,19 +40,22 @@ export function NavUser() {
           <SidebarMenuItem>
             <SidebarMenuButton
               isActive={pathname === "/settings"}
-              tooltip="Cài đặt"
+              tooltip={tNavigation("settings")}
               asChild
             >
               <Link href="/settings">
                 <Settings />
-                Cài đặt
+                {tNavigation("settings")}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Đăng xuất" onClick={onSignOut}>
+            <SidebarMenuButton
+              tooltip={tNavigation("signOut")}
+              onClick={onSignOut}
+            >
               <LogOut />
-              Đăng xuất
+              {tNavigation("signOut")}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

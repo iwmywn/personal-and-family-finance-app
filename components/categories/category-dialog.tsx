@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { customCategorySchema, type CustomCategoryFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -56,6 +57,8 @@ export function CategoryDialog({
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
     category?.type || "income"
   )
+  const tCategoriesFE = useTranslations("categories.fe")
+  const tCommonFE = useTranslations("common.fe")
   const form = useForm<CustomCategoryFormValues>({
     resolver: zodResolver(customCategorySchema),
     defaultValues: {
@@ -127,12 +130,14 @@ export function CategoryDialog({
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {category ? "Chỉnh sửa danh mục" : "Thêm danh mục mới"}
+            {category
+              ? tCategoriesFE("editCategory")
+              : tCategoriesFE("addCategory")}
           </DialogTitle>
           <DialogDescription>
             {category
-              ? "Cập nhật thông tin danh mục."
-              : "Thêm danh mục tùy chỉnh cho giao dịch của bạn."}
+              ? tCategoriesFE("editCategoryDescription")
+              : tCategoriesFE("addCategoryDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -144,13 +149,13 @@ export function CategoryDialog({
                   disabled={category && category.type === "expense" && true}
                   value="income"
                 >
-                  Thu nhập
+                  {tCommonFE("income")}
                 </TabsTrigger>
                 <TabsTrigger
                   disabled={category && category.type === "income" && true}
                   value="expense"
                 >
-                  Chi tiêu
+                  {tCommonFE("expense")}
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -160,9 +165,12 @@ export function CategoryDialog({
               name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tên danh mục</FormLabel>
+                  <FormLabel>{tCategoriesFE("categoryName")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nhập tên danh mục..." {...field} />
+                    <Input
+                      placeholder={tCategoriesFE("categoryNamePlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -174,11 +182,13 @@ export function CategoryDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mô tả</FormLabel>
+                  <FormLabel>{tCommonFE("description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
-                        placeholder="Nhập mô tả cho danh mục..."
+                        placeholder={tCategoriesFE(
+                          "categoryDescriptionPlaceholder"
+                        )}
                         maxLength={200}
                         {...field}
                       />
@@ -196,11 +206,11 @@ export function CategoryDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Hủy</Button>
+                <Button variant="outline">{tCommonFE("cancel")}</Button>
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Spinner />}{" "}
-                {category ? "Cập nhật" : "Thêm danh mục"}
+                {category ? tCommonFE("update") : tCommonFE("add")}
               </Button>
             </DialogFooter>
           </form>

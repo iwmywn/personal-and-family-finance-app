@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react"
 import { Search, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -21,8 +22,8 @@ import {
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { filterCustomCategories } from "@/lib/filters"
 import { useCustomCategories } from "@/lib/swr"
-import { filterCustomCategories } from "@/lib/utils/filters"
 
 export function CategoryFilters() {
   const { customCategories } = useCustomCategories()
@@ -31,6 +32,8 @@ export function CategoryFilters() {
     "all"
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+  const tCategoriesFE = useTranslations("categories.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   const filteredCategories = useMemo(() => {
     return filterCustomCategories(customCategories!, {
@@ -62,7 +65,7 @@ export function CategoryFilters() {
                 <Search />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder="Tìm kiếm danh mục..."
+                placeholder={tCategoriesFE("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -87,13 +90,15 @@ export function CategoryFilters() {
               <SelectTrigger
                 className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Loại danh mục" />
+                <SelectValue placeholder={tCategoriesFE("categoryType")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Tất cả loại danh mục</SelectItem>
+                <SelectItem value="all">
+                  {tCategoriesFE("allCategoryTypes")}
+                </SelectItem>
                 <SelectSeparator />
-                <SelectItem value="income">Thu nhập</SelectItem>
-                <SelectItem value="expense">Chi tiêu</SelectItem>
+                <SelectItem value="income">{tCommonFE("income")}</SelectItem>
+                <SelectItem value="expense">{tCommonFE("expense")}</SelectItem>
               </SelectContent>
             </Select>
             {hasActiveFilters && (
@@ -103,7 +108,7 @@ export function CategoryFilters() {
                 onClick={handleResetFilters}
                 className="w-full md:w-fit"
               >
-                Đặt lại
+                {tCommonFE("reset")}
               </Button>
             )}
           </div>

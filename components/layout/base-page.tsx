@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react"
 import { Ghost } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import {
   Empty,
@@ -14,6 +15,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useCustomCategories, useTransactions, useUser } from "@/lib/swr"
 
 export function BasePage({ children }: { children: ReactNode }) {
+  const tBasePage = useTranslations("basePage")
   const { user, isUserLoading } = useUser()
   const { transactions, isTransactionsLoading } = useTransactions()
   const { customCategories, isCategoriesLoading } = useCustomCategories()
@@ -33,9 +35,9 @@ export function BasePage({ children }: { children: ReactNode }) {
           <EmptyMedia variant="icon">
             <Ghost />
           </EmptyMedia>
-          <EmptyTitle>KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG</EmptyTitle>
+          <EmptyTitle>{tBasePage("userDataError.title")}</EmptyTitle>
           <EmptyDescription>
-            Đã xảy ra lỗi khi tải thông tin người dùng. Vui lòng thử lại sau.
+            {tBasePage("userDataError.description")}
           </EmptyDescription>
         </EmptyHeader>
       </Empty>
@@ -49,9 +51,9 @@ export function BasePage({ children }: { children: ReactNode }) {
           <EmptyMedia variant="icon">
             <Ghost />
           </EmptyMedia>
-          <EmptyTitle>KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH</EmptyTitle>
+          <EmptyTitle>{tBasePage("transactionsDataError.title")}</EmptyTitle>
           <EmptyDescription>
-            Đã xảy ra lỗi khi tải giao dịch. Vui lòng thử lại sau.
+            {tBasePage("transactionsDataError.description")}
           </EmptyDescription>
         </EmptyHeader>
       </Empty>
@@ -65,9 +67,9 @@ export function BasePage({ children }: { children: ReactNode }) {
           <EmptyMedia variant="icon">
             <Ghost />
           </EmptyMedia>
-          <EmptyTitle>KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC</EmptyTitle>
+          <EmptyTitle>{tBasePage("categoriesDataError.title")}</EmptyTitle>
           <EmptyDescription>
-            Đã xảy ra lỗi khi tải danh mục. Vui lòng thử lại sau.
+            {tBasePage("categoriesDataError.description")}
           </EmptyDescription>
         </EmptyHeader>
       </Empty>

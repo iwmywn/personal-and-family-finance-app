@@ -2,6 +2,8 @@ import { MongoMemoryServer } from "mongodb-memory-server"
 
 import { connect, disconnect } from "@/lib/db"
 
+import "@/tests/backend/mocks/translations.mock"
+
 let mongoServer: MongoMemoryServer
 
 beforeAll(async () => {

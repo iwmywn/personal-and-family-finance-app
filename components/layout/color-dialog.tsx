@@ -1,3 +1,5 @@
+import { Palette } from "lucide-react"
+
 import {
   Dialog,
   DialogContent,
@@ -45,9 +47,7 @@ export function ColorDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="cursor-pointer rounded-md border px-2 text-sm">
-          Bảng màu
-        </div>
+        <Palette />
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>

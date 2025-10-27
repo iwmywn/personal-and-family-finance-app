@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { vi } from "date-fns/locale"
 import { ChevronDownIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -23,13 +24,15 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
+import { filterTransactions } from "@/lib/filters"
 import { useTransactions } from "@/lib/swr"
-import { filterTransactions } from "@/lib/utils/filters"
-import { formatDate } from "@/lib/utils/formatting"
-import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
+import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
+  const tStatisticsFE = useTranslations("statistics.fe")
+  const tCommonFE = useTranslations("common.fe")
+  const tMonths = useTranslations("months")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
@@ -43,7 +46,7 @@ export function StatisticsFilters() {
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
 
-  const allMonths = getMonthsConfig()
+  const allMonths = getMonthsConfig(tMonths)
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
@@ -121,7 +124,9 @@ export function StatisticsFilters() {
                   variant="outline"
                   className={`w-full justify-between font-normal ${selectedDate && "border-primary!"}`}
                 >
-                  {selectedDate ? formatDate(selectedDate) : "Chọn ngày"}
+                  {selectedDate
+                    ? formatDate(selectedDate)
+                    : tCommonFE("selectDate")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -161,7 +166,7 @@ export function StatisticsFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    "Chọn khoảng thời gian"
+                    tCommonFE("selectDateRange")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -170,7 +175,7 @@ export function StatisticsFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Từ ngày
+                      {tCommonFE("from")}
                     </div>
                     <Calendar
                       autoFocus
@@ -192,7 +197,7 @@ export function StatisticsFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Đến ngày
+                      {tCommonFE("to")}
                     </div>
                     <Calendar
                       mode="single"
@@ -218,11 +223,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Tháng" />
+                <SelectValue placeholder={tCommonFE("month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả tháng</SelectItem>
+                  <SelectItem value="all">{tCommonFE("allMonths")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -237,11 +242,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Năm" />
+                <SelectValue placeholder={tCommonFE("year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả năm</SelectItem>
+                  <SelectItem value="all">{tCommonFE("allYears")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -258,7 +263,7 @@ export function StatisticsFilters() {
                 onClick={handleResetFilters}
                 className="sm:col-span-2 lg:col-span-1"
               >
-                Đặt lại
+                {tCommonFE("reset")}
               </Button>
             )}
           </div>

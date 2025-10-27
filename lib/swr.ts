@@ -25,12 +25,12 @@ export function useUser() {
   >("user", getUser)
 
   const user = data?.user
-  const userError = data?.error
+  // const userError = data?.error
   const isUserLoading = isLoading
 
   return {
     user,
-    userError,
+    // userError,
     isUserLoading,
     mutate,
   }
@@ -46,12 +46,12 @@ export function useTransactions() {
   >("transactions", getTransactions)
 
   const transactions = data?.transactions
-  const transactionsError = data?.error
+  // const transactionsError = data?.error
   const isTransactionsLoading = isLoading
 
   return {
     transactions,
-    transactionsError,
+    // transactionsError,
     isTransactionsLoading,
     mutate,
   }
@@ -67,12 +67,12 @@ export function useCustomCategories() {
   >("custom-categories", getCustomCategories)
 
   const customCategories = data?.customCategories
-  const categoriesError = data?.error
+  // const categoriesError = data?.error
   const isCategoriesLoading = isLoading
 
   return {
     customCategories,
-    categoriesError,
+    // categoriesError,
     isCategoriesLoading,
     mutate,
   }

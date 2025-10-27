@@ -5,6 +5,7 @@ import { transactionSchema, type TransactionFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { vi } from "react-day-picker/locale"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -55,13 +56,10 @@ import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormLink } from "@/components/custom/form-link"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { getCategoriesWithDetails, getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { cn } from "@/lib/utils"
-import {
-  getCategoriesWithDetails,
-  getCategoryLabel,
-} from "@/lib/utils/categories"
+import { cn, normalizeToUTCDate } from "@/lib/utils"
 
 interface TransactionDialogProps {
   transaction?: Transaction
@@ -80,6 +78,8 @@ export function TransactionDialog({
   )
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
+  const tTransactionsFE = useTranslations("transactions.fe")
+  const tCommonFE = useTranslations("common.fe")
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
@@ -98,10 +98,10 @@ export function TransactionDialog({
     setIsLoading(true)
 
     if (transaction) {
-      const { success, error } = await updateTransaction(
-        transaction._id,
-        values
-      )
+      const { success, error } = await updateTransaction(transaction._id, {
+        ...values,
+        date: normalizeToUTCDate(values.date),
+      })
 
       if (error || !success) {
         toast.error(error)
@@ -117,7 +117,10 @@ export function TransactionDialog({
         setOpen(false)
       }
     } else {
-      const { success, error } = await createTransaction(values)
+      const { success, error } = await createTransaction({
+        ...values,
+        date: normalizeToUTCDate(values.date),
+      })
 
       if (error || !success) {
         toast.error(error)
@@ -156,8 +159,9 @@ export function TransactionDialog({
   }
 
   const renderCategorySelect = (type: "income" | "expense") => {
-    const typeLabel = type === "income" ? "thu nhập" : "chi tiêu"
-    const placeholder = `Chọn danh mục ${typeLabel}`
+    const typeLabel =
+      type === "income" ? tCommonFE("income") : tCommonFE("expense")
+    const placeholder = tTransactionsFE("selectCategory", { type: typeLabel })
 
     return (
       <FormField
@@ -165,7 +169,9 @@ export function TransactionDialog({
         name="categoryKey"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Danh mục {typeLabel}</FormLabel>
+            <FormLabel>
+              {tCommonFE("category")} {typeLabel}
+            </FormLabel>
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className="w-full">
@@ -197,7 +203,9 @@ export function TransactionDialog({
                     customCategories.filter((c) => c.type === type).length >
                       0 && (
                       <>
-                        <SelectLabel>Danh mục tùy chỉnh</SelectLabel>
+                        <SelectLabel>
+                          {tTransactionsFE("customCategories")}
+                        </SelectLabel>
                         {customCategories
                           .filter((c) => c.type === type)
                           .map((c) => (
@@ -216,9 +224,9 @@ export function TransactionDialog({
               </SelectContent>
             </Select>
             <FormDescription>
-              Không tìm thấy danh mục phù hợp?{" "}
+              {tTransactionsFE("noCategoryFound")}{" "}
               <FormLink href="/categories" className="text-foreground/85">
-                Tạo danh mục tùy chỉnh
+                {tTransactionsFE("createCustomCategory")}
               </FormLink>
             </FormDescription>
             <FormMessage />
@@ -233,12 +241,14 @@ export function TransactionDialog({
       <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {transaction ? "Chỉnh sửa giao dịch" : "Thêm giao dịch mới"}
+            {transaction
+              ? tTransactionsFE("editTransaction")
+              : tTransactionsFE("addTransaction")}
           </DialogTitle>
           <DialogDescription>
             {transaction
-              ? "Cập nhật thông tin giao dịch."
-              : "Thêm thu nhập hoặc chi tiêu của bạn để theo dõi tài chính cá nhân."}
+              ? tTransactionsFE("editTransactionDescription")
+              : tTransactionsFE("addTransactionDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -252,7 +262,7 @@ export function TransactionDialog({
                   }
                   value="income"
                 >
-                  Thu nhập
+                  {tCommonFE("income")}
                 </TabsTrigger>
                 <TabsTrigger
                   disabled={
@@ -260,7 +270,7 @@ export function TransactionDialog({
                   }
                   value="expense"
                 >
-                  Chi tiêu
+                  {tCommonFE("expense")}
                 </TabsTrigger>
               </TabsList>
 
@@ -278,7 +288,7 @@ export function TransactionDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Số tiền (VND)</FormLabel>
+                  <FormLabel>{tTransactionsFE("amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -303,11 +313,11 @@ export function TransactionDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mô tả</FormLabel>
+                  <FormLabel>{tCommonFE("description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
-                        placeholder="Nhập mô tả cho giao dịch..."
+                        placeholder={tTransactionsFE("descriptionPlaceholder")}
                         maxLength={200}
                         {...field}
                       />
@@ -328,7 +338,7 @@ export function TransactionDialog({
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Ngày giao dịch</FormLabel>
+                  <FormLabel>{tTransactionsFE("date")}</FormLabel>
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -342,7 +352,7 @@ export function TransactionDialog({
                           {field.value ? (
                             format(field.value, "dd/MM/yyyy")
                           ) : (
-                            <span>Chọn ngày</span>
+                            <span>{tCommonFE("selectDate")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -375,11 +385,11 @@ export function TransactionDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Hủy</Button>
+                <Button variant="outline">{tCommonFE("cancel")}</Button>
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Spinner />}{" "}
-                {transaction ? "Cập nhật" : "Thêm giao dịch"}
+                {transaction ? tCommonFE("update") : tCommonFE("add")}
               </Button>
             </DialogFooter>
           </form>

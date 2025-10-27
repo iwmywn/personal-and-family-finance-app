@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
@@ -17,45 +19,55 @@ import { getUser, signIn, signOut } from "@/actions/auth"
 describe("Auth Actions", () => {
   describe("signIn", () => {
     it("should return error when recaptcha token is missing", async () => {
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signIn(mockValidSignInValues, null)
 
-      expect(result.error).toBe("Thiếu token recaptcha!")
+      expect(result.error).toBe(tAuthBE("recaptchaMissing"))
     })
 
     it("should return error with invalid input data", async () => {
       mockRecaptchaSuccess()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await signIn({ username: "", password: "" }, "valid-token")
 
-      expect(result.error).toBe("Dữ liệu không hợp lệ!")
+      expect(result.error).toBe(tCommonBE("invalidData"))
     })
 
     it("should return error when recaptcha verification fails", async () => {
       mockRecaptchaFailure()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signIn(mockValidSignInValues, "invalid-token")
 
-      expect(result.error).toBe("Xác thực Captcha thất bại!")
+      expect(result.error).toBe(tAuthBE("recaptchaFailed"))
     })
 
     it("should return error when user does not exist", async () => {
       mockRecaptchaSuccess()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signIn(mockValidSignInValues, "valid-token")
 
-      expect(result.error).toBe("Tên người dùng hoặc mật khẩu không đúng!")
+      expect(result.error).toBe(tAuthBE("signInError"))
     })
 
     it("should return error with incorrect password", async () => {
       await insertTestUser(mockUser)
       mockRecaptchaSuccess()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signIn(
         { username: "testuser", password: "WrongPassword123!" },
         "valid-token"
       )
 
-      expect(result.error).toBe("Tên người dùng hoặc mật khẩu không đúng!")
+      expect(result.error).toBe(tAuthBE("signInError"))
     })
 
     it("should successfully sign in with valid credentials", async () => {
@@ -70,18 +82,22 @@ describe("Auth Actions", () => {
     it("should return error when recaptcha verification throws error", async () => {
       mockRecaptchaError()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signIn(mockValidSignInValues, "valid-token")
 
-      expect(result.error).toBe("Đăng nhập thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tAuthBE("signInFailed"))
     })
 
     it("should return error when database operation throws error", async () => {
       mockRecaptchaSuccess()
       mockUserCollectionError()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signIn(mockValidSignInValues, "valid-token")
 
-      expect(result.error).toBe("Đăng nhập thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tAuthBE("signInFailed"))
     })
   })
 
@@ -89,19 +105,23 @@ describe("Auth Actions", () => {
     it("should successfully sign out", async () => {
       mockSignOutSuccess()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signOut()
 
-      expect(result.success).toBe("Bạn cần đăng nhập lại.")
+      expect(result.success).toBe(tAuthBE("signOutSuccess"))
       expect(result.error).toBeUndefined()
     })
 
     it("should return error when sign out fails", async () => {
       mockSignOutFailure()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await signOut()
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Đăng xuất thất bại! Vui lòng thử lại sau.")
+      expect(result.error).toBe(tAuthBE("signOutFailed"))
     })
   })
 
@@ -109,21 +129,23 @@ describe("Auth Actions", () => {
     it("should return error when user is not authenticated", async () => {
       mockUnauthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await getUser()
 
       expect(result.user).toBeUndefined()
-      expect(result.error).toBe(
-        "Không có quyền truy cập! Vui lòng tải lại trang và thử lại."
-      )
+      expect(result.error).toBe(tCommonBE("accessDenied"))
     })
 
     it("should return error when user not found in database", async () => {
       mockAuthenticatedUser()
 
+      const tCommonBE = await getTranslations("common.be")
+
       const result = await getUser()
 
       expect(result.user).toBeUndefined()
-      expect(result.error).toBe("Không tìm thấy người dùng!")
+      expect(result.error).toBe(tCommonBE("userNotFound"))
     })
 
     it("should return user data when authenticated", async () => {
@@ -142,12 +164,12 @@ describe("Auth Actions", () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
 
+      const tAuthBE = await getTranslations("auth.be")
+
       const result = await getUser()
 
       expect(result.user).toBeUndefined()
-      expect(result.error).toBe(
-        "Không thể tải thông tin người dùng! Vui lòng thử lại sau."
-      )
+      expect(result.error).toBe(tAuthBE("userFetchFailed"))
     })
   })
 })

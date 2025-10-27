@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react"
 import { vi } from "date-fns/locale"
 import { ChevronDownIcon, Search, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -30,16 +31,21 @@ import {
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/lib/categories"
+import {
+  EXPENSE_CATEGORIES,
+  getCategoryLabel,
+  INCOME_CATEGORIES,
+} from "@/lib/categories"
+import { filterTransactions } from "@/lib/filters"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { getCategoryLabel } from "@/lib/utils/categories"
-import { filterTransactions } from "@/lib/utils/filters"
-import { formatDate } from "@/lib/utils/formatting"
-import { getMonthsConfig, getUniqueYears } from "@/lib/utils/transactions"
+import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
 
 export function TransactionFilters() {
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
+  const tTransactionsFE = useTranslations("transactions.fe")
+  const tCommonFE = useTranslations("common.fe")
+  const tMonths = useTranslations("months")
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -59,7 +65,7 @@ export function TransactionFilters() {
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
-  const allMonths = getMonthsConfig()
+  const allMonths = getMonthsConfig(tMonths)
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
@@ -155,7 +161,7 @@ export function TransactionFilters() {
                 <Search />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder="Tìm kiếm giao dịch..."
+                placeholder={tTransactionsFE("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -178,7 +184,9 @@ export function TransactionFilters() {
                   variant="outline"
                   className={`w-full justify-between font-normal md:row-start-2 ${selectedDate && "border-primary!"}`}
                 >
-                  {selectedDate ? formatDate(selectedDate) : "Chọn ngày"}
+                  {selectedDate
+                    ? formatDate(selectedDate)
+                    : tCommonFE("selectDate")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -218,7 +226,7 @@ export function TransactionFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    "Chọn khoảng thời gian"
+                    tCommonFE("selectDateRange")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -227,7 +235,7 @@ export function TransactionFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Từ ngày
+                      {tCommonFE("from")}
                     </div>
                     <Calendar
                       autoFocus
@@ -249,7 +257,7 @@ export function TransactionFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      Đến ngày
+                      {tCommonFE("to")}
                     </div>
                     <Calendar
                       mode="single"
@@ -275,11 +283,11 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Tháng" />
+                <SelectValue placeholder={tCommonFE("month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả tháng</SelectItem>
+                  <SelectItem value="all">{tCommonFE("allMonths")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -294,11 +302,11 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Năm" />
+                <SelectValue placeholder={tCommonFE("year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả năm</SelectItem>
+                  <SelectItem value="all">{tCommonFE("allYears")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -318,14 +326,18 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Loại giao dịch" />
+                <SelectValue placeholder={tTransactionsFE("transactionType")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả loại giao dịch</SelectItem>
+                  <SelectItem value="all">
+                    {tTransactionsFE("allTransactionTypes")}
+                  </SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="income">Thu nhập</SelectItem>
-                  <SelectItem value="expense">Chi tiêu</SelectItem>
+                  <SelectItem value="income">{tCommonFE("income")}</SelectItem>
+                  <SelectItem value="expense">
+                    {tCommonFE("expense")}
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -337,13 +349,15 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder="Danh mục" />
+                <SelectValue placeholder={tCommonFE("category")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">Tất cả danh mục</SelectItem>
+                  <SelectItem value="all">
+                    {tTransactionsFE("allCategories")}
+                  </SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>Thu nhập</SelectLabel>
+                  <SelectLabel>{tCommonFE("income")}</SelectLabel>
                   {INCOME_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
@@ -359,7 +373,7 @@ export function TransactionFilters() {
                         {category.label}
                       </SelectItem>
                     ))}
-                  <SelectLabel>Chi tiêu</SelectLabel>
+                  <SelectLabel>{tCommonFE("expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
@@ -385,7 +399,7 @@ export function TransactionFilters() {
                 onClick={handleResetFilters}
                 className="col-span-full 2xl:col-auto 2xl:row-start-2"
               >
-                Đặt lại
+                {tCommonFE("reset")}
               </Button>
             )}
           </div>

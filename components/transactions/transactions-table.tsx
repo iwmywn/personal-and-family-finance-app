@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { MoreVertical, Receipt } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -36,20 +37,15 @@ import {
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import {
-  getCategoryDescription,
-  getCategoryLabel,
-} from "@/lib/utils/categories"
-import { formatCurrency, formatDate } from "@/lib/utils/formatting"
+import { formatCurrency, formatDate } from "@/lib/utils"
 
 interface TransactionsTableProps {
   filteredTransactions: Transaction[]
   offsetHeight: number
 }
-
-// type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 export function TransactionsTable({
   filteredTransactions,
@@ -57,11 +53,9 @@ export function TransactionsTable({
 }: TransactionsTableProps) {
   const { transactions } = useTransactions()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  // const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  // const [showTypeCol, setShowTypeCol] = useState<Checked>(true)
-  // const [showCategoryCol, setShowCategoryCol] = useState<Checked>(true)
-  // const [showAmountCol, setShowAmountCol] = useState<Checked>(true)
   const { customCategories } = useCustomCategories()
+  const tTransactionsFE = useTranslations("transactions.fe")
+  const tCommonFE = useTranslations("common.fe")
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -70,48 +64,6 @@ export function TransactionsTable({
   return (
     <>
       <Card>
-        {/* <CardHeader ref={registerRef}>
-          <CardTitle>Lịch sử giao dịch</CardTitle>
-          <CardDescription>
-            Xem chi tiết tất cả các giao dịch của bạn.
-          </CardDescription>
-          <CardAction>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">
-                  Tùy chỉnh cột
-                  <ChevronDownIcon className="size-4 opacity-50" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuCheckboxItem checked={true} disabled>
-                  Ngày
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem checked={true} disabled>
-                  Mô tả
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={showTypeCol}
-                  onCheckedChange={setShowTypeCol}
-                >
-                  Loại
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={showCategoryCol}
-                  onCheckedChange={setShowCategoryCol}
-                >
-                  Danh mục
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  checked={showAmountCol}
-                  onCheckedChange={setShowAmountCol}
-                >
-                  Số tiền
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </CardAction>
-        </CardHeader> */}
         <CardContent>
           {filteredTransactions.length === 0 ? (
             <Empty
@@ -126,11 +78,11 @@ export function TransactionsTable({
                 <EmptyMedia variant="icon">
                   <Receipt />
                 </EmptyMedia>
-                <EmptyTitle>Không tìm thấy giao dịch</EmptyTitle>
+                <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
                 <EmptyDescription>
                   {transactions!.length === 0
-                    ? "Bắt đầu thêm giao dịch của bạn."
-                    : "Hãy thử từ khóa hoặc bộ lọc khác."}
+                    ? tCommonFE("startAddingTransactions")
+                    : tCommonFE("noTransactionsFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -146,11 +98,11 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>Ngày</TableHead>
-                    <TableHead>Mô tả</TableHead>
-                    <TableHead>Loại</TableHead>
-                    <TableHead>Danh mục</TableHead>
-                    <TableHead>Số tiền</TableHead>
+                    <TableHead>{tTransactionsFE("date")}</TableHead>
+                    <TableHead>{tCommonFE("description")}</TableHead>
+                    <TableHead>{tCommonFE("type")}</TableHead>
+                    <TableHead>{tCommonFE("category")}</TableHead>
+                    <TableHead>{tTransactionsFE("amount")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -173,8 +125,8 @@ export function TransactionsTable({
                           }
                         >
                           {transaction.type === "income"
-                            ? "Thu nhập"
-                            : "Chi tiêu"}
+                            ? tCommonFE("income")
+                            : tCommonFE("expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -218,7 +170,9 @@ export function TransactionsTable({
                               size="icon"
                             >
                               <MoreVertical />
-                              <span className="sr-only">Mở menu</span>
+                              <span className="sr-only">
+                                {tTransactionsFE("openMenu")}
+                              </span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -229,7 +183,7 @@ export function TransactionsTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              Chỉnh sửa
+                              {tCommonFE("edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -239,7 +193,7 @@ export function TransactionsTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              Xóa
+                              {tCommonFE("delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -256,13 +210,13 @@ export function TransactionsTable({
       {selectedTransaction && (
         <>
           <TransactionDialog
-            key={selectedTransaction._id}
+            key={selectedTransaction._id + "TransactionDialog"}
             transaction={selectedTransaction}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
           <DeleteTransactionDialog
-            key={selectedTransaction._id}
+            key={selectedTransaction._id + "DeleteTransactionDialog"}
             transactionId={selectedTransaction._id}
             transactionDescription={selectedTransaction.description}
             open={isDeleteOpen}

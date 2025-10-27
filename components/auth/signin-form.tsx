@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { signInSchema, type SignInFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -25,6 +26,7 @@ export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const tAuthFE = useTranslations("auth.fe")
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -90,7 +92,9 @@ export function SignInForm() {
               name="username"
               render={({ field }) => (
                 <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="username">Tên người dùng</FormLabel>
+                  <FormLabel htmlFor="username">
+                    {tAuthFE("username")}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       id="username"
@@ -110,7 +114,9 @@ export function SignInForm() {
               render={({ field }) => (
                 <FormItem className="grid gap-2">
                   <div className="flex items-center justify-between">
-                    <FormLabel htmlFor="password">Mật khẩu</FormLabel>
+                    <FormLabel htmlFor="password">
+                      {tAuthFE("password")}
+                    </FormLabel>
                   </div>
                   <FormControl>
                     <PasswordInput
@@ -126,7 +132,7 @@ export function SignInForm() {
             />
             <FormButton
               isSubmitting={isLoading || form.formState.isSubmitting}
-              text="Đăng nhập"
+              text={tAuthFE("signIn")}
             />
           </div>
         </form>

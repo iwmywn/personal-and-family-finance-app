@@ -3,6 +3,7 @@
 import { customCategorySchema, type CustomCategoryFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { nanoid } from "nanoid"
+import { getTranslations } from "next-intl/server"
 
 import {
   getCategoryCollection,
@@ -13,18 +14,20 @@ import { session } from "@/lib/session"
 
 export async function createCustomCategory(values: CustomCategoryFormValues) {
   try {
+    const tCategoriesBE = await getTranslations("categories.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: tCommonBE("accessDenied"),
       }
     }
 
     const parsedValues = customCategorySchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Dữ liệu không hợp lệ!" }
+      return { error: tCommonBE("invalidData") }
     }
 
     const categoriesCollection = await getCategoryCollection()
@@ -36,7 +39,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     })
 
     if (existingCategory) {
-      return { error: "Danh mục với tên này đã tồn tại!" }
+      return { error: tCategoriesBE("categoryExists") }
     }
 
     const shortId = nanoid(8)
@@ -47,7 +50,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     })
 
     if (duplicateCategoryKey) {
-      return { error: "Lỗi tạo key danh mục. Vui lòng thử lại." }
+      return { error: tCategoriesBE("categoryKeyError") }
     }
 
     const result = await categoriesCollection.insertOne({
@@ -59,12 +62,13 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     })
 
     if (!result.acknowledged)
-      return { error: "Tạo danh mục thất bại! Thử lại sau." }
+      return { error: tCategoriesBE("categoryAddFailed") }
 
-    return { success: "Danh mục đã được tạo.", error: undefined }
+    return { success: tCategoriesBE("categoryAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating custom category:", error)
-    return { error: "Tạo danh mục thất bại! Vui lòng thử lại sau." }
+    const tCategoriesBE = await getTranslations("categories.be")
+    return { error: tCategoriesBE("categoryAddFailed") }
   }
 }
 
@@ -73,23 +77,25 @@ export async function updateCustomCategory(
   values: CustomCategoryFormValues
 ) {
   try {
+    const tCategoriesBE = await getTranslations("categories.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: tCommonBE("accessDenied"),
       }
     }
 
     const parsedValues = customCategorySchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: "Dữ liệu không hợp lệ!" }
+      return { error: tCommonBE("invalidData") }
     }
 
     if (!ObjectId.isValid(categoryId)) {
       return {
-        error: "Category ID không hợp lệ!",
+        error: tCategoriesBE("invalidCategoryId"),
       }
     }
 
@@ -102,7 +108,7 @@ export async function updateCustomCategory(
 
     if (!existingCategory) {
       return {
-        error: "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!",
+        error: tCategoriesBE("categoryNotFoundOrNoPermission"),
       }
     }
 
@@ -114,7 +120,7 @@ export async function updateCustomCategory(
     })
 
     if (duplicateCategory) {
-      return { error: "Danh mục với tên này đã tồn tại!" }
+      return { error: tCategoriesBE("categoryExists") }
     }
 
     await categoriesCollection.updateOne(
@@ -128,26 +134,29 @@ export async function updateCustomCategory(
       }
     )
 
-    return { success: "Danh mục đã được cập nhật.", error: undefined }
+    return { success: tCategoriesBE("categoryUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating custom category:", error)
-    return { error: "Cập nhật danh mục thất bại! Vui lòng thử lại sau." }
+    const tCategoriesBE = await getTranslations("categories.be")
+    return { error: tCategoriesBE("categoryUpdateFailed") }
   }
 }
 
 export async function deleteCustomCategory(categoryId: string) {
   try {
+    const tCategoriesBE = await getTranslations("categories.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: tCommonBE("accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(categoryId)) {
       return {
-        error: "Category ID không hợp lệ!",
+        error: tCategoriesBE("invalidCategoryId"),
       }
     }
 
@@ -163,7 +172,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     if (!existingCategory) {
       return {
-        error: "Không tìm thấy danh mục hoặc bạn không có quyền xóa!",
+        error: tCategoriesBE("categoryNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -174,7 +183,9 @@ export async function deleteCustomCategory(categoryId: string) {
 
     if (transactionCount > 0) {
       return {
-        error: `Không thể xóa danh mục. Có ${transactionCount} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.`,
+        error: tCategoriesBE("categoryInUseWithCount", {
+          count: transactionCount,
+        }),
       }
     }
 
@@ -183,20 +194,22 @@ export async function deleteCustomCategory(categoryId: string) {
       userId: new ObjectId(userId),
     })
 
-    return { success: "Danh mục đã được xóa." }
+    return { success: tCategoriesBE("categoryDeleted") }
   } catch (error) {
     console.error("Error deleting custom category:", error)
-    return { error: "Xóa danh mục thất bại! Vui lòng thử lại sau." }
+    const tCategoriesBE = await getTranslations("categories.be")
+    return { error: tCategoriesBE("categoryDeleteFailed") }
   }
 }
 
 export async function getCustomCategories() {
   try {
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
+        error: tCommonBE("accessDenied"),
       }
     }
 
@@ -216,8 +229,9 @@ export async function getCustomCategories() {
     }
   } catch (error) {
     console.error("Error fetching custom categories:", error)
+    const tCategoriesBE = await getTranslations("categories.be")
     return {
-      error: "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau.",
+      error: tCategoriesBE("categoryFetchFailed"),
     }
   }
 }

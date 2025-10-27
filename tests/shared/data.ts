@@ -1,15 +1,22 @@
 import { ObjectId } from "mongodb"
 
-import type { CustomCategory, Transaction } from "@/lib/definitions"
+import type {
+  CustomCategory,
+  DBCustomCategory,
+  DBTransaction,
+  DBUser,
+  Transaction,
+} from "@/lib/definitions"
 
-export const mockUser = {
+export const mockUser: DBUser = {
   _id: new ObjectId("68f712e4cda4897217a05a1c"),
   fullName: "Test User",
   username: "testuser",
   password: "$2a$10$uqIvouPdI5gzN95l3ct/zeOHzSICyxyRJJ7lCIqLbvUtKcqs4gRPe", //TestPassword123!
+  locale: "en",
 }
 
-export const mockCustomCategory = {
+export const mockCustomCategory: DBCustomCategory = {
   _id: new ObjectId("68f732914e63e5aa249cc173"),
   userId: mockUser._id,
   categoryKey: "custom_expense_abcdef12",
@@ -18,7 +25,7 @@ export const mockCustomCategory = {
   description: "Movies and games",
 }
 
-export const mockTransaction = {
+export const mockTransaction: DBTransaction = {
   _id: new ObjectId("68f73357357d93dcbaae8106"),
   userId: mockUser._id,
   type: "expense" as "income" | "expense",

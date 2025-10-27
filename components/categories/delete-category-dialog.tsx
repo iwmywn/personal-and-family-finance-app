@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
 import { deleteCustomCategory } from "@/actions/categories"
@@ -30,6 +31,8 @@ export function DeleteCategoryDialog({
   open,
   setOpen,
 }: DeleteCategoryDialogProps) {
+  const tCategoriesFE = useTranslations("categories.fe")
+  const tCommonFE = useTranslations("common.fe")
   const { customCategories, mutate } = useCustomCategories()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -55,16 +58,19 @@ export function DeleteCategoryDialog({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa danh mục</AlertDialogTitle>
+          <AlertDialogTitle>
+            {tCategoriesFE("deleteCategoryTitle")}
+          </AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            Bạn có chắc chắn muốn xóa danh mục &quot;{categoryLabel}
-            &quot;? Hành động này không thể hoàn tác.
+            {tCategoriesFE("deleteCategoryDescription", {
+              label: categoryLabel,
+            })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Hủy</AlertDialogCancel>
+          <AlertDialogCancel>{tCommonFE("cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} Xóa
+            {isLoading && <Spinner />} {tCommonFE("delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
