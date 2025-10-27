@@ -54,7 +54,8 @@ export function TransactionsTable({
   const { transactions } = useTransactions()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const { customCategories } = useCustomCategories()
-  const tTransactions = useTranslations("transactions")
+  const tTransactionsFE = useTranslations("transactions.fe")
+  const tCommonFE = useTranslations("common.fe")
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -77,11 +78,13 @@ export function TransactionsTable({
                 <EmptyMedia variant="icon">
                   <Receipt />
                 </EmptyMedia>
-                <EmptyTitle>{tTransactions("noTransactionsFound")}</EmptyTitle>
+                <EmptyTitle>
+                  {tTransactionsFE("noTransactionsFound")}
+                </EmptyTitle>
                 <EmptyDescription>
                   {transactions!.length === 0
-                    ? tTransactions("startAddingTransactions")
-                    : tTransactions("tryDifferentFilters")}
+                    ? tCommonFE("startAddingTransactions")
+                    : tCommonFE("noTransactionsFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -97,11 +100,11 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{tTransactions("date")}</TableHead>
-                    <TableHead>{tTransactions("description")}</TableHead>
-                    <TableHead>{tTransactions("type")}</TableHead>
-                    <TableHead>{tTransactions("category")}</TableHead>
-                    <TableHead>{tTransactions("amount")}</TableHead>
+                    <TableHead>{tTransactionsFE("date")}</TableHead>
+                    <TableHead>{tTransactionsFE("description")}</TableHead>
+                    <TableHead>{tCommonFE("type")}</TableHead>
+                    <TableHead>{tCommonFE("category")}</TableHead>
+                    <TableHead>{tTransactionsFE("amount")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -124,8 +127,8 @@ export function TransactionsTable({
                           }
                         >
                           {transaction.type === "income"
-                            ? tTransactions("income")
-                            : tTransactions("expense")}
+                            ? tCommonFE("income")
+                            : tCommonFE("expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -170,7 +173,7 @@ export function TransactionsTable({
                             >
                               <MoreVertical />
                               <span className="sr-only">
-                                {tTransactions("openMenu")}
+                                {tTransactionsFE("openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>
@@ -182,7 +185,7 @@ export function TransactionsTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {tTransactions("edit")}
+                              {tCommonFE("edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -192,7 +195,7 @@ export function TransactionsTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {tTransactions("delete")}
+                              {tCommonFE("delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

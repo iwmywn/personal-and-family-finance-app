@@ -10,19 +10,20 @@ import { session } from "@/lib/session"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {
-    const tTransactions = await getTranslations("transactions")
+    const tTransactionsBE = await getTranslations("transactions.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tTransactions("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tTransactions("invalidData") }
+      return { error: tCommonBE("invalidData") }
     }
 
     const transactionsCollection = await getTransactionCollection()
@@ -37,13 +38,13 @@ export async function createTransaction(values: TransactionFormValues) {
     })
 
     if (!result.acknowledged)
-      return { error: tTransactions("transactionAddFailed") }
+      return { error: tTransactionsBE("transactionAddFailed") }
 
-    return { success: tTransactions("transactionAdded"), error: undefined }
+    return { success: tTransactionsBE("transactionAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
-    const tTransactions = await getTranslations("transactions")
-    return { error: tTransactions("transactionAddFailed") }
+    const tTransactionsBE = await getTranslations("transactions.be")
+    return { error: tTransactionsBE("transactionAddFailed") }
   }
 }
 
@@ -52,24 +53,25 @@ export async function updateTransaction(
   values: TransactionFormValues
 ) {
   try {
-    const tTransactions = await getTranslations("transactions")
+    const tTransactionsBE = await getTranslations("transactions.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tTransactions("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tTransactions("invalidData") }
+      return { error: tCommonBE("invalidData") }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: tTransactions("invalidTransactionId"),
+        error: tTransactionsBE("invalidTransactionId"),
       }
     }
 
@@ -82,7 +84,7 @@ export async function updateTransaction(
 
     if (!existingTransaction) {
       return {
-        error: tTransactions("transactionNotFoundOrNoPermission"),
+        error: tTransactionsBE("transactionNotFoundOrNoPermission"),
       }
     }
 
@@ -99,28 +101,29 @@ export async function updateTransaction(
       }
     )
 
-    return { success: tTransactions("transactionUpdated"), error: undefined }
+    return { success: tTransactionsBE("transactionUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating transaction:", error)
-    const tTransactions = await getTranslations("transactions")
-    return { error: tTransactions("transactionUpdateFailed") }
+    const tTransactionsBE = await getTranslations("transactions.be")
+    return { error: tTransactionsBE("transactionUpdateFailed") }
   }
 }
 
 export async function deleteTransaction(transactionId: string) {
   try {
-    const tTransactions = await getTranslations("transactions")
+    const tTransactionsBE = await getTranslations("transactions.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tTransactions("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: tTransactions("invalidTransactionId"),
+        error: tTransactionsBE("invalidTransactionId"),
       }
     }
 
@@ -133,7 +136,7 @@ export async function deleteTransaction(transactionId: string) {
 
     if (!existingTransaction) {
       return {
-        error: tTransactions("transactionNotFoundOrNoPermissionDelete"),
+        error: tTransactionsBE("transactionNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -142,22 +145,22 @@ export async function deleteTransaction(transactionId: string) {
       userId: new ObjectId(userId),
     })
 
-    return { success: tTransactions("transactionDeleted") }
+    return { success: tTransactionsBE("transactionDeleted") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
-    const tTransactions = await getTranslations("transactions")
-    return { error: tTransactions("transactionDeleteFailed") }
+    const tTransactionsBE = await getTranslations("transactions.be")
+    return { error: tTransactionsBE("transactionDeleteFailed") }
   }
 }
 
 export async function getTransactions() {
   try {
-    const tTransactions = await getTranslations("transactions")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tTransactions("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
@@ -177,7 +180,7 @@ export async function getTransactions() {
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)
-    const tTransactions = await getTranslations("transactions")
-    return { error: tTransactions("transactionFetchFailed") }
+    const tTransactionsBE = await getTranslations("transactions.be")
+    return { error: tTransactionsBE("transactionFetchFailed") }
   }
 }

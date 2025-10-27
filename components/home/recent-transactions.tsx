@@ -30,12 +30,13 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const recentTransactions = transactions!.slice(0, 10)
   const { customCategories } = useCustomCategories()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const tHome = useTranslations("home")
+  const tHomeFE = useTranslations("home.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
       <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
-        <CardTitle>{tHome("recentTransactions")}</CardTitle>
+        <CardTitle>{tHomeFE("recentTransactions")}</CardTitle>
       </CardHeader>
       <CardContent
         className="overflow-y-auto"
@@ -54,10 +55,10 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                   <Receipt />
                 </EmptyMedia>
                 <EmptyTitle className="text-base">
-                  {tHome("noTransactions")}
+                  {tHomeFE("noTransactions")}
                 </EmptyTitle>
                 <EmptyDescription className="text-sm">
-                  {tHome("startAddingTransactions")}
+                  {tCommonFE("startAddingTransactions")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>

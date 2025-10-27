@@ -57,8 +57,8 @@ export function CategoryDialog({
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
     category?.type || "income"
   )
-  const tCategories = useTranslations("categories")
-  const tCommon = useTranslations("common")
+  const tCategoriesFE = useTranslations("categories.fe")
+  const tCommonFE = useTranslations("common.fe")
   const form = useForm<CustomCategoryFormValues>({
     resolver: zodResolver(customCategorySchema),
     defaultValues: {
@@ -131,13 +131,13 @@ export function CategoryDialog({
         <DialogHeader>
           <DialogTitle>
             {category
-              ? tCategories("editCategory")
-              : tCategories("addCategory")}
+              ? tCategoriesFE("editCategory")
+              : tCategoriesFE("addCategory")}
           </DialogTitle>
           <DialogDescription>
             {category
-              ? tCategories("editCategoryDescription")
-              : tCategories("addCategoryDescription")}
+              ? tCategoriesFE("editCategoryDescription")
+              : tCategoriesFE("addCategoryDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -149,13 +149,13 @@ export function CategoryDialog({
                   disabled={category && category.type === "expense" && true}
                   value="income"
                 >
-                  {tCategories("income")}
+                  {tCommonFE("income")}
                 </TabsTrigger>
                 <TabsTrigger
                   disabled={category && category.type === "income" && true}
                   value="expense"
                 >
-                  {tCategories("expense")}
+                  {tCommonFE("expense")}
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -165,10 +165,10 @@ export function CategoryDialog({
               name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tCategories("categoryName")}</FormLabel>
+                  <FormLabel>{tCategoriesFE("categoryName")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={tCategories("categoryNamePlaceholder")}
+                      placeholder={tCategoriesFE("categoryNamePlaceholder")}
                       {...field}
                     />
                   </FormControl>
@@ -182,11 +182,11 @@ export function CategoryDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tCategories("categoryDescription")}</FormLabel>
+                  <FormLabel>{tCommonFE("description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
-                        placeholder={tCategories(
+                        placeholder={tCategoriesFE(
                           "categoryDescriptionPlaceholder"
                         )}
                         maxLength={200}
@@ -206,11 +206,11 @@ export function CategoryDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{tCommon("cancel")}</Button>
+                <Button variant="outline">{tCommonFE("cancel")}</Button>
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Spinner />}{" "}
-                {category ? tCommon("update") : tCategories("addCategory")}
+                {category ? tCommonFE("update") : tCommonFE("add")}
               </Button>
             </DialogFooter>
           </form>

@@ -19,7 +19,8 @@ import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
 
 export function UpdatePasswordForm() {
-  const tSettings = useTranslations("settings")
+  const tSettingsFE = useTranslations("settings.fe")
+  const tCommonFE = useTranslations("common.fe")
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
@@ -51,7 +52,7 @@ export function UpdatePasswordForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel htmlFor="currentPassword">
-                {tSettings("currentPassword")}
+                {tSettingsFE("currentPassword")}
               </FormLabel>
               <FormControl>
                 <PasswordInput
@@ -74,7 +75,7 @@ export function UpdatePasswordForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="newPassword">
-                    {tSettings("newPassword")}
+                    {tSettingsFE("newPassword")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
@@ -97,7 +98,7 @@ export function UpdatePasswordForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="confirmPassword">
-                    {tSettings("confirmPassword")}
+                    {tSettingsFE("confirmPassword")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
@@ -117,7 +118,7 @@ export function UpdatePasswordForm() {
         <div className="flex flex-row-reverse">
           <FormButton
             isSubmitting={form.formState.isSubmitting}
-            text={tSettings("updatePassword")}
+            text={tCommonFE("save")}
           />
         </div>
       </form>

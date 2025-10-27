@@ -11,19 +11,19 @@ import {
 import { SignInForm } from "@/components/auth/signin-form"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const tAuth = await getTranslations("auth")
+  const tAuthFE = await getTranslations("auth.fe")
 
-  return { title: tAuth("signIn") }
+  return { title: tAuthFE("signIn") }
 }
 
 export default async function page() {
-  const tAuth = await getTranslations("auth")
+  const tAuthFE = await getTranslations("auth.fe")
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{tAuth("signIn")}</CardTitle>
-        <CardDescription>{tAuth("signInDescription")}</CardDescription>
+        <CardTitle>{tAuthFE("signIn")}</CardTitle>
+        <CardDescription>{tAuthFE("signInDescription")}</CardDescription>
       </CardHeader>
       <CardContent>
         <SignInForm />

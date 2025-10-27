@@ -16,7 +16,7 @@ import { nav } from "@/lib/nav"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const tNavigation = useTranslations("navigation")
-  const tCommon = useTranslations("common")
+  const tCommonFE = useTranslations("common.fe")
 
   const translatedNav = nav.map((item) => ({
     ...item,
@@ -31,16 +31,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {...props}
     >
       <SidebarHeader>
-        <SidebarMenuButton size="lg" tooltip={tCommon("appDescription")}>
+        <SidebarMenuButton size="lg" tooltip={tCommonFE("appDescription")}>
           <Image
             src="/images/logo.png"
-            alt={`${tCommon("appName")} Logo`}
+            alt={`${tCommonFE("appName")} Logo`}
             width={32}
             height={32}
             className="rounded-lg"
           />
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">{tCommon("appName")}</span>
+            <span className="truncate font-semibold">
+              {tCommonFE("appName")}
+            </span>
           </div>
         </SidebarMenuButton>
       </SidebarHeader>

@@ -14,19 +14,20 @@ import { session } from "@/lib/session"
 
 export async function createCustomCategory(values: CustomCategoryFormValues) {
   try {
-    const tCategories = await getTranslations("categories")
+    const tCategoriesBE = await getTranslations("categories.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCategories("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
     const parsedValues = customCategorySchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tCategories("invalidData") }
+      return { error: tCommonBE("invalidData") }
     }
 
     const categoriesCollection = await getCategoryCollection()
@@ -38,7 +39,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     })
 
     if (existingCategory) {
-      return { error: tCategories("categoryExists") }
+      return { error: tCategoriesBE("categoryExists") }
     }
 
     const shortId = nanoid(8)
@@ -49,7 +50,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     })
 
     if (duplicateCategoryKey) {
-      return { error: tCategories("categoryKeyError") }
+      return { error: tCategoriesBE("categoryKeyError") }
     }
 
     const result = await categoriesCollection.insertOne({
@@ -60,13 +61,14 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
       description: values.description,
     })
 
-    if (!result.acknowledged) return { error: tCategories("categoryAddFailed") }
+    if (!result.acknowledged)
+      return { error: tCategoriesBE("categoryAddFailed") }
 
-    return { success: tCategories("categoryAdded"), error: undefined }
+    return { success: tCategoriesBE("categoryAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating custom category:", error)
-    const tCategories = await getTranslations("categories")
-    return { error: tCategories("categoryAddFailed") }
+    const tCategoriesBE = await getTranslations("categories.be")
+    return { error: tCategoriesBE("categoryAddFailed") }
   }
 }
 
@@ -75,24 +77,25 @@ export async function updateCustomCategory(
   values: CustomCategoryFormValues
 ) {
   try {
-    const tCategories = await getTranslations("categories")
+    const tCategoriesBE = await getTranslations("categories.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCategories("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
     const parsedValues = customCategorySchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tCategories("invalidData") }
+      return { error: tCommonBE("invalidData") }
     }
 
     if (!ObjectId.isValid(categoryId)) {
       return {
-        error: tCategories("invalidCategoryId"),
+        error: tCategoriesBE("invalidCategoryId"),
       }
     }
 
@@ -105,7 +108,7 @@ export async function updateCustomCategory(
 
     if (!existingCategory) {
       return {
-        error: tCategories("categoryNotFoundOrNoPermission"),
+        error: tCategoriesBE("categoryNotFoundOrNoPermission"),
       }
     }
 
@@ -117,7 +120,7 @@ export async function updateCustomCategory(
     })
 
     if (duplicateCategory) {
-      return { error: tCategories("categoryExists") }
+      return { error: tCategoriesBE("categoryExists") }
     }
 
     await categoriesCollection.updateOne(
@@ -131,28 +134,29 @@ export async function updateCustomCategory(
       }
     )
 
-    return { success: tCategories("categoryUpdated"), error: undefined }
+    return { success: tCategoriesBE("categoryUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating custom category:", error)
-    const tCategories = await getTranslations("categories")
-    return { error: tCategories("categoryUpdateFailed") }
+    const tCategoriesBE = await getTranslations("categories.be")
+    return { error: tCategoriesBE("categoryUpdateFailed") }
   }
 }
 
 export async function deleteCustomCategory(categoryId: string) {
   try {
-    const tCategories = await getTranslations("categories")
+    const tCategoriesBE = await getTranslations("categories.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCategories("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(categoryId)) {
       return {
-        error: tCategories("invalidCategoryId"),
+        error: tCategoriesBE("invalidCategoryId"),
       }
     }
 
@@ -168,7 +172,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     if (!existingCategory) {
       return {
-        error: tCategories("categoryNotFoundOrNoPermissionDelete"),
+        error: tCategoriesBE("categoryNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -179,7 +183,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     if (transactionCount > 0) {
       return {
-        error: tCategories("categoryInUseWithCount", {
+        error: tCategoriesBE("categoryInUseWithCount", {
           count: transactionCount,
         }),
       }
@@ -190,22 +194,22 @@ export async function deleteCustomCategory(categoryId: string) {
       userId: new ObjectId(userId),
     })
 
-    return { success: tCategories("categoryDeleted") }
+    return { success: tCategoriesBE("categoryDeleted") }
   } catch (error) {
     console.error("Error deleting custom category:", error)
-    const tCategories = await getTranslations("categories")
-    return { error: tCategories("categoryDeleteFailed") }
+    const tCategoriesBE = await getTranslations("categories.be")
+    return { error: tCategoriesBE("categoryDeleteFailed") }
   }
 }
 
 export async function getCustomCategories() {
   try {
-    const tCategories = await getTranslations("categories")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCategories("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
@@ -225,9 +229,9 @@ export async function getCustomCategories() {
     }
   } catch (error) {
     console.error("Error fetching custom categories:", error)
-    const tCategories = await getTranslations("categories")
+    const tCategoriesBE = await getTranslations("categories.be")
     return {
-      error: tCategories("categoryFetchFailed"),
+      error: tCategoriesBE("categoryFetchFailed"),
     }
   }
 }

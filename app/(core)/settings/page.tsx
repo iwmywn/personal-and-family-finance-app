@@ -16,30 +16,30 @@ import { LanguageSelector } from "@/components/settings/language-selector"
 import { UpdatePasswordForm } from "@/components/settings/update-password-form"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const tSettings = await getTranslations("settings")
+  const tSettingsFE = await getTranslations("settings.fe")
 
   return {
-    title: tSettings("title"),
+    title: tSettingsFE("title"),
   }
 }
 
 export default async function page() {
-  const tSettings = await getTranslations("settings")
+  const tSettingsFE = await getTranslations("settings.fe")
 
   return (
     <BasePage>
       <Tabs defaultValue="general">
         <TabsList className="w-full">
-          <TabsTrigger value="general">{tSettings("general")}</TabsTrigger>
-          <TabsTrigger value="account">{tSettings("account")}</TabsTrigger>
+          <TabsTrigger value="general">{tSettingsFE("general")}</TabsTrigger>
+          <TabsTrigger value="account">{tSettingsFE("account")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>{tSettings("appearance")}</CardTitle>
+              <CardTitle>{tSettingsFE("appearance")}</CardTitle>
               <CardDescription>
-                {tSettings("appearanceDescription")}
+                {tSettingsFE("appearanceDescription")}
               </CardDescription>
               <CardAction>
                 <DashboardThemeToggle />
@@ -49,9 +49,9 @@ export default async function page() {
 
           <Card>
             <CardHeader>
-              <CardTitle>{tSettings("language")}</CardTitle>
+              <CardTitle>{tSettingsFE("language")}</CardTitle>
               <CardDescription>
-                {tSettings("languageDescription")}
+                {tSettingsFE("languageDescription")}
               </CardDescription>
               <CardAction>
                 <LanguageSelector />
@@ -63,9 +63,9 @@ export default async function page() {
         <TabsContent value="account" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>{tSettings("changePassword")}</CardTitle>
+              <CardTitle>{tSettingsFE("changePassword")}</CardTitle>
               <CardDescription>
-                {tSettings("changePasswordDescription")}
+                {tSettingsFE("changePasswordDescription")}
               </CardDescription>
             </CardHeader>
             <CardContent>

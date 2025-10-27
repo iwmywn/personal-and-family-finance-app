@@ -78,8 +78,8 @@ export function TransactionDialog({
   )
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
-  const tTransactions = useTranslations("transactions")
-  const tCommon = useTranslations("common")
+  const tTransactionsFE = useTranslations("transactions.fe")
+  const tCommonFE = useTranslations("common.fe")
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
@@ -107,10 +107,10 @@ export function TransactionDialog({
         toast.error(error)
       } else {
         mutate({
-          transactions: transactions!.map((tTransactions) =>
-            tTransactions._id === transaction._id
-              ? { ...tTransactions, ...values, date: values.date }
-              : tTransactions
+          transactions: transactions!.map((t) =>
+            t._id === transaction._id
+              ? { ...t, ...values, date: values.date }
+              : t
           ),
         })
         toast.success(success)
@@ -160,8 +160,8 @@ export function TransactionDialog({
 
   const renderCategorySelect = (type: "income" | "expense") => {
     const typeLabel =
-      type === "income" ? tTransactions("income") : tTransactions("expense")
-    const placeholder = tTransactions("selectCategory", { type: typeLabel })
+      type === "income" ? tCommonFE("income") : tCommonFE("expense")
+    const placeholder = tTransactionsFE("selectCategory", { type: typeLabel })
 
     return (
       <FormField
@@ -170,7 +170,7 @@ export function TransactionDialog({
         render={({ field }) => (
           <FormItem>
             <FormLabel>
-              {tTransactions("category")} {typeLabel}
+              {tCommonFE("category")} {typeLabel}
             </FormLabel>
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
@@ -204,7 +204,7 @@ export function TransactionDialog({
                       0 && (
                       <>
                         <SelectLabel>
-                          {tTransactions("customCategories")}
+                          {tTransactionsFE("customCategories")}
                         </SelectLabel>
                         {customCategories
                           .filter((c) => c.type === type)
@@ -224,9 +224,9 @@ export function TransactionDialog({
               </SelectContent>
             </Select>
             <FormDescription>
-              {tTransactions("noCategoryFound")}{" "}
+              {tTransactionsFE("noCategoryFound")}{" "}
               <FormLink href="/categories" className="text-foreground/85">
-                {tTransactions("createCustomCategory")}
+                {tTransactionsFE("createCustomCategory")}
               </FormLink>
             </FormDescription>
             <FormMessage />
@@ -242,13 +242,13 @@ export function TransactionDialog({
         <DialogHeader>
           <DialogTitle>
             {transaction
-              ? tTransactions("editTransaction")
-              : tTransactions("addTransaction")}
+              ? tTransactionsFE("editTransaction")
+              : tTransactionsFE("addTransaction")}
           </DialogTitle>
           <DialogDescription>
             {transaction
-              ? tTransactions("editTransactionDescription")
-              : tTransactions("addTransactionDescription")}
+              ? tTransactionsFE("editTransactionDescription")
+              : tTransactionsFE("addTransactionDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -262,7 +262,7 @@ export function TransactionDialog({
                   }
                   value="income"
                 >
-                  {tTransactions("income")}
+                  {tCommonFE("income")}
                 </TabsTrigger>
                 <TabsTrigger
                   disabled={
@@ -270,7 +270,7 @@ export function TransactionDialog({
                   }
                   value="expense"
                 >
-                  {tTransactions("expense")}
+                  {tCommonFE("expense")}
                 </TabsTrigger>
               </TabsList>
 
@@ -288,7 +288,7 @@ export function TransactionDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tTransactions("amount")} (VND)</FormLabel>
+                  <FormLabel>{tTransactionsFE("amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -313,11 +313,11 @@ export function TransactionDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tTransactions("description")}</FormLabel>
+                  <FormLabel>{tCommonFE("description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
-                        placeholder={tTransactions("descriptionPlaceholder")}
+                        placeholder={tTransactionsFE("descriptionPlaceholder")}
                         maxLength={200}
                         {...field}
                       />
@@ -338,7 +338,7 @@ export function TransactionDialog({
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>{tTransactions("date")}</FormLabel>
+                  <FormLabel>{tTransactionsFE("date")}</FormLabel>
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -352,7 +352,7 @@ export function TransactionDialog({
                           {field.value ? (
                             format(field.value, "dd/MM/yyyy")
                           ) : (
-                            <span>{tTransactions("selectDate")}</span>
+                            <span>{tCommonFE("selectDate")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -385,13 +385,11 @@ export function TransactionDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{tCommon("cancel")}</Button>
+                <Button variant="outline">{tCommonFE("cancel")}</Button>
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Spinner />}{" "}
-                {transaction
-                  ? tCommon("update")
-                  : tTransactions("addTransaction")}
+                {transaction ? tCommonFE("update") : tCommonFE("add")}
               </Button>
             </DialogFooter>
           </form>

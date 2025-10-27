@@ -16,8 +16,8 @@ export default function HomePage() {
   const { user } = useUser()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const tHome = useTranslations("home")
-  const tCommon = useTranslations("common")
+  const tHomeFE = useTranslations("home.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   return (
     <>
@@ -25,11 +25,13 @@ export default function HomePage() {
         <div ref={registerRef} className="header">
           <div>
             <div className="title">
-              {tHome("welcome")}, {user?.fullName}!
+              {tHomeFE("welcome")}, {user?.fullName}!
             </div>
-            <div className="description">{tHome("description")}</div>
+            <div className="description">{tHomeFE("description")}</div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>{tCommon("add")}</Button>
+          <Button onClick={() => setIsEditOpen(true)}>
+            {tCommonFE("add")}
+          </Button>
         </div>
 
         <div ref={registerRef}>

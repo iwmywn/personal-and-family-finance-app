@@ -30,7 +30,8 @@ import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
-  const tStatistics = useTranslations("statistics")
+  const tStatisticsFE = useTranslations("statistics.fe")
+  const tCommonFE = useTranslations("common.fe")
   const tMonths = useTranslations("months")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -125,7 +126,7 @@ export function StatisticsFilters() {
                 >
                   {selectedDate
                     ? formatDate(selectedDate)
-                    : tStatistics("selectDate")}
+                    : tCommonFE("selectDate")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -165,7 +166,7 @@ export function StatisticsFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    tStatistics("selectDateRange")
+                    tCommonFE("selectDateRange")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -174,7 +175,7 @@ export function StatisticsFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {tStatistics("from")}
+                      {tCommonFE("from")}
                     </div>
                     <Calendar
                       autoFocus
@@ -196,7 +197,7 @@ export function StatisticsFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {tStatistics("to")}
+                      {tCommonFE("to")}
                     </div>
                     <Calendar
                       mode="single"
@@ -222,13 +223,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tStatistics("month")} />
+                <SelectValue placeholder={tCommonFE("month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {tStatistics("allMonths")}
-                  </SelectItem>
+                  <SelectItem value="all">{tCommonFE("allMonths")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -243,11 +242,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tStatistics("year")} />
+                <SelectValue placeholder={tCommonFE("year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{tStatistics("allYears")}</SelectItem>
+                  <SelectItem value="all">{tCommonFE("allYears")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -264,7 +263,7 @@ export function StatisticsFilters() {
                 onClick={handleResetFilters}
                 className="sm:col-span-2 lg:col-span-1"
               >
-                {tStatistics("reset")}
+                {tCommonFE("reset")}
               </Button>
             )}
           </div>

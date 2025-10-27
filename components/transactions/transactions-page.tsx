@@ -10,20 +10,19 @@ import { TransactionFilters } from "@/components/transactions/transaction-filter
 
 export default function TransactionsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const tTransactions = useTranslations("transactions")
+  const tTransactionsFE = useTranslations("transactions.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   return (
     <>
       <BasePage>
         <div className="header">
           <div>
-            <div className="title">{tTransactions("title")}</div>
-            <div className="description">
-              {tTransactions("pageDescription")}
-            </div>
+            <div className="title">{tTransactionsFE("title")}</div>
+            <div className="description">{tTransactionsFE("description")}</div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>
-            {tTransactions("add")}
+            {tCommonFE("add")}
           </Button>
         </div>
 

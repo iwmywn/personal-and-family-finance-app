@@ -32,7 +32,8 @@ export function CategoryFilters() {
     "all"
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const tCategories = useTranslations("categories")
+  const tCategoriesFE = useTranslations("categories.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   const filteredCategories = useMemo(() => {
     return filterCustomCategories(customCategories!, {
@@ -64,7 +65,7 @@ export function CategoryFilters() {
                 <Search />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder={tCategories("searchPlaceholder")}
+                placeholder={tCategoriesFE("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -89,17 +90,15 @@ export function CategoryFilters() {
               <SelectTrigger
                 className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tCategories("categoryType")} />
+                <SelectValue placeholder={tCategoriesFE("categoryType")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">
-                  {tCategories("allCategoryTypes")}
+                  {tCategoriesFE("allCategoryTypes")}
                 </SelectItem>
                 <SelectSeparator />
-                <SelectItem value="income">{tCategories("income")}</SelectItem>
-                <SelectItem value="expense">
-                  {tCategories("expense")}
-                </SelectItem>
+                <SelectItem value="income">{tCommonFE("income")}</SelectItem>
+                <SelectItem value="expense">{tCommonFE("expense")}</SelectItem>
               </SelectContent>
             </Select>
             {hasActiveFilters && (
@@ -109,7 +108,7 @@ export function CategoryFilters() {
                 onClick={handleResetFilters}
                 className="w-full md:w-fit"
               >
-                {tCategories("reset")}
+                {tCommonFE("reset")}
               </Button>
             )}
           </div>

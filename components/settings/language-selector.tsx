@@ -6,7 +6,7 @@ import { Locale } from "@/i18n/config"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { updateLocale } from "@/actions/locale"
+import { updateLocale } from "@/actions/general"
 import {
   Select,
   SelectContent,
@@ -17,7 +17,7 @@ import {
 import { useUser } from "@/lib/swr"
 
 export function LanguageSelector() {
-  const tSettings = useTranslations("settings")
+  const tSettingsFE = useTranslations("settings.fe")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const { user, mutate } = useUser()
@@ -49,7 +49,7 @@ export function LanguageSelector() {
         disabled={isPending}
       >
         <SelectTrigger>
-          <SelectValue placeholder={tSettings("language")} />
+          <SelectValue placeholder={tSettingsFE("language")} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="vi">Tiếng Việt</SelectItem>

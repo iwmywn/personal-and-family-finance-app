@@ -10,19 +10,20 @@ import { session } from "@/lib/session"
 
 export async function updatePassword(values: PasswordFormValues) {
   try {
-    const tAuth = await getTranslations("auth")
+    const tSettingsBE = await getTranslations("settings.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tAuth("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
     const parsedValues = passwordSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tAuth("invalidData") }
+      return { error: tCommonBE("invalidData") }
     }
 
     const { currentPassword, newPassword } = parsedValues.data
@@ -33,7 +34,7 @@ export async function updatePassword(values: PasswordFormValues) {
     })
 
     if (!existingUser) {
-      return { error: tAuth("userNotFound") }
+      return { error: tCommonBE("userNotFound") }
     }
 
     let hashedPassword: string
@@ -45,7 +46,7 @@ export async function updatePassword(values: PasswordFormValues) {
       )
 
       if (!isPasswordValid) {
-        return { error: tAuth("passwordIncorrect") }
+        return { error: tSettingsBE("passwordIncorrect") }
       }
 
       hashedPassword = await bcrypt.hash(newPassword, 10)
@@ -56,7 +57,7 @@ export async function updatePassword(values: PasswordFormValues) {
     const isSame = hashedPassword === existingUser.password
 
     if (isSame) {
-      return { success: tAuth("noChanges") }
+      return { success: tSettingsBE("noChanges") }
     }
 
     await userCollection.updateOne(
@@ -68,10 +69,10 @@ export async function updatePassword(values: PasswordFormValues) {
       }
     )
 
-    return { success: tAuth("passwordUpdated") }
+    return { success: tSettingsBE("passwordUpdated") }
   } catch (error) {
     console.error("Error updating password:", error)
-    const tAuth = await getTranslations("auth")
-    return { error: tAuth("passwordUpdateFailed") }
+    const tSettingsBE = await getTranslations("settings.be")
+    return { error: tSettingsBE("passwordUpdateFailed") }
   }
 }

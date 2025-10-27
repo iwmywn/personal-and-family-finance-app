@@ -30,7 +30,7 @@ import {
 import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
 import { calculateCategoryStats } from "@/lib/statistics"
-import { useCustomCategories } from "@/lib/swr"
+import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
 interface TransactionBreakdownTableProps {
@@ -40,8 +40,10 @@ interface TransactionBreakdownTableProps {
 export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
+  const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
-  const tStatistics = useTranslations("statistics")
+  const tStatisticsFE = useTranslations("statistics.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   const categoryStats = useMemo(() => {
     return calculateCategoryStats(filteredTransactions)
@@ -62,9 +64,11 @@ export function TransactionBreakdownTable({
               <EmptyMedia variant="icon">
                 <Receipt />
               </EmptyMedia>
-              <EmptyTitle>{tStatistics("noTransactions")}</EmptyTitle>
+              <EmptyTitle>{tStatisticsFE("noTransactions")}</EmptyTitle>
               <EmptyDescription>
-                {tStatistics("noTransactionsDescription")}
+                {transactions!.length === 0
+                  ? tCommonFE("startAddingTransactions")
+                  : tCommonFE("noTransactionsFiltered")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -73,10 +77,10 @@ export function TransactionBreakdownTable({
             <Table>
               <TableHeader className="bg-muted sticky top-0">
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>{tStatistics("category")}</TableHead>
-                  <TableHead>{tStatistics("type")}</TableHead>
-                  <TableHead>{tStatistics("transactionCount")}</TableHead>
-                  <TableHead>{tStatistics("totalAmount")}</TableHead>
+                  <TableHead>{tCommonFE("category")}</TableHead>
+                  <TableHead>{tCommonFE("type")}</TableHead>
+                  <TableHead>{tStatisticsFE("transactionCount")}</TableHead>
+                  <TableHead>{tStatisticsFE("totalAmount")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -114,8 +118,8 @@ export function TransactionBreakdownTable({
                         }
                       >
                         {stat.type === "income"
-                          ? tStatistics("income")
-                          : tStatistics("expense")}
+                          ? tCommonFE("income")
+                          : tCommonFE("expense")}
                       </Badge>
                     </TableCell>
                     <TableCell>{stat.count}</TableCell>

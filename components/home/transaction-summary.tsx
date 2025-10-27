@@ -14,7 +14,7 @@ import { formatCurrency } from "@/lib/utils"
 
 export function TransactionSummary() {
   const { transactions } = useTransactions()
-  const tHome = useTranslations("home")
+  const tHomeFE = useTranslations("home.fe")
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions!)
 
@@ -28,7 +28,7 @@ export function TransactionSummary() {
     <div className="grid gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tHome("monthlyIncome")}</CardTitle>
+          <CardTitle>{tHomeFE("monthlyIncome")}</CardTitle>
           <ArrowUpIcon className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -38,17 +38,17 @@ export function TransactionSummary() {
           <p className="text-muted-foreground text-sm">
             {
               currentMonthTransactions.filter(
-                (tHome) => tHome.type === "income"
+                (tHomeFE) => tHomeFE.type === "income"
               ).length
             }{" "}
-            {tHome("transactions")}
+            {tHomeFE("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tHome("monthlyExpense")}</CardTitle>
+          <CardTitle>{tHomeFE("monthlyExpense")}</CardTitle>
           <ArrowDownIcon className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -58,17 +58,17 @@ export function TransactionSummary() {
           <p className="text-muted-foreground text-sm">
             {
               currentMonthTransactions.filter(
-                (tHome) => tHome.type === "expense"
+                (tHomeFE) => tHomeFE.type === "expense"
               ).length
             }{" "}
-            {tHome("transactions")}
+            {tHomeFE("transactions")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tHome("monthlyBalance")}</CardTitle>
+          <CardTitle>{tHomeFE("monthlyBalance")}</CardTitle>
           <TrendingUpIcon
             className={`h-4 w-4 ${balance >= 0 ? "text-green-600" : "text-red-600"}`}
           />
@@ -83,11 +83,11 @@ export function TransactionSummary() {
           </div>
           <p className="text-muted-foreground text-sm">
             {balance > 0
-              ? tHome("positive")
+              ? tHomeFE("positive")
               : balance < 0
-                ? tHome("negative")
-                : tHome("balanced")}{" "}
-            {tHome("comparedToIncome")}
+                ? tHomeFE("negative")
+                : tHomeFE("balanced")}{" "}
+            {tHomeFE("comparedToIncome")}
           </p>
         </CardContent>
       </Card>

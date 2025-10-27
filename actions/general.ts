@@ -10,13 +10,13 @@ import { session } from "@/lib/session"
 
 export async function updateLocale(locale: Locale) {
   try {
-    const tSettings = await getTranslations("settings")
-
+    const tSettings = await getTranslations("settings.be")
+    const tCommonBE = await getTranslations("common.be")
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tSettings("accessDenied"),
+        error: tCommonBE("accessDenied"),
       }
     }
 
@@ -30,7 +30,7 @@ export async function updateLocale(locale: Locale) {
     })
 
     if (!existingUser) {
-      return { error: tSettings("userNotFound") }
+      return { error: tCommonBE("userNotFound") }
     }
 
     await userCollection.updateOne(
@@ -50,7 +50,7 @@ export async function updateLocale(locale: Locale) {
     return { success: tSettings("languageUpdated") }
   } catch (error) {
     console.error("Error updating locale:", error)
-    const tSettings = await getTranslations("settings")
+    const tSettings = await getTranslations("settings.be")
     return { error: tSettings("languageUpdateFailed") }
   }
 }

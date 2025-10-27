@@ -43,7 +43,8 @@ import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
 export function TransactionFilters() {
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
-  const tTransactions = useTranslations("transactions")
+  const tTransactionsFE = useTranslations("transactions.fe")
+  const tCommonFE = useTranslations("common.fe")
   const tMonths = useTranslations("months")
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
@@ -160,7 +161,7 @@ export function TransactionFilters() {
                 <Search />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder={tTransactions("searchPlaceholder")}
+                placeholder={tTransactionsFE("searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -185,7 +186,7 @@ export function TransactionFilters() {
                 >
                   {selectedDate
                     ? formatDate(selectedDate)
-                    : tTransactions("selectDate")}
+                    : tCommonFE("selectDate")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -225,7 +226,7 @@ export function TransactionFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    tTransactions("selectDateRange")
+                    tCommonFE("selectDateRange")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -234,7 +235,7 @@ export function TransactionFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {tTransactions("from")}
+                      {tCommonFE("from")}
                     </div>
                     <Calendar
                       autoFocus
@@ -256,7 +257,7 @@ export function TransactionFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {tTransactions("to")}
+                      {tCommonFE("to")}
                     </div>
                     <Calendar
                       mode="single"
@@ -282,13 +283,11 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tTransactions("month")} />
+                <SelectValue placeholder={tCommonFE("month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {tTransactions("allMonths")}
-                  </SelectItem>
+                  <SelectItem value="all">{tCommonFE("allMonths")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -303,13 +302,11 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tTransactions("year")} />
+                <SelectValue placeholder={tCommonFE("year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {tTransactions("allYears")}
-                  </SelectItem>
+                  <SelectItem value="all">{tCommonFE("allYears")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -329,19 +326,17 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tTransactions("transactionType")} />
+                <SelectValue placeholder={tTransactionsFE("transactionType")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {tTransactions("allTransactionTypes")}
+                    {tTransactionsFE("allTransactionTypes")}
                   </SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="income">
-                    {tTransactions("income")}
-                  </SelectItem>
+                  <SelectItem value="income">{tCommonFE("income")}</SelectItem>
                   <SelectItem value="expense">
-                    {tTransactions("expense")}
+                    {tCommonFE("expense")}
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -354,15 +349,15 @@ export function TransactionFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tTransactions("category")} />
+                <SelectValue placeholder={tCommonFE("category")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {tTransactions("allCategories")}
+                    {tTransactionsFE("allCategories")}
                   </SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{tTransactions("income")}</SelectLabel>
+                  <SelectLabel>{tCommonFE("income")}</SelectLabel>
                   {INCOME_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
@@ -378,7 +373,7 @@ export function TransactionFilters() {
                         {category.label}
                       </SelectItem>
                     ))}
-                  <SelectLabel>{tTransactions("expense")}</SelectLabel>
+                  <SelectLabel>{tCommonFE("expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
@@ -404,7 +399,7 @@ export function TransactionFilters() {
                 onClick={handleResetFilters}
                 className="col-span-full 2xl:col-auto 2xl:row-start-2"
               >
-                {tTransactions("reset")}
+                {tCommonFE("reset")}
               </Button>
             )}
           </div>

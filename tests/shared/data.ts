@@ -128,3 +128,28 @@ export const mockCustomCategories: CustomCategory[] = [
     description: "Custom transport category",
   },
 ]
+
+export const mockCategoryConfig = {
+  salary_bonus: {
+    label: "Lương & Thưởng",
+    description:
+      "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp,...",
+    type: "income",
+  },
+  business_freelance: {
+    label: "Kinh doanh & Freelance",
+    description:
+      "Doanh thu bán hàng, dịch vụ, freelance, hợp đồng ngắn hạn,...",
+    type: "income",
+  },
+  food_beverage: {
+    label: "Ăn uống",
+    description: "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,...",
+    type: "expense",
+  },
+  transportation: {
+    label: "Di chuyển",
+    description: "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe,...",
+    type: "expense",
+  },
+}
