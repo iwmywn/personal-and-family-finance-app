@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { vi } from "react-day-picker/locale"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -365,7 +364,7 @@ export function TransactionDialog({
                       align="start"
                     >
                       <Calendar
-                        locale={vi}
+                        autoFocus
                         mode="single"
                         selected={field.value}
                         captionLayout="dropdown"
@@ -376,7 +375,6 @@ export function TransactionDialog({
                         disabled={(date) =>
                           date > new Date() || date < new Date("1900-01-01")
                         }
-                        autoFocus
                       />
                     </PopoverContent>
                   </Popover>

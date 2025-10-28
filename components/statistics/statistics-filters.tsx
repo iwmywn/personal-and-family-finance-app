@@ -1,7 +1,6 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { vi } from "date-fns/locale"
 import { ChevronDownIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -137,7 +136,6 @@ export function StatisticsFilters() {
                   selected={selectedDate}
                   captionLayout="dropdown"
                   onSelect={(date) => handleDateChange(date)}
-                  locale={vi}
                 />
               </PopoverContent>
             </Popover>
@@ -192,7 +190,6 @@ export function StatisticsFilters() {
                               : prev.to,
                         }))
                       }}
-                      locale={vi}
                     />
                   </div>
                   <div>
@@ -200,6 +197,7 @@ export function StatisticsFilters() {
                       {tCommonFE("to")}
                     </div>
                     <Calendar
+                      autoFocus
                       mode="single"
                       selected={dateRange.to}
                       defaultMonth={dateRange.to || new Date()}
@@ -212,7 +210,6 @@ export function StatisticsFilters() {
                           })
                         }
                       }}
-                      locale={vi}
                     />
                   </div>
                 </div>

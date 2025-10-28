@@ -64,11 +64,9 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
   const categorySums: Record<string, number> = {}
 
   for (const t of currentMonthTransactions) {
-    // Highest/Lowest
     if (t.amount > highestTransaction.amount) highestTransaction = t
     if (t.amount < lowestTransaction.amount) lowestTransaction = t
 
-    // Income/Expense
     if (t.type === "income") {
       totalIncome += t.amount
     } else if (t.type === "expense") {
@@ -76,14 +74,11 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
       expenseCount++
     }
 
-    // Category sums
     categorySums[t.categoryKey] = (categorySums[t.categoryKey] || 0) + t.amount
   }
 
-  // Average expense
   const avgExpense = expenseCount > 0 ? totalExpense / expenseCount : null
 
-  // Savings rate
   const savingsRate =
     totalIncome > 0
       ? Number(
@@ -93,7 +88,6 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
         })
       : null
 
-  // Popular category
   const maxTotal = Math.max(...Object.values(categorySums))
   const popularCategory = Object.entries(categorySums)
     .filter(([, total]) => total === maxTotal)
