@@ -13,6 +13,7 @@ import {
 import { Nav } from "@/components/layout/nav"
 import { NavUser } from "@/components/layout/nav-user"
 import { nav } from "@/lib/nav"
+import { siteConfig } from "@/app/pffa.config"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const tNavigation = useTranslations("navigation")
@@ -34,15 +35,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenuButton size="lg" tooltip={tCommonFE("appDescription")}>
           <Image
             src="/images/logo.png"
-            alt={`${tCommonFE("appName")} Logo`}
+            alt={`${siteConfig.name} Logo`}
             width={32}
             height={32}
             className="rounded-lg"
           />
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">
-              {tCommonFE("appName")}
-            </span>
+            <span className="truncate font-semibold">{siteConfig.name}</span>
           </div>
         </SidebarMenuButton>
       </SidebarHeader>

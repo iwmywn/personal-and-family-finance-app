@@ -10,16 +10,39 @@ import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
+import { siteConfig } from "@/app/pffa.config"
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
   const tCommonFE = await getTranslations("common.fe")
 
   return {
     title: {
-      template: "%s | PFFA",
-      default: "PFFA",
+      template: `%s | ${siteConfig.name}`,
+      default: siteConfig.name,
     },
     description: tCommonFE("appDescription"),
+    authors: [
+      {
+        name: "iwmywn",
+        url: "https://iwmywn.github.io",
+      },
+    ],
+    creator: "iwmywn",
+    openGraph: {
+      type: "website",
+      locale: locale === "vi" ? "vi" : "en_US",
+      url: process.env.NEXT_PUBLIC_URL,
+      title: siteConfig.name,
+      description: tCommonFE("appDescription"),
+      siteName: siteConfig.name,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: siteConfig.name,
+      description: tCommonFE("appDescription"),
+      creator: "@ctcuasaunay",
+    },
   }
 }
 

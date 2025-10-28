@@ -1,7 +1,6 @@
 {
   "common": {
     "fe": {
-      "appName": "PFFA",
       "appDescription": "Personal and Family Finance Application",
       "cancel": "Cancel",
       "delete": "Delete",

@@ -1,7 +1,6 @@
 {
   "common": {
     "fe": {
-      "appName": "PFFA",
       "appDescription": "Ứng dụng quản lý tài chính cá nhân và gia đình",
       "cancel": "Hủy",
       "delete": "Xóa",
