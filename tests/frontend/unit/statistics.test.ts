@@ -6,7 +6,7 @@ import {
   getCurrentMonthTransactions,
 } from "@/lib/statistics"
 
-describe("Statistics Helpers", () => {
+describe("Statistics", () => {
   afterEach(() => {
     vi.useRealTimers()
   })

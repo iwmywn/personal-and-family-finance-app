@@ -12,7 +12,7 @@ import { mockUser } from "@/tests/shared/data"
 import { updateLocale } from "@/actions/general"
 import { getUsersCollection } from "@/lib/collections"
 
-describe("General Actions", () => {
+describe("General", () => {
   describe("updateLocale", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()

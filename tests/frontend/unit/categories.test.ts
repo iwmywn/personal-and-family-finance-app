@@ -5,7 +5,7 @@ import {
 } from "@/lib/categories"
 import { CustomCategory } from "@/lib/definitions"
 
-describe("Category Helpers", () => {
+describe("Categories", () => {
   describe("getCategoriesWithDetails", () => {
     it("should return income categories", () => {
       const result = getCategoriesWithDetails("income")

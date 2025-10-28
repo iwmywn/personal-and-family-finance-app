@@ -11,7 +11,7 @@ import { mockUser, mockValidPasswordValues } from "@/tests/shared/data"
 import { updatePassword } from "@/actions/account"
 import { getUsersCollection } from "@/lib/collections"
 
-describe("Account Actions", () => {
+describe("Account", () => {
   describe("updatePassword", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()

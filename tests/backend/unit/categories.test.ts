@@ -28,7 +28,7 @@ import {
 } from "@/actions/categories"
 import { getCategoriesCollection } from "@/lib/collections"
 
-describe("Categories Actions", () => {
+describe("Categories", () => {
   describe("createCustomCategory", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()

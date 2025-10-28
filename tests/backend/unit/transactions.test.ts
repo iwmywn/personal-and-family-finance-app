@@ -22,7 +22,7 @@ import {
 } from "@/actions/transactions"
 import { getTransactionsCollection } from "@/lib/collections"
 
-describe("Transactions Actions", () => {
+describe("Transactions", () => {
   describe("createTransaction", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()

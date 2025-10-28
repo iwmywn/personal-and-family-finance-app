@@ -16,7 +16,7 @@ import {
 import { mockUser, mockValidSignInValues } from "@/tests/shared/data"
 import { getUser, signIn, signOut } from "@/actions/auth"
 
-describe("Auth Actions", () => {
+describe("Auth", () => {
   describe("signIn", () => {
     it("should return error when recaptcha token is missing", async () => {
       const tAuthBE = await getTranslations("auth.be")

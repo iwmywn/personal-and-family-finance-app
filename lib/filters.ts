@@ -18,6 +18,16 @@ export interface CategoryFilters {
   filterType?: string
 }
 
+export function toDateOnly(date: Date | null | undefined): Date | null {
+  if (!date) return null
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+}
+
+export function includesCaseInsensitive(text: string, query: string): boolean {
+  if (!query) return true
+  return text.toLowerCase().includes(query.toLowerCase())
+}
+
 export function filterTransactions(
   transactions: Transaction[],
   filters: TransactionFilters
@@ -32,17 +42,20 @@ export function filterTransactions(
     filterCategoryKey = "all",
   } = filters
 
+  const normalizedSearchTerm = searchTerm.trim()
+  const fromDateOnly = toDateOnly(dateRange.from)
+  const toDateOnlyValue = toDateOnly(dateRange.to)
+  const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
+  const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
+
   return transactions.filter((transaction) => {
-    const matchesSearch = searchTerm
-      ? transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
-      : true
+    const matchesSearch = includesCaseInsensitive(
+      transaction.description,
+      normalizedSearchTerm
+    )
 
     const transactionDate = new Date(transaction.date)
-    const transactionDateOnly = new Date(
-      transactionDate.getFullYear(),
-      transactionDate.getMonth(),
-      transactionDate.getDate()
-    )
+    const transactionDateOnly = toDateOnly(transactionDate)!
 
     const matchesSelectedDate = selectedDate
       ? transactionDate.getDate() === selectedDate.getDate() &&
@@ -51,16 +64,14 @@ export function filterTransactions(
       : true
 
     const matchesDateRange =
-      (!dateRange.from || transactionDateOnly >= dateRange.from) &&
-      (!dateRange.to || transactionDateOnly <= dateRange.to)
+      (!fromDateOnly || transactionDateOnly >= fromDateOnly) &&
+      (!toDateOnlyValue || transactionDateOnly <= toDateOnlyValue)
 
     const matchesMonth =
-      filterMonth === "all" ||
-      transactionDate.getMonth() + 1 === parseInt(filterMonth)
+      !parsedMonth || transactionDate.getMonth() + 1 === parsedMonth
 
     const matchesYear =
-      filterYear === "all" ||
-      transactionDate.getFullYear() === parseInt(filterYear)
+      !parsedYear || transactionDate.getFullYear() === parsedYear
 
     const matchesType = filterType === "all" || transaction.type === filterType
 
@@ -85,13 +96,15 @@ export function filterCustomCategories(
   filters: CategoryFilters
 ): CustomCategory[] {
   const { searchTerm = "", filterType = "all" } = filters
+  const normalizedSearchTerm = searchTerm.trim()
 
   return categories.filter((category) => {
     const matchesType = filterType === "all" || category.type === filterType
 
-    const matchesSearch = category.label
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+    const matchesSearch = includesCaseInsensitive(
+      category.label,
+      normalizedSearchTerm
+    )
 
     return matchesType && matchesSearch
   })

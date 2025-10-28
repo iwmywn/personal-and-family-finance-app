@@ -1,10 +1,54 @@
 import { mockCustomCategories, mockTransactions } from "@/tests/shared/data"
-import * as Filters from "@/lib/filters"
+import {
+  filterCustomCategories,
+  filterTransactions,
+  includesCaseInsensitive,
+  toDateOnly,
+} from "@/lib/filters"
 
-describe("Filter Helpers", () => {
+describe("Filters", () => {
+  describe("toDateOnly", () => {
+    it("should return null for null or undefined", () => {
+      expect(toDateOnly(null)).toBeNull()
+      expect(toDateOnly(undefined)).toBeNull()
+    })
+
+    it("should normalize to local midnight with same Y-M-D", () => {
+      const d = new Date(2024, 0, 20, 15, 30, 45, 123)
+      const only = toDateOnly(d)!
+
+      expect(only.getFullYear()).toBe(d.getFullYear())
+      expect(only.getMonth()).toBe(d.getMonth())
+      expect(only.getDate()).toBe(d.getDate())
+      expect(only.getHours()).toBe(0)
+      expect(only.getMinutes()).toBe(0)
+      expect(only.getSeconds()).toBe(0)
+      expect(only.getMilliseconds()).toBe(0)
+    })
+  })
+
+  describe("includesCaseInsensitive", () => {
+    it("should return true when query is empty", () => {
+      expect(includesCaseInsensitive("Hello World", "")).toBe(true)
+    })
+
+    it("should match case-insensitively", () => {
+      expect(includesCaseInsensitive("Restaurant", "restaurant")).toBe(true)
+      expect(includesCaseInsensitive("Restaurant", "RESTAURANT")).toBe(true)
+    })
+
+    it("should match partial substrings", () => {
+      expect(includesCaseInsensitive("Freelance Work", "lance")).toBe(true)
+    })
+
+    it("should return false when no match", () => {
+      expect(includesCaseInsensitive("Taxi", "bus")).toBe(false)
+    })
+  })
+
   describe("filterTransactions", () => {
     it("should filter by search term", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         searchTerm: "salary",
       })
 
@@ -13,7 +57,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should filter by transaction type", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         filterType: "income",
       })
 
@@ -22,7 +66,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should filter by category key", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         filterCategoryKey: "food_beverage",
       })
 
@@ -31,7 +75,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should filter by month", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         filterMonth: "1",
       })
 
@@ -41,7 +85,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should filter by year", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         filterYear: "2024",
       })
 
@@ -53,7 +97,7 @@ describe("Filter Helpers", () => {
 
     it("should filter by selected date", () => {
       const selectedDate = new Date("2024-01-20")
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         selectedDate,
       })
 
@@ -62,19 +106,19 @@ describe("Filter Helpers", () => {
     })
 
     it("should filter by date range", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         dateRange: {
           from: new Date("2024-01-20"),
           to: new Date("2024-01-25"),
         },
       })
 
-      expect(result).toHaveLength(2)
-      expect(result.map((t) => t._id)).toEqual(["4", "5"])
+      expect(result).toHaveLength(3)
+      expect(result.map((t) => t._id)).toEqual(["3", "4", "5"])
     })
 
     it("should combine multiple filters", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         searchTerm: "freelance",
         filterType: "income",
         filterYear: "2024",
@@ -85,13 +129,13 @@ describe("Filter Helpers", () => {
     })
 
     it("should return all transactions when no filters applied", () => {
-      const result = Filters.filterTransactions(mockTransactions, {})
+      const result = filterTransactions(mockTransactions, {})
 
       expect(result).toHaveLength(5)
     })
 
     it("should handle empty transactions array", () => {
-      const result = Filters.filterTransactions([], {
+      const result = filterTransactions([], {
         searchTerm: "test",
       })
 
@@ -99,7 +143,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should handle case insensitive search", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         searchTerm: "SALARY",
       })
 
@@ -108,7 +152,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should handle partial search matches", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         searchTerm: "freel",
       })
 
@@ -117,18 +161,18 @@ describe("Filter Helpers", () => {
     })
 
     it("should handle date range with only from date", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         dateRange: {
           from: new Date("2024-01-20"),
         },
       })
 
-      expect(result).toHaveLength(2)
-      expect(result.map((t) => t._id)).toEqual(["4", "5"])
+      expect(result).toHaveLength(3)
+      expect(result.map((t) => t._id)).toEqual(["3", "4", "5"])
     })
 
     it("should handle date range with only to date", () => {
-      const result = Filters.filterTransactions(mockTransactions, {
+      const result = filterTransactions(mockTransactions, {
         dateRange: {
           to: new Date("2024-01-20"),
         },
@@ -141,7 +185,7 @@ describe("Filter Helpers", () => {
 
   describe("filterCustomCategories", () => {
     it("should filter by search term", () => {
-      const result = Filters.filterCustomCategories(mockCustomCategories, {
+      const result = filterCustomCategories(mockCustomCategories, {
         searchTerm: "freelance",
       })
 
@@ -150,7 +194,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should filter by type", () => {
-      const result = Filters.filterCustomCategories(mockCustomCategories, {
+      const result = filterCustomCategories(mockCustomCategories, {
         filterType: "expense",
       })
 
@@ -159,7 +203,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should combine search and type filters", () => {
-      const result = Filters.filterCustomCategories(mockCustomCategories, {
+      const result = filterCustomCategories(mockCustomCategories, {
         searchTerm: "restaurant",
         filterType: "expense",
       })
@@ -169,13 +213,13 @@ describe("Filter Helpers", () => {
     })
 
     it("should return all categories when no filters applied", () => {
-      const result = Filters.filterCustomCategories(mockCustomCategories, {})
+      const result = filterCustomCategories(mockCustomCategories, {})
 
       expect(result).toHaveLength(3)
     })
 
     it("should handle empty categories array", () => {
-      const result = Filters.filterCustomCategories([], {
+      const result = filterCustomCategories([], {
         searchTerm: "test",
       })
 
@@ -183,7 +227,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should handle case insensitive search", () => {
-      const result = Filters.filterCustomCategories(mockCustomCategories, {
+      const result = filterCustomCategories(mockCustomCategories, {
         searchTerm: "RESTAURANT",
       })
 
@@ -192,7 +236,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should handle partial search matches", () => {
-      const result = Filters.filterCustomCategories(mockCustomCategories, {
+      const result = filterCustomCategories(mockCustomCategories, {
         searchTerm: "tax",
       })
 
@@ -201,7 +245,7 @@ describe("Filter Helpers", () => {
     })
 
     it("should return empty array when no matches found", () => {
-      const result = Filters.filterCustomCategories(mockCustomCategories, {
+      const result = filterCustomCategories(mockCustomCategories, {
         searchTerm: "nonexistent",
       })
 
