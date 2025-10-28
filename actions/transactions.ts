@@ -10,9 +10,13 @@ import { session } from "@/lib/session"
 
 export async function createTransaction(values: TransactionFormValues) {
   try {
-    const tTransactionsBE = await getTranslations("transactions.be")
-    const tCommonBE = await getTranslations("common.be")
-    const tSchemasTransaction = await getTranslations("schemas.transaction")
+    const [tCommonBE, tTransactionsBE, tSchemasTransaction] = await Promise.all(
+      [
+        getTranslations("common.be"),
+        getTranslations("transactions.be"),
+        getTranslations("schemas.transaction"),
+      ]
+    )
     const transactionSchema = createTransactionSchema(tSchemasTransaction)
     const { userId } = await session.user.get()
 
@@ -55,10 +59,14 @@ export async function updateTransaction(
   values: TransactionFormValues
 ) {
   try {
-    const tTransactionsBE = await getTranslations("transactions.be")
-    const tCommonBE = await getTranslations("common.be")
-    const tSchema = await getTranslations("schemas.transaction")
-    const transactionSchema = createTransactionSchema(tSchema)
+    const [tCommonBE, tTransactionsBE, tSchemasTransaction] = await Promise.all(
+      [
+        getTranslations("common.be"),
+        getTranslations("transactions.be"),
+        getTranslations("schemas.transaction"),
+      ]
+    )
+    const transactionSchema = createTransactionSchema(tSchemasTransaction)
     const { userId } = await session.user.get()
 
     if (!userId) {
@@ -115,8 +123,10 @@ export async function updateTransaction(
 
 export async function deleteTransaction(transactionId: string) {
   try {
-    const tTransactionsBE = await getTranslations("transactions.be")
-    const tCommonBE = await getTranslations("common.be")
+    const [tCommonBE, tTransactionsBE] = await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("transactions.be"),
+    ])
     const { userId } = await session.user.get()
 
     if (!userId) {

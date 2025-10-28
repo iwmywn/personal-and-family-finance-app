@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
 
 import {
   insertTestCategory,
@@ -33,8 +32,6 @@ describe("Categories", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
@@ -43,8 +40,6 @@ describe("Categories", () => {
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await createCustomCategory({
         type: "invalid" as "expense" | "income",
@@ -59,8 +54,6 @@ describe("Categories", () => {
     it("should return error when category with same name exists", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await createCustomCategory({
         type: mockCustomCategory.type,
@@ -79,8 +72,6 @@ describe("Categories", () => {
       vi.mock("nanoid", () => ({
         nanoid: () => "abcdef12",
       }))
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await createCustomCategory({
         type: "expense",
@@ -102,8 +93,6 @@ describe("Categories", () => {
         acknowledged: false,
       })
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
@@ -112,8 +101,6 @@ describe("Categories", () => {
 
     it("should successfully create custom category", async () => {
       mockAuthenticatedUser()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await createCustomCategory(mockValidCategoryValues)
       const categoriesTransaction = await getCategoriesCollection()
@@ -132,8 +119,6 @@ describe("Categories", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
@@ -144,8 +129,6 @@ describe("Categories", () => {
   describe("updateCustomCategory", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
@@ -158,8 +141,6 @@ describe("Categories", () => {
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
@@ -177,8 +158,6 @@ describe("Categories", () => {
     it("should return error with invalid category ID", async () => {
       mockAuthenticatedUser()
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await updateCustomCategory(
         "invalid-id",
         mockValidCategoryValues
@@ -190,8 +169,6 @@ describe("Categories", () => {
 
     it("should return error when category not found", async () => {
       mockAuthenticatedUser()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
@@ -211,8 +188,6 @@ describe("Categories", () => {
       })
       mockAuthenticatedUser()
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         {
@@ -229,8 +204,6 @@ describe("Categories", () => {
     it("should successfully update custom category", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
@@ -257,8 +230,6 @@ describe("Categories", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         mockValidCategoryValues
@@ -273,8 +244,6 @@ describe("Categories", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
@@ -286,8 +255,6 @@ describe("Categories", () => {
     it("should return error with invalid category ID", async () => {
       mockAuthenticatedUser()
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await deleteCustomCategory("invalid-id")
 
       expect(result.success).toBeUndefined()
@@ -296,8 +263,6 @@ describe("Categories", () => {
 
     it("should return error when category not found", async () => {
       mockAuthenticatedUser()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
@@ -317,8 +282,6 @@ describe("Categories", () => {
       })
       mockAuthenticatedUser()
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
@@ -332,8 +295,6 @@ describe("Categories", () => {
     it("should successfully delete custom category", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
@@ -353,8 +314,6 @@ describe("Categories", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const tCategoriesBE = await getTranslations("categories.be")
-
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
@@ -366,8 +325,6 @@ describe("Categories", () => {
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
@@ -381,8 +338,6 @@ describe("Categories", () => {
   describe("getCustomCategories", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await getCustomCategories()
 
@@ -413,8 +368,6 @@ describe("Categories", () => {
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
-
-      const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await getCustomCategories()
 

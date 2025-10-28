@@ -14,9 +14,11 @@ import { session } from "@/lib/session"
 
 export async function createCustomCategory(values: CustomCategoryFormValues) {
   try {
-    const tCategoriesBE = await getTranslations("categories.be")
-    const tCommonBE = await getTranslations("common.be")
-    const tSchemasCategory = await getTranslations("schemas.category")
+    const [tCommonBE, tCategoriesBE, tSchemasCategory] = await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("categories.be"),
+      getTranslations("schemas.category"),
+    ])
     const customCategorySchema = createCategorySchema(tSchemasCategory)
     const { userId } = await session.user.get()
 
@@ -79,10 +81,12 @@ export async function updateCustomCategory(
   values: CustomCategoryFormValues
 ) {
   try {
-    const tCategoriesBE = await getTranslations("categories.be")
-    const tCommonBE = await getTranslations("common.be")
-    const tSchema = await getTranslations("schemas.category")
-    const customCategorySchema = createCategorySchema(tSchema)
+    const [tCommonBE, tCategoriesBE, tSchemasCategory] = await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("categories.be"),
+      getTranslations("schemas.category"),
+    ])
+    const customCategorySchema = createCategorySchema(tSchemasCategory)
     const { userId } = await session.user.get()
 
     if (!userId) {
@@ -148,8 +152,10 @@ export async function updateCustomCategory(
 
 export async function deleteCustomCategory(categoryId: string) {
   try {
-    const tCategoriesBE = await getTranslations("categories.be")
-    const tCommonBE = await getTranslations("common.be")
+    const [tCommonBE, tCategoriesBE] = await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("categories.be"),
+    ])
     const { userId } = await session.user.get()
 
     if (!userId) {

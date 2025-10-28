@@ -1,5 +1,4 @@
 import { setUserLocale } from "@/i18n/locale"
-import { getTranslations } from "next-intl/server"
 
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
@@ -17,8 +16,6 @@ describe("General", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await updateLocale("vi")
 
       expect(result.success).toBeUndefined()
@@ -28,8 +25,6 @@ describe("General", () => {
     it("should return error with invalid locale", async () => {
       mockAuthenticatedUser()
 
-      const tSettingsBE = await getTranslations("settings.be")
-
       const result = await updateLocale("invalid" as "vi" | "en")
 
       expect(result.success).toBeUndefined()
@@ -38,8 +33,6 @@ describe("General", () => {
 
     it("should return error when user not found in database", async () => {
       mockAuthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await updateLocale("vi")
 
@@ -62,7 +55,6 @@ describe("General", () => {
       }
 
       mockSession.user.get.mockResolvedValue(mockSessionData)
-      const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updateLocale("vi")
       const usersCollection = await getUsersCollection()
@@ -83,8 +75,6 @@ describe("General", () => {
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
-
-      const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updateLocale("vi")
 

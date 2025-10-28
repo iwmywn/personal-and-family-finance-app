@@ -1,5 +1,3 @@
-import { getTranslations } from "next-intl/server"
-
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
 import {
   mockTransactionCollectionError,
@@ -27,8 +25,6 @@ describe("Transactions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
@@ -37,8 +33,6 @@ describe("Transactions", () => {
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await createTransaction({
         type: "invalid" as "income" | "expense",
@@ -59,8 +53,6 @@ describe("Transactions", () => {
         acknowledged: false,
       })
 
-      const tTransactionsBE = await getTranslations("transactions.be")
-
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
@@ -69,8 +61,6 @@ describe("Transactions", () => {
 
     it("should successfully create transaction", async () => {
       mockAuthenticatedUser()
-
-      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await createTransaction(mockValidTransactionValues)
       const transactionsCollection = await getTransactionsCollection()
@@ -90,8 +80,6 @@ describe("Transactions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const tTransactionsBE = await getTranslations("transactions.be")
-
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
@@ -102,8 +90,6 @@ describe("Transactions", () => {
   describe("updateTransaction", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await updateTransaction(
         mockTransaction._id.toString(),
@@ -116,8 +102,6 @@ describe("Transactions", () => {
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
         type: "invalid" as "income" | "expense",
@@ -134,8 +118,6 @@ describe("Transactions", () => {
     it("should return error with invalid transaction ID", async () => {
       mockAuthenticatedUser()
 
-      const tTransactionsBE = await getTranslations("transactions.be")
-
       const result = await updateTransaction(
         "invalid-id",
         mockValidTransactionValues
@@ -147,8 +129,6 @@ describe("Transactions", () => {
 
     it("should return error when transaction not found", async () => {
       mockAuthenticatedUser()
-
-      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await updateTransaction(
         mockTransaction._id.toString(),
@@ -164,8 +144,6 @@ describe("Transactions", () => {
     it("should successfully update transaction", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
-
-      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
         type: "expense",
@@ -192,8 +170,6 @@ describe("Transactions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const tTransactionsBE = await getTranslations("transactions.be")
-
       const result = await updateTransaction(
         mockTransaction._id.toString(),
         mockValidTransactionValues
@@ -208,8 +184,6 @@ describe("Transactions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
@@ -219,8 +193,6 @@ describe("Transactions", () => {
     it("should return error with invalid transaction ID", async () => {
       mockAuthenticatedUser()
 
-      const tTransactionsBE = await getTranslations("transactions.be")
-
       const result = await deleteTransaction("invalid-id")
 
       expect(result.success).toBeUndefined()
@@ -229,8 +201,6 @@ describe("Transactions", () => {
 
     it("should return error when transaction not found", async () => {
       mockAuthenticatedUser()
-
-      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await deleteTransaction(mockTransaction._id.toString())
 
@@ -243,8 +213,6 @@ describe("Transactions", () => {
     it("should successfully delete transaction", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
-
-      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await deleteTransaction(mockTransaction._id.toString())
       const transactionsCollection = await getTransactionsCollection()
@@ -262,8 +230,6 @@ describe("Transactions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const tTransactionsBE = await getTranslations("transactions.be")
-
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
@@ -274,8 +240,6 @@ describe("Transactions", () => {
   describe("getTransactions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await getTransactions()
 
@@ -307,8 +271,6 @@ describe("Transactions", () => {
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
-
-      const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await getTransactions()
 

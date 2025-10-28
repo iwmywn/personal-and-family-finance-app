@@ -1,8 +1,9 @@
+import "@/tests/backend/mocks/translations.mock"
+
 import { MongoMemoryServer } from "mongodb-memory-server"
+import { getTranslations } from "next-intl/server"
 
 import { connect, disconnect } from "@/lib/db"
-
-import "@/tests/backend/mocks/translations.mock"
 
 let mongoServer: MongoMemoryServer
 
@@ -14,6 +15,23 @@ beforeAll(async () => {
   process.env.DB_NAME = "test-db"
 
   await connect()
+
+  const [tCommonBE, tAuthBE, tTransactionsBE, tCategoriesBE, tSettingsBE] =
+    await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("auth.be"),
+      getTranslations("transactions.be"),
+      getTranslations("categories.be"),
+      getTranslations("settings.be"),
+    ])
+
+  Object.assign(globalThis, {
+    tCommonBE,
+    tAuthBE,
+    tTransactionsBE,
+    tCategoriesBE,
+    tSettingsBE,
+  })
 })
 
 afterAll(async () => {

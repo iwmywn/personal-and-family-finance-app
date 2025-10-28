@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server"
+import { setUserLocale } from "@/i18n/locale"
 
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
@@ -19,8 +19,6 @@ import { getUser, signIn, signOut } from "@/actions/auth"
 describe("Auth", () => {
   describe("signIn", () => {
     it("should return error when recaptcha token is missing", async () => {
-      const tAuthBE = await getTranslations("auth.be")
-
       const result = await signIn(mockValidSignInValues, null)
 
       expect(result.error).toBe(tAuthBE("recaptchaMissing"))
@@ -28,8 +26,6 @@ describe("Auth", () => {
 
     it("should return error with invalid input data", async () => {
       mockRecaptchaSuccess()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await signIn({ username: "", password: "" }, "valid-token")
 
@@ -39,8 +35,6 @@ describe("Auth", () => {
     it("should return error when recaptcha verification fails", async () => {
       mockRecaptchaFailure()
 
-      const tAuthBE = await getTranslations("auth.be")
-
       const result = await signIn(mockValidSignInValues, "invalid-token")
 
       expect(result.error).toBe(tAuthBE("recaptchaFailed"))
@@ -48,8 +42,6 @@ describe("Auth", () => {
 
     it("should return error when user does not exist", async () => {
       mockRecaptchaSuccess()
-
-      const tAuthBE = await getTranslations("auth.be")
 
       const result = await signIn(mockValidSignInValues, "valid-token")
 
@@ -59,8 +51,6 @@ describe("Auth", () => {
     it("should return error with incorrect password", async () => {
       await insertTestUser(mockUser)
       mockRecaptchaSuccess()
-
-      const tAuthBE = await getTranslations("auth.be")
 
       const result = await signIn(
         { username: "testuser", password: "WrongPassword123!" },
@@ -79,6 +69,7 @@ describe("Auth", () => {
       }))
       const result = await signIn(mockValidSignInValues, "valid-token")
 
+      expect(setUserLocale).toHaveBeenCalledWith(mockUser.locale)
       expect(result.error).toBeUndefined()
 
       vi.doUnmock("@/i18n/locale")
@@ -86,8 +77,6 @@ describe("Auth", () => {
 
     it("should return error when recaptcha verification throws error", async () => {
       mockRecaptchaError()
-
-      const tAuthBE = await getTranslations("auth.be")
 
       const result = await signIn(mockValidSignInValues, "valid-token")
 
@@ -97,8 +86,6 @@ describe("Auth", () => {
     it("should return error when database operation throws error", async () => {
       mockRecaptchaSuccess()
       mockUserCollectionError()
-
-      const tAuthBE = await getTranslations("auth.be")
 
       const result = await signIn(mockValidSignInValues, "valid-token")
 
@@ -110,8 +97,6 @@ describe("Auth", () => {
     it("should successfully sign out", async () => {
       mockSignOutSuccess()
 
-      const tAuthBE = await getTranslations("auth.be")
-
       const result = await signOut()
 
       expect(result.success).toBe(tAuthBE("signOutSuccess"))
@@ -120,8 +105,6 @@ describe("Auth", () => {
 
     it("should return error when sign out fails", async () => {
       mockSignOutFailure()
-
-      const tAuthBE = await getTranslations("auth.be")
 
       const result = await signOut()
 
@@ -134,8 +117,6 @@ describe("Auth", () => {
     it("should return error when user is not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await getUser()
 
       expect(result.user).toBeUndefined()
@@ -144,8 +125,6 @@ describe("Auth", () => {
 
     it("should return error when user not found in database", async () => {
       mockAuthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await getUser()
 
@@ -168,8 +147,6 @@ describe("Auth", () => {
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
-
-      const tAuthBE = await getTranslations("auth.be")
 
       const result = await getUser()
 

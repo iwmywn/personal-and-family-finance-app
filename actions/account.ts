@@ -10,9 +10,11 @@ import { session } from "@/lib/session"
 
 export async function updatePassword(values: PasswordFormValues) {
   try {
-    const tSettingsBE = await getTranslations("settings.be")
-    const tCommonBE = await getTranslations("common.be")
-    const tSchemasPassword = await getTranslations("schemas.password")
+    const [tCommonBE, tSettingsBE, tSchemasPassword] = await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("settings.be"),
+      getTranslations("schemas.password"),
+    ])
     const passwordSchema = createPasswordSchema(tSchemasPassword)
     const { userId } = await session.user.get()
 

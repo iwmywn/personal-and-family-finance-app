@@ -16,9 +16,11 @@ export async function signIn(
   recaptchaToken: string | null
 ) {
   try {
-    const tAuthBE = await getTranslations("auth.be")
-    const tCommonBE = await getTranslations("common.be")
-    const tSchemasSignIn = await getTranslations("schemas.signIn")
+    const [tCommonBE, tAuthBE, tSchemasSignIn] = await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("auth.be"),
+      getTranslations("schemas.signIn"),
+    ])
     const signInSchema = createSignInSchema(tSchemasSignIn)
 
     if (!recaptchaToken) return { error: tAuthBE("recaptchaMissing") }
@@ -44,8 +46,10 @@ export async function signIn(
 
     if (!isPasswordValid) return { error: tAuthBE("signInError") }
 
-    await session.user.create(existingUser._id.toString(), existingUser.locale)
-    await setUserLocale(existingUser.locale)
+    await Promise.all([
+      session.user.create(existingUser._id.toString(), existingUser.locale),
+      setUserLocale(existingUser.locale),
+    ])
 
     return { error: undefined }
   } catch (error) {
@@ -57,8 +61,9 @@ export async function signIn(
 
 export async function signOut() {
   try {
-    await session.user.delete()
     const tAuthBE = await getTranslations("auth.be")
+    await session.user.delete()
+
     return { success: tAuthBE("signOutSuccess"), error: undefined }
   } catch (error) {
     console.error("Error signing out: ", error)
@@ -70,7 +75,6 @@ export async function signOut() {
 export async function getUser() {
   try {
     const tCommonBE = await getTranslations("common.be")
-
     const { userId } = await session.user.get()
 
     if (!userId) {

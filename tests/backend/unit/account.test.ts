@@ -1,5 +1,4 @@
 import bcrypt from "bcryptjs"
-import { getTranslations } from "next-intl/server"
 
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
@@ -16,8 +15,6 @@ describe("Account", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
@@ -26,8 +23,6 @@ describe("Account", () => {
 
     it("should return error with invalid input data", async () => {
       mockAuthenticatedUser()
-
-      const tCommonBE = await getTranslations("common.be")
 
       const result = await updatePassword({
         currentPassword: "TestPassword123!",
@@ -42,8 +37,6 @@ describe("Account", () => {
     it("should return error when user not found", async () => {
       mockAuthenticatedUser()
 
-      const tCommonBE = await getTranslations("common.be")
-
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
@@ -53,8 +46,6 @@ describe("Account", () => {
     it("should return error with incorrect current password", async () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
-
-      const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updatePassword({
         currentPassword: "WrongPassword123!",
@@ -70,8 +61,6 @@ describe("Account", () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
-      const tSettingsBE = await getTranslations("settings.be")
-
       const result = await updatePassword({
         currentPassword: "",
         newPassword: "",
@@ -85,8 +74,6 @@ describe("Account", () => {
     it("should successfully update password", async () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
-
-      const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updatePassword(mockValidPasswordValues)
       const usersCollection = await getUsersCollection()
@@ -106,8 +93,6 @@ describe("Account", () => {
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
-
-      const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updatePassword(mockValidPasswordValues)
 
