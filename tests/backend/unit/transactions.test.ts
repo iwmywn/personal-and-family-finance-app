@@ -176,6 +176,7 @@ describe("Transactions Actions", () => {
       })
       const transactionsCollection = await getTransactionsCollection()
       const updatedTransaction = await transactionsCollection.findOne({
+        _id: mockTransaction._id,
         userId: mockUser._id,
       })
 
@@ -248,6 +249,7 @@ describe("Transactions Actions", () => {
       const result = await deleteTransaction(mockTransaction._id.toString())
       const transactionsCollection = await getTransactionsCollection()
       const deletedTransaction = await transactionsCollection.findOne({
+        _id: mockTransaction._id,
         userId: mockUser._id,
       })
 

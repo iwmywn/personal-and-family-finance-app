@@ -242,6 +242,7 @@ describe("Categories Actions", () => {
       )
       const categoriesTransaction = await getCategoriesCollection()
       const updatedCategory = await categoriesTransaction.findOne({
+        _id: mockCustomCategory._id,
         userId: mockUser._id,
       })
 
@@ -339,6 +340,7 @@ describe("Categories Actions", () => {
       )
       const categoriesTransaction = await getCategoriesCollection()
       const deletedCategory = await categoriesTransaction.findOne({
+        _id: mockCustomCategory._id,
         userId: mockUser._id,
       })
 
