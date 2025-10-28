@@ -17,6 +17,7 @@ export function StatisticsSummary({
   filteredTransactions,
 }: StatisticsSummaryProps) {
   const tStatisticsFE = useTranslations("statistics.fe")
+  const tCommonFE = useTranslations("common.fe")
   const summaryStats = useMemo(() => {
     return calculateSummaryStats(filteredTransactions)
   }, [filteredTransactions])
@@ -41,7 +42,7 @@ export function StatisticsSummary({
             {formatCurrency(totalIncome)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {incomeCount} {tStatisticsFE("transactions")}
+            {incomeCount} {tCommonFE("transactions")}
           </p>
         </CardContent>
       </Card>
@@ -56,7 +57,7 @@ export function StatisticsSummary({
             {formatCurrency(totalExpense)}
           </div>
           <p className="text-muted-foreground text-sm">
-            {expenseCount} {tStatisticsFE("transactions")}
+            {expenseCount} {tCommonFE("transactions")}
           </p>
         </CardContent>
       </Card>
@@ -78,11 +79,11 @@ export function StatisticsSummary({
           </div>
           <p className="text-muted-foreground text-sm">
             {balance > 0
-              ? tStatisticsFE("positive")
+              ? tCommonFE("positive")
               : balance < 0
-                ? tStatisticsFE("negative")
-                : tStatisticsFE("balanced")}{" "}
-            {tStatisticsFE("comparedToIncome")}
+                ? tCommonFE("negative")
+                : tCommonFE("balanced")}{" "}
+            {tCommonFE("comparedToIncome")}
           </p>
         </CardContent>
       </Card>
@@ -97,7 +98,7 @@ export function StatisticsSummary({
             {transactionCount.toLocaleString("vi-VN")}
           </div>
           <p className="text-muted-foreground text-sm">
-            {tStatisticsFE("totalTransactions")}
+            {tCommonFE("totalTransactions")}
           </p>
         </CardContent>
       </Card>

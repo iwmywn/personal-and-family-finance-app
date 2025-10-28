@@ -23,9 +23,15 @@
       "year": "Year",
       "allYears": "All Years",
       "description": "Description",
+      "totalTransactions": "Total Transactions",
+      "transactions": "transactions",
+      "positive": "Positive",
+      "negative": "Negative",
+      "balanced": "Balanced",
+      "comparedToIncome": "compared to income",
       "noTransactionsFound": "No transactions found",
       "startAddingTransactions": "Start adding your transactions.",
-      "noTransactionsFiltered": "No transactions match your filter."
+      "noTransactionsFiltered": "No transactions found matching your filters."
     },
     "be": {
       "accessDenied": "Access denied! Please refresh the page and try again.",
@@ -49,13 +55,27 @@
       "signInDescription": "Enter your username and password to sign in to your account."
     },
     "be": {
-      "signInError": "Invalid username or password!",
+      "signInError": "Incorrect username or password!",
       "signInFailed": "Sign in failed! Please try again later.",
-      "signOutSuccess": "You need to sign back in.",
+      "signOutSuccess": "You need to sign in again.",
       "signOutFailed": "Sign out failed! Please try again later.",
       "userFetchFailed": "Failed to load user information! Please try again later.",
       "recaptchaMissing": "Missing recaptcha token!",
-      "recaptchaFailed": "Recaptcha verification failed!"
+      "recaptchaFailed": "Captcha verification failed!"
+    }
+  },
+  "basePage": {
+    "userDataError": {
+      "title": "CANNOT FETCH USER DATA",
+      "description": "An error occurred while loading user information! Please try again later."
+    },
+    "transactionsDataError": {
+      "title": "CANNOT FETCH TRANSACTIONS DATA",
+      "description": "An error occurred while loading transactions! Please try again later."
+    },
+    "categoriesDataError": {
+      "title": "CANNOT FETCH CATEGORIES DATA",
+      "description": "An error occurred while loading categories! Please try again later."
     }
   },
   "home": {
@@ -65,70 +85,44 @@
       "welcome": "Welcome",
       "quickStats": "Quick Stats",
       "recentTransactions": "Recent Transactions",
-      "totalTransactions": "Total Transactions",
       "highestTransaction": "Highest Transaction",
       "lowestTransaction": "Lowest Transaction",
       "avgExpense": "Avg Expense/Transaction",
       "savingsRate": "Savings Rate",
       "popularCategory": "Popular Category",
-      "noData": "No data",
-      "totalTransactionsTooltip": "Total number of transactions (both income and expenses) you've made this month. Helps track your transaction frequency.",
-      "highestTransactionTooltip": "Transaction with the highest value this month (could be income or expense). Helps identify unusual large amounts.",
-      "lowestTransactionTooltip": "Transaction with the lowest value this month (could be income or expense). Helps identify frequent small expenses.",
-      "avgExpenseTooltip": "Average amount per expense transaction (Total expenses / Number of expense transactions). Helps you understand your average spending scale.",
-      "savingsRateTooltip": "Percentage of money you save compared to income ((Income - Expenses) / Income × 100%). Higher is better, should maintain above 20%.",
-      "popularCategoryTooltip": "Category with the highest total amount this month. Helps you identify your biggest spending area or income source.",
+      "noData": "No data available",
+      "totalTransactionsTooltip": "Total number of transactions (both income and expenses) you have made in the current month. Helps track your transaction frequency.",
+      "highestTransactionTooltip": "Transaction with the highest value in the month (can be income or expense). Helps identify unusual large amounts.",
+      "lowestTransactionTooltip": "Transaction with the lowest value in the month (can be income or expense). Helps identify recurring small expenses.",
+      "avgExpenseTooltip": "Average amount per expense (Total Expense / Number of expense transactions). Helps you understand your average spending scale.",
+      "savingsRateTooltip": "The percentage of money you save compared to income ((Income - Expense) / Income × 100%). Higher is better, should maintain above 20%.",
+      "popularCategoryTooltip": "Category with the highest total amount in the month. Helps you identify your largest spending area or income source.",
       "monthlyIncome": "This Month's Income",
-      "monthlyExpense": "This Month's Expenses",
-      "monthlyBalance": "This Month's Balance",
-      "transactions": "transactions",
-      "positive": "Positive",
-      "negative": "Negative",
-      "balanced": "Balanced",
-      "comparedToIncome": "compared to income"
-    }
-  },
-  "basePage": {
-    "userDataError": {
-      "title": "UNABLE TO LOAD USER DATA",
-      "description": "An error occurred while loading user information! Please try again later."
-    },
-    "transactionsDataError": {
-      "title": "UNABLE TO LOAD TRANSACTIONS DATA",
-      "description": "An error occurred while loading transactions! Please try again later."
-    },
-    "categoriesDataError": {
-      "title": "UNABLE TO LOAD CATEGORIES DATA",
-      "description": "An error occurred while loading categories! Please try again later."
+      "monthlyExpense": "This Month's Expense",
+      "monthlyBalance": "This Month's Balance"
     }
   },
   "statistics": {
     "fe": {
       "title": "Statistics",
-      "description": "Analyze your financial data with detailed statistics and insights.",
+      "description": "Analyze your financial data with statistics and insights.",
       "totalIncome": "Total Income",
       "totalExpense": "Total Expense",
       "balance": "Balance",
       "transactionCount": "Transaction Count",
-      "totalAmount": "Total Amount",
-      "transactions": "transactions",
-      "totalTransactions": "Total Transactions",
-      "positive": "Positive",
-      "negative": "Negative",
-      "balanced": "Balanced",
-      "comparedToIncome": "compared to income"
+      "totalAmount": "Total Amount"
     }
   },
   "transactions": {
     "fe": {
       "title": "Transactions",
-      "description": "Manage your income and expenses to track your personal finances.",
+      "description": "Manage income and expenses to track your personal finances.",
       "addTransaction": "Add Transaction",
       "editTransaction": "Edit Transaction",
-      "addTransactionDescription": "Add your income or expenses to track your personal finances.",
+      "addTransactionDescription": "Add your income or expense to track your personal finances.",
       "editTransactionDescription": "Update transaction information.",
       "selectCategory": "Select {type} category",
-      "descriptionPlaceholder": "Enter transaction description...",
+      "descriptionPlaceholder": "Enter a description for the transaction...",
       "date": "Transaction Date",
       "transactionType": "Transaction Type",
       "allTransactionTypes": "All Transaction Types",
@@ -136,16 +130,16 @@
       "searchPlaceholder": "Search transactions...",
       "openMenu": "Open menu",
       "customCategories": "Custom Categories",
-      "noCategoryFound": "Can't find a suitable category?",
+      "noCategoryFound": "Cannot find a suitable category?",
       "amount": "Amount",
-      "createCustomCategory": "Create custom category",
+      "createCustomCategory": "Create Custom Category",
       "deleteTransactionTitle": "Delete Transaction",
       "deleteTransactionDescription": "Are you sure you want to delete the transaction \"{description}\"? This action cannot be undone."
     },
     "be": {
-      "transactionAdded": "Transaction added.",
-      "transactionUpdated": "Transaction updated.",
-      "transactionDeleted": "Transaction deleted.",
+      "transactionAdded": "Transaction has been added.",
+      "transactionUpdated": "Transaction has been updated.",
+      "transactionDeleted": "Transaction has been deleted.",
       "transactionAddFailed": "Failed to add transaction! Please try again later.",
       "transactionUpdateFailed": "Failed to update transaction! Please try again later.",
       "transactionDeleteFailed": "Failed to delete transaction! Please try again later.",
@@ -165,21 +159,21 @@
       "editCategoryDescription": "Update category information.",
       "categoryName": "Name",
       "categoryNamePlaceholder": "Enter category name...",
-      "categoryDescriptionPlaceholder": "Enter category description...",
+      "categoryDescriptionPlaceholder": "Enter a description for the category...",
       "categoryType": "Category Type",
       "searchPlaceholder": "Search categories...",
-      "allCategoryTypes": "All category types",
-      "noCategoriesFound": "No categories found",
+      "allCategoryTypes": "All Category Types",
+      "noCategoriesFound": "No categories yet",
       "noCategoriesDescription": "You haven't created any custom categories yet. Add your first category!",
-      "noCategoriesFiltered": "No categories match your current filters.",
+      "noCategoriesFiltered": "No categories found matching your filters.",
       "openMenu": "Open menu",
       "deleteCategoryTitle": "Delete Category",
       "deleteCategoryDescription": "Are you sure you want to delete the category \"{label}\"? This action cannot be undone."
     },
     "be": {
-      "categoryAdded": "Category added.",
-      "categoryUpdated": "Category updated.",
-      "categoryDeleted": "Category deleted.",
+      "categoryAdded": "Category has been added.",
+      "categoryUpdated": "Category has been updated.",
+      "categoryDeleted": "Category has been deleted.",
       "categoryAddFailed": "Failed to add category! Please try again later.",
       "categoryUpdateFailed": "Failed to update category! Please try again later.",
       "categoryDeleteFailed": "Failed to delete category! Please try again later.",
@@ -211,8 +205,8 @@
       "passwordIncorrect": "Current password is incorrect!",
       "noChanges": "No changes were made.",
       "passwordUpdated": "Your password has been changed.",
-      "languageUpdated": "Language updated.",
-      "passwordUpdateFailed": "Password update failed! Please try again later.",
+      "languageUpdated": "Language has been updated.",
+      "passwordUpdateFailed": "Failed to update password! Please try again later.",
       "languageUpdateFailed": "Failed to update language! Please try again later."
     }
   },
@@ -232,35 +226,35 @@
   },
   "appError": {
     "title": "An error occurred!",
-    "tryAgain": "Try Again",
+    "tryAgain": "Try again",
     "backToHome": "Back to Home"
   },
   "schemas": {
     "signIn": {
       "usernameRequired": "Username is required.",
-      "passwordRequired": "Password must be at least 8 characters long, including uppercase, lowercase, numbers, and special characters."
+      "passwordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
     },
     "password": {
       "currentPasswordRequired": "Current password is required.",
-      "newPasswordRequired": "New password must be at least 8 characters long, including uppercase, lowercase, numbers, and special characters.",
+      "newPasswordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
       "confirmPasswordRequired": "Please confirm your new password.",
       "passwordsNotMatch": "Passwords do not match."
     },
     "transaction": {
-      "transactionTypeRequired": "Please select transaction type.",
+      "transactionTypeRequired": "Please select a transaction type.",
       "categoryRequired": "Please select a category.",
       "amountRequired": "Amount must be greater than 0.",
-      "amountMaxLength": "Amount must not exceed 100 billion.",
+      "amountMaxLength": "Maximum amount is 100 billion.",
       "descriptionRequired": "Description is required.",
-      "descriptionMaxLength": "Description must not exceed 200 characters.",
+      "descriptionMaxLength": "Description must be at most 200 characters.",
       "dateRequired": "Please select a date."
     },
     "category": {
-      "categoryTypeRequired": "Please select category type.",
+      "categoryTypeRequired": "Please select a category type.",
       "categoryNameRequired": "Category name is required.",
-      "categoryNameMaxLength": "Category name must not exceed 50 characters.",
+      "categoryNameMaxLength": "Category name must be at most 50 characters.",
       "categoryDescriptionRequired": "Description is required.",
-      "categoryDescriptionMaxLength": "Description must not exceed 200 characters."
+      "categoryDescriptionMaxLength": "Description must be at most 200 characters."
     }
   }
 }

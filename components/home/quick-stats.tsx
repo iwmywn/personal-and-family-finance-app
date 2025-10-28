@@ -27,6 +27,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const { customCategories } = useCustomCategories()
   const { transactions } = useTransactions()
   const tHomeFE = useTranslations("home.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   const {
     currentMonthCount,
@@ -55,7 +56,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="row">
-                  <div className="left">{tHomeFE("totalTransactions")}:</div>
+                  <div className="left">{tCommonFE("totalTransactions")}:</div>
                   <div className="right">{currentMonthCount}</div>
                 </div>
               </TooltipTrigger>

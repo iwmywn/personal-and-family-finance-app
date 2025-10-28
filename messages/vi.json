@@ -23,6 +23,12 @@
       "year": "Năm",
       "allYears": "Tất cả năm",
       "description": "Mô tả",
+      "totalTransactions": "Tổng giao dịch",
+      "transactions": "giao dịch",
+      "positive": "Dương",
+      "negative": "Âm",
+      "balanced": "Cân bằng",
+      "comparedToIncome": "so với thu nhập",
       "noTransactionsFound": "Không tìm thấy giao dịch",
       "startAddingTransactions": "Bắt đầu thêm giao dịch của bạn.",
       "noTransactionsFiltered": "Không tìm thấy giao dịch nào phù hợp với bộ lọc của bạn."
@@ -79,7 +85,6 @@
       "welcome": "Chào mừng",
       "quickStats": "Thống kê nhanh",
       "recentTransactions": "Giao dịch gần đây",
-      "totalTransactions": "Tổng giao dịch",
       "highestTransaction": "Giao dịch cao nhất",
       "lowestTransaction": "Giao dịch thấp nhất",
       "avgExpense": "Chi TB/giao dịch",
@@ -94,12 +99,7 @@
       "popularCategoryTooltip": "Danh mục có tổng số tiền cao nhất trong tháng. Giúp bạn nhận biết lĩnh vực chi tiêu hoặc nguồn thu lớn nhất của mình.",
       "monthlyIncome": "Thu nhập tháng này",
       "monthlyExpense": "Chi tiêu tháng này",
-      "monthlyBalance": "Số dư tháng này",
-      "transactions": "giao dịch",
-      "positive": "Dương",
-      "negative": "Âm",
-      "balanced": "Cân bằng",
-      "comparedToIncome": "so với thu nhập"
+      "monthlyBalance": "Số dư tháng này"
     }
   },
   "statistics": {
@@ -110,13 +110,7 @@
       "totalExpense": "Tổng chi tiêu",
       "balance": "Số dư",
       "transactionCount": "Số giao dịch",
-      "totalAmount": "Tổng số tiền",
-      "transactions": "giao dịch",
-      "totalTransactions": "Tổng giao dịch",
-      "positive": "Dương",
-      "negative": "Âm",
-      "balanced": "Cân bằng",
-      "comparedToIncome": "so với thu nhập"
+      "totalAmount": "Tổng số tiền"
     }
   },
   "transactions": {

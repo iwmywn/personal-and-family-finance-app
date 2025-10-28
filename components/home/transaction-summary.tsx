@@ -15,6 +15,7 @@ import { formatCurrency } from "@/lib/utils"
 export function TransactionSummary() {
   const { transactions } = useTransactions()
   const tHomeFE = useTranslations("home.fe")
+  const tCommonFE = useTranslations("common.fe")
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions!)
 
@@ -41,7 +42,7 @@ export function TransactionSummary() {
                 (tHomeFE) => tHomeFE.type === "income"
               ).length
             }{" "}
-            {tHomeFE("transactions")}
+            {tCommonFE("transactions")}
           </p>
         </CardContent>
       </Card>
@@ -61,7 +62,7 @@ export function TransactionSummary() {
                 (tHomeFE) => tHomeFE.type === "expense"
               ).length
             }{" "}
-            {tHomeFE("transactions")}
+            {tCommonFE("transactions")}
           </p>
         </CardContent>
       </Card>
@@ -83,11 +84,11 @@ export function TransactionSummary() {
           </div>
           <p className="text-muted-foreground text-sm">
             {balance > 0
-              ? tHomeFE("positive")
+              ? tCommonFE("positive")
               : balance < 0
-                ? tHomeFE("negative")
-                : tHomeFE("balanced")}{" "}
-            {tHomeFE("comparedToIncome")}
+                ? tCommonFE("negative")
+                : tCommonFE("balanced")}{" "}
+            {tCommonFE("comparedToIncome")}
           </p>
         </CardContent>
       </Card>
