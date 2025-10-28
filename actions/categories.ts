@@ -6,8 +6,8 @@ import { nanoid } from "nanoid"
 import { getTranslations } from "next-intl/server"
 
 import {
-  getCategoryCollection,
-  getTransactionCollection,
+  getCategoriesCollection,
+  getTransactionsCollection,
 } from "@/lib/collections"
 import { CustomCategory } from "@/lib/definitions"
 import { session } from "@/lib/session"
@@ -32,7 +32,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
       return { error: tCommonBE("invalidData") }
     }
 
-    const categoriesCollection = await getCategoryCollection()
+    const categoriesCollection = await getCategoriesCollection()
 
     const existingCategory = await categoriesCollection.findOne({
       userId: new ObjectId(userId),
@@ -103,7 +103,7 @@ export async function updateCustomCategory(
       }
     }
 
-    const categoriesCollection = await getCategoryCollection()
+    const categoriesCollection = await getCategoriesCollection()
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
@@ -165,8 +165,8 @@ export async function deleteCustomCategory(categoryId: string) {
     }
 
     const [categoriesCollection, transactionsCollection] = await Promise.all([
-      getCategoryCollection(),
-      getTransactionCollection(),
+      getCategoriesCollection(),
+      getTransactionsCollection(),
     ])
 
     const existingCategory = await categoriesCollection.findOne({
@@ -217,7 +217,7 @@ export async function getCustomCategories() {
       }
     }
 
-    const categoriesCollection = await getCategoryCollection()
+    const categoriesCollection = await getCategoriesCollection()
 
     const categories = await categoriesCollection
       .find({ userId: new ObjectId(userId) })

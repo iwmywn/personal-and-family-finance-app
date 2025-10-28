@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
-import { getUserCollection } from "@/lib/collections"
+import { getUsersCollection } from "@/lib/collections"
 import { User } from "@/lib/definitions"
 import { verifyRecaptchaToken } from "@/lib/recaptcha"
 import { session } from "@/lib/session"
@@ -27,11 +27,11 @@ export async function signIn(
     if (!parsedValues.success) return { error: tCommonBE("invalidData") }
 
     const { username, password } = parsedValues.data
-    const [verify, userCollection] = await Promise.all([
+    const [verify, usersCollection] = await Promise.all([
       verifyRecaptchaToken(recaptchaToken),
-      getUserCollection(),
+      getUsersCollection(),
     ])
-    const existingUser = await userCollection.findOne({ username })
+    const existingUser = await usersCollection.findOne({ username })
 
     if (!verify) return { error: tAuthBE("recaptchaFailed") }
     if (!existingUser) return { error: tAuthBE("signInError") }
@@ -77,7 +77,7 @@ export async function getUser() {
       }
     }
 
-    const userCollection = await getUserCollection()
+    const userCollection = await getUsersCollection()
     const existingUser = await userCollection.findOne(
       { _id: new ObjectId(userId) },
       { projection: { password: 0 } }

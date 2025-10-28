@@ -41,17 +41,17 @@ export const mockValidSignInValues = {
 }
 
 export const mockValidCategoryValues = {
-  type: "expense" as "income" | "expense",
-  label: "Entertainment",
-  description: "Movies and games",
+  type: "income" as "income" | "expense",
+  label: "Salary",
+  description: "Monthly job income",
 }
 
 export const mockValidTransactionValues = {
-  type: "expense" as "income" | "expense",
-  categoryKey: "food_beverage",
-  amount: 50000,
-  description: "nước dừa",
-  date: new Date("2024-01-15"),
+  type: "income" as "income" | "expense",
+  categoryKey: "business_freelance",
+  amount: 2500000,
+  description: "Dự án thiết kế web",
+  date: new Date("2024-02-05"),
 }
 
 export const mockValidPasswordValues = {

@@ -5,7 +5,7 @@ import { setUserLocale } from "@/i18n/locale"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
-import { getUserCollection } from "@/lib/collections"
+import { getUsersCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
 export async function updateLocale(locale: Locale) {
@@ -24,8 +24,8 @@ export async function updateLocale(locale: Locale) {
       return { error: tSettings("languageUpdateFailed") }
     }
 
-    const userCollection = await getUserCollection()
-    const existingUser = await userCollection.findOne({
+    const usersCollection = await getUsersCollection()
+    const existingUser = await usersCollection.findOne({
       _id: new ObjectId(userId),
     })
 
@@ -33,7 +33,7 @@ export async function updateLocale(locale: Locale) {
       return { error: tCommonBE("userNotFound") }
     }
 
-    await userCollection.updateOne(
+    await usersCollection.updateOne(
       { _id: new ObjectId(userId) },
       {
         $set: {

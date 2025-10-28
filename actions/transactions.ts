@@ -4,7 +4,7 @@ import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
-import { getTransactionCollection } from "@/lib/collections"
+import { getTransactionsCollection } from "@/lib/collections"
 import { Transaction } from "@/lib/definitions"
 import { session } from "@/lib/session"
 
@@ -28,7 +28,7 @@ export async function createTransaction(values: TransactionFormValues) {
       return { error: tCommonBE("invalidData") }
     }
 
-    const transactionsCollection = await getTransactionCollection()
+    const transactionsCollection = await getTransactionsCollection()
 
     const result = await transactionsCollection.insertOne({
       userId: new ObjectId(userId),
@@ -79,7 +79,7 @@ export async function updateTransaction(
       }
     }
 
-    const transactionsCollection = await getTransactionCollection()
+    const transactionsCollection = await getTransactionsCollection()
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
@@ -131,7 +131,7 @@ export async function deleteTransaction(transactionId: string) {
       }
     }
 
-    const transactionsCollection = await getTransactionCollection()
+    const transactionsCollection = await getTransactionsCollection()
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
@@ -168,7 +168,7 @@ export async function getTransactions() {
       }
     }
 
-    const transactionsCollection = await getTransactionCollection()
+    const transactionsCollection = await getTransactionsCollection()
 
     const transactions = await transactionsCollection
       .find({ userId: new ObjectId(userId) })

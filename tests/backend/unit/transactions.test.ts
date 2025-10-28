@@ -11,6 +11,7 @@ import {
 } from "@/tests/backend/mocks/session.mock"
 import {
   mockTransaction,
+  mockUser,
   mockValidTransactionValues,
 } from "@/tests/shared/data"
 import {
@@ -19,6 +20,7 @@ import {
   getTransactions,
   updateTransaction,
 } from "@/actions/transactions"
+import { getTransactionsCollection } from "@/lib/collections"
 
 describe("Transactions Actions", () => {
   describe("createTransaction", () => {
@@ -71,7 +73,15 @@ describe("Transactions Actions", () => {
       const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await createTransaction(mockValidTransactionValues)
+      const transactionsCollection = await getTransactionsCollection()
+      const addedTransaction = await transactionsCollection.findOne({
+        userId: mockUser._id,
+      })
 
+      expect(addedTransaction?.type).toBe("income")
+      expect(addedTransaction?.categoryKey).toBe("business_freelance")
+      expect(addedTransaction?.amount).toBe(2500000)
+      expect(addedTransaction?.description).toBe("Dự án thiết kế web")
       expect(result.success).toBe(tTransactionsBE("transactionAdded"))
       expect(result.error).toBeUndefined()
     })
@@ -158,13 +168,21 @@ describe("Transactions Actions", () => {
       const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
-        type: "income",
+        type: "expense",
         categoryKey: "personal_care",
         amount: 100000,
         description: "Updated description",
         date: new Date("2024-01-16"),
       })
+      const transactionsCollection = await getTransactionsCollection()
+      const updatedTransaction = await transactionsCollection.findOne({
+        userId: mockUser._id,
+      })
 
+      expect(updatedTransaction?.type).toBe("expense")
+      expect(updatedTransaction?.categoryKey).toBe("personal_care")
+      expect(updatedTransaction?.amount).toBe(100000)
+      expect(updatedTransaction?.description).toBe("Updated description")
       expect(result.success).toBe(tTransactionsBE("transactionUpdated"))
       expect(result.error).toBeUndefined()
     })
@@ -228,7 +246,12 @@ describe("Transactions Actions", () => {
       const tTransactionsBE = await getTranslations("transactions.be")
 
       const result = await deleteTransaction(mockTransaction._id.toString())
+      const transactionsCollection = await getTransactionsCollection()
+      const deletedTransaction = await transactionsCollection.findOne({
+        userId: mockUser._id,
+      })
 
+      expect(deletedTransaction).toBe(null)
       expect(result.success).toBe(tTransactionsBE("transactionDeleted"))
       expect(result.error).toBeUndefined()
     })

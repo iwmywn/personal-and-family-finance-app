@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
-import { getUserCollection } from "@/lib/collections"
+import { getUsersCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
 export async function updatePassword(values: PasswordFormValues) {
@@ -30,8 +30,8 @@ export async function updatePassword(values: PasswordFormValues) {
 
     const { currentPassword, newPassword } = parsedValues.data
 
-    const userCollection = await getUserCollection()
-    const existingUser = await userCollection.findOne({
+    const usersCollection = await getUsersCollection()
+    const existingUser = await usersCollection.findOne({
       _id: new ObjectId(userId),
     })
 
@@ -62,7 +62,7 @@ export async function updatePassword(values: PasswordFormValues) {
       return { success: tSettingsBE("noChanges") }
     }
 
-    await userCollection.updateOne(
+    await usersCollection.updateOne(
       { _id: new ObjectId(userId) },
       {
         $set: {

@@ -17,6 +17,7 @@ import {
 import {
   mockCustomCategory,
   mockTransaction,
+  mockUser,
   mockValidCategoryValues,
 } from "@/tests/shared/data"
 import {
@@ -25,6 +26,7 @@ import {
   getCustomCategories,
   updateCustomCategory,
 } from "@/actions/categories"
+import { getCategoriesCollection } from "@/lib/collections"
 
 describe("Categories Actions", () => {
   describe("createCustomCategory", () => {
@@ -88,6 +90,8 @@ describe("Categories Actions", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(tCategoriesBE("categoryKeyError"))
+
+      vi.doUnmock("nanoid")
     })
 
     it("should return error when database insertion fails", async () => {
@@ -112,7 +116,14 @@ describe("Categories Actions", () => {
       const tCategoriesBE = await getTranslations("categories.be")
 
       const result = await createCustomCategory(mockValidCategoryValues)
+      const categoriesTransaction = await getCategoriesCollection()
+      const addedCategory = await categoriesTransaction.findOne({
+        userId: mockUser._id,
+      })
 
+      expect(addedCategory?.type).toBe("income")
+      expect(addedCategory?.label).toBe("Salary")
+      expect(addedCategory?.description).toBe("Monthly job income")
       expect(result.success).toBe(tCategoriesBE("categoryAdded"))
       expect(result.error).toBeUndefined()
     })
@@ -224,12 +235,19 @@ describe("Categories Actions", () => {
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         {
-          type: "income",
+          type: "expense",
           label: "Updated Label",
           description: "Updated description",
         }
       )
+      const categoriesTransaction = await getCategoriesCollection()
+      const updatedCategory = await categoriesTransaction.findOne({
+        userId: mockUser._id,
+      })
 
+      expect(updatedCategory?.type).toBe("expense")
+      expect(updatedCategory?.label).toBe("Updated Label")
+      expect(updatedCategory?.description).toBe("Updated description")
       expect(result.success).toBe(tCategoriesBE("categoryUpdated"))
       expect(result.error).toBeUndefined()
     })
@@ -319,7 +337,12 @@ describe("Categories Actions", () => {
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()
       )
+      const categoriesTransaction = await getCategoriesCollection()
+      const deletedCategory = await categoriesTransaction.findOne({
+        userId: mockUser._id,
+      })
 
+      expect(deletedCategory).toBe(null)
       expect(result.success).toBe(tCategoriesBE("categoryDeleted"))
       expect(result.error).toBeUndefined()
     })

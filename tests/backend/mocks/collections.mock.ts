@@ -28,14 +28,14 @@ export const mockTransactionCollection = {
 }
 
 export const setupUserCollectionMock = () => {
-  vi.spyOn(collectionsLib, "getUserCollection").mockResolvedValue(
+  vi.spyOn(collectionsLib, "getUsersCollection").mockResolvedValue(
     mockUserCollection as unknown as Collection<OptionalId<DBUser>>
   )
   return mockUserCollection
 }
 
 export const setupCategoryCollectionMock = () => {
-  vi.spyOn(collectionsLib, "getCategoryCollection").mockResolvedValue(
+  vi.spyOn(collectionsLib, "getCategoriesCollection").mockResolvedValue(
     mockCategoryCollection as unknown as Collection<
       OptionalId<DBCustomCategory>
     >
@@ -44,7 +44,7 @@ export const setupCategoryCollectionMock = () => {
 }
 
 export const setupTransactionCollectionMock = () => {
-  vi.spyOn(collectionsLib, "getTransactionCollection").mockResolvedValue(
+  vi.spyOn(collectionsLib, "getTransactionsCollection").mockResolvedValue(
     mockTransactionCollection as unknown as Collection<
       OptionalId<DBTransaction>
     >
@@ -55,17 +55,17 @@ export const setupTransactionCollectionMock = () => {
 export const mockUserCollectionError = (
   error: Error = new Error("Database error")
 ) => {
-  vi.spyOn(collectionsLib, "getUserCollection").mockRejectedValue(error)
+  vi.spyOn(collectionsLib, "getUsersCollection").mockRejectedValue(error)
 }
 
 export const mockCategoryCollectionError = (
   error: Error = new Error("Database error")
 ) => {
-  vi.spyOn(collectionsLib, "getCategoryCollection").mockRejectedValue(error)
+  vi.spyOn(collectionsLib, "getCategoriesCollection").mockRejectedValue(error)
 }
 
 export const mockTransactionCollectionError = (
   error: Error = new Error("Database error")
 ) => {
-  vi.spyOn(collectionsLib, "getTransactionCollection").mockRejectedValue(error)
+  vi.spyOn(collectionsLib, "getTransactionsCollection").mockRejectedValue(error)
 }

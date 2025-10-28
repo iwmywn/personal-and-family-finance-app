@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs"
 import { getTranslations } from "next-intl/server"
 
 import { insertTestUser } from "@/tests/backend/helpers/database"
@@ -8,6 +9,7 @@ import {
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser, mockValidPasswordValues } from "@/tests/shared/data"
 import { updatePassword } from "@/actions/account"
+import { getUsersCollection } from "@/lib/collections"
 
 describe("Account Actions", () => {
   describe("updatePassword", () => {
@@ -87,7 +89,16 @@ describe("Account Actions", () => {
       const tSettingsBE = await getTranslations("settings.be")
 
       const result = await updatePassword(mockValidPasswordValues)
+      const usersCollection = await getUsersCollection()
+      const updatedUser = await usersCollection.findOne({ _id: mockUser._id })
 
+      expect(updatedUser).not.toBe(null)
+      expect(
+        await bcrypt.compare("TestPassword123!", updatedUser!.password)
+      ).toBe(false)
+      expect(
+        await bcrypt.compare("NewPassword456!", updatedUser!.password)
+      ).toBe(true)
       expect(result.success).toBe(tSettingsBE("passwordUpdated"))
       expect(result.error).toBeUndefined()
     })
