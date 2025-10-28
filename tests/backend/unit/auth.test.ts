@@ -74,9 +74,14 @@ describe("Auth", () => {
       await insertTestUser(mockUser)
       mockRecaptchaSuccess()
 
+      vi.mock("@/i18n/locale", () => ({
+        setUserLocale: vi.fn(),
+      }))
       const result = await signIn(mockValidSignInValues, "valid-token")
 
       expect(result.error).toBeUndefined()
+
+      vi.doUnmock("@/i18n/locale")
     })
 
     it("should return error when recaptcha verification throws error", async () => {
