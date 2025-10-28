@@ -81,7 +81,7 @@ export async function updateCustomCategory(
   try {
     const tCategoriesBE = await getTranslations("categories.be")
     const tCommonBE = await getTranslations("common.be")
-    const tSchema = await getTranslations("Schemas.Category")
+    const tSchema = await getTranslations("schemas.category")
     const customCategorySchema = createCategorySchema(tSchema)
     const { userId } = await session.user.get()
 

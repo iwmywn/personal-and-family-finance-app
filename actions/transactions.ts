@@ -57,7 +57,7 @@ export async function updateTransaction(
   try {
     const tTransactionsBE = await getTranslations("transactions.be")
     const tCommonBE = await getTranslations("common.be")
-    const tSchema = await getTranslations("Schemas.Transaction")
+    const tSchema = await getTranslations("schemas.transaction")
     const transactionSchema = createTransactionSchema(tSchema)
     const { userId } = await session.user.get()
 
