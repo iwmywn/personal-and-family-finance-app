@@ -1,5 +1,6 @@
 "use server"
 
+import { setUserLocale } from "@/i18n/locale"
 import { createSignInSchema, type SignInFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
@@ -44,6 +45,7 @@ export async function signIn(
     if (!isPasswordValid) return { error: tAuthBE("signInError") }
 
     await session.user.create(existingUser._id.toString(), existingUser.locale)
+    await setUserLocale(existingUser.locale)
 
     return { error: undefined }
   } catch (error) {
