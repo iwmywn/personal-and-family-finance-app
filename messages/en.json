@@ -53,7 +53,8 @@
       "signIn": "Sign In",
       "username": "Username",
       "password": "Password",
-      "signInDescription": "Enter your username and password to sign in to your account."
+      "signInDescription": "Enter your username and password to sign in to your account.",
+      "signingOut": "Signing out..."
     },
     "be": {
       "signInError": "Incorrect username or password!",

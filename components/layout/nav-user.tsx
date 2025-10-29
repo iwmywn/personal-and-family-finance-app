@@ -20,17 +20,18 @@ export function NavUser() {
   const router = useRouter()
   const pathname = usePathname()
   const tNavigation = useTranslations("navigation")
+  const tAuthFe = useTranslations("auth.fe")
 
   async function onSignOut() {
-    const { success, error } = await signOut()
-
-    if (error || !success) {
-      toast.error(error)
-    } else {
-      toast.success(success)
-      router.push("/signin")
-      setTimeout(() => clearSWRCache(), 3000)
-    }
+    toast.promise(signOut(), {
+      loading: tAuthFe("signingOut"),
+      success: ({ success }) => {
+        router.push("/signin")
+        setTimeout(() => clearSWRCache(), 3000)
+        return success
+      },
+      error: ({ error }) => error,
+    })
   }
 
   return (

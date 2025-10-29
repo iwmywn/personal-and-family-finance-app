@@ -53,7 +53,8 @@
       "signIn": "Đăng nhập",
       "username": "Tên đăng nhập",
       "password": "Mật khẩu",
-      "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản."
+      "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
+      "signingOut": "Đang đăng xuất..."
     },
     "be": {
       "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",
