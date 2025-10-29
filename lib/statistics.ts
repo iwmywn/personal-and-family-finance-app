@@ -1,6 +1,6 @@
 import type { Transaction, TransactionCategoryKey } from "@/lib/definitions"
 
-export interface QuickStats {
+interface QuickStats {
   currentMonthCount: number
   highestTransaction: Transaction | null
   lowestTransaction: Transaction | null
@@ -9,7 +9,7 @@ export interface QuickStats {
   popularCategory: TransactionCategoryKey[]
 }
 
-export interface SummaryStats {
+interface SummaryStats {
   totalIncome: number
   totalExpense: number
   balance: number
@@ -18,7 +18,7 @@ export interface SummaryStats {
   expenseCount: number
 }
 
-export interface CategoryStats {
+interface CategoryStats {
   categoryKey: string
   count: number
   total: number

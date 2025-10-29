@@ -1,6 +1,6 @@
 import type { CustomCategory, Transaction } from "@/lib/definitions"
 
-export interface TransactionFilters {
+interface TransactionFilters {
   searchTerm?: string
   selectedDate?: Date | null
   dateRange?: {
@@ -13,7 +13,7 @@ export interface TransactionFilters {
   filterCategoryKey?: string
 }
 
-export interface CategoryFilters {
+interface CategoryFilters {
   searchTerm?: string
   filterType?: string
 }
