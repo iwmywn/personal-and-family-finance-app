@@ -4,7 +4,6 @@ import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedUser,
-  mockSession,
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser } from "@/tests/shared/data"
@@ -47,14 +46,6 @@ describe("General", () => {
       vi.mock("@/i18n/locale", () => ({
         setUserLocale: vi.fn(),
       }))
-      const mockSave = vi.fn().mockResolvedValue(undefined)
-      const mockSessionData = {
-        userId: mockUser._id.toString(),
-        locale: "en",
-        save: mockSave,
-      }
-
-      mockSession.user.get.mockResolvedValue(mockSessionData)
 
       const result = await updateLocale("vi")
       const usersCollection = await getUsersCollection()
@@ -62,8 +53,6 @@ describe("General", () => {
         _id: mockUser._id,
       })
 
-      expect(mockSessionData.locale).toBe("vi")
-      expect(mockSave).toHaveBeenCalled()
       expect(setUserLocale).toHaveBeenCalledWith("vi")
       expect(updatedUser?.locale).toBe("vi")
       expect(result.success).toBe(tSettingsBE("languageUpdated"))

@@ -47,7 +47,7 @@ export async function signIn(
     if (!isPasswordValid) return { error: tAuthBE("signInError") }
 
     await Promise.all([
-      session.user.create(existingUser._id.toString(), existingUser.locale),
+      session.user.create(existingUser._id.toString()),
       setUserLocale(existingUser.locale),
     ])
 

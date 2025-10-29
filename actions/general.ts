@@ -44,10 +44,7 @@ export async function updateLocale(locale: AppLocale) {
       }
     )
 
-    const s = await session.user.get()
-    s.locale = locale
-
-    await Promise.all([s.save(), setUserLocale(locale)])
+    await setUserLocale(locale)
 
     return { success: tSettingsBE("languageUpdated") }
   } catch (error) {
