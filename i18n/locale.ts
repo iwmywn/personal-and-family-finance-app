@@ -26,7 +26,7 @@ export async function getUserLocale() {
   return locale
 }
 
-const tenYears = 10 * 365 * 24 * 60 * 60
+const fourHundredDays = 400 * 24 * 60 * 60
 
 export async function setUserLocale(locale: AppLocale) {
   const cookieStore = await cookies()
@@ -34,6 +34,6 @@ export async function setUserLocale(locale: AppLocale) {
   cookieStore.set(COOKIE_NAME, locale, {
     sameSite: "lax",
     path: "/",
-    maxAge: tenYears,
+    maxAge: fourHundredDays,
   })
 }
