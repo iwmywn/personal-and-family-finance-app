@@ -1,11 +1,11 @@
 import { cache } from "react"
 import { cookies } from "next/headers"
-import { Locale } from "@/i18n/config"
+import { AppLocale } from "@/i18n/config"
 import { getIronSession, SessionOptions } from "iron-session"
 
 interface UserSession {
   userId: string
-  locale: Locale
+  locale: AppLocale
   expires: Date
 }
 
@@ -32,7 +32,7 @@ async function getSession<T extends object>(options: SessionOptions) {
 const session = {
   user: {
     get: cache(async () => getSession<UserSession>(sessionOptions.user)),
-    create: async (userId: string, locale: Locale) => {
+    create: async (userId: string, locale: AppLocale) => {
       const s = await session.user.get()
       s.userId = userId
       s.locale = locale

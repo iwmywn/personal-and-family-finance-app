@@ -1,6 +1,6 @@
 "use server"
 
-import { Locale, locales } from "@/i18n/config"
+import { AppLocale, LOCALES } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server"
 import { getUsersCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
-export async function updateLocale(locale: Locale) {
+export async function updateLocale(locale: AppLocale) {
   try {
     const [tCommonBE, tSettingsBE] = await Promise.all([
       getTranslations("common.be"),
@@ -22,7 +22,7 @@ export async function updateLocale(locale: Locale) {
       }
     }
 
-    if (!locales.includes(locale)) {
+    if (!LOCALES.includes(locale)) {
       return { error: tSettingsBE("languageUpdateFailed") }
     }
 

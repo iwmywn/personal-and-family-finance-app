@@ -54,10 +54,11 @@ import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormLink } from "@/components/custom/form-link"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useFormatDate } from "@/hooks/use-format-date"
 import { getCategoriesWithDetails, getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { cn, formatDate, normalizeToUTCDate } from "@/lib/utils"
+import { cn, normalizeToUTCDate } from "@/lib/utils"
 
 interface TransactionDialogProps {
   transaction?: Transaction
@@ -79,6 +80,7 @@ export function TransactionDialog({
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
   const tSchemasTransaction = useTranslations("schemas.transaction")
+  const formatDate = useFormatDate()
   const schema = createTransactionSchema(tSchemasTransaction)
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(schema),

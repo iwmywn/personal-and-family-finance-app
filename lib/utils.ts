@@ -1,6 +1,6 @@
+import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 import { clsx, type ClassValue } from "clsx"
 import { format } from "date-fns"
-import { vi } from "date-fns/locale"
 import { twMerge } from "tailwind-merge"
 
 import type { Transaction } from "@/lib/definitions"
@@ -16,8 +16,10 @@ export function formatCurrency(amount: number) {
   }).format(amount)
 }
 
-export function formatDate(date: Date) {
-  return format(date, "EEEEE, dd/MM/yyyy", { locale: vi })
+export function formatDate(date: Date, locale: AppLocale) {
+  return format(date, "EEEEEE, dd/MM/yyyy", {
+    locale: LOCALE_CONFIG[locale].dateFnsLocale,
+  })
 }
 
 export function normalizeToUTCDate(date: Date) {

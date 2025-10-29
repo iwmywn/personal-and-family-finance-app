@@ -36,11 +36,12 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
+import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
 import { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { formatCurrency, formatDate } from "@/lib/utils"
+import { formatCurrency } from "@/lib/utils"
 
 interface TransactionsTableProps {
   filteredTransactions: Transaction[]
@@ -56,6 +57,7 @@ export function TransactionsTable({
   const { customCategories } = useCustomCategories()
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
+  const formatDate = useFormatDate()
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)

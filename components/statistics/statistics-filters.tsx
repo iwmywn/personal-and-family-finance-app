@@ -23,14 +23,16 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
+import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsConfig } from "@/hooks/use-months-config"
 import { filterTransactions } from "@/lib/filters"
 import { useTransactions } from "@/lib/swr"
-import { formatDate, getUniqueYears } from "@/lib/utils"
+import { getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
   const tCommonFE = useTranslations("common.fe")
+  const formatDate = useFormatDate()
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)

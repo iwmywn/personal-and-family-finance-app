@@ -81,7 +81,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                     }`}
                   >
                     {highestTransaction !== null
-                      ? `${formatCurrency(highestTransaction.amount)}`
+                      ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
                       : tHomeFE("noData")}
                   </div>
                 </div>
@@ -107,7 +107,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                     }`}
                   >
                     {lowestTransaction !== null
-                      ? `${formatCurrency(lowestTransaction.amount)}`
+                      ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
                       : tHomeFE("noData")}
                   </div>
                 </div>

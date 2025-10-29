@@ -2,7 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { Locale } from "@/i18n/config"
+import { AppLocale, LOCALE_CONFIG } from "@/i18n/config"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -22,7 +22,7 @@ export function LanguageSelector() {
   const [isPending, startTransition] = useTransition()
   const { user, mutate } = useUser()
 
-  async function handleLocaleChange(locale: Locale) {
+  async function handleLocaleChange(locale: AppLocale) {
     startTransition(async () => {
       const result = await updateLocale(locale)
 
@@ -44,7 +44,7 @@ export function LanguageSelector() {
   return (
     <div className="flex items-center space-x-2">
       <Select
-        value={user!.locale!}
+        value={user!.locale}
         onValueChange={handleLocaleChange}
         disabled={isPending}
       >
@@ -52,8 +52,11 @@ export function LanguageSelector() {
           <SelectValue placeholder={tSettingsFE("language")} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="vi">Tiếng Việt</SelectItem>
-          <SelectItem value="en">English</SelectItem>
+          {Object.entries(LOCALE_CONFIG).map(([locale, config]) => (
+            <SelectItem key={locale} value={locale}>
+              {config.displayName}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/empty"
 import { Separator } from "@/components/ui/separator"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryLabel } from "@/lib/categories"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { formatCurrency, formatDate } from "@/lib/utils"
+import { formatCurrency } from "@/lib/utils"
 
 interface RecentTransactionsProps {
   offsetHeight: number
@@ -32,6 +33,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const tHomeFE = useTranslations("home.fe")
   const tCommonFE = useTranslations("common.fe")
+  const formatDate = useFormatDate()
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
