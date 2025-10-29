@@ -12,17 +12,10 @@ import {
 } from "@/components/ui/sidebar"
 import { Nav } from "@/components/layout/nav"
 import { NavUser } from "@/components/layout/nav-user"
-import { nav } from "@/lib/nav"
 import { siteConfig } from "@/app/pffa.config"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const tNavigation = useTranslations("navigation")
   const tCommonFE = useTranslations("common.fe")
-
-  const translatedNav = nav.map((item) => ({
-    ...item,
-    title: tNavigation(item.title),
-  }))
 
   return (
     <Sidebar
@@ -46,7 +39,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
-        <Nav nav={translatedNav} />
+        <Nav />
       </SidebarContent>
       <SidebarFooter className="p-0">
         <NavUser />

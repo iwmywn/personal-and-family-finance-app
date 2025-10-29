@@ -15,14 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { nav } from "@/lib/nav"
-
-const other = [
-  {
-    title: "settings",
-    url: "/settings",
-  },
-]
+import { mainNav, secondaryNav } from "@/lib/nav"
 
 const ColorDialog =
   process.env.NODE_ENV === "development"
@@ -39,7 +32,7 @@ export function Header() {
   const pathname = usePathname()
   const tNavigation = useTranslations("navigation")
 
-  const allNavItems = [...nav, ...other]
+  const allNavItems = [...mainNav, ...secondaryNav]
   const foundItem = allNavItems.find(
     (item) => item.url === pathname || pathname.startsWith(item.url)
   )
@@ -66,7 +59,7 @@ export function Header() {
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>
                   <BreadcrumbPage>
-                    {foundItem ? tNavigation(foundItem.title) : ""}
+                    {foundItem ? tNavigation(foundItem.key) : ""}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </>

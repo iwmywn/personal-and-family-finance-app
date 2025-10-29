@@ -1,24 +1,38 @@
-import { ChartColumnIncreasing, FolderOpen, Home, Wallet } from "lucide-react"
+import {
+  ChartColumnIncreasing,
+  FolderOpen,
+  Home,
+  Settings,
+  Wallet,
+} from "lucide-react"
 
-export const nav = [
+export const mainNav = [
   {
-    title: "home",
+    key: "home",
     url: "/home",
     icon: Home,
   },
   {
-    title: "statistics",
+    key: "statistics",
     url: "/statistics",
     icon: ChartColumnIncreasing,
   },
   {
-    title: "transactions",
+    key: "transactions",
     url: "/transactions",
     icon: Wallet,
   },
   {
-    title: "categories",
+    key: "categories",
     url: "/categories",
     icon: FolderOpen,
+  },
+]
+
+export const secondaryNav = [
+  {
+    key: "settings",
+    url: "/settings",
+    icon: Settings,
   },
 ]

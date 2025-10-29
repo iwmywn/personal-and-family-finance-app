@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { type LucideIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 import {
   SidebarGroup,
@@ -11,43 +11,31 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { mainNav } from "@/lib/nav"
 
-interface NavItem {
-  title: string
-  url: string
-  icon: LucideIcon
-}
-
-interface NavProps {
-  nav: NavItem[]
-}
-
-export function Nav({ nav }: NavProps) {
+export function Nav() {
   const pathname = usePathname()
+  const tNavigation = useTranslations("navigation")
 
   return (
     <>
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            {nav.map((item) => {
-              const isActive = pathname === item.url
-
-              return (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    isActive={isActive}
-                    tooltip={item.title}
-                    asChild
-                  >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )
-            })}
+            {mainNav.map(({ key, url, icon: Icon }) => (
+              <SidebarMenuItem key={url}>
+                <SidebarMenuButton
+                  isActive={pathname === url}
+                  tooltip={tNavigation(key)}
+                  asChild
+                >
+                  <Link href={url}>
+                    <Icon />
+                    {tNavigation(key)}
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LogOut, Settings } from "lucide-react"
+import { LogOut } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -14,6 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { secondaryNav } from "@/lib/nav"
 import { clearSWRCache } from "@/lib/swr"
 
 export function NavUser() {
@@ -38,18 +39,20 @@ export function NavUser() {
     <SidebarGroup>
       <SidebarGroupContent>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              isActive={pathname === "/settings"}
-              tooltip={tNavigation("settings")}
-              asChild
-            >
-              <Link href="/settings">
-                <Settings />
-                {tNavigation("settings")}
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          {secondaryNav.map(({ key, url, icon: Icon }) => (
+            <SidebarMenuItem key={url}>
+              <SidebarMenuButton
+                isActive={pathname === url}
+                tooltip={tNavigation(key)}
+                asChild
+              >
+                <Link href={url}>
+                  <Icon />
+                  {tNavigation(key)}
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
           <SidebarMenuItem>
             <SidebarMenuButton
               tooltip={tNavigation("signOut")}
