@@ -11,7 +11,7 @@ import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { useLocale } from "next-intl"
-import { AppLocale, LOCALE_CONFIG } from "@/i18n/config"
+import { type AppLocale, LOCALE_CONFIG } from "@/i18n/config"
 
 function Calendar({
   className,

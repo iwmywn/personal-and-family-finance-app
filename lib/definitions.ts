@@ -1,4 +1,4 @@
-import { AppLocale } from "@/i18n/config"
+import type { AppLocale } from "@/i18n/config"
 import type { ObjectId } from "mongodb"
 
 import { ALL_CATEGORIES, TRANSACTION_TYPES } from "@/lib/categories"

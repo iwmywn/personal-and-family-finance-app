@@ -1,7 +1,7 @@
 "use server"
 
 import { cookies } from "next/headers"
-import { AppLocale, DEFAULT_LOCALE } from "@/i18n/config"
+import { DEFAULT_LOCALE, type AppLocale } from "@/i18n/config"
 import { ObjectId } from "mongodb"
 
 import { getUsersCollection } from "@/lib/collections"

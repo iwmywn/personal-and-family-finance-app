@@ -7,13 +7,15 @@ import { nunito } from "@/app/fonts"
 
 import "./globals.css"
 
+import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
+
 import { Toaster } from "@/components/ui/sonner"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { siteConfig } from "@/app/pffa.config"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale()
+  const locale = (await getLocale()) as AppLocale
   const tCommonFE = await getTranslations("common.fe")
 
   return {
@@ -31,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: "iwmywn",
     openGraph: {
       type: "website",
-      locale: locale === "vi" ? "vi" : "en_US",
+      locale: LOCALE_CONFIG[locale].intlLocale,
       url: process.env.NEXT_PUBLIC_URL,
       title: siteConfig.name,
       description: tCommonFE("appDescription"),

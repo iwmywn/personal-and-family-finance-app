@@ -1,6 +1,6 @@
 "use server"
 
-import { AppLocale, LOCALES } from "@/i18n/config"
+import { LOCALES, type AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"

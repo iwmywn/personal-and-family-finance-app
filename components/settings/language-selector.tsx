@@ -2,7 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { AppLocale, LOCALE_CONFIG } from "@/i18n/config"
+import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
