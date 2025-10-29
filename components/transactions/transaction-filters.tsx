@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useMonthsConfig } from "@/hooks/use-months-config"
 import {
   EXPENSE_CATEGORIES,
   getCategoryLabel,
@@ -37,14 +38,13 @@ import {
 } from "@/lib/categories"
 import { filterTransactions } from "@/lib/filters"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
+import { formatDate, getUniqueYears } from "@/lib/utils"
 
 export function TransactionFilters() {
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
-  const tMonths = useTranslations("months")
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -64,7 +64,7 @@ export function TransactionFilters() {
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
 
-  const allMonths = getMonthsConfig(tMonths)
+  const allMonths = useMonthsConfig()
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =

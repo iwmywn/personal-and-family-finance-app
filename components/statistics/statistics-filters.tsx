@@ -23,14 +23,14 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
+import { useMonthsConfig } from "@/hooks/use-months-config"
 import { filterTransactions } from "@/lib/filters"
 import { useTransactions } from "@/lib/swr"
-import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
+import { formatDate, getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
   const tCommonFE = useTranslations("common.fe")
-  const tMonths = useTranslations("months")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
@@ -44,7 +44,7 @@ export function StatisticsFilters() {
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
 
-  const allMonths = getMonthsConfig(tMonths)
+  const allMonths = useMonthsConfig()
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
