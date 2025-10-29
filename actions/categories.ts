@@ -107,7 +107,10 @@ export async function updateCustomCategory(
       }
     }
 
-    const categoriesCollection = await getCategoriesCollection()
+    const [categoriesCollection, transactionsCollection] = await Promise.all([
+      getCategoriesCollection(),
+      getTransactionsCollection(),
+    ])
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
@@ -131,16 +134,29 @@ export async function updateCustomCategory(
       return { error: tCategoriesBE("categoryExists") }
     }
 
-    await categoriesCollection.updateOne(
-      { _id: new ObjectId(categoryId), userId: new ObjectId(userId) },
-      {
-        $set: {
-          type: values.type,
-          label: values.label,
-          description: values.description,
+    await Promise.all([
+      categoriesCollection.updateOne(
+        { _id: new ObjectId(categoryId), userId: new ObjectId(userId) },
+        {
+          $set: {
+            type: values.type,
+            label: values.label,
+            description: values.description,
+          },
+        }
+      ),
+      transactionsCollection.updateMany(
+        {
+          userId: new ObjectId(userId),
+          categoryKey: existingCategory.categoryKey,
         },
-      }
-    )
+        {
+          $set: {
+            type: values.type,
+          },
+        }
+      ),
+    ])
 
     return { success: tCategoriesBE("categoryUpdated"), error: undefined }
   } catch (error) {

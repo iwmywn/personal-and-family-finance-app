@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { mutate as globalMutate } from "swr"
 
 import {
   createCustomCategory,
@@ -87,6 +88,7 @@ export function CategoryDialog({
             c._id === category._id ? { ...c, ...values } : c
           ),
         })
+        globalMutate("transactions")
         toast.success(success)
         setOpen(false)
       }
@@ -147,16 +149,8 @@ export function CategoryDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={categoryType} onValueChange={handleTypeChange}>
               <TabsList className="w-full">
-                <TabsTrigger
-                  disabled={category && category.type === "expense" && true}
-                  value="income"
-                >
-                  {tCommonFE("income")}
-                </TabsTrigger>
-                <TabsTrigger
-                  disabled={category && category.type === "income" && true}
-                  value="expense"
-                >
+                <TabsTrigger value="income">{tCommonFE("income")}</TabsTrigger>
+                <TabsTrigger value="expense">
                   {tCommonFE("expense")}
                 </TabsTrigger>
               </TabsList>

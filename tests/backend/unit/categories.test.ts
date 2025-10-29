@@ -25,7 +25,10 @@ import {
   getCustomCategories,
   updateCustomCategory,
 } from "@/actions/categories"
-import { getCategoriesCollection } from "@/lib/collections"
+import {
+  getCategoriesCollection,
+  getTransactionsCollection,
+} from "@/lib/collections"
 
 describe("Categories", () => {
   describe("createCustomCategory", () => {
@@ -202,7 +205,26 @@ describe("Categories", () => {
     })
 
     it("should successfully update custom category", async () => {
-      await insertTestCategory(mockCustomCategory)
+      await Promise.all([
+        insertTestCategory(mockCustomCategory),
+        insertTestTransaction({
+          ...mockTransaction,
+          _id: new ObjectId("6900f0887465621be45e8d30"),
+          categoryKey: mockCustomCategory.categoryKey,
+          type: "income",
+        }),
+        insertTestTransaction({
+          ...mockTransaction,
+          _id: new ObjectId("6900f0af8a1c0865ef9429c3"),
+          categoryKey: mockCustomCategory.categoryKey,
+          type: "income",
+        }),
+        insertTestTransaction({
+          ...mockTransaction,
+          _id: new ObjectId("6900f0b298e321c264864402"),
+          type: "income",
+        }),
+      ])
       mockAuthenticatedUser()
 
       const result = await updateCustomCategory(
@@ -213,15 +235,32 @@ describe("Categories", () => {
           description: "Updated description",
         }
       )
-      const categoriesTransaction = await getCategoriesCollection()
-      const updatedCategory = await categoriesTransaction.findOne({
-        _id: mockCustomCategory._id,
-        userId: mockUser._id,
-      })
+      const [categoriesTransaction, transactionsCollection] = await Promise.all(
+        [getCategoriesCollection(), getTransactionsCollection()]
+      )
+      const [updatedCategory, relatedTransactions, unrelatedTransaction] =
+        await Promise.all([
+          categoriesTransaction.findOne({
+            _id: mockCustomCategory._id,
+            userId: mockUser._id,
+          }),
+          transactionsCollection
+            .find({
+              userId: mockUser._id,
+              categoryKey: mockCustomCategory.categoryKey,
+            })
+            .toArray(),
+          transactionsCollection.findOne({
+            _id: new ObjectId("6900f0b298e321c264864402"),
+          }),
+        ])
 
       expect(updatedCategory?.type).toBe("expense")
       expect(updatedCategory?.label).toBe("Updated Label")
       expect(updatedCategory?.description).toBe("Updated description")
+      expect(relatedTransactions).toHaveLength(2)
+      expect(relatedTransactions.every((t) => t.type === "expense")).toBe(true)
+      expect(unrelatedTransaction?.type).toBe("income")
       expect(result.success).toBe(tCategoriesBE("categoryUpdated"))
       expect(result.error).toBeUndefined()
     })
@@ -229,6 +268,19 @@ describe("Categories", () => {
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
+
+      const result = await updateCustomCategory(
+        mockCustomCategory._id.toString(),
+        mockValidCategoryValues
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(tCategoriesBE("categoryUpdateFailed"))
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockAuthenticatedUser()
+      mockTransactionCollectionError()
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),

@@ -29,7 +29,6 @@ import { formatDate, getMonthsConfig, getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useTransactions()
-  const tStatisticsFE = useTranslations("statistics.fe")
   const tCommonFE = useTranslations("common.fe")
   const tMonths = useTranslations("months")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)

@@ -3,10 +3,9 @@
 import { useState } from "react"
 import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 
 import { createTransaction, updateTransaction } from "@/actions/transactions"
@@ -58,7 +57,7 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { getCategoriesWithDetails, getCategoryLabel } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
-import { cn, normalizeToUTCDate } from "@/lib/utils"
+import { cn, formatDate, normalizeToUTCDate } from "@/lib/utils"
 
 interface TransactionDialogProps {
   transaction?: Transaction
@@ -88,12 +87,17 @@ export function TransactionDialog({
       amount: transaction?.amount || 0,
       description: transaction?.description || "",
       categoryKey: transaction?.categoryKey || "",
-      date: transaction?.date ? new Date(transaction.date) : new Date(),
+      date: transaction?.date ? new Date(transaction.date) : undefined,
     },
   })
 
   const { transactions, mutate } = useTransactions()
   const { customCategories } = useCustomCategories()
+
+  const selectedDate = useWatch({
+    control: form.control,
+    name: "date",
+  })
 
   async function onSubmit(values: TransactionFormValues) {
     setIsLoading(true)
@@ -109,9 +113,7 @@ export function TransactionDialog({
       } else {
         mutate({
           transactions: transactions!.map((t) =>
-            t._id === transaction._id
-              ? { ...t, ...values, date: values.date }
-              : t
+            t._id === transaction._id ? { ...t, ...values } : t
           ),
         })
         toast.success(success)
@@ -142,7 +144,7 @@ export function TransactionDialog({
           amount: 0,
           description: "",
           categoryKey: "",
-          date: new Date(),
+          date: undefined,
         })
         setTransactionType("income")
         setOpen(false)
@@ -161,7 +163,9 @@ export function TransactionDialog({
 
   const renderCategorySelect = (type: "income" | "expense") => {
     const typeLabel =
-      type === "income" ? tCommonFE("income") : tCommonFE("expense")
+      type === "income"
+        ? tCommonFE("income").toLowerCase()
+        : tCommonFE("expense").toLowerCase()
     const placeholder = tTransactionsFE("selectCategory", { type: typeLabel })
 
     return (
@@ -257,20 +261,8 @@ export function TransactionDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={transactionType} onValueChange={handleTypeChange}>
               <TabsList className="w-full">
-                <TabsTrigger
-                  disabled={
-                    transaction && transaction.type === "expense" && true
-                  }
-                  value="income"
-                >
-                  {tCommonFE("income")}
-                </TabsTrigger>
-                <TabsTrigger
-                  disabled={
-                    transaction && transaction.type === "income" && true
-                  }
-                  value="expense"
-                >
+                <TabsTrigger value="income">{tCommonFE("income")}</TabsTrigger>
+                <TabsTrigger value="expense">
                   {tCommonFE("expense")}
                 </TabsTrigger>
               </TabsList>
@@ -347,11 +339,11 @@ export function TransactionDialog({
                           variant="outline"
                           className={cn(
                             "w-full justify-between font-normal",
-                            !field.value && "text-muted-foreground"
+                            !selectedDate && "text-muted-foreground"
                           )}
                         >
-                          {field.value ? (
-                            format(field.value, "dd/MM/yyyy")
+                          {selectedDate ? (
+                            formatDate(selectedDate)
                           ) : (
                             <span>{tCommonFE("selectDate")}</span>
                           )}
@@ -366,7 +358,7 @@ export function TransactionDialog({
                       <Calendar
                         autoFocus
                         mode="single"
-                        selected={field.value}
+                        selected={selectedDate}
                         captionLayout="dropdown"
                         onSelect={(date) => {
                           field.onChange(date)
