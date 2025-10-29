@@ -13,6 +13,8 @@
       "expense": "Expense",
       "type": "Type",
       "category": "Category",
+      "incomeCategory": "Income Category",
+      "expenseCategory": "Expense Category",
       "from": "From",
       "to": "To",
       "selectDate": "Select Date",

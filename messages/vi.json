@@ -13,6 +13,8 @@
       "expense": "Chi tiêu",
       "type": "Loại",
       "category": "Danh mục",
+      "incomeCategory": "Danh mục thu nhập",
+      "expenseCategory": "Danh mục chi tiêu",
       "from": "Từ",
       "to": "Đến",
       "selectDate": "Chọn ngày",

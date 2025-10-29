@@ -164,11 +164,13 @@ export function TransactionDialog({
   }
 
   const renderCategorySelect = (type: "income" | "expense") => {
-    const typeLabel =
+    const label =
       type === "income"
-        ? tCommonFE("income").toLowerCase()
-        : tCommonFE("expense").toLowerCase()
-    const placeholder = tTransactionsFE("selectCategory", { type: typeLabel })
+        ? tCommonFE("incomeCategory")
+        : tCommonFE("expenseCategory")
+    const placeholder = tTransactionsFE("selectCategory", {
+      type: tCommonFE(type).toLowerCase(),
+    })
 
     return (
       <FormField
@@ -176,9 +178,7 @@ export function TransactionDialog({
         name="categoryKey"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>
-              {tCommonFE("category")} {typeLabel}
-            </FormLabel>
+            <FormLabel>{label}</FormLabel>
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className="w-full">
