@@ -9,7 +9,7 @@ import {
   getCategoriesCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
-import { CustomCategory } from "@/lib/definitions"
+import { type CustomCategory } from "@/lib/definitions"
 import { session } from "@/lib/session"
 
 export async function createCustomCategory(values: CustomCategoryFormValues) {

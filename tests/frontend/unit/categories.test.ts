@@ -3,7 +3,7 @@ import {
   getCategoryDescription,
   getCategoryLabel,
 } from "@/lib/categories"
-import { CustomCategory } from "@/lib/definitions"
+import { type CustomCategory } from "@/lib/definitions"
 
 describe("Categories", () => {
   describe("getCategoriesWithDetails", () => {

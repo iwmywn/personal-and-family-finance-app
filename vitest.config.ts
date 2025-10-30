@@ -1,5 +1,5 @@
 import tsconfigPaths from "vite-tsconfig-paths"
-import { defineConfig, UserWorkspaceConfig } from "vitest/config"
+import { defineConfig, type UserWorkspaceConfig } from "vitest/config"
 
 const basePlugins = [tsconfigPaths({ ignoreConfigErrors: true })]
 

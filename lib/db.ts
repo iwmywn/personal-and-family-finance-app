@@ -1,7 +1,7 @@
 import {
-  Collection,
-  Db,
   MongoClient,
+  type Collection,
+  type Db,
   type MongoClientOptions,
   type OptionalId,
 } from "mongodb"

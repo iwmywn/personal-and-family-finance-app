@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
 import { getTransactionsCollection } from "@/lib/collections"
-import { Transaction } from "@/lib/definitions"
+import { type Transaction } from "@/lib/definitions"
 import { session } from "@/lib/session"
 
 export async function createTransaction(values: TransactionFormValues) {

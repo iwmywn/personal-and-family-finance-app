@@ -1,6 +1,4 @@
+dist
+build
 .next
-*.md
 node_modules
-public
-pnpm*.yaml
-components/ui/*

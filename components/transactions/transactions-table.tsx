@@ -39,7 +39,7 @@ import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
-import { Transaction } from "@/lib/definitions"
+import { type Transaction } from "@/lib/definitions"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 

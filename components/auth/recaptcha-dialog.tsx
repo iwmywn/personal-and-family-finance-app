@@ -1,6 +1,6 @@
 "use client"
 
-import { Dispatch, SetStateAction } from "react"
+import { type Dispatch, type SetStateAction } from "react"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { useLocale } from "next-intl"
 import ReCAPTCHA from "react-google-recaptcha"

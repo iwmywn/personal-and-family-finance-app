@@ -7,7 +7,7 @@ import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
 import { getUsersCollection } from "@/lib/collections"
-import { User } from "@/lib/definitions"
+import { type User } from "@/lib/definitions"
 import { verifyRecaptchaToken } from "@/lib/recaptcha"
 import { session } from "@/lib/session"
 

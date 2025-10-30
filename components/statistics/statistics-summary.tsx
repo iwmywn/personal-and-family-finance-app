@@ -5,7 +5,7 @@ import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Transaction } from "@/lib/definitions"
+import { type Transaction } from "@/lib/definitions"
 import { calculateSummaryStats } from "@/lib/statistics"
 import { formatCurrency } from "@/lib/utils"
 

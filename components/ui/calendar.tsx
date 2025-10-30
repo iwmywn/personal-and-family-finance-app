@@ -1,17 +1,17 @@
 "use client"
 
 import * as React from "react"
+import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react"
-import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
-
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
 import { useLocale } from "next-intl"
-import { type AppLocale, LOCALE_CONFIG } from "@/i18n/config"
+import { type DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
+
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 function Calendar({
   className,
@@ -26,7 +26,7 @@ function Calendar({
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
 }) {
   const defaultClassNames = getDefaultClassNames()
-  const locale = useLocale() as AppLocale;
+  const locale = useLocale() as AppLocale
 
   return (
     <DayPicker
@@ -41,7 +41,9 @@ function Calendar({
       captionLayout={captionLayout}
       formatters={{
         formatMonthDropdown: (date) =>
-          date.toLocaleString(LOCALE_CONFIG[locale].intlLocale, { month: "long" }),
+          date.toLocaleString(LOCALE_CONFIG[locale].intlLocale, {
+            month: "long",
+          }),
         ...formatters,
       }}
       classNames={{
@@ -104,7 +106,10 @@ function Calendar({
           defaultClassNames.week_number
         ),
         day: cn(
-          "relative w-full h-full p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md group/day aspect-square select-none",
+          "relative w-full h-full p-0 text-center [&:last-child[data-selected=true]_button]:rounded-r-md group/day aspect-square select-none",
+          props.showWeekNumber
+            ? "[&:nth-child(2)[data-selected=true]_button]:rounded-l-md"
+            : "[&:first-child[data-selected=true]_button]:rounded-l-md",
           defaultClassNames.day
         ),
         range_start: cn(

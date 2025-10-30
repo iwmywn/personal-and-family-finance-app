@@ -3,7 +3,11 @@ import {
   getTransactionsCollection,
   getUsersCollection,
 } from "@/lib/collections"
-import { DBCustomCategory, DBTransaction, DBUser } from "@/lib/definitions"
+import {
+  type DBCustomCategory,
+  type DBTransaction,
+  type DBUser,
+} from "@/lib/definitions"
 
 export const insertTestUser = async (user: DBUser) => {
   const collection = await getUsersCollection()

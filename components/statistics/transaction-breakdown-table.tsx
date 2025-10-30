@@ -28,7 +28,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
-import { Transaction } from "@/lib/definitions"
+import { type Transaction } from "@/lib/definitions"
 import { calculateCategoryStats } from "@/lib/statistics"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"

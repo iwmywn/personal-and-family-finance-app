@@ -1,6 +1,6 @@
 "use server"
 
-import { NextURL } from "next/dist/server/web/next-url"
+import { type NextURL } from "next/dist/server/web/next-url"
 import { NextResponse, type NextRequest } from "next/server"
 import * as routes from "@/routes"
 
