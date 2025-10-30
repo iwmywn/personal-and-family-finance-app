@@ -1,30 +1,38 @@
-import tsconfigPaths from "vite-tsconfig-paths"
+import { resolve } from "node:path"
 import { defineConfig, type UserWorkspaceConfig } from "vitest/config"
 
-const basePlugins = [tsconfigPaths({ ignoreConfigErrors: true })]
+const baseTestConfig = {
+  globals: true,
+  environment: "node",
+}
+const baseResolveConfig = {
+  alias: { "@": resolve(__dirname, "./") },
+}
 
 const projects: UserWorkspaceConfig[] = [
   {
     test: {
+      ...baseTestConfig,
       name: "frontend",
-      globals: true,
-      environment: "node",
       include: ["tests/frontend/**/*.test.ts"],
       setupFiles: ["./tests/frontend/setup.ts"],
     },
-    plugins: basePlugins,
+    resolve: {
+      ...baseResolveConfig,
+    },
   },
   {
     test: {
+      ...baseTestConfig,
       name: "backend",
-      globals: true,
-      environment: "node",
       include: ["tests/backend/**/*.test.ts"],
       setupFiles: ["./tests/backend/setup.ts"],
       testTimeout: 120000,
       hookTimeout: 300000,
     },
-    plugins: basePlugins,
+    resolve: {
+      ...baseResolveConfig,
+    },
   },
 ]
 
