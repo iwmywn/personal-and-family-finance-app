@@ -188,6 +188,80 @@
       "categoryFetchFailed": "Failed to load custom categories! Please try again later."
     }
   },
+  "categoriesConfig": {
+    "salaryBonus": {
+      "label": "Salary & Bonus",
+      "description": "Base salary, performance bonus, holiday bonus, allowances, etc."
+    },
+    "businessFreelance": {
+      "label": "Business & Freelance",
+      "description": "Sales revenue, services, freelance, short-term contracts, etc."
+    },
+    "investmentPassive": {
+      "label": "Investment & Passive Income",
+      "description": "Savings interest, dividends, bonds interest, rental, royalties, etc."
+    },
+    "giftSupport": {
+      "label": "Gifts & Support",
+      "description": "Cash gifts, family support, celebration money, etc."
+    },
+    "otherIncome": {
+      "label": "Other Income",
+      "description": "Refunds, selling used items, prizes, unexpected amounts, etc."
+    },
+    "foodBeverage": {
+      "label": "Food & Beverage",
+      "description": "Groceries, markets, restaurants, cafes, breakfast/lunch/dinner, etc."
+    },
+    "transportation": {
+      "label": "Transportation",
+      "description": "Fuel, bus/grab, vehicle maintenance, parking fees, etc."
+    },
+    "personalCare": {
+      "label": "Personal Care",
+      "description": "Haircut, manicure, spa, massage, hair dye, skincare, etc."
+    },
+    "shopping": {
+      "label": "Shopping",
+      "description": "Clothes, shoes, cosmetics, accessories, electronics, household items, etc."
+    },
+    "familySupport": {
+      "label": "Family Support",
+      "description": "Money for parents, support for siblings, relatives, etc."
+    },
+    "housing": {
+      "label": "Housing & Utilities",
+      "description": "Rent, electricity, water, gas, internet, phone, management fees, etc."
+    },
+    "healthcareInsurance": {
+      "label": "Healthcare & Insurance",
+      "description": "Medical visits, medicine, health/life insurance, etc."
+    },
+    "educationDevelopment": {
+      "label": "Education & Development",
+      "description": "Tuition, books, online/offline courses, certificates, seminars, etc."
+    },
+    "entertainmentLeisure": {
+      "label": "Entertainment & Leisure",
+      "description": "Travel, movies, music, games, gym, hobbies, etc."
+    },
+    "socialGifts": {
+      "label": "Social & Gifts",
+      "description": "Weddings, funerals, birthdays, gifts for friends, gatherings, etc."
+    },
+    "savingsInvestment": {
+      "label": "Savings & Investment",
+      "description": "Savings, stocks, funds, real estate, crypto, emergency fund, etc."
+    },
+    "debtPayment": {
+      "label": "Debt Payment",
+      "description": "Bank loan payments, credit cards, personal debts, etc."
+    },
+    "otherExpense": {
+      "label": "Other Expenses",
+      "description": "Unexpected repairs, fines, losses, unidentified expenses, etc."
+    }
+  },
   "settings": {
     "fe": {
       "title": "Settings",

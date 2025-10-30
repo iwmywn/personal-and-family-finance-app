@@ -29,14 +29,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
+import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsConfig } from "@/hooks/use-months-config"
-import {
-  EXPENSE_CATEGORIES,
-  getCategoryLabel,
-  INCOME_CATEGORIES,
-} from "@/lib/categories"
+import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import { filterTransactions } from "@/lib/filters"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { getUniqueYears } from "@/lib/utils"
@@ -65,6 +62,7 @@ export function TransactionFilters() {
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const formatDate = useFormatDate()
+  const { getCategoryLabel } = useCategoryI18n()
 
   const allMonths = useMonthsConfig()
   const allYears = getUniqueYears(transactions!)
@@ -357,7 +355,7 @@ export function TransactionFilters() {
                   </SelectItem>
                   <SelectSeparator />
                   <SelectLabel>{tCommonFE("income")}</SelectLabel>
-                  {INCOME_CATEGORIES.map((category) => (
+                  {INCOME_CATEGORIES_KEY.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
                     </SelectItem>
@@ -373,7 +371,7 @@ export function TransactionFilters() {
                       </SelectItem>
                     ))}
                   <SelectLabel>{tCommonFE("expense")}</SelectLabel>
-                  {EXPENSE_CATEGORIES.map((category) => (
+                  {EXPENSE_CATEGORIES_KEY.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category)}
                     </SelectItem>

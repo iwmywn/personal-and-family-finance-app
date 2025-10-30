@@ -1,4 +1,5 @@
-import type { Transaction, TransactionCategoryKey } from "@/lib/definitions"
+import type { CategoryKeyType } from "@/lib/categories"
+import type { Transaction } from "@/lib/definitions"
 
 interface QuickStats {
   currentMonthCount: number
@@ -6,7 +7,7 @@ interface QuickStats {
   lowestTransaction: Transaction | null
   avgExpense: number | null
   savingsRate: string | null
-  popularCategory: TransactionCategoryKey[]
+  popularCategory: CategoryKeyType[]
 }
 
 interface SummaryStats {
@@ -91,7 +92,7 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
   const maxTotal = Math.max(...Object.values(categorySums))
   const popularCategory = Object.entries(categorySums)
     .filter(([, total]) => total === maxTotal)
-    .map(([key]) => key as TransactionCategoryKey)
+    .map(([key]) => key as CategoryKeyType)
 
   return {
     currentMonthCount,

@@ -1,12 +1,9 @@
-import type {
-  CustomCategory,
-  TransactionCategoryKey,
-  TransactionType,
-} from "@/lib/definitions"
+import type { CustomCategory } from "@/lib/definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const
+export type TransactionType = (typeof TRANSACTION_TYPES)[number]
 
-export const INCOME_CATEGORIES = [
+export const INCOME_CATEGORIES_KEY = [
   "salary_bonus",
   "business_freelance",
   "investment_passive",
@@ -14,7 +11,7 @@ export const INCOME_CATEGORIES = [
   "other_income",
 ] as const
 
-export const EXPENSE_CATEGORIES = [
+export const EXPENSE_CATEGORIES_KEY = [
   "food_beverage",
   "transportation",
   "personal_care",
@@ -30,149 +27,145 @@ export const EXPENSE_CATEGORIES = [
   "other_expense",
 ] as const
 
-export const ALL_CATEGORIES = [
-  ...INCOME_CATEGORIES,
-  ...EXPENSE_CATEGORIES,
+export const ALL_CATEGORIES_KEY = [
+  ...INCOME_CATEGORIES_KEY,
+  ...EXPENSE_CATEGORIES_KEY,
 ] as const
 
+export type CategoryKeyType = (typeof ALL_CATEGORIES_KEY)[number] | string
+
 type CategoryConfigType = {
-  [K in (typeof ALL_CATEGORIES)[number]]: {
+  [K in CategoryKeyType]: {
     label: string
     description: string
     type: (typeof TRANSACTION_TYPES)[number]
   }
 }
 
-export const CATEGORY_CONFIG: CategoryConfigType = {
-  // Incomes
-  salary_bonus: {
-    label: "Lương & Thưởng",
-    description:
-      "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp,...",
-    type: "income",
-  },
-  business_freelance: {
-    label: "Kinh doanh & Freelance",
-    description:
-      "Doanh thu bán hàng, dịch vụ, freelance, hợp đồng ngắn hạn,...",
-    type: "income",
-  },
-  investment_passive: {
-    label: "Đầu tư & Thu nhập thụ động",
-    description:
-      "Lãi tiết kiệm, cổ tức, lãi trái phiếu, cho thuê, bản quyền,...",
-    type: "income",
-  },
-  gift_support: {
-    label: "Quà tặng & Hỗ trợ",
-    description: "Quà tặng tiền mặt, hỗ trợ từ gia đình, tiền mừng,...",
-    type: "income",
-  },
-  other_income: {
-    label: "Thu nhập khác",
-    description: "Tiền hoàn trả, bán đồ cũ, giải thưởng, các khoản bất ngờ,...",
-    type: "income",
-  },
-  // Expenses
-  food_beverage: {
-    label: "Ăn uống",
-    description: "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,...",
-    type: "expense",
-  },
-  transportation: {
-    label: "Di chuyển",
-    description: "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe,...",
-    type: "expense",
-  },
-  personal_care: {
-    label: "Chăm sóc",
-    description: "Cắt tóc, làm móng, spa, massage, nhuộm tóc, chăm sóc da,...",
-    type: "expense",
-  },
-  shopping: {
-    label: "Mua sắm",
-    description:
-      "Quần áo, giày dép, mỹ phẩm, phụ kiện, đồ điện tử, đồ gia dụng,...",
-    type: "expense",
-  },
-  family_support: {
-    label: "Hỗ trợ gia đình",
-    description: "Tiền gửi bố mẹ, hỗ trợ anh chị em, người thân,...",
-    type: "expense",
-  },
-  housing: {
-    label: "Nhà ở & Tiện ích",
-    description:
-      "Tiền thuê, điện, nước, gas, internet, điện thoại, phí quản lý,...",
-    type: "expense",
-  },
-  healthcare_insurance: {
-    label: "Y tế & Bảo hiểm",
-    description: "Khám chữa bệnh, thuốc men, bảo hiểm y tế/nhân thọ,...",
-    type: "expense",
-  },
-  education_development: {
-    label: "Giáo dục & Phát triển",
-    description:
-      "Học phí, sách vở, khóa học online/offline, chứng chỉ, hội thảo,...",
-    type: "expense",
-  },
-  entertainment_leisure: {
-    label: "Giải trí & Thư giãn",
-    description: "Du lịch, phim ảnh, âm nhạc, game, gym, sở thích,...",
-    type: "expense",
-  },
-  social_gifts: {
-    label: "Giao lưu & Quà tặng",
-    description: "Đám cưới, ma chay, sinh nhật, quà tặng bạn bè, hội họp,...",
-    type: "expense",
-  },
-  savings_investment: {
-    label: "Tiết kiệm & Đầu tư",
-    description:
-      "Gửi tiết kiệm, mua chứng khoán, quỹ đầu tư, bất động sản, crypto, quỹ khẩn cấp,...",
-    type: "expense",
-  },
-  debt_payment: {
-    label: "Trả nợ",
-    description: "Trả nợ vay ngân hàng, thẻ tín dụng, nợ cá nhân,...",
-    type: "expense",
-  },
-  other_expense: {
-    label: "Chi phí khác",
-    description:
-      "Sửa chữa đột xuất, phạt nguội, mất mát, chi phí không xác định,...",
-    type: "expense",
-  },
-} as const
+export function categoryConfig(t: (key: string) => string): CategoryConfigType {
+  return {
+    // Incomes
+    salary_bonus: {
+      label: t("salaryBonus.label"),
+      description: t("salaryBonus.description"),
+      type: "income",
+    },
+    business_freelance: {
+      label: t("businessFreelance.label"),
+      description: t("businessFreelance.description"),
+      type: "income",
+    },
+    investment_passive: {
+      label: t("investmentPassive.label"),
+      description: t("investmentPassive.description"),
+      type: "income",
+    },
+    gift_support: {
+      label: t("giftSupport.label"),
+      description: t("giftSupport.description"),
+      type: "income",
+    },
+    other_income: {
+      label: t("otherIncome.label"),
+      description: t("otherIncome.description"),
+      type: "income",
+    },
+    // Expenses
+    food_beverage: {
+      label: t("foodBeverage.label"),
+      description: t("foodBeverage.description"),
+      type: "expense",
+    },
+    transportation: {
+      label: t("transportation.label"),
+      description: t("transportation.description"),
+      type: "expense",
+    },
+    personal_care: {
+      label: t("personalCare.label"),
+      description: t("personalCare.description"),
+      type: "expense",
+    },
+    shopping: {
+      label: t("shopping.label"),
+      description: t("shopping.description"),
+      type: "expense",
+    },
+    family_support: {
+      label: t("familySupport.label"),
+      description: t("familySupport.description"),
+      type: "expense",
+    },
+    housing: {
+      label: t("housing.label"),
+      description: t("housing.description"),
+      type: "expense",
+    },
+    healthcare_insurance: {
+      label: t("healthcareInsurance.label"),
+      description: t("healthcareInsurance.description"),
+      type: "expense",
+    },
+    education_development: {
+      label: t("educationDevelopment.label"),
+      description: t("educationDevelopment.description"),
+      type: "expense",
+    },
+    entertainment_leisure: {
+      label: t("entertainmentLeisure.label"),
+      description: t("entertainmentLeisure.description"),
+      type: "expense",
+    },
+    social_gifts: {
+      label: t("socialGifts.label"),
+      description: t("socialGifts.description"),
+      type: "expense",
+    },
+    savings_investment: {
+      label: t("savingsInvestment.label"),
+      description: t("savingsInvestment.description"),
+      type: "expense",
+    },
+    debt_payment: {
+      label: t("debtPayment.label"),
+      description: t("debtPayment.description"),
+      type: "expense",
+    },
+    other_expense: {
+      label: t("otherExpense.label"),
+      description: t("otherExpense.description"),
+      type: "expense",
+    },
+  }
+}
 
 interface CategoryDetail {
   label: string
   description: string
-  categoryKey: TransactionCategoryKey
+  categoryKey: CategoryKeyType
 }
 
-export function getCategoriesWithDetails(
-  type: TransactionType
+export function getDetails(
+  type: TransactionType,
+  CATEGORY_CONFIG: CategoryConfigType
 ): CategoryDetail[] {
   return Object.entries(CATEGORY_CONFIG)
     .filter(([_, config]) => config.type === type)
     .map(([categoryKey, config]) => ({
       label: config.label,
       description: config.description,
-      categoryKey: categoryKey as TransactionCategoryKey,
+      categoryKey: categoryKey as CategoryKeyType,
     }))
 }
 
-export function getCategoryProperty(
-  categoryKey: TransactionCategoryKey,
+function getProperty(
+  categoryKey: CategoryKeyType,
+  CATEGORY_CONFIG: CategoryConfigType,
   property: "label" | "description",
   customCategories?: CustomCategory[]
 ): string {
   if (categoryKey in CATEGORY_CONFIG) {
-    return CATEGORY_CONFIG[categoryKey as keyof typeof CATEGORY_CONFIG][
-      property
-    ]
+    return CATEGORY_CONFIG[categoryKey as CategoryKeyType][property]
   }
   return (
     customCategories?.find((c) => c.categoryKey === categoryKey)?.[property] ||
@@ -180,16 +173,23 @@ export function getCategoryProperty(
   )
 }
 
-export function getCategoryLabel(
-  categoryKey: TransactionCategoryKey,
+export function getLabel(
+  categoryKey: CategoryKeyType,
+  CATEGORY_CONFIG: CategoryConfigType,
   customCategories?: CustomCategory[]
 ): string {
-  return getCategoryProperty(categoryKey, "label", customCategories)
+  return getProperty(categoryKey, CATEGORY_CONFIG, "label", customCategories)
 }
 
-export function getCategoryDescription(
-  categoryKey: TransactionCategoryKey,
+export function getDescription(
+  categoryKey: CategoryKeyType,
+  CATEGORY_CONFIG: CategoryConfigType,
   customCategories?: CustomCategory[]
 ): string {
-  return getCategoryProperty(categoryKey, "description", customCategories)
+  return getProperty(
+    categoryKey,
+    CATEGORY_CONFIG,
+    "description",
+    customCategories
+  )
 }

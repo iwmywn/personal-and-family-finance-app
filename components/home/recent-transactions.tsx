@@ -14,10 +14,10 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { Separator } from "@/components/ui/separator"
+import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { getCategoryLabel } from "@/lib/categories"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
@@ -33,6 +33,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const tHomeFE = useTranslations("home.fe")
   const tCommonFE = useTranslations("common.fe")
+  const { getCategoryLabel } = useCategoryI18n()
   const formatDate = useFormatDate()
 
   return (

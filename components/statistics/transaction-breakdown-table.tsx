@@ -27,7 +27,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { getCategoryDescription, getCategoryLabel } from "@/lib/categories"
+import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { type Transaction } from "@/lib/definitions"
 import { calculateCategoryStats } from "@/lib/statistics"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
@@ -44,6 +44,7 @@ export function TransactionBreakdownTable({
   const { customCategories } = useCustomCategories()
   const tStatisticsFE = useTranslations("statistics.fe")
   const tCommonFE = useTranslations("common.fe")
+  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
 
   const categoryStats = useMemo(() => {
     return calculateCategoryStats(filteredTransactions)

@@ -1,14 +1,24 @@
+import { getTranslations } from "next-intl/server"
+
 import {
-  getCategoriesWithDetails,
-  getCategoryDescription,
-  getCategoryLabel,
+  categoryConfig,
+  getDescription,
+  getDetails,
+  getLabel,
 } from "@/lib/categories"
 import { type CustomCategory } from "@/lib/definitions"
 
+let CATEGORY_CONFIG: ReturnType<typeof categoryConfig>
+
 describe("Categories", () => {
-  describe("getCategoriesWithDetails", () => {
+  beforeAll(async () => {
+    const tCategoriesConfig = await getTranslations("categoriesConfig")
+    CATEGORY_CONFIG = categoryConfig(tCategoriesConfig)
+  })
+
+  describe("getDetails", () => {
     it("should return income categories", () => {
-      const result = getCategoriesWithDetails("income")
+      const result = getDetails("income", CATEGORY_CONFIG)
       expect(Array.isArray(result)).toBe(true)
       expect(result.length).toBeGreaterThan(0)
       expect(result.every((cat) => cat.categoryKey)).toBe(true)
@@ -17,7 +27,7 @@ describe("Categories", () => {
     })
 
     it("should return expense categories", () => {
-      const result = getCategoriesWithDetails("expense")
+      const result = getDetails("expense", CATEGORY_CONFIG)
       expect(Array.isArray(result)).toBe(true)
       expect(result.length).toBeGreaterThan(0)
       expect(result.every((cat) => cat.categoryKey)).toBe(true)
@@ -26,21 +36,22 @@ describe("Categories", () => {
     })
   })
 
-  describe("getCategoryLabel", () => {
+  describe("getLabel", () => {
     it("should return label for valid income category key", () => {
-      const result = getCategoryLabel("salary_bonus")
-      expect(result).toBe("Lương & Thưởng")
+      const result = getLabel("salary_bonus", CATEGORY_CONFIG)
+      expect(typeof result).toBe("string")
+      expect(result.length).toBeGreaterThan(0)
     })
 
     it("should return label for valid expense category key", () => {
-      const result = getCategoryLabel("food_beverage")
-      expect(result).toBe("Ăn uống")
+      const result = getLabel("food_beverage", CATEGORY_CONFIG)
+      expect(typeof result).toBe("string")
+      expect(result.length).toBeGreaterThan(0)
     })
 
     it("should return empty string for invalid category key", () => {
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-      const result = getCategoryLabel("invalid" as any)
-      /* eslint-enable @typescript-eslint/no-explicit-any */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result = getLabel("invalid" as any, CATEGORY_CONFIG)
       expect(result).toBe("")
     })
 
@@ -50,41 +61,46 @@ describe("Categories", () => {
           _id: "1",
           userId: "user1",
           categoryKey: "custom_income_test",
-          type: "income" as const,
+          type: "income",
           label: "Custom Income",
           description: "Custom income category",
         },
       ]
-      const result = getCategoryLabel("custom_income_test", customCategories)
+      const result = getLabel(
+        "custom_income_test",
+        CATEGORY_CONFIG,
+        customCategories
+      )
       expect(result).toBe("Custom Income")
     })
 
     it("should return empty string for custom category not found", () => {
       const customCategories: CustomCategory[] = []
-      const result = getCategoryLabel("custom_income_test", customCategories)
+      const result = getLabel(
+        "custom_income_test",
+        CATEGORY_CONFIG,
+        customCategories
+      )
       expect(result).toBe("")
     })
   })
 
-  describe("getCategoryDescription", () => {
+  describe("getDescription", () => {
     it("should return description for valid income category key", () => {
-      const result = getCategoryDescription("salary_bonus")
-      expect(result).toBe(
-        "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp,..."
-      )
+      const result = getDescription("salary_bonus", CATEGORY_CONFIG)
+      expect(typeof result).toBe("string")
+      expect(result.length).toBeGreaterThan(0)
     })
 
     it("should return description for valid expense category key", () => {
-      const result = getCategoryDescription("food_beverage")
-      expect(result).toBe(
-        "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,..."
-      )
+      const result = getDescription("food_beverage", CATEGORY_CONFIG)
+      expect(typeof result).toBe("string")
+      expect(result.length).toBeGreaterThan(0)
     })
 
     it("should return empty string for invalid category key", () => {
-      /* eslint-disable @typescript-eslint/no-explicit-any */
-      const result = getCategoryDescription("invalid" as any)
-      /* eslint-enable @typescript-eslint/no-explicit-any */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result = getDescription("invalid" as any, CATEGORY_CONFIG)
       expect(result).toBe("")
     })
 
@@ -94,13 +110,14 @@ describe("Categories", () => {
           _id: "1",
           userId: "user1",
           categoryKey: "custom_income_test",
-          type: "income" as const,
+          type: "income",
           label: "Custom Income",
           description: "Custom income category description",
         },
       ]
-      const result = getCategoryDescription(
+      const result = getDescription(
         "custom_income_test",
+        CATEGORY_CONFIG,
         customCategories
       )
       expect(result).toBe("Custom income category description")
@@ -108,8 +125,9 @@ describe("Categories", () => {
 
     it("should return empty string for custom category not found", () => {
       const customCategories: CustomCategory[] = []
-      const result = getCategoryDescription(
+      const result = getDescription(
         "custom_income_test",
+        CATEGORY_CONFIG,
         customCategories
       )
       expect(result).toBe("")

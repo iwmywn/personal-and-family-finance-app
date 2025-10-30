@@ -10,9 +10,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { getCategoryLabel } from "@/lib/categories"
 import { calculateQuickStats } from "@/lib/statistics"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
@@ -28,6 +28,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const { transactions } = useTransactions()
   const tHomeFE = useTranslations("home.fe")
   const tCommonFE = useTranslations("common.fe")
+  const { getCategoryLabel } = useCategoryI18n()
 
   const {
     currentMonthCount,

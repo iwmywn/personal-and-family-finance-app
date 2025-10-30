@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { ALL_CATEGORIES, TRANSACTION_TYPES } from "@/lib/categories"
+import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
 
 export const createSignInSchema = (t: (key: string) => string) => {
   const basePasswordSchema = z
@@ -81,7 +81,7 @@ export const createTransactionSchema = (t: (key: string) => string) => {
       .min(1, { message: t("categoryRequired") })
       .refine(
         (val) =>
-          (ALL_CATEGORIES as readonly string[]).includes(val) ||
+          (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
           val.startsWith("custom_"),
         { message: t("categoryRequired") }
       ),

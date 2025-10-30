@@ -1,7 +1,7 @@
 import type { AppLocale } from "@/i18n/config"
 import type { ObjectId } from "mongodb"
 
-import { type ALL_CATEGORIES, type TRANSACTION_TYPES } from "@/lib/categories"
+import { type CategoryKeyType, type TransactionType } from "@/lib/categories"
 
 type BaseUser<T> = {
   _id: T
@@ -15,7 +15,7 @@ type BaseTransaction<T> = {
   _id: T
   userId: T
   type: TransactionType
-  categoryKey: TransactionCategoryKey
+  categoryKey: CategoryKeyType
   amount: number
   description: string
   date: Date
@@ -29,9 +29,6 @@ type BaseCustomCategory<T> = {
   label: string
   description: string
 }
-
-export type TransactionType = (typeof TRANSACTION_TYPES)[number]
-export type TransactionCategoryKey = (typeof ALL_CATEGORIES)[number] | string
 
 export type User = BaseUser<string>
 export type DBUser = BaseUser<ObjectId>

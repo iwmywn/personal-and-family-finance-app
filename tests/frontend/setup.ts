@@ -1,1 +1,1 @@
-// setup here
+import "@/tests/shared/mocks/translations.mock"

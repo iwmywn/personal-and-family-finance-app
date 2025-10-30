@@ -1,4 +1,4 @@
-import "@/tests/backend/mocks/translations.mock"
+import "@/tests/shared/mocks/translations.mock"
 
 import { MongoMemoryServer } from "mongodb-memory-server"
 import { getTranslations } from "next-intl/server"
