@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sidebar"
 import { mainNav } from "@/lib/nav"
 
-export function Nav() {
+export function MainNav() {
   const pathname = usePathname()
   const tNavigation = useTranslations("navigation")
 
