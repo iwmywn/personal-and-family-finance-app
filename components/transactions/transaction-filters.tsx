@@ -32,7 +32,7 @@ import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMonthsConfig } from "@/hooks/use-months-config"
+import { useMonthsI18n } from "@/hooks/use-months-i18n"
 import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import { filterTransactions } from "@/lib/filters"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
@@ -64,7 +64,7 @@ export function TransactionFilters() {
   const formatDate = useFormatDate()
   const { getCategoryLabel } = useCategoryI18n()
 
-  const allMonths = useMonthsConfig()
+  const allMonths = useMonthsI18n()
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =

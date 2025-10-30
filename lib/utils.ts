@@ -17,7 +17,7 @@ export function formatCurrency(amount: number) {
 }
 
 export function formatDate(date: Date, locale: AppLocale) {
-  return format(date, "EEEEEE, dd/MM/yyyy", {
+  return format(date, LOCALE_CONFIG[locale].formatStr, {
     locale: LOCALE_CONFIG[locale].dateFnsLocale,
   })
 }

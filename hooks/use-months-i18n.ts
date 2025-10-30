@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl"
 
-export function useMonthsConfig() {
+export function useMonthsI18n() {
   const tMonths = useTranslations("months")
 
   return [

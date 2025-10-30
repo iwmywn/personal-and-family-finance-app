@@ -11,6 +11,7 @@ type LocaleConfigType = {
     dateFnsLocale: DateFnsLocale
     intlLocale: string
     displayName: string
+    formatStr: string
   }
 }
 
@@ -19,10 +20,12 @@ export const LOCALE_CONFIG: LocaleConfigType = {
     dateFnsLocale: vi,
     intlLocale: "vi-VN",
     displayName: "Tiếng Việt",
+    formatStr: "EEEEEE, dd/MM/yyyy",
   },
   en: {
     dateFnsLocale: enUS,
     intlLocale: "en-US",
     displayName: "English",
+    formatStr: "EEEEEE, MM/dd/yyyy",
   },
 }
