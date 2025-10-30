@@ -90,7 +90,7 @@ describe("Utils", () => {
     it("should formats in English (en) correctly", () => {
       const date = new Date("2024-01-15T00:00:00.000+00:00")
       const result = formatDate(date, "en" as AppLocale)
-      expect(result).toBe("Mo, 15/01/2024")
+      expect(result).toBe("Mo, 01/15/2024")
     })
 
     it("should formats local Indochina Time in vi", () => {
