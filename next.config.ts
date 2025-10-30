@@ -4,15 +4,13 @@ import createNextIntlPlugin from "next-intl/plugin"
 const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   experimental: {
     scrollRestoration: true,
     cpus: 1,
     inlineCss: true,
-    reactCompiler: true,
+    turbopackFileSystemCacheForDev: true,
   },
+  reactCompiler: true,
 }
 
 export default withNextIntl(nextConfig)
