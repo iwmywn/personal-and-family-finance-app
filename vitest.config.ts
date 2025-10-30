@@ -27,8 +27,8 @@ const projects: UserWorkspaceConfig[] = [
       name: "backend",
       include: ["tests/backend/**/*.test.ts"],
       setupFiles: ["./tests/backend/setup.ts"],
-      testTimeout: 120000,
-      hookTimeout: 300000,
+      testTimeout: 120_000,
+      hookTimeout: 300_000,
     },
     resolve: {
       ...baseResolveConfig,
