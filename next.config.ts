@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     inlineCss: true,
     turbopackFileSystemCacheForDev: true,
   },
+  cacheComponents: true,
   reactCompiler: true,
 }
 
