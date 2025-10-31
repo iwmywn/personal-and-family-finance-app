@@ -1,6 +1,6 @@
 # Credit to [@Miodec](https://github.com/Miodec)
 
-name: "Semantic PR Title"
+name: Semantic PR Title
 
 on:
   pull_request_target:
