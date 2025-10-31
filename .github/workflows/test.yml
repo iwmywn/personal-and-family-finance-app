@@ -51,9 +51,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-mongodb-binaries-
 
-      - name: Pre-download MongoDB binary
-        run: pnpm exec mongodb-memory-server-download --version=7.0.14
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
