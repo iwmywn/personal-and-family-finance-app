@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl"
 
 import {
-  categoryConfig,
+  createCategoryConfig,
   getDescription,
   getDetails,
   getLabel,
@@ -14,7 +14,7 @@ import type { CustomCategory } from "@/lib/definitions"
 
 export function useCategoryI18n() {
   const tCategoriesConfig = useTranslations("categoriesConfig")
-  const CATEGORY_CONFIG = categoryConfig(tCategoriesConfig)
+  const CATEGORY_CONFIG = createCategoryConfig(tCategoriesConfig)
 
   const getCategoryLabel = (
     categoryKey: CategoryKeyType,

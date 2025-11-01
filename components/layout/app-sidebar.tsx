@@ -10,8 +10,8 @@ import {
   SidebarHeader,
   SidebarMenuButton,
 } from "@/components/ui/sidebar"
-import { Nav } from "@/components/layout/nav"
-import { NavUser } from "@/components/layout/nav-user"
+import { MainNav } from "@/components/layout/main-nav"
+import { SecondaryNav } from "@/components/layout/secondary-nav"
 import { siteConfig } from "@/app/pffa.config"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -39,10 +39,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
-        <Nav />
+        <MainNav />
       </SidebarContent>
       <SidebarFooter className="p-0">
-        <NavUser />
+        <SecondaryNav />
       </SidebarFooter>
     </Sidebar>
   )

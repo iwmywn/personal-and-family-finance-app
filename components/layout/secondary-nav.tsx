@@ -17,7 +17,7 @@ import {
 import { secondaryNav } from "@/lib/nav"
 import { clearSWRCache } from "@/lib/swr"
 
-export function NavUser() {
+export function SecondaryNav() {
   const router = useRouter()
   const pathname = usePathname()
   const tNavigation = useTranslations("navigation")

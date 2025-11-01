@@ -31,19 +31,22 @@ export const ALL_CATEGORIES_KEY = [
   ...INCOME_CATEGORIES_KEY,
   ...EXPENSE_CATEGORIES_KEY,
 ] as const
+type AllCategoriesKeyType = (typeof ALL_CATEGORIES_KEY)[number]
 
-export type CategoryKeyType = (typeof ALL_CATEGORIES_KEY)[number] | string
+export type CategoryKeyType = AllCategoriesKeyType | string
 
 type CategoryConfigType = {
-  [K in CategoryKeyType]: {
+  [K in AllCategoriesKeyType]: {
     label: string
     description: string
-    type: (typeof TRANSACTION_TYPES)[number]
+    type: TransactionType
   }
 }
 
-export function categoryConfig(t: (key: string) => string): CategoryConfigType {
-  return {
+export function createCategoryConfig(
+  t: (key: string) => string
+): CategoryConfigType {
+  const CATEGORY_CONFIG: CategoryConfigType = {
     // Incomes
     salary_bonus: {
       label: t("salaryBonus.label"),
@@ -137,6 +140,8 @@ export function categoryConfig(t: (key: string) => string): CategoryConfigType {
       type: "expense",
     },
   }
+
+  return CATEGORY_CONFIG
 }
 
 interface CategoryDetail {
@@ -165,7 +170,7 @@ function getProperty(
   customCategories?: CustomCategory[]
 ): string {
   if (categoryKey in CATEGORY_CONFIG) {
-    return CATEGORY_CONFIG[categoryKey as CategoryKeyType][property]
+    return CATEGORY_CONFIG[categoryKey as AllCategoriesKeyType][property]
   }
   return (
     customCategories?.find((c) => c.categoryKey === categoryKey)?.[property] ||

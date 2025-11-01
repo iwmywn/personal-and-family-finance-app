@@ -10,7 +10,7 @@ function redirectIfProtectedRoute(nextUrl: NextURL) {
   const { pathname, search } = nextUrl
 
   if (
-    pathname !== "/signin" &&
+    pathname !== routes.signInRoute &&
     !routes.ignoredRoutes.some((route) => pathname.startsWith(route))
   ) {
     const redirectUrl = new URL(routes.signInRoute, nextUrl)
@@ -29,15 +29,9 @@ function redirectTo(path: string, nextUrl: NextURL) {
   return NextResponse.redirect(new URL(path, nextUrl))
 }
 
-export default async function middleware(req: NextRequest) {
-  const { nextUrl, cookies } = req
+export default async function proxy(req: NextRequest) {
+  const { nextUrl } = req
   const { pathname } = nextUrl
-
-  const user_session = cookies.get("user_session")?.value
-
-  if (!user_session) {
-    return redirectIfProtectedRoute(nextUrl)
-  }
 
   const { userId, expires } = await session.user.get()
   const expiresIn = new Date(expires).getTime() - Date.now()

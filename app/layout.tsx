@@ -7,6 +7,7 @@ import { nunito } from "@/app/fonts"
 
 import "./globals.css"
 
+import { Suspense } from "react"
 import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 
 import { Toaster } from "@/components/ui/sonner"
@@ -48,7 +49,19 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function RootLayout({
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <Suspense fallback={null}>
+      <Layout>{children}</Layout>
+    </Suspense>
+  )
+}
+
+async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode
