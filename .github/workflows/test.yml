@@ -47,7 +47,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/mongodb-binaries
-          key: ${{ runner.os }}-mongodb-binaries-7.0.14
+          key: ${{ runner.os }}-mongodb-binaries-7.0.24
           restore-keys: |
             ${{ runner.os }}-mongodb-binaries-
 
