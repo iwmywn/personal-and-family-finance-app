@@ -43,7 +43,9 @@ type CategoryConfigType = {
   }
 }
 
-export function categoryConfig(t: (key: string) => string): CategoryConfigType {
+export function createCategoryConfig(
+  t: (key: string) => string
+): CategoryConfigType {
   const CATEGORY_CONFIG: CategoryConfigType = {
     // Incomes
     salary_bonus: {

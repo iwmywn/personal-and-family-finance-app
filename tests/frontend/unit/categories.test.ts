@@ -1,19 +1,19 @@
 import { getTranslations } from "next-intl/server"
 
 import {
-  categoryConfig,
+  createCategoryConfig,
   getDescription,
   getDetails,
   getLabel,
 } from "@/lib/categories"
 import { type CustomCategory } from "@/lib/definitions"
 
-let CATEGORY_CONFIG: ReturnType<typeof categoryConfig>
+let CATEGORY_CONFIG: ReturnType<typeof createCategoryConfig>
 
 describe("Categories", () => {
   beforeAll(async () => {
     const tCategoriesConfig = await getTranslations("categoriesConfig")
-    CATEGORY_CONFIG = categoryConfig(tCategoriesConfig)
+    CATEGORY_CONFIG = createCategoryConfig(tCategoriesConfig)
   })
 
   describe("getDetails", () => {
