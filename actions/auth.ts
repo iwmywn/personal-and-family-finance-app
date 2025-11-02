@@ -84,6 +84,7 @@ export async function getUser() {
     }
 
     const userCollection = await getUsersCollection()
+
     const existingUser = await userCollection.findOne(
       { _id: new ObjectId(userId) },
       { projection: { password: 0 } }

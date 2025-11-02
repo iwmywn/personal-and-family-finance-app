@@ -54,7 +54,10 @@
       "username": "Tên đăng nhập",
       "password": "Mật khẩu",
       "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
-      "signingOut": "Đang đăng xuất..."
+      "signingOut": "Đang đăng xuất...",
+      "recaptchaVerification": "Xác thực CAPTCHA",
+      "recaptchaVerificationFailed": "Xác thực CAPTCHA thất bại! Vui lòng thử lại.",
+      "completeRecaptchaVerification": "Vui lòng hoàn thành xác thực CAPTCHA!"
     },
     "be": {
       "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",

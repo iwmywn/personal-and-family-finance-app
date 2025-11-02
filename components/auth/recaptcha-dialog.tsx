@@ -2,7 +2,7 @@
 
 import { type Dispatch, type SetStateAction } from "react"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import ReCAPTCHA from "react-google-recaptcha"
 import { toast } from "sonner"
 
@@ -20,10 +20,11 @@ export function ReCaptchaDialog({
   setRecaptchaToken,
 }: ReCaptchaPopupProps) {
   const locale = useLocale()
+  const tAuthFE = useTranslations("auth.fe")
 
   const handleRecaptchaChange = async (token: string | null) => {
     if (!token) {
-      toast.error("Xác thực CAPTCHA thất bại! Vui lòng thử lại.")
+      toast.error(tAuthFE("recaptchaVerificationFailed"))
       return
     }
 
@@ -32,7 +33,7 @@ export function ReCaptchaDialog({
   }
 
   const handleDialogClose = () => {
-    toast.error("Vui lòng hoàn thành xác thực CAPTCHA!")
+    toast.error(tAuthFE("completeRecaptchaVerification"))
     setOpen(false)
   }
 
@@ -40,7 +41,7 @@ export function ReCaptchaDialog({
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="w-fit">
         <VisuallyHidden>
-          <DialogTitle>Xác thực CAPTCHA</DialogTitle>
+          <DialogTitle>{tAuthFE("recaptchaVerification")}</DialogTitle>
         </VisuallyHidden>
         <ReCAPTCHA
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA!}
