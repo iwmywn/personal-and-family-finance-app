@@ -1,3 +1,5 @@
+import type { TypedTranslationFunction } from "@/i18n/types"
+
 import type { CustomCategory } from "@/lib/definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const
@@ -44,7 +46,7 @@ type CategoryConfigType = {
 }
 
 export function createCategoryConfig(
-  t: (key: string) => string
+  t: TypedTranslationFunction<"categoriesConfig">
 ): CategoryConfigType {
   const CATEGORY_CONFIG: CategoryConfigType = {
     // Incomes

@@ -8,7 +8,7 @@ import { nunito } from "@/app/fonts"
 import "./globals.css"
 
 import { Suspense } from "react"
-import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
+import { LOCALE_CONFIG } from "@/i18n/config"
 
 import { Toaster } from "@/components/ui/sonner"
 import { ProgressProvider } from "@/components/progress-provider"
@@ -16,7 +16,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { siteConfig } from "@/app/pffa.config"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = (await getLocale()) as AppLocale
+  const locale = await getLocale()
   const tCommonFE = await getTranslations("common.fe")
 
   return {

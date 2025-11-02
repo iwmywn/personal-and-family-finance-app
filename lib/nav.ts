@@ -1,12 +1,20 @@
+import type { NamespacedKey } from "@/i18n/types"
 import {
   ChartColumnIncreasing,
   FolderOpen,
   Home,
   Settings,
   Wallet,
+  type LucideIcon,
 } from "lucide-react"
 
-export const mainNav = [
+type NavType = {
+  key: NamespacedKey<"navigation">
+  url: string
+  icon: LucideIcon
+}
+
+export const mainNav: NavType[] = [
   {
     key: "home",
     url: "/home",
@@ -29,7 +37,7 @@ export const mainNav = [
   },
 ]
 
-export const secondaryNav = [
+export const secondaryNav: NavType[] = [
   {
     key: "settings",
     url: "/settings",

@@ -1,8 +1,11 @@
+import type { TypedTranslationFunction } from "@/i18n/types"
 import { z } from "zod"
 
 import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
 
-export const createSignInSchema = (t: (key: string) => string) => {
+export const createSignInSchema = (
+  t: TypedTranslationFunction<"schemas.signIn">
+) => {
   const basePasswordSchema = z
     .string()
     .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
@@ -15,7 +18,9 @@ export const createSignInSchema = (t: (key: string) => string) => {
   })
 }
 
-export const createPasswordSchema = (t: (key: string) => string) => {
+export const createPasswordSchema = (
+  t: TypedTranslationFunction<"schemas.password">
+) => {
   const basePasswordSchema = z
     .string()
     .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
@@ -71,7 +76,9 @@ export const createPasswordSchema = (t: (key: string) => string) => {
     })
 }
 
-export const createTransactionSchema = (t: (key: string) => string) => {
+export const createTransactionSchema = (
+  t: TypedTranslationFunction<"schemas.transaction">
+) => {
   return z.object({
     type: z.enum(TRANSACTION_TYPES, {
       message: t("transactionTypeRequired"),
@@ -107,7 +114,9 @@ export const createTransactionSchema = (t: (key: string) => string) => {
   })
 }
 
-export const createCategorySchema = (t: (key: string) => string) => {
+export const createCategorySchema = (
+  t: TypedTranslationFunction<"schemas.category">
+) => {
   return z.object({
     categoryKey: z.string().optional(),
     type: z.enum(TRANSACTION_TYPES, {

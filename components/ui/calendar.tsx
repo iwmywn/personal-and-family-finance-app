@@ -1,14 +1,18 @@
 "use client"
 
 import * as React from "react"
-import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
+import { LOCALE_CONFIG } from "@/i18n/config"
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "lucide-react"
 import { useLocale } from "next-intl"
-import { type DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
+import {
+  DayPicker,
+  getDefaultClassNames,
+  type DayButton,
+} from "react-day-picker"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -26,7 +30,7 @@ function Calendar({
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
 }) {
   const defaultClassNames = getDefaultClassNames()
-  const locale = useLocale() as AppLocale
+  const locale = useLocale()
 
   return (
     <DayPicker
