@@ -34,9 +34,7 @@ export function Header() {
   const tCommonFE = useTranslations("common.fe")
 
   const allNavItems = [...mainNav, ...secondaryNav]
-  const foundItem = allNavItems.find(
-    (item) => item.url === pathname || pathname.startsWith(item.url)
-  )
+  const foundItem = allNavItems.find((item) => item.url === pathname)
 
   return (
     <header className="bg-primary-foreground sticky top-0 z-50 flex shrink-0 items-center justify-between py-2 backdrop-blur-xs backdrop-saturate-150">
