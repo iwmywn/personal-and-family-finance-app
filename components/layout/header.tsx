@@ -31,6 +31,7 @@ const ColorDialog =
 export function Header() {
   const pathname = usePathname()
   const tNavigation = useTranslations("navigation")
+  const tCommonFE = useTranslations("common.fe")
 
   const allNavItems = [...mainNav, ...secondaryNav]
   const foundItem = allNavItems.find(
@@ -59,7 +60,9 @@ export function Header() {
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>
                   <BreadcrumbPage>
-                    {foundItem ? tNavigation(foundItem.key) : ""}
+                    {foundItem
+                      ? tNavigation(foundItem.key)
+                      : tCommonFE("notFound")}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </>

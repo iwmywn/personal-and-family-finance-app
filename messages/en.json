@@ -30,6 +30,8 @@
       "negative": "Negative",
       "balanced": "Balanced",
       "comparedToIncome": "compared to income",
+      "notFound": "Not Found",
+      "backToHome": "Back to Home",
       "noTransactionsFound": "No transactions found",
       "startAddingTransactions": "Start adding your transactions.",
       "noTransactionsFiltered": "No transactions found matching your filters."
@@ -305,8 +307,11 @@
   },
   "appError": {
     "title": "An error occurred!",
-    "tryAgain": "Try again",
-    "backToHome": "Back to Home"
+    "tryAgain": "Try again"
+  },
+  "notFound": {
+    "title": "PAGE NOT FOUND",
+    "description": "The page you are looking for does not exist."
   },
   "schemas": {
     "signIn": {

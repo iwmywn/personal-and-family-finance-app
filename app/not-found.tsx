@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Ghost } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,23 +13,30 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 
-export const metadata: Metadata = {
-  title: "KHÔNG TÌM THẤY",
+export async function generateMetadata(): Promise<Metadata> {
+  const tCommonFE = await getTranslations("common.fe")
+
+  return {
+    title: tCommonFE("notFound"),
+  }
 }
 
-export default function NotFound() {
+export default async function NotFound() {
+  const tNotFound = await getTranslations("notFound")
+  const tCommonFE = await getTranslations("common.fe")
+
   return (
     <Empty className="min-h-screen">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <Ghost />
         </EmptyMedia>
-        <EmptyTitle>KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM</EmptyTitle>
-        <EmptyDescription>Trang này không tồn tại.</EmptyDescription>
+        <EmptyTitle>{tNotFound("title")}</EmptyTitle>
+        <EmptyDescription>{tNotFound("description")}</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <Button asChild>
-          <Link href="/home">Về trang chủ</Link>
+          <Link href="/home">{tCommonFE("backToHome")}</Link>
         </Button>
       </EmptyContent>
     </Empty>

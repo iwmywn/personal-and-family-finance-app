@@ -30,6 +30,8 @@
       "negative": "Âm",
       "balanced": "Cân bằng",
       "comparedToIncome": "so với thu nhập",
+      "notFound": "Không tìm thấy",
+      "backToHome": "Về trang chủ",
       "noTransactionsFound": "Không tìm thấy giao dịch",
       "startAddingTransactions": "Bắt đầu thêm giao dịch của bạn.",
       "noTransactionsFiltered": "Không tìm thấy giao dịch nào phù hợp với bộ lọc của bạn."
@@ -305,8 +307,11 @@
   },
   "appError": {
     "title": "Đã xảy ra lỗi!",
-    "tryAgain": "Thử lại",
-    "backToHome": "Về trang chủ"
+    "tryAgain": "Thử lại"
+  },
+  "notFound": {
+    "title": "KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM",
+    "description": "Trang này không tồn tại."
   },
   "schemas": {
     "signIn": {
