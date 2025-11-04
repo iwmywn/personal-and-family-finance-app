@@ -1,6 +1,7 @@
 "use client"
 
 import { Monitor, Moon, Sun } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
@@ -11,30 +12,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export function DashboardThemeToggle() {
+export function ThemeSelector() {
   const { setTheme } = useTheme()
+  const tSettingsFE = useTranslations("settings.fe")
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild title="Chuyển đổi chế độ màu">
+      <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
           <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Chuyển đổi chủ đề</span>
+          <span className="sr-only">{tSettingsFE("toggleTheme")}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <Sun />
-          Sáng
+          {tSettingsFE("light")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           <Moon />
-          Tối
+          {tSettingsFE("dark")}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <Monitor />
-          Hệ thống
+          {tSettingsFE("system")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

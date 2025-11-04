@@ -280,7 +280,11 @@
       "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
       "currentPassword": "Mật khẩu hiện tại",
       "newPassword": "Mật khẩu mới",
-      "confirmPassword": "Xác nhận mật khẩu"
+      "confirmPassword": "Xác nhận mật khẩu",
+      "toggleTheme": "Chuyển đổi chủ đề",
+      "light": "Sáng",
+      "dark": "Tối",
+      "system": "Hệ thống"
     },
     "be": {
       "passwordIncorrect": "Mật khẩu hiện tại không đúng!",

@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BasePage } from "@/components/layout/base-page"
-import { DashboardThemeToggle } from "@/components/mode-toggle"
 import { LanguageSelector } from "@/components/settings/language-selector"
+import { ThemeSelector } from "@/components/settings/theme-selector"
 import { UpdatePasswordForm } from "@/components/settings/update-password-form"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -42,7 +42,7 @@ export default async function page() {
                 {tSettingsFE("appearanceDescription")}
               </CardDescription>
               <CardAction>
-                <DashboardThemeToggle />
+                <ThemeSelector />
               </CardAction>
             </CardHeader>
           </Card>

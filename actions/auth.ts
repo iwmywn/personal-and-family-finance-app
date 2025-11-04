@@ -21,10 +21,10 @@ export async function signIn(
       getTranslations("auth.be"),
       getTranslations("schemas.signIn"),
     ])
-    const signInSchema = createSignInSchema(tSchemasSignIn)
 
     if (!recaptchaToken) return { error: tAuthBE("recaptchaMissing") }
 
+    const signInSchema = createSignInSchema(tSchemasSignIn)
     const parsedValues = signInSchema.safeParse(values)
 
     if (!parsedValues.success) return { error: tCommonBE("invalidData") }

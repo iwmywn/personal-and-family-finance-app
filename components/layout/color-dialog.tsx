@@ -1,10 +1,9 @@
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { Palette } from "lucide-react"
 
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
@@ -50,14 +49,10 @@ export function ColorDialog() {
         <Palette />
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Bảng màu & Token</DialogTitle>
-          <DialogDescription>
-            Token màu chủ đề được định nghĩa dưới dạng biến CSS để tạo kiểu nhất
-            quán.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <VisuallyHidden>
+          <DialogTitle>Color Palette & Tokens</DialogTitle>
+        </VisuallyHidden>
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {colors.map((color) => (
             <div key={color} className="flex items-center justify-between">
               <span className="font-mono text-sm">{color}</span>

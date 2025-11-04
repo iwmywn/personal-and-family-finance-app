@@ -280,7 +280,11 @@
       "changePasswordDescription": "Change your password.",
       "currentPassword": "Current Password",
       "newPassword": "New Password",
-      "confirmPassword": "Confirm Password"
+      "confirmPassword": "Confirm Password",
+      "toggleTheme": "Toggle theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
     },
     "be": {
       "passwordIncorrect": "Current password is incorrect!",
