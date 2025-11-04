@@ -21,12 +21,12 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function NotFound() {
+export default async function page() {
   const tNotFound = await getTranslations("notFound")
   const tCommonFE = await getTranslations("common.fe")
 
   return (
-    <Empty className="min-h-screen">
+    <Empty className="h-full border">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <Ghost />
