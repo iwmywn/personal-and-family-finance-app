@@ -16,7 +16,7 @@
     "test": "vitest",
     "test:fe": "vitest --project frontend",
     "test:be": "vitest --project backend",
-    "i18n:check": "i18n-check --locales messages --source vi --unused actions app components hooks lib -f next-intl"
+    "i18n:check": "i18n-check --locales messages --source vi --unused actions app components hooks lib --format next-intl"
   },
   "dependencies": {
     "@bprogress/next": "3.2.12",
