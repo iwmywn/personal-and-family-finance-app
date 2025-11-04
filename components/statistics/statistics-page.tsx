@@ -7,7 +7,7 @@ import { BasePage } from "@/components/layout/base-page"
 import { StatisticsFilters } from "@/components/statistics/statistics-filters"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 
-export function StatisticsPage() {
+export default function StatisticsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const tStatisticsFE = useTranslations("statistics.fe")
 
