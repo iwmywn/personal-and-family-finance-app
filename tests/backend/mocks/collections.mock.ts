@@ -3,7 +3,7 @@ import type { Collection, OptionalId } from "mongodb"
 import * as collectionsLib from "@/lib/collections"
 import type { DBCustomCategory, DBTransaction, DBUser } from "@/lib/definitions"
 
-export const mockUserCollection = {
+const mockUserCollection = {
   findOne: vi.fn(),
   find: vi.fn(),
   updateOne: vi.fn(),
@@ -11,7 +11,7 @@ export const mockUserCollection = {
   deleteOne: vi.fn(),
 }
 
-export const mockCategoryCollection = {
+const mockCategoryCollection = {
   findOne: vi.fn(),
   find: vi.fn(),
   updateOne: vi.fn(),
@@ -19,7 +19,7 @@ export const mockCategoryCollection = {
   deleteOne: vi.fn(),
 }
 
-export const mockTransactionCollection = {
+const mockTransactionCollection = {
   findOne: vi.fn(),
   find: vi.fn(),
   updateOne: vi.fn(),

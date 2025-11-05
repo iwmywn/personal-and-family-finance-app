@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { env } from "@/env/client"
 import { Slash } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -18,7 +19,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 import { mainNav, secondaryNav } from "@/lib/nav"
 
 const ColorDialog =
-  process.env.NODE_ENV === "development"
+  env.NEXT_PUBLIC_NODE_ENV === "development"
     ? dynamic(
         () =>
           import("@/components/layout/color-dialog").then(

@@ -1,6 +1,6 @@
 import { mockUser } from "@/tests/shared/data"
 
-export const mockSession = {
+const mockSession = {
   user: {
     get: vi.fn(),
     create: vi.fn(),

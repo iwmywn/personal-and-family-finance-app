@@ -1,3 +1,4 @@
+import "@/tests/backend/mocks/env.mock"
 import "@/tests/shared/mocks/translations.mock"
 
 import { MongoMemoryServer } from "mongodb-memory-server"
@@ -12,7 +13,6 @@ beforeAll(async () => {
   const mongoUri = mongoServer.getUri()
 
   process.env.DB_URI = mongoUri
-  process.env.DB_NAME = "test-db"
 
   await connect()
 
@@ -41,7 +41,6 @@ afterAll(async () => {
   }
 
   delete process.env.MONGODB_URI
-  delete process.env.DB_NAME
 })
 
 beforeEach(() => {
