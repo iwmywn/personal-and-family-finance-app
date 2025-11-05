@@ -1,6 +1,5 @@
 "use client"
 
-import { useMemo } from "react"
 import { Receipt } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -46,18 +45,10 @@ export function TransactionBreakdownTable({
   const tCommonFE = useTranslations("common.fe")
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
 
-  const categoryStats = useMemo(() => {
-    return calculateCategoryStats(filteredTransactions)
-  }, [filteredTransactions])
+  const categoryStats = calculateCategoryStats(filteredTransactions)
 
   return (
     <Card>
-      {/* <CardHeader>
-        <CardTitle>Thống kê theo danh mục</CardTitle>
-        <CardDescription>
-          Phân tích chi tiết theo từng danh mục.
-        </CardDescription>
-      </CardHeader> */}
       <CardContent>
         {filteredTransactions.length === 0 ? (
           <Empty className="border" style={{ minHeight: "300px" }}>

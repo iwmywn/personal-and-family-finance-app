@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { Search, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -35,12 +35,10 @@ export function CategoryFilters() {
   const tCategoriesFE = useTranslations("categories.fe")
   const tCommonFE = useTranslations("common.fe")
 
-  const filteredCategories = useMemo(() => {
-    return filterCustomCategories(customCategories!, {
-      searchTerm,
-      filterType,
-    })
-  }, [customCategories, searchTerm, filterType])
+  const filteredCategories = filterCustomCategories(customCategories!, {
+    searchTerm,
+    filterType,
+  })
 
   const handleResetFilters = () => {
     setSearchTerm("")

@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { ChevronDownIcon, Search, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -122,18 +122,7 @@ export function TransactionFilters() {
     }
   }
 
-  const filteredTransactions = useMemo(() => {
-    return filterTransactions(transactions!, {
-      searchTerm,
-      selectedDate,
-      dateRange,
-      filterMonth,
-      filterYear,
-      filterType,
-      filterCategoryKey,
-    })
-  }, [
-    transactions,
+  const filteredTransactions = filterTransactions(transactions!, {
     searchTerm,
     selectedDate,
     dateRange,
@@ -141,7 +130,7 @@ export function TransactionFilters() {
     filterYear,
     filterType,
     filterCategoryKey,
-  ])
+  })
 
   return (
     <>

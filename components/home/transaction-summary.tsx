@@ -1,6 +1,5 @@
 "use client"
 
-import { useMemo } from "react"
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -19,9 +18,7 @@ export function TransactionSummary() {
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions!)
 
-  const summaryStats = useMemo(() => {
-    return calculateSummaryStats(currentMonthTransactions)
-  }, [currentMonthTransactions])
+  const summaryStats = calculateSummaryStats(currentMonthTransactions)
 
   const { totalIncome, totalExpense, balance } = summaryStats
 

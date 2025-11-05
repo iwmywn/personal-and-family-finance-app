@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { ChevronDownIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -98,14 +98,12 @@ export function StatisticsFilters() {
     }
   }
 
-  const filteredTransactions = useMemo(() => {
-    return filterTransactions(transactions!, {
-      selectedDate,
-      dateRange,
-      filterMonth,
-      filterYear,
-    })
-  }, [transactions, selectedDate, dateRange, filterMonth, filterYear])
+  const filteredTransactions = filterTransactions(transactions!, {
+    selectedDate,
+    dateRange,
+    filterMonth,
+    filterYear,
+  })
 
   return (
     <div className="space-y-4">

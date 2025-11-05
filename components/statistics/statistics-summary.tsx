@@ -1,6 +1,5 @@
 "use client"
 
-import { useMemo } from "react"
 import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -18,9 +17,7 @@ export function StatisticsSummary({
 }: StatisticsSummaryProps) {
   const tStatisticsFE = useTranslations("statistics.fe")
   const tCommonFE = useTranslations("common.fe")
-  const summaryStats = useMemo(() => {
-    return calculateSummaryStats(filteredTransactions)
-  }, [filteredTransactions])
+  const summaryStats = calculateSummaryStats(filteredTransactions)
   const {
     totalIncome,
     totalExpense,
