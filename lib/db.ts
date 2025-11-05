@@ -1,3 +1,4 @@
+import { env } from "@/env/server"
 import {
   MongoClient,
   type Collection,
@@ -13,26 +14,13 @@ declare global {
 
 let db: Db | undefined
 
-function getConnectionConfig() {
-  if (!process.env.DB_URI) {
-    throw new Error("Environment variable DB_URI is not set")
-  }
-
-  if (!process.env.DB_NAME) {
-    throw new Error("Environment variable DB_NAME is not set")
-  }
-
-  return {
-    uri: process.env.DB_URI,
-    dbName: process.env.DB_NAME,
-  }
-}
-
 function getClientPromise(): Promise<MongoClient> {
   if (!globalThis._mongoClientPromise) {
-    const { uri } = getConnectionConfig()
     const options: MongoClientOptions = {}
-    globalThis._mongoClientPromise = new MongoClient(uri, options).connect()
+    globalThis._mongoClientPromise = new MongoClient(
+      env.DB_URI,
+      options
+    ).connect()
   }
   return globalThis._mongoClientPromise
 }
@@ -42,9 +30,8 @@ export async function connect() {
     return db
   }
 
-  const { dbName } = getConnectionConfig()
   const client = await getClientPromise()
-  db = client.db(dbName)
+  db = client.db(env.DB_NAME)
   globalThis._mongoClient = client
 
   return db

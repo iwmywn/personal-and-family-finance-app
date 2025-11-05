@@ -1,6 +1,7 @@
 "use client"
 
 import { type Dispatch, type SetStateAction } from "react"
+import { env } from "@/env/client"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { useLocale, useTranslations } from "next-intl"
 import ReCAPTCHA from "react-google-recaptcha"
@@ -44,7 +45,7 @@ export function ReCaptchaDialog({
           <DialogTitle>{tAuthFE("recaptchaVerification")}</DialogTitle>
         </VisuallyHidden>
         <ReCAPTCHA
-          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA!}
+          sitekey={env.NEXT_PUBLIC_RECAPTCHA}
           onChange={handleRecaptchaChange}
           hl={locale}
           className="m-3"

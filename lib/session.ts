@@ -1,5 +1,7 @@
 import { cache } from "react"
 import { cookies } from "next/headers"
+import { env as clientEnv } from "@/env/client"
+import { env as serverEnv } from "@/env/server"
 import { getIronSession, type SessionOptions } from "iron-session"
 
 interface UserSession {
@@ -11,10 +13,10 @@ const sevenDays = 7 * 24 * 60 * 60
 
 const sessionOptions = {
   user: {
-    password: process.env.SESSION_SECRET!,
+    password: serverEnv.SESSION_SECRET,
     cookieName: "user_session",
     cookieOptions: {
-      secure: process.env.NODE_ENV === "production",
+      secure: clientEnv.NEXT_PUBLIC_NODE_ENV === "production",
       httpOnly: true,
       sameSite: "lax",
       path: "/",

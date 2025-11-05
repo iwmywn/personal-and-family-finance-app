@@ -15,6 +15,7 @@ import {
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser, mockValidSignInValues } from "@/tests/shared/data"
 import { getUser, signIn, signOut } from "@/actions/auth"
+import { session } from "@/lib/session"
 
 describe("Auth", () => {
   describe("signIn", () => {
@@ -69,6 +70,7 @@ describe("Auth", () => {
       }))
       const result = await signIn(mockValidSignInValues, "valid-token")
 
+      expect(session.user.create).toHaveBeenCalledWith(mockUser._id.toString())
       expect(setUserLocale).toHaveBeenCalledWith(mockUser.locale)
       expect(result.error).toBeUndefined()
 
@@ -99,6 +101,7 @@ describe("Auth", () => {
 
       const result = await signOut()
 
+      expect(session.user.delete).toHaveBeenCalled()
       expect(result.success).toBe(tAuthBE("signOutSuccess"))
       expect(result.error).toBeUndefined()
     })
