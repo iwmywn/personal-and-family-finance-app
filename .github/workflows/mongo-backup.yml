@@ -24,8 +24,10 @@ jobs:
       - name: Dump MongoDB
         run: |
           TIMESTAMP=$(date +%Y-%m-%dT%H-%M-%S)
-          echo "BACKUP_FILE=backup-$TIMESTAMP.gz" >> $GITHUB_ENV
-          mongodump --uri="$MONGO_URI" --gzip --archive="$BACKUP_FILE"
+          BACKUP_FILE="backup-$TIMESTAMP.gz"
+          echo "BACKUP_FILE=$BACKUP_FILE" >> $GITHUB_ENV
+          mongodump --uri="$MONGO_URI" --gzip --archive="./$BACKUP_FILE"
+          ls -lh .
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
 
