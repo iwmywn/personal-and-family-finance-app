@@ -207,6 +207,13 @@ describe("Categories", () => {
     it("should successfully update custom category", async () => {
       await Promise.all([
         insertTestCategory(mockCustomCategory),
+        insertTestCategory({
+          ...mockCustomCategory,
+          _id: new ObjectId("68f795d4bdcc3c9a30717977"),
+          userId: new ObjectId("690d2cdc200d6a719f9a438e"),
+          type: "expense",
+          label: "Updated Label",
+        }),
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("6900f0887465621be45e8d30"),
@@ -242,7 +249,6 @@ describe("Categories", () => {
         await Promise.all([
           categoriesTransaction.findOne({
             _id: mockCustomCategory._id,
-            userId: mockUser._id,
           }),
           transactionsCollection
             .find({
@@ -354,7 +360,6 @@ describe("Categories", () => {
       const categoriesTransaction = await getCategoriesCollection()
       const deletedCategory = await categoriesTransaction.findOne({
         _id: mockCustomCategory._id,
-        userId: mockUser._id,
       })
 
       expect(deletedCategory).toBe(null)

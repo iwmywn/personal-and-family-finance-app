@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb"
+
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
 import {
   mockTransactionCollectionError,
@@ -142,7 +144,13 @@ describe("Transactions", () => {
     })
 
     it("should successfully update transaction", async () => {
-      await insertTestTransaction(mockTransaction)
+      await Promise.all([
+        insertTestTransaction(mockTransaction),
+        insertTestTransaction({
+          ...mockTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+        }),
+      ])
       mockAuthenticatedUser()
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
@@ -155,13 +163,19 @@ describe("Transactions", () => {
       const transactionsCollection = await getTransactionsCollection()
       const updatedTransaction = await transactionsCollection.findOne({
         _id: mockTransaction._id,
-        userId: mockUser._id,
+      })
+      const unrelatedTransaction = await transactionsCollection.findOne({
+        _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
       })
 
       expect(updatedTransaction?.type).toBe("expense")
       expect(updatedTransaction?.categoryKey).toBe("personal_care")
       expect(updatedTransaction?.amount).toBe(100000)
       expect(updatedTransaction?.description).toBe("Updated description")
+      expect(unrelatedTransaction?.type).toBe("expense")
+      expect(unrelatedTransaction?.categoryKey).toBe("food_beverage")
+      expect(unrelatedTransaction?.amount).toBe(50000)
+      expect(unrelatedTransaction?.description).toBe("nước dừa")
       expect(result.success).toBe(tTransactionsBE("transactionUpdated"))
       expect(result.error).toBeUndefined()
     })
@@ -218,7 +232,6 @@ describe("Transactions", () => {
       const transactionsCollection = await getTransactionsCollection()
       const deletedTransaction = await transactionsCollection.findOne({
         _id: mockTransaction._id,
-        userId: mockUser._id,
       })
 
       expect(deletedTransaction).toBe(null)

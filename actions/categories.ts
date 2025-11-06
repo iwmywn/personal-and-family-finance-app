@@ -114,7 +114,6 @@ export async function updateCustomCategory(
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
-      userId: new ObjectId(userId),
     })
 
     if (!existingCategory) {
@@ -136,7 +135,7 @@ export async function updateCustomCategory(
 
     await Promise.all([
       categoriesCollection.updateOne(
-        { _id: new ObjectId(categoryId), userId: new ObjectId(userId) },
+        { _id: new ObjectId(categoryId) },
         {
           $set: {
             type: values.type,
@@ -193,7 +192,6 @@ export async function deleteCustomCategory(categoryId: string) {
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
-      userId: new ObjectId(userId),
     })
 
     if (!existingCategory) {
@@ -217,7 +215,6 @@ export async function deleteCustomCategory(categoryId: string) {
 
     await categoriesCollection.deleteOne({
       _id: new ObjectId(categoryId),
-      userId: new ObjectId(userId),
     })
 
     return { success: tCategoriesBE("categoryDeleted") }

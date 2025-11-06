@@ -91,7 +91,6 @@ export async function updateTransaction(
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
-      userId: new ObjectId(userId),
     })
 
     if (!existingTransaction) {
@@ -101,7 +100,7 @@ export async function updateTransaction(
     }
 
     await transactionsCollection.updateOne(
-      { _id: new ObjectId(transactionId), userId: new ObjectId(userId) },
+      { _id: new ObjectId(transactionId) },
       {
         $set: {
           type: values.type,
@@ -145,7 +144,6 @@ export async function deleteTransaction(transactionId: string) {
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
-      userId: new ObjectId(userId),
     })
 
     if (!existingTransaction) {
@@ -156,7 +154,6 @@ export async function deleteTransaction(transactionId: string) {
 
     await transactionsCollection.deleteOne({
       _id: new ObjectId(transactionId),
-      userId: new ObjectId(userId),
     })
 
     return { success: tTransactionsBE("transactionDeleted") }
