@@ -37,6 +37,7 @@ jobs:
           filename: ${{ env.BACKUP_FILE }}
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
           credentials: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
+          overwrite: true
 
       - name: Clean up old backups
         run: |
