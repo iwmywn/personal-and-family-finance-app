@@ -1,0 +1,40 @@
+name: MongoDB Backup
+
+on:
+  schedule:
+    - cron: "*/3 * * * *"
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install MongoDB tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mongodb-org-tools
+
+      - name: Dump MongoDB
+        run: |
+          mongodump --uri="$MONGO_URI" --gzip --archive="backup-$(date +%Y-%m-%d).gz"
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+
+      - name: Upload to Google Drive
+        uses: willo32/gdrive-upload-action@v1
+        with:
+          filename: backup-$(date +%Y-%m-%d).gz
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
+
+      - name: Clean up old backups
+        run: |
+          pip install google-api-python-client google-auth
+          python scripts/cleanup_drive.py
+        env:
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          GDRIVE_CREDENTIALS_JSON: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
