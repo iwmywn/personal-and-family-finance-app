@@ -31,18 +31,23 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
 
-      - name: Upload to Google Drive
-        uses: adityak74/google-drive-upload-git-action@v0.3
+      - name: Send backup via email
+        uses: dawidd6/action-send-mail@v6
         with:
-          filename: ${{ env.BACKUP_FILE }}
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
-          overwrite: true
+          server_address: smtp.gmail.com
+          server_port: 587
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "MongoDB Backup ${{ env.BACKUP_FILE }}"
+          to: ${{ secrets.EMAIL_USERNAME }}
+          from: "GitHub Backup Bot <${{ secrets.EMAIL_USERNAME }}>"
+          body: |
+            MongoDB backup created successfully at ${{ env.BACKUP_FILE }}.
+            Attached is your backup file.
+          attachments: ${{ env.BACKUP_FILE }}
 
-      - name: Clean up old backups
+      - name: Delete local backup file
         run: |
-          pip install google-api-python-client google-auth
-          python scripts/cleanup_drive.py
-        env:
-          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
-          GDRIVE_CREDENTIALS_JSON: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
+          echo "Deleting local backup file: $BACKUP_FILE"
+          rm -f "$BACKUP_FILE"
