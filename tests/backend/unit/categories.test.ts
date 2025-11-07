@@ -187,6 +187,7 @@ describe("Categories", () => {
       await insertTestCategory({
         ...mockCustomCategory,
         _id: new ObjectId("68f795d4bdcc3c9a30717977"),
+        categoryKey: "custom_expense_abcdef34",
         label: "Different Label",
       })
       mockAuthenticatedUser()
@@ -211,6 +212,7 @@ describe("Categories", () => {
           ...mockCustomCategory,
           _id: new ObjectId("68f795d4bdcc3c9a30717977"),
           userId: new ObjectId("690d2cdc200d6a719f9a438e"),
+          categoryKey: "custom_expense_abcdef34",
           type: "expense",
           label: "Updated Label",
         }),
