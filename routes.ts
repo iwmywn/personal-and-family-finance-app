@@ -9,7 +9,7 @@ const protectedRoutes = [
   "/budgets",
   "/settings",
 ]
-const ignoredRoutes = ["/images/"]
+const ignoredRoutes = ["/images/", "/opengraph-image.png", "/icon.png"]
 
 export {
   authRoutes,
