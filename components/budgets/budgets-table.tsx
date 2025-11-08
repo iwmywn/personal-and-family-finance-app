@@ -111,7 +111,7 @@ export function BudgetsTable({
                     <TableHead>{tBudgetsFE("spent")}</TableHead>
                     <TableHead>{tBudgetsFE("balance")}</TableHead>
                     <TableHead>{tBudgetsFE("status")}</TableHead>
-                    <TableHead>Progress</TableHead>
+                    <TableHead>{tBudgetsFE("progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
