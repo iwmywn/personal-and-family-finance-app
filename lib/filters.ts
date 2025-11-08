@@ -139,34 +139,36 @@ export function filterBudgets(
 
   const fromDateOnly = toDateOnly(dateRange.from)
   const toDateOnlyValue = toDateOnly(dateRange.to)
+  const selectedDateOnly = toDateOnly(selectedDate)
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
   let filteredBudgets = budgets.filter((budget) => {
-    const budgetStartDate = new Date(budget.startDate)
-    const budgetEndDate = new Date(budget.endDate)
+    const budgetStartDateOnly = toDateOnly(new Date(budget.startDate))!
+    const budgetEndDateOnly = toDateOnly(new Date(budget.endDate))!
 
-    const matchesSelectedDate = selectedDate
-      ? budgetStartDate <= selectedDate && budgetEndDate >= selectedDate
+    const matchesSelectedDate = selectedDateOnly
+      ? budgetStartDateOnly <= selectedDateOnly &&
+        budgetEndDateOnly >= selectedDateOnly
       : true
 
     const matchesDateRange =
-      (!fromDateOnly || budgetEndDate >= fromDateOnly) &&
-      (!toDateOnlyValue || budgetStartDate <= toDateOnlyValue)
+      (!fromDateOnly || budgetEndDateOnly >= fromDateOnly) &&
+      (!toDateOnlyValue || budgetStartDateOnly <= toDateOnlyValue)
 
     const matchesMonth = !parsedMonth
       ? true
-      : budgetStartDate.getMonth() + 1 === parsedMonth ||
-        budgetEndDate.getMonth() + 1 === parsedMonth ||
-        (budgetStartDate.getMonth() + 1 < parsedMonth &&
-          budgetEndDate.getMonth() + 1 > parsedMonth)
+      : budgetStartDateOnly.getMonth() + 1 === parsedMonth ||
+        budgetEndDateOnly.getMonth() + 1 === parsedMonth ||
+        (budgetStartDateOnly.getMonth() + 1 < parsedMonth &&
+          budgetEndDateOnly.getMonth() + 1 > parsedMonth)
 
     const matchesYear = !parsedYear
       ? true
-      : budgetStartDate.getFullYear() === parsedYear ||
-        budgetEndDate.getFullYear() === parsedYear ||
-        (budgetStartDate.getFullYear() < parsedYear &&
-          budgetEndDate.getFullYear() > parsedYear)
+      : budgetStartDateOnly.getFullYear() === parsedYear ||
+        budgetEndDateOnly.getFullYear() === parsedYear ||
+        (budgetStartDateOnly.getFullYear() < parsedYear &&
+          budgetEndDateOnly.getFullYear() > parsedYear)
 
     const matchesCategory =
       filterCategoryKey === "all" || budget.categoryKey === filterCategoryKey
