@@ -384,7 +384,7 @@
       "deleteBudgetTitle": "Xóa ngân sách",
       "deleteBudgetDescription": "Bạn có chắc chắn muốn xóa ngân sách này? Hành động này không thể hoàn tác.",
       "spent": "Đã chi",
-      "remaining": "Còn lại"
+      "balance": "Số dư"
     },
     "be": {
       "budgetAdded": "Ngân sách đã được thêm.",

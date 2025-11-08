@@ -191,7 +191,6 @@ export function TransactionDialog({
                 </SelectTrigger>
               </FormControl>
               <SelectContent
-                align="start"
                 style={{
                   maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                 }}

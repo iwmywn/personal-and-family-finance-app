@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import type { Budget } from "@/lib/definitions"
 import { useBudgets, useCustomCategories } from "@/lib/swr"
@@ -59,6 +60,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
+  const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
   const tSchemasBudget = useTranslations("schemas.budget")
@@ -145,7 +147,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
+      <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {budget ? tBudgetsFE("editBudget") : tBudgetsFE("addBudget")}
@@ -175,7 +177,11 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                         </SelectValue>
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent
+                      style={{
+                        maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
+                      }}
+                    >
                       {getCategoriesWithDetails("expense").map((c) => (
                         <SelectItem key={c.categoryKey} value={c.categoryKey}>
                           <div className="flex flex-col">

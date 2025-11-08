@@ -384,7 +384,7 @@
       "deleteBudgetTitle": "Delete Budget",
       "deleteBudgetDescription": "Are you sure you want to delete this budget? This action cannot be undone.",
       "spent": "Spent",
-      "remaining": "Remaining"
+      "balance": "Balance"
     },
     "be": {
       "budgetAdded": "Budget has been added.",
