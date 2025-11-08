@@ -6,6 +6,7 @@ const protectedRoutes = [
   "/statistics",
   "/transactions",
   "/categories",
+  "/budgets",
   "/settings",
 ]
 const ignoredRoutes = ["/images/"]

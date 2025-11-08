@@ -23,7 +23,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
@@ -82,24 +81,22 @@ export function TransactionBreakdownTable({
                     className="[&>td]:text-center"
                   >
                     <TableCell>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Badge variant="outline">
-                              {getCategoryLabel(
-                                stat.categoryKey,
-                                customCategories
-                              )}
-                            </Badge>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            {getCategoryDescription(
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Badge variant="outline">
+                            {getCategoryLabel(
                               stat.categoryKey,
                               customCategories
                             )}
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {getCategoryDescription(
+                            stat.categoryKey,
+                            customCategories
+                          )}
+                        </TooltipContent>
+                      </Tooltip>
                     </TableCell>
                     <TableCell>
                       <Badge

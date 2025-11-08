@@ -1,5 +1,10 @@
 import { collection } from "@/lib/db"
-import type { DBCustomCategory, DBTransaction, DBUser } from "@/lib/definitions"
+import type {
+  DBBudget,
+  DBCustomCategory,
+  DBTransaction,
+  DBUser,
+} from "@/lib/definitions"
 
 export function getUsersCollection() {
   return collection<DBUser>("users")
@@ -11,4 +16,8 @@ export function getTransactionsCollection() {
 
 export function getCategoriesCollection() {
   return collection<DBCustomCategory>("categories")
+}
+
+export function getBudgetsCollection() {
+  return collection<DBBudget>("budgets")
 }

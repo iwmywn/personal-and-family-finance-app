@@ -12,13 +12,14 @@ export default function TransactionsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
+  const tNavigation = useTranslations("navigation")
 
   return (
     <>
       <BasePage>
         <div className="header">
           <div>
-            <div className="title">{tTransactionsFE("title")}</div>
+            <div className="title">{tNavigation("transactions")}</div>
             <div className="description">{tTransactionsFE("description")}</div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>

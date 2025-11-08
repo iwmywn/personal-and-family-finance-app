@@ -4,13 +4,13 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
-import { CategoryDialog } from "@/components/categories/category-dialog"
-import { CategoryFilters } from "@/components/categories/category-filters"
+import { BudgetDialog } from "@/components/budgets/budget-dialog"
+import { BudgetsFilters } from "@/components/budgets/budgets-filters"
 import { BasePage } from "@/components/layout/base-page"
 
-export default function CategoriesPage() {
+export default function BudgetsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const tCategoriesFE = useTranslations("categories.fe")
+  const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
   const tNavigation = useTranslations("navigation")
 
@@ -19,18 +19,18 @@ export default function CategoriesPage() {
       <BasePage>
         <div className="header">
           <div>
-            <div className="title">{tNavigation("categories")}</div>
-            <div className="description">{tCategoriesFE("description")}</div>
+            <div className="title">{tNavigation("budgets")}</div>
+            <div className="description">{tBudgetsFE("description")}</div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>
             {tCommonFE("add")}
           </Button>
         </div>
 
-        <CategoryFilters />
+        <BudgetsFilters />
       </BasePage>
 
-      <CategoryDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <BudgetDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>
   )
 }

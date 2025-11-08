@@ -122,11 +122,11 @@ describe("Statistics", () => {
       const result = calculateSummaryStats(mockTransactions)
 
       expect(result.totalIncome).toBe(1500)
-      expect(result.totalExpense).toBe(600)
-      expect(result.balance).toBe(900)
-      expect(result.transactionCount).toBe(5)
+      expect(result.totalExpense).toBe(3000600)
+      expect(result.balance).toBe(-2999100)
+      expect(result.transactionCount).toBe(8)
       expect(result.incomeCount).toBe(2)
-      expect(result.expenseCount).toBe(3)
+      expect(result.expenseCount).toBe(6)
     })
 
     it("should handle empty transactions", () => {
@@ -146,14 +146,14 @@ describe("Statistics", () => {
       const result = calculateCategoryStats(mockTransactions)
 
       expect(result).toHaveLength(5)
-      expect(result[0].categoryKey).toBe("salary_bonus")
-      expect(result[0].count).toBe(1)
-      expect(result[0].total).toBe(1000)
-      expect(result[0].type).toBe("income")
-      expect(result[1].categoryKey).toBe("business_freelance")
-      expect(result[2].categoryKey).toBe("housing")
-      expect(result[3].categoryKey).toBe("food_beverage")
-      expect(result[4].categoryKey).toBe("transportation")
+      expect(result[0].categoryKey).toBe("housing")
+      expect(result[0].count).toBe(2)
+      expect(result[0].total).toBe(2100300)
+      expect(result[0].type).toBe("expense")
+      expect(result[1].categoryKey).toBe("food_beverage")
+      expect(result[2].categoryKey).toBe("transportation")
+      expect(result[3].categoryKey).toBe("salary_bonus")
+      expect(result[4].categoryKey).toBe("business_freelance")
     })
 
     it("should sort by total amount descending", () => {

@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb"
 
 import {
+  insertTestBudget,
   insertTestCategory,
   insertTestTransaction,
 } from "@/tests/backend/helpers/database"
@@ -14,6 +15,7 @@ import {
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
 import {
+  mockBudget,
   mockCustomCategory,
   mockTransaction,
   mockUser,
@@ -348,7 +350,25 @@ describe("Categories", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        tCategoriesBE("categoryInUseWithCount", { count: 1 })
+        tCategoriesBE("categoryInUseWithCountTransaction", { count: 1 })
+      )
+    })
+
+    it("should return error when category has associated budgets", async () => {
+      await insertTestCategory(mockCustomCategory)
+      await insertTestBudget({
+        ...mockBudget,
+        categoryKey: mockCustomCategory.categoryKey,
+      })
+      mockAuthenticatedUser()
+
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        tCategoriesBE("categoryInUseWithCountBudget", { count: 1 })
       )
     })
 

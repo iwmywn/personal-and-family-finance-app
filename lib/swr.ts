@@ -4,9 +4,15 @@ import { mutate } from "swr"
 import useSWRImmutable from "swr/immutable"
 
 import { getUser } from "@/actions/auth"
+import { getBudgets } from "@/actions/budgets"
 import { getCustomCategories } from "@/actions/categories"
 import { getTransactions } from "@/actions/transactions"
-import type { CustomCategory, Transaction, User } from "@/lib/definitions"
+import type {
+  Budget,
+  CustomCategory,
+  Transaction,
+  User,
+} from "@/lib/definitions"
 
 export function clearSWRCache() {
   mutate(() => true, undefined, { revalidate: false })
@@ -74,6 +80,27 @@ export function useCustomCategories() {
     customCategories,
     // categoriesError,
     isCategoriesLoading,
+    mutate,
+  }
+}
+
+export function useBudgets() {
+  const { data, isLoading, mutate } = useSWRImmutable<
+    | { error: string; budgets?: undefined }
+    | {
+        budgets: Budget[]
+        error?: undefined
+      }
+  >("budgets", getBudgets)
+
+  const budgets = data?.budgets
+  // const budgetsError = data?.error
+  const isBudgetsLoading = isLoading
+
+  return {
+    budgets,
+    // budgetsError,
+    isBudgetsLoading,
     mutate,
   }
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreVertical, Receipt } from "lucide-react"
+import { MoreVertical, PiggyBank } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -20,6 +20,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
+import { Progress } from "@/components/ui/progress"
 import {
   Table,
   TableBody,
@@ -33,41 +34,44 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
-import { TransactionDialog } from "@/components/transactions/transaction-dialog"
+import { BudgetDialog } from "@/components/budgets/budget-dialog"
+import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { type Transaction } from "@/lib/definitions"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
+import { calculateBudgetsStats } from "@/lib/budgets"
+import type { Budget } from "@/lib/definitions"
+import { useBudgets, useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
-interface TransactionsTableProps {
-  filteredTransactions: Transaction[]
+interface BudgetsTableProps {
+  filteredBudgets: Budget[]
   offsetHeight: number
 }
 
-export function TransactionsTable({
-  filteredTransactions,
+export function BudgetsTable({
+  filteredBudgets,
   offsetHeight,
-}: TransactionsTableProps) {
+}: BudgetsTableProps) {
+  const { budgets } = useBudgets()
   const { transactions } = useTransactions()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  const { customCategories } = useCustomCategories()
-  const tTransactionsFE = useTranslations("transactions.fe")
-  const tCommonFE = useTranslations("common.fe")
-  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
-  const formatDate = useFormatDate()
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<Transaction | null>(null)
+  const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
+  const tBudgetsFE = useTranslations("budgets.fe")
+  const tCommonFE = useTranslations("common.fe")
+  const { customCategories } = useCustomCategories()
+  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
+  const formatDate = useFormatDate()
+
+  const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions!)
 
   return (
     <>
       <Card>
         <CardContent>
-          {filteredTransactions.length === 0 ? (
+          {budgetsWithSpent.length === 0 ? (
             <Empty
               className="border"
               style={{
@@ -78,13 +82,13 @@ export function TransactionsTable({
             >
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <Receipt />
+                  <PiggyBank />
                 </EmptyMedia>
-                <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
+                <EmptyTitle>{tBudgetsFE("noBudgetsFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {transactions!.length === 0
-                    ? tCommonFE("startAddingTransactions")
-                    : tCommonFE("noTransactionsFiltered")}
+                  {budgets!.length === 0
+                    ? tBudgetsFE("noBudgetsDescription")
+                    : tBudgetsFE("noBudgetsFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -100,68 +104,70 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{tTransactionsFE("date")}</TableHead>
-                    <TableHead>{tCommonFE("description")}</TableHead>
-                    <TableHead>{tCommonFE("type")}</TableHead>
-                    <TableHead>{tCommonFE("category")}</TableHead>
-                    <TableHead>{tTransactionsFE("amount")}</TableHead>
+                    <TableHead>{tBudgetsFE("startDate")}</TableHead>
+                    <TableHead>{tBudgetsFE("endDate")}</TableHead>
+                    <TableHead>{tBudgetsFE("category")}</TableHead>
+                    <TableHead>{tBudgetsFE("amount")}</TableHead>
+                    <TableHead>{tBudgetsFE("spent")}</TableHead>
+                    <TableHead>{tBudgetsFE("balance")}</TableHead>
+                    <TableHead>{tBudgetsFE("status")}</TableHead>
+                    <TableHead>Progress</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredTransactions.map((transaction) => (
-                    <TableRow
-                      key={transaction._id.toString()}
-                      className="[&>td]:text-center"
-                    >
-                      <TableCell>{formatDate(transaction.date)}</TableCell>
-                      <TableCell className="max-w-md min-w-52 wrap-anywhere whitespace-normal">
-                        {transaction.description}
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          className={
-                            transaction.type === "income"
-                              ? "badge-income"
-                              : "badge-expense"
-                          }
-                        >
-                          {transaction.type === "income"
-                            ? tCommonFE("income")
-                            : tCommonFE("expense")}
-                        </Badge>
-                      </TableCell>
+                  {budgetsWithSpent.map((budget) => (
+                    <TableRow key={budget._id} className="[&>td]:text-center">
+                      <TableCell>{formatDate(budget.startDate)}</TableCell>
+                      <TableCell>{formatDate(budget.endDate)}</TableCell>
                       <TableCell>
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
                               {getCategoryLabel(
-                                transaction.categoryKey,
+                                budget.categoryKey,
                                 customCategories
                               )}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
                             {getCategoryDescription(
-                              transaction.categoryKey,
+                              budget.categoryKey,
                               customCategories
                             )}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
-                        <span
-                          className={`font-semibold ${
-                            transaction.type === "income"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          {transaction.type === "income" ? "+" : "-"}
-                          {formatCurrency(transaction.amount)}
-                        </span>
+                      <TableCell>{formatCurrency(budget.amount)}</TableCell>
+                      <TableCell>{formatCurrency(budget.spent)}</TableCell>
+                      <TableCell>
+                        {formatCurrency(budget.amount - budget.spent)}
                       </TableCell>
-                      <TableCell className="space-x-2">
+                      <TableCell>
+                        <Badge
+                          className={
+                            budget.isActive ? "badge-income" : "badge-expense"
+                          }
+                        >
+                          {budget.isActive
+                            ? tBudgetsFE("active")
+                            : tBudgetsFE("completed")}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="min-w-32">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Progress
+                              value={Math.min(100, budget.percentage)}
+                              className={`flex-1 ${budget.progressColorClass}`}
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            {budget.percentage.toFixed(1)}%
+                          </TooltipContent>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell onClick={(e) => e.stopPropagation()}>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button
@@ -171,7 +177,7 @@ export function TransactionsTable({
                             >
                               <MoreVertical />
                               <span className="sr-only">
-                                {tTransactionsFE("openMenu")}
+                                {tBudgetsFE("openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>
@@ -179,7 +185,7 @@ export function TransactionsTable({
                             <DropdownMenuItem
                               className="cursor-pointer"
                               onClick={() => {
-                                setSelectedTransaction(transaction)
+                                setSelectedBudget(budget)
                                 setIsEditOpen(true)
                               }}
                             >
@@ -189,7 +195,7 @@ export function TransactionsTable({
                               className="cursor-pointer"
                               variant="destructive"
                               onClick={() => {
-                                setSelectedTransaction(transaction)
+                                setSelectedBudget(budget)
                                 setIsDeleteOpen(true)
                               }}
                             >
@@ -207,18 +213,17 @@ export function TransactionsTable({
         </CardContent>
       </Card>
 
-      {selectedTransaction && (
+      {selectedBudget && (
         <>
-          <TransactionDialog
-            key={selectedTransaction._id + "TransactionDialog"}
-            transaction={selectedTransaction}
+          <BudgetDialog
+            key={selectedBudget._id + "BudgetDialog"}
+            budget={selectedBudget}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
-          <DeleteTransactionDialog
-            key={selectedTransaction._id + "DeleteTransactionDialog"}
-            transactionId={selectedTransaction._id}
-            transactionDescription={selectedTransaction.description}
+          <DeleteBudgetDialog
+            key={selectedBudget._id + "DeleteBudgetDialog"}
+            budgetId={selectedBudget._id}
             open={isDeleteOpen}
             setOpen={setIsDeleteOpen}
           />

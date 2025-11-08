@@ -1,7 +1,9 @@
 import { ObjectId } from "mongodb"
 
 import type {
+  Budget,
   CustomCategory,
+  DBBudget,
   DBCustomCategory,
   DBTransaction,
   DBUser,
@@ -35,6 +37,15 @@ export const mockTransaction: DBTransaction = {
   date: new Date("2024-01-15"),
 }
 
+export const mockBudget: DBBudget = {
+  _id: new ObjectId("68f795d4bdcc3c9a30717988"),
+  userId: mockUser._id,
+  categoryKey: "food_beverage",
+  amount: 1000000,
+  startDate: new Date("2024-01-01"),
+  endDate: new Date("2024-01-31"),
+}
+
 export const mockValidSignInValues = {
   username: "testuser",
   password: "TestPassword123!",
@@ -58,6 +69,13 @@ export const mockValidPasswordValues = {
   currentPassword: "TestPassword123!",
   newPassword: "NewPassword456!",
   confirmPassword: "NewPassword456!",
+}
+
+export const mockValidBudgetValues = {
+  categoryKey: "food_beverage",
+  amount: 1000000,
+  startDate: new Date("2024-01-01"),
+  endDate: new Date("2024-01-31"),
 }
 
 export const mockTransactions: Transaction[] = [
@@ -106,6 +124,33 @@ export const mockTransactions: Transaction[] = [
     categoryKey: "housing",
     date: new Date("2024-01-25"),
   },
+  {
+    _id: "6",
+    userId: "68f712e4cda4897217a05a1c",
+    type: "expense" as const,
+    amount: 500000, // 50% of 1000000 - green (< 75%) mockBudgets[0]
+    description: "Food expense",
+    categoryKey: "food_beverage",
+    date: new Date("2024-02-15"),
+  },
+  {
+    _id: "7",
+    userId: "68f712e4cda4897217a05a1c",
+    type: "expense" as const,
+    amount: 400000, // 80% of 500000 - orange (75-100%) mockBudgets[1]
+    description: "Transport expense",
+    categoryKey: "transportation",
+    date: new Date("2024-03-20"),
+  },
+  {
+    _id: "8",
+    userId: "68f712e4cda4897217a05a1c",
+    type: "expense" as const,
+    amount: 2100000, // 105% of 2000000 - red (>= 100%) mockBudgets[2]
+    description: "Housing expense",
+    categoryKey: "housing",
+    date: new Date("2024-04-10"),
+  },
 ]
 
 export const mockCustomCategories: CustomCategory[] = [
@@ -132,5 +177,50 @@ export const mockCustomCategories: CustomCategory[] = [
     type: "expense",
     label: "Taxi",
     description: "Custom transport category",
+  },
+]
+
+// Active: startDate <= now && endDate >= now
+// Completed: endDate < now
+export const mockBudgets: Budget[] = [
+  {
+    _id: "1",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "food_beverage",
+    amount: 1000000,
+    startDate: new Date("2024-02-01"),
+    endDate: new Date("2024-02-28"), // Completed (in the past)
+  },
+  {
+    _id: "2",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "transportation",
+    amount: 500000,
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-03-28"), // Active (current month)
+  },
+  {
+    _id: "3",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "housing",
+    amount: 2000000,
+    startDate: new Date("2024-04-01"),
+    endDate: new Date("2024-04-28"), // Active (future)
+  },
+  {
+    _id: "4",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "food_beverage",
+    amount: 1500000,
+    startDate: new Date("2024-03-01"),
+    endDate: new Date("2024-03-28"), // Active (current month)
+  },
+  {
+    _id: "5",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "business_freelance",
+    amount: 3000000,
+    startDate: new Date("2023-01-01"),
+    endDate: new Date("2023-01-31"), // Completed (last year)
   },
 ]

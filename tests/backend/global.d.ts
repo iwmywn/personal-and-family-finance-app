@@ -5,6 +5,7 @@ declare global {
   var tAuthBE: Translator
   var tTransactionsBE: Translator
   var tCategoriesBE: Translator
+  var tBudgetsBE: Translator
   var tSettingsBE: Translator
 }
 

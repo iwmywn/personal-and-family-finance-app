@@ -191,7 +191,6 @@ export function TransactionDialog({
                 </SelectTrigger>
               </FormControl>
               <SelectContent
-                align="start"
                 style={{
                   maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                 }}
@@ -333,7 +332,7 @@ export function TransactionDialog({
               control={form.control}
               name="date"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem>
                   <FormLabel>{tTransactionsFE("date")}</FormLabel>
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>

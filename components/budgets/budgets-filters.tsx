@@ -1,18 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDownIcon, Search, X } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from "@/components/ui/input-group"
 import {
   Popover,
   PopoverContent,
@@ -28,22 +22,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { TransactionsTable } from "@/components/transactions/transactions-table"
+import { BudgetsTable } from "@/components/budgets/budgets-table"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
-import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
-import { filterTransactions } from "@/lib/filters"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
+import { EXPENSE_CATEGORIES_KEY } from "@/lib/categories"
+import { filterBudgets } from "@/lib/filters"
+import { useBudgets, useCustomCategories, useTransactions } from "@/lib/swr"
 import { getUniqueYears } from "@/lib/utils"
 
-export function TransactionFilters() {
+export function BudgetsFilters() {
+  const { budgets } = useBudgets()
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
-  const tTransactionsFE = useTranslations("transactions.fe")
-  const tCommonFE = useTranslations("common.fe")
-  const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
@@ -56,35 +48,35 @@ export function TransactionFilters() {
   })
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
-  const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
-    "all"
-  )
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
+  const [filterProgress, setFilterProgress] = useState<
+    "all" | "gray" | "green" | "orange" | "red"
+  >("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const formatDate = useFormatDate()
+  const tBudgetsFE = useTranslations("budgets.fe")
+  const tCommonFE = useTranslations("common.fe")
   const { getCategoryLabel } = useCategoryI18n()
+  const formatDate = useFormatDate()
 
   const allMonths = useMonthsI18n()
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
-    searchTerm !== "" ||
     selectedDate ||
     dateRange.from ||
     dateRange.to ||
     filterMonth !== "all" ||
     filterYear !== "all" ||
-    filterType !== "all" ||
-    filterCategoryKey !== "all"
+    filterCategoryKey !== "all" ||
+    filterProgress !== "all"
 
   const handleResetFilters = () => {
-    setSearchTerm("")
     setSelectedDate(undefined)
     setDateRange({ from: undefined, to: undefined })
     setFilterMonth("all")
     setFilterYear("all")
-    setFilterType("all")
     setFilterCategoryKey("all")
+    setFilterProgress("all")
   }
 
   const handleDateChange = (date: Date | undefined) => {
@@ -122,55 +114,34 @@ export function TransactionFilters() {
     }
   }
 
-  const filteredTransactions = filterTransactions(transactions!, {
-    searchTerm,
-    selectedDate,
-    dateRange,
-    filterMonth,
-    filterYear,
-    filterType,
-    filterCategoryKey,
-  })
+  const filteredBudgets = filterBudgets(
+    budgets!,
+    {
+      selectedDate,
+      dateRange,
+      filterMonth,
+      filterYear,
+      filterCategoryKey,
+      filterProgress,
+    },
+    transactions!
+  )
 
   return (
     <>
       <Card ref={registerRef}>
         <CardContent>
           <div
-            className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-4 lg:grid-cols-[1fr_1fr_1fr] lg:grid-rows-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] 2xl:grid-rows-2 ${
+            className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-3 lg:grid-cols-[1fr_1fr_1fr] lg:grid-rows-2 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] 2xl:grid-rows-1 ${
               hasActiveFilters &&
-              "md:grid-rows-5 lg:grid-rows-4 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]"
+              "md:grid-rows-3 lg:grid-rows-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]"
             } gap-4`}
           >
-            <InputGroup
-              className={`col-span-full ${searchTerm !== "" && "border-primary"}`}
-            >
-              <InputGroupAddon>
-                <Search />
-              </InputGroupAddon>
-              <InputGroupInput
-                placeholder={tTransactionsFE("searchPlaceholder")}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              {searchTerm && (
-                <InputGroupAddon align="inline-end">
-                  <InputGroupButton
-                    className="rounded-full"
-                    size="icon-xs"
-                    onClick={() => setSearchTerm("")}
-                  >
-                    <X />
-                  </InputGroupButton>
-                </InputGroupAddon>
-              )}
-            </InputGroup>
-
             <Popover open={isDatePickerOpen} onOpenChange={setIsDatePickerOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={`w-full justify-between font-normal md:row-start-2 ${selectedDate && "border-primary!"}`}
+                  className={`w-full justify-between font-normal md:row-start-1 ${selectedDate && "border-primary!"}`}
                 >
                   {selectedDate
                     ? formatDate(selectedDate)
@@ -201,7 +172,7 @@ export function TransactionFilters() {
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={`w-full justify-between font-normal md:row-start-2 ${dateRange.from && "border-primary!"}`}
+                  className={`w-full justify-between font-normal md:row-start-1 ${dateRange.from && "border-primary!"}`}
                 >
                   {dateRange.from ? (
                     dateRange.to ? (
@@ -267,7 +238,7 @@ export function TransactionFilters() {
 
             <Select value={filterMonth} onValueChange={handleMonthChange}>
               <SelectTrigger
-                className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-2 lg:row-start-1 ${filterMonth !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={tCommonFE("month")} />
               </SelectTrigger>
@@ -286,7 +257,7 @@ export function TransactionFilters() {
 
             <Select value={filterYear} onValueChange={handleYearChange}>
               <SelectTrigger
-                className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-2 2xl:row-start-1 ${filterYear !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={tCommonFE("year")} />
               </SelectTrigger>
@@ -304,65 +275,24 @@ export function TransactionFilters() {
             </Select>
 
             <Select
-              value={filterType}
-              onValueChange={(value: "all" | "income" | "expense") =>
-                setFilterType(value)
-              }
-            >
-              <SelectTrigger
-                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterType !== "all" && "border-primary"}`}
-              >
-                <SelectValue placeholder={tTransactionsFE("transactionType")} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="all">
-                    {tTransactionsFE("allTransactionTypes")}
-                  </SelectItem>
-                  <SelectSeparator />
-                  <SelectItem value="income">{tCommonFE("income")}</SelectItem>
-                  <SelectItem value="expense">
-                    {tCommonFE("expense")}
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-
-            <Select
               value={filterCategoryKey}
               onValueChange={setFilterCategoryKey}
             >
               <SelectTrigger
-                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={tCommonFE("category")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {tTransactionsFE("allCategories")}
+                    {tBudgetsFE("allCategories")}
                   </SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{tCommonFE("income")}</SelectLabel>
-                  {INCOME_CATEGORIES_KEY.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category)}
-                    </SelectItem>
-                  ))}
-                  {customCategories!
-                    .filter((c) => c.type === "income")
-                    .map((category) => (
-                      <SelectItem
-                        key={category._id}
-                        value={category.categoryKey}
-                      >
-                        {category.label}
-                      </SelectItem>
-                    ))}
                   <SelectLabel>{tCommonFE("expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES_KEY.map((category) => (
                     <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category)}
+                      {getCategoryLabel(category, customCategories)}
                     </SelectItem>
                   ))}
                   {customCategories!
@@ -379,11 +309,44 @@ export function TransactionFilters() {
               </SelectContent>
             </Select>
 
+            <Select
+              value={filterProgress}
+              onValueChange={(
+                value: "all" | "gray" | "green" | "orange" | "red"
+              ) => setFilterProgress(value)}
+            >
+              <SelectTrigger
+                className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterProgress !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder={tBudgetsFE("progress")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">
+                    {tBudgetsFE("allProgress")}
+                  </SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="gray">
+                    {tBudgetsFE("progressGray")}
+                  </SelectItem>
+                  <SelectItem value="green">
+                    {tBudgetsFE("progressGreen")}
+                  </SelectItem>
+                  <SelectItem value="orange">
+                    {tBudgetsFE("progressOrange")}
+                  </SelectItem>
+                  <SelectItem value="red">
+                    {tBudgetsFE("progressRed")}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
             {hasActiveFilters && (
               <Button
                 variant="outline"
                 onClick={handleResetFilters}
-                className="col-span-full 2xl:col-auto 2xl:row-start-2"
+                className="col-span-full 2xl:col-auto 2xl:row-start-1"
               >
                 {tCommonFE("reset")}
               </Button>
@@ -392,8 +355,8 @@ export function TransactionFilters() {
         </CardContent>
       </Card>
 
-      <TransactionsTable
-        filteredTransactions={filteredTransactions}
+      <BudgetsTable
+        filteredBudgets={filteredBudgets}
         offsetHeight={calculatedHeight}
       />
     </>
