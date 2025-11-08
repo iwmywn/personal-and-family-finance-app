@@ -260,9 +260,13 @@ describe("Filters", () => {
 
   describe("filterBudgets", () => {
     it("should filter by category key", () => {
-      const result = filterBudgets(mockBudgets, {
-        filterCategoryKey: "food_beverage",
-      })
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterCategoryKey: "food_beverage",
+        },
+        mockTransactions
+      )
 
       expect(result).toHaveLength(2)
       expect(result.every((b) => b.categoryKey === "food_beverage")).toBe(true)
@@ -270,9 +274,13 @@ describe("Filters", () => {
 
     it("should filter by selected date", () => {
       const selectedDate = new Date("2024-03-15")
-      const result = filterBudgets(mockBudgets, {
-        selectedDate,
-      })
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          selectedDate,
+        },
+        mockTransactions
+      )
 
       // Should return budgets where selectedDate falls within budget period
       expect(result.length).toBeGreaterThan(0)
@@ -286,12 +294,16 @@ describe("Filters", () => {
     it("should filter by date range", () => {
       const fromDate = new Date("2024-03-01")
       const toDate = new Date("2024-03-28")
-      const result = filterBudgets(mockBudgets, {
-        dateRange: {
-          from: fromDate,
-          to: toDate,
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          dateRange: {
+            from: fromDate,
+            to: toDate,
+          },
         },
-      })
+        mockTransactions
+      )
 
       // Should return budgets that overlap with date range
       expect(result.length).toBeGreaterThan(0)
@@ -303,9 +315,13 @@ describe("Filters", () => {
     })
 
     it("should filter by month", () => {
-      const result = filterBudgets(mockBudgets, {
-        filterMonth: "3", // March 2024
-      })
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterMonth: "3", // March 2024
+        },
+        mockTransactions
+      )
 
       // Should return budgets that overlap with the selected month
       expect(result.length).toBeGreaterThan(0)
@@ -321,9 +337,13 @@ describe("Filters", () => {
     })
 
     it("should filter by year", () => {
-      const result = filterBudgets(mockBudgets, {
-        filterYear: "2024",
-      })
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterYear: "2024",
+        },
+        mockTransactions
+      )
 
       // Should return budgets that overlap with the selected year
       expect(result.length).toBeGreaterThan(0)
@@ -453,10 +473,14 @@ describe("Filters", () => {
     })
 
     it("should combine multiple filters", () => {
-      const result = filterBudgets(mockBudgets, {
-        filterCategoryKey: "food_beverage",
-        filterMonth: "3",
-      })
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterCategoryKey: "food_beverage",
+          filterMonth: "3",
+        },
+        mockTransactions
+      )
 
       expect(result.length).toBeGreaterThan(0)
       result.forEach((budget) => {
@@ -472,26 +496,34 @@ describe("Filters", () => {
     })
 
     it("should return all budgets when no filters applied", () => {
-      const result = filterBudgets(mockBudgets, {})
+      const result = filterBudgets(mockBudgets, {}, mockTransactions)
 
       expect(result).toHaveLength(mockBudgets.length)
     })
 
     it("should handle empty budgets array", () => {
-      const result = filterBudgets([], {
-        filterCategoryKey: "food_beverage",
-      })
+      const result = filterBudgets(
+        [],
+        {
+          filterCategoryKey: "food_beverage",
+        },
+        mockTransactions
+      )
 
       expect(result).toEqual([])
     })
 
     it("should handle date range with only from date", () => {
       const fromDate = new Date("2024-03-01")
-      const result = filterBudgets(mockBudgets, {
-        dateRange: {
-          from: fromDate,
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          dateRange: {
+            from: fromDate,
+          },
         },
-      })
+        mockTransactions
+      )
 
       expect(result.length).toBeGreaterThan(0)
       result.forEach((budget) => {
@@ -502,11 +534,15 @@ describe("Filters", () => {
 
     it("should handle date range with only to date", () => {
       const toDate = new Date("2024-03-28")
-      const result = filterBudgets(mockBudgets, {
-        dateRange: {
-          to: toDate,
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          dateRange: {
+            to: toDate,
+          },
         },
-      })
+        mockTransactions
+      )
 
       expect(result.length).toBeGreaterThan(0)
       result.forEach((budget) => {
@@ -516,20 +552,15 @@ describe("Filters", () => {
     })
 
     it("should return empty array when no matches found", () => {
-      const result = filterBudgets(mockBudgets, {
-        filterCategoryKey: "nonexistent_category",
-      })
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterCategoryKey: "nonexistent_category",
+        },
+        mockTransactions
+      )
 
       expect(result).toEqual([])
-    })
-
-    it("should not filter by progress when transactions are not provided", () => {
-      const result = filterBudgets(mockBudgets, {
-        filterProgress: "green",
-      })
-
-      // Should return all budgets when transactions are not provided
-      expect(result).toHaveLength(mockBudgets.length)
     })
   })
 })

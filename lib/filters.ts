@@ -58,6 +58,7 @@ export function filterTransactions(
   const normalizedSearchTerm = searchTerm.trim()
   const fromDateOnly = toDateOnly(dateRange.from)
   const toDateOnlyValue = toDateOnly(dateRange.to)
+  const selectedDateOnly = toDateOnly(selectedDate)
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
@@ -70,10 +71,8 @@ export function filterTransactions(
     const transactionDate = new Date(transaction.date)
     const transactionDateOnly = toDateOnly(transactionDate)!
 
-    const matchesSelectedDate = selectedDate
-      ? transactionDate.getDate() === selectedDate.getDate() &&
-        transactionDate.getMonth() === selectedDate.getMonth() &&
-        transactionDate.getFullYear() === selectedDate.getFullYear()
+    const matchesSelectedDate = selectedDateOnly
+      ? transactionDateOnly.getTime() === selectedDateOnly.getTime()
       : true
 
     const matchesDateRange =
@@ -81,10 +80,10 @@ export function filterTransactions(
       (!toDateOnlyValue || transactionDateOnly <= toDateOnlyValue)
 
     const matchesMonth =
-      !parsedMonth || transactionDate.getMonth() + 1 === parsedMonth
+      !parsedMonth || transactionDateOnly.getMonth() + 1 === parsedMonth
 
     const matchesYear =
-      !parsedYear || transactionDate.getFullYear() === parsedYear
+      !parsedYear || transactionDateOnly.getFullYear() === parsedYear
 
     const matchesType = filterType === "all" || transaction.type === filterType
 
@@ -126,7 +125,7 @@ export function filterCustomCategories(
 export function filterBudgets(
   budgets: Budget[],
   filters: BudgetFilters,
-  transactions?: Transaction[]
+  transactions: Transaction[]
 ): Budget[] {
   const {
     selectedDate,
