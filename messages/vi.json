@@ -92,7 +92,6 @@
   },
   "home": {
     "fe": {
-      "title": "Trang chủ",
       "description": "Quản lý tài chính cá nhân của bạn.",
       "welcome": "Chào mừng",
       "quickStats": "Thống kê nhanh",
@@ -116,7 +115,6 @@
   },
   "statistics": {
     "fe": {
-      "title": "Thống kê",
       "description": "Phân tích dữ liệu tài chính của bạn với các thống kê và thông tin chi tiết.",
       "totalIncome": "Tổng thu nhập",
       "totalExpense": "Tổng chi tiêu",
@@ -127,7 +125,6 @@
   },
   "transactions": {
     "fe": {
-      "title": "Giao dịch",
       "description": "Quản lý thu nhập và chi tiêu để theo dõi tài chính cá nhân của bạn.",
       "addTransaction": "Thêm giao dịch",
       "editTransaction": "Chỉnh sửa giao dịch",
@@ -163,7 +160,6 @@
   },
   "categories": {
     "fe": {
-      "title": "Danh mục",
       "description": "Quản lý các danh mục tùy chỉnh cho giao dịch của bạn.",
       "addCategory": "Thêm danh mục",
       "editCategory": "Chỉnh sửa danh mục",
@@ -197,6 +193,73 @@
       "categoryInUseWithCountTransaction": "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.",
       "categoryInUseWithCountBudget": "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước.",
       "categoryFetchFailed": "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
+    }
+  },
+  "budgets": {
+    "fe": {
+      "description": "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn.",
+      "addBudget": "Thêm ngân sách",
+      "editBudget": "Chỉnh sửa ngân sách",
+      "addBudgetDescription": "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của bạn.",
+      "editBudgetDescription": "Cập nhật thông tin ngân sách.",
+      "category": "Danh mục",
+      "selectCategory": "Chọn danh mục",
+      "amount": "Số tiền",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày kết thúc",
+      "status": "Trạng thái",
+      "allStatuses": "Tất cả trạng thái",
+      "active": "Đang hoạt động",
+      "completed": "Đã hoàn thành",
+      "searchPlaceholder": "Tìm kiếm ngân sách...",
+      "noBudgetsFound": "Không có ngân sách nào",
+      "noBudgetsDescription": "Bạn chưa tạo ngân sách nào. Hãy thêm ngân sách đầu tiên!",
+      "noBudgetsFiltered": "Không tìm thấy ngân sách nào phù hợp với bộ lọc của bạn.",
+      "openMenu": "Mở menu",
+      "deleteBudgetTitle": "Xóa ngân sách",
+      "deleteBudgetDescription": "Bạn có chắc chắn muốn xóa ngân sách này? Hành động này không thể hoàn tác.",
+      "spent": "Đã chi",
+      "balance": "Số dư"
+    },
+    "be": {
+      "budgetAdded": "Ngân sách đã được thêm.",
+      "budgetUpdated": "Ngân sách đã được cập nhật.",
+      "budgetDeleted": "Ngân sách đã được xóa.",
+      "budgetAddFailed": "Thêm ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetUpdateFailed": "Cập nhật ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetDeleteFailed": "Xóa ngân sách thất bại! Vui lòng thử lại sau.",
+      "invalidBudgetId": "Budget ID không hợp lệ!",
+      "budgetNotFoundOrNoPermission": "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!",
+      "budgetNotFoundOrNoPermissionDelete": "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!",
+      "budgetFetchFailed": "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau."
+    }
+  },
+  "settings": {
+    "fe": {
+      "general": "Chung",
+      "account": "Tài khoản",
+      "appearance": "Giao diện",
+      "appearanceDescription": "Chọn chủ đề hiển thị cho ứng dụng.",
+      "language": "Ngôn ngữ",
+      "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
+      "changePassword": "Đổi mật khẩu",
+      "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
+      "currentPassword": "Mật khẩu hiện tại",
+      "newPassword": "Mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "toggleTheme": "Chuyển đổi chủ đề",
+      "light": "Sáng",
+      "dark": "Tối",
+      "system": "Hệ thống"
+    },
+    "be": {
+      "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
+      "noChanges": "Không có thay đổi nào được thực hiện.",
+      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi.",
+      "languageUpdated": "Ngôn ngữ đã được cập nhật.",
+      "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
+      "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau."
     }
   },
   "categoriesConfig": {
@@ -273,34 +336,6 @@
       "description": "Sửa chữa đột xuất, phạt nguội, mất mát, chi phí không xác định,..."
     }
   },
-  "settings": {
-    "fe": {
-      "title": "Cài đặt",
-      "general": "Chung",
-      "account": "Tài khoản",
-      "appearance": "Giao diện",
-      "appearanceDescription": "Chọn chủ đề hiển thị cho ứng dụng.",
-      "language": "Ngôn ngữ",
-      "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
-      "changePassword": "Đổi mật khẩu",
-      "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
-      "currentPassword": "Mật khẩu hiện tại",
-      "newPassword": "Mật khẩu mới",
-      "confirmPassword": "Xác nhận mật khẩu",
-      "toggleTheme": "Chuyển đổi chủ đề",
-      "light": "Sáng",
-      "dark": "Tối",
-      "system": "Hệ thống"
-    },
-    "be": {
-      "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
-      "noChanges": "Không có thay đổi nào được thực hiện.",
-      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi.",
-      "languageUpdated": "Ngôn ngữ đã được cập nhật.",
-      "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
-      "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau."
-    }
-  },
   "months": {
     "january": "Tháng 1",
     "february": "Tháng 2",
@@ -357,47 +392,6 @@
       "startDateRequired": "Vui lòng chọn ngày bắt đầu.",
       "endDateRequired": "Vui lòng chọn ngày kết thúc.",
       "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu."
-    }
-  },
-  "budgets": {
-    "fe": {
-      "title": "Ngân sách",
-      "description": "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn.",
-      "addBudget": "Thêm ngân sách",
-      "editBudget": "Chỉnh sửa ngân sách",
-      "addBudgetDescription": "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của bạn.",
-      "editBudgetDescription": "Cập nhật thông tin ngân sách.",
-      "category": "Danh mục",
-      "selectCategory": "Chọn danh mục",
-      "amount": "Số tiền",
-      "startDate": "Ngày bắt đầu",
-      "endDate": "Ngày kết thúc",
-      "status": "Trạng thái",
-      "allStatuses": "Tất cả trạng thái",
-      "active": "Đang hoạt động",
-      "completed": "Đã hoàn thành",
-      "searchPlaceholder": "Tìm kiếm ngân sách...",
-      "noBudgetsFound": "Không có ngân sách nào",
-      "noBudgetsDescription": "Bạn chưa tạo ngân sách nào. Hãy thêm ngân sách đầu tiên!",
-      "noBudgetsFiltered": "Không tìm thấy ngân sách nào phù hợp với bộ lọc của bạn.",
-      "openMenu": "Mở menu",
-      "deleteBudgetTitle": "Xóa ngân sách",
-      "deleteBudgetDescription": "Bạn có chắc chắn muốn xóa ngân sách này? Hành động này không thể hoàn tác.",
-      "spent": "Đã chi",
-      "balance": "Số dư"
-    },
-    "be": {
-      "budgetAdded": "Ngân sách đã được thêm.",
-      "budgetUpdated": "Ngân sách đã được cập nhật.",
-      "budgetDeleted": "Ngân sách đã được xóa.",
-      "budgetAddFailed": "Thêm ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetUpdateFailed": "Cập nhật ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetDeleteFailed": "Xóa ngân sách thất bại! Vui lòng thử lại sau.",
-      "invalidBudgetId": "Budget ID không hợp lệ!",
-      "budgetNotFoundOrNoPermission": "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!",
-      "budgetNotFoundOrNoPermissionDelete": "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!",
-      "budgetFetchFailed": "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau."
     }
   }
 }

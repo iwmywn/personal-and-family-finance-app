@@ -12,13 +12,14 @@ export default function BudgetsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
+  const tNavigation = useTranslations("navigation")
 
   return (
     <>
       <BasePage>
         <div className="header">
           <div>
-            <div className="title">{tBudgetsFE("title")}</div>
+            <div className="title">{tNavigation("budgets")}</div>
             <div className="description">{tBudgetsFE("description")}</div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>

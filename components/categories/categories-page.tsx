@@ -12,13 +12,14 @@ export default function CategoriesPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const tCategoriesFE = useTranslations("categories.fe")
   const tCommonFE = useTranslations("common.fe")
+  const tNavigation = useTranslations("navigation")
 
   return (
     <>
       <BasePage>
         <div className="header">
           <div>
-            <div className="title">{tCategoriesFE("title")}</div>
+            <div className="title">{tNavigation("categories")}</div>
             <div className="description">{tCategoriesFE("description")}</div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>
