@@ -47,6 +47,7 @@
     "statistics": "Statistics",
     "transactions": "Transactions",
     "categories": "Categories",
+    "budgets": "Budgets",
     "settings": "Settings",
     "signOut": "Sign Out"
   },
@@ -83,6 +84,10 @@
     "categoriesDataError": {
       "title": "CANNOT FETCH CATEGORIES DATA",
       "description": "An error occurred while loading categories! Please try again later."
+    },
+    "budgetsDataError": {
+      "title": "CANNOT FETCH BUDGETS DATA",
+      "description": "An error occurred while loading budgets! Please try again later."
     }
   },
   "home": {
@@ -189,7 +194,8 @@
       "invalidCategoryId": "Invalid category ID!",
       "categoryNotFoundOrNoPermission": "Category not found or you don't have permission to edit!",
       "categoryNotFoundOrNoPermissionDelete": "Category not found or you don't have permission to delete!",
-      "categoryInUseWithCount": "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first.",
+      "categoryInUseWithCountTransaction": "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first.",
+      "categoryInUseWithCountBudget": "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first.",
       "categoryFetchFailed": "Failed to load custom categories! Please try again later."
     }
   },
@@ -343,6 +349,55 @@
       "categoryNameMaxLength": "Category name must be at most 50 characters.",
       "categoryDescriptionRequired": "Description is required.",
       "categoryDescriptionMaxLength": "Description must be at most 200 characters."
+    },
+    "budget": {
+      "categoryRequired": "Please select a category.",
+      "amountRequired": "Amount must be greater than 0.",
+      "amountMaxLength": "Maximum amount is 100 billion.",
+      "startDateRequired": "Please select a start date.",
+      "endDateRequired": "Please select an end date.",
+      "endDateMustBeAfterStartDate": "End date must be after start date."
+    }
+  },
+  "budgets": {
+    "fe": {
+      "title": "Budgets",
+      "description": "Set and manage budgets for your expense categories.",
+      "addBudget": "Add Budget",
+      "editBudget": "Edit Budget",
+      "addBudgetDescription": "Create a budget for a category to track your spending.",
+      "editBudgetDescription": "Update budget information.",
+      "category": "Category",
+      "selectCategory": "Select category",
+      "amount": "Amount",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "active": "Active",
+      "completed": "Completed",
+      "searchPlaceholder": "Search budgets...",
+      "noBudgetsFound": "No budgets yet",
+      "noBudgetsDescription": "You haven't created any budgets yet. Add your first budget!",
+      "noBudgetsFiltered": "No budgets found matching your filters.",
+      "openMenu": "Open menu",
+      "deleteBudgetTitle": "Delete Budget",
+      "deleteBudgetDescription": "Are you sure you want to delete this budget? This action cannot be undone.",
+      "spent": "Spent",
+      "remaining": "Remaining"
+    },
+    "be": {
+      "budgetAdded": "Budget has been added.",
+      "budgetUpdated": "Budget has been updated.",
+      "budgetDeleted": "Budget has been deleted.",
+      "budgetAddFailed": "Failed to add budget! Please try again later.",
+      "budgetUpdateFailed": "Failed to update budget! Please try again later.",
+      "budgetDeleteFailed": "Failed to delete budget! Please try again later.",
+      "invalidBudgetId": "Invalid budget ID!",
+      "budgetNotFoundOrNoPermission": "Budget not found or you don't have permission to edit!",
+      "budgetNotFoundOrNoPermissionDelete": "Budget not found or you don't have permission to delete!",
+      "budgetFetchFailed": "Failed to load budgets! Please try again later.",
+      "budgetDetailsFetchFailed": "Failed to load budget details! Please try again later."
     }
   }
 }

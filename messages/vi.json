@@ -47,6 +47,7 @@
     "statistics": "Thống kê",
     "transactions": "Giao dịch",
     "categories": "Danh mục",
+    "budgets": "Ngân sách",
     "settings": "Cài đặt",
     "signOut": "Đăng xuất"
   },
@@ -83,6 +84,10 @@
     "categoriesDataError": {
       "title": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
       "description": "Đã xảy ra lỗi khi tải danh mục! Vui lòng thử lại sau."
+    },
+    "budgetsDataError": {
+      "title": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH",
+      "description": "Đã xảy ra lỗi khi tải ngân sách! Vui lòng thử lại sau."
     }
   },
   "home": {
@@ -189,7 +194,8 @@
       "invalidCategoryId": "Category ID không hợp lệ!",
       "categoryNotFoundOrNoPermission": "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!",
       "categoryNotFoundOrNoPermissionDelete": "Không tìm thấy danh mục hoặc bạn không có quyền xóa!",
-      "categoryInUseWithCount": "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.",
+      "categoryInUseWithCountTransaction": "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.",
+      "categoryInUseWithCountBudget": "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước.",
       "categoryFetchFailed": "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
     }
   },
@@ -343,6 +349,55 @@
       "categoryNameMaxLength": "Tên danh mục tối đa là 50 ký tự.",
       "categoryDescriptionRequired": "Mô tả là bắt buộc.",
       "categoryDescriptionMaxLength": "Mô tả tối đa là 200 ký tự."
+    },
+    "budget": {
+      "categoryRequired": "Vui lòng chọn danh mục.",
+      "amountRequired": "Số tiền phải lớn hơn 0.",
+      "amountMaxLength": "Số tiền tối đa là 100 tỉ.",
+      "startDateRequired": "Vui lòng chọn ngày bắt đầu.",
+      "endDateRequired": "Vui lòng chọn ngày kết thúc.",
+      "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu."
+    }
+  },
+  "budgets": {
+    "fe": {
+      "title": "Ngân sách",
+      "description": "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn.",
+      "addBudget": "Thêm ngân sách",
+      "editBudget": "Chỉnh sửa ngân sách",
+      "addBudgetDescription": "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của bạn.",
+      "editBudgetDescription": "Cập nhật thông tin ngân sách.",
+      "category": "Danh mục",
+      "selectCategory": "Chọn danh mục",
+      "amount": "Số tiền",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày kết thúc",
+      "status": "Trạng thái",
+      "allStatuses": "Tất cả trạng thái",
+      "active": "Đang hoạt động",
+      "completed": "Đã hoàn thành",
+      "searchPlaceholder": "Tìm kiếm ngân sách...",
+      "noBudgetsFound": "Không có ngân sách nào",
+      "noBudgetsDescription": "Bạn chưa tạo ngân sách nào. Hãy thêm ngân sách đầu tiên!",
+      "noBudgetsFiltered": "Không tìm thấy ngân sách nào phù hợp với bộ lọc của bạn.",
+      "openMenu": "Mở menu",
+      "deleteBudgetTitle": "Xóa ngân sách",
+      "deleteBudgetDescription": "Bạn có chắc chắn muốn xóa ngân sách này? Hành động này không thể hoàn tác.",
+      "spent": "Đã chi",
+      "remaining": "Còn lại"
+    },
+    "be": {
+      "budgetAdded": "Ngân sách đã được thêm.",
+      "budgetUpdated": "Ngân sách đã được cập nhật.",
+      "budgetDeleted": "Ngân sách đã được xóa.",
+      "budgetAddFailed": "Thêm ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetUpdateFailed": "Cập nhật ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetDeleteFailed": "Xóa ngân sách thất bại! Vui lòng thử lại sau.",
+      "invalidBudgetId": "Budget ID không hợp lệ!",
+      "budgetNotFoundOrNoPermission": "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!",
+      "budgetNotFoundOrNoPermissionDelete": "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!",
+      "budgetFetchFailed": "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau."
     }
   }
 }

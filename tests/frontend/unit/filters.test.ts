@@ -1,5 +1,10 @@
-import { mockCustomCategories, mockTransactions } from "@/tests/shared/data"
 import {
+  mockBudgets,
+  mockCustomCategories,
+  mockTransactions,
+} from "@/tests/shared/data"
+import {
+  filterBudgets,
   filterCustomCategories,
   filterTransactions,
   includesCaseInsensitive,
@@ -250,6 +255,163 @@ describe("Filters", () => {
       })
 
       expect(result).toEqual([])
+    })
+  })
+
+  describe("filterBudgets", () => {
+    const mockGetCategoryLabel = (categoryKey: string): string => {
+      const categoryMap: Record<string, string> = {
+        food_beverage: "Food & Beverage",
+        transportation: "Transportation",
+        housing: "Housing",
+        business_freelance: "Business & Freelance",
+      }
+      return categoryMap[categoryKey] || categoryKey
+    }
+
+    it("should filter by search term", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { searchTerm: "food" },
+        mockGetCategoryLabel
+      )
+
+      expect(result).toHaveLength(2)
+      expect(result.every((b) => b.categoryKey === "food_beverage")).toBe(true)
+    })
+
+    it("should filter by active status", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { filterStatus: "active" },
+        mockGetCategoryLabel
+      )
+
+      // Should return budgets where startDate <= now && endDate >= now
+      expect(result.length).toBeGreaterThan(0)
+      const now = new Date()
+      result.forEach((budget) => {
+        const startDate = new Date(budget.startDate)
+        const endDate = new Date(budget.endDate)
+        expect(startDate <= now && endDate >= now).toBe(true)
+      })
+    })
+
+    it("should filter by completed status", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { filterStatus: "completed" },
+        mockGetCategoryLabel
+      )
+
+      // Should return budgets where endDate < now
+      expect(result.length).toBeGreaterThan(0)
+      const now = new Date()
+      result.forEach((budget) => {
+        const endDate = new Date(budget.endDate)
+        expect(endDate < now).toBe(true)
+      })
+    })
+
+    it("should return all budgets when filterStatus is 'all'", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { filterStatus: "all" },
+        mockGetCategoryLabel
+      )
+
+      expect(result).toHaveLength(mockBudgets.length)
+    })
+
+    it("should combine search and status filters", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { searchTerm: "food", filterStatus: "active" },
+        mockGetCategoryLabel
+      )
+
+      // Should return active food_beverage budgets only
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        expect(budget.categoryKey).toBe("food_beverage")
+        const now = new Date()
+        const startDate = new Date(budget.startDate)
+        const endDate = new Date(budget.endDate)
+        expect(startDate <= now && endDate >= now).toBe(true)
+      })
+    })
+
+    it("should return all budgets when no filters applied", () => {
+      const result = filterBudgets(mockBudgets, {}, mockGetCategoryLabel)
+
+      expect(result).toHaveLength(mockBudgets.length)
+    })
+
+    it("should handle empty budgets array", () => {
+      const result = filterBudgets(
+        [],
+        { searchTerm: "test" },
+        mockGetCategoryLabel
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it("should handle case insensitive search", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { searchTerm: "FOOD" },
+        mockGetCategoryLabel
+      )
+
+      expect(result.length).toBeGreaterThan(0)
+      expect(result.every((b) => b.categoryKey === "food_beverage")).toBe(true)
+    })
+
+    it("should handle partial search matches", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { searchTerm: "trans" },
+        mockGetCategoryLabel
+      )
+
+      expect(result.length).toBeGreaterThan(0)
+      expect(result.every((b) => b.categoryKey === "transportation")).toBe(true)
+    })
+
+    it("should return empty array when no matches found", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { searchTerm: "nonexistent" },
+        mockGetCategoryLabel
+      )
+
+      expect(result).toEqual([])
+    })
+
+    it("should trim search term whitespace", () => {
+      const result1 = filterBudgets(
+        mockBudgets,
+        { searchTerm: "  food  " },
+        mockGetCategoryLabel
+      )
+      const result2 = filterBudgets(
+        mockBudgets,
+        { searchTerm: "food" },
+        mockGetCategoryLabel
+      )
+
+      expect(result1).toEqual(result2)
+    })
+
+    it("should handle empty search term", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        { searchTerm: "" },
+        mockGetCategoryLabel
+      )
+
+      expect(result).toHaveLength(mockBudgets.length)
     })
   })
 })

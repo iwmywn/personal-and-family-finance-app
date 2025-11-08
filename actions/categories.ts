@@ -6,6 +6,7 @@ import { nanoid } from "nanoid"
 import { getTranslations } from "next-intl/server"
 
 import {
+  getBudgetsCollection,
   getCategoriesCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
@@ -185,10 +186,12 @@ export async function deleteCustomCategory(categoryId: string) {
       }
     }
 
-    const [categoriesCollection, transactionsCollection] = await Promise.all([
-      getCategoriesCollection(),
-      getTransactionsCollection(),
-    ])
+    const [categoriesCollection, transactionsCollection, budgetsCollection] =
+      await Promise.all([
+        getCategoriesCollection(),
+        getTransactionsCollection(),
+        getBudgetsCollection(),
+      ])
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
@@ -200,15 +203,29 @@ export async function deleteCustomCategory(categoryId: string) {
       }
     }
 
-    const transactionCount = await transactionsCollection.countDocuments({
-      userId: new ObjectId(userId),
-      categoryKey: existingCategory.categoryKey,
-    })
+    const [transactionCount, budgetCount] = await Promise.all([
+      transactionsCollection.countDocuments({
+        userId: new ObjectId(userId),
+        categoryKey: existingCategory.categoryKey,
+      }),
+      budgetsCollection.countDocuments({
+        userId: new ObjectId(userId),
+        categoryKey: existingCategory.categoryKey,
+      }),
+    ])
 
     if (transactionCount > 0) {
       return {
-        error: tCategoriesBE("categoryInUseWithCount", {
+        error: tCategoriesBE("categoryInUseWithCountTransaction", {
           count: transactionCount,
+        }),
+      }
+    }
+
+    if (budgetCount > 0) {
+      return {
+        error: tCategoriesBE("categoryInUseWithCountBudget", {
+          count: budgetCount,
         }),
       }
     }

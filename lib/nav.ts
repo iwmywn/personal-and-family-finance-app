@@ -3,6 +3,7 @@ import {
   ChartColumnIncreasing,
   FolderOpen,
   Home,
+  PiggyBank,
   Settings,
   Wallet,
   type LucideIcon,
@@ -34,6 +35,11 @@ export const mainNav: NavType[] = [
     key: "categories",
     url: "/categories",
     icon: FolderOpen,
+  },
+  {
+    key: "budgets",
+    url: "/budgets",
+    icon: PiggyBank,
   },
 ]
 

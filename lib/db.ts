@@ -34,6 +34,7 @@ function getClientPromise(): Promise<MongoClient> {
 //   try {
 //     const transactionsCollection = db.collection("transactions")
 //     const categoriesCollection = db.collection("categories")
+//     const budgetsCollection = db.collection("budgets")
 
 //     await Promise.all([
 //       transactionsCollection.createIndex(
@@ -58,6 +59,17 @@ function getClientPromise(): Promise<MongoClient> {
 //       categoriesCollection.createIndex(
 //         { userId: 1, _id: -1 },
 //         { name: "userId__id", background: true }
+//       ),
+//     ])
+
+//     await Promise.all([
+//       budgetsCollection.createIndex(
+//         { userId: 1, startDate: -1, _id: -1 },
+//         { name: "userId_startDate__id", background: true }
+//       ),
+//       budgetsCollection.createIndex(
+//         { userId: 1, categoryKey: 1 },
+//         { name: "userId_categoryKey", background: true }
 //       ),
 //     ])
 

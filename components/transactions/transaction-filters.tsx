@@ -349,8 +349,8 @@ export function TransactionFilters() {
                       {getCategoryLabel(category)}
                     </SelectItem>
                   ))}
-                  {customCategories
-                    ?.filter((c) => c.type === "income")
+                  {customCategories!
+                    .filter((c) => c.type === "income")
                     .map((category) => (
                       <SelectItem
                         key={category._id}
@@ -365,8 +365,8 @@ export function TransactionFilters() {
                       {getCategoryLabel(category)}
                     </SelectItem>
                   ))}
-                  {customCategories
-                    ?.filter((c) => c.type === "expense")
+                  {customCategories!
+                    .filter((c) => c.type === "expense")
                     .map((category) => (
                       <SelectItem
                         key={category._id}

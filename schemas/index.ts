@@ -141,6 +141,46 @@ export const createCategorySchema = (
   })
 }
 
+export const createBudgetSchema = (
+  t: TypedTranslationFunction<"schemas.budget">
+) => {
+  return z
+    .object({
+      categoryKey: z
+        .string()
+        .min(1, { message: t("categoryRequired") })
+        .refine(
+          (val) =>
+            (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
+            val.startsWith("custom_"),
+          { message: t("categoryRequired") }
+        ),
+      amount: z
+        .number()
+        .min(0.01, {
+          message: t("amountRequired"),
+        })
+        .max(100000000000, {
+          message: t("amountMaxLength"),
+        }),
+      startDate: z.date({
+        message: t("startDateRequired"),
+      }),
+      endDate: z.date({
+        message: t("endDateRequired"),
+      }),
+    })
+    .superRefine((data, ctx) => {
+      if (data.endDate <= data.startDate) {
+        ctx.addIssue({
+          path: ["endDate"],
+          message: t("endDateMustBeAfterStartDate"),
+          code: "custom",
+        })
+      }
+    })
+}
+
 export type SignInFormValues = z.infer<ReturnType<typeof createSignInSchema>>
 export type PasswordFormValues = z.infer<
   ReturnType<typeof createPasswordSchema>
@@ -151,3 +191,4 @@ export type TransactionFormValues = z.infer<
 export type CustomCategoryFormValues = z.infer<
   ReturnType<typeof createCategorySchema>
 >
+export type BudgetFormValues = z.infer<ReturnType<typeof createBudgetSchema>>

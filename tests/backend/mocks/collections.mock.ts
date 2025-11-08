@@ -1,7 +1,12 @@
 import type { Collection, OptionalId } from "mongodb"
 
 import * as collectionsLib from "@/lib/collections"
-import type { DBCustomCategory, DBTransaction, DBUser } from "@/lib/definitions"
+import type {
+  DBBudget,
+  DBCustomCategory,
+  DBTransaction,
+  DBUser,
+} from "@/lib/definitions"
 
 const mockUserCollection = {
   findOne: vi.fn(),
@@ -20,6 +25,15 @@ const mockCategoryCollection = {
 }
 
 const mockTransactionCollection = {
+  findOne: vi.fn(),
+  find: vi.fn(),
+  updateOne: vi.fn(),
+  insertOne: vi.fn(),
+  deleteOne: vi.fn(),
+  countDocuments: vi.fn(),
+}
+
+const mockBudgetCollection = {
   findOne: vi.fn(),
   find: vi.fn(),
   updateOne: vi.fn(),
@@ -68,4 +82,17 @@ export const mockTransactionCollectionError = (
   error: Error = new Error("Database error")
 ) => {
   vi.spyOn(collectionsLib, "getTransactionsCollection").mockRejectedValue(error)
+}
+
+export const setupBudgetCollectionMock = () => {
+  vi.spyOn(collectionsLib, "getBudgetsCollection").mockResolvedValue(
+    mockBudgetCollection as unknown as Collection<OptionalId<DBBudget>>
+  )
+  return mockBudgetCollection
+}
+
+export const mockBudgetCollectionError = (
+  error: Error = new Error("Database error")
+) => {
+  vi.spyOn(collectionsLib, "getBudgetsCollection").mockRejectedValue(error)
 }

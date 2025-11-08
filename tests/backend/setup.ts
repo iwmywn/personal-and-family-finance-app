@@ -16,20 +16,28 @@ beforeAll(async () => {
 
   await connect()
 
-  const [tCommonBE, tAuthBE, tTransactionsBE, tCategoriesBE, tSettingsBE] =
-    await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("auth.be"),
-      getTranslations("transactions.be"),
-      getTranslations("categories.be"),
-      getTranslations("settings.be"),
-    ])
+  const [
+    tCommonBE,
+    tAuthBE,
+    tTransactionsBE,
+    tCategoriesBE,
+    tBudgetsBE,
+    tSettingsBE,
+  ] = await Promise.all([
+    getTranslations("common.be"),
+    getTranslations("auth.be"),
+    getTranslations("transactions.be"),
+    getTranslations("categories.be"),
+    getTranslations("budgets.be"),
+    getTranslations("settings.be"),
+  ])
 
   Object.assign(globalThis, {
     tCommonBE,
     tAuthBE,
     tTransactionsBE,
     tCategoriesBE,
+    tBudgetsBE,
     tSettingsBE,
   })
 })

@@ -1,7 +1,9 @@
 import { ObjectId } from "mongodb"
 
 import type {
+  Budget,
   CustomCategory,
+  DBBudget,
   DBCustomCategory,
   DBTransaction,
   DBUser,
@@ -35,6 +37,15 @@ export const mockTransaction: DBTransaction = {
   date: new Date("2024-01-15"),
 }
 
+export const mockBudget: DBBudget = {
+  _id: new ObjectId("68f795d4bdcc3c9a30717988"),
+  userId: mockUser._id,
+  categoryKey: "food_beverage",
+  amount: 1000000,
+  startDate: new Date("2024-01-01"),
+  endDate: new Date("2024-01-31"),
+}
+
 export const mockValidSignInValues = {
   username: "testuser",
   password: "TestPassword123!",
@@ -58,6 +69,13 @@ export const mockValidPasswordValues = {
   currentPassword: "TestPassword123!",
   newPassword: "NewPassword456!",
   confirmPassword: "NewPassword456!",
+}
+
+export const mockValidBudgetValues = {
+  categoryKey: "food_beverage",
+  amount: 1000000,
+  startDate: new Date("2024-01-01"),
+  endDate: new Date("2024-01-31"),
 }
 
 export const mockTransactions: Transaction[] = [
@@ -132,5 +150,52 @@ export const mockCustomCategories: CustomCategory[] = [
     type: "expense",
     label: "Taxi",
     description: "Custom transport category",
+  },
+]
+
+// Active: startDate <= now && endDate >= now
+// Completed: endDate < now
+const now = new Date()
+
+export const mockBudgets: Budget[] = [
+  {
+    _id: "1",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "food_beverage",
+    amount: 1000000,
+    startDate: new Date(now.getFullYear(), now.getMonth() - 1, 1),
+    endDate: new Date(now.getFullYear(), now.getMonth() - 1, 28), // Completed (in the past)
+  },
+  {
+    _id: "2",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "transportation",
+    amount: 500000,
+    startDate: new Date(now.getFullYear(), now.getMonth(), 1),
+    endDate: new Date(now.getFullYear(), now.getMonth(), 28), // Active (current month)
+  },
+  {
+    _id: "3",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "housing",
+    amount: 2000000,
+    startDate: new Date(now.getFullYear(), now.getMonth() + 1, 1),
+    endDate: new Date(now.getFullYear(), now.getMonth() + 1, 28), // Active (future)
+  },
+  {
+    _id: "4",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "food_beverage",
+    amount: 1500000,
+    startDate: new Date(now.getFullYear(), now.getMonth(), 1),
+    endDate: new Date(now.getFullYear(), now.getMonth(), 28), // Active (current month)
+  },
+  {
+    _id: "5",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "business_freelance",
+    amount: 3000000,
+    startDate: new Date(now.getFullYear() - 1, 0, 1),
+    endDate: new Date(now.getFullYear() - 1, 0, 31), // Completed (last year)
   },
 ]

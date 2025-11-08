@@ -1,4 +1,4 @@
-import type { CustomCategory, Transaction } from "@/lib/definitions"
+import type { Budget, CustomCategory, Transaction } from "@/lib/definitions"
 
 interface TransactionFilters {
   searchTerm?: string
@@ -16,6 +16,11 @@ interface TransactionFilters {
 interface CategoryFilters {
   searchTerm?: string
   filterType?: string
+}
+
+interface BudgetFilters {
+  searchTerm?: string
+  filterStatus?: string
 }
 
 export function toDateOnly(date: Date | null | undefined): Date | null {
@@ -107,5 +112,36 @@ export function filterCustomCategories(
     )
 
     return matchesType && matchesSearch
+  })
+}
+
+export function filterBudgets(
+  budgets: Budget[],
+  filters: BudgetFilters,
+  getCategoryLabel: (categoryKey: string) => string
+): Budget[] {
+  const { searchTerm = "", filterStatus = "all" } = filters
+  const normalizedSearchTerm = searchTerm.trim()
+  const now = new Date()
+
+  return budgets.filter((budget) => {
+    const categoryLabel = getCategoryLabel(budget.categoryKey)
+    const matchesSearch = includesCaseInsensitive(
+      categoryLabel,
+      normalizedSearchTerm
+    )
+
+    const isActive =
+      new Date(budget.startDate) <= now && new Date(budget.endDate) >= now
+    const isCompleted = new Date(budget.endDate) < now
+
+    let matchesStatus = true
+    if (filterStatus === "active") {
+      matchesStatus = isActive
+    } else if (filterStatus === "completed") {
+      matchesStatus = isCompleted
+    }
+
+    return matchesSearch && matchesStatus
   })
 }
