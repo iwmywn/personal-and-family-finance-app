@@ -29,13 +29,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { BudgetDialog } from "@/components/budgets/budget-dialog"
 import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { calculateBudgetsStats } from "@/lib/budgets"
 import type { Budget } from "@/lib/definitions"
-import { useBudgets, useTransactions } from "@/lib/swr"
+import { useBudgets, useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
 interface BudgetsTableProps {
@@ -54,7 +59,8 @@ export function BudgetsTable({
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
   const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { getCategoryLabel } = useCategoryI18n()
+  const { customCategories } = useCustomCategories()
+  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
 
   const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions!)
@@ -108,7 +114,22 @@ export function BudgetsTable({
                       <TableCell>{formatDate(budget.startDate)}</TableCell>
                       <TableCell>{formatDate(budget.endDate)}</TableCell>
                       <TableCell>
-                        {getCategoryLabel(budget.categoryKey)}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Badge variant="outline">
+                              {getCategoryLabel(
+                                budget.categoryKey,
+                                customCategories
+                              )}
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            {getCategoryDescription(
+                              budget.categoryKey,
+                              customCategories
+                            )}
+                          </TooltipContent>
+                        </Tooltip>
                       </TableCell>
                       <TableCell>{formatCurrency(budget.amount)}</TableCell>
                       <TableCell>{formatCurrency(budget.spent)}</TableCell>
@@ -127,15 +148,17 @@ export function BudgetsTable({
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">
-                        <div className="flex items-center gap-2">
-                          <Progress
-                            value={Math.min(100, budget.percentage)}
-                            className={`flex-1 ${budget.progressColorClass}`}
-                          />
-                          <div className="text-muted-foreground min-w-12">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Progress
+                              value={Math.min(100, budget.percentage)}
+                              className={`flex-1 ${budget.progressColorClass}`}
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
                             {budget.percentage.toFixed(1)}%
-                          </div>
-                        </div>
+                          </TooltipContent>
+                        </Tooltip>
                       </TableCell>
                       <TableCell onClick={(e) => e.stopPropagation()}>
                         <DropdownMenu>

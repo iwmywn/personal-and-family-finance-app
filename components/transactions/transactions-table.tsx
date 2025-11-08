@@ -31,7 +31,6 @@ import {
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
@@ -133,24 +132,22 @@ export function TransactionsTable({
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Badge variant="outline">
-                                {getCategoryLabel(
-                                  transaction.categoryKey,
-                                  customCategories
-                                )}
-                              </Badge>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              {getCategoryDescription(
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Badge variant="outline">
+                              {getCategoryLabel(
                                 transaction.categoryKey,
                                 customCategories
                               )}
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            {getCategoryDescription(
+                              transaction.categoryKey,
+                              customCategories
+                            )}
+                          </TooltipContent>
+                        </Tooltip>
                       </TableCell>
                       <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
                         <span

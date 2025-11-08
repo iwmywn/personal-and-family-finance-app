@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator"
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
@@ -52,135 +51,129 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
             : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
         }}
       >
-        <TooltipProvider>
-          <div id="quick-stats-content" className="space-y-4">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="row">
-                  <div className="left">{tCommonFE("totalTransactions")}:</div>
-                  <div className="right">{currentMonthCount}</div>
+        <div id="quick-stats-content" className="space-y-4">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="row">
+                <div className="left">{tCommonFE("totalTransactions")}:</div>
+                <div className="right">{currentMonthCount}</div>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              {tHomeFE("totalTransactionsTooltip")}
+            </TooltipContent>
+          </Tooltip>
+
+          <Separator />
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="row">
+                <div className="left">{tHomeFE("highestTransaction")}:</div>
+                <div
+                  className={`right ${
+                    highestTransaction !== null
+                      ? highestTransaction.type === "income"
+                        ? "text-green-600"
+                        : "text-red-600"
+                      : ""
+                  }`}
+                >
+                  {highestTransaction !== null
+                    ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
+                    : tHomeFE("noData")}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                {tHomeFE("totalTransactionsTooltip")}
-              </TooltipContent>
-            </Tooltip>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              {tHomeFE("highestTransactionTooltip")}
+            </TooltipContent>
+          </Tooltip>
 
-            <Separator />
+          <Separator />
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="row">
-                  <div className="left">{tHomeFE("highestTransaction")}:</div>
-                  <div
-                    className={`right ${
-                      highestTransaction !== null
-                        ? highestTransaction.type === "income"
-                          ? "text-green-600"
-                          : "text-red-600"
-                        : ""
-                    }`}
-                  >
-                    {highestTransaction !== null
-                      ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
-                      : tHomeFE("noData")}
-                  </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="row">
+                <div className="left">{tHomeFE("lowestTransaction")}:</div>
+                <div
+                  className={`right ${
+                    lowestTransaction !== null
+                      ? lowestTransaction.type === "income"
+                        ? "text-green-600"
+                        : "text-red-600"
+                      : ""
+                  }`}
+                >
+                  {lowestTransaction !== null
+                    ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
+                    : tHomeFE("noData")}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                {tHomeFE("highestTransactionTooltip")}
-              </TooltipContent>
-            </Tooltip>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              {tHomeFE("lowestTransactionTooltip")}
+            </TooltipContent>
+          </Tooltip>
 
-            <Separator />
+          <Separator />
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="row">
-                  <div className="left">{tHomeFE("lowestTransaction")}:</div>
-                  <div
-                    className={`right ${
-                      lowestTransaction !== null
-                        ? lowestTransaction.type === "income"
-                          ? "text-green-600"
-                          : "text-red-600"
-                        : ""
-                    }`}
-                  >
-                    {lowestTransaction !== null
-                      ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
-                      : tHomeFE("noData")}
-                  </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="row">
+                <div className="left">{tHomeFE("avgExpense")}:</div>
+                <div className="right">
+                  {avgExpense !== null
+                    ? formatCurrency(avgExpense)
+                    : tHomeFE("noData")}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                {tHomeFE("lowestTransactionTooltip")}
-              </TooltipContent>
-            </Tooltip>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>{tHomeFE("avgExpenseTooltip")}</TooltipContent>
+          </Tooltip>
 
-            <Separator />
+          <Separator />
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="row">
-                  <div className="left">{tHomeFE("avgExpense")}:</div>
-                  <div className="right">
-                    {avgExpense !== null
-                      ? formatCurrency(avgExpense)
-                      : tHomeFE("noData")}
-                  </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="row">
+                <div className="left">{tHomeFE("savingsRate")}:</div>
+                <div
+                  className={`right ${
+                    savingsRate !== null
+                      ? parseFloat(savingsRate) > 0
+                        ? "text-green-600"
+                        : parseFloat(savingsRate) < 0
+                          ? "text-red-600"
+                          : ""
+                      : ""
+                  } `}
+                >
+                  {savingsRate !== null ? `${savingsRate}%` : tHomeFE("noData")}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>{tHomeFE("avgExpenseTooltip")}</TooltipContent>
-            </Tooltip>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>{tHomeFE("savingsRateTooltip")}</TooltipContent>
+          </Tooltip>
 
-            <Separator />
+          <Separator />
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="row">
-                  <div className="left">{tHomeFE("savingsRate")}:</div>
-                  <div
-                    className={`right ${
-                      savingsRate !== null
-                        ? parseFloat(savingsRate) > 0
-                          ? "text-green-600"
-                          : parseFloat(savingsRate) < 0
-                            ? "text-red-600"
-                            : ""
-                        : ""
-                    } `}
-                  >
-                    {savingsRate !== null
-                      ? `${savingsRate}%`
-                      : tHomeFE("noData")}
-                  </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="row">
+                <div className="left">{tHomeFE("popularCategory")}:</div>
+                <div className="right">
+                  {popularCategory.length > 0
+                    ? popularCategory
+                        .map((key) => getCategoryLabel(key, customCategories))
+                        .join(", ")
+                    : tHomeFE("noData")}
                 </div>
-              </TooltipTrigger>
-              <TooltipContent>{tHomeFE("savingsRateTooltip")}</TooltipContent>
-            </Tooltip>
-
-            <Separator />
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="row">
-                  <div className="left">{tHomeFE("popularCategory")}:</div>
-                  <div className="right">
-                    {popularCategory.length > 0
-                      ? popularCategory
-                          .map((key) => getCategoryLabel(key, customCategories))
-                          .join(", ")
-                      : tHomeFE("noData")}
-                  </div>
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                {tHomeFE("popularCategoryTooltip")}
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </TooltipProvider>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>{tHomeFE("popularCategoryTooltip")}</TooltipContent>
+          </Tooltip>
+        </div>
       </CardContent>
     </Card>
   )

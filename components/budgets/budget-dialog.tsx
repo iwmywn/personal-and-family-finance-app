@@ -169,7 +169,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                     <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder={tBudgetsFE("selectCategory")}>
-                          {field.value ? getCategoryLabel(field.value) : null}
+                          {field.value
+                            ? getCategoryLabel(field.value, customCategories)
+                            : null}
                         </SelectValue>
                       </SelectTrigger>
                     </FormControl>
