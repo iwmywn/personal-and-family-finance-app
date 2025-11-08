@@ -1,3 +1,4 @@
+import { calculateBudgetsStats } from "@/lib/budgets"
 import type { Budget, CustomCategory, Transaction } from "@/lib/definitions"
 
 interface TransactionFilters {
@@ -19,8 +20,15 @@ interface CategoryFilters {
 }
 
 interface BudgetFilters {
-  searchTerm?: string
-  filterStatus?: string
+  selectedDate?: Date | null
+  dateRange?: {
+    from?: Date | null
+    to?: Date | null
+  }
+  filterMonth?: string
+  filterYear?: string
+  filterCategoryKey?: string
+  filterProgress?: string
 }
 
 export function toDateOnly(date: Date | null | undefined): Date | null {
@@ -118,30 +126,96 @@ export function filterCustomCategories(
 export function filterBudgets(
   budgets: Budget[],
   filters: BudgetFilters,
-  getCategoryLabel: (categoryKey: string) => string
+  transactions?: Transaction[]
 ): Budget[] {
-  const { searchTerm = "", filterStatus = "all" } = filters
-  const normalizedSearchTerm = searchTerm.trim()
-  const now = new Date()
+  const {
+    selectedDate,
+    dateRange = {},
+    filterMonth = "all",
+    filterYear = "all",
+    filterCategoryKey = "all",
+    filterProgress = "all",
+  } = filters
 
-  return budgets.filter((budget) => {
-    const categoryLabel = getCategoryLabel(budget.categoryKey)
-    const matchesSearch = includesCaseInsensitive(
-      categoryLabel,
-      normalizedSearchTerm
+  const fromDateOnly = toDateOnly(dateRange.from)
+  const toDateOnlyValue = toDateOnly(dateRange.to)
+  const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
+  const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
+
+  let filteredBudgets = budgets.filter((budget) => {
+    const budgetStartDate = new Date(budget.startDate)
+    const budgetEndDate = new Date(budget.endDate)
+
+    const matchesSelectedDate = selectedDate
+      ? budgetStartDate <= selectedDate && budgetEndDate >= selectedDate
+      : true
+
+    const matchesDateRange =
+      (!fromDateOnly || budgetEndDate >= fromDateOnly) &&
+      (!toDateOnlyValue || budgetStartDate <= toDateOnlyValue)
+
+    const matchesMonth = !parsedMonth
+      ? true
+      : budgetStartDate.getMonth() + 1 === parsedMonth ||
+        budgetEndDate.getMonth() + 1 === parsedMonth ||
+        (budgetStartDate.getMonth() + 1 < parsedMonth &&
+          budgetEndDate.getMonth() + 1 > parsedMonth)
+
+    const matchesYear = !parsedYear
+      ? true
+      : budgetStartDate.getFullYear() === parsedYear ||
+        budgetEndDate.getFullYear() === parsedYear ||
+        (budgetStartDate.getFullYear() < parsedYear &&
+          budgetEndDate.getFullYear() > parsedYear)
+
+    const matchesCategory =
+      filterCategoryKey === "all" || budget.categoryKey === filterCategoryKey
+
+    return (
+      matchesSelectedDate &&
+      matchesDateRange &&
+      matchesMonth &&
+      matchesYear &&
+      matchesCategory
+    )
+  })
+
+  if (filterProgress !== "all" && transactions) {
+    const budgetsWithStats = calculateBudgetsStats(
+      filteredBudgets,
+      transactions
     )
 
-    const isActive =
-      new Date(budget.startDate) <= now && new Date(budget.endDate) >= now
-    const isCompleted = new Date(budget.endDate) < now
+    filteredBudgets = budgetsWithStats
+      .filter((budget) => {
+        if (filterProgress === "gray") {
+          return (
+            budget.progressColorClass ===
+            "[&>[data-slot=progress-indicator]]:bg-gray-400"
+          )
+        }
+        if (filterProgress === "green") {
+          return (
+            budget.progressColorClass ===
+            "[&>[data-slot=progress-indicator]]:bg-green-500"
+          )
+        }
+        if (filterProgress === "orange") {
+          return (
+            budget.progressColorClass ===
+            "[&>[data-slot=progress-indicator]]:bg-orange-500"
+          )
+        }
+        if (filterProgress === "red") {
+          return (
+            budget.progressColorClass ===
+            "[&>[data-slot=progress-indicator]]:bg-red-500"
+          )
+        }
+        return true
+      })
+      .map((budget) => budget)
+  }
 
-    let matchesStatus = true
-    if (filterStatus === "active") {
-      matchesStatus = isActive
-    } else if (filterStatus === "completed") {
-      matchesStatus = isCompleted
-    }
-
-    return matchesSearch && matchesStatus
-  })
+  return filteredBudgets
 }

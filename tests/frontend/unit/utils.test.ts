@@ -105,7 +105,8 @@ describe("Utils", () => {
   describe("getUniqueYears", () => {
     it("should return unique years sorted descending", () => {
       const result = getUniqueYears(mockTransactions)
-      expect(result).toEqual([2024, 2023])
+      const now = new Date()
+      expect(result).toEqual([now.getFullYear(), 2024, 2023])
     })
 
     it("should return empty array for empty transactions", () => {

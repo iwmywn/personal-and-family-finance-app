@@ -219,7 +219,14 @@
       "deleteBudgetTitle": "Xóa ngân sách",
       "deleteBudgetDescription": "Bạn có chắc chắn muốn xóa ngân sách này? Hành động này không thể hoàn tác.",
       "spent": "Đã chi",
-      "balance": "Số dư"
+      "balance": "Số dư",
+      "allCategories": "Tất cả danh mục",
+      "progress": "Tiến độ",
+      "allProgress": "Tất cả tiến độ",
+      "progressGray": "Chưa có giao dịch",
+      "progressGreen": "Tốt (< 75%)",
+      "progressOrange": "Cảnh báo (75-100%)",
+      "progressRed": "Vượt quá (≥ 100%)"
     },
     "be": {
       "budgetAdded": "Ngân sách đã được thêm.",

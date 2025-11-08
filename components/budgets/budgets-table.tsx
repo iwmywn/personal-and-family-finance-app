@@ -38,6 +38,7 @@ import { BudgetDialog } from "@/components/budgets/budget-dialog"
 import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useMediaQuery } from "@/hooks/use-media-query"
 import { calculateBudgetsStats } from "@/lib/budgets"
 import type { Budget } from "@/lib/definitions"
 import { useBudgets, useCustomCategories, useTransactions } from "@/lib/swr"
@@ -54,6 +55,7 @@ export function BudgetsTable({
 }: BudgetsTableProps) {
   const { budgets } = useBudgets()
   const { transactions } = useTransactions()
+  const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
@@ -71,8 +73,11 @@ export function BudgetsTable({
         <CardContent>
           {budgetsWithSpent.length === 0 ? (
             <Empty
+              className="border"
               style={{
-                minHeight: `calc(100vh - ${offsetHeight}px - 12.5rem)`,
+                minHeight: isLargeScreens
+                  ? "300px"
+                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
               }}
             >
               <EmptyHeader>
@@ -91,7 +96,9 @@ export function BudgetsTable({
             <div
               className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
               style={{
-                maxHeight: `calc(100vh - ${offsetHeight}px - 12.5rem)`,
+                maxHeight: isLargeScreens
+                  ? "300px"
+                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
               }}
             >
               <Table>

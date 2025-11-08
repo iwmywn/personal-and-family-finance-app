@@ -75,7 +75,7 @@ describe("Filters", () => {
         filterCategoryKey: "food_beverage",
       })
 
-      expect(result).toHaveLength(1)
+      expect(result).toHaveLength(2)
       expect(result[0].categoryKey).toBe("food_beverage")
     })
 
@@ -136,7 +136,7 @@ describe("Filters", () => {
     it("should return all transactions when no filters applied", () => {
       const result = filterTransactions(mockTransactions, {})
 
-      expect(result).toHaveLength(5)
+      expect(result).toHaveLength(8)
     })
 
     it("should handle empty transactions array", () => {
@@ -172,8 +172,8 @@ describe("Filters", () => {
         },
       })
 
-      expect(result).toHaveLength(3)
-      expect(result.map((t) => t._id)).toEqual(["3", "4", "5"])
+      expect(result).toHaveLength(6)
+      expect(result.map((t) => t._id)).toEqual(["3", "4", "5", "6", "7", "8"])
     })
 
     it("should handle date range with only to date", () => {
@@ -259,158 +259,284 @@ describe("Filters", () => {
   })
 
   describe("filterBudgets", () => {
-    const mockGetCategoryLabel = (categoryKey: string): string => {
-      const categoryMap: Record<string, string> = {
-        food_beverage: "Food & Beverage",
-        transportation: "Transportation",
-        housing: "Housing",
-        business_freelance: "Business & Freelance",
-      }
-      return categoryMap[categoryKey] || categoryKey
-    }
+    const now = new Date()
+    const currentYear = now.getFullYear()
+    const currentMonth = now.getMonth()
 
-    it("should filter by search term", () => {
-      const result = filterBudgets(
-        mockBudgets,
-        { searchTerm: "food" },
-        mockGetCategoryLabel
-      )
+    it("should filter by category key", () => {
+      const result = filterBudgets(mockBudgets, {
+        filterCategoryKey: "food_beverage",
+      })
 
       expect(result).toHaveLength(2)
       expect(result.every((b) => b.categoryKey === "food_beverage")).toBe(true)
     })
 
-    it("should filter by active status", () => {
-      const result = filterBudgets(
-        mockBudgets,
-        { filterStatus: "active" },
-        mockGetCategoryLabel
-      )
+    it("should filter by selected date", () => {
+      const selectedDate = new Date(currentYear, currentMonth, 15)
+      const result = filterBudgets(mockBudgets, {
+        selectedDate,
+      })
 
-      // Should return budgets where startDate <= now && endDate >= now
+      // Should return budgets where selectedDate falls within budget period
       expect(result.length).toBeGreaterThan(0)
-      const now = new Date()
       result.forEach((budget) => {
         const startDate = new Date(budget.startDate)
         const endDate = new Date(budget.endDate)
-        expect(startDate <= now && endDate >= now).toBe(true)
+        expect(startDate <= selectedDate && endDate >= selectedDate).toBe(true)
       })
     })
 
-    it("should filter by completed status", () => {
+    it("should filter by date range", () => {
+      const fromDate = new Date(currentYear, currentMonth, 1)
+      const toDate = new Date(currentYear, currentMonth, 28)
+      const result = filterBudgets(mockBudgets, {
+        dateRange: {
+          from: fromDate,
+          to: toDate,
+        },
+      })
+
+      // Should return budgets that overlap with date range
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        const budgetStart = new Date(budget.startDate)
+        const budgetEnd = new Date(budget.endDate)
+        expect(budgetEnd >= fromDate && budgetStart <= toDate).toBe(true)
+      })
+    })
+
+    it("should filter by month", () => {
+      const result = filterBudgets(mockBudgets, {
+        filterMonth: String(currentMonth + 1), // Month is 1-indexed
+      })
+
+      // Should return budgets that overlap with the selected month
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        const budgetStart = new Date(budget.startDate)
+        const budgetEnd = new Date(budget.endDate)
+        const startMonth = budgetStart.getMonth() + 1
+        const endMonth = budgetEnd.getMonth() + 1
+        expect(
+          startMonth === currentMonth + 1 ||
+            endMonth === currentMonth + 1 ||
+            (startMonth < currentMonth + 1 && endMonth > currentMonth + 1)
+        ).toBe(true)
+      })
+    })
+
+    it("should filter by year", () => {
+      const result = filterBudgets(mockBudgets, {
+        filterYear: String(currentYear),
+      })
+
+      // Should return budgets that overlap with the selected year
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        const budgetStart = new Date(budget.startDate)
+        const budgetEnd = new Date(budget.endDate)
+        const startYear = budgetStart.getFullYear()
+        const endYear = budgetEnd.getFullYear()
+        expect(
+          startYear === currentYear ||
+            endYear === currentYear ||
+            (startYear < currentYear && endYear > currentYear)
+        ).toBe(true)
+      })
+    })
+
+    it("should filter by progress - gray (no transactions)", () => {
       const result = filterBudgets(
         mockBudgets,
-        { filterStatus: "completed" },
-        mockGetCategoryLabel
+        {
+          filterProgress: "gray",
+        },
+        mockTransactions
       )
 
-      // Should return budgets where endDate < now
-      expect(result.length).toBeGreaterThan(0)
-      const now = new Date()
+      // Should return budgets with no transactions (gray progress)
       result.forEach((budget) => {
-        const endDate = new Date(budget.endDate)
-        expect(endDate < now).toBe(true)
+        const budgetTransactions = mockTransactions.filter(
+          (t) =>
+            t.type === "expense" &&
+            t.categoryKey === budget.categoryKey &&
+            new Date(t.date) >= new Date(budget.startDate) &&
+            new Date(t.date) <= new Date(budget.endDate)
+        )
+        expect(budgetTransactions.length).toBe(0)
       })
     })
 
-    it("should return all budgets when filterStatus is 'all'", () => {
+    it("should filter by progress - green (< 75%)", () => {
       const result = filterBudgets(
         mockBudgets,
-        { filterStatus: "all" },
-        mockGetCategoryLabel
+        {
+          filterProgress: "green",
+        },
+        mockTransactions
+      )
+
+      // Should return budgets with green progress (< 75%)
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        const budgetTransactions = mockTransactions.filter(
+          (t) =>
+            t.type === "expense" &&
+            t.categoryKey === budget.categoryKey &&
+            new Date(t.date) >= new Date(budget.startDate) &&
+            new Date(t.date) <= new Date(budget.endDate)
+        )
+        const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
+        const percentage =
+          budget.amount === 0 ? 0 : (spent / budget.amount) * 100
+        expect(percentage < 75).toBe(true)
+      })
+    })
+
+    it("should filter by progress - orange (75-100%)", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterProgress: "orange",
+        },
+        mockTransactions
+      )
+
+      // Should return budgets with orange progress (75-100%)
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        const budgetTransactions = mockTransactions.filter(
+          (t) =>
+            t.type === "expense" &&
+            t.categoryKey === budget.categoryKey &&
+            new Date(t.date) >= new Date(budget.startDate) &&
+            new Date(t.date) <= new Date(budget.endDate)
+        )
+        const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
+        const percentage =
+          budget.amount === 0 ? 0 : (spent / budget.amount) * 100
+        expect(percentage >= 75 && percentage < 100).toBe(true)
+      })
+    })
+
+    it("should filter by progress - red (>= 100%)", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterProgress: "red",
+        },
+        mockTransactions
+      )
+
+      // Should return budgets with red progress (>= 100%)
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        const budgetTransactions = mockTransactions.filter(
+          (t) =>
+            t.type === "expense" &&
+            t.categoryKey === budget.categoryKey &&
+            new Date(t.date) >= new Date(budget.startDate) &&
+            new Date(t.date) <= new Date(budget.endDate)
+        )
+        const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
+        const percentage =
+          budget.amount === 0 ? 0 : (spent / budget.amount) * 100
+        expect(percentage >= 100).toBe(true)
+      })
+    })
+
+    it("should return all budgets when filterProgress is 'all'", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterProgress: "all",
+        },
+        mockTransactions
       )
 
       expect(result).toHaveLength(mockBudgets.length)
     })
 
-    it("should combine search and status filters", () => {
-      const result = filterBudgets(
-        mockBudgets,
-        { searchTerm: "food", filterStatus: "active" },
-        mockGetCategoryLabel
-      )
+    it("should combine multiple filters", () => {
+      const result = filterBudgets(mockBudgets, {
+        filterCategoryKey: "food_beverage",
+        filterMonth: String(currentMonth + 1),
+      })
 
-      // Should return active food_beverage budgets only
       expect(result.length).toBeGreaterThan(0)
       result.forEach((budget) => {
         expect(budget.categoryKey).toBe("food_beverage")
-        const now = new Date()
-        const startDate = new Date(budget.startDate)
-        const endDate = new Date(budget.endDate)
-        expect(startDate <= now && endDate >= now).toBe(true)
+        const budgetStart = new Date(budget.startDate)
+        const budgetEnd = new Date(budget.endDate)
+        const startMonth = budgetStart.getMonth() + 1
+        const endMonth = budgetEnd.getMonth() + 1
+        expect(
+          startMonth === currentMonth + 1 ||
+            endMonth === currentMonth + 1 ||
+            (startMonth < currentMonth + 1 && endMonth > currentMonth + 1)
+        ).toBe(true)
       })
     })
 
     it("should return all budgets when no filters applied", () => {
-      const result = filterBudgets(mockBudgets, {}, mockGetCategoryLabel)
+      const result = filterBudgets(mockBudgets, {})
 
       expect(result).toHaveLength(mockBudgets.length)
     })
 
     it("should handle empty budgets array", () => {
-      const result = filterBudgets(
-        [],
-        { searchTerm: "test" },
-        mockGetCategoryLabel
-      )
+      const result = filterBudgets([], {
+        filterCategoryKey: "food_beverage",
+      })
 
       expect(result).toEqual([])
     })
 
-    it("should handle case insensitive search", () => {
-      const result = filterBudgets(
-        mockBudgets,
-        { searchTerm: "FOOD" },
-        mockGetCategoryLabel
-      )
+    it("should handle date range with only from date", () => {
+      const fromDate = new Date(currentYear, currentMonth, 1)
+      const result = filterBudgets(mockBudgets, {
+        dateRange: {
+          from: fromDate,
+        },
+      })
 
       expect(result.length).toBeGreaterThan(0)
-      expect(result.every((b) => b.categoryKey === "food_beverage")).toBe(true)
+      result.forEach((budget) => {
+        const budgetEnd = new Date(budget.endDate)
+        expect(budgetEnd >= fromDate).toBe(true)
+      })
     })
 
-    it("should handle partial search matches", () => {
-      const result = filterBudgets(
-        mockBudgets,
-        { searchTerm: "trans" },
-        mockGetCategoryLabel
-      )
+    it("should handle date range with only to date", () => {
+      const toDate = new Date(currentYear, currentMonth, 28)
+      const result = filterBudgets(mockBudgets, {
+        dateRange: {
+          to: toDate,
+        },
+      })
 
       expect(result.length).toBeGreaterThan(0)
-      expect(result.every((b) => b.categoryKey === "transportation")).toBe(true)
+      result.forEach((budget) => {
+        const budgetStart = new Date(budget.startDate)
+        expect(budgetStart <= toDate).toBe(true)
+      })
     })
 
     it("should return empty array when no matches found", () => {
-      const result = filterBudgets(
-        mockBudgets,
-        { searchTerm: "nonexistent" },
-        mockGetCategoryLabel
-      )
+      const result = filterBudgets(mockBudgets, {
+        filterCategoryKey: "nonexistent_category",
+      })
 
       expect(result).toEqual([])
     })
 
-    it("should trim search term whitespace", () => {
-      const result1 = filterBudgets(
-        mockBudgets,
-        { searchTerm: "  food  " },
-        mockGetCategoryLabel
-      )
-      const result2 = filterBudgets(
-        mockBudgets,
-        { searchTerm: "food" },
-        mockGetCategoryLabel
-      )
+    it("should not filter by progress when transactions are not provided", () => {
+      const result = filterBudgets(mockBudgets, {
+        filterProgress: "green",
+      })
 
-      expect(result1).toEqual(result2)
-    })
-
-    it("should handle empty search term", () => {
-      const result = filterBudgets(
-        mockBudgets,
-        { searchTerm: "" },
-        mockGetCategoryLabel
-      )
-
+      // Should return all budgets when transactions are not provided
       expect(result).toHaveLength(mockBudgets.length)
     })
   })
