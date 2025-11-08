@@ -292,7 +292,7 @@ export function BudgetsFilters() {
                   <SelectLabel>{tCommonFE("expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES_KEY.map((category) => (
                     <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category)}
+                      {getCategoryLabel(category, customCategories)}
                     </SelectItem>
                   ))}
                   {customCategories!
