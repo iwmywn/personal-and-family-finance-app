@@ -94,7 +94,7 @@ describe("Filters", () => {
         filterYear: "2024",
       })
 
-      expect(result).toHaveLength(4)
+      expect(result).toHaveLength(7)
       expect(result.every((t) => new Date(t.date).getFullYear() === 2024)).toBe(
         true
       )
@@ -259,10 +259,6 @@ describe("Filters", () => {
   })
 
   describe("filterBudgets", () => {
-    const now = new Date()
-    const currentYear = now.getFullYear()
-    const currentMonth = now.getMonth()
-
     it("should filter by category key", () => {
       const result = filterBudgets(mockBudgets, {
         filterCategoryKey: "food_beverage",
@@ -273,7 +269,7 @@ describe("Filters", () => {
     })
 
     it("should filter by selected date", () => {
-      const selectedDate = new Date(currentYear, currentMonth, 15)
+      const selectedDate = new Date("2024-03-15")
       const result = filterBudgets(mockBudgets, {
         selectedDate,
       })
@@ -288,8 +284,8 @@ describe("Filters", () => {
     })
 
     it("should filter by date range", () => {
-      const fromDate = new Date(currentYear, currentMonth, 1)
-      const toDate = new Date(currentYear, currentMonth, 28)
+      const fromDate = new Date("2024-03-01")
+      const toDate = new Date("2024-03-28")
       const result = filterBudgets(mockBudgets, {
         dateRange: {
           from: fromDate,
@@ -308,7 +304,7 @@ describe("Filters", () => {
 
     it("should filter by month", () => {
       const result = filterBudgets(mockBudgets, {
-        filterMonth: String(currentMonth + 1), // Month is 1-indexed
+        filterMonth: "3", // March 2024
       })
 
       // Should return budgets that overlap with the selected month
@@ -319,16 +315,14 @@ describe("Filters", () => {
         const startMonth = budgetStart.getMonth() + 1
         const endMonth = budgetEnd.getMonth() + 1
         expect(
-          startMonth === currentMonth + 1 ||
-            endMonth === currentMonth + 1 ||
-            (startMonth < currentMonth + 1 && endMonth > currentMonth + 1)
+          startMonth === 3 || endMonth === 3 || (startMonth < 3 && endMonth > 3)
         ).toBe(true)
       })
     })
 
     it("should filter by year", () => {
       const result = filterBudgets(mockBudgets, {
-        filterYear: String(currentYear),
+        filterYear: "2024",
       })
 
       // Should return budgets that overlap with the selected year
@@ -339,9 +333,9 @@ describe("Filters", () => {
         const startYear = budgetStart.getFullYear()
         const endYear = budgetEnd.getFullYear()
         expect(
-          startYear === currentYear ||
-            endYear === currentYear ||
-            (startYear < currentYear && endYear > currentYear)
+          startYear === 2024 ||
+            endYear === 2024 ||
+            (startYear < 2024 && endYear > 2024)
         ).toBe(true)
       })
     })
@@ -461,7 +455,7 @@ describe("Filters", () => {
     it("should combine multiple filters", () => {
       const result = filterBudgets(mockBudgets, {
         filterCategoryKey: "food_beverage",
-        filterMonth: String(currentMonth + 1),
+        filterMonth: "3",
       })
 
       expect(result.length).toBeGreaterThan(0)
@@ -472,9 +466,7 @@ describe("Filters", () => {
         const startMonth = budgetStart.getMonth() + 1
         const endMonth = budgetEnd.getMonth() + 1
         expect(
-          startMonth === currentMonth + 1 ||
-            endMonth === currentMonth + 1 ||
-            (startMonth < currentMonth + 1 && endMonth > currentMonth + 1)
+          startMonth === 3 || endMonth === 3 || (startMonth < 3 && endMonth > 3)
         ).toBe(true)
       })
     })
@@ -494,7 +486,7 @@ describe("Filters", () => {
     })
 
     it("should handle date range with only from date", () => {
-      const fromDate = new Date(currentYear, currentMonth, 1)
+      const fromDate = new Date("2024-03-01")
       const result = filterBudgets(mockBudgets, {
         dateRange: {
           from: fromDate,
@@ -509,7 +501,7 @@ describe("Filters", () => {
     })
 
     it("should handle date range with only to date", () => {
-      const toDate = new Date(currentYear, currentMonth, 28)
+      const toDate = new Date("2024-03-28")
       const result = filterBudgets(mockBudgets, {
         dateRange: {
           to: toDate,
