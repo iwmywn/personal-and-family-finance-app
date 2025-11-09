@@ -25,12 +25,12 @@ import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
+import { useAppData } from "@/lib/app-data-context"
 import { filterTransactions } from "@/lib/filters"
-import { useTransactions } from "@/lib/swr"
 import { getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
-  const { transactions } = useTransactions()
+  const { transactions } = useAppData()
   const tCommonFE = useTranslations("common.fe")
   const formatDate = useFormatDate()
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
@@ -47,7 +47,7 @@ export function StatisticsFilters() {
   const [filterYear, setFilterYear] = useState<string>("all")
 
   const allMonths = useMonthsI18n()
-  const allYears = getUniqueYears(transactions!)
+  const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
     selectedDate ||
@@ -98,7 +98,7 @@ export function StatisticsFilters() {
     }
   }
 
-  const filteredTransactions = filterTransactions(transactions!, {
+  const filteredTransactions = filterTransactions(transactions, {
     selectedDate,
     dateRange,
     filterMonth,

@@ -15,7 +15,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { secondaryNav } from "@/lib/nav"
-import { clearSWRCache } from "@/lib/swr"
 
 export function SecondaryNav() {
   const router = useRouter()
@@ -28,7 +27,6 @@ export function SecondaryNav() {
       loading: tAuthFe("signingOut"),
       success: ({ success }) => {
         router.push("/signin")
-        setTimeout(() => clearSWRCache(), 3000)
         return success
       },
       error: ({ error }) => error,

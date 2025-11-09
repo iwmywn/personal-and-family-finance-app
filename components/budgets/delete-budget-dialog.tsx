@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useOptimistic, useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -16,7 +16,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
-import { useBudgets } from "@/lib/swr"
+import { useAppData } from "@/lib/app-data-context"
 
 interface DeleteBudgetDialogProps {
   budgetId: string
@@ -31,8 +31,14 @@ export function DeleteBudgetDialog({
 }: DeleteBudgetDialogProps) {
   const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { budgets, mutate } = useBudgets()
+  const { budgets } = useAppData()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [_, setOptimisticBudgets] = useOptimistic(
+    budgets,
+    (state, budgetIdToDelete: string) => {
+      return state.filter((b) => b._id !== budgetIdToDelete)
+    }
+  )
 
   async function handleDelete() {
     if (isLoading) return
@@ -44,9 +50,7 @@ export function DeleteBudgetDialog({
     if (error || !success) {
       toast.error(error)
     } else {
-      mutate({
-        budgets: budgets!.filter((b) => b._id !== budgetId),
-      })
+      setOptimisticBudgets(budgetId)
       toast.success(success)
     }
     setIsLoading(false)

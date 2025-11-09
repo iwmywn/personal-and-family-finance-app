@@ -1,5 +1,7 @@
 "use server"
 
+import { cacheTag, updateTag } from "next/cache"
+import type { TypedTranslationFunction } from "@/i18n/types"
 import { createBudgetSchema, type BudgetFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
@@ -42,6 +44,7 @@ export async function createBudget(values: BudgetFormValues) {
 
     if (!result.acknowledged) return { error: tBudgetsBE("budgetAddFailed") }
 
+    updateTag("budgets")
     return { success: tBudgetsBE("budgetAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating budget:", error)
@@ -102,6 +105,7 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
       }
     )
 
+    updateTag("budgets")
     return { success: tBudgetsBE("budgetUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating budget:", error)
@@ -146,6 +150,7 @@ export async function deleteBudget(budgetId: string) {
       _id: new ObjectId(budgetId),
     })
 
+    updateTag("budgets")
     return { success: tBudgetsBE("budgetDeleted") }
   } catch (error) {
     console.error("Error deleting budget:", error)
@@ -154,11 +159,14 @@ export async function deleteBudget(budgetId: string) {
   }
 }
 
-export async function getBudgets() {
+export async function getBudgets(
+  userId: string,
+  tCommonBE: TypedTranslationFunction<"common.be">,
+  tBudgetsBE: TypedTranslationFunction<"budgets.be">
+) {
+  "use cache"
+  cacheTag("budgets")
   try {
-    const tCommonBE = await getTranslations("common.be")
-    const { userId } = await session.user.get()
-
     if (!userId) {
       return {
         error: tCommonBE("accessDenied"),
@@ -181,7 +189,6 @@ export async function getBudgets() {
     }
   } catch (error) {
     console.error("Error fetching budgets:", error)
-    const tBudgetsBE = await getTranslations("budgets.be")
     return {
       error: tBudgetsBE("budgetFetchFailed"),
     }

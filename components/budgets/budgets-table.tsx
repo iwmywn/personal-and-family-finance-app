@@ -39,9 +39,9 @@ import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { useAppData } from "@/lib/app-data-context"
 import { calculateBudgetsStats } from "@/lib/budgets"
 import type { Budget } from "@/lib/definitions"
-import { useBudgets, useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
 interface BudgetsTableProps {
@@ -53,19 +53,17 @@ export function BudgetsTable({
   filteredBudgets,
   offsetHeight,
 }: BudgetsTableProps) {
-  const { budgets } = useBudgets()
-  const { transactions } = useTransactions()
+  const { budgets, transactions, customCategories } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
   const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { customCategories } = useCustomCategories()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
 
-  const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions!)
+  const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions)
 
   return (
     <>

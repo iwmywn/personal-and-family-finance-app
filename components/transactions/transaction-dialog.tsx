@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useOptimistic, useState } from "react"
 import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
@@ -56,8 +56,8 @@ import { FormLink } from "@/components/custom/form-link"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useAppData } from "@/lib/app-data-context"
 import type { Transaction } from "@/lib/definitions"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
 
 interface TransactionDialogProps {
@@ -93,9 +93,23 @@ export function TransactionDialog({
     },
   })
 
-  const { transactions, mutate } = useTransactions()
-  const { customCategories } = useCustomCategories()
+  const { transactions, customCategories } = useAppData()
   const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
+  const [_, setOptimisticTransactions] = useOptimistic(
+    transactions,
+    (
+      state,
+      action: { type: "update" | "create"; transaction: Transaction }
+    ) => {
+      if (action.type === "update") {
+        return state.map((t) =>
+          t._id === action.transaction._id ? action.transaction : t
+        )
+      } else {
+        return [action.transaction, ...state]
+      }
+    }
+  )
 
   const selectedDate = useWatch({
     control: form.control,
@@ -114,10 +128,13 @@ export function TransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        mutate({
-          transactions: transactions!.map((t) =>
-            t._id === transaction._id ? { ...t, ...values } : t
-          ),
+        setOptimisticTransactions({
+          type: "update",
+          transaction: {
+            ...transaction,
+            ...values,
+            date: normalizeToUTCDate(values.date),
+          },
         })
         toast.success(success)
         setOpen(false)
@@ -131,15 +148,14 @@ export function TransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        mutate({
-          transactions: [
-            {
-              _id: `temp-id`,
-              userId: "temp-user",
-              ...values,
-            },
-            ...transactions!,
-          ],
+        setOptimisticTransactions({
+          type: "create",
+          transaction: {
+            _id: `temp-id`,
+            userId: "temp-user",
+            ...values,
+            date: normalizeToUTCDate(values.date),
+          },
         })
         toast.success(success)
         form.reset({

@@ -10,10 +10,10 @@ import { TransactionSummary } from "@/components/home/transaction-summary"
 import { BasePage } from "@/components/layout/base-page"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
-import { useUser } from "@/lib/swr"
+import { useAppData } from "@/lib/app-data-context"
 
 export default function HomePage() {
-  const { user } = useUser()
+  const { user } = useAppData()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const tHomeFE = useTranslations("home.fe")

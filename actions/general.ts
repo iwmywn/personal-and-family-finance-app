@@ -1,5 +1,6 @@
 "use server"
 
+import { updateTag } from "next/cache"
 import { LOCALES, type AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { ObjectId } from "mongodb"
@@ -46,6 +47,7 @@ export async function updateLocale(locale: AppLocale) {
 
     await setUserLocale(locale)
 
+    updateTag("user")
     return { success: tSettingsBE("languageUpdated") }
   } catch (error) {
     console.error("Error updating locale:", error)

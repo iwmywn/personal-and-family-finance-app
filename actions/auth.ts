@@ -1,6 +1,8 @@
 "use server"
 
+import { cacheTag, updateTag } from "next/cache"
 import { setUserLocale } from "@/i18n/locale"
+import type { TypedTranslationFunction } from "@/i18n/types"
 import { createSignInSchema, type SignInFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
@@ -51,6 +53,7 @@ export async function signIn(
       setUserLocale(existingUser.locale),
     ])
 
+    updateTag("user")
     return { error: undefined }
   } catch (error) {
     console.error("Error signing in: ", error)
@@ -72,11 +75,14 @@ export async function signOut() {
   }
 }
 
-export async function getUser() {
+export async function getUser(
+  userId: string,
+  tCommonBE: TypedTranslationFunction<"common.be">,
+  tAuthBE: TypedTranslationFunction<"auth.be">
+) {
+  "use cache"
+  cacheTag("user")
   try {
-    const tCommonBE = await getTranslations("common.be")
-    const { userId } = await session.user.get()
-
     if (!userId) {
       return {
         error: tCommonBE("accessDenied"),
@@ -100,7 +106,6 @@ export async function getUser() {
     return { user }
   } catch (error) {
     console.error("Error fetching user: ", error)
-    const tAuthBE = await getTranslations("auth.be")
     return {
       error: tAuthBE("userFetchFailed"),
     }

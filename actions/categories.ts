@@ -1,5 +1,7 @@
 "use server"
 
+import { cacheTag, updateTag } from "next/cache"
+import type { TypedTranslationFunction } from "@/i18n/types"
 import { createCategorySchema, type CustomCategoryFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { nanoid } from "nanoid"
@@ -69,6 +71,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
     if (!result.acknowledged)
       return { error: tCategoriesBE("categoryAddFailed") }
 
+    updateTag("categories")
     return { success: tCategoriesBE("categoryAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating custom category:", error)
@@ -158,6 +161,8 @@ export async function updateCustomCategory(
       ),
     ])
 
+    updateTag("categories")
+    updateTag("transactions")
     return { success: tCategoriesBE("categoryUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating custom category:", error)
@@ -234,6 +239,7 @@ export async function deleteCustomCategory(categoryId: string) {
       _id: new ObjectId(categoryId),
     })
 
+    updateTag("categories")
     return { success: tCategoriesBE("categoryDeleted") }
   } catch (error) {
     console.error("Error deleting custom category:", error)
@@ -242,11 +248,14 @@ export async function deleteCustomCategory(categoryId: string) {
   }
 }
 
-export async function getCustomCategories() {
+export async function getCustomCategories(
+  userId: string,
+  tCommonBE: TypedTranslationFunction<"common.be">,
+  tCategoriesBE: TypedTranslationFunction<"categories.be">
+) {
+  "use cache"
+  cacheTag("categories")
   try {
-    const tCommonBE = await getTranslations("common.be")
-    const { userId } = await session.user.get()
-
     if (!userId) {
       return {
         error: tCommonBE("accessDenied"),
@@ -269,7 +278,6 @@ export async function getCustomCategories() {
     }
   } catch (error) {
     console.error("Error fetching custom categories:", error)
-    const tCategoriesBE = await getTranslations("categories.be")
     return {
       error: tCategoriesBE("categoryFetchFailed"),
     }

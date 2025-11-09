@@ -1,6 +1,6 @@
 "use client"
 
-import { useTransition } from "react"
+import { useOptimistic, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 import { useTranslations } from "next-intl"
@@ -14,13 +14,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useUser } from "@/lib/swr"
+import { useAppData } from "@/lib/app-data-context"
 
 export function LanguageSelector() {
   const tSettingsFE = useTranslations("settings.fe")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const { user, mutate } = useUser()
+  const { user } = useAppData()
+  const [optimisticUser, setOptimisticUser] = useOptimistic(
+    user,
+    (state, newLocale: AppLocale) => {
+      if (!state) return state
+      return { ...state, locale: newLocale }
+    }
+  )
 
   async function handleLocaleChange(locale: AppLocale) {
     startTransition(async () => {
@@ -29,12 +36,7 @@ export function LanguageSelector() {
       if (result.error) {
         toast.error(result.error)
       } else {
-        mutate({
-          user: {
-            ...user!,
-            locale: locale,
-          },
-        })
+        setOptimisticUser(locale)
         toast.success(result.success)
         router.refresh()
       }
@@ -44,7 +46,7 @@ export function LanguageSelector() {
   return (
     <div className="flex items-center space-x-2">
       <Select
-        value={user!.locale}
+        value={optimisticUser!.locale}
         onValueChange={handleLocaleChange}
         disabled={isPending}
       >

@@ -22,11 +22,11 @@ import {
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useAppData } from "@/lib/app-data-context"
 import { filterCustomCategories } from "@/lib/filters"
-import { useCustomCategories } from "@/lib/swr"
 
 export function CategoryFilters() {
-  const { customCategories } = useCustomCategories()
+  const { customCategories } = useAppData()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
     "all"
@@ -35,7 +35,7 @@ export function CategoryFilters() {
   const tCategoriesFE = useTranslations("categories.fe")
   const tCommonFE = useTranslations("common.fe")
 
-  const filteredCategories = filterCustomCategories(customCategories!, {
+  const filteredCategories = filterCustomCategories(customCategories, {
     searchTerm,
     filterType,
   })

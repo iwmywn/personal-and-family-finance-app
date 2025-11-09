@@ -4,19 +4,19 @@ import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useAppData } from "@/lib/app-data-context"
 import {
   calculateSummaryStats,
   getCurrentMonthTransactions,
 } from "@/lib/statistics"
-import { useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
 export function TransactionSummary() {
-  const { transactions } = useTransactions()
+  const { transactions } = useAppData()
   const tHomeFE = useTranslations("home.fe")
   const tCommonFE = useTranslations("common.fe")
 
-  const currentMonthTransactions = getCurrentMonthTransactions(transactions!)
+  const currentMonthTransactions = getCurrentMonthTransactions(transactions)
 
   const summaryStats = calculateSummaryStats(currentMonthTransactions)
 

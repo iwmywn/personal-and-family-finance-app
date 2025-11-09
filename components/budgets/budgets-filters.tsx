@@ -27,15 +27,13 @@ import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
+import { useAppData } from "@/lib/app-data-context"
 import { EXPENSE_CATEGORIES_KEY } from "@/lib/categories"
 import { filterBudgets } from "@/lib/filters"
-import { useBudgets, useCustomCategories, useTransactions } from "@/lib/swr"
 import { getUniqueYears } from "@/lib/utils"
 
 export function BudgetsFilters() {
-  const { budgets } = useBudgets()
-  const { transactions } = useTransactions()
-  const { customCategories } = useCustomCategories()
+  const { budgets, transactions, customCategories } = useAppData()
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined
@@ -60,7 +58,7 @@ export function BudgetsFilters() {
   const formatDate = useFormatDate()
 
   const allMonths = useMonthsI18n()
-  const allYears = getUniqueYears(transactions!)
+  const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
     dateRange.from ||
@@ -105,7 +103,7 @@ export function BudgetsFilters() {
   }
 
   const filteredBudgets = filterBudgets(
-    budgets!,
+    budgets,
     {
       dateRange,
       filterMonth,
@@ -114,7 +112,7 @@ export function BudgetsFilters() {
       filterProgress,
       filterStatus,
     },
-    transactions!
+    transactions
   )
 
   return (

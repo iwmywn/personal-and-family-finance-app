@@ -12,6 +12,7 @@ import { env } from "@/env/client"
 import { LOCALE_CONFIG } from "@/i18n/config"
 
 import { Toaster } from "@/components/ui/sonner"
+import { Spinner } from "@/components/ui/spinner"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { siteConfig } from "@/app/pffa.config"
@@ -56,7 +57,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        <div className="center">
+          <Spinner className="size-8" />
+        </div>
+      }
+    >
       <Layout>{children}</Layout>
     </Suspense>
   )
