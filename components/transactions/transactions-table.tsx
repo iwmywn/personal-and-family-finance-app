@@ -100,11 +100,11 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{tTransactionsFE("date")}</TableHead>
+                    <TableHead>{tCommonFE("date")}</TableHead>
                     <TableHead>{tCommonFE("description")}</TableHead>
                     <TableHead>{tCommonFE("type")}</TableHead>
                     <TableHead>{tCommonFE("category")}</TableHead>
-                    <TableHead>{tTransactionsFE("amount")}</TableHead>
+                    <TableHead>{tCommonFE("amount")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>

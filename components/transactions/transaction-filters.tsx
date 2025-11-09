@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ChevronDownIcon, Search, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -34,11 +34,18 @@ import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
 import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
+import type { Transaction } from "@/lib/definitions"
 import { filterTransactions } from "@/lib/filters"
 import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { getUniqueYears } from "@/lib/utils"
 
-export function TransactionFilters() {
+interface TransactionFiltersProps {
+  onFilteredTransactionsChange: (transactions: Transaction[]) => void
+}
+
+export function TransactionFilters({
+  onFilteredTransactionsChange,
+}: TransactionFiltersProps) {
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
   const tTransactionsFE = useTranslations("transactions.fe")
@@ -131,6 +138,10 @@ export function TransactionFilters() {
     filterType,
     filterCategoryKey,
   })
+
+  useEffect(() => {
+    onFilteredTransactionsChange(filteredTransactions)
+  }, [onFilteredTransactionsChange, filteredTransactions])
 
   return (
     <>

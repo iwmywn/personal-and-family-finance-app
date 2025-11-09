@@ -225,7 +225,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tBudgetsFE("amount")} (VND)</FormLabel>
+                  <FormLabel>{tCommonFE("amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"

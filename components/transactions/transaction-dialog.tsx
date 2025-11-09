@@ -283,7 +283,7 @@ export function TransactionDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tTransactionsFE("amount")} (VND)</FormLabel>
+                  <FormLabel>{tCommonFE("amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -333,7 +333,7 @@ export function TransactionDialog({
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tTransactionsFE("date")}</FormLabel>
+                  <FormLabel>{tCommonFE("date")}</FormLabel>
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
