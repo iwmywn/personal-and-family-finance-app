@@ -107,7 +107,7 @@ export function BudgetsTable({
                     <TableHead>{tBudgetsFE("startDate")}</TableHead>
                     <TableHead>{tBudgetsFE("endDate")}</TableHead>
                     <TableHead>{tBudgetsFE("category")}</TableHead>
-                    <TableHead>{tBudgetsFE("amount")}</TableHead>
+                    <TableHead>{tCommonFE("amount")}</TableHead>
                     <TableHead>{tBudgetsFE("spent")}</TableHead>
                     <TableHead>{tBudgetsFE("balance")}</TableHead>
                     <TableHead>{tBudgetsFE("status")}</TableHead>
