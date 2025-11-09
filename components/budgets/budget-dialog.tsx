@@ -119,8 +119,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
           budget: {
             ...budget,
             ...values,
-            startDate: normalizeToUTCDate(values.startDate),
-            endDate: normalizeToUTCDate(values.endDate),
           },
         })
         toast.success(success)
@@ -142,8 +140,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
             _id: `temp-id`,
             userId: "temp-user",
             ...values,
-            startDate: normalizeToUTCDate(values.startDate),
-            endDate: normalizeToUTCDate(values.endDate),
           },
         })
         toast.success(success)

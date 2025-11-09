@@ -133,7 +133,6 @@ export function TransactionDialog({
           transaction: {
             ...transaction,
             ...values,
-            date: normalizeToUTCDate(values.date),
           },
         })
         toast.success(success)
@@ -154,7 +153,6 @@ export function TransactionDialog({
             _id: `temp-id`,
             userId: "temp-user",
             ...values,
-            date: normalizeToUTCDate(values.date),
           },
         })
         toast.success(success)
