@@ -254,7 +254,7 @@ describe("Transactions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getTransactions()
+      const result = await getTransactions("", tCommonBE, tTransactionsBE)
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(tCommonBE("accessDenied"))
@@ -263,7 +263,11 @@ describe("Transactions", () => {
     it("should return empty transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getTransactions()
+      const result = await getTransactions(
+        mockUser._id.toString(),
+        tCommonBE,
+        tTransactionsBE
+      )
 
       expect(result.transactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -273,7 +277,11 @@ describe("Transactions", () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await getTransactions()
+      const result = await getTransactions(
+        mockUser._id.toString(),
+        tCommonBE,
+        tTransactionsBE
+      )
 
       expect(result.transactions).toHaveLength(1)
       expect(result.transactions?.[0].description).toBe("nước dừa")
@@ -285,7 +293,11 @@ describe("Transactions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await getTransactions()
+      const result = await getTransactions(
+        mockUser._id.toString(),
+        tCommonBE,
+        tTransactionsBE
+      )
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(tTransactionsBE("transactionFetchFailed"))

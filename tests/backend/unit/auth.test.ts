@@ -120,7 +120,7 @@ describe("Auth", () => {
     it("should return error when user is not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getUser()
+      const result = await getUser("", tCommonBE, tAuthBE)
 
       expect(result.user).toBeUndefined()
       expect(result.error).toBe(tCommonBE("accessDenied"))
@@ -129,7 +129,7 @@ describe("Auth", () => {
     it("should return error when user not found in database", async () => {
       mockAuthenticatedUser()
 
-      const result = await getUser()
+      const result = await getUser(mockUser._id.toString(), tCommonBE, tAuthBE)
 
       expect(result.user).toBeUndefined()
       expect(result.error).toBe(tCommonBE("userNotFound"))
@@ -139,7 +139,7 @@ describe("Auth", () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
-      const result = await getUser()
+      const result = await getUser(mockUser._id.toString(), tCommonBE, tAuthBE)
 
       expect(result.user).toBeDefined()
       expect(result.user?.fullName).toBe("Test User")
@@ -151,7 +151,7 @@ describe("Auth", () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
 
-      const result = await getUser()
+      const result = await getUser(mockUser._id.toString(), tCommonBE, tAuthBE)
 
       expect(result.user).toBeUndefined()
       expect(result.error).toBe(tAuthBE("userFetchFailed"))

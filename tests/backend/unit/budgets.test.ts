@@ -246,7 +246,7 @@ describe("Budgets", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getBudgets()
+      const result = await getBudgets("", tCommonBE, tBudgetsBE)
 
       expect(result.budgets).toBeUndefined()
       expect(result.error).toBe(tCommonBE("accessDenied"))
@@ -255,7 +255,11 @@ describe("Budgets", () => {
     it("should return empty budgets list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getBudgets()
+      const result = await getBudgets(
+        mockUser._id.toString(),
+        tCommonBE,
+        tBudgetsBE
+      )
 
       expect(result.budgets).toEqual([])
       expect(result.error).toBeUndefined()
@@ -265,7 +269,11 @@ describe("Budgets", () => {
       await insertTestBudget(mockBudget)
       mockAuthenticatedUser()
 
-      const result = await getBudgets()
+      const result = await getBudgets(
+        mockUser._id.toString(),
+        tCommonBE,
+        tBudgetsBE
+      )
 
       expect(result.budgets).toHaveLength(1)
       expect(result.budgets?.[0].categoryKey).toBe("food_beverage")
@@ -277,7 +285,11 @@ describe("Budgets", () => {
       mockAuthenticatedUser()
       mockBudgetCollectionError()
 
-      const result = await getBudgets()
+      const result = await getBudgets(
+        mockUser._id.toString(),
+        tCommonBE,
+        tBudgetsBE
+      )
 
       expect(result.budgets).toBeUndefined()
       expect(result.error).toBe(tBudgetsBE("budgetFetchFailed"))

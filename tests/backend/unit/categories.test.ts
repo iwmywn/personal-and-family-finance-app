@@ -418,7 +418,7 @@ describe("Categories", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getCustomCategories()
+      const result = await getCustomCategories("", tCommonBE, tCategoriesBE)
 
       expect(result.customCategories).toBeUndefined()
       expect(result.error).toBe(tCommonBE("accessDenied"))
@@ -427,7 +427,11 @@ describe("Categories", () => {
     it("should return empty categories list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getCustomCategories()
+      const result = await getCustomCategories(
+        mockUser._id.toString(),
+        tCommonBE,
+        tCategoriesBE
+      )
 
       expect(result.customCategories).toEqual([])
       expect(result.error).toBeUndefined()
@@ -437,7 +441,11 @@ describe("Categories", () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
-      const result = await getCustomCategories()
+      const result = await getCustomCategories(
+        mockUser._id.toString(),
+        tCommonBE,
+        tCategoriesBE
+      )
 
       expect(result.customCategories).toHaveLength(1)
       expect(result.customCategories?.[0].label).toBe("Entertainment")
@@ -448,7 +456,11 @@ describe("Categories", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const result = await getCustomCategories()
+      const result = await getCustomCategories(
+        mockUser._id.toString(),
+        tCommonBE,
+        tCategoriesBE
+      )
 
       expect(result.customCategories).toBeUndefined()
       expect(result.error).toBe(tCategoriesBE("categoryFetchFailed"))
