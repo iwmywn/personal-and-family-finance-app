@@ -101,9 +101,7 @@ export function TransactionBreakdownTable({
                     <TableCell>
                       <Badge
                         className={
-                          stat.type === "income"
-                            ? "badge-income"
-                            : "badge-expense"
+                          stat.type === "income" ? "badge-green" : "badge-red"
                         }
                       >
                         {stat.type === "income"

@@ -122,8 +122,8 @@ export function TransactionsTable({
                         <Badge
                           className={
                             transaction.type === "income"
-                              ? "badge-income"
-                              : "badge-expense"
+                              ? "badge-green"
+                              : "badge-red"
                           }
                         >
                           {transaction.type === "income"

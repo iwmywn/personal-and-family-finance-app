@@ -74,8 +74,8 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                       <Badge
                         className={
                           transaction.type === "income"
-                            ? "badge-income"
-                            : "badge-expense"
+                            ? "badge-green"
+                            : "badge-red"
                         }
                       >
                         {getCategoryLabel(

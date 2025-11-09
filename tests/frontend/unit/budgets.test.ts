@@ -1,5 +1,9 @@
 import { mockBudgets, mockTransactions } from "@/tests/shared/data"
-import { calculateBudgetsStats, calculateBudgetStats } from "@/lib/budgets"
+import {
+  calculateBudgetsStats,
+  calculateBudgetStats,
+  progressColorClass,
+} from "@/lib/budgets"
 
 describe("Budgets", () => {
   describe("calculateBudgetStats", () => {
@@ -10,8 +14,7 @@ describe("Budgets", () => {
       expect(result).toHaveProperty("spent")
       expect(result).toHaveProperty("percentage")
       expect(result).toHaveProperty("progressColorClass")
-      expect(result).toHaveProperty("isActive")
-      expect(result).toHaveProperty("isCompleted")
+      expect(result).toHaveProperty("status")
       expect(result._id).toBe(budget._id)
       expect(result.categoryKey).toBe(budget.categoryKey)
       expect(result.amount).toBe(budget.amount)
@@ -93,9 +96,7 @@ describe("Budgets", () => {
       }
       const result = calculateBudgetStats(budget, mockTransactions)
 
-      expect(result.progressColorClass).toBe(
-        "[&>[data-slot=progress-indicator]]:bg-gray-400"
-      )
+      expect(result.progressColorClass).toBe(progressColorClass.gray)
     })
 
     it("should return green progress color when percentage < 75", () => {
@@ -115,9 +116,7 @@ describe("Budgets", () => {
       const result = calculateBudgetStats(budget, transactions)
 
       expect(result.percentage).toBeLessThan(75)
-      expect(result.progressColorClass).toBe(
-        "[&>[data-slot=progress-indicator]]:bg-green-500"
-      )
+      expect(result.progressColorClass).toBe(progressColorClass.green)
     })
 
     it("should return orange progress color when percentage >= 75 and < 100", () => {
@@ -138,9 +137,7 @@ describe("Budgets", () => {
 
       expect(result.percentage).toBeGreaterThanOrEqual(75)
       expect(result.percentage).toBeLessThan(100)
-      expect(result.progressColorClass).toBe(
-        "[&>[data-slot=progress-indicator]]:bg-orange-500"
-      )
+      expect(result.progressColorClass).toBe(progressColorClass.orange)
     })
 
     it("should return red progress color when percentage >= 100", () => {
@@ -160,9 +157,7 @@ describe("Budgets", () => {
       const result = calculateBudgetStats(budget, transactions)
 
       expect(result.percentage).toBeGreaterThanOrEqual(100)
-      expect(result.progressColorClass).toBe(
-        "[&>[data-slot=progress-indicator]]:bg-red-500"
-      )
+      expect(result.progressColorClass).toBe(progressColorClass.red)
     })
 
     it("should correctly identify active budget", () => {
@@ -174,11 +169,10 @@ describe("Budgets", () => {
       }
       const result = calculateBudgetStats(budget, mockTransactions)
 
-      expect(result.isActive).toBe(true)
-      expect(result.isCompleted).toBe(false)
+      expect(result.status).toBe("active")
     })
 
-    it("should correctly identify completed budget", () => {
+    it("should correctly identify expired budget", () => {
       const now = new Date()
       const budget = {
         ...mockBudgets[0],
@@ -187,11 +181,10 @@ describe("Budgets", () => {
       }
       const result = calculateBudgetStats(budget, mockTransactions)
 
-      expect(result.isActive).toBe(false)
-      expect(result.isCompleted).toBe(true)
+      expect(result.status).toBe("expired")
     })
 
-    it("should correctly identify future budget", () => {
+    it("should correctly identify upcoming budget", () => {
       const now = new Date()
       const budget = {
         ...mockBudgets[0],
@@ -200,8 +193,7 @@ describe("Budgets", () => {
       }
       const result = calculateBudgetStats(budget, mockTransactions)
 
-      expect(result.isActive).toBe(false)
-      expect(result.isCompleted).toBe(false)
+      expect(result.status).toBe("upcoming")
     })
 
     it("should handle budget that starts today", () => {
@@ -213,7 +205,7 @@ describe("Budgets", () => {
       }
       const result = calculateBudgetStats(budget, mockTransactions)
 
-      expect(result.isActive).toBe(true)
+      expect(result.status).toBe("active")
     })
 
     it("should handle budget that ends today", () => {
@@ -225,8 +217,7 @@ describe("Budgets", () => {
       }
       const result = calculateBudgetStats(budget, mockTransactions)
 
-      expect(result.isActive).toBe(true)
-      expect(result.isCompleted).toBe(false)
+      expect(result.status).toBe("active")
     })
 
     it("should handle empty transactions array", () => {
@@ -235,9 +226,7 @@ describe("Budgets", () => {
 
       expect(result.spent).toBe(0)
       expect(result.percentage).toBe(0)
-      expect(result.progressColorClass).toBe(
-        "[&>[data-slot=progress-indicator]]:bg-gray-400"
-      )
+      expect(result.progressColorClass).toBe(progressColorClass.gray)
     })
 
     it("should exclude transactions outside date range", () => {
@@ -295,8 +284,7 @@ describe("Budgets", () => {
         expect(budgetWithStats).toHaveProperty("spent")
         expect(budgetWithStats).toHaveProperty("percentage")
         expect(budgetWithStats).toHaveProperty("progressColorClass")
-        expect(budgetWithStats).toHaveProperty("isActive")
-        expect(budgetWithStats).toHaveProperty("isCompleted")
+        expect(budgetWithStats).toHaveProperty("status")
         expect(budgetWithStats._id).toBe(mockBudgets[index]._id)
       })
     })
@@ -314,9 +302,7 @@ describe("Budgets", () => {
       result.forEach((budgetWithStats) => {
         expect(budgetWithStats.spent).toBe(0)
         expect(budgetWithStats.percentage).toBe(0)
-        expect(budgetWithStats.progressColorClass).toBe(
-          "[&>[data-slot=progress-indicator]]:bg-gray-400"
-        )
+        expect(budgetWithStats.progressColorClass).toBe(progressColorClass.gray)
       })
     })
 
@@ -330,8 +316,7 @@ describe("Budgets", () => {
         expect(result[index].progressColorClass).toBe(
           individualResult.progressColorClass
         )
-        expect(result[index].isActive).toBe(individualResult.isActive)
-        expect(result[index].isCompleted).toBe(individualResult.isCompleted)
+        expect(result[index].status).toBe(individualResult.status)
       })
     })
   })

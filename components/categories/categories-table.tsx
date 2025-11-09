@@ -101,8 +101,8 @@ export function CategoriesTable({
                         <Badge
                           className={
                             category.type === "income"
-                              ? "badge-income"
-                              : "badge-expense"
+                              ? "badge-green"
+                              : "badge-red"
                           }
                         >
                           {category.type === "income"

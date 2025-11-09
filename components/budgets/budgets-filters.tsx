@@ -36,9 +36,7 @@ export function BudgetsFilters() {
   const { budgets } = useBudgets()
   const { transactions } = useTransactions()
   const { customCategories } = useCustomCategories()
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined
     to: Date | undefined
@@ -52,6 +50,9 @@ export function BudgetsFilters() {
   const [filterProgress, setFilterProgress] = useState<
     "all" | "gray" | "green" | "orange" | "red"
   >("all")
+  const [filterStatus, setFilterStatus] = useState<
+    "all" | "expired" | "active" | "upcoming"
+  >("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
@@ -62,29 +63,21 @@ export function BudgetsFilters() {
   const allYears = getUniqueYears(transactions!)
 
   const hasActiveFilters =
-    selectedDate ||
     dateRange.from ||
     dateRange.to ||
     filterMonth !== "all" ||
     filterYear !== "all" ||
     filterCategoryKey !== "all" ||
-    filterProgress !== "all"
+    filterProgress !== "all" ||
+    filterStatus !== "all"
 
   const handleResetFilters = () => {
-    setSelectedDate(undefined)
     setDateRange({ from: undefined, to: undefined })
     setFilterMonth("all")
     setFilterYear("all")
     setFilterCategoryKey("all")
     setFilterProgress("all")
-  }
-
-  const handleDateChange = (date: Date | undefined) => {
-    setSelectedDate(date)
-    setDateRange({ from: undefined, to: undefined })
-    setFilterMonth("all")
-    setFilterYear("all")
-    setIsDatePickerOpen(false)
+    setFilterStatus("all")
   }
 
   const handleDateRangeChange = (range: {
@@ -92,7 +85,6 @@ export function BudgetsFilters() {
     to: Date | undefined
   }) => {
     setDateRange(range)
-    setSelectedDate(undefined)
     setFilterMonth("all")
     setFilterYear("all")
     setIsDateRangeOpen(false)
@@ -101,7 +93,6 @@ export function BudgetsFilters() {
   const handleMonthChange = (month: string) => {
     setFilterMonth(month)
     if (month !== "all") {
-      setSelectedDate(undefined)
       setDateRange({ from: undefined, to: undefined })
     }
   }
@@ -109,7 +100,6 @@ export function BudgetsFilters() {
   const handleYearChange = (year: string) => {
     setFilterYear(year)
     if (year !== "all") {
-      setSelectedDate(undefined)
       setDateRange({ from: undefined, to: undefined })
     }
   }
@@ -117,12 +107,12 @@ export function BudgetsFilters() {
   const filteredBudgets = filterBudgets(
     budgets!,
     {
-      selectedDate,
       dateRange,
       filterMonth,
       filterYear,
       filterCategoryKey,
       filterProgress,
+      filterStatus,
     },
     transactions!
   )
@@ -137,29 +127,6 @@ export function BudgetsFilters() {
               "md:grid-rows-3 lg:grid-rows-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]"
             } gap-4`}
           >
-            <Popover open={isDatePickerOpen} onOpenChange={setIsDatePickerOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={`w-full justify-between font-normal md:row-start-1 ${selectedDate && "border-primary!"}`}
-                >
-                  {selectedDate
-                    ? formatDate(selectedDate)
-                    : tCommonFE("selectDate")}
-                  <ChevronDownIcon />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  autoFocus
-                  mode="single"
-                  selected={selectedDate}
-                  captionLayout="dropdown"
-                  onSelect={(date) => handleDateChange(date)}
-                />
-              </PopoverContent>
-            </Popover>
-
             <Popover
               open={isDateRangeOpen}
               onOpenChange={(open) => {
@@ -238,7 +205,7 @@ export function BudgetsFilters() {
 
             <Select value={filterMonth} onValueChange={handleMonthChange}>
               <SelectTrigger
-                className={`w-full md:row-start-2 lg:row-start-1 ${filterMonth !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-1 ${filterMonth !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={tCommonFE("month")} />
               </SelectTrigger>
@@ -257,7 +224,7 @@ export function BudgetsFilters() {
 
             <Select value={filterYear} onValueChange={handleYearChange}>
               <SelectTrigger
-                className={`w-full md:row-start-2 2xl:row-start-1 ${filterYear !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-2 lg:row-start-1 ${filterYear !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={tCommonFE("year")} />
               </SelectTrigger>
@@ -279,7 +246,7 @@ export function BudgetsFilters() {
               onValueChange={setFilterCategoryKey}
             >
               <SelectTrigger
-                className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterCategoryKey !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-2 2xl:row-start-1 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={tCommonFE("category")} />
               </SelectTrigger>
@@ -337,6 +304,34 @@ export function BudgetsFilters() {
                   </SelectItem>
                   <SelectItem value="red">
                     {tBudgetsFE("progressRed")}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={filterStatus}
+              onValueChange={(
+                value: "all" | "expired" | "active" | "upcoming"
+              ) => setFilterStatus(value)}
+            >
+              <SelectTrigger
+                className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterStatus !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder={tBudgetsFE("status")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">
+                    {tBudgetsFE("allStatuses")}
+                  </SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="expired">
+                    {tBudgetsFE("expired")}
+                  </SelectItem>
+                  <SelectItem value="active">{tBudgetsFE("active")}</SelectItem>
+                  <SelectItem value="upcoming">
+                    {tBudgetsFE("upcoming")}
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>

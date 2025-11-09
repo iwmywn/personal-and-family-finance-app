@@ -1,3 +1,5 @@
+import { vi } from "vitest"
+
 import {
   mockBudgets,
   mockCustomCategories,
@@ -272,23 +274,85 @@ describe("Filters", () => {
       expect(result.every((b) => b.categoryKey === "food_beverage")).toBe(true)
     })
 
-    it("should filter by selected date", () => {
-      const selectedDate = new Date("2024-03-15")
+    it("should filter by status - expired", () => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date("2024-04-01"))
+
       const result = filterBudgets(
         mockBudgets,
         {
-          selectedDate,
+          filterStatus: "expired",
         },
         mockTransactions
       )
 
-      // Should return budgets where selectedDate falls within budget period
+      // Should return budgets where endDate < now
       expect(result.length).toBeGreaterThan(0)
+      result.forEach((budget) => {
+        const endDate = new Date(budget.endDate)
+        expect(endDate < new Date()).toBe(true)
+      })
+
+      vi.useRealTimers()
+    })
+
+    it("should filter by status - active", () => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date("2024-03-15"))
+
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterStatus: "active",
+        },
+        mockTransactions
+      )
+
+      // Should return budgets where startDate <= now && endDate >= now
+      expect(result.length).toBeGreaterThan(0)
+      const now = new Date()
       result.forEach((budget) => {
         const startDate = new Date(budget.startDate)
         const endDate = new Date(budget.endDate)
-        expect(startDate <= selectedDate && endDate >= selectedDate).toBe(true)
+        expect(startDate <= now && endDate >= now).toBe(true)
       })
+
+      vi.useRealTimers()
+    })
+
+    it("should filter by status - upcoming", () => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date("2024-01-15"))
+
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterStatus: "upcoming",
+        },
+        mockTransactions
+      )
+
+      // Should return budgets where startDate > now
+      expect(result.length).toBeGreaterThan(0)
+      const now = new Date()
+      result.forEach((budget) => {
+        const startDate = new Date(budget.startDate)
+        expect(startDate > now).toBe(true)
+      })
+
+      vi.useRealTimers()
+    })
+
+    it("should return all budgets when filterStatus is 'all'", () => {
+      const result = filterBudgets(
+        mockBudgets,
+        {
+          filterStatus: "all",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(mockBudgets.length)
     })
 
     it("should filter by date range", () => {

@@ -4,9 +4,15 @@ interface BudgetWithStats extends Budget {
   spent: number
   percentage: number
   progressColorClass: string
-  isActive: boolean
-  isCompleted: boolean
+  status: "expired" | "active" | "upcoming"
 }
+
+export const progressColorClass = {
+  gray: "[&>[data-slot=progress-indicator]]:bg-gray-400",
+  green: "[&>[data-slot=progress-indicator]]:bg-green-500",
+  orange: "[&>[data-slot=progress-indicator]]:bg-orange-500",
+  red: "[&>[data-slot=progress-indicator]]:bg-red-500",
+} as const
 
 export function calculateBudgetStats(
   budget: Budget,
@@ -31,28 +37,32 @@ export function calculateBudgetStats(
 
   const percentage = budget.amount === 0 ? 0 : (spent / budget.amount) * 100
 
-  let progressColorClass = "[&>[data-slot=progress-indicator]]:bg-gray-400"
+  let colorClass: string = progressColorClass.gray
   if (budgetTransactions.length > 0) {
     if (percentage < 75) {
-      progressColorClass = "[&>[data-slot=progress-indicator]]:bg-green-500"
+      colorClass = progressColorClass.green
     } else if (percentage < 100) {
-      progressColorClass = "[&>[data-slot=progress-indicator]]:bg-orange-500"
+      colorClass = progressColorClass.orange
     } else {
-      progressColorClass = "[&>[data-slot=progress-indicator]]:bg-red-500"
+      colorClass = progressColorClass.red
     }
   }
 
-  const isActive = startDate <= now && endDate >= now
-
-  const isCompleted = endDate < now
+  let status: "expired" | "active" | "upcoming"
+  if (endDate < now) {
+    status = "expired"
+  } else if (startDate <= now && endDate >= now) {
+    status = "active"
+  } else {
+    status = "upcoming"
+  }
 
   return {
     ...budget,
     spent,
     percentage,
-    progressColorClass,
-    isActive,
-    isCompleted,
+    progressColorClass: colorClass,
+    status,
   }
 }
 

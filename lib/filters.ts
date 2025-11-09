@@ -1,4 +1,4 @@
-import { calculateBudgetsStats } from "@/lib/budgets"
+import { calculateBudgetsStats, progressColorClass } from "@/lib/budgets"
 import type { Budget, CustomCategory, Transaction } from "@/lib/definitions"
 
 interface TransactionFilters {
@@ -20,7 +20,6 @@ interface CategoryFilters {
 }
 
 interface BudgetFilters {
-  selectedDate?: Date | null
   dateRange?: {
     from?: Date | null
     to?: Date | null
@@ -29,6 +28,7 @@ interface BudgetFilters {
   filterYear?: string
   filterCategoryKey?: string
   filterProgress?: string
+  filterStatus?: string
 }
 
 export function toDateOnly(date: Date | null | undefined): Date | null {
@@ -76,8 +76,10 @@ export function filterTransactions(
       : true
 
     const matchesDateRange =
-      (!fromDateOnly || transactionDateOnly >= fromDateOnly) &&
-      (!toDateOnlyValue || transactionDateOnly <= toDateOnlyValue)
+      (!fromDateOnly ||
+        transactionDateOnly.getTime() >= fromDateOnly.getTime()) &&
+      (!toDateOnlyValue ||
+        transactionDateOnly.getTime() <= toDateOnlyValue.getTime())
 
     const matchesMonth =
       !parsedMonth || transactionDateOnly.getMonth() + 1 === parsedMonth
@@ -128,32 +130,29 @@ export function filterBudgets(
   transactions: Transaction[]
 ): Budget[] {
   const {
-    selectedDate,
     dateRange = {},
     filterMonth = "all",
     filterYear = "all",
     filterCategoryKey = "all",
     filterProgress = "all",
+    filterStatus = "all",
   } = filters
 
   const fromDateOnly = toDateOnly(dateRange.from)
   const toDateOnlyValue = toDateOnly(dateRange.to)
-  const selectedDateOnly = toDateOnly(selectedDate)
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
+  const nowDateOnly = toDateOnly(new Date())!
 
   let filteredBudgets = budgets.filter((budget) => {
     const budgetStartDateOnly = toDateOnly(new Date(budget.startDate))!
     const budgetEndDateOnly = toDateOnly(new Date(budget.endDate))!
 
-    const matchesSelectedDate = selectedDateOnly
-      ? budgetStartDateOnly <= selectedDateOnly &&
-        budgetEndDateOnly >= selectedDateOnly
-      : true
-
     const matchesDateRange =
-      (!fromDateOnly || budgetEndDateOnly >= fromDateOnly) &&
-      (!toDateOnlyValue || budgetStartDateOnly <= toDateOnlyValue)
+      (!fromDateOnly ||
+        budgetEndDateOnly.getTime() >= fromDateOnly.getTime()) &&
+      (!toDateOnlyValue ||
+        budgetStartDateOnly.getTime() <= toDateOnlyValue.getTime())
 
     const matchesMonth = !parsedMonth
       ? true
@@ -172,12 +171,25 @@ export function filterBudgets(
     const matchesCategory =
       filterCategoryKey === "all" || budget.categoryKey === filterCategoryKey
 
+    let matchesStatus = true
+    if (filterStatus !== "all") {
+      if (filterStatus === "expired") {
+        matchesStatus = budgetEndDateOnly.getTime() < nowDateOnly.getTime()
+      } else if (filterStatus === "active") {
+        matchesStatus =
+          budgetStartDateOnly.getTime() <= nowDateOnly.getTime() &&
+          budgetEndDateOnly.getTime() >= nowDateOnly.getTime()
+      } else if (filterStatus === "upcoming") {
+        matchesStatus = budgetStartDateOnly.getTime() > nowDateOnly.getTime()
+      }
+    }
+
     return (
-      matchesSelectedDate &&
       matchesDateRange &&
       matchesMonth &&
       matchesYear &&
-      matchesCategory
+      matchesCategory &&
+      matchesStatus
     )
   })
 
@@ -190,28 +202,16 @@ export function filterBudgets(
     filteredBudgets = budgetsWithStats
       .filter((budget) => {
         if (filterProgress === "gray") {
-          return (
-            budget.progressColorClass ===
-            "[&>[data-slot=progress-indicator]]:bg-gray-400"
-          )
+          return budget.progressColorClass === progressColorClass.gray
         }
         if (filterProgress === "green") {
-          return (
-            budget.progressColorClass ===
-            "[&>[data-slot=progress-indicator]]:bg-green-500"
-          )
+          return budget.progressColorClass === progressColorClass.green
         }
         if (filterProgress === "orange") {
-          return (
-            budget.progressColorClass ===
-            "[&>[data-slot=progress-indicator]]:bg-orange-500"
-          )
+          return budget.progressColorClass === progressColorClass.orange
         }
         if (filterProgress === "red") {
-          return (
-            budget.progressColorClass ===
-            "[&>[data-slot=progress-indicator]]:bg-red-500"
-          )
+          return budget.progressColorClass === progressColorClass.red
         }
         return true
       })

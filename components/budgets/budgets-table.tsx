@@ -146,12 +146,18 @@ export function BudgetsTable({
                       <TableCell>
                         <Badge
                           className={
-                            budget.isActive ? "badge-income" : "badge-expense"
+                            budget.status === "expired"
+                              ? "badge-red"
+                              : budget.status === "active"
+                                ? "badge-green"
+                                : "badge-yellow"
                           }
                         >
-                          {budget.isActive
-                            ? tBudgetsFE("active")
-                            : tBudgetsFE("completed")}
+                          {budget.status === "expired"
+                            ? tBudgetsFE("expired")
+                            : budget.status === "active"
+                              ? tBudgetsFE("active")
+                              : tBudgetsFE("upcoming")}
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">
