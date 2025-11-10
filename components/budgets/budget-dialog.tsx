@@ -1,6 +1,6 @@
 "use client"
 
-import { useOptimistic, useState } from "react"
+import { useState } from "react"
 import { createBudgetSchema, type BudgetFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
@@ -76,20 +76,8 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
     },
   })
 
-  const { budgets, customCategories } = useAppData()
+  const { customCategories } = useAppData()
   const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
-  const [_, setOptimisticBudgets] = useOptimistic(
-    budgets,
-    (state, action: { type: "update" | "create"; budget: Budget }) => {
-      if (action.type === "update") {
-        return state.map((b) =>
-          b._id === action.budget._id ? action.budget : b
-        )
-      } else {
-        return [action.budget, ...state]
-      }
-    }
-  )
 
   const startDate = useWatch({
     control: form.control,
@@ -114,13 +102,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        setOptimisticBudgets({
-          type: "update",
-          budget: {
-            ...budget,
-            ...values,
-          },
-        })
         toast.success(success)
         setOpen(false)
       }
@@ -134,14 +115,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        setOptimisticBudgets({
-          type: "create",
-          budget: {
-            _id: `temp-id`,
-            userId: "temp-user",
-            ...values,
-          },
-        })
         toast.success(success)
         form.reset({
           categoryKey: "",

@@ -1,6 +1,6 @@
 "use client"
 
-import { useOptimistic, useState } from "react"
+import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -16,7 +16,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
-import { useAppData } from "@/lib/app-data-context"
 
 interface DeleteTransactionDialogProps {
   transactionId: string
@@ -33,14 +32,7 @@ export function DeleteTransactionDialog({
 }: DeleteTransactionDialogProps) {
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { transactions } = useAppData()
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [_, setOptimisticTransactions] = useOptimistic(
-    transactions,
-    (state, transactionIdToDelete: string) => {
-      return state.filter((t) => t._id !== transactionIdToDelete)
-    }
-  )
 
   async function handleDelete() {
     if (isLoading) return
@@ -52,7 +44,6 @@ export function DeleteTransactionDialog({
     if (error || !success) {
       toast.error(error)
     } else {
-      setOptimisticTransactions(transactionId)
       toast.success(success)
     }
     setIsLoading(false)

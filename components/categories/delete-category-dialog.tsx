@@ -1,6 +1,6 @@
 "use client"
 
-import { useOptimistic, useState } from "react"
+import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -16,7 +16,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
-import { useAppData } from "@/lib/app-data-context"
 
 interface DeleteCategoryDialogProps {
   categoryId: string
@@ -33,14 +32,7 @@ export function DeleteCategoryDialog({
 }: DeleteCategoryDialogProps) {
   const tCategoriesFE = useTranslations("categories.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { customCategories } = useAppData()
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [_, setOptimisticCategories] = useOptimistic(
-    customCategories,
-    (state, categoryIdToDelete: string) => {
-      return state.filter((c) => c._id !== categoryIdToDelete)
-    }
-  )
 
   async function handleDelete() {
     if (isLoading) return
@@ -52,7 +44,6 @@ export function DeleteCategoryDialog({
     if (error || !success) {
       toast.error(error)
     } else {
-      setOptimisticCategories(categoryId)
       toast.success(success)
     }
     setIsLoading(false)

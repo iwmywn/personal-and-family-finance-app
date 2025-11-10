@@ -1,6 +1,6 @@
 "use client"
 
-import { useOptimistic, useState } from "react"
+import { useState } from "react"
 import { createCategorySchema, type CustomCategoryFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -38,7 +38,6 @@ import {
 } from "@/components/ui/input-group"
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useAppData } from "@/lib/app-data-context"
 import type { CustomCategory } from "@/lib/definitions"
 
 interface CategoryDialogProps {
@@ -53,24 +52,8 @@ export function CategoryDialog({
   setOpen,
 }: CategoryDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { customCategories } = useAppData()
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
     category?.type || "income"
-  )
-  const [_, setOptimisticCategories] = useOptimistic(
-    customCategories,
-    (
-      state,
-      action: { type: "update" | "create"; category: CustomCategory }
-    ) => {
-      if (action.type === "update") {
-        return state.map((c) =>
-          c._id === action.category._id ? action.category : c
-        )
-      } else {
-        return [action.category, ...state]
-      }
-    }
   )
   const tCategoriesFE = useTranslations("categories.fe")
   const tCommonFE = useTranslations("common.fe")
@@ -97,13 +80,6 @@ export function CategoryDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        setOptimisticCategories({
-          type: "update",
-          category: {
-            ...category,
-            ...values,
-          },
-        })
         toast.success(success)
         setOpen(false)
       }
@@ -113,15 +89,6 @@ export function CategoryDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        setOptimisticCategories({
-          type: "create",
-          category: {
-            _id: `temp-id`,
-            userId: "temp-user",
-            categoryKey: `custom_${values.type}_temp`,
-            ...values,
-          },
-        })
         toast.success(success)
         form.reset({
           type: "income",

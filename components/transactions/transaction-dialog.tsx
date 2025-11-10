@@ -1,6 +1,6 @@
 "use client"
 
-import { useOptimistic, useState } from "react"
+import { useState } from "react"
 import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
@@ -93,23 +93,8 @@ export function TransactionDialog({
     },
   })
 
-  const { transactions, customCategories } = useAppData()
+  const { customCategories } = useAppData()
   const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
-  const [_, setOptimisticTransactions] = useOptimistic(
-    transactions,
-    (
-      state,
-      action: { type: "update" | "create"; transaction: Transaction }
-    ) => {
-      if (action.type === "update") {
-        return state.map((t) =>
-          t._id === action.transaction._id ? action.transaction : t
-        )
-      } else {
-        return [action.transaction, ...state]
-      }
-    }
-  )
 
   const selectedDate = useWatch({
     control: form.control,
@@ -128,13 +113,6 @@ export function TransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        setOptimisticTransactions({
-          type: "update",
-          transaction: {
-            ...transaction,
-            ...values,
-          },
-        })
         toast.success(success)
         setOpen(false)
       }
@@ -147,14 +125,6 @@ export function TransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        setOptimisticTransactions({
-          type: "create",
-          transaction: {
-            _id: `temp-id`,
-            userId: "temp-user",
-            ...values,
-          },
-        })
         toast.success(success)
         form.reset({
           type: "income",
