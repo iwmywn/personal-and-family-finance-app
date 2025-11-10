@@ -188,7 +188,7 @@ export type PasswordFormValues = z.infer<
 export type TransactionFormValues = z.infer<
   ReturnType<typeof createTransactionSchema>
 >
-export type CustomCategoryFormValues = z.infer<
+export type CategoryFormValues = z.infer<
   ReturnType<typeof createCategorySchema>
 >
 export type BudgetFormValues = z.infer<ReturnType<typeof createBudgetSchema>>

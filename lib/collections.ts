@@ -1,7 +1,7 @@
 import { collection } from "@/lib/db"
 import type {
   DBBudget,
-  DBCustomCategory,
+  DBCategory,
   DBTransaction,
   DBUser,
 } from "@/lib/definitions"
@@ -15,7 +15,7 @@ export function getTransactionsCollection() {
 }
 
 export function getCategoriesCollection() {
-  return collection<DBCustomCategory>("categories")
+  return collection<DBCategory>("categories")
 }
 
 export function getBudgetsCollection() {

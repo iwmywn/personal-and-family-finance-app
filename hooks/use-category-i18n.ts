@@ -10,7 +10,7 @@ import {
   type CategoryKeyType,
   type TransactionType,
 } from "@/lib/categories"
-import type { CustomCategory } from "@/lib/definitions"
+import type { Category } from "@/lib/definitions"
 
 export function useCategoryI18n() {
   const tCategoriesConfig = useTranslations("categoriesConfig")
@@ -18,14 +18,14 @@ export function useCategoryI18n() {
 
   const getCategoryLabel = (
     categoryKey: CategoryKeyType,
-    customCategories?: CustomCategory[]
+    customCategories?: Category[]
   ): string => {
     return getLabel(categoryKey, CATEGORY_CONFIG, customCategories)
   }
 
   const getCategoryDescription = (
     categoryKey: CategoryKeyType,
-    customCategories?: CustomCategory[]
+    customCategories?: Category[]
   ): string => {
     return getDescription(categoryKey, CATEGORY_CONFIG, customCategories)
   }

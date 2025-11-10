@@ -2,7 +2,7 @@
 
 import { cacheTag, updateTag } from "next/cache"
 import type { TypedTranslationFunction } from "@/i18n/types"
-import { createCategorySchema, type CustomCategoryFormValues } from "@/schemas"
+import { createCategorySchema, type CategoryFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { nanoid } from "nanoid"
 import { getTranslations } from "next-intl/server"
@@ -12,10 +12,10 @@ import {
   getCategoriesCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
-import { type CustomCategory } from "@/lib/definitions"
+import { type Category } from "@/lib/definitions"
 import { session } from "@/lib/session"
 
-export async function createCustomCategory(values: CustomCategoryFormValues) {
+export async function createCustomCategory(values: CategoryFormValues) {
   try {
     const [tCommonBE, tCategoriesBE, tSchemasCategory] = await Promise.all([
       getTranslations("common.be"),
@@ -82,7 +82,7 @@ export async function createCustomCategory(values: CustomCategoryFormValues) {
 
 export async function updateCustomCategory(
   categoryId: string,
-  values: CustomCategoryFormValues
+  values: CategoryFormValues
 ) {
   try {
     const [tCommonBE, tCategoriesBE, tSchemasCategory] = await Promise.all([
@@ -274,7 +274,7 @@ export async function getCustomCategories(
         ...category,
         _id: category._id.toString(),
         userId: category.userId.toString(),
-      })) as CustomCategory[],
+      })) as Category[],
     }
   } catch (error) {
     console.error("Error fetching custom categories:", error)

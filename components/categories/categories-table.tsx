@@ -31,10 +31,10 @@ import {
 import { CategoryDialog } from "@/components/categories/category-dialog"
 import { DeleteCategoryDialog } from "@/components/categories/delete-category-dialog"
 import { useAppData } from "@/lib/app-data-context"
-import type { CustomCategory } from "@/lib/definitions"
+import type { Category } from "@/lib/definitions"
 
 interface CategoriesTableProps {
-  filteredCategories: CustomCategory[]
+  filteredCategories: Category[]
   offsetHeight: number
 }
 
@@ -43,8 +43,9 @@ export function CategoriesTable({
   offsetHeight,
 }: CategoriesTableProps) {
   const { customCategories } = useAppData()
-  const [selectedCategory, setSelectedCategory] =
-    useState<CustomCategory | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  )
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
   const tCategoriesFE = useTranslations("categories.fe")

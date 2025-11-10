@@ -2,9 +2,9 @@ import { ObjectId } from "mongodb"
 
 import type {
   Budget,
-  CustomCategory,
+  Category,
   DBBudget,
-  DBCustomCategory,
+  DBCategory,
   DBTransaction,
   DBUser,
   Transaction,
@@ -18,7 +18,7 @@ export const mockUser: DBUser = {
   locale: "en",
 }
 
-export const mockCustomCategory: DBCustomCategory = {
+export const mockCustomCategory: DBCategory = {
   _id: new ObjectId("68f732914e63e5aa249cc173"),
   userId: mockUser._id,
   categoryKey: "custom_expense_abcdef12",
@@ -153,7 +153,7 @@ export const mockTransactions: Transaction[] = [
   },
 ]
 
-export const mockCustomCategories: CustomCategory[] = [
+export const mockCustomCategories: Category[] = [
   {
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",

@@ -3,7 +3,7 @@ import type { Collection, OptionalId } from "mongodb"
 import * as collectionsLib from "@/lib/collections"
 import type {
   DBBudget,
-  DBCustomCategory,
+  DBCategory,
   DBTransaction,
   DBUser,
 } from "@/lib/definitions"
@@ -50,9 +50,7 @@ export const setupUserCollectionMock = () => {
 
 export const setupCategoryCollectionMock = () => {
   vi.spyOn(collectionsLib, "getCategoriesCollection").mockResolvedValue(
-    mockCategoryCollection as unknown as Collection<
-      OptionalId<DBCustomCategory>
-    >
+    mockCategoryCollection as unknown as Collection<OptionalId<DBCategory>>
   )
   return mockCategoryCollection
 }

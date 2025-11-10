@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { createCategorySchema, type CustomCategoryFormValues } from "@/schemas"
+import { createCategorySchema, type CategoryFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -38,10 +38,10 @@ import {
 } from "@/components/ui/input-group"
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { CustomCategory } from "@/lib/definitions"
+import type { Category } from "@/lib/definitions"
 
 interface CategoryDialogProps {
-  category?: CustomCategory
+  category?: Category
   open: boolean
   setOpen: (open: boolean) => void
 }
@@ -59,7 +59,7 @@ export function CategoryDialog({
   const tCommonFE = useTranslations("common.fe")
   const tSchemasCategory = useTranslations("schemas.category")
   const schema = createCategorySchema(tSchemasCategory)
-  const form = useForm<CustomCategoryFormValues>({
+  const form = useForm<CategoryFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       type: category?.type || "income",
@@ -68,7 +68,7 @@ export function CategoryDialog({
     },
   })
 
-  async function onSubmit(values: CustomCategoryFormValues) {
+  async function onSubmit(values: CategoryFormValues) {
     setIsLoading(true)
 
     if (category) {

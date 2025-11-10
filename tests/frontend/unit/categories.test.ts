@@ -6,7 +6,7 @@ import {
   getDetails,
   getLabel,
 } from "@/lib/categories"
-import { type CustomCategory } from "@/lib/definitions"
+import { type Category } from "@/lib/definitions"
 
 let CATEGORY_CONFIG: ReturnType<typeof createCategoryConfig>
 
@@ -56,7 +56,7 @@ describe("Categories", () => {
     })
 
     it("should return custom category label when provided", () => {
-      const customCategories: CustomCategory[] = [
+      const customCategories: Category[] = [
         {
           _id: "1",
           userId: "user1",
@@ -75,7 +75,7 @@ describe("Categories", () => {
     })
 
     it("should return empty string for custom category not found", () => {
-      const customCategories: CustomCategory[] = []
+      const customCategories: Category[] = []
       const result = getLabel(
         "custom_income_test",
         CATEGORY_CONFIG,
@@ -105,7 +105,7 @@ describe("Categories", () => {
     })
 
     it("should return custom category description when provided", () => {
-      const customCategories: CustomCategory[] = [
+      const customCategories: Category[] = [
         {
           _id: "1",
           userId: "user1",
@@ -124,7 +124,7 @@ describe("Categories", () => {
     })
 
     it("should return empty string for custom category not found", () => {
-      const customCategories: CustomCategory[] = []
+      const customCategories: Category[] = []
       const result = getDescription(
         "custom_income_test",
         CATEGORY_CONFIG,

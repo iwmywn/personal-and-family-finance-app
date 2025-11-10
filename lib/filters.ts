@@ -1,5 +1,5 @@
 import { calculateBudgetsStats, progressColorClass } from "@/lib/budgets"
-import type { Budget, CustomCategory, Transaction } from "@/lib/definitions"
+import type { Budget, Category, Transaction } from "@/lib/definitions"
 
 interface TransactionFilters {
   searchTerm?: string
@@ -106,9 +106,9 @@ export function filterTransactions(
 }
 
 export function filterCustomCategories(
-  categories: CustomCategory[],
+  categories: Category[],
   filters: CategoryFilters
-): CustomCategory[] {
+): Category[] {
   const { searchTerm = "", filterType = "all" } = filters
   const normalizedSearchTerm = searchTerm.trim()
 

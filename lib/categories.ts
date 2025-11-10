@@ -1,6 +1,6 @@
 import type { TypedTranslationFunction } from "@/i18n/types"
 
-import type { CustomCategory } from "@/lib/definitions"
+import type { Category } from "@/lib/definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const
 export type TransactionType = (typeof TRANSACTION_TYPES)[number]
@@ -169,7 +169,7 @@ function getProperty(
   categoryKey: CategoryKeyType,
   CATEGORY_CONFIG: CategoryConfigType,
   property: "label" | "description",
-  customCategories?: CustomCategory[]
+  customCategories?: Category[]
 ): string {
   if (categoryKey in CATEGORY_CONFIG) {
     return CATEGORY_CONFIG[categoryKey as AllCategoriesKeyType][property]
@@ -183,7 +183,7 @@ function getProperty(
 export function getLabel(
   categoryKey: CategoryKeyType,
   CATEGORY_CONFIG: CategoryConfigType,
-  customCategories?: CustomCategory[]
+  customCategories?: Category[]
 ): string {
   return getProperty(categoryKey, CATEGORY_CONFIG, "label", customCategories)
 }
@@ -191,7 +191,7 @@ export function getLabel(
 export function getDescription(
   categoryKey: CategoryKeyType,
   CATEGORY_CONFIG: CategoryConfigType,
-  customCategories?: CustomCategory[]
+  customCategories?: Category[]
 ): string {
   return getProperty(
     categoryKey,

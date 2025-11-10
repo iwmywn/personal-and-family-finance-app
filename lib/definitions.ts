@@ -21,7 +21,7 @@ type BaseTransaction<T> = {
   date: Date
 }
 
-type BaseCustomCategory<T> = {
+type BaseCategory<T> = {
   _id: T
   userId: T
   categoryKey: string
@@ -45,8 +45,8 @@ export type DBUser = BaseUser<ObjectId>
 export type Transaction = BaseTransaction<string>
 export type DBTransaction = BaseTransaction<ObjectId>
 
-export type CustomCategory = BaseCustomCategory<string>
-export type DBCustomCategory = BaseCustomCategory<ObjectId>
+export type Category = BaseCategory<string>
+export type DBCategory = BaseCategory<ObjectId>
 
 export type Budget = BaseBudget<string>
 export type DBBudget = BaseBudget<ObjectId>

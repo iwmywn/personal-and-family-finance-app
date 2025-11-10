@@ -2,17 +2,12 @@
 
 import * as React from "react"
 
-import type {
-  Budget,
-  CustomCategory,
-  Transaction,
-  User,
-} from "@/lib/definitions"
+import type { Budget, Category, Transaction, User } from "@/lib/definitions"
 
 type AppDataContextValue = {
   user: Omit<User, "password"> | null
   transactions: Transaction[]
-  customCategories: CustomCategory[]
+  customCategories: Category[]
   budgets: Budget[]
 }
 
@@ -28,7 +23,7 @@ export function AppDataProvider({
   children: React.ReactNode
   user: Omit<User, "password"> | null
   transactions: Transaction[]
-  customCategories: CustomCategory[]
+  customCategories: Category[]
   budgets: Budget[]
 }) {
   return (
