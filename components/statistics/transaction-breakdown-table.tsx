@@ -26,9 +26,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useAppData } from "@/lib/app-data-context"
 import { type Transaction } from "@/lib/definitions"
 import { calculateCategoryStats } from "@/lib/statistics"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
 interface TransactionBreakdownTableProps {
@@ -38,8 +38,7 @@ interface TransactionBreakdownTableProps {
 export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
-  const { transactions } = useTransactions()
-  const { customCategories } = useCustomCategories()
+  const { transactions, customCategories } = useAppData()
   const tStatisticsFE = useTranslations("statistics.fe")
   const tCommonFE = useTranslations("common.fe")
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()

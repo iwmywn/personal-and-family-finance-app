@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { mutate as globalMutate } from "swr"
 
 import {
   createCustomCategory,
@@ -40,7 +39,6 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import type { CustomCategory } from "@/lib/definitions"
-import { useCustomCategories } from "@/lib/swr"
 
 interface CategoryDialogProps {
   category?: CustomCategory
@@ -54,7 +52,6 @@ export function CategoryDialog({
   setOpen,
 }: CategoryDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { customCategories, mutate } = useCustomCategories()
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
     category?.type || "income"
   )
@@ -83,12 +80,6 @@ export function CategoryDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        mutate({
-          customCategories: customCategories!.map((c) =>
-            c._id === category._id ? { ...c, ...values } : c
-          ),
-        })
-        globalMutate("transactions")
         toast.success(success)
         setOpen(false)
       }
@@ -98,17 +89,6 @@ export function CategoryDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        mutate({
-          customCategories: [
-            {
-              _id: `temp-id`,
-              userId: "temp-user",
-              categoryKey: `custom_${values.type}_temp`,
-              ...values,
-            },
-            ...customCategories!,
-          ],
-        })
         toast.success(success)
         form.reset({
           type: "income",

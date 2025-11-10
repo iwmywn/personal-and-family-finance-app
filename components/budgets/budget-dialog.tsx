@@ -46,8 +46,8 @@ import { Spinner } from "@/components/ui/spinner"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useAppData } from "@/lib/app-data-context"
 import type { Budget } from "@/lib/definitions"
-import { useBudgets, useCustomCategories } from "@/lib/swr"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
 
 interface BudgetDialogProps {
@@ -76,8 +76,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
     },
   })
 
-  const { budgets, mutate } = useBudgets()
-  const { customCategories } = useCustomCategories()
+  const { customCategories } = useAppData()
   const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
 
   const startDate = useWatch({
@@ -103,11 +102,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        mutate({
-          budgets: budgets!.map((b) =>
-            b._id === budget._id ? { ...b, ...values } : b
-          ),
-        })
         toast.success(success)
         setOpen(false)
       }
@@ -121,16 +115,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        mutate({
-          budgets: [
-            {
-              _id: `temp-id`,
-              userId: "temp-user",
-              ...values,
-            },
-            ...budgets!,
-          ],
-        })
         toast.success(success)
         form.reset({
           categoryKey: "",

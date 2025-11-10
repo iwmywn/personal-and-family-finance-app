@@ -1,8 +1,17 @@
+import { Suspense } from "react"
 import { cookies } from "next/headers"
+import { getTranslations } from "next-intl/server"
 
+import { getUser } from "@/actions/auth"
+import { getBudgets } from "@/actions/budgets"
+import { getCustomCategories } from "@/actions/categories"
+import { getTransactions } from "@/actions/transactions"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { Spinner } from "@/components/ui/spinner"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
+import { AppDataProvider } from "@/lib/app-data-context"
+import { session } from "@/lib/session"
 
 export default async function DashboardLayout({
   children,
@@ -26,10 +35,59 @@ export default async function DashboardLayout({
             className="h-full"
             style={{ maxHeight: "calc(100vh - 4.375rem)" }}
           >
-            {children}
+            <Suspense
+              fallback={
+                <div className="center">
+                  <Spinner className="size-8" />
+                </div>
+              }
+            >
+              <Layout>{children}</Layout>
+            </Suspense>
           </section>
         </div>
       </SidebarInset>
     </SidebarProvider>
+  )
+}
+
+async function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  const { userId } = await session.user.get()
+
+  const [tCommonBE, tAuthBE, tTransactionsBE, tCategoriesBE, tBudgetsBE] =
+    await Promise.all([
+      getTranslations("common.be"),
+      getTranslations("auth.be"),
+      getTranslations("transactions.be"),
+      getTranslations("categories.be"),
+      getTranslations("budgets.be"),
+    ])
+
+  const [userResult, transactionsResult, categoriesResult, budgetsResult] =
+    await Promise.all([
+      getUser(userId, tCommonBE, tAuthBE),
+      getTransactions(userId, tCommonBE, tTransactionsBE),
+      getCustomCategories(userId, tCommonBE, tCategoriesBE),
+      getBudgets(userId, tCommonBE, tBudgetsBE),
+    ])
+
+  const user = userResult.user || null
+  const transactions = transactionsResult.transactions || []
+  const customCategories = categoriesResult.customCategories || []
+  const budgets = budgetsResult.budgets || []
+
+  return (
+    <AppDataProvider
+      user={user}
+      transactions={transactions}
+      customCategories={customCategories}
+      budgets={budgets}
+    >
+      {children}
+    </AppDataProvider>
   )
 }

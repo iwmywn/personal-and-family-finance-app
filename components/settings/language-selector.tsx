@@ -14,13 +14,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useUser } from "@/lib/swr"
+import { useAppData } from "@/lib/app-data-context"
 
 export function LanguageSelector() {
   const tSettingsFE = useTranslations("settings.fe")
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const { user, mutate } = useUser()
+  const { user } = useAppData()
 
   async function handleLocaleChange(locale: AppLocale) {
     startTransition(async () => {
@@ -29,12 +29,6 @@ export function LanguageSelector() {
       if (result.error) {
         toast.error(result.error)
       } else {
-        mutate({
-          user: {
-            ...user!,
-            locale: locale,
-          },
-        })
         toast.success(result.success)
         router.refresh()
       }

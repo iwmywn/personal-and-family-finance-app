@@ -16,7 +16,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
-import { useTransactions } from "@/lib/swr"
 
 interface DeleteTransactionDialogProps {
   transactionId: string
@@ -33,7 +32,6 @@ export function DeleteTransactionDialog({
 }: DeleteTransactionDialogProps) {
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { transactions, mutate } = useTransactions()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -46,9 +44,6 @@ export function DeleteTransactionDialog({
     if (error || !success) {
       toast.error(error)
     } else {
-      mutate({
-        transactions: transactions!.filter((t) => t._id !== transactionId),
-      })
       toast.success(success)
     }
     setIsLoading(false)

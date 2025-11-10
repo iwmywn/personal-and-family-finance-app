@@ -11,33 +11,11 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
-import { Spinner } from "@/components/ui/spinner"
-import {
-  useBudgets,
-  useCustomCategories,
-  useTransactions,
-  useUser,
-} from "@/lib/swr"
+import { useAppData } from "@/lib/app-data-context"
 
 export function BasePage({ children }: { children: ReactNode }) {
   const tBasePage = useTranslations("basePage")
-  const { user, isUserLoading } = useUser()
-  const { transactions, isTransactionsLoading } = useTransactions()
-  const { customCategories, isCategoriesLoading } = useCustomCategories()
-  const { budgets, isBudgetsLoading } = useBudgets()
-
-  if (
-    isUserLoading ||
-    isTransactionsLoading ||
-    isCategoriesLoading ||
-    isBudgetsLoading
-  ) {
-    return (
-      <div className="center">
-        <Spinner className="size-8" />
-      </div>
-    )
-  }
+  const { user, transactions, customCategories, budgets } = useAppData()
 
   const renderEmptyState = (key: keyof Messages["basePage"]) => (
     <Empty className="h-full border">

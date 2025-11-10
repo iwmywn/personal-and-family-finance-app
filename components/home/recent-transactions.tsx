@@ -18,7 +18,7 @@ import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
+import { useAppData } from "@/lib/app-data-context"
 import { formatCurrency } from "@/lib/utils"
 
 interface RecentTransactionsProps {
@@ -27,9 +27,8 @@ interface RecentTransactionsProps {
 
 export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
-  const { transactions } = useTransactions()
-  const recentTransactions = transactions!.slice(0, 10)
-  const { customCategories } = useCustomCategories()
+  const { transactions, customCategories } = useAppData()
+  const recentTransactions = transactions.slice(0, 10)
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const tHomeFE = useTranslations("home.fe")
   const tCommonFE = useTranslations("common.fe")

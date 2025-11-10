@@ -12,8 +12,8 @@ import {
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { useAppData } from "@/lib/app-data-context"
 import { calculateQuickStats } from "@/lib/statistics"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
 interface QuickStatsProps {
@@ -23,8 +23,7 @@ interface QuickStatsProps {
 export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const { customCategories } = useCustomCategories()
-  const { transactions } = useTransactions()
+  const { transactions, customCategories } = useAppData()
   const tHomeFE = useTranslations("home.fe")
   const tCommonFE = useTranslations("common.fe")
   const { getCategoryLabel } = useCategoryI18n()
@@ -36,7 +35,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
     avgExpense,
     savingsRate,
     popularCategory,
-  } = calculateQuickStats(transactions!)
+  } = calculateQuickStats(transactions)
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">

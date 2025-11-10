@@ -33,10 +33,10 @@ import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
+import { useAppData } from "@/lib/app-data-context"
 import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { filterTransactions } from "@/lib/filters"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { getUniqueYears } from "@/lib/utils"
 
 interface TransactionFiltersProps {
@@ -46,8 +46,7 @@ interface TransactionFiltersProps {
 export function TransactionFilters({
   onFilteredTransactionsChange,
 }: TransactionFiltersProps) {
-  const { transactions } = useTransactions()
-  const { customCategories } = useCustomCategories()
+  const { transactions, customCategories } = useAppData()
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
   const [searchTerm, setSearchTerm] = useState<string>("")
@@ -72,7 +71,7 @@ export function TransactionFilters({
   const { getCategoryLabel } = useCategoryI18n()
 
   const allMonths = useMonthsI18n()
-  const allYears = getUniqueYears(transactions!)
+  const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
     searchTerm !== "" ||
@@ -129,7 +128,7 @@ export function TransactionFilters({
     }
   }
 
-  const filteredTransactions = filterTransactions(transactions!, {
+  const filteredTransactions = filterTransactions(transactions, {
     searchTerm,
     selectedDate,
     dateRange,

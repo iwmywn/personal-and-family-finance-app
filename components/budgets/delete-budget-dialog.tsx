@@ -16,7 +16,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
-import { useBudgets } from "@/lib/swr"
 
 interface DeleteBudgetDialogProps {
   budgetId: string
@@ -31,7 +30,6 @@ export function DeleteBudgetDialog({
 }: DeleteBudgetDialogProps) {
   const tBudgetsFE = useTranslations("budgets.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { budgets, mutate } = useBudgets()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -44,9 +42,6 @@ export function DeleteBudgetDialog({
     if (error || !success) {
       toast.error(error)
     } else {
-      mutate({
-        budgets: budgets!.filter((b) => b._id !== budgetId),
-      })
       toast.success(success)
     }
     setIsLoading(false)

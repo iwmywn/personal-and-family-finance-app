@@ -1,5 +1,7 @@
 "use server"
 
+import { cacheTag, updateTag } from "next/cache"
+import type { TypedTranslationFunction } from "@/i18n/types"
 import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
@@ -46,6 +48,7 @@ export async function createTransaction(values: TransactionFormValues) {
     if (!result.acknowledged)
       return { error: tTransactionsBE("transactionAddFailed") }
 
+    updateTag("transactions")
     return { success: tTransactionsBE("transactionAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
@@ -112,6 +115,7 @@ export async function updateTransaction(
       }
     )
 
+    updateTag("transactions")
     return { success: tTransactionsBE("transactionUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating transaction:", error)
@@ -156,6 +160,7 @@ export async function deleteTransaction(transactionId: string) {
       _id: new ObjectId(transactionId),
     })
 
+    updateTag("transactions")
     return { success: tTransactionsBE("transactionDeleted") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
@@ -164,11 +169,14 @@ export async function deleteTransaction(transactionId: string) {
   }
 }
 
-export async function getTransactions() {
+export async function getTransactions(
+  userId: string,
+  tCommonBE: TypedTranslationFunction<"common.be">,
+  tTransactionsBE: TypedTranslationFunction<"transactions.be">
+) {
+  "use cache"
+  cacheTag("transactions")
   try {
-    const tCommonBE = await getTranslations("common.be")
-    const { userId } = await session.user.get()
-
     if (!userId) {
       return {
         error: tCommonBE("accessDenied"),
@@ -191,7 +199,6 @@ export async function getTransactions() {
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)
-    const tTransactionsBE = await getTranslations("transactions.be")
     return { error: tTransactionsBE("transactionFetchFailed") }
   }
 }

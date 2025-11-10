@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/tooltip"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useAppData } from "@/lib/app-data-context"
 import type { Transaction } from "@/lib/definitions"
-import { useCustomCategories } from "@/lib/swr"
 
 interface ExportButtonProps {
   filteredTransactions: Transaction[]
@@ -25,7 +25,7 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
   const tCommonFE = useTranslations("common.fe")
   const formatDate = useFormatDate()
   const { getCategoryLabel } = useCategoryI18n()
-  const { customCategories } = useCustomCategories()
+  const { customCategories } = useAppData()
 
   function formatTransactionsToCSV(
     filteredTransactions: Transaction[]

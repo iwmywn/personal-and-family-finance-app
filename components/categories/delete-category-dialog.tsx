@@ -16,7 +16,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
-import { useCustomCategories } from "@/lib/swr"
 
 interface DeleteCategoryDialogProps {
   categoryId: string
@@ -33,7 +32,6 @@ export function DeleteCategoryDialog({
 }: DeleteCategoryDialogProps) {
   const tCategoriesFE = useTranslations("categories.fe")
   const tCommonFE = useTranslations("common.fe")
-  const { customCategories, mutate } = useCustomCategories()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -46,9 +44,6 @@ export function DeleteCategoryDialog({
     if (error || !success) {
       toast.error(error)
     } else {
-      mutate({
-        customCategories: customCategories!.filter((c) => c._id !== categoryId),
-      })
       toast.success(success)
     }
     setIsLoading(false)

@@ -38,8 +38,8 @@ import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { useAppData } from "@/lib/app-data-context"
 import { type Transaction } from "@/lib/definitions"
-import { useCustomCategories, useTransactions } from "@/lib/swr"
 import { formatCurrency } from "@/lib/utils"
 
 interface TransactionsTableProps {
@@ -51,9 +51,8 @@ export function TransactionsTable({
   filteredTransactions,
   offsetHeight,
 }: TransactionsTableProps) {
-  const { transactions } = useTransactions()
+  const { transactions, customCategories } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  const { customCategories } = useCustomCategories()
   const tTransactionsFE = useTranslations("transactions.fe")
   const tCommonFE = useTranslations("common.fe")
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
