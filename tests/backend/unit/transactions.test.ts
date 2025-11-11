@@ -21,6 +21,7 @@ import {
   updateTransaction,
 } from "@/actions/transactions"
 import { getTransactionsCollection } from "@/lib/collections"
+import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Transactions", () => {
   describe("createTransaction", () => {
@@ -74,6 +75,9 @@ describe("Transactions", () => {
       expect(addedTransaction?.categoryKey).toBe("business_freelance")
       expect(addedTransaction?.amount).toBe(2500000)
       expect(addedTransaction?.description).toBe("Dự án thiết kế web")
+      expect(addedTransaction?.date.toISOString()).toBe(
+        "2024-02-05T00:00:00.000Z"
+      )
       expect(result.success).toBe(tTransactionsBE("transactionAdded"))
       expect(result.error).toBeUndefined()
     })
@@ -158,7 +162,7 @@ describe("Transactions", () => {
         categoryKey: "personal_care",
         amount: 100000,
         description: "Updated description",
-        date: new Date("2024-01-16"),
+        date: normalizeToUTCDate(new Date("2024-02-04")),
       })
       const transactionsCollection = await getTransactionsCollection()
       const updatedTransaction = await transactionsCollection.findOne({
@@ -172,6 +176,9 @@ describe("Transactions", () => {
       expect(updatedTransaction?.categoryKey).toBe("personal_care")
       expect(updatedTransaction?.amount).toBe(100000)
       expect(updatedTransaction?.description).toBe("Updated description")
+      expect(updatedTransaction?.date.toISOString()).toBe(
+        "2024-02-04T00:00:00.000Z"
+      )
       expect(unrelatedTransaction?.type).toBe("expense")
       expect(unrelatedTransaction?.categoryKey).toBe("food_beverage")
       expect(unrelatedTransaction?.amount).toBe(50000)

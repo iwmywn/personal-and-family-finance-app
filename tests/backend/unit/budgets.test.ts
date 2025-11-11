@@ -21,6 +21,7 @@ import {
   updateBudget,
 } from "@/actions/budgets"
 import { getBudgetsCollection } from "@/lib/collections"
+import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Budgets", () => {
   describe("createBudget", () => {
@@ -71,8 +72,12 @@ describe("Budgets", () => {
 
       expect(addedBudget?.categoryKey).toBe("food_beverage")
       expect(addedBudget?.amount).toBe(1000000)
-      expect(addedBudget?.startDate).toEqual(new Date("2024-01-01"))
-      expect(addedBudget?.endDate).toEqual(new Date("2024-01-31"))
+      expect(addedBudget?.startDate.toISOString()).toBe(
+        "2024-01-01T00:00:00.000Z"
+      )
+      expect(addedBudget?.endDate.toISOString()).toBe(
+        "2024-01-31T00:00:00.000Z"
+      )
       expect(result.success).toBe(tBudgetsBE("budgetAdded"))
       expect(result.error).toBeUndefined()
     })
@@ -149,8 +154,8 @@ describe("Budgets", () => {
       const result = await updateBudget(mockBudget._id.toString(), {
         categoryKey: "transportation",
         amount: 2000000,
-        startDate: new Date("2024-02-01"),
-        endDate: new Date("2024-02-29"),
+        startDate: normalizeToUTCDate(new Date("2024-02-01")),
+        endDate: normalizeToUTCDate(new Date("2024-02-29")),
       })
       const budgetsCollection = await getBudgetsCollection()
       const updatedBudget = await budgetsCollection.findOne({
@@ -162,12 +167,20 @@ describe("Budgets", () => {
 
       expect(updatedBudget?.categoryKey).toBe("transportation")
       expect(updatedBudget?.amount).toBe(2000000)
-      expect(updatedBudget?.startDate).toEqual(new Date("2024-02-01"))
-      expect(updatedBudget?.endDate).toEqual(new Date("2024-02-29"))
+      expect(updatedBudget?.startDate.toISOString()).toBe(
+        "2024-02-01T00:00:00.000Z"
+      )
+      expect(updatedBudget?.endDate.toISOString()).toBe(
+        "2024-02-29T00:00:00.000Z"
+      )
       expect(unrelatedBudget?.categoryKey).toBe("food_beverage")
       expect(unrelatedBudget?.amount).toBe(1000000)
-      expect(unrelatedBudget?.startDate).toEqual(new Date("2024-01-01"))
-      expect(unrelatedBudget?.endDate).toEqual(new Date("2024-01-31"))
+      expect(unrelatedBudget?.startDate.toISOString()).toBe(
+        "2024-01-01T00:00:00.000Z"
+      )
+      expect(unrelatedBudget?.endDate.toISOString()).toBe(
+        "2024-01-31T00:00:00.000Z"
+      )
       expect(result.success).toBe(tBudgetsBE("budgetUpdated"))
       expect(result.error).toBeUndefined()
     })

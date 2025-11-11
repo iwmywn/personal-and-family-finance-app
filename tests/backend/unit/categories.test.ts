@@ -86,8 +86,6 @@ describe("Categories", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(tCategoriesBE("categoryKeyError"))
-
-      vi.doUnmock("nanoid")
     })
 
     it("should return error when database insertion fails", async () => {
@@ -113,6 +111,7 @@ describe("Categories", () => {
         userId: mockUser._id,
       })
 
+      expect(addedCategory?.categoryKey).toMatch(/^custom_/)
       expect(addedCategory?.type).toBe("income")
       expect(addedCategory?.label).toBe("Salary")
       expect(addedCategory?.description).toBe("Monthly job income")
@@ -265,6 +264,7 @@ describe("Categories", () => {
           }),
         ])
 
+      expect(updatedCategory?.categoryKey).toBe("custom_expense_abcdef12")
       expect(updatedCategory?.type).toBe("expense")
       expect(updatedCategory?.label).toBe("Updated Label")
       expect(updatedCategory?.description).toBe("Updated description")

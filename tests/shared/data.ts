@@ -9,6 +9,7 @@ import type {
   DBUser,
   Transaction,
 } from "@/lib/definitions"
+import { normalizeToUTCDate } from "@/lib/utils"
 
 export const mockUser: DBUser = {
   _id: new ObjectId("68f712e4cda4897217a05a1c"),
@@ -52,6 +53,7 @@ export const mockValidSignInValues = {
 }
 
 export const mockValidCategoryValues = {
+  // categoryKey: auto generated
   type: "income" as "income" | "expense",
   label: "Salary",
   description: "Monthly job income",
@@ -62,7 +64,7 @@ export const mockValidTransactionValues = {
   categoryKey: "business_freelance",
   amount: 2500000,
   description: "Dự án thiết kế web",
-  date: new Date("2024-02-05"),
+  date: normalizeToUTCDate(new Date("2024-02-05")),
 }
 
 export const mockValidPasswordValues = {
@@ -74,8 +76,8 @@ export const mockValidPasswordValues = {
 export const mockValidBudgetValues = {
   categoryKey: "food_beverage",
   amount: 1000000,
-  startDate: new Date("2024-01-01"),
-  endDate: new Date("2024-01-31"),
+  startDate: normalizeToUTCDate(new Date("2024-01-01")),
+  endDate: normalizeToUTCDate(new Date("2024-01-31")),
 }
 
 export const mockTransactions: Transaction[] = [
