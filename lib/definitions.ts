@@ -1,6 +1,6 @@
-import type { AppLocale } from "@/i18n/config"
 import type { ObjectId } from "mongodb"
 
+import type { AppLocale } from "@/i18n/config"
 import { type CategoryKeyType, type TransactionType } from "@/lib/categories"
 
 type BaseUser<T> = {

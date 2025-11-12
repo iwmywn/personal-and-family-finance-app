@@ -1,4 +1,3 @@
-import type { NamespacedKey } from "@/i18n/types"
 import {
   ChartColumnIncreasing,
   FolderOpen,
@@ -8,6 +7,8 @@ import {
   Wallet,
   type LucideIcon,
 } from "lucide-react"
+
+import type { NamespacedKey } from "@/i18n/types"
 
 type NavType = {
   key: NamespacedKey<"navigation">

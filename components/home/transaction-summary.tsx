@@ -4,7 +4,7 @@ import { ArrowDownIcon, ArrowUpIcon, TrendingUpIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useAppData } from "@/lib/app-data-context"
+import { useAppData } from "@/context/app-data-context"
 import {
   calculateSummaryStats,
   getCurrentMonthTransactions,

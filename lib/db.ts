@@ -1,4 +1,3 @@
-import { env } from "@/env/server"
 import {
   MongoClient,
   type Collection,
@@ -6,6 +5,8 @@ import {
   type MongoClientOptions,
   type OptionalId,
 } from "mongodb"
+
+import { env } from "@/env/server"
 
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined

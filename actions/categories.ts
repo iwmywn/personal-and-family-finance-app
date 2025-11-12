@@ -1,12 +1,12 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import type { TypedTranslationFunction } from "@/i18n/types"
 import { createCategorySchema, type CategoryFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
 import { nanoid } from "nanoid"
 import { getTranslations } from "next-intl/server"
 
+import type { TypedTranslationFunction } from "@/i18n/types"
 import {
   getBudgetsCollection,
   getCategoriesCollection,

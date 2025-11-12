@@ -23,9 +23,9 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
+import { useAppData } from "@/context/app-data-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
-import { useAppData } from "@/lib/app-data-context"
 import { filterTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 

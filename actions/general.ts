@@ -1,11 +1,11 @@
 "use server"
 
 import { updateTag } from "next/cache"
-import { LOCALES, type AppLocale } from "@/i18n/config"
-import { setUserLocale } from "@/i18n/locale"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
+import { LOCALES, type AppLocale } from "@/i18n/config"
+import { setUserLocale } from "@/i18n/locale"
 import { getUsersCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 

@@ -35,10 +35,10 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
+import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { useAppData } from "@/lib/app-data-context"
 import { type Transaction } from "@/lib/definitions"
 import { formatCurrency } from "@/lib/utils"
 

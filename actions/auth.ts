@@ -1,13 +1,13 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import { setUserLocale } from "@/i18n/locale"
-import type { TypedTranslationFunction } from "@/i18n/types"
 import { createSignInSchema, type SignInFormValues } from "@/schemas"
 import bcrypt from "bcryptjs"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
+import { setUserLocale } from "@/i18n/locale"
+import type { TypedTranslationFunction } from "@/i18n/types"
 import { getUsersCollection } from "@/lib/collections"
 import { type User } from "@/lib/definitions"
 import { verifyRecaptchaToken } from "@/lib/recaptcha"

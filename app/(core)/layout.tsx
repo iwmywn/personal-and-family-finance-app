@@ -20,7 +20,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { Spinner } from "@/components/ui/spinner"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
-import { AppDataProvider } from "@/lib/app-data-context"
+import { AppDataProvider } from "@/context/app-data-context"
 import { session } from "@/lib/session"
 
 export default async function DashboardLayout({

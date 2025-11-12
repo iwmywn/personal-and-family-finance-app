@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/table"
 import { CategoryDialog } from "@/components/categories/category-dialog"
 import { DeleteCategoryDialog } from "@/components/categories/delete-category-dialog"
-import { useAppData } from "@/lib/app-data-context"
+import { useAppData } from "@/context/app-data-context"
 import type { Category } from "@/lib/definitions"
 
 interface CategoriesTableProps {

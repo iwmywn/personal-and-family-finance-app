@@ -1,5 +1,3 @@
-import { setUserLocale } from "@/i18n/locale"
-
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
@@ -8,6 +6,7 @@ import {
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser } from "@/tests/shared/data"
 import { updateLocale } from "@/actions/general"
+import { setUserLocale } from "@/i18n/locale"
 import { getUsersCollection } from "@/lib/collections"
 
 describe("General", () => {

@@ -1,6 +1,5 @@
-import type { AppLocale } from "@/i18n/config"
-
 import { mockTransactions } from "@/tests/shared/data"
+import type { AppLocale } from "@/i18n/config"
 import {
   formatCurrency,
   formatDate,

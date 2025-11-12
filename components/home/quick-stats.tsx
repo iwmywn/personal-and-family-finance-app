@@ -9,10 +9,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { useAppData } from "@/lib/app-data-context"
 import { calculateQuickStats } from "@/lib/statistics"
 import { formatCurrency } from "@/lib/utils"
 

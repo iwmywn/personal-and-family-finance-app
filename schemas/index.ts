@@ -1,6 +1,6 @@
-import type { TypedTranslationFunction } from "@/i18n/types"
 import { z } from "zod"
 
+import type { TypedTranslationFunction } from "@/i18n/types"
 import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
 
 export const createSignInSchema = (

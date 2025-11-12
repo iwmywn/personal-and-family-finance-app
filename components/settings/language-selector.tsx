@@ -2,7 +2,6 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -14,7 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useAppData } from "@/lib/app-data-context"
+import { useAppData } from "@/context/app-data-context"
+import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 
 export function LanguageSelector() {
   const tSettingsFE = useTranslations("settings.fe")

@@ -1,5 +1,3 @@
-import { setUserLocale } from "@/i18n/locale"
-
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
@@ -15,6 +13,7 @@ import {
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser, mockValidSignInValues } from "@/tests/shared/data"
 import { getUser, signIn, signOut } from "@/actions/auth"
+import { setUserLocale } from "@/i18n/locale"
 import { session } from "@/lib/session"
 
 describe("Auth", () => {

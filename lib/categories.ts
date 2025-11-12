@@ -1,5 +1,4 @@
 import type { TypedTranslationFunction } from "@/i18n/types"
-
 import type { Category } from "@/lib/definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const

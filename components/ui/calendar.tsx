@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { LOCALE_CONFIG } from "@/i18n/config"
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -15,6 +14,7 @@ import {
 } from "react-day-picker"
 
 import { Button, buttonVariants } from "@/components/ui/button"
+import { LOCALE_CONFIG } from "@/i18n/config"
 import { cn } from "@/lib/utils"
 
 function Calendar({

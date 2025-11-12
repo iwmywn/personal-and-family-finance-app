@@ -21,8 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
+import { useAppData } from "@/context/app-data-context"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
-import { useAppData } from "@/lib/app-data-context"
 import { filterCustomCategories } from "@/lib/filters"
 
 export function CategoryFilters() {

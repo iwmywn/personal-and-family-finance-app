@@ -2,9 +2,9 @@
 
 import { cache } from "react"
 import { cookies } from "next/headers"
-import { DEFAULT_LOCALE, type AppLocale } from "@/i18n/config"
 import { ObjectId } from "mongodb"
 
+import { DEFAULT_LOCALE, type AppLocale } from "@/i18n/config"
 import { getUsersCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 

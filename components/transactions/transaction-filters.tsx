@@ -29,11 +29,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
+import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
-import { useAppData } from "@/lib/app-data-context"
 import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { filterTransactions } from "@/lib/filters"

@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { env } from "@/env/client"
 import { Slash } from "lucide-react"
 import { useTranslations } from "next-intl"
 
@@ -16,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { env } from "@/env/client"
 import { mainNav, secondaryNav } from "@/lib/nav"
 
 const ColorDialog =

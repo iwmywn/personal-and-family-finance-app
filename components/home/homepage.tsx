@@ -8,8 +8,8 @@ import { QuickStats } from "@/components/home/quick-stats"
 import { RecentTransactions } from "@/components/home/recent-transactions"
 import { TransactionSummary } from "@/components/home/transaction-summary"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
+import { useAppData } from "@/context/app-data-context"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
-import { useAppData } from "@/lib/app-data-context"
 
 export default function HomePage() {
   const { user } = useAppData()

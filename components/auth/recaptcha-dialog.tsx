@@ -1,13 +1,13 @@
 "use client"
 
 import { type Dispatch, type SetStateAction } from "react"
-import { env } from "@/env/client"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { useLocale, useTranslations } from "next-intl"
 import ReCAPTCHA from "react-google-recaptcha"
 import { toast } from "sonner"
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { env } from "@/env/client"
 
 interface ReCaptchaPopupProps {
   open: boolean
