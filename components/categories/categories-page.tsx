@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { CategoryDialog } from "@/components/categories/category-dialog"
 import { CategoryFilters } from "@/components/categories/category-filters"
-import { BasePage } from "@/components/layout/base-page"
 
 export default function CategoriesPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -16,19 +15,15 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <BasePage>
-        <div className="header">
-          <div>
-            <div className="title">{tNavigation("categories")}</div>
-            <div className="description">{tCategoriesFE("description")}</div>
-          </div>
-          <Button onClick={() => setIsEditOpen(true)}>
-            {tCommonFE("add")}
-          </Button>
+      <div className="header">
+        <div>
+          <div className="title">{tNavigation("categories")}</div>
+          <div className="description">{tCategoriesFE("description")}</div>
         </div>
+        <Button onClick={() => setIsEditOpen(true)}>{tCommonFE("add")}</Button>
+      </div>
 
-        <CategoryFilters />
-      </BasePage>
+      <CategoryFilters />
 
       <CategoryDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

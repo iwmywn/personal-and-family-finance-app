@@ -64,12 +64,12 @@ export default function RootLayout({
         </div>
       }
     >
-      <Layout>{children}</Layout>
+      <RootProviders>{children}</RootProviders>
     </Suspense>
   )
 }
 
-async function Layout({
+async function RootProviders({
   children,
 }: Readonly<{
   children: React.ReactNode

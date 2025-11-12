@@ -78,24 +78,6 @@
       "recaptchaFailed": "Captcha verification failed!"
     }
   },
-  "basePage": {
-    "userDataError": {
-      "title": "CANNOT FETCH USER DATA",
-      "description": "An error occurred while loading user information! Please try again later."
-    },
-    "transactionsDataError": {
-      "title": "CANNOT FETCH TRANSACTIONS DATA",
-      "description": "An error occurred while loading transactions! Please try again later."
-    },
-    "categoriesDataError": {
-      "title": "CANNOT FETCH CATEGORIES DATA",
-      "description": "An error occurred while loading categories! Please try again later."
-    },
-    "budgetsDataError": {
-      "title": "CANNOT FETCH BUDGETS DATA",
-      "description": "An error occurred while loading budgets! Please try again later."
-    }
-  },
   "home": {
     "fe": {
       "description": "Manage your personal finances.",
@@ -365,6 +347,12 @@
   "appError": {
     "title": "An error occurred!",
     "tryAgain": "Try again"
+  },
+  "dataError": {
+    "userDataError": "CANNOT FETCH USER DATA",
+    "transactionsDataError": "CANNOT FETCH TRANSACTIONS DATA",
+    "categoriesDataError": "CANNOT FETCH CATEGORIES DATA",
+    "budgetsDataError": "CANNOT FETCH BUDGETS DATA"
   },
   "notFound": {
     "title": "PAGE NOT FOUND",

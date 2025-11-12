@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useTranslations } from "next-intl"
 
-import { BasePage } from "@/components/layout/base-page"
 import { StatisticsFilters } from "@/components/statistics/statistics-filters"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 
@@ -14,16 +13,14 @@ export default function StatisticsPage() {
 
   return (
     <>
-      <BasePage>
-        <div className="header">
-          <div>
-            <div className="title">{tNavigation("statistics")}</div>
-            <div className="description">{tStatisticsFE("description")}</div>
-          </div>
+      <div className="header">
+        <div>
+          <div className="title">{tNavigation("statistics")}</div>
+          <div className="description">{tStatisticsFE("description")}</div>
         </div>
+      </div>
 
-        <StatisticsFilters />
-      </BasePage>
+      <StatisticsFilters />
 
       <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

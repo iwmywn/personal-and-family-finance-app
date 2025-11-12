@@ -78,24 +78,6 @@
       "recaptchaFailed": "Xác thực Captcha thất bại!"
     }
   },
-  "basePage": {
-    "userDataError": {
-      "title": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG",
-      "description": "Đã xảy ra lỗi khi tải thông tin người dùng! Vui lòng thử lại sau."
-    },
-    "transactionsDataError": {
-      "title": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
-      "description": "Đã xảy ra lỗi khi tải giao dịch! Vui lòng thử lại sau."
-    },
-    "categoriesDataError": {
-      "title": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
-      "description": "Đã xảy ra lỗi khi tải danh mục! Vui lòng thử lại sau."
-    },
-    "budgetsDataError": {
-      "title": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH",
-      "description": "Đã xảy ra lỗi khi tải ngân sách! Vui lòng thử lại sau."
-    }
-  },
   "home": {
     "fe": {
       "description": "Quản lý tài chính cá nhân của bạn.",
@@ -365,6 +347,12 @@
   "appError": {
     "title": "Đã xảy ra lỗi!",
     "tryAgain": "Thử lại"
+  },
+  "dataError": {
+    "userDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG",
+    "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
+    "categoriesDataError": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
+    "budgetsDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH"
   },
   "notFound": {
     "title": "KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM",

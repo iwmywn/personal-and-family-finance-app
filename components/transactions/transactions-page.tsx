@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
-import { BasePage } from "@/components/layout/base-page"
 import { ExportButton } from "@/components/transactions/export-button"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { TransactionFilters } from "@/components/transactions/transaction-filters"
@@ -21,24 +20,22 @@ export default function TransactionsPage() {
 
   return (
     <>
-      <BasePage>
-        <div className="header">
-          <div>
-            <div className="title">{tNavigation("transactions")}</div>
-            <div className="description">{tTransactionsFE("description")}</div>
-          </div>
-          <div className="flex gap-2">
-            <ExportButton filteredTransactions={filteredTransactions} />
-            <Button onClick={() => setIsEditOpen(true)}>
-              {tCommonFE("add")}
-            </Button>
-          </div>
+      <div className="header">
+        <div>
+          <div className="title">{tNavigation("transactions")}</div>
+          <div className="description">{tTransactionsFE("description")}</div>
         </div>
+        <div className="flex gap-2">
+          <ExportButton filteredTransactions={filteredTransactions} />
+          <Button onClick={() => setIsEditOpen(true)}>
+            {tCommonFE("add")}
+          </Button>
+        </div>
+      </div>
 
-        <TransactionFilters
-          onFilteredTransactionsChange={setFilteredTransactions}
-        />
-      </BasePage>
+      <TransactionFilters
+        onFilteredTransactionsChange={setFilteredTransactions}
+      />
 
       <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

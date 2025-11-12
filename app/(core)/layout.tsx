@@ -1,11 +1,21 @@
 import { Suspense } from "react"
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
+import { Ghost } from "lucide-react"
+import type { Messages } from "next-intl"
 import { getTranslations } from "next-intl/server"
 
 import { getUser } from "@/actions/auth"
 import { getBudgets } from "@/actions/budgets"
 import { getCustomCategories } from "@/actions/categories"
 import { getTransactions } from "@/actions/transactions"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { Spinner } from "@/components/ui/spinner"
 import { AppSidebar } from "@/components/layout/app-sidebar"
@@ -32,7 +42,7 @@ export default async function DashboardLayout({
           <Header />
           <section
             id="page-content"
-            className="h-full"
+            className="h-full space-y-4"
             style={{ maxHeight: "calc(100vh - 4.375rem)" }}
           >
             <Suspense
@@ -42,7 +52,7 @@ export default async function DashboardLayout({
                 </div>
               }
             >
-              <Layout>{children}</Layout>
+              <DashboardProvider>{children}</DashboardProvider>
             </Suspense>
           </section>
         </div>
@@ -51,21 +61,32 @@ export default async function DashboardLayout({
   )
 }
 
-async function Layout({
+async function DashboardProvider({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   const { userId } = await session.user.get()
 
-  const [tCommonBE, tAuthBE, tTransactionsBE, tCategoriesBE, tBudgetsBE] =
-    await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("auth.be"),
-      getTranslations("transactions.be"),
-      getTranslations("categories.be"),
-      getTranslations("budgets.be"),
-    ])
+  if (!userId) {
+    redirect("/signin")
+  }
+
+  const [
+    tDataError,
+    tCommonBE,
+    tAuthBE,
+    tTransactionsBE,
+    tCategoriesBE,
+    tBudgetsBE,
+  ] = await Promise.all([
+    getTranslations("dataError"),
+    getTranslations("common.be"),
+    getTranslations("auth.be"),
+    getTranslations("transactions.be"),
+    getTranslations("categories.be"),
+    getTranslations("budgets.be"),
+  ])
 
   const [userResult, transactionsResult, categoriesResult, budgetsResult] =
     await Promise.all([
@@ -75,10 +96,32 @@ async function Layout({
       getBudgets(userId, tCommonBE, tBudgetsBE),
     ])
 
-  const user = userResult.user || null
-  const transactions = transactionsResult.transactions || []
-  const customCategories = categoriesResult.customCategories || []
-  const budgets = budgetsResult.budgets || []
+  const renderEmptyState = (
+    title: keyof Messages["dataError"],
+    description: string
+  ) => (
+    <Empty className="h-full border">
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <Ghost />
+        </EmptyMedia>
+        <EmptyTitle>{tDataError(title)}</EmptyTitle>
+        <EmptyDescription>{description}</EmptyDescription>
+      </EmptyHeader>
+    </Empty>
+  )
+
+  const user = userResult.user
+  const transactions = transactionsResult.transactions
+  const customCategories = categoriesResult.customCategories
+  const budgets = budgetsResult.budgets
+
+  if (!user) return renderEmptyState("userDataError", userResult.error)
+  if (!transactions)
+    return renderEmptyState("transactionsDataError", transactionsResult.error)
+  if (!customCategories)
+    return renderEmptyState("categoriesDataError", categoriesResult.error)
+  if (!budgets) return renderEmptyState("budgetsDataError", budgetsResult.error)
 
   return (
     <AppDataProvider
