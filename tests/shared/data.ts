@@ -139,7 +139,7 @@ export const mockTransactions: Transaction[] = [
     _id: "7",
     userId: "68f712e4cda4897217a05a1c",
     type: "expense" as const,
-    amount: 400000, // 80% of 500000 - orange (75-100%) mockBudgets[1]
+    amount: 400000, // 80% of 500000 - yellow (75-100%) mockBudgets[1]
     description: "Transport expense",
     categoryKey: "transportation",
     date: new Date("2024-03-20"),

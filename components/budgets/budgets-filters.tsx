@@ -46,7 +46,7 @@ export function BudgetsFilters() {
   const [filterYear, setFilterYear] = useState<string>("all")
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const [filterProgress, setFilterProgress] = useState<
-    "all" | "gray" | "green" | "orange" | "red"
+    "all" | "gray" | "green" | "yellow" | "red"
   >("all")
   const [filterStatus, setFilterStatus] = useState<
     "all" | "expired" | "active" | "upcoming"
@@ -277,7 +277,7 @@ export function BudgetsFilters() {
             <Select
               value={filterProgress}
               onValueChange={(
-                value: "all" | "gray" | "green" | "orange" | "red"
+                value: "all" | "gray" | "green" | "yellow" | "red"
               ) => setFilterProgress(value)}
             >
               <SelectTrigger
@@ -297,8 +297,8 @@ export function BudgetsFilters() {
                   <SelectItem value="green">
                     {tBudgetsFE("progressGreen")}
                   </SelectItem>
-                  <SelectItem value="orange">
-                    {tBudgetsFE("progressOrange")}
+                  <SelectItem value="yellow">
+                    {tBudgetsFE("progressYellow")}
                   </SelectItem>
                   <SelectItem value="red">
                     {tBudgetsFE("progressRed")}

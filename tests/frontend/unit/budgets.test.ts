@@ -119,7 +119,7 @@ describe("Budgets", () => {
       expect(result.progressColorClass).toBe(progressColorClass.green)
     })
 
-    it("should return orange progress color when percentage >= 75 and < 100", () => {
+    it("should return yellow progress color when percentage >= 75 and < 100", () => {
       const budget = {
         ...mockBudgets[0],
         amount: 1000000,

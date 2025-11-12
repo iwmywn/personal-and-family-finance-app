@@ -212,7 +212,7 @@
       "allProgress": "All Progress",
       "progressGray": "No Transactions",
       "progressGreen": "Good (< 75%)",
-      "progressOrange": "Warning (75-100%)",
+      "progressYellow": "Warning (75-100%)",
       "progressRed": "Exceeded (≥ 100%)"
     },
     "be": {

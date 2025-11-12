@@ -212,7 +212,7 @@
       "allProgress": "Tất cả tiến độ",
       "progressGray": "Chưa có giao dịch",
       "progressGreen": "Tốt (< 75%)",
-      "progressOrange": "Cảnh báo (75-100%)",
+      "progressYellow": "Cảnh báo (75-100%)",
       "progressRed": "Vượt quá (≥ 100%)"
     },
     "be": {

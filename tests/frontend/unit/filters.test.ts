@@ -481,7 +481,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets with orange progress (75-100%)
+      // Should return budgets with yellow progress (75-100%)
       expect(result.length).toBeGreaterThan(0)
       result.forEach((budget) => {
         const budgetTransactions = mockTransactions.filter(
