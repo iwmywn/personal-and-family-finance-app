@@ -8,10 +8,10 @@ interface BudgetWithStats extends Budget {
 }
 
 export const progressColorClass = {
-  gray: "[&>[data-slot=progress-indicator]]:bg-gray-400",
-  green: "[&>[data-slot=progress-indicator]]:bg-green-500",
-  orange: "[&>[data-slot=progress-indicator]]:bg-orange-500",
-  red: "[&>[data-slot=progress-indicator]]:bg-red-500",
+  gray: "[&>[data-slot=progress-indicator]]:bg-gray-600",
+  green: "[&>[data-slot=progress-indicator]]:bg-green-600",
+  yellow: "[&>[data-slot=progress-indicator]]:bg-yellow-600",
+  red: "[&>[data-slot=progress-indicator]]:bg-red-600",
 } as const
 
 export function calculateBudgetStats(
@@ -42,7 +42,7 @@ export function calculateBudgetStats(
     if (percentage < 75) {
       colorClass = progressColorClass.green
     } else if (percentage < 100) {
-      colorClass = progressColorClass.orange
+      colorClass = progressColorClass.yellow
     } else {
       colorClass = progressColorClass.red
     }

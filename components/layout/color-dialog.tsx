@@ -1,5 +1,5 @@
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
-import { Palette } from "lucide-react"
+import { PaletteIcon } from "lucide-react"
 
 import {
   Dialog,
@@ -46,7 +46,7 @@ export function ColorDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Palette />
+        <PaletteIcon />
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <VisuallyHidden>

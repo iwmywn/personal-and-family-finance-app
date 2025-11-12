@@ -1,10 +1,10 @@
 import {
-  ChartColumnIncreasing,
-  FolderOpen,
-  Home,
-  PiggyBank,
-  Settings,
-  Wallet,
+  ChartColumnIncreasingIcon,
+  FolderOpenIcon,
+  HomeIcon,
+  PiggyBankIcon,
+  SettingsIcon,
+  WalletIcon,
   type LucideIcon,
 } from "lucide-react"
 
@@ -20,27 +20,27 @@ export const mainNav: NavType[] = [
   {
     key: "home",
     url: "/home",
-    icon: Home,
+    icon: HomeIcon,
   },
   {
     key: "statistics",
     url: "/statistics",
-    icon: ChartColumnIncreasing,
+    icon: ChartColumnIncreasingIcon,
   },
   {
     key: "transactions",
     url: "/transactions",
-    icon: Wallet,
+    icon: WalletIcon,
   },
   {
     key: "categories",
     url: "/categories",
-    icon: FolderOpen,
+    icon: FolderOpenIcon,
   },
   {
     key: "budgets",
     url: "/budgets",
-    icon: PiggyBank,
+    icon: PiggyBankIcon,
   },
 ]
 
@@ -48,6 +48,6 @@ export const secondaryNav: NavType[] = [
   {
     key: "settings",
     url: "/settings",
-    icon: Settings,
+    icon: SettingsIcon,
   },
 ]

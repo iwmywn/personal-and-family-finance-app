@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreVertical, Tag } from "lucide-react"
+import { MoreVerticalIcon, TagIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -63,7 +63,7 @@ export function CategoriesTable({
             >
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <Tag />
+                  <TagIcon />
                 </EmptyMedia>
                 <EmptyTitle>{tCategoriesFE("noCategoriesFound")}</EmptyTitle>
                 <EmptyDescription>
@@ -119,7 +119,7 @@ export function CategoriesTable({
                               variant="ghost"
                               size="icon"
                             >
-                              <MoreVertical />
+                              <MoreVerticalIcon />
                               <span className="sr-only">
                                 {tCategoriesFE("openMenu")}
                               </span>

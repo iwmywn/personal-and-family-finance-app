@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, X } from "lucide-react"
+import { SearchIcon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
@@ -60,7 +60,7 @@ export function CategoryFilters() {
           >
             <InputGroup className={`${searchTerm !== "" && "border-primary"}`}>
               <InputGroupAddon>
-                <Search />
+                <SearchIcon />
               </InputGroupAddon>
               <InputGroupInput
                 placeholder={tCategoriesFE("searchPlaceholder")}
@@ -74,7 +74,7 @@ export function CategoryFilters() {
                     size="icon-xs"
                     onClick={() => setSearchTerm("")}
                   >
-                    <X />
+                    <XIcon />
                   </InputGroupButton>
                 </InputGroupAddon>
               )}

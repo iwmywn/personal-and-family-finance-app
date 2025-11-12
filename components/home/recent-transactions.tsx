@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment } from "react"
-import { Receipt } from "lucide-react"
+import { ReceiptIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -54,7 +54,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
             <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <Receipt />
+                  <ReceiptIcon />
                 </EmptyMedia>
                 <EmptyTitle className="text-base">
                   {tCommonFE("noTransactionsFound")}

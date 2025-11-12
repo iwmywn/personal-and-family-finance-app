@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreVertical, PiggyBank } from "lucide-react"
+import { MoreVerticalIcon, PiggyBankIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -80,7 +80,7 @@ export function BudgetsTable({
             >
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <PiggyBank />
+                  <PiggyBankIcon />
                 </EmptyMedia>
                 <EmptyTitle>{tBudgetsFE("noBudgetsFound")}</EmptyTitle>
                 <EmptyDescription>
@@ -179,7 +179,7 @@ export function BudgetsTable({
                               variant="ghost"
                               size="icon"
                             >
-                              <MoreVertical />
+                              <MoreVerticalIcon />
                               <span className="sr-only">
                                 {tBudgetsFE("openMenu")}
                               </span>

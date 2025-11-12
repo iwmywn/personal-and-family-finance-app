@@ -207,8 +207,8 @@ export function filterBudgets(
         if (filterProgress === "green") {
           return budget.progressColorClass === progressColorClass.green
         }
-        if (filterProgress === "orange") {
-          return budget.progressColorClass === progressColorClass.orange
+        if (filterProgress === "yellow") {
+          return budget.progressColorClass === progressColorClass.yellow
         }
         if (filterProgress === "red") {
           return budget.progressColorClass === progressColorClass.red

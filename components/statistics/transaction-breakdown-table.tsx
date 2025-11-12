@@ -1,6 +1,6 @@
 "use client"
 
-import { Receipt } from "lucide-react"
+import { ReceiptIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -52,7 +52,7 @@ export function TransactionBreakdownTable({
           <Empty className="border" style={{ minHeight: "300px" }}>
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <Receipt />
+                <ReceiptIcon />
               </EmptyMedia>
               <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
               <EmptyDescription>

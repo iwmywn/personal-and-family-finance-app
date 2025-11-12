@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ChevronDownIcon, Search, X } from "lucide-react"
+import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
@@ -156,7 +156,7 @@ export function TransactionFilters({
               className={`col-span-full ${searchTerm !== "" && "border-primary"}`}
             >
               <InputGroupAddon>
-                <Search />
+                <SearchIcon />
               </InputGroupAddon>
               <InputGroupInput
                 placeholder={tTransactionsFE("searchPlaceholder")}
@@ -170,7 +170,7 @@ export function TransactionFilters({
                     size="icon-xs"
                     onClick={() => setSearchTerm("")}
                   >
-                    <X />
+                    <XIcon />
                   </InputGroupButton>
                 </InputGroupAddon>
               )}

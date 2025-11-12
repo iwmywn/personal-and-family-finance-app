@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { Ghost } from "lucide-react"
+import { GhostIcon } from "lucide-react"
 import type { Messages } from "next-intl"
 import { getTranslations } from "next-intl/server"
 
@@ -103,7 +103,7 @@ async function DashboardProvider({
     <Empty className="h-full border">
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <Ghost />
+          <GhostIcon />
         </EmptyMedia>
         <EmptyTitle>{tDataError(title)}</EmptyTitle>
         <EmptyDescription>{description}</EmptyDescription>

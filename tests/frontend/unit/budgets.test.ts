@@ -137,7 +137,7 @@ describe("Budgets", () => {
 
       expect(result.percentage).toBeGreaterThanOrEqual(75)
       expect(result.percentage).toBeLessThan(100)
-      expect(result.progressColorClass).toBe(progressColorClass.orange)
+      expect(result.progressColorClass).toBe(progressColorClass.yellow)
     })
 
     it("should return red progress color when percentage >= 100", () => {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Ghost } from "lucide-react"
+import { GhostIcon } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
 import { Button } from "@/components/ui/button"
@@ -29,7 +29,7 @@ export default async function page() {
     <Empty className="h-full border">
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <Ghost />
+          <GhostIcon />
         </EmptyMedia>
         <EmptyTitle>{tNotFound("title")}</EmptyTitle>
         <EmptyDescription>{tNotFound("description")}</EmptyDescription>

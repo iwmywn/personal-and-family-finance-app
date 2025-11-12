@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Slash } from "lucide-react"
+import { SlashIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import {
@@ -55,7 +55,7 @@ export function Header() {
             {pathname !== "/home" && (
               <>
                 <BreadcrumbSeparator>
-                  <Slash />
+                  <SlashIcon />
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>
                   <BreadcrumbPage>

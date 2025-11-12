@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LogOut } from "lucide-react"
+import { LogOutIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -56,7 +56,7 @@ export function SecondaryNav() {
               tooltip={tNavigation("signOut")}
               onClick={onSignOut}
             >
-              <LogOut />
+              <LogOutIcon />
               {tNavigation("signOut")}
             </SidebarMenuButton>
           </SidebarMenuItem>

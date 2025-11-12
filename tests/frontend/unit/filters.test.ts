@@ -472,11 +472,11 @@ describe("Filters", () => {
       })
     })
 
-    it("should filter by progress - orange (75-100%)", () => {
+    it("should filter by progress - yellow (75-100%)", () => {
       const result = filterBudgets(
         mockBudgets,
         {
-          filterProgress: "orange",
+          filterProgress: "yellow",
         },
         mockTransactions
       )
