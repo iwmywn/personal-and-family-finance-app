@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { updatePassword } from "@/actions/account"
+import { updatePassword } from "@/actions/account.actions"
 import {
   Form,
   FormControl,

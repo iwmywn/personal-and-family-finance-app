@@ -20,7 +20,7 @@ import {
   deleteTransaction,
   getTransactions,
   updateTransaction,
-} from "@/actions/transactions"
+} from "@/actions/transaction.actions"
 import { getTransactionsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 

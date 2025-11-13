@@ -7,7 +7,7 @@ import {
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser } from "@/tests/shared/data"
-import { updateLocale } from "@/actions/general"
+import { updateLocale } from "@/actions/general.actions"
 import { setUserLocale } from "@/i18n/locale"
 import { getUsersCollection } from "@/lib/collections"
 

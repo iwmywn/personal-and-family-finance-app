@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { updateLocale } from "@/actions/general"
+import { updateLocale } from "@/actions/general.actions"
 import {
   Select,
   SelectContent,

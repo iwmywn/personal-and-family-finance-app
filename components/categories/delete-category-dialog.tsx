@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { deleteCustomCategory } from "@/actions/categories"
+import { deleteCustomCategory } from "@/actions/category.actions"
 import {
   AlertDialog,
   AlertDialogAction,

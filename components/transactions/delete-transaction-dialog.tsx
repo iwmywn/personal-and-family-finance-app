@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { deleteTransaction } from "@/actions/transactions"
+import { deleteTransaction } from "@/actions/transaction.actions"
 import {
   AlertDialog,
   AlertDialogAction,

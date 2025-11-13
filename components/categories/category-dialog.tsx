@@ -10,7 +10,7 @@ import { toast } from "sonner"
 import {
   createCustomCategory,
   updateCustomCategory,
-} from "@/actions/categories"
+} from "@/actions/category.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,

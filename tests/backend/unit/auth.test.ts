@@ -14,7 +14,7 @@ import {
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser, mockValidSignInValues } from "@/tests/shared/data"
-import { getUser, signIn, signOut } from "@/actions/auth"
+import { getUser, signIn, signOut } from "@/actions/auth.actions"
 import { setUserLocale } from "@/i18n/locale"
 import { session } from "@/lib/session"
 

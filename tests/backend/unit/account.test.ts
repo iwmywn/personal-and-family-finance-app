@@ -8,7 +8,7 @@ import {
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
 import { mockUser, mockValidPasswordValues } from "@/tests/shared/data"
-import { updatePassword } from "@/actions/account"
+import { updatePassword } from "@/actions/account.actions"
 import { getUsersCollection } from "@/lib/collections"
 
 describe("Account", async () => {

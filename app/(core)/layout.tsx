@@ -5,10 +5,10 @@ import { GhostIcon } from "lucide-react"
 import type { Messages } from "next-intl"
 import { getTranslations } from "next-intl/server"
 
-import { getUser } from "@/actions/auth"
-import { getBudgets } from "@/actions/budgets"
-import { getCustomCategories } from "@/actions/categories"
-import { getTransactions } from "@/actions/transactions"
+import { getUser } from "@/actions/auth.actions"
+import { getBudgets } from "@/actions/budget.actions"
+import { getCustomCategories } from "@/actions/category.actions"
+import { getTransactions } from "@/actions/transaction.actions"
 import {
   Empty,
   EmptyDescription,

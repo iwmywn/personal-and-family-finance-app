@@ -8,7 +8,10 @@ import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 
-import { createTransaction, updateTransaction } from "@/actions/transactions"
+import {
+  createTransaction,
+  updateTransaction,
+} from "@/actions/transaction.actions"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {

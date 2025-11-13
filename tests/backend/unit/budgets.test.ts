@@ -20,7 +20,7 @@ import {
   deleteBudget,
   getBudgets,
   updateBudget,
-} from "@/actions/budgets"
+} from "@/actions/budget.actions"
 import { getBudgetsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 

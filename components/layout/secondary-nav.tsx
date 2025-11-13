@@ -6,7 +6,7 @@ import { LogOutIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { signOut } from "@/actions/auth"
+import { signOut } from "@/actions/auth.actions"
 import {
   SidebarGroup,
   SidebarGroupContent,

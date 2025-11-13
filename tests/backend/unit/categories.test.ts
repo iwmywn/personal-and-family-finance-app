@@ -27,7 +27,7 @@ import {
   deleteCustomCategory,
   getCustomCategories,
   updateCustomCategory,
-} from "@/actions/categories"
+} from "@/actions/category.actions"
 import {
   getCategoriesCollection,
   getTransactionsCollection,

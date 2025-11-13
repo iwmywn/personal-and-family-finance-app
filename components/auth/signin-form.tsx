@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { signIn } from "@/actions/auth"
+import { signIn } from "@/actions/auth.actions"
 import {
   Form,
   FormControl,
