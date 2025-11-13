@@ -13,15 +13,15 @@ export default function GlobalError({
   reset: () => void
 }) {
   const locale = useLocale()
-  const tAppError = useTranslations("appError")
+  const t = useTranslations()
 
   return (
     <html lang={locale}>
       <body className={`${nunito.className}`}>
         <main className="flex h-screen flex-col items-center justify-center gap-2 px-6 text-center md:px-16">
-          <h2 className="text-lg font-semibold">{tAppError("title")}</h2>
+          <h2 className="text-lg font-semibold">{t("appError.title")}</h2>
           <p>{error.message}</p>
-          <Button onClick={() => reset()}>{tAppError("tryAgain")}</Button>
+          <Button onClick={() => reset()}>{t("appError.tryAgain")}</Button>
         </main>
       </body>
     </html>

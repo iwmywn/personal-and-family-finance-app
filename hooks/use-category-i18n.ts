@@ -13,8 +13,8 @@ import {
 import type { Category } from "@/lib/definitions"
 
 export function useCategoryI18n() {
-  const tCategoriesConfig = useTranslations("categoriesConfig")
-  const CATEGORY_CONFIG = createCategoryConfig(tCategoriesConfig)
+  const t = useTranslations()
+  const CATEGORY_CONFIG = createCategoryConfig(t)
 
   const getCategoryLabel = (
     categoryKey: CategoryKeyType,

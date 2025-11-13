@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb"
+import { getTranslations } from "next-intl/server"
 
 import {
   insertTestBudget,
@@ -32,7 +33,9 @@ import {
   getTransactionsCollection,
 } from "@/lib/collections"
 
-describe("Categories", () => {
+describe("Categories", async () => {
+  const t = await getTranslations()
+
   describe("createCustomCategory", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -40,7 +43,7 @@ describe("Categories", () => {
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
@@ -53,7 +56,7 @@ describe("Categories", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("invalidData"))
+      expect(result.error).toBe(t("common.be.invalidData"))
     })
 
     it("should return error when category with same name exists", async () => {
@@ -67,7 +70,7 @@ describe("Categories", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryExists"))
+      expect(result.error).toBe(t("categories.be.categoryExists"))
     })
 
     it("should return error when duplicate categoryKey exists", async () => {
@@ -85,7 +88,7 @@ describe("Categories", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryKeyError"))
+      expect(result.error).toBe(t("categories.be.categoryKeyError"))
     })
 
     it("should return error when database insertion fails", async () => {
@@ -99,7 +102,7 @@ describe("Categories", () => {
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryAddFailed"))
+      expect(result.error).toBe(t("categories.be.categoryAddFailed"))
     })
 
     it("should successfully create custom category", async () => {
@@ -115,7 +118,7 @@ describe("Categories", () => {
       expect(addedCategory?.type).toBe("income")
       expect(addedCategory?.label).toBe("Salary")
       expect(addedCategory?.description).toBe("Monthly job income")
-      expect(result.success).toBe(tCategoriesBE("categoryAdded"))
+      expect(result.success).toBe(t("categories.be.categoryAdded"))
       expect(result.error).toBeUndefined()
     })
 
@@ -126,7 +129,7 @@ describe("Categories", () => {
       const result = await createCustomCategory(mockValidCategoryValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryAddFailed"))
+      expect(result.error).toBe(t("categories.be.categoryAddFailed"))
     })
   })
 
@@ -140,7 +143,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
@@ -156,7 +159,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("invalidData"))
+      expect(result.error).toBe(t("common.be.invalidData"))
     })
 
     it("should return error with invalid category ID", async () => {
@@ -168,7 +171,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("invalidCategoryId"))
+      expect(result.error).toBe(t("categories.be.invalidCategoryId"))
     })
 
     it("should return error when category not found", async () => {
@@ -180,7 +183,9 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryNotFoundOrNoPermission"))
+      expect(result.error).toBe(
+        t("categories.be.categoryNotFoundOrNoPermission")
+      )
     })
 
     it("should return error when duplicate category name exists", async () => {
@@ -203,7 +208,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryExists"))
+      expect(result.error).toBe(t("categories.be.categoryExists"))
     })
 
     it("should successfully update custom category", async () => {
@@ -271,7 +276,7 @@ describe("Categories", () => {
       expect(relatedTransactions).toHaveLength(2)
       expect(relatedTransactions.every((t) => t.type === "expense")).toBe(true)
       expect(unrelatedTransaction?.type).toBe("income")
-      expect(result.success).toBe(tCategoriesBE("categoryUpdated"))
+      expect(result.success).toBe(t("categories.be.categoryUpdated"))
       expect(result.error).toBeUndefined()
     })
 
@@ -285,7 +290,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryUpdateFailed"))
+      expect(result.error).toBe(t("categories.be.categoryUpdateFailed"))
     })
 
     it("should return error when database operation throws error", async () => {
@@ -298,7 +303,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryUpdateFailed"))
+      expect(result.error).toBe(t("categories.be.categoryUpdateFailed"))
     })
   })
 
@@ -311,7 +316,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid category ID", async () => {
@@ -320,7 +325,7 @@ describe("Categories", () => {
       const result = await deleteCustomCategory("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("invalidCategoryId"))
+      expect(result.error).toBe(t("categories.be.invalidCategoryId"))
     })
 
     it("should return error when category not found", async () => {
@@ -332,7 +337,7 @@ describe("Categories", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        tCategoriesBE("categoryNotFoundOrNoPermissionDelete")
+        t("categories.be.categoryNotFoundOrNoPermissionDelete")
       )
     })
 
@@ -350,7 +355,7 @@ describe("Categories", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        tCategoriesBE("categoryInUseWithCountTransaction", { count: 1 })
+        t("categories.be.categoryInUseWithCountTransaction", { count: 1 })
       )
     })
 
@@ -368,7 +373,7 @@ describe("Categories", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        tCategoriesBE("categoryInUseWithCountBudget", { count: 1 })
+        t("categories.be.categoryInUseWithCountBudget", { count: 1 })
       )
     })
 
@@ -385,7 +390,7 @@ describe("Categories", () => {
       })
 
       expect(deletedCategory).toBe(null)
-      expect(result.success).toBe(tCategoriesBE("categoryDeleted"))
+      expect(result.success).toBe(t("categories.be.categoryDeleted"))
       expect(result.error).toBeUndefined()
     })
 
@@ -398,7 +403,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryDeleteFailed"))
+      expect(result.error).toBe(t("categories.be.categoryDeleteFailed"))
     })
 
     it("should return error when database operation throws error", async () => {
@@ -410,7 +415,7 @@ describe("Categories", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryDeleteFailed"))
+      expect(result.error).toBe(t("categories.be.categoryDeleteFailed"))
     })
   })
 
@@ -418,20 +423,16 @@ describe("Categories", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getCustomCategories("", tCommonBE, tCategoriesBE)
+      const result = await getCustomCategories("", t)
 
       expect(result.customCategories).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return empty categories list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getCustomCategories(
-        mockUser._id.toString(),
-        tCommonBE,
-        tCategoriesBE
-      )
+      const result = await getCustomCategories(mockUser._id.toString(), t)
 
       expect(result.customCategories).toEqual([])
       expect(result.error).toBeUndefined()
@@ -441,11 +442,7 @@ describe("Categories", () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
-      const result = await getCustomCategories(
-        mockUser._id.toString(),
-        tCommonBE,
-        tCategoriesBE
-      )
+      const result = await getCustomCategories(mockUser._id.toString(), t)
 
       expect(result.customCategories).toHaveLength(1)
       expect(result.customCategories?.[0].label).toBe("Entertainment")
@@ -456,14 +453,10 @@ describe("Categories", () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const result = await getCustomCategories(
-        mockUser._id.toString(),
-        tCommonBE,
-        tCategoriesBE
-      )
+      const result = await getCustomCategories(mockUser._id.toString(), t)
 
       expect(result.customCategories).toBeUndefined()
-      expect(result.error).toBe(tCategoriesBE("categoryFetchFailed"))
+      expect(result.error).toBe(t("categories.be.categoryFetchFailed"))
     })
   })
 })

@@ -17,7 +17,7 @@ import { useAppData } from "@/context/app-data-context"
 import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
 
 export function LanguageSelector() {
-  const tSettingsFE = useTranslations("settings.fe")
+  const t = useTranslations()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const { user } = useAppData()
@@ -43,7 +43,7 @@ export function LanguageSelector() {
         disabled={isPending}
       >
         <SelectTrigger>
-          <SelectValue placeholder={tSettingsFE("language")} />
+          <SelectValue placeholder={t("settings.fe.language")} />
         </SelectTrigger>
         <SelectContent>
           {Object.entries(LOCALE_CONFIG).map(([locale, config]) => (

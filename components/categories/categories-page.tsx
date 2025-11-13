@@ -9,18 +9,18 @@ import { CategoryFilters } from "@/components/categories/category-filters"
 
 export default function CategoriesPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const tCategoriesFE = useTranslations("categories.fe")
-  const tCommonFE = useTranslations("common.fe")
-  const tNavigation = useTranslations("navigation")
+  const t = useTranslations()
 
   return (
     <>
       <div className="header">
         <div>
-          <div className="title">{tNavigation("categories")}</div>
-          <div className="description">{tCategoriesFE("description")}</div>
+          <div className="title">{t("navigation.categories")}</div>
+          <div className="description">{t("categories.fe.description")}</div>
         </div>
-        <Button onClick={() => setIsEditOpen(true)}>{tCommonFE("add")}</Button>
+        <Button onClick={() => setIsEditOpen(true)}>
+          {t("common.fe.add")}
+        </Button>
       </div>
 
       <CategoryFilters />

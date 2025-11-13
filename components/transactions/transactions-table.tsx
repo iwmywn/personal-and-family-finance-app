@@ -53,8 +53,7 @@ export function TransactionsTable({
 }: TransactionsTableProps) {
   const { transactions, customCategories } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  const tTransactionsFE = useTranslations("transactions.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
   const [selectedTransaction, setSelectedTransaction] =
@@ -79,11 +78,11 @@ export function TransactionsTable({
                 <EmptyMedia variant="icon">
                   <ReceiptIcon />
                 </EmptyMedia>
-                <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
+                <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
                 <EmptyDescription>
                   {transactions!.length === 0
-                    ? tCommonFE("startAddingTransactions")
-                    : tCommonFE("noTransactionsFiltered")}
+                    ? t("common.fe.startAddingTransactions")
+                    : t("common.fe.noTransactionsFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -99,11 +98,11 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{tCommonFE("date")}</TableHead>
-                    <TableHead>{tCommonFE("description")}</TableHead>
-                    <TableHead>{tCommonFE("type")}</TableHead>
-                    <TableHead>{tCommonFE("category")}</TableHead>
-                    <TableHead>{tCommonFE("amount")}</TableHead>
+                    <TableHead>{t("common.fe.date")}</TableHead>
+                    <TableHead>{t("common.fe.description")}</TableHead>
+                    <TableHead>{t("common.fe.type")}</TableHead>
+                    <TableHead>{t("common.fe.category")}</TableHead>
+                    <TableHead>{t("common.fe.amount")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -126,8 +125,8 @@ export function TransactionsTable({
                           }
                         >
                           {transaction.type === "income"
-                            ? tCommonFE("income")
-                            : tCommonFE("expense")}
+                            ? t("common.fe.income")
+                            : t("common.fe.expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -170,7 +169,7 @@ export function TransactionsTable({
                             >
                               <MoreVerticalIcon />
                               <span className="sr-only">
-                                {tTransactionsFE("openMenu")}
+                                {t("transactions.fe.openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>
@@ -182,7 +181,7 @@ export function TransactionsTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {tCommonFE("edit")}
+                              {t("common.fe.edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -192,7 +191,7 @@ export function TransactionsTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {tCommonFE("delete")}
+                              {t("common.fe.delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

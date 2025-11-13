@@ -15,7 +15,7 @@ import { mainNav } from "@/lib/nav"
 
 export function MainNav() {
   const pathname = usePathname()
-  const tNavigation = useTranslations("navigation")
+  const t = useTranslations()
 
   return (
     <>
@@ -26,12 +26,12 @@ export function MainNav() {
               <SidebarMenuItem key={url}>
                 <SidebarMenuButton
                   isActive={pathname === url}
-                  tooltip={tNavigation(key)}
+                  tooltip={t(`navigation.${key}`)}
                   asChild
                 >
                   <Link href={url}>
                     <Icon />
-                    {tNavigation(key)}
+                    {t(`navigation.${key}`)}
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

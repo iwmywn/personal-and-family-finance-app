@@ -48,8 +48,7 @@ export function CategoriesTable({
   )
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-  const tCategoriesFE = useTranslations("categories.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
 
   return (
     <>
@@ -65,11 +64,11 @@ export function CategoriesTable({
                 <EmptyMedia variant="icon">
                   <TagIcon />
                 </EmptyMedia>
-                <EmptyTitle>{tCategoriesFE("noCategoriesFound")}</EmptyTitle>
+                <EmptyTitle>{t("categories.fe.noCategoriesFound")}</EmptyTitle>
                 <EmptyDescription>
                   {customCategories!.length === 0
-                    ? tCategoriesFE("noCategoriesDescription")
-                    : tCategoriesFE("noCategoriesFiltered")}
+                    ? t("categories.fe.noCategoriesDescription")
+                    : t("categories.fe.noCategoriesFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -83,9 +82,9 @@ export function CategoriesTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{tCategoriesFE("categoryName")}</TableHead>
-                    <TableHead>{tCommonFE("description")}</TableHead>
-                    <TableHead>{tCommonFE("type")}</TableHead>
+                    <TableHead>{t("categories.fe.categoryName")}</TableHead>
+                    <TableHead>{t("common.fe.description")}</TableHead>
+                    <TableHead>{t("common.fe.type")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -107,8 +106,8 @@ export function CategoriesTable({
                           }
                         >
                           {category.type === "income"
-                            ? tCommonFE("income")
-                            : tCommonFE("expense")}
+                            ? t("common.fe.income")
+                            : t("common.fe.expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -121,7 +120,7 @@ export function CategoriesTable({
                             >
                               <MoreVerticalIcon />
                               <span className="sr-only">
-                                {tCategoriesFE("openMenu")}
+                                {t("categories.fe.openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>
@@ -133,7 +132,7 @@ export function CategoriesTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {tCommonFE("edit")}
+                              {t("common.fe.edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -143,7 +142,7 @@ export function CategoriesTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {tCommonFE("delete")}
+                              {t("common.fe.delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

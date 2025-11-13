@@ -21,8 +21,7 @@ interface StatisticsSummaryProps {
 export function StatisticsSummary({
   filteredTransactions,
 }: StatisticsSummaryProps) {
-  const tStatisticsFE = useTranslations("statistics.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
   const summaryStats = calculateSummaryStats(filteredTransactions)
   const {
     totalIncome,
@@ -37,7 +36,7 @@ export function StatisticsSummary({
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tStatisticsFE("totalIncome")}</CardTitle>
+          <CardTitle>{t("statistics.fe.totalIncome")}</CardTitle>
           <ArrowUpIcon className="size-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -45,14 +44,14 @@ export function StatisticsSummary({
             {formatCurrency(totalIncome)}
           </div>
           <div className="text-muted-foreground text-sm">
-            {incomeCount} {tCommonFE("transactions")}
+            {incomeCount} {t("common.fe.transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tStatisticsFE("totalExpense")}</CardTitle>
+          <CardTitle>{t("statistics.fe.totalExpense")}</CardTitle>
           <ArrowDownIcon className="size-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -60,14 +59,14 @@ export function StatisticsSummary({
             {formatCurrency(totalExpense)}
           </div>
           <div className="text-muted-foreground text-sm">
-            {expenseCount} {tCommonFE("transactions")}
+            {expenseCount} {t("common.fe.transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tStatisticsFE("balance")}</CardTitle>
+          <CardTitle>{t("statistics.fe.balance")}</CardTitle>
           {balance >= 0 ? (
             <TrendingUpIcon className="size-4 text-green-600" />
           ) : (
@@ -84,18 +83,18 @@ export function StatisticsSummary({
           </div>
           <div className="text-muted-foreground text-sm">
             {balance > 0
-              ? tCommonFE("positive")
+              ? t("common.fe.positive")
               : balance < 0
-                ? tCommonFE("negative")
-                : tCommonFE("balanced")}{" "}
-            {tCommonFE("comparedToIncome")}
+                ? t("common.fe.negative")
+                : t("common.fe.balanced")}{" "}
+            {t("common.fe.comparedToIncome")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tCommonFE("totalTransactions")}</CardTitle>
+          <CardTitle>{t("common.fe.totalTransactions")}</CardTitle>
           <ActivityIcon className="size-4 text-blue-600" />
         </CardHeader>
         <CardContent>
@@ -103,7 +102,7 @@ export function StatisticsSummary({
             {transactionCount}
           </div>
           <div className="text-muted-foreground text-sm">
-            {tStatisticsFE("transactionCount")}
+            {t("statistics.fe.transactionCount")}
           </div>
         </CardContent>
       </Card>

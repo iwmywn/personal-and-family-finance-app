@@ -32,8 +32,7 @@ export function CategoryFilters() {
     "all"
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const tCategoriesFE = useTranslations("categories.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
 
   const filteredCategories = filterCustomCategories(customCategories, {
     searchTerm,
@@ -63,7 +62,7 @@ export function CategoryFilters() {
                 <SearchIcon />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder={tCategoriesFE("searchPlaceholder")}
+                placeholder={t("categories.fe.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -88,15 +87,17 @@ export function CategoryFilters() {
               <SelectTrigger
                 className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={tCategoriesFE("categoryType")} />
+                <SelectValue placeholder={t("categories.fe.categoryType")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">
-                  {tCategoriesFE("allCategoryTypes")}
+                  {t("categories.fe.allCategoryTypes")}
                 </SelectItem>
                 <SelectSeparator />
-                <SelectItem value="income">{tCommonFE("income")}</SelectItem>
-                <SelectItem value="expense">{tCommonFE("expense")}</SelectItem>
+                <SelectItem value="income">{t("common.fe.income")}</SelectItem>
+                <SelectItem value="expense">
+                  {t("common.fe.expense")}
+                </SelectItem>
               </SelectContent>
             </Select>
             {hasActiveFilters && (
@@ -106,7 +107,7 @@ export function CategoryFilters() {
                 onClick={handleResetFilters}
                 className="w-full md:w-fit"
               >
-                {tCommonFE("reset")}
+                {t("common.fe.reset")}
               </Button>
             )}
           </div>

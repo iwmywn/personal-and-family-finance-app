@@ -10,21 +10,19 @@ import { getUsersCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
 export async function updateLocale(locale: AppLocale) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tSettingsBE] = await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("settings.be"),
-    ])
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
     if (!LOCALES.includes(locale)) {
-      return { error: tSettingsBE("languageUpdateFailed") }
+      return { error: t("settings.be.languageUpdateFailed") }
     }
 
     const usersCollection = await getUsersCollection()
@@ -33,7 +31,7 @@ export async function updateLocale(locale: AppLocale) {
     })
 
     if (!existingUser) {
-      return { error: tCommonBE("userNotFound") }
+      return { error: t("common.be.userNotFound") }
     }
 
     await usersCollection.updateOne(
@@ -48,10 +46,9 @@ export async function updateLocale(locale: AppLocale) {
     await setUserLocale(locale)
 
     updateTag("user")
-    return { success: tSettingsBE("languageUpdated") }
+    return { success: t("settings.be.languageUpdated") }
   } catch (error) {
     console.error("Error updating locale:", error)
-    const tSettingsBE = await getTranslations("settings.be")
-    return { error: tSettingsBE("languageUpdateFailed") }
+    return { error: t("settings.be.languageUpdateFailed") }
   }
 }

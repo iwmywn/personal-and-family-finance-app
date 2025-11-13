@@ -4,10 +4,10 @@ import { getTranslations } from "next-intl/server"
 import SettingsPage from "@/components/settings/settings-page"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const tNavigation = await getTranslations("navigation")
+  const t = await getTranslations()
 
   return {
-    title: tNavigation("settings"),
+    title: t("navigation.settings"),
   }
 }
 

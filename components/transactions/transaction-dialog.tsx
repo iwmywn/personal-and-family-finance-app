@@ -77,11 +77,9 @@ export function TransactionDialog({
   )
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
-  const tTransactionsFE = useTranslations("transactions.fe")
-  const tCommonFE = useTranslations("common.fe")
-  const tSchemasTransaction = useTranslations("schemas.transaction")
+  const t = useTranslations()
   const formatDate = useFormatDate()
-  const schema = createTransactionSchema(tSchemasTransaction)
+  const schema = createTransactionSchema(t)
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -151,10 +149,10 @@ export function TransactionDialog({
   const renderCategorySelect = (type: "income" | "expense") => {
     const label =
       type === "income"
-        ? tCommonFE("incomeCategory")
-        : tCommonFE("expenseCategory")
-    const placeholder = tTransactionsFE("selectCategory", {
-      type: tCommonFE(type).toLowerCase(),
+        ? t("common.fe.incomeCategory")
+        : t("common.fe.expenseCategory")
+    const placeholder = t("transactions.fe.selectCategory", {
+      type: t(`common.fe.${type}`).toLowerCase(),
     })
 
     return (
@@ -195,7 +193,7 @@ export function TransactionDialog({
                       0 && (
                       <>
                         <SelectLabel>
-                          {tTransactionsFE("customCategories")}
+                          {t("transactions.fe.customCategories")}
                         </SelectLabel>
                         {customCategories
                           .filter((c) => c.type === type)
@@ -215,9 +213,9 @@ export function TransactionDialog({
               </SelectContent>
             </Select>
             <FormDescription>
-              {tTransactionsFE("noCategoryFound")}{" "}
+              {t("transactions.fe.noCategoryFound")}{" "}
               <FormLink href="/categories" className="text-foreground/85">
-                {tTransactionsFE("createCustomCategory")}
+                {t("transactions.fe.createCustomCategory")}
               </FormLink>
             </FormDescription>
             <FormMessage />
@@ -233,13 +231,13 @@ export function TransactionDialog({
         <DialogHeader>
           <DialogTitle>
             {transaction
-              ? tTransactionsFE("editTransaction")
-              : tTransactionsFE("addTransaction")}
+              ? t("transactions.fe.editTransaction")
+              : t("transactions.fe.addTransaction")}
           </DialogTitle>
           <DialogDescription>
             {transaction
-              ? tTransactionsFE("editTransactionDescription")
-              : tTransactionsFE("addTransactionDescription")}
+              ? t("transactions.fe.editTransactionDescription")
+              : t("transactions.fe.addTransactionDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -247,9 +245,11 @@ export function TransactionDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={transactionType} onValueChange={handleTypeChange}>
               <TabsList className="w-full">
-                <TabsTrigger value="income">{tCommonFE("income")}</TabsTrigger>
+                <TabsTrigger value="income">
+                  {t("common.fe.income")}
+                </TabsTrigger>
                 <TabsTrigger value="expense">
-                  {tCommonFE("expense")}
+                  {t("common.fe.expense")}
                 </TabsTrigger>
               </TabsList>
 
@@ -267,7 +267,7 @@ export function TransactionDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tCommonFE("amount")} (VND)</FormLabel>
+                  <FormLabel>{t("common.fe.amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -292,11 +292,13 @@ export function TransactionDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tCommonFE("description")}</FormLabel>
+                  <FormLabel>{t("common.fe.description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
-                        placeholder={tTransactionsFE("descriptionPlaceholder")}
+                        placeholder={t(
+                          "transactions.fe.descriptionPlaceholder"
+                        )}
                         maxLength={200}
                         {...field}
                       />
@@ -317,7 +319,7 @@ export function TransactionDialog({
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{tCommonFE("date")}</FormLabel>
+                  <FormLabel>{t("common.fe.date")}</FormLabel>
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -331,7 +333,7 @@ export function TransactionDialog({
                           {selectedDate ? (
                             formatDate(selectedDate)
                           ) : (
-                            <span>{tCommonFE("selectDate")}</span>
+                            <span>{t("common.fe.selectDate")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -363,11 +365,11 @@ export function TransactionDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{tCommonFE("cancel")}</Button>
+                <Button variant="outline">{t("common.fe.cancel")}</Button>
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Spinner />}{" "}
-                {transaction ? tCommonFE("update") : tCommonFE("add")}
+                {transaction ? t("common.fe.update") : t("common.fe.add")}
               </Button>
             </DialogFooter>
           </form>

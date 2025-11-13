@@ -16,21 +16,21 @@ import { ThemeSelector } from "@/components/settings/theme-selector"
 import { UpdatePasswordForm } from "@/components/settings/update-password-form"
 
 export default function SettingsPage() {
-  const tSettingsFE = useTranslations("settings.fe")
+  const t = useTranslations()
 
   return (
     <Tabs defaultValue="general">
       <TabsList className="w-full">
-        <TabsTrigger value="general">{tSettingsFE("general")}</TabsTrigger>
-        <TabsTrigger value="account">{tSettingsFE("account")}</TabsTrigger>
+        <TabsTrigger value="general">{t("settings.fe.general")}</TabsTrigger>
+        <TabsTrigger value="account">{t("settings.fe.account")}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="general" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{tSettingsFE("appearance")}</CardTitle>
+            <CardTitle>{t("settings.fe.appearance")}</CardTitle>
             <CardDescription>
-              {tSettingsFE("appearanceDescription")}
+              {t("settings.fe.appearanceDescription")}
             </CardDescription>
             <CardAction>
               <ThemeSelector />
@@ -40,9 +40,9 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{tSettingsFE("language")}</CardTitle>
+            <CardTitle>{t("settings.fe.language")}</CardTitle>
             <CardDescription>
-              {tSettingsFE("languageDescription")}
+              {t("settings.fe.languageDescription")}
             </CardDescription>
             <CardAction>
               <LanguageSelector />
@@ -54,9 +54,9 @@ export default function SettingsPage() {
       <TabsContent value="account" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{tSettingsFE("changePassword")}</CardTitle>
+            <CardTitle>{t("settings.fe.changePassword")}</CardTitle>
             <CardDescription>
-              {tSettingsFE("changePasswordDescription")}
+              {t("settings.fe.changePasswordDescription")}
             </CardDescription>
           </CardHeader>
           <CardContent>

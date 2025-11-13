@@ -19,12 +19,11 @@ import { secondaryNav } from "@/lib/nav"
 export function SecondaryNav() {
   const router = useRouter()
   const pathname = usePathname()
-  const tNavigation = useTranslations("navigation")
-  const tAuthFe = useTranslations("auth.fe")
+  const t = useTranslations()
 
   async function onSignOut() {
     toast.promise(signOut(), {
-      loading: tAuthFe("signingOut"),
+      loading: t("auth.fe.signingOut"),
       success: ({ success }) => {
         router.push("/signin")
         return success
@@ -41,23 +40,23 @@ export function SecondaryNav() {
             <SidebarMenuItem key={url}>
               <SidebarMenuButton
                 isActive={pathname === url}
-                tooltip={tNavigation(key)}
+                tooltip={t(`navigation.${key}`)}
                 asChild
               >
                 <Link href={url}>
                   <Icon />
-                  {tNavigation(key)}
+                  {t(`navigation.${key}`)}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
           <SidebarMenuItem>
             <SidebarMenuButton
-              tooltip={tNavigation("signOut")}
+              tooltip={t("navigation.signOut")}
               onClick={onSignOut}
             >
               <LogOutIcon />
-              {tNavigation("signOut")}
+              {t("navigation.signOut")}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

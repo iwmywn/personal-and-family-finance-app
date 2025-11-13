@@ -30,8 +30,7 @@ export function DeleteCategoryDialog({
   open,
   setOpen,
 }: DeleteCategoryDialogProps) {
-  const tCategoriesFE = useTranslations("categories.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -54,18 +53,18 @@ export function DeleteCategoryDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {tCategoriesFE("deleteCategoryTitle")}
+            {t("categories.fe.deleteCategoryTitle")}
           </AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            {tCategoriesFE("deleteCategoryDescription", {
+            {t("categories.fe.deleteCategoryDescription", {
               label: categoryLabel,
             })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{tCommonFE("cancel")}</AlertDialogCancel>
+          <AlertDialogCancel>{t("common.fe.cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} {tCommonFE("delete")}
+            {isLoading && <Spinner />} {t("common.fe.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

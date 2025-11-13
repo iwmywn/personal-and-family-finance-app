@@ -3,28 +3,26 @@ import { z } from "zod"
 import type { TypedTranslationFunction } from "@/i18n/types"
 import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
 
-export const createSignInSchema = (
-  t: TypedTranslationFunction<"schemas.signIn">
-) => {
+export const createSignInSchema = (t: TypedTranslationFunction) => {
   const basePasswordSchema = z
     .string()
     .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
-      message: t("passwordRequired"),
+      message: t("schemas.signIn.passwordRequired"),
     })
 
   return z.object({
-    username: z.string().min(1, { message: t("usernameRequired") }),
+    username: z
+      .string()
+      .min(1, { message: t("schemas.signIn.usernameRequired") }),
     password: basePasswordSchema,
   })
 }
 
-export const createPasswordSchema = (
-  t: TypedTranslationFunction<"schemas.password">
-) => {
+export const createPasswordSchema = (t: TypedTranslationFunction) => {
   const basePasswordSchema = z
     .string()
     .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
-      message: t("newPasswordRequired"),
+      message: t("schemas.password.newPasswordRequired"),
     })
 
   return z
@@ -43,7 +41,7 @@ export const createPasswordSchema = (
         if (!currentPassword) {
           ctx.addIssue({
             path: ["currentPassword"],
-            message: t("currentPasswordRequired"),
+            message: t("schemas.password.currentPasswordRequired"),
             code: "custom",
           })
         }
@@ -54,7 +52,7 @@ export const createPasswordSchema = (
         ) {
           ctx.addIssue({
             path: ["newPassword"],
-            message: t("newPasswordRequired"),
+            message: t("schemas.password.newPasswordRequired"),
             code: "custom",
           })
         }
@@ -62,13 +60,13 @@ export const createPasswordSchema = (
         if (!confirmPassword) {
           ctx.addIssue({
             path: ["confirmPassword"],
-            message: t("confirmPasswordRequired"),
+            message: t("schemas.password.confirmPasswordRequired"),
             code: "custom",
           })
         } else if (newPassword !== confirmPassword) {
           ctx.addIssue({
             path: ["confirmPassword"],
-            message: t("passwordsNotMatch"),
+            message: t("schemas.password.passwordsNotMatch"),
             code: "custom",
           })
         }
@@ -76,105 +74,99 @@ export const createPasswordSchema = (
     })
 }
 
-export const createTransactionSchema = (
-  t: TypedTranslationFunction<"schemas.transaction">
-) => {
+export const createTransactionSchema = (t: TypedTranslationFunction) => {
   return z.object({
     type: z.enum(TRANSACTION_TYPES, {
-      message: t("transactionTypeRequired"),
+      message: t("schemas.transaction.transactionTypeRequired"),
     }),
     categoryKey: z
       .string()
-      .min(1, { message: t("categoryRequired") })
+      .min(1, { message: t("schemas.transaction.categoryRequired") })
       .refine(
         (val) =>
           (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
           val.startsWith("custom_"),
-        { message: t("categoryRequired") }
+        { message: t("schemas.transaction.categoryRequired") }
       ),
     amount: z
       .number()
       .min(0.01, {
-        message: t("amountRequired"),
+        message: t("schemas.transaction.amountRequired"),
       })
       .max(100000000000, {
-        message: t("amountMaxLength"),
+        message: t("schemas.transaction.amountMaxLength"),
       }),
     description: z
       .string()
       .min(1, {
-        message: t("descriptionRequired"),
+        message: t("schemas.transaction.descriptionRequired"),
       })
       .max(200, {
-        message: t("descriptionMaxLength"),
+        message: t("schemas.transaction.descriptionMaxLength"),
       }),
     date: z.date({
-      message: t("dateRequired"),
+      message: t("schemas.transaction.dateRequired"),
     }),
   })
 }
 
-export const createCategorySchema = (
-  t: TypedTranslationFunction<"schemas.category">
-) => {
+export const createCategorySchema = (t: TypedTranslationFunction) => {
   return z.object({
     categoryKey: z.string().optional(),
     type: z.enum(TRANSACTION_TYPES, {
-      message: t("categoryTypeRequired"),
+      message: t("schemas.category.categoryTypeRequired"),
     }),
     label: z
       .string()
       .min(1, {
-        message: t("categoryNameRequired"),
+        message: t("schemas.category.categoryNameRequired"),
       })
       .max(50, {
-        message: t("categoryNameMaxLength"),
+        message: t("schemas.category.categoryNameMaxLength"),
       }),
     description: z
       .string()
       .min(1, {
-        message: t("categoryDescriptionRequired"),
+        message: t("schemas.category.categoryDescriptionRequired"),
       })
       .max(200, {
-        message: t("categoryDescriptionMaxLength"),
+        message: t("schemas.category.categoryDescriptionMaxLength"),
       }),
   })
 }
 
-export const createBudgetSchema = (
-  t: TypedTranslationFunction<"schemas.budget">
-) => {
+export const createBudgetSchema = (t: TypedTranslationFunction) => {
   return z
     .object({
       categoryKey: z
         .string()
-        .min(1, { message: t("categoryRequired") })
+        .min(1, { message: t("schemas.budget.categoryRequired") })
         .refine(
           (val) =>
             (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
             val.startsWith("custom_"),
-          { message: t("categoryRequired") }
+          { message: t("schemas.budget.categoryRequired") }
         ),
       amount: z
         .number()
         .min(0.01, {
-          message: t("amountRequired"),
+          message: t("schemas.budget.amountRequired"),
         })
         .max(100000000000, {
-          message: t("amountMaxLength"),
+          message: t("schemas.budget.amountMaxLength"),
         }),
       startDate: z.date({
-        message: t("startDateRequired"),
+        message: t("schemas.budget.startDateRequired"),
       }),
       endDate: z.date({
-        message: t("endDateRequired"),
+        message: t("schemas.budget.endDateRequired"),
       }),
     })
     .superRefine((data, ctx) => {
       if (data.endDate <= data.startDate) {
         ctx.addIssue({
           path: ["endDate"],
-          message: t("endDateMustBeAfterStartDate"),
+          message: t("schemas.budget.endDateMustBeAfterStartDate"),
           code: "custom",
         })
       }

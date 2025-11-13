@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs"
+import { getTranslations } from "next-intl/server"
 
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
@@ -10,7 +11,9 @@ import { mockUser, mockValidPasswordValues } from "@/tests/shared/data"
 import { updatePassword } from "@/actions/account"
 import { getUsersCollection } from "@/lib/collections"
 
-describe("Account", () => {
+describe("Account", async () => {
+  const t = await getTranslations()
+
   describe("updatePassword", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -18,7 +21,7 @@ describe("Account", () => {
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
@@ -31,7 +34,7 @@ describe("Account", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("invalidData"))
+      expect(result.error).toBe(t("common.be.invalidData"))
     })
 
     it("should return error when user not found", async () => {
@@ -40,7 +43,7 @@ describe("Account", () => {
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("userNotFound"))
+      expect(result.error).toBe(t("common.be.userNotFound"))
     })
 
     it("should return error with incorrect current password", async () => {
@@ -54,7 +57,7 @@ describe("Account", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tSettingsBE("passwordIncorrect"))
+      expect(result.error).toBe(t("settings.be.passwordIncorrect"))
     })
 
     it("should return success when no changes are made", async () => {
@@ -67,7 +70,7 @@ describe("Account", () => {
         confirmPassword: "",
       })
 
-      expect(result.success).toBe(tSettingsBE("noChanges"))
+      expect(result.success).toBe(t("settings.be.noChanges"))
       expect(result.error).toBeUndefined()
     })
 
@@ -86,7 +89,7 @@ describe("Account", () => {
       expect(
         await bcrypt.compare("NewPassword456!", updatedUser!.password)
       ).toBe(true)
-      expect(result.success).toBe(tSettingsBE("passwordUpdated"))
+      expect(result.success).toBe(t("settings.be.passwordUpdated"))
       expect(result.error).toBeUndefined()
     })
 
@@ -97,7 +100,7 @@ describe("Account", () => {
       const result = await updatePassword(mockValidPasswordValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tSettingsBE("passwordUpdateFailed"))
+      expect(result.error).toBe(t("settings.be.passwordUpdateFailed"))
     })
   })
 })

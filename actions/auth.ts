@@ -17,19 +17,15 @@ export async function signIn(
   values: SignInFormValues,
   recaptchaToken: string | null
 ) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tAuthBE, tSchemasSignIn] = await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("auth.be"),
-      getTranslations("schemas.signIn"),
-    ])
+    if (!recaptchaToken) return { error: t("auth.be.recaptchaMissing") }
 
-    if (!recaptchaToken) return { error: tAuthBE("recaptchaMissing") }
-
-    const signInSchema = createSignInSchema(tSchemasSignIn)
+    const signInSchema = createSignInSchema(t)
     const parsedValues = signInSchema.safeParse(values)
 
-    if (!parsedValues.success) return { error: tCommonBE("invalidData") }
+    if (!parsedValues.success) return { error: t("common.be.invalidData") }
 
     const { username, password } = parsedValues.data
     const [verify, usersCollection] = await Promise.all([
@@ -38,15 +34,15 @@ export async function signIn(
     ])
     const existingUser = await usersCollection.findOne({ username })
 
-    if (!verify) return { error: tAuthBE("recaptchaFailed") }
-    if (!existingUser) return { error: tAuthBE("signInError") }
+    if (!verify) return { error: t("auth.be.recaptchaFailed") }
+    if (!existingUser) return { error: t("auth.be.signInError") }
 
     const isPasswordValid = await bcrypt.compare(
       password,
       existingUser.password
     )
 
-    if (!isPasswordValid) return { error: tAuthBE("signInError") }
+    if (!isPasswordValid) return { error: t("auth.be.signInError") }
 
     await Promise.all([
       session.user.create(existingUser._id.toString()),
@@ -57,35 +53,30 @@ export async function signIn(
     return { error: undefined }
   } catch (error) {
     console.error("Error signing in: ", error)
-    const tAuthBE = await getTranslations("auth.be")
-    return { error: tAuthBE("signInFailed") }
+    return { error: t("auth.be.signInFailed") }
   }
 }
 
 export async function signOut() {
+  const t = await getTranslations()
+
   try {
-    const tAuthBE = await getTranslations("auth.be")
     await session.user.delete()
 
-    return { success: tAuthBE("signOutSuccess"), error: undefined }
+    return { success: t("auth.be.signOutSuccess"), error: undefined }
   } catch (error) {
     console.error("Error signing out: ", error)
-    const tAuthBE = await getTranslations("auth.be")
-    return { error: tAuthBE("signOutFailed") }
+    return { error: t("auth.be.signOutFailed") }
   }
 }
 
-export async function getUser(
-  userId: string,
-  tCommonBE: TypedTranslationFunction<"common.be">,
-  tAuthBE: TypedTranslationFunction<"auth.be">
-) {
+export async function getUser(userId: string, t: TypedTranslationFunction) {
   "use cache"
   cacheTag("user")
   try {
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
@@ -96,7 +87,7 @@ export async function getUser(
       { projection: { password: 0 } }
     )
 
-    if (!existingUser) return { error: tCommonBE("userNotFound") }
+    if (!existingUser) return { error: t("common.be.userNotFound") }
 
     const user = { ...existingUser, _id: existingUser._id.toString() } as Omit<
       User,
@@ -107,7 +98,7 @@ export async function getUser(
   } catch (error) {
     console.error("Error fetching user: ", error)
     return {
-      error: tAuthBE("userFetchFailed"),
+      error: t("auth.be.userFetchFailed"),
     }
   }
 }

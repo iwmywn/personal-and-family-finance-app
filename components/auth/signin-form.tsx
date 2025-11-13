@@ -26,9 +26,8 @@ export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const tAuthFE = useTranslations("auth.fe")
-  const tSchemasSignIn = useTranslations("schemas.signIn")
-  const schema = createSignInSchema(tSchemasSignIn)
+  const t = useTranslations()
+  const schema = createSignInSchema(t)
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -95,7 +94,7 @@ export function SignInForm() {
               render={({ field }) => (
                 <FormItem className="grid gap-2">
                   <FormLabel htmlFor="username">
-                    {tAuthFE("username")}
+                    {t("auth.fe.username")}
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -117,7 +116,7 @@ export function SignInForm() {
                 <FormItem className="grid gap-2">
                   <div className="flex items-center justify-between">
                     <FormLabel htmlFor="password">
-                      {tAuthFE("password")}
+                      {t("auth.fe.password")}
                     </FormLabel>
                   </div>
                   <FormControl>
@@ -134,7 +133,7 @@ export function SignInForm() {
             />
             <FormButton
               isSubmitting={isLoading || form.formState.isSubmitting}
-              text={tAuthFE("signIn")}
+              text={t("auth.fe.signIn")}
             />
           </div>
         </form>

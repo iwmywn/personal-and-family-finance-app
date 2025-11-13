@@ -24,8 +24,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const { transactions, customCategories } = useAppData()
-  const tHomeFE = useTranslations("home.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
   const { getCategoryLabel } = useCategoryI18n()
 
   const {
@@ -40,7 +39,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
       <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
-        <CardTitle>{tHomeFE("quickStats")}</CardTitle>
+        <CardTitle>{t("home.fe.quickStats")}</CardTitle>
       </CardHeader>
       <CardContent
         className="h-full overflow-y-auto"
@@ -54,12 +53,12 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{tCommonFE("totalTransactions")}:</div>
+                <div className="left">{t("common.fe.totalTransactions")}:</div>
                 <div className="right">{currentMonthCount}</div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {tHomeFE("totalTransactionsTooltip")}
+              {t("home.fe.totalTransactionsTooltip")}
             </TooltipContent>
           </Tooltip>
 
@@ -68,7 +67,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{tHomeFE("highestTransaction")}:</div>
+                <div className="left">{t("home.fe.highestTransaction")}:</div>
                 <div
                   className={`right ${
                     highestTransaction !== null
@@ -80,12 +79,12 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {highestTransaction !== null
                     ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
-                    : tHomeFE("noData")}
+                    : t("home.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {tHomeFE("highestTransactionTooltip")}
+              {t("home.fe.highestTransactionTooltip")}
             </TooltipContent>
           </Tooltip>
 
@@ -94,7 +93,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{tHomeFE("lowestTransaction")}:</div>
+                <div className="left">{t("home.fe.lowestTransaction")}:</div>
                 <div
                   className={`right ${
                     lowestTransaction !== null
@@ -106,12 +105,12 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {lowestTransaction !== null
                     ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
-                    : tHomeFE("noData")}
+                    : t("home.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {tHomeFE("lowestTransactionTooltip")}
+              {t("home.fe.lowestTransactionTooltip")}
             </TooltipContent>
           </Tooltip>
 
@@ -120,15 +119,15 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{tHomeFE("avgExpense")}:</div>
+                <div className="left">{t("home.fe.avgExpense")}:</div>
                 <div className="right">
                   {avgExpense !== null
                     ? formatCurrency(avgExpense)
-                    : tHomeFE("noData")}
+                    : t("home.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
-            <TooltipContent>{tHomeFE("avgExpenseTooltip")}</TooltipContent>
+            <TooltipContent>{t("home.fe.avgExpenseTooltip")}</TooltipContent>
           </Tooltip>
 
           <Separator />
@@ -136,7 +135,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{tHomeFE("savingsRate")}:</div>
+                <div className="left">{t("home.fe.savingsRate")}:</div>
                 <div
                   className={`right ${
                     savingsRate !== null
@@ -148,11 +147,13 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                       : ""
                   } `}
                 >
-                  {savingsRate !== null ? `${savingsRate}%` : tHomeFE("noData")}
+                  {savingsRate !== null
+                    ? `${savingsRate}%`
+                    : t("home.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
-            <TooltipContent>{tHomeFE("savingsRateTooltip")}</TooltipContent>
+            <TooltipContent>{t("home.fe.savingsRateTooltip")}</TooltipContent>
           </Tooltip>
 
           <Separator />
@@ -160,17 +161,19 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{tHomeFE("popularCategory")}:</div>
+                <div className="left">{t("home.fe.popularCategory")}:</div>
                 <div className="right">
                   {popularCategory.length > 0
                     ? popularCategory
                         .map((key) => getCategoryLabel(key, customCategories))
                         .join(", ")
-                    : tHomeFE("noData")}
+                    : t("home.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
-            <TooltipContent>{tHomeFE("popularCategoryTooltip")}</TooltipContent>
+            <TooltipContent>
+              {t("home.fe.popularCategoryTooltip")}
+            </TooltipContent>
           </Tooltip>
         </div>
       </CardContent>

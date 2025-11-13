@@ -19,14 +19,14 @@ import { siteConfig } from "@/app/pffa.config"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
-  const tCommonFE = await getTranslations("common.fe")
+  const t = await getTranslations()
 
   return {
     title: {
       template: `%s | ${siteConfig.name}`,
       default: siteConfig.name,
     },
-    description: tCommonFE("appDescription"),
+    description: t("common.fe.appDescription"),
     authors: [
       {
         name: "iwmywn",
@@ -39,13 +39,13 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: LOCALE_CONFIG[locale].intlLocale,
       url: env.NEXT_PUBLIC_URL,
       title: siteConfig.name,
-      description: tCommonFE("appDescription"),
+      description: t("common.fe.appDescription"),
       siteName: siteConfig.name,
     },
     twitter: {
       card: "summary_large_image",
       title: siteConfig.name,
-      description: tCommonFE("appDescription"),
+      description: t("common.fe.appDescription"),
       creator: "@ctcuasaunay",
     },
   }

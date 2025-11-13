@@ -14,16 +14,15 @@ import {
 } from "@/components/ui/empty"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const tCommonFE = await getTranslations("common.fe")
+  const t = await getTranslations()
 
   return {
-    title: tCommonFE("notFound"),
+    title: t("common.fe.notFound"),
   }
 }
 
 export default async function page() {
-  const tNotFound = await getTranslations("notFound")
-  const tCommonFE = await getTranslations("common.fe")
+  const t = await getTranslations()
 
   return (
     <Empty className="h-full border">
@@ -31,12 +30,12 @@ export default async function page() {
         <EmptyMedia variant="icon">
           <GhostIcon />
         </EmptyMedia>
-        <EmptyTitle>{tNotFound("title")}</EmptyTitle>
-        <EmptyDescription>{tNotFound("description")}</EmptyDescription>
+        <EmptyTitle>{t("notFound.title")}</EmptyTitle>
+        <EmptyDescription>{t("notFound.description")}</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <Button asChild>
-          <Link href="/home">{tCommonFE("backToHome")}</Link>
+          <Link href="/home">{t("common.fe.backToHome")}</Link>
         </Button>
       </EmptyContent>
     </Empty>

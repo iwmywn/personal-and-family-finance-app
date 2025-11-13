@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
@@ -9,7 +11,9 @@ import { updateLocale } from "@/actions/general"
 import { setUserLocale } from "@/i18n/locale"
 import { getUsersCollection } from "@/lib/collections"
 
-describe("General", () => {
+describe("General", async () => {
+  const t = await getTranslations()
+
   describe("updateLocale", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -17,7 +21,7 @@ describe("General", () => {
       const result = await updateLocale("vi")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid locale", async () => {
@@ -26,7 +30,7 @@ describe("General", () => {
       const result = await updateLocale("invalid" as "vi" | "en")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tSettingsBE("languageUpdateFailed"))
+      expect(result.error).toBe(t("settings.be.languageUpdateFailed"))
     })
 
     it("should return error when user not found in database", async () => {
@@ -35,7 +39,7 @@ describe("General", () => {
       const result = await updateLocale("vi")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("userNotFound"))
+      expect(result.error).toBe(t("common.be.userNotFound"))
     })
 
     it("should successfully update locale", async () => {
@@ -54,7 +58,7 @@ describe("General", () => {
 
       expect(setUserLocale).toHaveBeenCalledWith("vi")
       expect(updatedUser?.locale).toBe("vi")
-      expect(result.success).toBe(tSettingsBE("languageUpdated"))
+      expect(result.success).toBe(t("settings.be.languageUpdated"))
       expect(result.error).toBeUndefined()
 
       vi.doUnmock("@/i18n/locale")
@@ -67,7 +71,7 @@ describe("General", () => {
       const result = await updateLocale("vi")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tSettingsBE("languageUpdateFailed"))
+      expect(result.error).toBe(t("settings.be.languageUpdateFailed"))
     })
   })
 })

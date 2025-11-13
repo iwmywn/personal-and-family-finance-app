@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb"
+import { getTranslations } from "next-intl/server"
 
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
 import {
@@ -23,7 +24,9 @@ import {
 import { getTransactionsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
-describe("Transactions", () => {
+describe("Transactions", async () => {
+  const t = await getTranslations()
+
   describe("createTransaction", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -31,7 +34,7 @@ describe("Transactions", () => {
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
@@ -46,7 +49,7 @@ describe("Transactions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("invalidData"))
+      expect(result.error).toBe(t("common.be.invalidData"))
     })
 
     it("should return error when database insertion fails", async () => {
@@ -59,7 +62,7 @@ describe("Transactions", () => {
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tTransactionsBE("transactionAddFailed"))
+      expect(result.error).toBe(t("transactions.be.transactionAddFailed"))
     })
 
     it("should successfully create transaction", async () => {
@@ -78,7 +81,7 @@ describe("Transactions", () => {
       expect(addedTransaction?.date.toISOString()).toBe(
         "2024-02-05T00:00:00.000Z"
       )
-      expect(result.success).toBe(tTransactionsBE("transactionAdded"))
+      expect(result.success).toBe(t("transactions.be.transactionAdded"))
       expect(result.error).toBeUndefined()
     })
 
@@ -89,7 +92,7 @@ describe("Transactions", () => {
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tTransactionsBE("transactionAddFailed"))
+      expect(result.error).toBe(t("transactions.be.transactionAddFailed"))
     })
   })
 
@@ -103,7 +106,7 @@ describe("Transactions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid input data", async () => {
@@ -118,7 +121,7 @@ describe("Transactions", () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("invalidData"))
+      expect(result.error).toBe(t("common.be.invalidData"))
     })
 
     it("should return error with invalid transaction ID", async () => {
@@ -130,7 +133,7 @@ describe("Transactions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tTransactionsBE("invalidTransactionId"))
+      expect(result.error).toBe(t("transactions.be.invalidTransactionId"))
     })
 
     it("should return error when transaction not found", async () => {
@@ -143,7 +146,7 @@ describe("Transactions", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        tTransactionsBE("transactionNotFoundOrNoPermission")
+        t("transactions.be.transactionNotFoundOrNoPermission")
       )
     })
 
@@ -183,7 +186,7 @@ describe("Transactions", () => {
       expect(unrelatedTransaction?.categoryKey).toBe("food_beverage")
       expect(unrelatedTransaction?.amount).toBe(50000)
       expect(unrelatedTransaction?.description).toBe("nước dừa")
-      expect(result.success).toBe(tTransactionsBE("transactionUpdated"))
+      expect(result.success).toBe(t("transactions.be.transactionUpdated"))
       expect(result.error).toBeUndefined()
     })
 
@@ -197,7 +200,7 @@ describe("Transactions", () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tTransactionsBE("transactionUpdateFailed"))
+      expect(result.error).toBe(t("transactions.be.transactionUpdateFailed"))
     })
   })
 
@@ -208,7 +211,7 @@ describe("Transactions", () => {
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error with invalid transaction ID", async () => {
@@ -217,7 +220,7 @@ describe("Transactions", () => {
       const result = await deleteTransaction("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tTransactionsBE("invalidTransactionId"))
+      expect(result.error).toBe(t("transactions.be.invalidTransactionId"))
     })
 
     it("should return error when transaction not found", async () => {
@@ -227,7 +230,7 @@ describe("Transactions", () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        tTransactionsBE("transactionNotFoundOrNoPermissionDelete")
+        t("transactions.be.transactionNotFoundOrNoPermissionDelete")
       )
     })
 
@@ -242,7 +245,7 @@ describe("Transactions", () => {
       })
 
       expect(deletedTransaction).toBe(null)
-      expect(result.success).toBe(tTransactionsBE("transactionDeleted"))
+      expect(result.success).toBe(t("transactions.be.transactionDeleted"))
       expect(result.error).toBeUndefined()
     })
 
@@ -253,7 +256,7 @@ describe("Transactions", () => {
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tTransactionsBE("transactionDeleteFailed"))
+      expect(result.error).toBe(t("transactions.be.transactionDeleteFailed"))
     })
   })
 
@@ -261,20 +264,16 @@ describe("Transactions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getTransactions("", tCommonBE, tTransactionsBE)
+      const result = await getTransactions("", t)
 
       expect(result.transactions).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return empty transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getTransactions(
-        mockUser._id.toString(),
-        tCommonBE,
-        tTransactionsBE
-      )
+      const result = await getTransactions(mockUser._id.toString(), t)
 
       expect(result.transactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -284,11 +283,7 @@ describe("Transactions", () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await getTransactions(
-        mockUser._id.toString(),
-        tCommonBE,
-        tTransactionsBE
-      )
+      const result = await getTransactions(mockUser._id.toString(), t)
 
       expect(result.transactions).toHaveLength(1)
       expect(result.transactions?.[0].description).toBe("nước dừa")
@@ -300,14 +295,10 @@ describe("Transactions", () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await getTransactions(
-        mockUser._id.toString(),
-        tCommonBE,
-        tTransactionsBE
-      )
+      const result = await getTransactions(mockUser._id.toString(), t)
 
       expect(result.transactions).toBeUndefined()
-      expect(result.error).toBe(tTransactionsBE("transactionFetchFailed"))
+      expect(result.error).toBe(t("transactions.be.transactionFetchFailed"))
     })
   })
 })

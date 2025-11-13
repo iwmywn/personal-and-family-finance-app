@@ -14,21 +14,19 @@ export default function TransactionsPage() {
   const [filteredTransactions, setFilteredTransactions] = useState<
     Transaction[]
   >([])
-  const tTransactionsFE = useTranslations("transactions.fe")
-  const tCommonFE = useTranslations("common.fe")
-  const tNavigation = useTranslations("navigation")
+  const t = useTranslations()
 
   return (
     <>
       <div className="header">
         <div>
-          <div className="title">{tNavigation("transactions")}</div>
-          <div className="description">{tTransactionsFE("description")}</div>
+          <div className="title">{t("navigation.transactions")}</div>
+          <div className="description">{t("transactions.fe.description")}</div>
         </div>
         <div className="flex gap-2">
           <ExportButton filteredTransactions={filteredTransactions} />
           <Button onClick={() => setIsEditOpen(true)}>
-            {tCommonFE("add")}
+            {t("common.fe.add")}
           </Button>
         </div>
       </div>

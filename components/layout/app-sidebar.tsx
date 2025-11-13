@@ -15,7 +15,7 @@ import { SecondaryNav } from "@/components/layout/secondary-nav"
 import { siteConfig } from "@/app/pffa.config"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
 
   return (
     <Sidebar
@@ -25,7 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {...props}
     >
       <SidebarHeader>
-        <SidebarMenuButton size="lg" tooltip={tCommonFE("appDescription")}>
+        <SidebarMenuButton size="lg" tooltip={t("common.fe.appDescription")}>
           <Image
             src="/images/logo.png"
             alt={`${siteConfig.name} Logo`}

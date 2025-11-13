@@ -45,99 +45,99 @@ type CategoryConfigType = {
 }
 
 export function createCategoryConfig(
-  t: TypedTranslationFunction<"categoriesConfig">
+  t: TypedTranslationFunction
 ): CategoryConfigType {
   const CATEGORY_CONFIG: CategoryConfigType = {
     // Incomes
     salary_bonus: {
-      label: t("salaryBonus.label"),
-      description: t("salaryBonus.description"),
+      label: t("categoriesConfig.salaryBonus.label"),
+      description: t("categoriesConfig.salaryBonus.description"),
       type: "income",
     },
     business_freelance: {
-      label: t("businessFreelance.label"),
-      description: t("businessFreelance.description"),
+      label: t("categoriesConfig.businessFreelance.label"),
+      description: t("categoriesConfig.businessFreelance.description"),
       type: "income",
     },
     investment_passive: {
-      label: t("investmentPassive.label"),
-      description: t("investmentPassive.description"),
+      label: t("categoriesConfig.investmentPassive.label"),
+      description: t("categoriesConfig.investmentPassive.description"),
       type: "income",
     },
     gift_support: {
-      label: t("giftSupport.label"),
-      description: t("giftSupport.description"),
+      label: t("categoriesConfig.giftSupport.label"),
+      description: t("categoriesConfig.giftSupport.description"),
       type: "income",
     },
     other_income: {
-      label: t("otherIncome.label"),
-      description: t("otherIncome.description"),
+      label: t("categoriesConfig.otherIncome.label"),
+      description: t("categoriesConfig.otherIncome.description"),
       type: "income",
     },
     // Expenses
     food_beverage: {
-      label: t("foodBeverage.label"),
-      description: t("foodBeverage.description"),
+      label: t("categoriesConfig.foodBeverage.label"),
+      description: t("categoriesConfig.foodBeverage.description"),
       type: "expense",
     },
     transportation: {
-      label: t("transportation.label"),
-      description: t("transportation.description"),
+      label: t("categoriesConfig.transportation.label"),
+      description: t("categoriesConfig.transportation.description"),
       type: "expense",
     },
     personal_care: {
-      label: t("personalCare.label"),
-      description: t("personalCare.description"),
+      label: t("categoriesConfig.personalCare.label"),
+      description: t("categoriesConfig.personalCare.description"),
       type: "expense",
     },
     shopping: {
-      label: t("shopping.label"),
-      description: t("shopping.description"),
+      label: t("categoriesConfig.shopping.label"),
+      description: t("categoriesConfig.shopping.description"),
       type: "expense",
     },
     family_support: {
-      label: t("familySupport.label"),
-      description: t("familySupport.description"),
+      label: t("categoriesConfig.familySupport.label"),
+      description: t("categoriesConfig.familySupport.description"),
       type: "expense",
     },
     housing: {
-      label: t("housing.label"),
-      description: t("housing.description"),
+      label: t("categoriesConfig.housing.label"),
+      description: t("categoriesConfig.housing.description"),
       type: "expense",
     },
     healthcare_insurance: {
-      label: t("healthcareInsurance.label"),
-      description: t("healthcareInsurance.description"),
+      label: t("categoriesConfig.healthcareInsurance.label"),
+      description: t("categoriesConfig.healthcareInsurance.description"),
       type: "expense",
     },
     education_development: {
-      label: t("educationDevelopment.label"),
-      description: t("educationDevelopment.description"),
+      label: t("categoriesConfig.educationDevelopment.label"),
+      description: t("categoriesConfig.educationDevelopment.description"),
       type: "expense",
     },
     entertainment_leisure: {
-      label: t("entertainmentLeisure.label"),
-      description: t("entertainmentLeisure.description"),
+      label: t("categoriesConfig.entertainmentLeisure.label"),
+      description: t("categoriesConfig.entertainmentLeisure.description"),
       type: "expense",
     },
     social_gifts: {
-      label: t("socialGifts.label"),
-      description: t("socialGifts.description"),
+      label: t("categoriesConfig.socialGifts.label"),
+      description: t("categoriesConfig.socialGifts.description"),
       type: "expense",
     },
     savings_investment: {
-      label: t("savingsInvestment.label"),
-      description: t("savingsInvestment.description"),
+      label: t("categoriesConfig.savingsInvestment.label"),
+      description: t("categoriesConfig.savingsInvestment.description"),
       type: "expense",
     },
     debt_payment: {
-      label: t("debtPayment.label"),
-      description: t("debtPayment.description"),
+      label: t("categoriesConfig.debtPayment.label"),
+      description: t("categoriesConfig.debtPayment.description"),
       type: "expense",
     },
     other_expense: {
-      label: t("otherExpense.label"),
-      description: t("otherExpense.description"),
+      label: t("categoriesConfig.otherExpense.label"),
+      description: t("categoriesConfig.otherExpense.description"),
       type: "expense",
     },
   }

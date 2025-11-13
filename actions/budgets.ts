@@ -11,25 +11,22 @@ import { type Budget } from "@/lib/definitions"
 import { session } from "@/lib/session"
 
 export async function createBudget(values: BudgetFormValues) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tBudgetsBE, tSchemasBudget] = await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("budgets.be"),
-      getTranslations("schemas.budget"),
-    ])
-    const budgetSchema = createBudgetSchema(tSchemasBudget)
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
+    const budgetSchema = createBudgetSchema(t)
     const parsedValues = budgetSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tCommonBE("invalidData") }
+      return { error: t("common.be.invalidData") }
     }
 
     const budgetsCollection = await getBudgetsCollection()
@@ -42,42 +39,38 @@ export async function createBudget(values: BudgetFormValues) {
       endDate: values.endDate,
     })
 
-    if (!result.acknowledged) return { error: tBudgetsBE("budgetAddFailed") }
+    if (!result.acknowledged) return { error: t("budgets.be.budgetAddFailed") }
 
     updateTag("budgets")
-    return { success: tBudgetsBE("budgetAdded"), error: undefined }
+    return { success: t("budgets.be.budgetAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating budget:", error)
-    const tBudgetsBE = await getTranslations("budgets.be")
-    return { error: tBudgetsBE("budgetAddFailed") }
+    return { error: t("budgets.be.budgetAddFailed") }
   }
 }
 
 export async function updateBudget(budgetId: string, values: BudgetFormValues) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tBudgetsBE, tSchemasBudget] = await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("budgets.be"),
-      getTranslations("schemas.budget"),
-    ])
-    const budgetSchema = createBudgetSchema(tSchemasBudget)
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
+    const budgetSchema = createBudgetSchema(t)
     const parsedValues = budgetSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tCommonBE("invalidData") }
+      return { error: t("common.be.invalidData") }
     }
 
     if (!ObjectId.isValid(budgetId)) {
       return {
-        error: tBudgetsBE("invalidBudgetId"),
+        error: t("budgets.be.invalidBudgetId"),
       }
     }
 
@@ -89,7 +82,7 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
 
     if (!existingBudget) {
       return {
-        error: tBudgetsBE("budgetNotFoundOrNoPermission"),
+        error: t("budgets.be.budgetNotFoundOrNoPermission"),
       }
     }
 
@@ -106,31 +99,28 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
     )
 
     updateTag("budgets")
-    return { success: tBudgetsBE("budgetUpdated"), error: undefined }
+    return { success: t("budgets.be.budgetUpdated"), error: undefined }
   } catch (error) {
     console.error("Error updating budget:", error)
-    const tBudgetsBE = await getTranslations("budgets.be")
-    return { error: tBudgetsBE("budgetUpdateFailed") }
+    return { error: t("budgets.be.budgetUpdateFailed") }
   }
 }
 
 export async function deleteBudget(budgetId: string) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tBudgetsBE] = await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("budgets.be"),
-    ])
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(budgetId)) {
       return {
-        error: tBudgetsBE("invalidBudgetId"),
+        error: t("budgets.be.invalidBudgetId"),
       }
     }
 
@@ -142,7 +132,7 @@ export async function deleteBudget(budgetId: string) {
 
     if (!existingBudget) {
       return {
-        error: tBudgetsBE("budgetNotFoundOrNoPermissionDelete"),
+        error: t("budgets.be.budgetNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -151,25 +141,20 @@ export async function deleteBudget(budgetId: string) {
     })
 
     updateTag("budgets")
-    return { success: tBudgetsBE("budgetDeleted") }
+    return { success: t("budgets.be.budgetDeleted") }
   } catch (error) {
     console.error("Error deleting budget:", error)
-    const tBudgetsBE = await getTranslations("budgets.be")
-    return { error: tBudgetsBE("budgetDeleteFailed") }
+    return { error: t("budgets.be.budgetDeleteFailed") }
   }
 }
 
-export async function getBudgets(
-  userId: string,
-  tCommonBE: TypedTranslationFunction<"common.be">,
-  tBudgetsBE: TypedTranslationFunction<"budgets.be">
-) {
+export async function getBudgets(userId: string, t: TypedTranslationFunction) {
   "use cache"
   cacheTag("budgets")
   try {
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
@@ -190,7 +175,7 @@ export async function getBudgets(
   } catch (error) {
     console.error("Error fetching budgets:", error)
     return {
-      error: tBudgetsBE("budgetFetchFailed"),
+      error: t("budgets.be.budgetFetchFailed"),
     }
   }
 }

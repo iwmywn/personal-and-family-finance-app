@@ -18,8 +18,7 @@ import { formatCurrency } from "@/lib/utils"
 
 export function TransactionSummary() {
   const { transactions } = useAppData()
-  const tHomeFE = useTranslations("home.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions)
 
@@ -31,7 +30,7 @@ export function TransactionSummary() {
     <div className="grid gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tHomeFE("monthlyIncome")}</CardTitle>
+          <CardTitle>{t("home.fe.monthlyIncome")}</CardTitle>
           <ArrowUpIcon className="size-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -44,14 +43,14 @@ export function TransactionSummary() {
                 (tHomeFE) => tHomeFE.type === "income"
               ).length
             }{" "}
-            {tCommonFE("transactions")}
+            {t("common.fe.transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tHomeFE("monthlyExpense")}</CardTitle>
+          <CardTitle>{t("home.fe.monthlyExpense")}</CardTitle>
           <ArrowDownIcon className="size-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -64,14 +63,14 @@ export function TransactionSummary() {
                 (tHomeFE) => tHomeFE.type === "expense"
               ).length
             }{" "}
-            {tCommonFE("transactions")}
+            {t("common.fe.transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{tHomeFE("monthlyBalance")}</CardTitle>
+          <CardTitle>{t("home.fe.monthlyBalance")}</CardTitle>
           {balance >= 0 ? (
             <TrendingUpIcon className="size-4 text-green-600" />
           ) : (
@@ -88,11 +87,11 @@ export function TransactionSummary() {
           </div>
           <div className="text-muted-foreground text-sm">
             {balance > 0
-              ? tCommonFE("positive")
+              ? t("common.fe.positive")
               : balance < 0
-                ? tCommonFE("negative")
-                : tCommonFE("balanced")}{" "}
-            {tCommonFE("comparedToIncome")}
+                ? t("common.fe.negative")
+                : t("common.fe.balanced")}{" "}
+            {t("common.fe.comparedToIncome")}
           </div>
         </CardContent>
       </Card>

@@ -28,8 +28,7 @@ export function DeleteBudgetDialog({
   open,
   setOpen,
 }: DeleteBudgetDialogProps) {
-  const tBudgetsFE = useTranslations("budgets.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -51,15 +50,17 @@ export function DeleteBudgetDialog({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{tBudgetsFE("deleteBudgetTitle")}</AlertDialogTitle>
+          <AlertDialogTitle>
+            {t("budgets.fe.deleteBudgetTitle")}
+          </AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            {tBudgetsFE("deleteBudgetDescription")}
+            {t("budgets.fe.deleteBudgetDescription")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{tCommonFE("cancel")}</AlertDialogCancel>
+          <AlertDialogCancel>{t("common.fe.cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} {tCommonFE("delete")}
+            {isLoading && <Spinner />} {t("common.fe.delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -9,25 +9,22 @@ import { getUsersCollection } from "@/lib/collections"
 import { session } from "@/lib/session"
 
 export async function updatePassword(values: PasswordFormValues) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tSettingsBE, tSchemasPassword] = await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("settings.be"),
-      getTranslations("schemas.password"),
-    ])
-    const passwordSchema = createPasswordSchema(tSchemasPassword)
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
+    const passwordSchema = createPasswordSchema(t)
     const parsedValues = passwordSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tCommonBE("invalidData") }
+      return { error: t("common.be.invalidData") }
     }
 
     const { currentPassword, newPassword } = parsedValues.data
@@ -38,7 +35,7 @@ export async function updatePassword(values: PasswordFormValues) {
     })
 
     if (!existingUser) {
-      return { error: tCommonBE("userNotFound") }
+      return { error: t("common.be.userNotFound") }
     }
 
     let hashedPassword: string
@@ -50,7 +47,7 @@ export async function updatePassword(values: PasswordFormValues) {
       )
 
       if (!isPasswordValid) {
-        return { error: tSettingsBE("passwordIncorrect") }
+        return { error: t("settings.be.passwordIncorrect") }
       }
 
       hashedPassword = await bcrypt.hash(newPassword, 10)
@@ -61,7 +58,7 @@ export async function updatePassword(values: PasswordFormValues) {
     const isSame = hashedPassword === existingUser.password
 
     if (isSame) {
-      return { success: tSettingsBE("noChanges") }
+      return { success: t("settings.be.noChanges") }
     }
 
     await usersCollection.updateOne(
@@ -73,10 +70,9 @@ export async function updatePassword(values: PasswordFormValues) {
       }
     )
 
-    return { success: tSettingsBE("passwordUpdated") }
+    return { success: t("settings.be.passwordUpdated") }
   } catch (error) {
     console.error("Error updating password:", error)
-    const tSettingsBE = await getTranslations("settings.be")
-    return { error: tSettingsBE("passwordUpdateFailed") }
+    return { error: t("settings.be.passwordUpdateFailed") }
   }
 }

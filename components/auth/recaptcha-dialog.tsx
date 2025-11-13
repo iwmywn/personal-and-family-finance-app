@@ -21,11 +21,11 @@ export function ReCaptchaDialog({
   setRecaptchaToken,
 }: ReCaptchaPopupProps) {
   const locale = useLocale()
-  const tAuthFE = useTranslations("auth.fe")
+  const t = useTranslations()
 
   const handleRecaptchaChange = async (token: string | null) => {
     if (!token) {
-      toast.error(tAuthFE("recaptchaVerificationFailed"))
+      toast.error(t("auth.fe.recaptchaVerificationFailed"))
       return
     }
 
@@ -34,7 +34,7 @@ export function ReCaptchaDialog({
   }
 
   const handleDialogClose = () => {
-    toast.error(tAuthFE("completeRecaptchaVerification"))
+    toast.error(t("auth.fe.completeRecaptchaVerification"))
     setOpen(false)
   }
 
@@ -42,7 +42,7 @@ export function ReCaptchaDialog({
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="w-fit">
         <VisuallyHidden>
-          <DialogTitle>{tAuthFE("recaptchaVerification")}</DialogTitle>
+          <DialogTitle>{t("auth.fe.recaptchaVerification")}</DialogTitle>
         </VisuallyHidden>
         <ReCAPTCHA
           sitekey={env.NEXT_PUBLIC_RECAPTCHA}

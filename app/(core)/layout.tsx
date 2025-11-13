@@ -72,28 +72,14 @@ async function DashboardProvider({
     redirect("/signin")
   }
 
-  const [
-    tDataError,
-    tCommonBE,
-    tAuthBE,
-    tTransactionsBE,
-    tCategoriesBE,
-    tBudgetsBE,
-  ] = await Promise.all([
-    getTranslations("dataError"),
-    getTranslations("common.be"),
-    getTranslations("auth.be"),
-    getTranslations("transactions.be"),
-    getTranslations("categories.be"),
-    getTranslations("budgets.be"),
-  ])
+  const t = await getTranslations()
 
   const [userResult, transactionsResult, categoriesResult, budgetsResult] =
     await Promise.all([
-      getUser(userId, tCommonBE, tAuthBE),
-      getTransactions(userId, tCommonBE, tTransactionsBE),
-      getCustomCategories(userId, tCommonBE, tCategoriesBE),
-      getBudgets(userId, tCommonBE, tBudgetsBE),
+      getUser(userId, t),
+      getTransactions(userId, t),
+      getCustomCategories(userId, t),
+      getBudgets(userId, t),
     ])
 
   const renderEmptyState = (
@@ -105,7 +91,7 @@ async function DashboardProvider({
         <EmptyMedia variant="icon">
           <GhostIcon />
         </EmptyMedia>
-        <EmptyTitle>{tDataError(title)}</EmptyTitle>
+        <EmptyTitle>{t(`dataError.${title}`)}</EmptyTitle>
         <EmptyDescription>{description}</EmptyDescription>
       </EmptyHeader>
     </Empty>

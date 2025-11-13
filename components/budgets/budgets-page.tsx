@@ -9,18 +9,18 @@ import { BudgetsFilters } from "@/components/budgets/budgets-filters"
 
 export default function BudgetsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const tBudgetsFE = useTranslations("budgets.fe")
-  const tCommonFE = useTranslations("common.fe")
-  const tNavigation = useTranslations("navigation")
+  const t = useTranslations()
 
   return (
     <>
       <div className="header">
         <div>
-          <div className="title">{tNavigation("budgets")}</div>
-          <div className="description">{tBudgetsFE("description")}</div>
+          <div className="title">{t("navigation.budgets")}</div>
+          <div className="description">{t("budgets.fe.description")}</div>
         </div>
-        <Button onClick={() => setIsEditOpen(true)}>{tCommonFE("add")}</Button>
+        <Button onClick={() => setIsEditOpen(true)}>
+          {t("common.fe.add")}
+        </Button>
       </div>
 
       <BudgetsFilters />

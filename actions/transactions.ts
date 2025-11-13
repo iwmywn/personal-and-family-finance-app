@@ -11,27 +11,22 @@ import { type Transaction } from "@/lib/definitions"
 import { session } from "@/lib/session"
 
 export async function createTransaction(values: TransactionFormValues) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tTransactionsBE, tSchemasTransaction] = await Promise.all(
-      [
-        getTranslations("common.be"),
-        getTranslations("transactions.be"),
-        getTranslations("schemas.transaction"),
-      ]
-    )
-    const transactionSchema = createTransactionSchema(tSchemasTransaction)
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
+    const transactionSchema = createTransactionSchema(t)
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tCommonBE("invalidData") }
+      return { error: t("common.be.invalidData") }
     }
 
     const transactionsCollection = await getTransactionsCollection()
@@ -46,14 +41,13 @@ export async function createTransaction(values: TransactionFormValues) {
     })
 
     if (!result.acknowledged)
-      return { error: tTransactionsBE("transactionAddFailed") }
+      return { error: t("transactions.be.transactionAddFailed") }
 
     updateTag("transactions")
-    return { success: tTransactionsBE("transactionAdded"), error: undefined }
+    return { success: t("transactions.be.transactionAdded"), error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
-    const tTransactionsBE = await getTranslations("transactions.be")
-    return { error: tTransactionsBE("transactionAddFailed") }
+    return { error: t("transactions.be.transactionAddFailed") }
   }
 }
 
@@ -61,32 +55,27 @@ export async function updateTransaction(
   transactionId: string,
   values: TransactionFormValues
 ) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tTransactionsBE, tSchemasTransaction] = await Promise.all(
-      [
-        getTranslations("common.be"),
-        getTranslations("transactions.be"),
-        getTranslations("schemas.transaction"),
-      ]
-    )
-    const transactionSchema = createTransactionSchema(tSchemasTransaction)
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
+    const transactionSchema = createTransactionSchema(t)
     const parsedValues = transactionSchema.safeParse(values)
 
     if (!parsedValues.success) {
-      return { error: tCommonBE("invalidData") }
+      return { error: t("common.be.invalidData") }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: tTransactionsBE("invalidTransactionId"),
+        error: t("transactions.be.invalidTransactionId"),
       }
     }
 
@@ -98,7 +87,7 @@ export async function updateTransaction(
 
     if (!existingTransaction) {
       return {
-        error: tTransactionsBE("transactionNotFoundOrNoPermission"),
+        error: t("transactions.be.transactionNotFoundOrNoPermission"),
       }
     }
 
@@ -116,31 +105,31 @@ export async function updateTransaction(
     )
 
     updateTag("transactions")
-    return { success: tTransactionsBE("transactionUpdated"), error: undefined }
+    return {
+      success: t("transactions.be.transactionUpdated"),
+      error: undefined,
+    }
   } catch (error) {
     console.error("Error updating transaction:", error)
-    const tTransactionsBE = await getTranslations("transactions.be")
-    return { error: tTransactionsBE("transactionUpdateFailed") }
+    return { error: t("transactions.be.transactionUpdateFailed") }
   }
 }
 
 export async function deleteTransaction(transactionId: string) {
+  const t = await getTranslations()
+
   try {
-    const [tCommonBE, tTransactionsBE] = await Promise.all([
-      getTranslations("common.be"),
-      getTranslations("transactions.be"),
-    ])
     const { userId } = await session.user.get()
 
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: tTransactionsBE("invalidTransactionId"),
+        error: t("transactions.be.invalidTransactionId"),
       }
     }
 
@@ -152,7 +141,7 @@ export async function deleteTransaction(transactionId: string) {
 
     if (!existingTransaction) {
       return {
-        error: tTransactionsBE("transactionNotFoundOrNoPermissionDelete"),
+        error: t("transactions.be.transactionNotFoundOrNoPermissionDelete"),
       }
     }
 
@@ -161,25 +150,23 @@ export async function deleteTransaction(transactionId: string) {
     })
 
     updateTag("transactions")
-    return { success: tTransactionsBE("transactionDeleted") }
+    return { success: t("transactions.be.transactionDeleted") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
-    const tTransactionsBE = await getTranslations("transactions.be")
-    return { error: tTransactionsBE("transactionDeleteFailed") }
+    return { error: t("transactions.be.transactionDeleteFailed") }
   }
 }
 
 export async function getTransactions(
   userId: string,
-  tCommonBE: TypedTranslationFunction<"common.be">,
-  tTransactionsBE: TypedTranslationFunction<"transactions.be">
+  t: TypedTranslationFunction
 ) {
   "use cache"
   cacheTag("transactions")
   try {
     if (!userId) {
       return {
-        error: tCommonBE("accessDenied"),
+        error: t("common.be.accessDenied"),
       }
     }
 
@@ -199,6 +186,6 @@ export async function getTransactions(
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)
-    return { error: tTransactionsBE("transactionFetchFailed") }
+    return { error: t("transactions.be.transactionFetchFailed") }
   }
 }

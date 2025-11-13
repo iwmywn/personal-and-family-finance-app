@@ -58,8 +58,7 @@ export function BudgetsTable({
   const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-  const tBudgetsFE = useTranslations("budgets.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
 
@@ -82,11 +81,11 @@ export function BudgetsTable({
                 <EmptyMedia variant="icon">
                   <PiggyBankIcon />
                 </EmptyMedia>
-                <EmptyTitle>{tBudgetsFE("noBudgetsFound")}</EmptyTitle>
+                <EmptyTitle>{t("budgets.fe.noBudgetsFound")}</EmptyTitle>
                 <EmptyDescription>
                   {budgets!.length === 0
-                    ? tBudgetsFE("noBudgetsDescription")
-                    : tBudgetsFE("noBudgetsFiltered")}
+                    ? t("budgets.fe.noBudgetsDescription")
+                    : t("budgets.fe.noBudgetsFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -102,14 +101,14 @@ export function BudgetsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{tBudgetsFE("startDate")}</TableHead>
-                    <TableHead>{tBudgetsFE("endDate")}</TableHead>
-                    <TableHead>{tBudgetsFE("category")}</TableHead>
-                    <TableHead>{tCommonFE("amount")}</TableHead>
-                    <TableHead>{tBudgetsFE("spent")}</TableHead>
-                    <TableHead>{tBudgetsFE("balance")}</TableHead>
-                    <TableHead>{tBudgetsFE("status")}</TableHead>
-                    <TableHead>{tBudgetsFE("progress")}</TableHead>
+                    <TableHead>{t("budgets.fe.startDate")}</TableHead>
+                    <TableHead>{t("budgets.fe.endDate")}</TableHead>
+                    <TableHead>{t("budgets.fe.category")}</TableHead>
+                    <TableHead>{t("common.fe.amount")}</TableHead>
+                    <TableHead>{t("budgets.fe.spent")}</TableHead>
+                    <TableHead>{t("budgets.fe.balance")}</TableHead>
+                    <TableHead>{t("budgets.fe.status")}</TableHead>
+                    <TableHead>{t("budgets.fe.progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -152,10 +151,10 @@ export function BudgetsTable({
                           }
                         >
                           {budget.status === "expired"
-                            ? tBudgetsFE("expired")
+                            ? t("budgets.fe.expired")
                             : budget.status === "active"
-                              ? tBudgetsFE("active")
-                              : tBudgetsFE("upcoming")}
+                              ? t("budgets.fe.active")
+                              : t("budgets.fe.upcoming")}
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">
@@ -181,7 +180,7 @@ export function BudgetsTable({
                             >
                               <MoreVerticalIcon />
                               <span className="sr-only">
-                                {tBudgetsFE("openMenu")}
+                                {t("budgets.fe.openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>
@@ -193,7 +192,7 @@ export function BudgetsTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {tCommonFE("edit")}
+                              {t("common.fe.edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -203,7 +202,7 @@ export function BudgetsTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {tCommonFE("delete")}
+                              {t("common.fe.delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

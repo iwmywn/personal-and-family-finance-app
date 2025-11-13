@@ -1,3 +1,5 @@
+import { getTranslations } from "next-intl/server"
+
 import { insertTestUser } from "@/tests/backend/helpers/database"
 import { mockUserCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
@@ -16,12 +18,14 @@ import { getUser, signIn, signOut } from "@/actions/auth"
 import { setUserLocale } from "@/i18n/locale"
 import { session } from "@/lib/session"
 
-describe("Auth", () => {
+describe("Auth", async () => {
+  const t = await getTranslations()
+
   describe("signIn", () => {
     it("should return error when recaptcha token is missing", async () => {
       const result = await signIn(mockValidSignInValues, null)
 
-      expect(result.error).toBe(tAuthBE("recaptchaMissing"))
+      expect(result.error).toBe(t("auth.be.recaptchaMissing"))
     })
 
     it("should return error with invalid input data", async () => {
@@ -29,7 +33,7 @@ describe("Auth", () => {
 
       const result = await signIn({ username: "", password: "" }, "valid-token")
 
-      expect(result.error).toBe(tCommonBE("invalidData"))
+      expect(result.error).toBe(t("common.be.invalidData"))
     })
 
     it("should return error when recaptcha verification fails", async () => {
@@ -37,7 +41,7 @@ describe("Auth", () => {
 
       const result = await signIn(mockValidSignInValues, "invalid-token")
 
-      expect(result.error).toBe(tAuthBE("recaptchaFailed"))
+      expect(result.error).toBe(t("auth.be.recaptchaFailed"))
     })
 
     it("should return error when user does not exist", async () => {
@@ -45,7 +49,7 @@ describe("Auth", () => {
 
       const result = await signIn(mockValidSignInValues, "valid-token")
 
-      expect(result.error).toBe(tAuthBE("signInError"))
+      expect(result.error).toBe(t("auth.be.signInError"))
     })
 
     it("should return error with incorrect password", async () => {
@@ -57,7 +61,7 @@ describe("Auth", () => {
         "valid-token"
       )
 
-      expect(result.error).toBe(tAuthBE("signInError"))
+      expect(result.error).toBe(t("auth.be.signInError"))
     })
 
     it("should successfully sign in with valid credentials", async () => {
@@ -81,7 +85,7 @@ describe("Auth", () => {
 
       const result = await signIn(mockValidSignInValues, "valid-token")
 
-      expect(result.error).toBe(tAuthBE("signInFailed"))
+      expect(result.error).toBe(t("auth.be.signInFailed"))
     })
 
     it("should return error when database operation throws error", async () => {
@@ -90,7 +94,7 @@ describe("Auth", () => {
 
       const result = await signIn(mockValidSignInValues, "valid-token")
 
-      expect(result.error).toBe(tAuthBE("signInFailed"))
+      expect(result.error).toBe(t("auth.be.signInFailed"))
     })
   })
 
@@ -101,7 +105,7 @@ describe("Auth", () => {
       const result = await signOut()
 
       expect(session.user.delete).toHaveBeenCalled()
-      expect(result.success).toBe(tAuthBE("signOutSuccess"))
+      expect(result.success).toBe(t("auth.be.signOutSuccess"))
       expect(result.error).toBeUndefined()
     })
 
@@ -111,7 +115,7 @@ describe("Auth", () => {
       const result = await signOut()
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(tAuthBE("signOutFailed"))
+      expect(result.error).toBe(t("auth.be.signOutFailed"))
     })
   })
 
@@ -119,26 +123,26 @@ describe("Auth", () => {
     it("should return error when user is not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getUser("", tCommonBE, tAuthBE)
+      const result = await getUser("", t)
 
       expect(result.user).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("accessDenied"))
+      expect(result.error).toBe(t("common.be.accessDenied"))
     })
 
     it("should return error when user not found in database", async () => {
       mockAuthenticatedUser()
 
-      const result = await getUser(mockUser._id.toString(), tCommonBE, tAuthBE)
+      const result = await getUser(mockUser._id.toString(), t)
 
       expect(result.user).toBeUndefined()
-      expect(result.error).toBe(tCommonBE("userNotFound"))
+      expect(result.error).toBe(t("common.be.userNotFound"))
     })
 
     it("should return user data when authenticated", async () => {
       await insertTestUser(mockUser)
       mockAuthenticatedUser()
 
-      const result = await getUser(mockUser._id.toString(), tCommonBE, tAuthBE)
+      const result = await getUser(mockUser._id.toString(), t)
 
       expect(result.user).toBeDefined()
       expect(result.user?.fullName).toBe("Test User")
@@ -150,10 +154,10 @@ describe("Auth", () => {
       mockAuthenticatedUser()
       mockUserCollectionError()
 
-      const result = await getUser(mockUser._id.toString(), tCommonBE, tAuthBE)
+      const result = await getUser(mockUser._id.toString(), t)
 
       expect(result.user).toBeUndefined()
-      expect(result.error).toBe(tAuthBE("userFetchFailed"))
+      expect(result.error).toBe(t("auth.be.userFetchFailed"))
     })
   })
 })

@@ -12,8 +12,8 @@ let CATEGORY_CONFIG: ReturnType<typeof createCategoryConfig>
 
 describe("Categories", () => {
   beforeAll(async () => {
-    const tCategoriesConfig = await getTranslations("categoriesConfig")
-    CATEGORY_CONFIG = createCategoryConfig(tCategoriesConfig)
+    const t = await getTranslations()
+    CATEGORY_CONFIG = createCategoryConfig(t)
   })
 
   describe("getDetails", () => {

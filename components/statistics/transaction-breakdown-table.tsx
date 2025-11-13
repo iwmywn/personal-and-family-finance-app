@@ -39,8 +39,7 @@ export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
   const { transactions, customCategories } = useAppData()
-  const tStatisticsFE = useTranslations("statistics.fe")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
 
   const categoryStats = calculateCategoryStats(filteredTransactions)
@@ -54,11 +53,11 @@ export function TransactionBreakdownTable({
               <EmptyMedia variant="icon">
                 <ReceiptIcon />
               </EmptyMedia>
-              <EmptyTitle>{tCommonFE("noTransactionsFound")}</EmptyTitle>
+              <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
               <EmptyDescription>
                 {transactions!.length === 0
-                  ? tCommonFE("startAddingTransactions")
-                  : tCommonFE("noTransactionsFiltered")}
+                  ? t("common.fe.startAddingTransactions")
+                  : t("common.fe.noTransactionsFiltered")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -67,10 +66,10 @@ export function TransactionBreakdownTable({
             <Table>
               <TableHeader className="bg-muted sticky top-0">
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>{tCommonFE("category")}</TableHead>
-                  <TableHead>{tCommonFE("type")}</TableHead>
-                  <TableHead>{tStatisticsFE("transactionCount")}</TableHead>
-                  <TableHead>{tStatisticsFE("totalAmount")}</TableHead>
+                  <TableHead>{t("common.fe.category")}</TableHead>
+                  <TableHead>{t("common.fe.type")}</TableHead>
+                  <TableHead>{t("statistics.fe.transactionCount")}</TableHead>
+                  <TableHead>{t("statistics.fe.totalAmount")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -104,8 +103,8 @@ export function TransactionBreakdownTable({
                         }
                       >
                         {stat.type === "income"
-                          ? tCommonFE("income")
-                          : tCommonFE("expense")}
+                          ? t("common.fe.income")
+                          : t("common.fe.expense")}
                       </Badge>
                     </TableCell>
                     <TableCell>{stat.count}</TableCell>

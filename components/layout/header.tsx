@@ -31,8 +31,7 @@ const ColorDialog =
 
 export function Header() {
   const pathname = usePathname()
-  const tNavigation = useTranslations("navigation")
-  const tCommonFE = useTranslations("common.fe")
+  const t = useTranslations()
 
   const allNavItems = [...mainNav, ...secondaryNav]
   const foundItem = allNavItems.find((item) => item.url === pathname)
@@ -45,10 +44,10 @@ export function Header() {
           <BreadcrumbList>
             <BreadcrumbItem>
               {pathname === "/home" ? (
-                <BreadcrumbPage>{tNavigation("home")}</BreadcrumbPage>
+                <BreadcrumbPage>{t("navigation.home")}</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>
-                  <Link href="/home">{tNavigation("home")}</Link>
+                  <Link href="/home">{t("navigation.home")}</Link>
                 </BreadcrumbLink>
               )}
             </BreadcrumbItem>
@@ -60,8 +59,8 @@ export function Header() {
                 <BreadcrumbItem>
                   <BreadcrumbPage>
                     {foundItem
-                      ? tNavigation(foundItem.key)
-                      : tCommonFE("notFound")}
+                      ? t(`navigation.${foundItem.key}`)
+                      : t("common.fe.notFound")}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </>

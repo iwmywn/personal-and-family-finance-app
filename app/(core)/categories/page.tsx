@@ -4,9 +4,9 @@ import { getTranslations } from "next-intl/server"
 import CategoriesPage from "@/components/categories/categories-page"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const tNavigation = await getTranslations("navigation")
+  const t = await getTranslations()
 
-  return { title: tNavigation("categories") }
+  return { title: t("navigation.categories") }
 }
 
 export default function page() {
