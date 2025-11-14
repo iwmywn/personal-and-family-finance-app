@@ -13,7 +13,7 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <div>
+      <div className="h-auto max-h-none space-y-4">
         <div className="header">
           <div>
             <div className="title">{t("navigation.categories")}</div>
