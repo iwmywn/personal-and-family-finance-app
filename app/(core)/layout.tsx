@@ -40,11 +40,7 @@ export default async function DashboardLayout({
           style={{ maxHeight: "calc(100vh - 1rem)" }}
         >
           <Header />
-          <section
-            id="page-content"
-            className="h-full space-y-4"
-            style={{ maxHeight: "calc(100vh - 4.375rem)" }}
-          >
+          <section id="page-content">
             <Suspense
               fallback={
                 <div className="center">

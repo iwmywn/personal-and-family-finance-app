@@ -12,14 +12,16 @@ export default function StatisticsPage() {
 
   return (
     <>
-      <div className="header">
-        <div>
-          <div className="title">{t("navigation.statistics")}</div>
-          <div className="description">{t("statistics.fe.description")}</div>
+      <div className="h-auto max-h-none space-y-4">
+        <div className="header">
+          <div>
+            <div className="title">{t("navigation.statistics")}</div>
+            <div className="description">{t("statistics.fe.description")}</div>
+          </div>
         </div>
-      </div>
 
-      <StatisticsFilters />
+        <StatisticsFilters />
+      </div>
 
       <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

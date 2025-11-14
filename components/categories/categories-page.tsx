@@ -13,17 +13,19 @@ export default function CategoriesPage() {
 
   return (
     <>
-      <div className="header">
-        <div>
-          <div className="title">{t("navigation.categories")}</div>
-          <div className="description">{t("categories.fe.description")}</div>
+      <div>
+        <div className="header">
+          <div>
+            <div className="title">{t("navigation.categories")}</div>
+            <div className="description">{t("categories.fe.description")}</div>
+          </div>
+          <Button onClick={() => setIsEditOpen(true)}>
+            {t("common.fe.add")}
+          </Button>
         </div>
-        <Button onClick={() => setIsEditOpen(true)}>
-          {t("common.fe.add")}
-        </Button>
-      </div>
 
-      <CategoryFilters />
+        <CategoryFilters />
+      </div>
 
       <CategoryDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

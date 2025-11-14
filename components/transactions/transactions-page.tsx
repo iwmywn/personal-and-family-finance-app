@@ -18,22 +18,26 @@ export default function TransactionsPage() {
 
   return (
     <>
-      <div className="header">
-        <div>
-          <div className="title">{t("navigation.transactions")}</div>
-          <div className="description">{t("transactions.fe.description")}</div>
+      <div className="h-auto max-h-none space-y-4 lg:h-full lg:max-h-[calc(100vh-4.375rem)]">
+        <div className="header">
+          <div>
+            <div className="title">{t("navigation.transactions")}</div>
+            <div className="description">
+              {t("transactions.fe.description")}
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <ExportButton filteredTransactions={filteredTransactions} />
+            <Button onClick={() => setIsEditOpen(true)}>
+              {t("common.fe.add")}
+            </Button>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <ExportButton filteredTransactions={filteredTransactions} />
-          <Button onClick={() => setIsEditOpen(true)}>
-            {t("common.fe.add")}
-          </Button>
-        </div>
-      </div>
 
-      <TransactionFilters
-        onFilteredTransactionsChange={setFilteredTransactions}
-      />
+        <TransactionFilters
+          onFilteredTransactionsChange={setFilteredTransactions}
+        />
+      </div>
 
       <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>

@@ -19,24 +19,27 @@ export default function HomePage() {
 
   return (
     <>
-      <div ref={registerRef} className="header">
-        <div>
-          <div className="title">
-            {t("home.fe.welcome")}, {user.fullName}!
+      <div className="h-auto max-h-none space-y-4 md:h-full md:max-h-[calc(100vh-4.375rem)]">
+        <div ref={registerRef} className="header">
+          <div>
+            <div className="title">
+              {t("home.fe.welcome")}, {user.fullName}!
+            </div>
+            <div className="description">{t("home.fe.description")}</div>
           </div>
-          <div className="description">{t("home.fe.description")}</div>
+          <Button onClick={() => setIsEditOpen(true)}>
+            {t("common.fe.add")}
+          </Button>
         </div>
-        <Button onClick={() => setIsEditOpen(true)}>
-          {t("common.fe.add")}
-        </Button>
-      </div>
 
-      <div ref={registerRef}>
-        <TransactionSummary />
-      </div>
-      <div className="grid gap-4 md:grid-cols-2">
-        <RecentTransactions offsetHeight={calculatedHeight} />
-        <QuickStats offsetHeight={calculatedHeight} />
+        <div ref={registerRef}>
+          <TransactionSummary />
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <RecentTransactions offsetHeight={calculatedHeight} />
+          <QuickStats offsetHeight={calculatedHeight} />
+        </div>
       </div>
 
       <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />

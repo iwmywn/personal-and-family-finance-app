@@ -13,17 +13,19 @@ export default function BudgetsPage() {
 
   return (
     <>
-      <div className="header">
-        <div>
-          <div className="title">{t("navigation.budgets")}</div>
-          <div className="description">{t("budgets.fe.description")}</div>
+      <div className="h-auto max-h-none space-y-4 lg:h-full lg:max-h-[calc(100vh-4.375rem)]">
+        <div className="header">
+          <div>
+            <div className="title">{t("navigation.budgets")}</div>
+            <div className="description">{t("budgets.fe.description")}</div>
+          </div>
+          <Button onClick={() => setIsEditOpen(true)}>
+            {t("common.fe.add")}
+          </Button>
         </div>
-        <Button onClick={() => setIsEditOpen(true)}>
-          {t("common.fe.add")}
-        </Button>
-      </div>
 
-      <BudgetsFilters />
+        <BudgetsFilters />
+      </div>
 
       <BudgetDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>
