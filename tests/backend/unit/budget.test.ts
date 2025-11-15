@@ -51,6 +51,21 @@ describe("Budgets", async () => {
       expect(result.error).toBe(t("common.be.invalidData"))
     })
 
+    it("should return error when budget already exists", async () => {
+      await insertTestBudget(mockBudget)
+      mockAuthenticatedUser()
+
+      const result = await createBudget({
+        categoryKey: mockBudget.categoryKey,
+        amount: 2000000,
+        startDate: normalizeToUTCDate(mockBudget.startDate),
+        endDate: normalizeToUTCDate(mockBudget.endDate),
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(t("budgets.be.budgetExists"))
+    })
+
     it("should return error when database insertion fails", async () => {
       mockAuthenticatedUser()
       const mockBudgetsCollection = setupBudgetCollectionMock()

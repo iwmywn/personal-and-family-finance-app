@@ -35,7 +35,7 @@ export const mockTransaction: DBTransaction = {
   categoryKey: "food_beverage",
   amount: 50000,
   description: "nước dừa",
-  date: new Date("2024-01-15"),
+  date: normalizeToUTCDate(new Date("2024-01-15")),
 }
 
 export const mockBudget: DBBudget = {
@@ -43,8 +43,8 @@ export const mockBudget: DBBudget = {
   userId: mockUser._id,
   categoryKey: "food_beverage",
   amount: 1000000,
-  startDate: new Date("2024-01-01"),
-  endDate: new Date("2024-01-31"),
+  startDate: normalizeToUTCDate(new Date("2024-01-01")),
+  endDate: normalizeToUTCDate(new Date("2024-01-31")),
 }
 
 export const mockValidSignInValues = {

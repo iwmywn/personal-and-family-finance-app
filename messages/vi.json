@@ -226,7 +226,8 @@
       "budgetNotFoundOrNoPermission": "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!",
       "budgetNotFoundOrNoPermissionDelete": "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!",
       "budgetFetchFailed": "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau."
+      "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetExists": "Ngân sách với danh mục, ngày bắt đầu và ngày kết thúc này đã tồn tại!"
     }
   },
   "settings": {

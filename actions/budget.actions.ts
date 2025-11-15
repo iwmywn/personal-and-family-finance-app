@@ -31,6 +31,17 @@ export async function createBudget(values: BudgetFormValues) {
 
     const budgetsCollection = await getBudgetsCollection()
 
+    const existingBudget = await budgetsCollection.findOne({
+      userId: new ObjectId(userId),
+      categoryKey: values.categoryKey,
+      startDate: values.startDate,
+      endDate: values.endDate,
+    })
+
+    if (existingBudget) {
+      return { error: t("budgets.be.budgetExists") }
+    }
+
     const result = await budgetsCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey: values.categoryKey,
