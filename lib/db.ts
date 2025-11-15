@@ -65,6 +65,10 @@ function getClientPromise(): Promise<MongoClient> {
 
 //     await Promise.all([
 //       budgetsCollection.createIndex(
+//         { userId: 1, categoryKey: 1, startDate: 1, endDate: 1 },
+//         { name: "userId_categoryKey_startDate_endDate", background: true }
+//       ),
+//       budgetsCollection.createIndex(
 //         { userId: 1, startDate: -1, _id: -1 },
 //         { name: "userId_startDate__id", background: true }
 //       ),
