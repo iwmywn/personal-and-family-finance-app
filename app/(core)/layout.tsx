@@ -8,6 +8,7 @@ import { getTranslations } from "next-intl/server"
 import { getUser } from "@/actions/auth.actions"
 import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
+import { getGoals } from "@/actions/goal.actions"
 import { getTransactions } from "@/actions/transaction.actions"
 import {
   Empty,
@@ -70,13 +71,19 @@ async function DashboardProvider({
 
   const t = await getTranslations()
 
-  const [userResult, transactionsResult, categoriesResult, budgetsResult] =
-    await Promise.all([
-      getUser(userId, t),
-      getTransactions(userId, t),
-      getCustomCategories(userId, t),
-      getBudgets(userId, t),
-    ])
+  const [
+    userResult,
+    transactionsResult,
+    categoriesResult,
+    budgetsResult,
+    goalsResult,
+  ] = await Promise.all([
+    getUser(userId, t),
+    getTransactions(userId, t),
+    getCustomCategories(userId, t),
+    getBudgets(userId, t),
+    getGoals(userId, t),
+  ])
 
   const renderEmptyState = (
     title: keyof Messages["dataError"],
@@ -97,6 +104,7 @@ async function DashboardProvider({
   const transactions = transactionsResult.transactions
   const customCategories = categoriesResult.customCategories
   const budgets = budgetsResult.budgets
+  const goals = goalsResult.goals
 
   if (!user) return renderEmptyState("userDataError", userResult.error)
   if (!transactions)
@@ -104,6 +112,7 @@ async function DashboardProvider({
   if (!customCategories)
     return renderEmptyState("categoriesDataError", categoriesResult.error)
   if (!budgets) return renderEmptyState("budgetsDataError", budgetsResult.error)
+  if (!goals) return renderEmptyState("goalsDataError", goalsResult.error)
 
   return (
     <AppDataProvider
@@ -111,6 +120,7 @@ async function DashboardProvider({
       transactions={transactions}
       customCategories={customCategories}
       budgets={budgets}
+      goals={goals}
     >
       {children}
     </AppDataProvider>

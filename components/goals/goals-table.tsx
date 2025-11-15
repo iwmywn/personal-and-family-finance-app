@@ -1,0 +1,236 @@
+"use client"
+
+import { useState } from "react"
+import { MoreVerticalIcon, TargetIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
+import { Progress } from "@/components/ui/progress"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { DeleteGoalDialog } from "@/components/goals/delete-goal-dialog"
+import { GoalDialog } from "@/components/goals/goal-dialog"
+import { useAppData } from "@/context/app-data-context"
+import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useFormatDate } from "@/hooks/use-format-date"
+import { useMediaQuery } from "@/hooks/use-media-query"
+import type { Goal } from "@/lib/definitions"
+import { calculateGoalsStats } from "@/lib/goals"
+import { formatCurrency } from "@/lib/utils"
+
+interface GoalsTableProps {
+  filteredGoals: Goal[]
+  offsetHeight: number
+}
+
+export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
+  const { goals, customCategories } = useAppData()
+  const isLargeScreens = useMediaQuery("(max-width: 1023px)")
+  const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
+  const t = useTranslations()
+  const { getCategoryLabel } = useCategoryI18n()
+  const formatDate = useFormatDate()
+
+  const goalsWithStats = calculateGoalsStats(filteredGoals)
+
+  return (
+    <>
+      <Card>
+        <CardContent>
+          {goalsWithStats.length === 0 ? (
+            <Empty
+              className="border"
+              style={{
+                minHeight: isLargeScreens
+                  ? "300px"
+                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
+              }}
+            >
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <TargetIcon />
+                </EmptyMedia>
+                <EmptyTitle>{t("goals.fe.noGoalsFound")}</EmptyTitle>
+                <EmptyDescription>
+                  {goals!.length === 0
+                    ? t("goals.fe.noGoalsDescription")
+                    : t("goals.fe.noGoalsFiltered")}
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
+          ) : (
+            <div
+              className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
+              style={{
+                maxHeight: isLargeScreens
+                  ? "300px"
+                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
+              }}
+            >
+              <Table>
+                <TableHeader className="bg-muted sticky top-0">
+                  <TableRow className="[&>th]:text-center">
+                    <TableHead>{t("goals.fe.name")}</TableHead>
+                    <TableHead>{t("goals.fe.currentAmount")}</TableHead>
+                    <TableHead>{t("goals.fe.targetAmount")}</TableHead>
+                    <TableHead>{t("goals.fe.remainingAmount")}</TableHead>
+                    <TableHead>{t("goals.fe.deadline")}</TableHead>
+                    <TableHead>{t("goals.fe.category")}</TableHead>
+                    <TableHead>{t("goals.fe.status")}</TableHead>
+                    <TableHead>{t("goals.fe.progress")}</TableHead>
+                    <TableHead></TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {goalsWithStats.map((goal) => (
+                    <TableRow key={goal._id} className="[&>td]:text-center">
+                      <TableCell className="font-medium">{goal.name}</TableCell>
+                      <TableCell>
+                        {formatCurrency(goal.currentAmount)}
+                      </TableCell>
+                      <TableCell>{formatCurrency(goal.targetAmount)}</TableCell>
+                      <TableCell>
+                        {formatCurrency(goal.remainingAmount)}
+                      </TableCell>
+                      <TableCell>{formatDate(goal.deadline)}</TableCell>
+                      <TableCell>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Badge variant="outline">
+                              {getCategoryLabel(
+                                goal.categoryKey,
+                                customCategories
+                              )}
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            {getCategoryLabel(
+                              goal.categoryKey,
+                              customCategories
+                            )}
+                          </TooltipContent>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          className={
+                            goal.status === "completed"
+                              ? "badge-green"
+                              : goal.status === "overdue"
+                                ? "badge-red"
+                                : "badge-yellow"
+                          }
+                        >
+                          {goal.status === "completed"
+                            ? t("goals.fe.completed")
+                            : goal.status === "overdue"
+                              ? t("goals.fe.overdue")
+                              : t("goals.fe.active")}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="min-w-32">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Progress
+                              value={Math.min(100, goal.percentage)}
+                              className={`flex-1 ${goal.progressColorClass}`}
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            {goal.percentage.toFixed(1)}%
+                          </TooltipContent>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell onClick={(e) => e.stopPropagation()}>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              className="dark:hover:bg-input/50"
+                              variant="ghost"
+                              size="icon"
+                            >
+                              <MoreVerticalIcon />
+                              <span className="sr-only">
+                                {t("goals.fe.openMenu")}
+                              </span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuItem
+                              className="cursor-pointer"
+                              onClick={() => {
+                                setSelectedGoal(goal)
+                                setIsEditOpen(true)
+                              }}
+                            >
+                              {t("common.fe.edit")}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="cursor-pointer"
+                              variant="destructive"
+                              onClick={() => {
+                                setSelectedGoal(goal)
+                                setIsDeleteOpen(true)
+                              }}
+                            >
+                              {t("common.fe.delete")}
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {selectedGoal && (
+        <>
+          <GoalDialog
+            key={selectedGoal._id + "GoalDialog"}
+            goal={selectedGoal}
+            open={isEditOpen}
+            setOpen={setIsEditOpen}
+          />
+          <DeleteGoalDialog
+            key={selectedGoal._id + "DeleteGoalDialog"}
+            goalId={selectedGoal._id}
+            open={isDeleteOpen}
+            setOpen={setIsDeleteOpen}
+          />
+        </>
+      )}
+    </>
+  )
+}
