@@ -227,7 +227,8 @@
       "budgetNotFoundOrNoPermission": "Budget not found or you don't have permission to edit!",
       "budgetNotFoundOrNoPermissionDelete": "Budget not found or you don't have permission to delete!",
       "budgetFetchFailed": "Failed to load budgets! Please try again later.",
-      "budgetDetailsFetchFailed": "Failed to load budget details! Please try again later."
+      "budgetDetailsFetchFailed": "Failed to load budget details! Please try again later.",
+      "budgetExists": "Budget with this category, start date and end date already exists!"
     }
   },
   "goals": {
