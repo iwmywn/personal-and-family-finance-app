@@ -43,7 +43,7 @@ export default async function DashboardLayout({
           <section id="page-content">
             <Suspense
               fallback={
-                <div className="center">
+                <div className="center h-[calc(100vh-4.375rem)]">
                   <Spinner className="size-8" />
                 </div>
               }

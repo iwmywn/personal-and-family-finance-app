@@ -59,7 +59,7 @@ export default function RootLayout({
   return (
     <Suspense
       fallback={
-        <div className="center">
+        <div className="center h-screen">
           <Spinner className="size-8" />
         </div>
       }
