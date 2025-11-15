@@ -39,6 +39,17 @@ type BaseBudget<T> = {
   endDate: Date
 }
 
+type BaseGoal<T> = {
+  _id: T
+  userId: T
+  name: string
+  targetAmount: number
+  currentAmount: number
+  deadline: Date
+  categoryKey: CategoryKeyType
+  isCompleted: boolean
+}
+
 export type User = BaseUser<string>
 export type DBUser = BaseUser<ObjectId>
 
@@ -50,3 +61,6 @@ export type DBCategory = BaseCategory<ObjectId>
 
 export type Budget = BaseBudget<string>
 export type DBBudget = BaseBudget<ObjectId>
+
+export type Goal = BaseGoal<string>
+export type DBGoal = BaseGoal<ObjectId>

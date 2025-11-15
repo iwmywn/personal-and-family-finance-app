@@ -54,6 +54,7 @@
     "transactions": "Giao dịch",
     "categories": "Danh mục",
     "budgets": "Ngân sách",
+    "goals": "Mục tiêu",
     "settings": "Cài đặt",
     "signOut": "Đăng xuất"
   },
@@ -229,6 +230,61 @@
       "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau."
     }
   },
+  "goals": {
+    "fe": {
+      "description": "Theo dõi mục tiêu tài chính và tiến độ tiết kiệm của bạn.",
+      "addGoal": "Thêm mục tiêu",
+      "editGoal": "Chỉnh sửa mục tiêu",
+      "addGoalDescription": "Tạo mục tiêu tài chính mới để theo dõi tiết kiệm của bạn.",
+      "editGoalDescription": "Cập nhật thông tin mục tiêu tài chính.",
+      "name": "Tên mục tiêu",
+      "namePlaceholder": "ví dụ: Quỹ du lịch, Quỹ khẩn cấp",
+      "targetAmount": "Số tiền mục tiêu",
+      "currentAmount": "Số tiền hiện tại",
+      "deadline": "Hạn chót",
+      "noDeadline": "Không có hạn chót",
+      "category": "Danh mục",
+      "optional": "Tùy chọn",
+      "selectCategory": "Chọn danh mục",
+      "noCategory": "Không có danh mục",
+      "completed": "Đã hoàn thành",
+      "active": "Đang hoạt động",
+      "overdue": "Quá hạn",
+      "status": "Trạng thái",
+      "progress": "Tiến độ",
+      "remainingAmount": "Còn lại",
+      "searchPlaceholder": "Tìm kiếm mục tiêu...",
+      "noGoalsFound": "Không có mục tiêu nào",
+      "noGoalsDescription": "Bạn chưa tạo mục tiêu nào. Hãy thêm mục tiêu đầu tiên!",
+      "noGoalsFiltered": "Không tìm thấy mục tiêu nào phù hợp với bộ lọc của bạn.",
+      "openMenu": "Mở menu",
+      "deleteGoalTitle": "Xóa mục tiêu",
+      "deleteGoalDescription": "Bạn có chắc chắn muốn xóa mục tiêu này? Hành động này không thể hoàn tác.",
+      "allCategories": "Tất cả danh mục",
+      "allProgress": "Tất cả tiến độ",
+      "progressGray": "Chưa có tiến độ",
+      "progressGreen": "Tốt (≥ 75%)",
+      "progressYellow": "Trung bình (50-75%)",
+      "progressRed": "Thấp (< 50%)",
+      "allStatuses": "Tất cả trạng thái",
+      "hasDeadline": "Có hạn chót",
+      "allDeadlines": "Tất cả",
+      "hasDeadlineYes": "Có hạn chót",
+      "hasDeadlineNo": "Không có hạn chót"
+    },
+    "be": {
+      "goalAdded": "Mục tiêu đã được thêm.",
+      "goalUpdated": "Mục tiêu đã được cập nhật.",
+      "goalDeleted": "Mục tiêu đã được xóa.",
+      "goalAddFailed": "Thêm mục tiêu thất bại! Vui lòng thử lại sau.",
+      "goalUpdateFailed": "Cập nhật mục tiêu thất bại! Vui lòng thử lại sau.",
+      "goalDeleteFailed": "Xóa mục tiêu thất bại! Vui lòng thử lại sau.",
+      "invalidGoalId": "ID mục tiêu không hợp lệ!",
+      "goalNotFoundOrNoPermission": "Không tìm thấy mục tiêu hoặc bạn không có quyền chỉnh sửa!",
+      "goalNotFoundOrNoPermissionDelete": "Không tìm thấy mục tiêu hoặc bạn không có quyền xóa!",
+      "goalFetchFailed": "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau."
+    }
+  },
   "settings": {
     "fe": {
       "general": "Chung",
@@ -352,7 +408,8 @@
     "userDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG",
     "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
     "categoriesDataError": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
-    "budgetsDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH"
+    "budgetsDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH",
+    "goalsDataError": "KHÔNG THỂ LẤY DỮ LIỆU MỤC TIÊU"
   },
   "notFound": {
     "title": "KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM",
@@ -392,6 +449,18 @@
       "startDateRequired": "Vui lòng chọn ngày bắt đầu.",
       "endDateRequired": "Vui lòng chọn ngày kết thúc.",
       "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu."
+    },
+    "goal": {
+      "nameRequired": "Tên mục tiêu là bắt buộc.",
+      "nameMaxLength": "Tên mục tiêu tối đa 100 ký tự.",
+      "targetAmountRequired": "Số tiền mục tiêu phải lớn hơn 0.",
+      "targetAmountMaxLength": "Số tiền mục tiêu tối đa là 100 tỷ.",
+      "currentAmountRequired": "Số tiền hiện tại phải từ 0 trở lên.",
+      "currentAmountMaxLength": "Số tiền hiện tại tối đa là 100 tỷ.",
+      "currentAmountExceedsTarget": "Số tiền hiện tại không thể vượt quá số tiền mục tiêu.",
+      "deadlineRequired": "Vui lòng chọn hạn chót.",
+      "categoryRequired": "Vui lòng chọn danh mục.",
+      "categoryInvalid": "Danh mục được chọn không hợp lệ."
     }
   }
 }

@@ -1,5 +1,9 @@
 import { calculateBudgetsStats, progressColorClass } from "@/lib/budgets"
-import type { Budget, Category, Transaction } from "@/lib/definitions"
+import type { Budget, Category, Goal, Transaction } from "@/lib/definitions"
+import {
+  calculateGoalsStats,
+  progressColorClass as goalProgressColorClass,
+} from "@/lib/goals"
 
 interface TransactionFilters {
   searchTerm?: string
@@ -219,4 +223,66 @@ export function filterBudgets(
   }
 
   return filteredBudgets
+}
+
+interface GoalFilters {
+  searchTerm?: string
+  filterStatus?: string
+  filterProgress?: string
+  filterCategoryKey?: string
+}
+
+export function filterGoals(goals: Goal[], filters: GoalFilters): Goal[] {
+  const {
+    searchTerm = "",
+    filterStatus = "all",
+    filterProgress = "all",
+    filterCategoryKey = "all",
+  } = filters
+
+  const normalizedSearchTerm = searchTerm.trim()
+
+  let filteredGoals = goals.filter((goal) => {
+    const matchesSearch = includesCaseInsensitive(
+      goal.name,
+      normalizedSearchTerm
+    )
+
+    const matchesCategory =
+      filterCategoryKey === "all" || goal.categoryKey === filterCategoryKey
+
+    return matchesSearch && matchesCategory
+  })
+
+  if (filterStatus !== "all" || filterProgress !== "all") {
+    const goalsWithStats = calculateGoalsStats(filteredGoals)
+
+    filteredGoals = goalsWithStats
+      .filter((goal) => {
+        const matchesStatus =
+          filterStatus === "all" || goal.status === filterStatus
+
+        let matchesProgress = true
+        if (filterProgress !== "all") {
+          if (filterProgress === "gray") {
+            matchesProgress =
+              goal.progressColorClass === goalProgressColorClass.gray
+          } else if (filterProgress === "green") {
+            matchesProgress =
+              goal.progressColorClass === goalProgressColorClass.green
+          } else if (filterProgress === "yellow") {
+            matchesProgress =
+              goal.progressColorClass === goalProgressColorClass.yellow
+          } else if (filterProgress === "red") {
+            matchesProgress =
+              goal.progressColorClass === goalProgressColorClass.red
+          }
+        }
+
+        return matchesStatus && matchesProgress
+      })
+      .map((goal) => goal)
+  }
+
+  return filteredGoals
 }

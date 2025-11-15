@@ -173,6 +173,57 @@ export const createBudgetSchema = (t: TypedTranslationFunction) => {
     })
 }
 
+export const createGoalSchema = (t: TypedTranslationFunction) => {
+  return z
+    .object({
+      name: z
+        .string()
+        .min(1, {
+          message: t("schemas.goal.nameRequired"),
+        })
+        .max(100, {
+          message: t("schemas.goal.nameMaxLength"),
+        }),
+      targetAmount: z
+        .number()
+        .min(0.01, {
+          message: t("schemas.goal.targetAmountRequired"),
+        })
+        .max(100000000000, {
+          message: t("schemas.goal.targetAmountMaxLength"),
+        }),
+      currentAmount: z
+        .number()
+        .min(0, {
+          message: t("schemas.goal.currentAmountRequired"),
+        })
+        .max(100000000000, {
+          message: t("schemas.goal.currentAmountMaxLength"),
+        }),
+      deadline: z.date({
+        message: t("schemas.goal.deadlineRequired"),
+      }),
+      categoryKey: z
+        .string()
+        .min(1, { message: t("schemas.goal.categoryRequired") })
+        .refine(
+          (val) =>
+            (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
+            val.startsWith("custom_"),
+          { message: t("schemas.goal.categoryInvalid") }
+        ),
+    })
+    .superRefine((data, ctx) => {
+      if (data.currentAmount > data.targetAmount) {
+        ctx.addIssue({
+          path: ["currentAmount"],
+          message: t("schemas.goal.currentAmountExceedsTarget"),
+          code: "custom",
+        })
+      }
+    })
+}
+
 export type SignInFormValues = z.infer<ReturnType<typeof createSignInSchema>>
 export type PasswordFormValues = z.infer<
   ReturnType<typeof createPasswordSchema>
@@ -184,3 +235,4 @@ export type CategoryFormValues = z.infer<
   ReturnType<typeof createCategorySchema>
 >
 export type BudgetFormValues = z.infer<ReturnType<typeof createBudgetSchema>>
+export type GoalFormValues = z.infer<ReturnType<typeof createGoalSchema>>
