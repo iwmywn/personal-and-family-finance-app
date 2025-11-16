@@ -35,8 +35,7 @@ interface BudgetFilters {
   filterStatus?: string
 }
 
-export function toDateOnly(date: Date | null | undefined): Date | null {
-  if (!date) return null
+export function toDateOnly(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
 
@@ -60,9 +59,6 @@ export function filterTransactions(
   } = filters
 
   const normalizedSearchTerm = searchTerm.trim()
-  const fromDateOnly = toDateOnly(dateRange.from)
-  const toDateOnlyValue = toDateOnly(dateRange.to)
-  const selectedDateOnly = toDateOnly(selectedDate)
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
@@ -72,18 +68,18 @@ export function filterTransactions(
       normalizedSearchTerm
     )
 
-    const transactionDate = new Date(transaction.date)
-    const transactionDateOnly = toDateOnly(transactionDate)!
+    const transactionDateOnly = toDateOnly(new Date(transaction.date))
 
-    const matchesSelectedDate = selectedDateOnly
-      ? transactionDateOnly.getTime() === selectedDateOnly.getTime()
+    const matchesSelectedDate = selectedDate
+      ? transactionDateOnly.getTime() === toDateOnly(selectedDate).getTime()
       : true
 
     const matchesDateRange =
-      (!fromDateOnly ||
-        transactionDateOnly.getTime() >= fromDateOnly.getTime()) &&
-      (!toDateOnlyValue ||
-        transactionDateOnly.getTime() <= toDateOnlyValue.getTime())
+      (!dateRange.from ||
+        transactionDateOnly.getTime() >=
+          toDateOnly(dateRange.from).getTime()) &&
+      (!dateRange.to ||
+        transactionDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
 
     const matchesMonth =
       !parsedMonth || transactionDateOnly.getMonth() + 1 === parsedMonth
@@ -142,21 +138,19 @@ export function filterBudgets(
     filterStatus = "all",
   } = filters
 
-  const fromDateOnly = toDateOnly(dateRange.from)
-  const toDateOnlyValue = toDateOnly(dateRange.to)
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
-  const nowDateOnly = toDateOnly(new Date())!
+  const nowDateOnly = toDateOnly(new Date())
 
   let filteredBudgets = budgets.filter((budget) => {
-    const budgetStartDateOnly = toDateOnly(new Date(budget.startDate))!
-    const budgetEndDateOnly = toDateOnly(new Date(budget.endDate))!
+    const budgetStartDateOnly = toDateOnly(new Date(budget.startDate))
+    const budgetEndDateOnly = toDateOnly(new Date(budget.endDate))
 
     const matchesDateRange =
-      (!fromDateOnly ||
-        budgetEndDateOnly.getTime() >= fromDateOnly.getTime()) &&
-      (!toDateOnlyValue ||
-        budgetStartDateOnly.getTime() <= toDateOnlyValue.getTime())
+      (!dateRange.from ||
+        budgetEndDateOnly.getTime() >= toDateOnly(dateRange.from).getTime()) &&
+      (!dateRange.to ||
+        budgetStartDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
 
     const matchesMonth = !parsedMonth
       ? true

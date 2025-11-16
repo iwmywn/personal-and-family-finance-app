@@ -13,11 +13,6 @@ import {
 
 describe("Filters", () => {
   describe("toDateOnly", () => {
-    it("should return null for null or undefined", () => {
-      expect(toDateOnly(null)).toBeNull()
-      expect(toDateOnly(undefined)).toBeNull()
-    })
-
     it("should normalize to local midnight with same Y-M-D", () => {
       const d = new Date(2024, 0, 20, 15, 30, 45, 123)
       const only = toDateOnly(d)!
