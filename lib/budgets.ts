@@ -1,4 +1,5 @@
 import type { Budget, Transaction } from "@/lib/definitions"
+import { toDateOnly } from "@/lib/filters"
 
 interface BudgetWithStats extends Budget {
   spent: number
@@ -18,15 +19,19 @@ export function calculateBudgetStats(
   budget: Budget,
   transactions: Transaction[]
 ): BudgetWithStats {
-  const startDate = new Date(budget.startDate)
-  const endDate = new Date(budget.endDate)
-  const now = new Date()
+  const startDateOnly = toDateOnly(new Date(budget.startDate))
+  const endDateOnly = toDateOnly(new Date(budget.endDate))
+  const nowDateOnly = toDateOnly(new Date())
 
   const budgetTransactions = transactions.filter((t) => {
     if (t.type !== "expense") return false
 
-    const transactionDate = new Date(t.date)
-    if (transactionDate < startDate || transactionDate > endDate) {
+    const transactionDateOnly = toDateOnly(new Date(t.date))
+
+    if (
+      transactionDateOnly.getTime() < startDateOnly.getTime() ||
+      transactionDateOnly.getTime() > endDateOnly.getTime()
+    ) {
       return false
     }
 
@@ -49,9 +54,12 @@ export function calculateBudgetStats(
   }
 
   let status: "expired" | "active" | "upcoming"
-  if (endDate < now) {
+  if (endDateOnly.getTime() < nowDateOnly.getTime()) {
     status = "expired"
-  } else if (startDate <= now && endDate >= now) {
+  } else if (
+    startDateOnly.getTime() <= nowDateOnly.getTime() &&
+    endDateOnly.getTime() >= nowDateOnly.getTime()
+  ) {
     status = "active"
   } else {
     status = "upcoming"
