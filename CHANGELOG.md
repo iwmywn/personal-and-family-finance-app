@@ -1,3 +1,24 @@
+## [25.47.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.46.0...v25.47.0)
+
+### Nerd stuff
+
+These changes will not be visible to users, but are included for completeness and to credit contributors.
+
+- **refactor:** rename test files ([a9d1e44](https://github.com/iwmywn/personal-and-family-finance-app/commit/a9d1e44fdb5c41fa490cee3688ad6043668f52fb))
+- **refactor:** rename action files ([4b25e81](https://github.com/iwmywn/personal-and-family-finance-app/commit/4b25e81df1cebf91d64f3979b806473f64a2ed26))
+- **refactor:** unify translation handling ([25d3077](https://github.com/iwmywn/personal-and-family-finance-app/commit/25d30772eedae686f4fd80ab4a05eb1ea3c8a165))
+- **refactor:** update icon imports and adjust badge styles ([e69e694](https://github.com/iwmywn/personal-and-family-finance-app/commit/e69e6947fa8bb893fb5b475b0d03899391db2e4f))
+- **refactor:** reorganize imports and update context usage across multiple files ([d9a893f](https://github.com/iwmywn/personal-and-family-finance-app/commit/d9a893ff1accf6b9eebe0914b547255efcec3d03))
+- **refactor:** remove BasePage component and update layout structure across multiple pages ([73562d1](https://github.com/iwmywn/personal-and-family-finance-app/commit/73562d14fefaaea75b8c5a2eb8a04bb9c6c34da7))
+- **refactor:** rename CustomCategory to Category ([922b61e](https://github.com/iwmywn/personal-and-family-finance-app/commit/922b61ee7ef336cb4584e805c0099628608eb09f))
+- **refactor:** replace SWR with AppDataContext (@iwmywn) ([#6](https://github.com/iwmywn/personal-and-family-finance-app/pull/6)) ([e18db5e](https://github.com/iwmywn/personal-and-family-finance-app/commit/e18db5eae21378a262e03a941ca352f4c30a1a5c))
+- **test:** normalize date handling in budget and transaction tests ([0a50c11](https://github.com/iwmywn/personal-and-family-finance-app/commit/0a50c1129f584c32a0506fe6d4ce8ceea91fa62b))
+- **chore:** update deps ([7b547c5](https://github.com/iwmywn/personal-and-family-finance-app/commit/7b547c592d632a10e4e50c15eb42e97e0ecd648a))
+- **chore:** add missing indexes for budgets collection ([21e09a3](https://github.com/iwmywn/personal-and-family-finance-app/commit/21e09a351833e57f5819d1126be53c6076c4db27))
+- **chore:** update progress color ([f3dea2b](https://github.com/iwmywn/personal-and-family-finance-app/commit/f3dea2b16a1fb83a5bef00bf76dabf06871e8a82))
+- **chore:** update pnpm version to 10.21.0 ([560b225](https://github.com/iwmywn/personal-and-family-finance-app/commit/560b225155972a177a97516462641d404ec6d9f4))
+- **chore:** update og image ([8a2fa56](https://github.com/iwmywn/personal-and-family-finance-app/commit/8a2fa5607833f61bd04f7682f8e080e8fafc1a37))
+
 ## 25.46.0
 
 Thank you to all the contributors who made this release possible!
