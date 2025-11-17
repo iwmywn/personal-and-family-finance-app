@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { createBudgetSchema, type BudgetFormValues } from "@/schemas"
+import { createGoalSchema, type GoalFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 
-import { createBudget, updateBudget } from "@/actions/budget.actions"
+import { createGoal, updateGoal } from "@/actions/goal.actions"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -47,30 +47,31 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
-import type { Budget } from "@/lib/definitions"
+import type { Goal } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
 
-interface BudgetDialogProps {
-  budget?: Budget
+interface GoalDialogProps {
+  goal?: Goal
   open: boolean
   setOpen: (open: boolean) => void
 }
 
-export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
+export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useTranslations()
   const formatDate = useFormatDate()
-  const schema = createBudgetSchema(t)
-  const form = useForm<BudgetFormValues>({
+  const schema = createGoalSchema(t)
+  const form = useForm<GoalFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      categoryKey: budget?.categoryKey || "",
-      allocatedAmount: budget?.allocatedAmount || 0,
-      startDate: budget?.startDate ? new Date(budget.startDate) : undefined,
-      endDate: budget?.endDate ? new Date(budget.endDate) : undefined,
+      categoryKey: goal?.categoryKey || "",
+      name: goal?.name || "",
+      targetAmount: goal?.targetAmount || 0,
+      startDate: goal?.startDate ? new Date(goal.startDate) : undefined,
+      endDate: goal?.endDate ? new Date(goal.endDate) : undefined,
     },
   })
 
@@ -87,11 +88,11 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
     name: "endDate",
   })
 
-  async function onSubmit(values: BudgetFormValues) {
+  async function onSubmit(values: GoalFormValues) {
     setIsLoading(true)
 
-    if (budget) {
-      const { success, error } = await updateBudget(budget._id, {
+    if (goal) {
+      const { success, error } = await updateGoal(goal._id, {
         ...values,
         startDate: normalizeToUTCDate(values.startDate),
         endDate: normalizeToUTCDate(values.endDate),
@@ -104,7 +105,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         setOpen(false)
       }
     } else {
-      const { success, error } = await createBudget({
+      const { success, error } = await createGoal({
         ...values,
         startDate: normalizeToUTCDate(values.startDate),
         endDate: normalizeToUTCDate(values.endDate),
@@ -115,8 +116,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       } else {
         toast.success(success)
         form.reset({
+          name: "",
           categoryKey: "",
-          allocatedAmount: 0,
+          targetAmount: 0,
           startDate: undefined,
           endDate: undefined,
         })
@@ -132,12 +134,12 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {budget ? t("budgets.fe.editBudget") : t("budgets.fe.addBudget")}
+            {goal ? t("goals.fe.editGoal") : t("goals.fe.addGoal")}
           </DialogTitle>
           <DialogDescription>
-            {budget
-              ? t("budgets.fe.editBudgetDescription")
-              : t("budgets.fe.addBudgetDescription")}
+            {goal
+              ? t("goals.fe.editGoalDescription")
+              : t("goals.fe.addGoalDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -166,7 +168,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                         maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                       }}
                     >
-                      {getCategoriesWithDetails("expense").map((c) => (
+                      {getCategoriesWithDetails("income").map((c) => (
                         <SelectItem key={c.categoryKey} value={c.categoryKey}>
                           <div className="flex flex-col">
                             <span className="font-medium">{c.label}</span>
@@ -177,12 +179,12 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                         </SelectItem>
                       ))}
                       {customCategories &&
-                        customCategories.filter((c) => c.type === "expense")
+                        customCategories.filter((c) => c.type === "income")
                           .length > 0 && (
                           <>
                             <SelectSeparator />
                             {customCategories
-                              .filter((c) => c.type === "expense")
+                              .filter((c) => c.type === "income")
                               .map((c) => (
                                 <SelectItem key={c._id} value={c.categoryKey}>
                                   <div className="flex flex-col">
@@ -206,10 +208,27 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
             <FormField
               control={form.control}
-              name="allocatedAmount"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.amount")} (VND)</FormLabel>
+                  <FormLabel>{t("goals.fe.goalName")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("goals.fe.goalNamePlaceholder")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="targetAmount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("goals.fe.targetAmount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -341,7 +360,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               </DialogClose>
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Spinner />}{" "}
-                {budget ? t("common.fe.update") : t("common.fe.add")}
+                {goal ? t("common.fe.update") : t("common.fe.add")}
               </Button>
             </DialogFooter>
           </form>

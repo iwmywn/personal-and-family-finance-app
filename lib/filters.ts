@@ -1,7 +1,8 @@
-import { calculateBudgetsStats, progressColorClass } from "@/lib/budgets"
-import type { Budget, Category, Transaction } from "@/lib/definitions"
+import type { Budget, Category, Goal, Transaction } from "@/lib/definitions"
+import { calculateBudgetsStats, calculateGoalsStats } from "@/lib/statistics"
+import { progressColorClass } from "@/lib/utils"
 
-interface TransactionFilters {
+interface Filters {
   searchTerm?: string
   selectedDate?: Date | null
   dateRange?: {
@@ -11,21 +12,6 @@ interface TransactionFilters {
   filterMonth?: string
   filterYear?: string
   filterType?: string
-  filterCategoryKey?: string
-}
-
-interface CategoryFilters {
-  searchTerm?: string
-  filterType?: string
-}
-
-interface BudgetFilters {
-  dateRange?: {
-    from?: Date | null
-    to?: Date | null
-  }
-  filterMonth?: string
-  filterYear?: string
   filterCategoryKey?: string
   filterProgress?: string
   filterStatus?: string
@@ -42,7 +28,7 @@ export function includesCaseInsensitive(text: string, query: string): boolean {
 
 export function filterTransactions(
   transactions: Transaction[],
-  filters: TransactionFilters
+  filters: Filters
 ): Transaction[] {
   const {
     searchTerm = "",
@@ -103,7 +89,7 @@ export function filterTransactions(
 
 export function filterCustomCategories(
   categories: Category[],
-  filters: CategoryFilters
+  filters: Filters
 ): Category[] {
   const { searchTerm = "", filterType = "all" } = filters
   const normalizedSearchTerm = searchTerm.trim()
@@ -122,7 +108,7 @@ export function filterCustomCategories(
 
 export function filterBudgets(
   budgets: Budget[],
-  filters: BudgetFilters,
+  filters: Filters,
   transactions: Transaction[]
 ): Budget[] {
   const {
@@ -136,7 +122,6 @@ export function filterBudgets(
 
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
-  const nowDateOnly = toDateOnly(new Date())
 
   let filteredBudgets = budgets.filter((budget) => {
     const budgetStartDateOnly = toDateOnly(new Date(budget.startDate))
@@ -165,29 +150,10 @@ export function filterBudgets(
     const matchesCategory =
       filterCategoryKey === "all" || budget.categoryKey === filterCategoryKey
 
-    let matchesStatus = true
-    if (filterStatus !== "all") {
-      if (filterStatus === "expired") {
-        matchesStatus = budgetEndDateOnly.getTime() < nowDateOnly.getTime()
-      } else if (filterStatus === "active") {
-        matchesStatus =
-          budgetStartDateOnly.getTime() <= nowDateOnly.getTime() &&
-          budgetEndDateOnly.getTime() >= nowDateOnly.getTime()
-      } else if (filterStatus === "upcoming") {
-        matchesStatus = budgetStartDateOnly.getTime() > nowDateOnly.getTime()
-      }
-    }
-
-    return (
-      matchesDateRange &&
-      matchesMonth &&
-      matchesYear &&
-      matchesCategory &&
-      matchesStatus
-    )
+    return matchesDateRange && matchesMonth && matchesYear && matchesCategory
   })
 
-  if (filterProgress !== "all" && transactions) {
+  if (filterStatus !== "all" || filterProgress !== "all") {
     const budgetsWithStats = calculateBudgetsStats(
       filteredBudgets,
       transactions
@@ -195,22 +161,118 @@ export function filterBudgets(
 
     filteredBudgets = budgetsWithStats
       .filter((budget) => {
+        const matchesStatus =
+          filterStatus === "all" || budget.status === filterStatus
+
+        let matchesProgress = true
         if (filterProgress === "gray") {
-          return budget.progressColorClass === progressColorClass.gray
+          matchesProgress =
+            budget.progressColorClass === progressColorClass.gray
         }
         if (filterProgress === "green") {
-          return budget.progressColorClass === progressColorClass.green
+          matchesProgress =
+            budget.progressColorClass === progressColorClass.green
         }
         if (filterProgress === "yellow") {
-          return budget.progressColorClass === progressColorClass.yellow
+          matchesProgress =
+            budget.progressColorClass === progressColorClass.yellow
         }
         if (filterProgress === "red") {
-          return budget.progressColorClass === progressColorClass.red
+          matchesProgress = budget.progressColorClass === progressColorClass.red
         }
-        return true
+
+        return matchesStatus && matchesProgress
       })
       .map((budget) => budget)
   }
 
   return filteredBudgets
+}
+
+export function filterGoals(
+  goals: Goal[],
+  filters: Filters,
+  transactions: Transaction[]
+): Goal[] {
+  const {
+    searchTerm = "",
+    dateRange = {},
+    filterMonth = "all",
+    filterYear = "all",
+    filterStatus = "all",
+    filterProgress = "all",
+    filterCategoryKey = "all",
+  } = filters
+
+  const normalizedSearchTerm = searchTerm.trim()
+  const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
+  const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
+
+  let filteredGoals = goals.filter((goal) => {
+    const goalStartDateOnly = toDateOnly(new Date(goal.startDate))
+    const goalEndDateOnly = toDateOnly(new Date(goal.endDate))
+
+    const matchesSearch = includesCaseInsensitive(
+      goal.name,
+      normalizedSearchTerm
+    )
+
+    const matchesDateRange =
+      (!dateRange.from ||
+        goalEndDateOnly.getTime() >= toDateOnly(dateRange.from).getTime()) &&
+      (!dateRange.to ||
+        goalStartDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
+
+    const matchesMonth = !parsedMonth
+      ? true
+      : goalStartDateOnly.getMonth() + 1 === parsedMonth ||
+        goalEndDateOnly.getMonth() + 1 === parsedMonth ||
+        (goalStartDateOnly.getMonth() + 1 < parsedMonth &&
+          goalEndDateOnly.getMonth() + 1 > parsedMonth)
+
+    const matchesYear = !parsedYear
+      ? true
+      : goalStartDateOnly.getFullYear() === parsedYear ||
+        goalEndDateOnly.getFullYear() === parsedYear ||
+        (goalStartDateOnly.getFullYear() < parsedYear &&
+          goalEndDateOnly.getFullYear() > parsedYear)
+
+    const matchesCategory =
+      filterCategoryKey === "all" || goal.categoryKey === filterCategoryKey
+
+    return (
+      matchesSearch &&
+      matchesDateRange &&
+      matchesMonth &&
+      matchesYear &&
+      matchesCategory
+    )
+  })
+
+  if (filterStatus !== "all" || filterProgress !== "all") {
+    const goalsWithStats = calculateGoalsStats(filteredGoals, transactions)
+
+    filteredGoals = goalsWithStats
+      .filter((goal) => {
+        const matchesStatus =
+          filterStatus === "all" || goal.status === filterStatus
+
+        let matchesProgress = true
+        if (filterProgress === "gray") {
+          matchesProgress = goal.progressColorClass === progressColorClass.gray
+        } else if (filterProgress === "green") {
+          matchesProgress = goal.progressColorClass === progressColorClass.green
+        } else if (filterProgress === "yellow") {
+          matchesProgress =
+            goal.progressColorClass === progressColorClass.yellow
+        } else if (filterProgress === "red") {
+          matchesProgress = goal.progressColorClass === progressColorClass.red
+        }
+
+        return matchesStatus && matchesProgress
+      })
+      .map((goal) => goal)
+  }
+
+  return filteredGoals
 }

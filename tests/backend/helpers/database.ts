@@ -1,12 +1,14 @@
 import {
   getBudgetsCollection,
   getCategoriesCollection,
+  getGoalsCollection,
   getTransactionsCollection,
   getUsersCollection,
 } from "@/lib/collections"
 import {
   type DBBudget,
   type DBCategory,
+  type DBGoal,
   type DBTransaction,
   type DBUser,
 } from "@/lib/definitions"
@@ -29,4 +31,9 @@ export const insertTestCategory = async (category: DBCategory) => {
 export const insertTestBudget = async (budget: DBBudget) => {
   const collection = await getBudgetsCollection()
   await collection.insertOne(budget)
+}
+
+export const insertTestGoal = async (goal: DBGoal) => {
+  const collection = await getGoalsCollection()
+  await collection.insertOne(goal)
 }

@@ -2,6 +2,7 @@ import { collection } from "@/lib/db"
 import type {
   DBBudget,
   DBCategory,
+  DBGoal,
   DBTransaction,
   DBUser,
 } from "@/lib/definitions"
@@ -20,4 +21,8 @@ export function getCategoriesCollection() {
 
 export function getBudgetsCollection() {
   return collection<DBBudget>("budgets")
+}
+
+export function getGoalsCollection() {
+  return collection<DBGoal>("goals")
 }

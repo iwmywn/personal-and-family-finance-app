@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreVerticalIcon, PiggyBankIcon } from "lucide-react"
+import { MoreVerticalIcon, TargetIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -34,41 +34,38 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { BudgetDialog } from "@/components/budgets/budget-dialog"
-import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
+import { DeleteGoalDialog } from "@/components/goals/delete-goal-dialog"
+import { GoalDialog } from "@/components/goals/goal-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import type { Budget } from "@/lib/definitions"
-import { calculateBudgetsStats } from "@/lib/statistics"
+import type { Goal } from "@/lib/definitions"
+import { calculateGoalsStats } from "@/lib/statistics"
 import { formatCurrency } from "@/lib/utils"
 
-interface BudgetsTableProps {
-  filteredBudgets: Budget[]
+interface GoalsTableProps {
+  filteredGoals: Goal[]
   offsetHeight: number
 }
 
-export function BudgetsTable({
-  filteredBudgets,
-  offsetHeight,
-}: BudgetsTableProps) {
-  const { budgets, transactions, customCategories } = useAppData()
+export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
+  const { goals, transactions, customCategories } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
+  const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
   const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
 
-  const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions)
+  const goalsWithStats = calculateGoalsStats(filteredGoals, transactions)
 
   return (
     <>
       <Card>
         <CardContent>
-          {filteredBudgets.length === 0 ? (
+          {filteredGoals.length === 0 ? (
             <Empty
               className="border"
               style={{
@@ -79,13 +76,13 @@ export function BudgetsTable({
             >
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <PiggyBankIcon />
+                  <TargetIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("budgets.fe.noBudgetsFound")}</EmptyTitle>
+                <EmptyTitle>{t("goals.fe.noGoalsFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {budgets.length === 0
-                    ? t("budgets.fe.noBudgetsDescription")
-                    : t("budgets.fe.noBudgetsFiltered")}
+                  {goals.length === 0
+                    ? t("goals.fe.noGoalsDescription")
+                    : t("goals.fe.noGoalsFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -103,58 +100,54 @@ export function BudgetsTable({
                   <TableRow className="[&>th]:text-center">
                     <TableHead>{t("common.fe.startDate")}</TableHead>
                     <TableHead>{t("common.fe.endDate")}</TableHead>
+                    <TableHead>{t("goals.fe.goalName")}</TableHead>
                     <TableHead>{t("common.fe.category")}</TableHead>
-                    <TableHead>{t("common.fe.amount")}</TableHead>
-                    <TableHead>{t("budgets.fe.spent")}</TableHead>
-                    <TableHead>{t("common.fe.balance")}</TableHead>
+                    <TableHead>{t("goals.fe.targetAmount")}</TableHead>
+                    <TableHead>{t("goals.fe.accumulated")}</TableHead>
                     <TableHead>{t("common.fe.status")}</TableHead>
                     <TableHead>{t("common.fe.progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {budgetsWithSpent.map((budget) => (
-                    <TableRow key={budget._id} className="[&>td]:text-center">
-                      <TableCell>{formatDate(budget.startDate)}</TableCell>
-                      <TableCell>{formatDate(budget.endDate)}</TableCell>
+                  {goalsWithStats.map((goal) => (
+                    <TableRow key={goal._id} className="[&>td]:text-center">
+                      <TableCell>{formatDate(goal.startDate)}</TableCell>
+                      <TableCell>{formatDate(goal.endDate)}</TableCell>
+                      <TableCell className="font-medium">{goal.name}</TableCell>
                       <TableCell>
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
                               {getCategoryLabel(
-                                budget.categoryKey,
+                                goal.categoryKey,
                                 customCategories
                               )}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
                             {getCategoryDescription(
-                              budget.categoryKey,
+                              goal.categoryKey,
                               customCategories
                             )}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell>
-                        {formatCurrency(budget.allocatedAmount)}
-                      </TableCell>
-                      <TableCell>{formatCurrency(budget.spent)}</TableCell>
-                      <TableCell>
-                        {formatCurrency(budget.allocatedAmount - budget.spent)}
-                      </TableCell>
+                      <TableCell>{formatCurrency(goal.targetAmount)}</TableCell>
+                      <TableCell>{formatCurrency(goal.accumulated)}</TableCell>
                       <TableCell>
                         <Badge
                           className={
-                            budget.status === "expired"
+                            goal.status === "expired"
                               ? "badge-red"
-                              : budget.status === "active"
+                              : goal.status === "active"
                                 ? "badge-green"
                                 : "badge-yellow"
                           }
                         >
-                          {budget.status === "expired"
+                          {goal.status === "expired"
                             ? t("common.fe.expired")
-                            : budget.status === "active"
+                            : goal.status === "active"
                               ? t("common.fe.active")
                               : t("common.fe.upcoming")}
                         </Badge>
@@ -163,12 +156,12 @@ export function BudgetsTable({
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Progress
-                              value={Math.min(100, budget.percentage)}
-                              className={`flex-1 ${budget.progressColorClass}`}
+                              value={Math.min(100, goal.percentage)}
+                              className={`flex-1 ${goal.progressColorClass}`}
                             />
                           </TooltipTrigger>
                           <TooltipContent>
-                            {budget.percentage.toFixed(1)}%
+                            {goal.percentage.toFixed(1)}%
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
@@ -190,7 +183,7 @@ export function BudgetsTable({
                             <DropdownMenuItem
                               className="cursor-pointer"
                               onClick={() => {
-                                setSelectedBudget(budget)
+                                setSelectedGoal(goal)
                                 setIsEditOpen(true)
                               }}
                             >
@@ -200,7 +193,7 @@ export function BudgetsTable({
                               className="cursor-pointer"
                               variant="destructive"
                               onClick={() => {
-                                setSelectedBudget(budget)
+                                setSelectedGoal(goal)
                                 setIsDeleteOpen(true)
                               }}
                             >
@@ -218,17 +211,17 @@ export function BudgetsTable({
         </CardContent>
       </Card>
 
-      {selectedBudget && (
+      {selectedGoal && (
         <>
-          <BudgetDialog
-            key={selectedBudget._id + "BudgetDialog"}
-            budget={selectedBudget}
+          <GoalDialog
+            key={selectedGoal._id + "GoalDialog"}
+            goal={selectedGoal}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
-          <DeleteBudgetDialog
-            key={selectedBudget._id + "DeleteBudgetDialog"}
-            budgetId={selectedBudget._id}
+          <DeleteGoalDialog
+            key={selectedGoal._id + "DeleteGoalDialog"}
+            goalId={selectedGoal._id}
             open={isDeleteOpen}
             setOpen={setIsDeleteOpen}
           />

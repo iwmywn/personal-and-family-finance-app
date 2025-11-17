@@ -6,7 +6,7 @@ import {
   type OptionalId,
 } from "mongodb"
 
-import { env } from "@/env/server"
+import { env } from "@/env/server.mjs"
 
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined

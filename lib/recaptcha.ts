@@ -1,6 +1,6 @@
 "use server"
 
-import { env } from "@/env/server"
+import { env } from "@/env/server.mjs"
 
 export async function verifyRecaptchaToken(token: string) {
   if (!token) return false

@@ -4,6 +4,7 @@ import {
   HomeIcon,
   PiggyBankIcon,
   SettingsIcon,
+  TargetIcon,
   WalletIcon,
   type LucideIcon,
 } from "lucide-react"
@@ -41,6 +42,11 @@ export const mainNav: NavType[] = [
     key: "budgets",
     url: "/budgets",
     icon: PiggyBankIcon,
+  },
+  {
+    key: "goals",
+    url: "/goals",
+    icon: TargetIcon,
   },
 ]
 

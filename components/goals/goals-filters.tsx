@@ -1,12 +1,18 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group"
 import {
   Popover,
   PopoverContent,
@@ -22,18 +28,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { BudgetsTable } from "@/components/budgets/budgets-table"
+import { GoalsTable } from "@/components/goals/goals-table"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonthsI18n } from "@/hooks/use-months-i18n"
-import { EXPENSE_CATEGORIES_KEY } from "@/lib/categories"
-import { filterBudgets } from "@/lib/filters"
+import { INCOME_CATEGORIES_KEY } from "@/lib/categories"
+import { filterGoals } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
-export function BudgetsFilters() {
-  const { budgets, transactions, customCategories } = useAppData()
+export function GoalsFilters() {
+  const { goals, transactions, customCategories } = useAppData()
+  const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined
@@ -44,13 +51,13 @@ export function BudgetsFilters() {
   })
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
-  const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
-  const [filterProgress, setFilterProgress] = useState<
-    "all" | "gray" | "green" | "yellow" | "red"
-  >("all")
   const [filterStatus, setFilterStatus] = useState<
     "all" | "expired" | "active" | "upcoming"
   >("all")
+  const [filterProgress, setFilterProgress] = useState<
+    "all" | "gray" | "green" | "yellow" | "red"
+  >("all")
+  const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useTranslations()
   const { getCategoryLabel } = useCategoryI18n()
@@ -60,21 +67,23 @@ export function BudgetsFilters() {
   const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
+    searchTerm !== "" ||
     dateRange.from ||
     dateRange.to ||
     filterMonth !== "all" ||
     filterYear !== "all" ||
-    filterCategoryKey !== "all" ||
+    filterStatus !== "all" ||
     filterProgress !== "all" ||
-    filterStatus !== "all"
+    filterCategoryKey !== "all"
 
   const handleResetFilters = () => {
+    setSearchTerm("")
     setDateRange({ from: undefined, to: undefined })
     setFilterMonth("all")
     setFilterYear("all")
-    setFilterCategoryKey("all")
-    setFilterProgress("all")
     setFilterStatus("all")
+    setFilterProgress("all")
+    setFilterCategoryKey("all")
   }
 
   const handleDateRangeChange = (range: {
@@ -101,15 +110,16 @@ export function BudgetsFilters() {
     }
   }
 
-  const filteredBudgets = filterBudgets(
-    budgets,
+  const filteredGoals = filterGoals(
+    goals,
     {
+      searchTerm,
       dateRange,
       filterMonth,
       filterYear,
-      filterCategoryKey,
-      filterProgress,
       filterStatus,
+      filterProgress,
+      filterCategoryKey,
     },
     transactions
   )
@@ -119,11 +129,35 @@ export function BudgetsFilters() {
       <Card ref={registerRef}>
         <CardContent>
           <div
-            className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-3 lg:grid-cols-[1fr_1fr_1fr] lg:grid-rows-2 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] 2xl:grid-rows-1 ${
+            className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-4 lg:grid-cols-[1fr_1fr_1fr] lg:grid-rows-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] 2xl:grid-rows-2 ${
               hasActiveFilters &&
-              "md:grid-rows-3 lg:grid-rows-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]"
+              "md:grid-rows-5 lg:grid-rows-4 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]"
             } gap-4`}
           >
+            <InputGroup
+              className={`col-span-full ${searchTerm !== "" && "border-primary"}`}
+            >
+              <InputGroupAddon>
+                <SearchIcon />
+              </InputGroupAddon>
+              <InputGroupInput
+                placeholder={t("goals.fe.searchPlaceholder")}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    className="rounded-full"
+                    size="icon-xs"
+                    onClick={() => setSearchTerm("")}
+                  >
+                    <XIcon />
+                  </InputGroupButton>
+                </InputGroupAddon>
+              )}
+            </InputGroup>
+
             <Popover
               open={isDateRangeOpen}
               onOpenChange={(open) => {
@@ -136,7 +170,7 @@ export function BudgetsFilters() {
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={`w-full justify-between font-normal md:row-start-1 ${dateRange.from && "border-primary!"}`}
+                  className={`w-full justify-between font-normal md:row-start-2 ${dateRange.from && "border-primary!"}`}
                 >
                   {dateRange.from ? (
                     dateRange.to ? (
@@ -202,7 +236,7 @@ export function BudgetsFilters() {
 
             <Select value={filterMonth} onValueChange={handleMonthChange}>
               <SelectTrigger
-                className={`w-full md:row-start-1 ${filterMonth !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.month")} />
               </SelectTrigger>
@@ -223,7 +257,7 @@ export function BudgetsFilters() {
 
             <Select value={filterYear} onValueChange={handleYearChange}>
               <SelectTrigger
-                className={`w-full md:row-start-2 lg:row-start-1 ${filterYear !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.year")} />
               </SelectTrigger>
@@ -245,7 +279,7 @@ export function BudgetsFilters() {
               onValueChange={setFilterCategoryKey}
             >
               <SelectTrigger
-                className={`w-full md:row-start-2 2xl:row-start-1 ${filterCategoryKey !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.category")} />
               </SelectTrigger>
@@ -255,14 +289,14 @@ export function BudgetsFilters() {
                     {t("common.fe.allCategories")}
                   </SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{t("common.fe.expense")}</SelectLabel>
-                  {EXPENSE_CATEGORIES_KEY.map((category) => (
+                  <SelectLabel>{t("common.fe.income")}</SelectLabel>
+                  {INCOME_CATEGORIES_KEY.map((category) => (
                     <SelectItem key={category} value={category}>
                       {getCategoryLabel(category, customCategories)}
                     </SelectItem>
                   ))}
                   {customCategories!
-                    .filter((c) => c.type === "expense")
+                    .filter((c) => c.type === "income")
                     .map((category) => (
                       <SelectItem
                         key={category._id}
@@ -282,7 +316,7 @@ export function BudgetsFilters() {
               ) => setFilterProgress(value)}
             >
               <SelectTrigger
-                className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterProgress !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterProgress !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.progress")} />
               </SelectTrigger>
@@ -293,16 +327,16 @@ export function BudgetsFilters() {
                   </SelectItem>
                   <SelectSeparator />
                   <SelectItem value="gray">
-                    {t("budgets.fe.progressGray")}
+                    {t("goals.fe.progressGray")}
                   </SelectItem>
                   <SelectItem value="green">
-                    {t("budgets.fe.progressGreen")}
+                    {t("goals.fe.progressGreen")}
                   </SelectItem>
                   <SelectItem value="yellow">
-                    {t("budgets.fe.progressYellow")}
+                    {t("goals.fe.progressYellow")}
                   </SelectItem>
                   <SelectItem value="red">
-                    {t("budgets.fe.progressRed")}
+                    {t("goals.fe.progressRed")}
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -315,7 +349,7 @@ export function BudgetsFilters() {
               ) => setFilterStatus(value)}
             >
               <SelectTrigger
-                className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterStatus !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterStatus !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.status")} />
               </SelectTrigger>
@@ -342,7 +376,7 @@ export function BudgetsFilters() {
               <Button
                 variant="outline"
                 onClick={handleResetFilters}
-                className="col-span-full 2xl:col-auto 2xl:row-start-1"
+                className="col-span-full 2xl:col-auto 2xl:row-start-2"
               >
                 {t("common.fe.reset")}
               </Button>
@@ -351,8 +385,8 @@ export function BudgetsFilters() {
         </CardContent>
       </Card>
 
-      <BudgetsTable
-        filteredBudgets={filteredBudgets}
+      <GoalsTable
+        filteredGoals={filteredGoals}
         offsetHeight={calculatedHeight}
       />
     </>

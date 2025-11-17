@@ -1,398 +1,444 @@
 {
-  "common": {
-    "fe": {
-      "appDescription": "Ứng dụng quản lý tài chính cá nhân và gia đình",
-      "cancel": "Hủy",
-      "delete": "Xóa",
-      "update": "Cập nhật",
-      "add": "Thêm",
-      "save": "Lưu",
-      "edit": "Chỉnh sửa",
-      "reset": "Đặt lại",
-      "income": "Thu nhập",
-      "expense": "Chi tiêu",
-      "date": "Ngày giao dịch",
-      "type": "Loại",
-      "category": "Danh mục",
-      "amount": "Số tiền",
-      "description": "Mô tả",
-      "incomeCategory": "Danh mục thu nhập",
-      "expenseCategory": "Danh mục chi tiêu",
-      "from": "Từ",
-      "to": "Đến",
-      "selectDate": "Chọn ngày",
-      "selectDateRange": "Chọn khoảng thời gian",
-      "month": "Tháng",
-      "allMonths": "Tất cả tháng",
-      "year": "Năm",
-      "allYears": "Tất cả năm",
-      "totalTransactions": "Tổng giao dịch",
-      "transactions": "giao dịch",
-      "positive": "Dương",
-      "negative": "Âm",
-      "balanced": "Cân bằng",
-      "comparedToIncome": "so với thu nhập",
-      "exportCsv": "Xuất Giao dịch (CSV)",
-      "exportTransactions": "Xuất giao dịch",
-      "exportWithFilters": "Xuất giao dịch kèm theo bộ lọc hiện tại",
-      "transactionsExportFailed": "Không xuất được dữ liệu! Vui lòng thử lại.",
-      "notFound": "Không tìm thấy",
-      "backToHome": "Về trang chủ",
-      "noTransactionsFound": "Không tìm thấy giao dịch",
-      "startAddingTransactions": "Bắt đầu thêm giao dịch của bạn.",
-      "noTransactionsFiltered": "Không tìm thấy giao dịch nào phù hợp với bộ lọc của bạn."
+  "appError": {
+    "title": "Đã xảy ra lỗi!",
+    "tryAgain": "Thử lại"
+  },
+  "auth": {
+    "be": {
+      "recaptchaFailed": "Xác thực Captcha thất bại!",
+      "recaptchaMissing": "Thiếu token recaptcha!",
+      "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",
+      "signInFailed": "Đăng nhập thất bại! Vui lòng thử lại sau.",
+      "signOutFailed": "Đăng xuất thất bại! Vui lòng thử lại sau.",
+      "signOutSuccess": "Bạn cần đăng nhập lại.",
+      "userFetchFailed": "Không thể tải thông tin người dùng! Vui lòng thử lại sau."
     },
+    "fe": {
+      "completeRecaptchaVerification": "Vui lòng hoàn thành xác thực CAPTCHA!",
+      "password": "Mật khẩu",
+      "recaptchaVerification": "Xác thực CAPTCHA",
+      "recaptchaVerificationFailed": "Xác thực CAPTCHA thất bại! Vui lòng thử lại.",
+      "signIn": "Đăng nhập",
+      "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
+      "signingOut": "Đang đăng xuất...",
+      "username": "Tên đăng nhập"
+    }
+  },
+  "budgets": {
+    "be": {
+      "budgetAddFailed": "Thêm ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetAdded": "Ngân sách đã được thêm.",
+      "budgetDeleteFailed": "Xóa ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetDeleted": "Ngân sách đã được xóa.",
+      "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetExists": "Ngân sách với danh mục, ngày bắt đầu và ngày kết thúc này đã tồn tại!",
+      "budgetFetchFailed": "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetNotFoundOrNoPermission": "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!",
+      "budgetNotFoundOrNoPermissionDelete": "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!",
+      "budgetUpdateFailed": "Cập nhật ngân sách thất bại! Vui lòng thử lại sau.",
+      "budgetUpdated": "Ngân sách đã được cập nhật.",
+      "invalidBudgetId": "Budget ID không hợp lệ!"
+    },
+    "fe": {
+      "addBudget": "Thêm ngân sách",
+      "addBudgetDescription": "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của bạn.",
+      "deleteBudgetDescription": "Bạn có chắc chắn muốn xóa ngân sách này? Hành động này không thể hoàn tác.",
+      "deleteBudgetTitle": "Xóa ngân sách",
+      "description": "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn.",
+      "editBudget": "Chỉnh sửa ngân sách",
+      "editBudgetDescription": "Cập nhật thông tin ngân sách.",
+      "noBudgetsDescription": "Bạn chưa tạo ngân sách nào. Hãy thêm ngân sách đầu tiên!",
+      "noBudgetsFiltered": "Không tìm thấy ngân sách nào phù hợp với bộ lọc của bạn.",
+      "noBudgetsFound": "Không có ngân sách nào",
+      "progressGray": "Chưa có giao dịch",
+      "progressGreen": "Tốt (< 75%)",
+      "progressRed": "Vượt quá (≥ 100%)",
+      "progressYellow": "Cảnh báo (75-100%)",
+      "spent": "Đã chi"
+    }
+  },
+  "categories": {
+    "be": {
+      "categoryAddFailed": "Thêm danh mục thất bại! Vui lòng thử lại sau.",
+      "categoryAdded": "Danh mục đã được thêm.",
+      "categoryDeleteFailed": "Xóa danh mục thất bại! Vui lòng thử lại sau.",
+      "categoryDeleted": "Danh mục đã được xóa.",
+      "categoryExists": "Danh mục với tên này đã tồn tại!",
+      "categoryFetchFailed": "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau.",
+      "categoryInUseWithCountGoal": "Không thể xóa danh mục. Có {count} mục tiêu đang sử dụng danh mục này. Vui lòng xóa các mục tiêu đó trước.",
+      "categoryInUseWithCountBudget": "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước.",
+      "categoryInUseWithCountTransaction": "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.",
+      "categoryKeyError": "Lỗi tạo key danh mục. Vui lòng thử lại.",
+      "categoryNotFoundOrNoPermission": "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!",
+      "categoryNotFoundOrNoPermissionDelete": "Không tìm thấy danh mục hoặc bạn không có quyền xóa!",
+      "categoryUpdateFailed": "Cập nhật danh mục thất bại! Vui lòng thử lại sau.",
+      "categoryUpdated": "Danh mục đã được cập nhật.",
+      "invalidCategoryId": "Category ID không hợp lệ!"
+    },
+    "fe": {
+      "addCategory": "Thêm danh mục",
+      "addCategoryDescription": "Thêm danh mục tùy chỉnh cho giao dịch của bạn.",
+      "allCategoryTypes": "Tất cả loại danh mục",
+      "categoryDescriptionPlaceholder": "Nhập mô tả cho danh mục...",
+      "categoryName": "Tên",
+      "categoryNamePlaceholder": "Nhập tên danh mục...",
+      "categoryType": "Loại danh mục",
+      "deleteCategoryDescription": "Bạn có chắc chắn muốn xóa danh mục \"{label}\"? Hành động này không thể hoàn tác.",
+      "deleteCategoryTitle": "Xóa danh mục",
+      "description": "Quản lý các danh mục tùy chỉnh cho giao dịch của bạn.",
+      "editCategory": "Chỉnh sửa danh mục",
+      "editCategoryDescription": "Cập nhật thông tin danh mục.",
+      "noCategoriesDescription": "Bạn chưa tạo danh mục tùy chỉnh nào. Hãy thêm danh mục đầu tiên!",
+      "noCategoriesFiltered": "Không tìm thấy danh mục nào phù hợp với bộ lọc của bạn.",
+      "noCategoriesFound": "Không có danh mục nào",
+      "openMenu": "Mở menu",
+      "searchPlaceholder": "Tìm kiếm danh mục..."
+    }
+  },
+  "categoriesConfig": {
+    "businessFreelance": {
+      "description": "Doanh thu bán hàng, dịch vụ, freelance, hợp đồng ngắn hạn,...",
+      "label": "Kinh doanh & Freelance"
+    },
+    "debtPayment": {
+      "description": "Trả nợ vay ngân hàng, thẻ tín dụng, nợ cá nhân,...",
+      "label": "Trả nợ"
+    },
+    "educationDevelopment": {
+      "description": "Học phí, sách vở, khóa học online/offline, chứng chỉ, hội thảo,...",
+      "label": "Giáo dục & Phát triển"
+    },
+    "entertainmentLeisure": {
+      "description": "Du lịch, phim ảnh, âm nhạc, game, gym, sở thích,...",
+      "label": "Giải trí & Thư giãn"
+    },
+    "familySupport": {
+      "description": "Tiền gửi bố mẹ, hỗ trợ anh chị em, người thân,...",
+      "label": "Hỗ trợ gia đình"
+    },
+    "foodBeverage": {
+      "description": "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,...",
+      "label": "Ăn uống"
+    },
+    "giftSupport": {
+      "description": "Quà tặng tiền mặt, hỗ trợ từ gia đình, tiền mừng,...",
+      "label": "Quà tặng & Hỗ trợ"
+    },
+    "healthcareInsurance": {
+      "description": "Khám chữa bệnh, thuốc men, bảo hiểm y tế/nhân thọ,...",
+      "label": "Y tế & Bảo hiểm"
+    },
+    "housing": {
+      "description": "Tiền thuê, điện, nước, gas, internet, điện thoại, phí quản lý,...",
+      "label": "Nhà ở & Tiện ích"
+    },
+    "investmentPassive": {
+      "description": "Lãi tiết kiệm, cổ tức, lãi trái phiếu, cho thuê, bản quyền,...",
+      "label": "Đầu tư & Thu nhập thụ động"
+    },
+    "otherExpense": {
+      "description": "Sửa chữa đột xuất, phạt nguội, mất mát, chi phí không xác định,...",
+      "label": "Chi phí khác"
+    },
+    "otherIncome": {
+      "description": "Tiền hoàn trả, bán đồ cũ, giải thưởng, các khoản bất ngờ,...",
+      "label": "Thu nhập khác"
+    },
+    "personalCare": {
+      "description": "Cắt tóc, làm móng, spa, massage, nhuộm tóc, chăm sóc da,...",
+      "label": "Chăm sóc"
+    },
+    "salaryBonus": {
+      "description": "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp,...",
+      "label": "Lương & Thưởng"
+    },
+    "savingsInvestment": {
+      "description": "Gửi tiết kiệm, mua chứng khoán, quỹ đầu tư, bất động sản, crypto, quỹ khẩn cấp,...",
+      "label": "Tiết kiệm & Đầu tư"
+    },
+    "shopping": {
+      "description": "Quần áo, giày dép, mỹ phẩm, phụ kiện, đồ điện tử, đồ gia dụng,...",
+      "label": "Mua sắm"
+    },
+    "socialGifts": {
+      "description": "Đám cưới, ma chay, sinh nhật, quà tặng bạn bè, hội họp,...",
+      "label": "Giao lưu & Quà tặng"
+    },
+    "transportation": {
+      "description": "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe,...",
+      "label": "Di chuyển"
+    }
+  },
+  "common": {
     "be": {
       "accessDenied": "Không có quyền truy cập! Vui lòng tải lại trang và thử lại.",
       "invalidData": "Dữ liệu không hợp lệ!",
       "userNotFound": "Không tìm thấy người dùng!"
+    },
+    "fe": {
+      "active": "Đang hoạt động",
+      "add": "Thêm",
+      "allCategories": "Tất cả danh mục",
+      "allMonths": "Tất cả tháng",
+      "allProgress": "Tất cả tiến độ",
+      "allStatuses": "Tất cả trạng thái",
+      "allYears": "Tất cả năm",
+      "amount": "Số tiền",
+      "appDescription": "Ứng dụng quản lý tài chính cá nhân và gia đình",
+      "backToHome": "Về trang chủ",
+      "balance": "Số dư",
+      "balanced": "Cân bằng",
+      "cancel": "Hủy",
+      "category": "Danh mục",
+      "comparedToIncome": "so với thu nhập",
+      "date": "Ngày giao dịch",
+      "delete": "Xóa",
+      "description": "Mô tả",
+      "edit": "Chỉnh sửa",
+      "endDate": "Ngày kết thúc",
+      "expense": "Chi tiêu",
+      "expenseCategory": "Danh mục chi tiêu",
+      "expired": "Đã hết hạn",
+      "exportCsv": "Xuất Giao dịch (CSV)",
+      "exportTransactions": "Xuất giao dịch",
+      "exportWithFilters": "Xuất giao dịch kèm theo bộ lọc hiện tại",
+      "from": "Từ",
+      "income": "Thu nhập",
+      "incomeCategory": "Danh mục thu nhập",
+      "month": "Tháng",
+      "negative": "Âm",
+      "noTransactionsFiltered": "Không tìm thấy giao dịch nào phù hợp với bộ lọc của bạn.",
+      "noTransactionsFound": "Không tìm thấy giao dịch",
+      "notFound": "Không tìm thấy",
+      "openMenu": "Mở menu",
+      "positive": "Dương",
+      "progress": "Tiến độ",
+      "reset": "Đặt lại",
+      "save": "Lưu",
+      "selectCategory": "Chọn danh mục",
+      "selectDate": "Chọn ngày",
+      "selectDateRange": "Chọn khoảng thời gian",
+      "startAddingTransactions": "Bắt đầu thêm giao dịch của bạn.",
+      "startDate": "Ngày bắt đầu",
+      "status": "Trạng thái",
+      "to": "Đến",
+      "totalTransactions": "Tổng giao dịch",
+      "transactions": "giao dịch",
+      "transactionsExportFailed": "Không xuất được dữ liệu! Vui lòng thử lại.",
+      "type": "Loại",
+      "upcoming": "Sắp tới",
+      "update": "Cập nhật",
+      "year": "Năm"
     }
   },
-  "navigation": {
-    "home": "Trang chủ",
-    "statistics": "Thống kê",
-    "transactions": "Giao dịch",
-    "categories": "Danh mục",
-    "budgets": "Ngân sách",
-    "settings": "Cài đặt",
-    "signOut": "Đăng xuất"
+  "dataError": {
+    "budgetsDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH",
+    "categoriesDataError": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
+    "goalsDataError": "KHÔNG THỂ LẤY DỮ LIỆU MỤC TIÊU",
+    "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
+    "userDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG"
   },
-  "auth": {
-    "fe": {
-      "signIn": "Đăng nhập",
-      "username": "Tên đăng nhập",
-      "password": "Mật khẩu",
-      "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
-      "signingOut": "Đang đăng xuất...",
-      "recaptchaVerification": "Xác thực CAPTCHA",
-      "recaptchaVerificationFailed": "Xác thực CAPTCHA thất bại! Vui lòng thử lại.",
-      "completeRecaptchaVerification": "Vui lòng hoàn thành xác thực CAPTCHA!"
-    },
+  "goals": {
     "be": {
-      "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",
-      "signInFailed": "Đăng nhập thất bại! Vui lòng thử lại sau.",
-      "signOutSuccess": "Bạn cần đăng nhập lại.",
-      "signOutFailed": "Đăng xuất thất bại! Vui lòng thử lại sau.",
-      "userFetchFailed": "Không thể tải thông tin người dùng! Vui lòng thử lại sau.",
-      "recaptchaMissing": "Thiếu token recaptcha!",
-      "recaptchaFailed": "Xác thực Captcha thất bại!"
+      "goalAddFailed": "Thêm mục tiêu thất bại! Vui lòng thử lại sau.",
+      "goalAdded": "Mục tiêu đã được thêm.",
+      "goalDeleteFailed": "Xóa mục tiêu thất bại! Vui lòng thử lại sau.",
+      "goalDeleted": "Mục tiêu đã được xóa.",
+      "goalExists": "Mục tiêu với danh mục, ngày bắt đầu và ngày kết thúc này đã tồn tại!",
+      "goalFetchFailed": "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau.",
+      "goalNotFoundOrNoPermission": "Không tìm thấy mục tiêu hoặc bạn không có quyền chỉnh sửa!",
+      "goalNotFoundOrNoPermissionDelete": "Không tìm thấy mục tiêu hoặc bạn không có quyền xóa!",
+      "goalUpdateFailed": "Cập nhật mục tiêu thất bại! Vui lòng thử lại sau.",
+      "goalUpdated": "Mục tiêu đã được cập nhật.",
+      "invalidGoalId": "ID mục tiêu không hợp lệ!"
+    },
+    "fe": {
+      "accumulated": "Tích lũy",
+      "addGoal": "Thêm mục tiêu",
+      "addGoalDescription": "Tạo mục tiêu tài chính mới để theo dõi tiết kiệm của bạn.",
+      "deleteGoalDescription": "Bạn có chắc chắn muốn xóa mục tiêu này? Hành động này không thể hoàn tác.",
+      "deleteGoalTitle": "Xóa mục tiêu",
+      "description": "Theo dõi mục tiêu tài chính và tiến độ tiết kiệm của bạn.",
+      "editGoal": "Chỉnh sửa mục tiêu",
+      "editGoalDescription": "Cập nhật thông tin mục tiêu tài chính.",
+      "goalName": "Tên",
+      "goalNamePlaceholder": "Nhập tên mục tiêu...",
+      "noGoalsDescription": "Bạn chưa tạo mục tiêu nào. Hãy thêm mục tiêu đầu tiên!",
+      "noGoalsFiltered": "Không tìm thấy mục tiêu nào phù hợp với bộ lọc của bạn.",
+      "noGoalsFound": "Không có mục tiêu nào",
+      "progressGray": "Chưa có giao dịch",
+      "progressGreen": "Tốt (≥ 100%)",
+      "progressRed": "Cảnh báo (< 75%)",
+      "progressYellow": "Thấp (75-100%)",
+      "searchPlaceholder": "Tìm kiếm mục tiêu...",
+      "targetAmount": "Số tiền mục tiêu"
     }
   },
   "home": {
     "fe": {
+      "avgExpense": "Chi TB/giao dịch",
+      "avgExpenseTooltip": "Số tiền trung bình mỗi lần chi tiêu (Tổng chi / Số giao dịch chi). Giúp bạn nhận biết quy mô chi tiêu trung bình của mình.",
       "description": "Quản lý tài chính cá nhân của bạn.",
-      "welcome": "Chào mừng",
+      "highestTransaction": "Giao dịch cao nhất",
+      "highestTransactionTooltip": "Giao dịch có giá trị lớn nhất trong tháng (có thể là thu hoặc chi). Giúp nhận diện các khoản tiền lớn bất thường.",
+      "lowestTransaction": "Giao dịch thấp nhất",
+      "lowestTransactionTooltip": "Giao dịch có giá trị nhỏ nhất trong tháng (có thể là thu hoặc chi). Giúp nhận diện các khoản chi nhỏ lẻ thường xuyên.",
+      "monthlyBalance": "Số dư tháng này",
+      "monthlyExpense": "Chi tiêu tháng này",
+      "monthlyIncome": "Thu nhập tháng này",
+      "noData": "Chưa có",
+      "popularCategory": "Danh mục phổ biến",
+      "popularCategoryTooltip": "Danh mục có tổng số tiền cao nhất trong tháng. Giúp bạn nhận biết lĩnh vực chi tiêu hoặc nguồn thu lớn nhất của mình.",
       "quickStats": "Thống kê nhanh",
       "recentTransactions": "Giao dịch gần đây",
-      "highestTransaction": "Giao dịch cao nhất",
-      "lowestTransaction": "Giao dịch thấp nhất",
-      "avgExpense": "Chi TB/giao dịch",
       "savingsRate": "Tỷ lệ tiết kiệm",
-      "popularCategory": "Danh mục phổ biến",
-      "noData": "Chưa có",
-      "totalTransactionsTooltip": "Tổng số giao dịch (cả thu và chi) bạn đã thực hiện trong tháng hiện tại. Giúp theo dõi tần suất giao dịch của bạn.",
-      "highestTransactionTooltip": "Giao dịch có giá trị lớn nhất trong tháng (có thể là thu hoặc chi). Giúp nhận diện các khoản tiền lớn bất thường.",
-      "lowestTransactionTooltip": "Giao dịch có giá trị nhỏ nhất trong tháng (có thể là thu hoặc chi). Giúp nhận diện các khoản chi nhỏ lẻ thường xuyên.",
-      "avgExpenseTooltip": "Số tiền trung bình mỗi lần chi tiêu (Tổng chi / Số giao dịch chi). Giúp bạn nhận biết quy mô chi tiêu trung bình của mình.",
       "savingsRateTooltip": "Tỷ lệ phần trăm số tiền bạn tiết kiệm được so với thu nhập ((Thu - Chi) / Thu × 100%). Tỷ lệ càng cao càng tốt, nên duy trì trên 20%.",
-      "popularCategoryTooltip": "Danh mục có tổng số tiền cao nhất trong tháng. Giúp bạn nhận biết lĩnh vực chi tiêu hoặc nguồn thu lớn nhất của mình.",
-      "monthlyIncome": "Thu nhập tháng này",
-      "monthlyExpense": "Chi tiêu tháng này",
-      "monthlyBalance": "Số dư tháng này"
+      "totalTransactionsTooltip": "Tổng số giao dịch (cả thu và chi) bạn đã thực hiện trong tháng hiện tại. Giúp theo dõi tần suất giao dịch của bạn.",
+      "welcome": "Chào mừng"
+    }
+  },
+  "months": {
+    "april": "Tháng 4",
+    "august": "Tháng 8",
+    "december": "Tháng 12",
+    "february": "Tháng 2",
+    "january": "Tháng 1",
+    "july": "Tháng 7",
+    "june": "Tháng 6",
+    "march": "Tháng 3",
+    "may": "Tháng 5",
+    "november": "Tháng 11",
+    "october": "Tháng 10",
+    "september": "Tháng 9"
+  },
+  "navigation": {
+    "budgets": "Ngân sách",
+    "categories": "Danh mục",
+    "goals": "Mục tiêu",
+    "home": "Trang chủ",
+    "settings": "Cài đặt",
+    "signOut": "Đăng xuất",
+    "statistics": "Thống kê",
+    "transactions": "Giao dịch"
+  },
+  "notFound": {
+    "description": "Trang này không tồn tại.",
+    "title": "KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM"
+  },
+  "schemas": {
+    "budget": {
+      "amountMaxLength": "Số tiền tối đa là 100 tỉ.",
+      "amountRequired": "Số tiền phải lớn hơn 0.",
+      "categoryRequired": "Vui lòng chọn danh mục.",
+      "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu.",
+      "endDateRequired": "Vui lòng chọn ngày kết thúc.",
+      "startDateRequired": "Vui lòng chọn ngày bắt đầu."
+    },
+    "category": {
+      "categoryDescriptionMaxLength": "Mô tả tối đa là 200 ký tự.",
+      "categoryDescriptionRequired": "Mô tả là bắt buộc.",
+      "categoryNameMaxLength": "Tên danh mục tối đa là 50 ký tự.",
+      "categoryNameRequired": "Tên danh mục là bắt buộc.",
+      "categoryTypeRequired": "Vui lòng chọn loại danh mục."
+    },
+    "goal": {
+      "categoryInvalid": "Danh mục được chọn không hợp lệ.",
+      "categoryRequired": "Vui lòng chọn danh mục.",
+      "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu.",
+      "endDateRequired": "Vui lòng chọn ngày kết thúc.",
+      "nameMaxLength": "Tên mục tiêu tối đa 100 ký tự.",
+      "nameRequired": "Tên mục tiêu là bắt buộc.",
+      "startDateRequired": "Vui lòng chọn ngày bắt đầu.",
+      "targetAmountMaxLength": "Số tiền mục tiêu tối đa là 100 tỷ.",
+      "targetAmountRequired": "Số tiền mục tiêu phải lớn hơn 0."
+    },
+    "password": {
+      "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu mới của bạn.",
+      "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc.",
+      "newPasswordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+      "passwordsNotMatch": "Mật khẩu không khớp."
+    },
+    "signIn": {
+      "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+      "usernameRequired": "Tên người dùng là bắt buộc."
+    },
+    "transaction": {
+      "amountMaxLength": "Số tiền tối đa là 100 tỉ.",
+      "amountRequired": "Số tiền phải lớn hơn 0.",
+      "categoryRequired": "Vui lòng chọn danh mục.",
+      "dateRequired": "Vui lòng chọn ngày.",
+      "descriptionMaxLength": "Mô tả tối đa là 200 ký tự.",
+      "descriptionRequired": "Mô tả là bắt buộc.",
+      "transactionTypeRequired": "Vui lòng chọn loại giao dịch."
+    }
+  },
+  "settings": {
+    "be": {
+      "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau.",
+      "languageUpdated": "Ngôn ngữ đã được cập nhật.",
+      "noChanges": "Không có thay đổi nào được thực hiện.",
+      "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
+      "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
+      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi."
+    },
+    "fe": {
+      "account": "Tài khoản",
+      "appearance": "Giao diện",
+      "appearanceDescription": "Chọn chủ đề hiển thị cho ứng dụng.",
+      "changePassword": "Đổi mật khẩu",
+      "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "currentPassword": "Mật khẩu hiện tại",
+      "dark": "Tối",
+      "general": "Chung",
+      "language": "Ngôn ngữ",
+      "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
+      "light": "Sáng",
+      "newPassword": "Mật khẩu mới",
+      "system": "Hệ thống",
+      "toggleTheme": "Chuyển đổi chủ đề"
     }
   },
   "statistics": {
     "fe": {
       "description": "Phân tích dữ liệu tài chính của bạn với các thống kê và thông tin chi tiết.",
-      "totalIncome": "Tổng thu nhập",
+      "totalAmount": "Tổng số tiền",
       "totalExpense": "Tổng chi tiêu",
-      "balance": "Số dư",
-      "transactionCount": "Số giao dịch",
-      "totalAmount": "Tổng số tiền"
+      "totalIncome": "Tổng thu nhập",
+      "transactionCount": "Số giao dịch"
     }
   },
   "transactions": {
-    "fe": {
-      "description": "Quản lý thu nhập và chi tiêu để theo dõi tài chính cá nhân của bạn.",
-      "addTransaction": "Thêm giao dịch",
-      "editTransaction": "Chỉnh sửa giao dịch",
-      "addTransactionDescription": "Thêm thu nhập hoặc chi tiêu của bạn để theo dõi tài chính cá nhân.",
-      "editTransactionDescription": "Cập nhật thông tin giao dịch.",
-      "selectCategory": "Chọn danh mục {type}",
-      "descriptionPlaceholder": "Nhập mô tả cho giao dịch...",
-      "transactionType": "Loại giao dịch",
-      "allTransactionTypes": "Tất cả loại giao dịch",
-      "allCategories": "Tất cả danh mục",
-      "searchPlaceholder": "Tìm kiếm giao dịch...",
-      "openMenu": "Mở menu",
-      "customCategories": "Danh mục tùy chỉnh",
-      "noCategoryFound": "Không tìm thấy danh mục phù hợp?",
-      "createCustomCategory": "Tạo danh mục tùy chỉnh",
-      "deleteTransactionTitle": "Xóa giao dịch",
-      "deleteTransactionDescription": "Bạn có chắc chắn muốn xóa giao dịch \"{description}\"? Hành động này không thể hoàn tác."
-    },
     "be": {
-      "transactionAdded": "Giao dịch đã được thêm.",
-      "transactionUpdated": "Giao dịch đã được cập nhật.",
-      "transactionDeleted": "Giao dịch đã được xóa.",
-      "transactionAddFailed": "Thêm giao dịch thất bại! Vui lòng thử lại sau.",
-      "transactionUpdateFailed": "Cập nhật giao dịch thất bại! Vui lòng thử lại sau.",
-      "transactionDeleteFailed": "Xóa giao dịch thất bại! Vui lòng thử lại sau.",
       "invalidTransactionId": "Transaction ID không hợp lệ!",
+      "transactionAddFailed": "Thêm giao dịch thất bại! Vui lòng thử lại sau.",
+      "transactionAdded": "Giao dịch đã được thêm.",
+      "transactionDeleteFailed": "Xóa giao dịch thất bại! Vui lòng thử lại sau.",
+      "transactionDeleted": "Giao dịch đã được xóa.",
+      "transactionFetchFailed": "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau.",
       "transactionNotFoundOrNoPermission": "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!",
       "transactionNotFoundOrNoPermissionDelete": "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!",
-      "transactionFetchFailed": "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
-    }
-  },
-  "categories": {
-    "fe": {
-      "description": "Quản lý các danh mục tùy chỉnh cho giao dịch của bạn.",
-      "addCategory": "Thêm danh mục",
-      "editCategory": "Chỉnh sửa danh mục",
-      "addCategoryDescription": "Thêm danh mục tùy chỉnh cho giao dịch của bạn.",
-      "editCategoryDescription": "Cập nhật thông tin danh mục.",
-      "categoryName": "Tên",
-      "categoryNamePlaceholder": "Nhập tên danh mục...",
-      "categoryDescriptionPlaceholder": "Nhập mô tả cho danh mục...",
-      "categoryType": "Loại danh mục",
-      "searchPlaceholder": "Tìm kiếm danh mục...",
-      "allCategoryTypes": "Tất cả loại danh mục",
-      "noCategoriesFound": "Không có danh mục nào",
-      "noCategoriesDescription": "Bạn chưa tạo danh mục tùy chỉnh nào. Hãy thêm danh mục đầu tiên!",
-      "noCategoriesFiltered": "Không tìm thấy danh mục nào phù hợp với bộ lọc của bạn.",
-      "openMenu": "Mở menu",
-      "deleteCategoryTitle": "Xóa danh mục",
-      "deleteCategoryDescription": "Bạn có chắc chắn muốn xóa danh mục \"{label}\"? Hành động này không thể hoàn tác."
+      "transactionUpdateFailed": "Cập nhật giao dịch thất bại! Vui lòng thử lại sau.",
+      "transactionUpdated": "Giao dịch đã được cập nhật."
     },
-    "be": {
-      "categoryAdded": "Danh mục đã được thêm.",
-      "categoryUpdated": "Danh mục đã được cập nhật.",
-      "categoryDeleted": "Danh mục đã được xóa.",
-      "categoryAddFailed": "Thêm danh mục thất bại! Vui lòng thử lại sau.",
-      "categoryUpdateFailed": "Cập nhật danh mục thất bại! Vui lòng thử lại sau.",
-      "categoryDeleteFailed": "Xóa danh mục thất bại! Vui lòng thử lại sau.",
-      "categoryExists": "Danh mục với tên này đã tồn tại!",
-      "categoryKeyError": "Lỗi tạo key danh mục. Vui lòng thử lại.",
-      "invalidCategoryId": "Category ID không hợp lệ!",
-      "categoryNotFoundOrNoPermission": "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!",
-      "categoryNotFoundOrNoPermissionDelete": "Không tìm thấy danh mục hoặc bạn không có quyền xóa!",
-      "categoryInUseWithCountTransaction": "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.",
-      "categoryInUseWithCountBudget": "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước.",
-      "categoryFetchFailed": "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
-    }
-  },
-  "budgets": {
     "fe": {
-      "description": "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn.",
-      "addBudget": "Thêm ngân sách",
-      "editBudget": "Chỉnh sửa ngân sách",
-      "addBudgetDescription": "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của bạn.",
-      "editBudgetDescription": "Cập nhật thông tin ngân sách.",
-      "category": "Danh mục",
-      "selectCategory": "Chọn danh mục",
-      "startDate": "Ngày bắt đầu",
-      "endDate": "Ngày kết thúc",
-      "status": "Trạng thái",
-      "allStatuses": "Tất cả trạng thái",
-      "completed": "Đã hoàn thành",
-      "expired": "Đã hết hạn",
-      "active": "Đang hoạt động",
-      "upcoming": "Sắp tới",
-      "searchPlaceholder": "Tìm kiếm ngân sách...",
-      "noBudgetsFound": "Không có ngân sách nào",
-      "noBudgetsDescription": "Bạn chưa tạo ngân sách nào. Hãy thêm ngân sách đầu tiên!",
-      "noBudgetsFiltered": "Không tìm thấy ngân sách nào phù hợp với bộ lọc của bạn.",
-      "openMenu": "Mở menu",
-      "deleteBudgetTitle": "Xóa ngân sách",
-      "deleteBudgetDescription": "Bạn có chắc chắn muốn xóa ngân sách này? Hành động này không thể hoàn tác.",
-      "spent": "Đã chi",
-      "balance": "Số dư",
+      "addTransaction": "Thêm giao dịch",
+      "addTransactionDescription": "Thêm thu nhập hoặc chi tiêu của bạn để theo dõi tài chính cá nhân.",
       "allCategories": "Tất cả danh mục",
-      "progress": "Tiến độ",
-      "allProgress": "Tất cả tiến độ",
-      "progressGray": "Chưa có giao dịch",
-      "progressGreen": "Tốt (< 75%)",
-      "progressYellow": "Cảnh báo (75-100%)",
-      "progressRed": "Vượt quá (≥ 100%)"
-    },
-    "be": {
-      "budgetAdded": "Ngân sách đã được thêm.",
-      "budgetUpdated": "Ngân sách đã được cập nhật.",
-      "budgetDeleted": "Ngân sách đã được xóa.",
-      "budgetAddFailed": "Thêm ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetUpdateFailed": "Cập nhật ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetDeleteFailed": "Xóa ngân sách thất bại! Vui lòng thử lại sau.",
-      "invalidBudgetId": "Budget ID không hợp lệ!",
-      "budgetNotFoundOrNoPermission": "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!",
-      "budgetNotFoundOrNoPermissionDelete": "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!",
-      "budgetFetchFailed": "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetDetailsFetchFailed": "Tải chi tiết ngân sách thất bại! Vui lòng thử lại sau.",
-      "budgetExists": "Ngân sách với danh mục, ngày bắt đầu và ngày kết thúc này đã tồn tại!"
-    }
-  },
-  "settings": {
-    "fe": {
-      "general": "Chung",
-      "account": "Tài khoản",
-      "appearance": "Giao diện",
-      "appearanceDescription": "Chọn chủ đề hiển thị cho ứng dụng.",
-      "language": "Ngôn ngữ",
-      "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
-      "changePassword": "Đổi mật khẩu",
-      "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
-      "currentPassword": "Mật khẩu hiện tại",
-      "newPassword": "Mật khẩu mới",
-      "confirmPassword": "Xác nhận mật khẩu",
-      "toggleTheme": "Chuyển đổi chủ đề",
-      "light": "Sáng",
-      "dark": "Tối",
-      "system": "Hệ thống"
-    },
-    "be": {
-      "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
-      "noChanges": "Không có thay đổi nào được thực hiện.",
-      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi.",
-      "languageUpdated": "Ngôn ngữ đã được cập nhật.",
-      "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
-      "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau."
-    }
-  },
-  "categoriesConfig": {
-    "salaryBonus": {
-      "label": "Lương & Thưởng",
-      "description": "Lương chính, thưởng hiệu suất, thưởng lễ tết, thu nhập phụ cấp,..."
-    },
-    "businessFreelance": {
-      "label": "Kinh doanh & Freelance",
-      "description": "Doanh thu bán hàng, dịch vụ, freelance, hợp đồng ngắn hạn,..."
-    },
-    "investmentPassive": {
-      "label": "Đầu tư & Thu nhập thụ động",
-      "description": "Lãi tiết kiệm, cổ tức, lãi trái phiếu, cho thuê, bản quyền,..."
-    },
-    "giftSupport": {
-      "label": "Quà tặng & Hỗ trợ",
-      "description": "Quà tặng tiền mặt, hỗ trợ từ gia đình, tiền mừng,..."
-    },
-    "otherIncome": {
-      "label": "Thu nhập khác",
-      "description": "Tiền hoàn trả, bán đồ cũ, giải thưởng, các khoản bất ngờ,..."
-    },
-    "foodBeverage": {
-      "label": "Ăn uống",
-      "description": "Siêu thị, chợ, nhà hàng, café, đồ ăn sáng/trưa/tối,..."
-    },
-    "transportation": {
-      "label": "Di chuyển",
-      "description": "Xăng xe, xe bus/grab, bảo dưỡng xe, phí đỗ xe,..."
-    },
-    "personalCare": {
-      "label": "Chăm sóc",
-      "description": "Cắt tóc, làm móng, spa, massage, nhuộm tóc, chăm sóc da,..."
-    },
-    "shopping": {
-      "label": "Mua sắm",
-      "description": "Quần áo, giày dép, mỹ phẩm, phụ kiện, đồ điện tử, đồ gia dụng,..."
-    },
-    "familySupport": {
-      "label": "Hỗ trợ gia đình",
-      "description": "Tiền gửi bố mẹ, hỗ trợ anh chị em, người thân,..."
-    },
-    "housing": {
-      "label": "Nhà ở & Tiện ích",
-      "description": "Tiền thuê, điện, nước, gas, internet, điện thoại, phí quản lý,..."
-    },
-    "healthcareInsurance": {
-      "label": "Y tế & Bảo hiểm",
-      "description": "Khám chữa bệnh, thuốc men, bảo hiểm y tế/nhân thọ,..."
-    },
-    "educationDevelopment": {
-      "label": "Giáo dục & Phát triển",
-      "description": "Học phí, sách vở, khóa học online/offline, chứng chỉ, hội thảo,..."
-    },
-    "entertainmentLeisure": {
-      "label": "Giải trí & Thư giãn",
-      "description": "Du lịch, phim ảnh, âm nhạc, game, gym, sở thích,..."
-    },
-    "socialGifts": {
-      "label": "Giao lưu & Quà tặng",
-      "description": "Đám cưới, ma chay, sinh nhật, quà tặng bạn bè, hội họp,..."
-    },
-    "savingsInvestment": {
-      "label": "Tiết kiệm & Đầu tư",
-      "description": "Gửi tiết kiệm, mua chứng khoán, quỹ đầu tư, bất động sản, crypto, quỹ khẩn cấp,..."
-    },
-    "debtPayment": {
-      "label": "Trả nợ",
-      "description": "Trả nợ vay ngân hàng, thẻ tín dụng, nợ cá nhân,..."
-    },
-    "otherExpense": {
-      "label": "Chi phí khác",
-      "description": "Sửa chữa đột xuất, phạt nguội, mất mát, chi phí không xác định,..."
-    }
-  },
-  "months": {
-    "january": "Tháng 1",
-    "february": "Tháng 2",
-    "march": "Tháng 3",
-    "april": "Tháng 4",
-    "may": "Tháng 5",
-    "june": "Tháng 6",
-    "july": "Tháng 7",
-    "august": "Tháng 8",
-    "september": "Tháng 9",
-    "october": "Tháng 10",
-    "november": "Tháng 11",
-    "december": "Tháng 12"
-  },
-  "appError": {
-    "title": "Đã xảy ra lỗi!",
-    "tryAgain": "Thử lại"
-  },
-  "dataError": {
-    "userDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG",
-    "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
-    "categoriesDataError": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
-    "budgetsDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH"
-  },
-  "notFound": {
-    "title": "KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM",
-    "description": "Trang này không tồn tại."
-  },
-  "schemas": {
-    "signIn": {
-      "usernameRequired": "Tên người dùng là bắt buộc.",
-      "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt."
-    },
-    "password": {
-      "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc.",
-      "newPasswordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
-      "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu mới của bạn.",
-      "passwordsNotMatch": "Mật khẩu không khớp."
-    },
-    "transaction": {
-      "transactionTypeRequired": "Vui lòng chọn loại giao dịch.",
-      "categoryRequired": "Vui lòng chọn danh mục.",
-      "amountRequired": "Số tiền phải lớn hơn 0.",
-      "amountMaxLength": "Số tiền tối đa là 100 tỉ.",
-      "descriptionRequired": "Mô tả là bắt buộc.",
-      "descriptionMaxLength": "Mô tả tối đa là 200 ký tự.",
-      "dateRequired": "Vui lòng chọn ngày."
-    },
-    "category": {
-      "categoryTypeRequired": "Vui lòng chọn loại danh mục.",
-      "categoryNameRequired": "Tên danh mục là bắt buộc.",
-      "categoryNameMaxLength": "Tên danh mục tối đa là 50 ký tự.",
-      "categoryDescriptionRequired": "Mô tả là bắt buộc.",
-      "categoryDescriptionMaxLength": "Mô tả tối đa là 200 ký tự."
-    },
-    "budget": {
-      "categoryRequired": "Vui lòng chọn danh mục.",
-      "amountRequired": "Số tiền phải lớn hơn 0.",
-      "amountMaxLength": "Số tiền tối đa là 100 tỉ.",
-      "startDateRequired": "Vui lòng chọn ngày bắt đầu.",
-      "endDateRequired": "Vui lòng chọn ngày kết thúc.",
-      "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu."
+      "allTransactionTypes": "Tất cả loại giao dịch",
+      "createCustomCategory": "Tạo danh mục tùy chỉnh",
+      "customCategories": "Danh mục tùy chỉnh",
+      "deleteTransactionDescription": "Bạn có chắc chắn muốn xóa giao dịch \"{description}\"? Hành động này không thể hoàn tác.",
+      "deleteTransactionTitle": "Xóa giao dịch",
+      "description": "Quản lý thu nhập và chi tiêu để theo dõi tài chính cá nhân của bạn.",
+      "descriptionPlaceholder": "Nhập mô tả cho giao dịch...",
+      "editTransaction": "Chỉnh sửa giao dịch",
+      "editTransactionDescription": "Cập nhật thông tin giao dịch.",
+      "noCategoryFound": "Không tìm thấy danh mục phù hợp?",
+      "openMenu": "Mở menu",
+      "searchPlaceholder": "Tìm kiếm giao dịch...",
+      "selectCategory": "Chọn danh mục {type}",
+      "transactionType": "Loại giao dịch"
     }
   }
 }

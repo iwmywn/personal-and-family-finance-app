@@ -80,7 +80,7 @@ export function TransactionsTable({
                 </EmptyMedia>
                 <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {transactions!.length === 0
+                  {transactions.length === 0
                     ? t("common.fe.startAddingTransactions")
                     : t("common.fe.noTransactionsFiltered")}
                 </EmptyDescription>

@@ -34,7 +34,17 @@ type BaseBudget<T> = {
   _id: T
   userId: T
   categoryKey: CategoryKeyType
-  amount: number
+  allocatedAmount: number
+  startDate: Date
+  endDate: Date
+}
+
+type BaseGoal<T> = {
+  _id: T
+  userId: T
+  categoryKey: CategoryKeyType
+  name: string
+  targetAmount: number
   startDate: Date
   endDate: Date
 }
@@ -50,3 +60,6 @@ export type DBCategory = BaseCategory<ObjectId>
 
 export type Budget = BaseBudget<string>
 export type DBBudget = BaseBudget<ObjectId>
+
+export type Goal = BaseGoal<string>
+export type DBGoal = BaseGoal<ObjectId>

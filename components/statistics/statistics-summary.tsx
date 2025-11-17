@@ -66,7 +66,7 @@ export function StatisticsSummary({
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("statistics.fe.balance")}</CardTitle>
+          <CardTitle>{t("common.fe.balance")}</CardTitle>
           {balance >= 0 ? (
             <TrendingUpIcon className="size-4 text-green-600" />
           ) : (

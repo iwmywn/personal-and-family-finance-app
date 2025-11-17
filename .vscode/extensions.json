@@ -4,6 +4,7 @@
     "bradlc.vscode-tailwindcss",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "vitest.explorer"
+    "vitest.explorer",
+    "richie5um2.vscode-sort-json"
   ]
 }
