@@ -1,11 +1,13 @@
 import {
   mockBudgets,
   mockCustomCategories,
+  mockGoals,
   mockTransactions,
 } from "@/tests/shared/data"
 import {
   filterBudgets,
   filterCustomCategories,
+  filterGoals,
   filterTransactions,
   includesCaseInsensitive,
   toDateOnly,
@@ -619,6 +621,281 @@ describe("Filters", () => {
         mockBudgets,
         {
           filterCategoryKey: "nonexistent_category",
+        },
+        mockTransactions
+      )
+
+      expect(result).toEqual([])
+    })
+  })
+
+  describe("filterGoals", () => {
+    it("should filter by search term", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          searchTerm: "motorbike",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0].name).toBe("buy a motorbike")
+    })
+
+    it("should filter by category key", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterCategoryKey: "business_freelance",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(3)
+      expect(
+        result.every((goal) => goal.categoryKey === "business_freelance")
+      ).toBe(true)
+    })
+
+    it("should filter by date range", () => {
+      const fromDate = new Date("2024-01-01")
+      const toDate = new Date("2024-01-31")
+      const result = filterGoals(
+        mockGoals,
+        {
+          dateRange: {
+            from: fromDate,
+            to: toDate,
+          },
+        },
+        mockTransactions
+      )
+
+      expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4"])
+      result.forEach((goal) => {
+        const start = new Date(goal.startDate)
+        const end = new Date(goal.endDate)
+        expect(end >= fromDate && start <= toDate).toBe(true)
+      })
+    })
+
+    it("should filter by month", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterMonth: "1",
+        },
+        mockTransactions
+      )
+
+      expect(result.map((goal) => goal._id)).toEqual([
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+      ])
+    })
+
+    it("should filter by year", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterYear: "2023",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0]._id).toBe("5")
+    })
+
+    it("should filter by status - expired", () => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date("2024-04-15"))
+
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterStatus: "expired",
+        },
+        mockTransactions
+      )
+
+      const now = new Date()
+      expect(result.map((goal) => goal._id)).toEqual(["3", "4", "5"])
+      result.forEach((goal) => {
+        const endDate = new Date(goal.endDate)
+        expect(endDate < now).toBe(true)
+      })
+
+      vi.useRealTimers()
+    })
+
+    it("should filter by status - active", () => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date("2024-01-15"))
+
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterStatus: "active",
+        },
+        mockTransactions
+      )
+
+      const now = new Date()
+      expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4"])
+      result.forEach((goal) => {
+        const startDate = new Date(goal.startDate)
+        const endDate = new Date(goal.endDate)
+        expect(startDate <= now && endDate >= now).toBe(true)
+      })
+
+      vi.useRealTimers()
+    })
+
+    it("should filter by status - upcoming", () => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date("2024-05-01"))
+
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterStatus: "upcoming",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0]._id).toBe("6")
+
+      vi.useRealTimers()
+    })
+
+    it("should filter by progress - gray", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterProgress: "gray",
+        },
+        mockTransactions
+      )
+
+      expect(result.map((goal) => goal._id)).toEqual(["1", "5", "6"])
+    })
+
+    it("should filter by progress - red", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterProgress: "red",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0]._id).toBe("2")
+    })
+
+    it("should filter by progress - yellow", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterProgress: "yellow",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0]._id).toBe("3")
+    })
+
+    it("should filter by progress - green", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterProgress: "green",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0]._id).toBe("4")
+    })
+
+    it("should combine multiple filters", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterCategoryKey: "business_freelance",
+          filterMonth: "1",
+          filterProgress: "yellow",
+        },
+        mockTransactions
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0]._id).toBe("3")
+    })
+
+    it("should return all goals when no filters applied", () => {
+      const result = filterGoals(mockGoals, {}, mockTransactions)
+
+      expect(result).toHaveLength(mockGoals.length)
+    })
+
+    it("should handle empty goals array", () => {
+      const result = filterGoals([], { searchTerm: "test" }, mockTransactions)
+
+      expect(result).toEqual([])
+    })
+
+    it("should handle date range with only from date", () => {
+      const fromDate = new Date("2024-01-01")
+      const result = filterGoals(
+        mockGoals,
+        {
+          dateRange: {
+            from: fromDate,
+          },
+        },
+        mockTransactions
+      )
+
+      expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4", "6"])
+      result.forEach((goal) => {
+        const end = new Date(goal.endDate)
+        expect(end >= fromDate).toBe(true)
+      })
+    })
+
+    it("should handle date range with only to date", () => {
+      const toDate = new Date("2024-01-31")
+      const result = filterGoals(
+        mockGoals,
+        {
+          dateRange: {
+            to: toDate,
+          },
+        },
+        mockTransactions
+      )
+
+      expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4", "5"])
+      result.forEach((goal) => {
+        const start = new Date(goal.startDate)
+        expect(start <= toDate).toBe(true)
+      })
+    })
+
+    it("should return empty array when no matches found", () => {
+      const result = filterGoals(
+        mockGoals,
+        {
+          filterCategoryKey: "nonexistent",
         },
         mockTransactions
       )
