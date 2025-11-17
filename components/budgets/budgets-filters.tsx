@@ -252,7 +252,7 @@ export function BudgetsFilters() {
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {t("budgets.fe.allCategories")}
+                    {t("common.fe.allCategories")}
                   </SelectItem>
                   <SelectSeparator />
                   <SelectLabel>{t("common.fe.expense")}</SelectLabel>
@@ -284,12 +284,12 @@ export function BudgetsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterProgress !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("budgets.fe.progress")} />
+                <SelectValue placeholder={t("common.fe.progress")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {t("budgets.fe.allProgress")}
+                    {t("common.fe.allProgress")}
                   </SelectItem>
                   <SelectSeparator />
                   <SelectItem value="gray">
@@ -317,22 +317,22 @@ export function BudgetsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterStatus !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("budgets.fe.status")} />
+                <SelectValue placeholder={t("common.fe.status")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {t("budgets.fe.allStatuses")}
+                    {t("common.fe.allStatuses")}
                   </SelectItem>
                   <SelectSeparator />
                   <SelectItem value="expired">
-                    {t("budgets.fe.expired")}
+                    {t("common.fe.expired")}
                   </SelectItem>
                   <SelectItem value="active">
-                    {t("budgets.fe.active")}
+                    {t("common.fe.active")}
                   </SelectItem>
                   <SelectItem value="upcoming">
-                    {t("budgets.fe.upcoming")}
+                    {t("common.fe.upcoming")}
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>

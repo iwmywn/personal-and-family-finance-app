@@ -286,7 +286,7 @@ export function GoalsFilters() {
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {t("goals.fe.allCategories")}
+                    {t("common.fe.allCategories")}
                   </SelectItem>
                   <SelectSeparator />
                   <SelectLabel>{t("common.fe.income")}</SelectLabel>
@@ -318,12 +318,12 @@ export function GoalsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterProgress !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("goals.fe.progress")} />
+                <SelectValue placeholder={t("common.fe.progress")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {t("goals.fe.allProgress")}
+                    {t("common.fe.allProgress")}
                   </SelectItem>
                   <SelectSeparator />
                   <SelectItem value="gray">
@@ -351,20 +351,22 @@ export function GoalsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterStatus !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("goals.fe.status")} />
+                <SelectValue placeholder={t("common.fe.status")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {t("goals.fe.allStatuses")}
+                    {t("common.fe.allStatuses")}
                   </SelectItem>
                   <SelectSeparator />
                   <SelectItem value="expired">
-                    {t("goals.fe.expired")}
+                    {t("common.fe.expired")}
                   </SelectItem>
-                  <SelectItem value="active">{t("goals.fe.active")}</SelectItem>
+                  <SelectItem value="active">
+                    {t("common.fe.active")}
+                  </SelectItem>
                   <SelectItem value="upcoming">
-                    {t("goals.fe.upcoming")}
+                    {t("common.fe.upcoming")}
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>

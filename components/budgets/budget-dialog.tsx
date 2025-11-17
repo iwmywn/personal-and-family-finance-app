@@ -148,12 +148,12 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="categoryKey"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("budgets.fe.category")}</FormLabel>
+                  <FormLabel>{t("common.fe.category")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full">
                         <SelectValue
-                          placeholder={t("budgets.fe.selectCategory")}
+                          placeholder={t("common.fe.selectCategory")}
                         >
                           {field.value
                             ? getCategoryLabel(field.value, customCategories)
@@ -234,7 +234,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="startDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("budgets.fe.startDate")}</FormLabel>
+                  <FormLabel>{t("common.fe.startDate")}</FormLabel>
                   <Popover
                     open={startCalendarOpen}
                     onOpenChange={setStartCalendarOpen}
@@ -287,7 +287,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("budgets.fe.endDate")}</FormLabel>
+                  <FormLabel>{t("common.fe.endDate")}</FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}

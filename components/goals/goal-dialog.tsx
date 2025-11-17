@@ -150,11 +150,13 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="categoryKey"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("goals.fe.category")}</FormLabel>
+                  <FormLabel>{t("common.fe.category")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t("goals.fe.selectCategory")}>
+                        <SelectValue
+                          placeholder={t("common.fe.selectCategory")}
+                        >
                           {field.value
                             ? getCategoryLabel(field.value, customCategories)
                             : null}
@@ -251,7 +253,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="startDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("goals.fe.startDate")}</FormLabel>
+                  <FormLabel>{t("common.fe.startDate")}</FormLabel>
                   <Popover
                     open={startCalendarOpen}
                     onOpenChange={setStartCalendarOpen}
@@ -304,7 +306,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("goals.fe.endDate")}</FormLabel>
+                  <FormLabel>{t("common.fe.endDate")}</FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}

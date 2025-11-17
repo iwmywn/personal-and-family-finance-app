@@ -101,14 +101,14 @@ export function BudgetsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("budgets.fe.startDate")}</TableHead>
-                    <TableHead>{t("budgets.fe.endDate")}</TableHead>
-                    <TableHead>{t("budgets.fe.category")}</TableHead>
+                    <TableHead>{t("common.fe.startDate")}</TableHead>
+                    <TableHead>{t("common.fe.endDate")}</TableHead>
+                    <TableHead>{t("common.fe.category")}</TableHead>
                     <TableHead>{t("common.fe.amount")}</TableHead>
                     <TableHead>{t("budgets.fe.spent")}</TableHead>
-                    <TableHead>{t("budgets.fe.balance")}</TableHead>
-                    <TableHead>{t("budgets.fe.status")}</TableHead>
-                    <TableHead>{t("budgets.fe.progress")}</TableHead>
+                    <TableHead>{t("common.fe.balance")}</TableHead>
+                    <TableHead>{t("common.fe.status")}</TableHead>
+                    <TableHead>{t("common.fe.progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -153,10 +153,10 @@ export function BudgetsTable({
                           }
                         >
                           {budget.status === "expired"
-                            ? t("budgets.fe.expired")
+                            ? t("common.fe.expired")
                             : budget.status === "active"
-                              ? t("budgets.fe.active")
-                              : t("budgets.fe.upcoming")}
+                              ? t("common.fe.active")
+                              : t("common.fe.upcoming")}
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">
@@ -182,7 +182,7 @@ export function BudgetsTable({
                             >
                               <MoreVerticalIcon />
                               <span className="sr-only">
-                                {t("budgets.fe.openMenu")}
+                                {t("common.fe.openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>

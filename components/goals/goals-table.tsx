@@ -98,14 +98,14 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("goals.fe.startDate")}</TableHead>
-                    <TableHead>{t("goals.fe.endDate")}</TableHead>
+                    <TableHead>{t("common.fe.startDate")}</TableHead>
+                    <TableHead>{t("common.fe.endDate")}</TableHead>
                     <TableHead>{t("goals.fe.goalName")}</TableHead>
-                    <TableHead>{t("goals.fe.category")}</TableHead>
+                    <TableHead>{t("common.fe.category")}</TableHead>
                     <TableHead>{t("goals.fe.targetAmount")}</TableHead>
                     <TableHead>{t("goals.fe.accumulated")}</TableHead>
-                    <TableHead>{t("goals.fe.status")}</TableHead>
-                    <TableHead>{t("goals.fe.progress")}</TableHead>
+                    <TableHead>{t("common.fe.status")}</TableHead>
+                    <TableHead>{t("common.fe.progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -146,10 +146,10 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                           }
                         >
                           {goal.status === "expired"
-                            ? t("goals.fe.expired")
+                            ? t("common.fe.expired")
                             : goal.status === "active"
-                              ? t("goals.fe.active")
-                              : t("goals.fe.upcoming")}
+                              ? t("common.fe.active")
+                              : t("common.fe.upcoming")}
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">
@@ -175,7 +175,7 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                             >
                               <MoreVerticalIcon />
                               <span className="sr-only">
-                                {t("goals.fe.openMenu")}
+                                {t("common.fe.openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>
