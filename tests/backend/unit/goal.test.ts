@@ -102,7 +102,7 @@ describe("Goals", async () => {
       })
 
       expect(addedGoal?.categoryKey).toBe("food_beverage")
-      expect(addedGoal?.name).toBe("Mua xe máy")
+      expect(addedGoal?.name).toBe("buy a motorbike")
       expect(addedGoal?.targetAmount).toBe(50000000)
       expect(addedGoal?.startDate.toISOString()).toBe(
         "2024-01-01T00:00:00.000Z"
@@ -206,8 +206,8 @@ describe("Goals", async () => {
       expect(updatedGoal?.endDate.toISOString()).toBe(
         "2025-12-31T00:00:00.000Z"
       )
-      expect(unrelatedGoal?.categoryKey).toBe("food_beverage")
-      expect(unrelatedGoal?.name).toBe("Mua xe máy")
+      expect(unrelatedGoal?.categoryKey).toBe("salary_bonus")
+      expect(unrelatedGoal?.name).toBe("buy a motorbike")
       expect(result.success).toBe(t("goals.be.goalUpdated"))
       expect(result.error).toBeUndefined()
     })
@@ -306,9 +306,9 @@ describe("Goals", async () => {
       const result = await getGoals(mockUser._id.toString(), t)
 
       expect(result.goals).toHaveLength(1)
-      expect(result.goals?.[0].name).toBe("Mua xe máy")
+      expect(result.goals?.[0].name).toBe("buy a motorbike")
       expect(result.goals?.[0].targetAmount).toBe(50000000)
-      expect(result.goals?.[0].categoryKey).toBe("food_beverage")
+      expect(result.goals?.[0].categoryKey).toBe("salary_bonus")
       expect(result.error).toBeUndefined()
     })
 

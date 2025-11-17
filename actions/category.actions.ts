@@ -10,6 +10,7 @@ import type { TypedTranslationFunction } from "@/i18n/types"
 import {
   getBudgetsCollection,
   getCategoriesCollection,
+  getGoalsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
 import { type Category } from "@/lib/definitions"
@@ -181,12 +182,17 @@ export async function deleteCustomCategory(categoryId: string) {
       }
     }
 
-    const [categoriesCollection, transactionsCollection, budgetsCollection] =
-      await Promise.all([
-        getCategoriesCollection(),
-        getTransactionsCollection(),
-        getBudgetsCollection(),
-      ])
+    const [
+      categoriesCollection,
+      transactionsCollection,
+      budgetsCollection,
+      goalsCollection,
+    ] = await Promise.all([
+      getCategoriesCollection(),
+      getTransactionsCollection(),
+      getBudgetsCollection(),
+      getGoalsCollection(),
+    ])
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
@@ -198,12 +204,16 @@ export async function deleteCustomCategory(categoryId: string) {
       }
     }
 
-    const [transactionCount, budgetCount] = await Promise.all([
+    const [transactionCount, budgetCount, goalCount] = await Promise.all([
       transactionsCollection.countDocuments({
         userId: new ObjectId(userId),
         categoryKey: existingCategory.categoryKey,
       }),
       budgetsCollection.countDocuments({
+        userId: new ObjectId(userId),
+        categoryKey: existingCategory.categoryKey,
+      }),
+      goalsCollection.countDocuments({
         userId: new ObjectId(userId),
         categoryKey: existingCategory.categoryKey,
       }),
@@ -221,6 +231,14 @@ export async function deleteCustomCategory(categoryId: string) {
       return {
         error: t("categories.be.categoryInUseWithCountBudget", {
           count: budgetCount,
+        }),
+      }
+    }
+
+    if (goalCount > 0) {
+      return {
+        error: t("categories.be.categoryInUseWithCountGoal", {
+          count: goalCount,
         }),
       }
     }

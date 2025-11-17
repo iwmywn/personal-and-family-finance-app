@@ -65,6 +65,7 @@
       "categoryDeleted": "Category has been deleted.",
       "categoryExists": "Category with this name already exists!",
       "categoryFetchFailed": "Failed to load custom categories! Please try again later.",
+      "categoryInUseWithCountGoal": "Cannot delete category. There are {count} goals using this category. Please delete those goals first.",
       "categoryInUseWithCountBudget": "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first.",
       "categoryInUseWithCountTransaction": "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first.",
       "categoryKeyError": "Error creating category key. Please try again.",

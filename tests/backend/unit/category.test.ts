@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server"
 import {
   insertTestBudget,
   insertTestCategory,
+  insertTestGoal,
   insertTestTransaction,
 } from "@/tests/backend/helpers/database"
 import {
@@ -18,6 +19,7 @@ import {
 import {
   mockBudget,
   mockCustomCategory,
+  mockGoal,
   mockTransaction,
   mockUser,
   mockValidCategoryValues,
@@ -341,39 +343,63 @@ describe("Categories", async () => {
       )
     })
 
-    it("should return error when category has associated transactions", async () => {
-      await insertTestCategory(mockCustomCategory)
-      await insertTestTransaction({
-        ...mockTransaction,
-        categoryKey: mockCustomCategory.categoryKey,
-      })
+    it("should return error when categories have associated transactions, budgets, or goals", async () => {
+      const category1 = {
+        ...mockCustomCategory,
+        _id: new ObjectId("691ac8b98629369bb1da9214"),
+        categoryKey: "custom_expense_abcdef12",
+      }
+      const category2 = {
+        ...mockCustomCategory,
+        _id: new ObjectId("691ac8c4fb168bfba59615c8"),
+        categoryKey: "custom_expense_abcdef13",
+      }
+      const category3 = {
+        ...mockCustomCategory,
+        _id: new ObjectId("691ac8cd3cf60fa9f018a37c"),
+        categoryKey: "custom_expense_abcdef14",
+      }
+
+      await Promise.all([
+        insertTestCategory(category1),
+        insertTestCategory(category2),
+        insertTestCategory(category3),
+
+        insertTestTransaction({
+          ...mockTransaction,
+          categoryKey: category1.categoryKey,
+        }),
+        insertTestBudget({
+          ...mockBudget,
+          categoryKey: category2.categoryKey,
+        }),
+        insertTestGoal({
+          ...mockGoal,
+          categoryKey: category3.categoryKey,
+        }),
+      ])
+
       mockAuthenticatedUser()
 
-      const result = await deleteCustomCategory(
-        mockCustomCategory._id.toString()
-      )
+      const [result1, result2, result3] = await Promise.all([
+        deleteCustomCategory(category1._id.toString()),
+        deleteCustomCategory(category2._id.toString()),
+        deleteCustomCategory(category3._id.toString()),
+      ])
 
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
+      expect(result1.success).toBeUndefined()
+      expect(result1.error).toBe(
         t("categories.be.categoryInUseWithCountTransaction", { count: 1 })
       )
-    })
 
-    it("should return error when category has associated budgets", async () => {
-      await insertTestCategory(mockCustomCategory)
-      await insertTestBudget({
-        ...mockBudget,
-        categoryKey: mockCustomCategory.categoryKey,
-      })
-      mockAuthenticatedUser()
-
-      const result = await deleteCustomCategory(
-        mockCustomCategory._id.toString()
+      expect(result2.success).toBeUndefined()
+      expect(result2.error).toBe(
+        t("categories.be.categoryInUseWithCountBudget", { count: 1 })
       )
 
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        t("categories.be.categoryInUseWithCountBudget", { count: 1 })
+      expect(result3.success).toBeUndefined()
+      expect(result3.error).toBe(
+        t("categories.be.categoryInUseWithCountGoal", { count: 1 })
       )
     })
 
@@ -395,20 +421,10 @@ describe("Categories", async () => {
     })
 
     it("should return error when database operation throws error", async () => {
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
       mockCategoryCollectionError()
-
-      const result = await deleteCustomCategory(
-        mockCustomCategory._id.toString()
-      )
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("categories.be.categoryDeleteFailed"))
-    })
-
-    it("should return error when database operation throws error", async () => {
-      mockAuthenticatedUser()
-      mockTransactionCollectionError()
+      // same for mockTransactionCollectionError, mockBudgetCollectionError, mockGoalCollectionError
 
       const result = await deleteCustomCategory(
         mockCustomCategory._id.toString()

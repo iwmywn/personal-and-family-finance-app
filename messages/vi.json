@@ -65,6 +65,7 @@
       "categoryDeleted": "Danh mục đã được xóa.",
       "categoryExists": "Danh mục với tên này đã tồn tại!",
       "categoryFetchFailed": "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau.",
+      "categoryInUseWithCountGoal": "Không thể xóa danh mục. Có {count} mục tiêu đang sử dụng danh mục này. Vui lòng xóa các mục tiêu đó trước.",
       "categoryInUseWithCountBudget": "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước.",
       "categoryInUseWithCountTransaction": "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.",
       "categoryKeyError": "Lỗi tạo key danh mục. Vui lòng thử lại.",

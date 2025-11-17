@@ -27,7 +27,7 @@ export const mockTransaction: DBTransaction = {
   type: "expense" as "income" | "expense",
   categoryKey: "food_beverage",
   amount: 50000,
-  description: "nước dừa",
+  description: "hamburger",
   date: normalizeToUTCDate(new Date("2024-01-15")),
 }
 
@@ -52,8 +52,8 @@ export const mockBudget: DBBudget = {
 export const mockGoal: DBGoal = {
   _id: new ObjectId("68f896e5cda4897217a05a2d"),
   userId: mockUser._id,
-  categoryKey: "food_beverage",
-  name: "Mua xe máy",
+  categoryKey: "salary_bonus",
+  name: "buy a motorbike",
   targetAmount: 50000000,
   startDate: normalizeToUTCDate(new Date("2024-01-01")),
   endDate: normalizeToUTCDate(new Date("2024-12-31")),
@@ -74,7 +74,7 @@ export const mockValidTransactionValues = {
   type: "income" as "income" | "expense",
   categoryKey: "business_freelance",
   amount: 2500000,
-  description: "Dự án thiết kế web",
+  description: "freelance project payment",
   date: normalizeToUTCDate(new Date("2024-02-05")),
 }
 
@@ -94,7 +94,7 @@ export const mockValidBudgetValues = {
 
 export const mockValidGoalValues = {
   categoryKey: "food_beverage",
-  name: "Mua xe máy",
+  name: "buy a motorbike",
   targetAmount: 50000000,
   startDate: normalizeToUTCDate(new Date("2024-01-01")),
   endDate: normalizeToUTCDate(new Date("2024-12-31")),
@@ -251,8 +251,8 @@ export const mockGoals: Goal[] = [
   {
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "food_beverage",
-    name: "Mua xe máy",
+    categoryKey: "salary_bonus",
+    name: "buy a motorbike",
     targetAmount: 50000000,
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-12-31"),
@@ -260,8 +260,8 @@ export const mockGoals: Goal[] = [
   {
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "housing",
-    name: "Mua nhà",
+    categoryKey: "business_freelance",
+    name: "buy a house",
     targetAmount: 2000000000,
     startDate: new Date("2024-01-01"),
     endDate: new Date("2025-12-31"),
