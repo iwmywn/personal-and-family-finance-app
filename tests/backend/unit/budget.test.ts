@@ -43,8 +43,22 @@ describe("Budgets", async () => {
       const result = await createBudget({
         categoryKey: "",
         amount: -1,
-        startDate: new Date("2024-01-01"),
-        endDate: new Date("2024-01-01"), // endDate <= startDate
+        startDate: new Date("invalid"),
+        endDate: new Date("invalid"),
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(t("common.be.invalidData"))
+    })
+
+    it("should return error when endDate is before startDate", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createBudget({
+        categoryKey: "food_beverage",
+        amount: 1000000,
+        startDate: normalizeToUTCDate(new Date("2024-12-31")),
+        endDate: normalizeToUTCDate(new Date("2024-01-01")),
       })
 
       expect(result.success).toBeUndefined()
@@ -301,6 +315,42 @@ describe("Budgets", async () => {
       expect(result.budgets).toHaveLength(1)
       expect(result.budgets?.[0].categoryKey).toBe("food_beverage")
       expect(result.budgets?.[0].amount).toBe(1000000)
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return budgets sorted by startDate and _id descending", async () => {
+      const budget1 = {
+        ...mockBudget,
+        _id: new ObjectId("68f795d4bdcc3c9a30717988"),
+        startDate: normalizeToUTCDate(new Date("2024-01-01")),
+      }
+      const budget2 = {
+        ...mockBudget,
+        _id: new ObjectId("68f795d4bdcc3c9a30717989"),
+        startDate: normalizeToUTCDate(new Date("2024-01-01")),
+      }
+      const budget3 = {
+        ...mockBudget,
+        _id: new ObjectId("68f795d4bdcc3c9a30717990"),
+        startDate: normalizeToUTCDate(new Date("2024-02-01")),
+      }
+
+      await Promise.all([
+        insertTestBudget(budget1),
+        insertTestBudget(budget2),
+        insertTestBudget(budget3),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await getBudgets(mockUser._id.toString(), t)
+
+      expect(result.budgets).toHaveLength(3)
+      // Should be sorted by startDate descending, then _id descending
+      expect(result.budgets?.[0].startDate.toISOString()).toBe(
+        "2024-02-01T00:00:00.000Z"
+      )
+      expect(result.budgets?.[1]._id).toBe("68f795d4bdcc3c9a30717989")
+      expect(result.budgets?.[2]._id).toBe("68f795d4bdcc3c9a30717988")
       expect(result.error).toBeUndefined()
     })
 

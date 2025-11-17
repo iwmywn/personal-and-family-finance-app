@@ -5,8 +5,10 @@ import type {
   Category,
   DBBudget,
   DBCategory,
+  DBGoal,
   DBTransaction,
   DBUser,
+  Goal,
   Transaction,
 } from "@/lib/definitions"
 import { normalizeToUTCDate } from "@/lib/utils"
@@ -19,15 +21,6 @@ export const mockUser: DBUser = {
   locale: "en",
 }
 
-export const mockCustomCategory: DBCategory = {
-  _id: new ObjectId("68f732914e63e5aa249cc173"),
-  userId: mockUser._id,
-  categoryKey: "custom_expense_abcdef12",
-  type: "expense" as "income" | "expense",
-  label: "Entertainment",
-  description: "Movies and games",
-}
-
 export const mockTransaction: DBTransaction = {
   _id: new ObjectId("68f73357357d93dcbaae8106"),
   userId: mockUser._id,
@@ -36,6 +29,15 @@ export const mockTransaction: DBTransaction = {
   amount: 50000,
   description: "nước dừa",
   date: normalizeToUTCDate(new Date("2024-01-15")),
+}
+
+export const mockCustomCategory: DBCategory = {
+  _id: new ObjectId("68f732914e63e5aa249cc173"),
+  userId: mockUser._id,
+  categoryKey: "custom_expense_abcdef12",
+  type: "expense" as "income" | "expense",
+  label: "Entertainment",
+  description: "Movies and games",
 }
 
 export const mockBudget: DBBudget = {
@@ -47,16 +49,25 @@ export const mockBudget: DBBudget = {
   endDate: normalizeToUTCDate(new Date("2024-01-31")),
 }
 
+export const mockGoal: DBGoal = {
+  _id: new ObjectId("68f896e5cda4897217a05a2d"),
+  userId: mockUser._id,
+  categoryKey: "food_beverage",
+  name: "Mua xe máy",
+  targetAmount: 50000000,
+  startDate: normalizeToUTCDate(new Date("2024-01-01")),
+  endDate: normalizeToUTCDate(new Date("2024-12-31")),
+}
+
 export const mockValidSignInValues = {
   username: "testuser",
   password: "TestPassword123!",
 }
 
-export const mockValidCategoryValues = {
-  // categoryKey: auto generated
-  type: "income" as "income" | "expense",
-  label: "Salary",
-  description: "Monthly job income",
+export const mockValidPasswordValues = {
+  currentPassword: "TestPassword123!",
+  newPassword: "NewPassword456!",
+  confirmPassword: "NewPassword456!",
 }
 
 export const mockValidTransactionValues = {
@@ -67,10 +78,11 @@ export const mockValidTransactionValues = {
   date: normalizeToUTCDate(new Date("2024-02-05")),
 }
 
-export const mockValidPasswordValues = {
-  currentPassword: "TestPassword123!",
-  newPassword: "NewPassword456!",
-  confirmPassword: "NewPassword456!",
+export const mockValidCategoryValues = {
+  // categoryKey: auto generated
+  type: "income" as "income" | "expense",
+  label: "Salary",
+  description: "Monthly job income",
 }
 
 export const mockValidBudgetValues = {
@@ -78,6 +90,14 @@ export const mockValidBudgetValues = {
   amount: 1000000,
   startDate: normalizeToUTCDate(new Date("2024-01-01")),
   endDate: normalizeToUTCDate(new Date("2024-01-31")),
+}
+
+export const mockValidGoalValues = {
+  categoryKey: "food_beverage",
+  name: "Mua xe máy",
+  targetAmount: 50000000,
+  startDate: normalizeToUTCDate(new Date("2024-01-01")),
+  endDate: normalizeToUTCDate(new Date("2024-12-31")),
 }
 
 export const mockTransactions: Transaction[] = [
@@ -224,5 +244,26 @@ export const mockBudgets: Budget[] = [
     amount: 3000000,
     startDate: new Date("2023-01-01"),
     endDate: new Date("2023-01-31"), // Completed (last year)
+  },
+]
+
+export const mockGoals: Goal[] = [
+  {
+    _id: "1",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "food_beverage",
+    name: "Mua xe máy",
+    targetAmount: 50000000,
+    startDate: new Date("2024-01-01"),
+    endDate: new Date("2024-12-31"),
+  },
+  {
+    _id: "2",
+    userId: "68f712e4cda4897217a05a1c",
+    categoryKey: "housing",
+    name: "Mua nhà",
+    targetAmount: 2000000000,
+    startDate: new Date("2024-01-01"),
+    endDate: new Date("2025-12-31"),
   },
 ]

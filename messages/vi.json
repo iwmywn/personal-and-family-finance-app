@@ -276,7 +276,8 @@
       "invalidGoalId": "ID mục tiêu không hợp lệ!",
       "goalNotFoundOrNoPermission": "Không tìm thấy mục tiêu hoặc bạn không có quyền chỉnh sửa!",
       "goalNotFoundOrNoPermissionDelete": "Không tìm thấy mục tiêu hoặc bạn không có quyền xóa!",
-      "goalFetchFailed": "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau."
+      "goalFetchFailed": "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau.",
+      "goalExists": "Mục tiêu với danh mục, ngày bắt đầu và ngày kết thúc này đã tồn tại!"
     }
   },
   "settings": {

@@ -449,6 +449,40 @@ describe("Categories", async () => {
       expect(result.error).toBeUndefined()
     })
 
+    it("should return categories sorted by _id descending", async () => {
+      const category1 = {
+        ...mockCustomCategory,
+        _id: new ObjectId("68f732914e63e5aa249cc173"),
+        categoryKey: "custom_expense_abcdef12",
+      }
+      const category2 = {
+        ...mockCustomCategory,
+        _id: new ObjectId("68f732914e63e5aa249cc174"),
+        categoryKey: "custom_expense_abcdef13",
+      }
+      const category3 = {
+        ...mockCustomCategory,
+        _id: new ObjectId("68f732914e63e5aa249cc175"),
+        categoryKey: "custom_expense_abcdef14",
+      }
+
+      await Promise.all([
+        insertTestCategory(category1),
+        insertTestCategory(category2),
+        insertTestCategory(category3),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await getCustomCategories(mockUser._id.toString(), t)
+
+      expect(result.customCategories).toHaveLength(3)
+      // Should be sorted by _id descending
+      expect(result.customCategories?.[0]._id).toBe("68f732914e63e5aa249cc175")
+      expect(result.customCategories?.[1]._id).toBe("68f732914e63e5aa249cc174")
+      expect(result.customCategories?.[2]._id).toBe("68f732914e63e5aa249cc173")
+      expect(result.error).toBeUndefined()
+    })
+
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()

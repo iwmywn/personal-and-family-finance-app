@@ -291,6 +291,42 @@ describe("Transactions", async () => {
       expect(result.error).toBeUndefined()
     })
 
+    it("should return transactions sorted by date and _id descending", async () => {
+      const transaction1 = {
+        ...mockTransaction,
+        _id: new ObjectId("68f73357357d93dcbaae8106"),
+        date: normalizeToUTCDate(new Date("2024-01-15")),
+      }
+      const transaction2 = {
+        ...mockTransaction,
+        _id: new ObjectId("68f73357357d93dcbaae8107"),
+        date: normalizeToUTCDate(new Date("2024-01-15")),
+      }
+      const transaction3 = {
+        ...mockTransaction,
+        _id: new ObjectId("68f73357357d93dcbaae8108"),
+        date: normalizeToUTCDate(new Date("2024-02-15")),
+      }
+
+      await Promise.all([
+        insertTestTransaction(transaction1),
+        insertTestTransaction(transaction2),
+        insertTestTransaction(transaction3),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await getTransactions(mockUser._id.toString(), t)
+
+      expect(result.transactions).toHaveLength(3)
+      // Should be sorted by date descending, then _id descending
+      expect(result.transactions?.[0].date.toISOString()).toBe(
+        "2024-02-15T00:00:00.000Z"
+      )
+      expect(result.transactions?.[1]._id).toBe("68f73357357d93dcbaae8107")
+      expect(result.transactions?.[2]._id).toBe("68f73357357d93dcbaae8106")
+      expect(result.error).toBeUndefined()
+    })
+
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()

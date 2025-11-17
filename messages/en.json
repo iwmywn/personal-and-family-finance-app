@@ -276,7 +276,8 @@
       "invalidGoalId": "Invalid goal ID!",
       "goalNotFoundOrNoPermission": "Goal not found or you don't have permission to edit!",
       "goalNotFoundOrNoPermissionDelete": "Goal not found or you don't have permission to delete!",
-      "goalFetchFailed": "Failed to load goals! Please try again later."
+      "goalFetchFailed": "Failed to load goals! Please try again later.",
+      "goalExists": "Goal with this category, start date and end date already exists!"
     }
   },
   "settings": {

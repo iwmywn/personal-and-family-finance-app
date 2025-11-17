@@ -31,6 +31,17 @@ export async function createGoal(values: GoalFormValues) {
 
     const goalsCollection = await getGoalsCollection()
 
+    const existingGoal = await goalsCollection.findOne({
+      userId: new ObjectId(userId),
+      categoryKey: values.categoryKey,
+      startDate: values.startDate,
+      endDate: values.endDate,
+    })
+
+    if (existingGoal) {
+      return { error: t("goals.be.goalExists") }
+    }
+
     const result = await goalsCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey: values.categoryKey,
