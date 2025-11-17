@@ -1,5 +1,6 @@
 import type { Budget, Transaction } from "@/lib/definitions"
 import { toDateOnly } from "@/lib/filters"
+import { progressColorClass } from "@/lib/utils"
 
 interface BudgetWithStats extends Budget {
   spent: number
@@ -7,13 +8,6 @@ interface BudgetWithStats extends Budget {
   progressColorClass: string
   status: "expired" | "active" | "upcoming"
 }
-
-export const progressColorClass = {
-  gray: "[&>[data-slot=progress-indicator]]:bg-gray-600",
-  green: "[&>[data-slot=progress-indicator]]:bg-green-600",
-  yellow: "[&>[data-slot=progress-indicator]]:bg-yellow-600",
-  red: "[&>[data-slot=progress-indicator]]:bg-red-600",
-} as const
 
 export function calculateBudgetStats(
   budget: Budget,

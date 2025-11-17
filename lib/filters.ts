@@ -1,11 +1,9 @@
-import { calculateBudgetsStats, progressColorClass } from "@/lib/budgets"
+import { calculateBudgetsStats } from "@/lib/budgets"
 import type { Budget, Category, Goal, Transaction } from "@/lib/definitions"
-import {
-  calculateGoalsStats,
-  progressColorClass as goalProgressColorClass,
-} from "@/lib/goals"
+import { calculateGoalsStats } from "@/lib/goals"
+import { progressColorClass } from "@/lib/utils"
 
-interface TransactionFilters {
+interface Filters {
   searchTerm?: string
   selectedDate?: Date | null
   dateRange?: {
@@ -15,21 +13,6 @@ interface TransactionFilters {
   filterMonth?: string
   filterYear?: string
   filterType?: string
-  filterCategoryKey?: string
-}
-
-interface CategoryFilters {
-  searchTerm?: string
-  filterType?: string
-}
-
-interface BudgetFilters {
-  dateRange?: {
-    from?: Date | null
-    to?: Date | null
-  }
-  filterMonth?: string
-  filterYear?: string
   filterCategoryKey?: string
   filterProgress?: string
   filterStatus?: string
@@ -46,7 +29,7 @@ export function includesCaseInsensitive(text: string, query: string): boolean {
 
 export function filterTransactions(
   transactions: Transaction[],
-  filters: TransactionFilters
+  filters: Filters
 ): Transaction[] {
   const {
     searchTerm = "",
@@ -107,7 +90,7 @@ export function filterTransactions(
 
 export function filterCustomCategories(
   categories: Category[],
-  filters: CategoryFilters
+  filters: Filters
 ): Category[] {
   const { searchTerm = "", filterType = "all" } = filters
   const normalizedSearchTerm = searchTerm.trim()
@@ -126,7 +109,7 @@ export function filterCustomCategories(
 
 export function filterBudgets(
   budgets: Budget[],
-  filters: BudgetFilters,
+  filters: Filters,
   transactions: Transaction[]
 ): Budget[] {
   const {
@@ -219,37 +202,68 @@ export function filterBudgets(
   return filteredBudgets
 }
 
-interface GoalFilters {
-  searchTerm?: string
-  filterStatus?: string
-  filterProgress?: string
-  filterCategoryKey?: string
-}
-
-export function filterGoals(goals: Goal[], filters: GoalFilters): Goal[] {
+export function filterGoals(
+  goals: Goal[],
+  filters: Filters,
+  transactions: Transaction[]
+): Goal[] {
   const {
     searchTerm = "",
+    dateRange = {},
+    filterMonth = "all",
+    filterYear = "all",
     filterStatus = "all",
     filterProgress = "all",
     filterCategoryKey = "all",
   } = filters
 
   const normalizedSearchTerm = searchTerm.trim()
+  const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
+  const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
   let filteredGoals = goals.filter((goal) => {
+    const goalStartDateOnly = toDateOnly(new Date(goal.startDate))
+    const goalEndDateOnly = toDateOnly(new Date(goal.endDate))
+
     const matchesSearch = includesCaseInsensitive(
       goal.name,
       normalizedSearchTerm
     )
 
+    const matchesDateRange =
+      (!dateRange.from ||
+        goalEndDateOnly.getTime() >= toDateOnly(dateRange.from).getTime()) &&
+      (!dateRange.to ||
+        goalStartDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
+
+    const matchesMonth = !parsedMonth
+      ? true
+      : goalStartDateOnly.getMonth() + 1 === parsedMonth ||
+        goalEndDateOnly.getMonth() + 1 === parsedMonth ||
+        (goalStartDateOnly.getMonth() + 1 < parsedMonth &&
+          goalEndDateOnly.getMonth() + 1 > parsedMonth)
+
+    const matchesYear = !parsedYear
+      ? true
+      : goalStartDateOnly.getFullYear() === parsedYear ||
+        goalEndDateOnly.getFullYear() === parsedYear ||
+        (goalStartDateOnly.getFullYear() < parsedYear &&
+          goalEndDateOnly.getFullYear() > parsedYear)
+
     const matchesCategory =
       filterCategoryKey === "all" || goal.categoryKey === filterCategoryKey
 
-    return matchesSearch && matchesCategory
+    return (
+      matchesSearch &&
+      matchesDateRange &&
+      matchesMonth &&
+      matchesYear &&
+      matchesCategory
+    )
   })
 
   if (filterStatus !== "all" || filterProgress !== "all") {
-    const goalsWithStats = calculateGoalsStats(filteredGoals)
+    const goalsWithStats = calculateGoalsStats(filteredGoals, transactions)
 
     filteredGoals = goalsWithStats
       .filter((goal) => {
@@ -260,16 +274,15 @@ export function filterGoals(goals: Goal[], filters: GoalFilters): Goal[] {
         if (filterProgress !== "all") {
           if (filterProgress === "gray") {
             matchesProgress =
-              goal.progressColorClass === goalProgressColorClass.gray
+              goal.progressColorClass === progressColorClass.gray
           } else if (filterProgress === "green") {
             matchesProgress =
-              goal.progressColorClass === goalProgressColorClass.green
+              goal.progressColorClass === progressColorClass.green
           } else if (filterProgress === "yellow") {
             matchesProgress =
-              goal.progressColorClass === goalProgressColorClass.yellow
+              goal.progressColorClass === progressColorClass.yellow
           } else if (filterProgress === "red") {
-            matchesProgress =
-              goal.progressColorClass === goalProgressColorClass.red
+            matchesProgress = goal.progressColorClass === progressColorClass.red
           }
         }
 

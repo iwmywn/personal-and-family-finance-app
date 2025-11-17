@@ -31,16 +31,13 @@ export async function createGoal(values: GoalFormValues) {
 
     const goalsCollection = await getGoalsCollection()
 
-    const isCompleted = values.currentAmount >= values.targetAmount
-
     const result = await goalsCollection.insertOne({
       userId: new ObjectId(userId),
+      categoryKey: values.categoryKey,
       name: values.name,
       targetAmount: values.targetAmount,
-      currentAmount: values.currentAmount,
-      deadline: values.deadline,
-      categoryKey: values.categoryKey,
-      isCompleted,
+      startDate: values.startDate,
+      endDate: values.endDate,
     })
 
     if (!result.acknowledged) return { error: t("goals.be.goalAddFailed") }
@@ -90,18 +87,15 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
       }
     }
 
-    const isCompleted = values.currentAmount >= values.targetAmount
-
     await goalsCollection.updateOne(
       { _id: new ObjectId(goalId) },
       {
         $set: {
+          categoryKey: values.categoryKey,
           name: values.name,
           targetAmount: values.targetAmount,
-          currentAmount: values.currentAmount,
-          deadline: values.deadline,
-          categoryKey: values.categoryKey,
-          isCompleted,
+          startDate: values.startDate,
+          endDate: values.endDate,
         },
       }
     )
@@ -170,7 +164,7 @@ export async function getGoals(userId: string, t: TypedTranslationFunction) {
 
     const goals = await goalsCollection
       .find({ userId: new ObjectId(userId) })
-      .sort({ isCompleted: 1, deadline: 1, _id: -1 })
+      .sort({ startDate: -1, _id: -1 })
       .toArray()
 
     return {

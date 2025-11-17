@@ -50,16 +50,16 @@ interface GoalsTableProps {
 }
 
 export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
-  const { goals, customCategories } = useAppData()
+  const { goals, transactions, customCategories } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
   const t = useTranslations()
-  const { getCategoryLabel } = useCategoryI18n()
+  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
 
-  const goalsWithStats = calculateGoalsStats(filteredGoals)
+  const goalsWithStats = calculateGoalsStats(filteredGoals, transactions)
 
   return (
     <>
@@ -98,12 +98,12 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("goals.fe.name")}</TableHead>
-                    <TableHead>{t("goals.fe.currentAmount")}</TableHead>
-                    <TableHead>{t("goals.fe.targetAmount")}</TableHead>
-                    <TableHead>{t("goals.fe.remainingAmount")}</TableHead>
-                    <TableHead>{t("goals.fe.deadline")}</TableHead>
+                    <TableHead>{t("goals.fe.startDate")}</TableHead>
+                    <TableHead>{t("goals.fe.endDate")}</TableHead>
+                    <TableHead>{t("goals.fe.goalName")}</TableHead>
                     <TableHead>{t("goals.fe.category")}</TableHead>
+                    <TableHead>{t("goals.fe.targetAmount")}</TableHead>
+                    <TableHead>{t("goals.fe.accumulated")}</TableHead>
                     <TableHead>{t("goals.fe.status")}</TableHead>
                     <TableHead>{t("goals.fe.progress")}</TableHead>
                     <TableHead></TableHead>
@@ -112,15 +112,9 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                 <TableBody>
                   {goalsWithStats.map((goal) => (
                     <TableRow key={goal._id} className="[&>td]:text-center">
+                      <TableCell>{formatDate(goal.startDate)}</TableCell>
+                      <TableCell>{formatDate(goal.endDate)}</TableCell>
                       <TableCell className="font-medium">{goal.name}</TableCell>
-                      <TableCell>
-                        {formatCurrency(goal.currentAmount)}
-                      </TableCell>
-                      <TableCell>{formatCurrency(goal.targetAmount)}</TableCell>
-                      <TableCell>
-                        {formatCurrency(goal.remainingAmount)}
-                      </TableCell>
-                      <TableCell>{formatDate(goal.deadline)}</TableCell>
                       <TableCell>
                         <Tooltip>
                           <TooltipTrigger asChild>
@@ -132,28 +126,30 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            {getCategoryLabel(
+                            {getCategoryDescription(
                               goal.categoryKey,
                               customCategories
                             )}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
+                      <TableCell>{formatCurrency(goal.targetAmount)}</TableCell>
+                      <TableCell>{formatCurrency(goal.accumulated)}</TableCell>
                       <TableCell>
                         <Badge
                           className={
-                            goal.status === "completed"
-                              ? "badge-green"
-                              : goal.status === "overdue"
-                                ? "badge-red"
+                            goal.status === "expired"
+                              ? "badge-red"
+                              : goal.status === "active"
+                                ? "badge-green"
                                 : "badge-yellow"
                           }
                         >
-                          {goal.status === "completed"
-                            ? t("goals.fe.completed")
-                            : goal.status === "overdue"
-                              ? t("goals.fe.overdue")
-                              : t("goals.fe.active")}
+                          {goal.status === "expired"
+                            ? t("goals.fe.expired")
+                            : goal.status === "active"
+                              ? t("goals.fe.active")
+                              : t("goals.fe.upcoming")}
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">

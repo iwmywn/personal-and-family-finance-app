@@ -1,9 +1,6 @@
 import { mockBudgets, mockTransactions } from "@/tests/shared/data"
-import {
-  calculateBudgetsStats,
-  calculateBudgetStats,
-  progressColorClass,
-} from "@/lib/budgets"
+import { calculateBudgetsStats, calculateBudgetStats } from "@/lib/budgets"
+import { progressColorClass } from "@/lib/utils"
 
 describe("Budgets", () => {
   describe("calculateBudgetStats", () => {

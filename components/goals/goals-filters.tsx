@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { SearchIcon, XIcon } from "lucide-react"
+import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   InputGroup,
@@ -12,6 +13,11 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
@@ -26,14 +32,27 @@ import { GoalsTable } from "@/components/goals/goals-table"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useFormatDate } from "@/hooks/use-format-date"
+import { useMonthsI18n } from "@/hooks/use-months-i18n"
 import { INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import { filterGoals } from "@/lib/filters"
+import { getUniqueYears } from "@/lib/utils"
 
 export function GoalsFilters() {
-  const { goals, customCategories } = useAppData()
+  const { goals, transactions, customCategories } = useAppData()
   const [searchTerm, setSearchTerm] = useState<string>("")
+  const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
+  const [dateRange, setDateRange] = useState<{
+    from: Date | undefined
+    to: Date | undefined
+  }>({
+    from: undefined,
+    to: undefined,
+  })
+  const [filterMonth, setFilterMonth] = useState<string>("all")
+  const [filterYear, setFilterYear] = useState<string>("all")
   const [filterStatus, setFilterStatus] = useState<
-    "all" | "completed" | "active" | "overdue"
+    "all" | "expired" | "active" | "upcoming"
   >("all")
   const [filterProgress, setFilterProgress] = useState<
     "all" | "gray" | "green" | "yellow" | "red"
@@ -42,38 +61,82 @@ export function GoalsFilters() {
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useTranslations()
   const { getCategoryLabel } = useCategoryI18n()
+  const formatDate = useFormatDate()
+
+  const allMonths = useMonthsI18n()
+  const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
     searchTerm !== "" ||
+    dateRange.from ||
+    dateRange.to ||
+    filterMonth !== "all" ||
+    filterYear !== "all" ||
     filterStatus !== "all" ||
     filterProgress !== "all" ||
     filterCategoryKey !== "all"
 
   const handleResetFilters = () => {
     setSearchTerm("")
+    setDateRange({ from: undefined, to: undefined })
+    setFilterMonth("all")
+    setFilterYear("all")
     setFilterStatus("all")
     setFilterProgress("all")
     setFilterCategoryKey("all")
   }
 
-  const filteredGoals = filterGoals(goals, {
-    searchTerm,
-    filterStatus,
-    filterProgress,
-    filterCategoryKey,
-  })
+  const handleDateRangeChange = (range: {
+    from: Date | undefined
+    to: Date | undefined
+  }) => {
+    setDateRange(range)
+    setFilterMonth("all")
+    setFilterYear("all")
+    setIsDateRangeOpen(false)
+  }
+
+  const handleMonthChange = (month: string) => {
+    setFilterMonth(month)
+    if (month !== "all") {
+      setDateRange({ from: undefined, to: undefined })
+    }
+  }
+
+  const handleYearChange = (year: string) => {
+    setFilterYear(year)
+    if (year !== "all") {
+      setDateRange({ from: undefined, to: undefined })
+    }
+  }
+
+  const filteredGoals = filterGoals(
+    goals,
+    {
+      searchTerm,
+      dateRange,
+      filterMonth,
+      filterYear,
+      filterStatus,
+      filterProgress,
+      filterCategoryKey,
+    },
+    transactions
+  )
 
   return (
     <>
       <Card ref={registerRef}>
         <CardContent>
           <div
-            className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-2 lg:grid-cols-[1fr_1fr_1fr] lg:grid-rows-2 2xl:grid-cols-[1fr_1fr_1fr_1fr] 2xl:grid-rows-1 ${
+            className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-4 lg:grid-cols-[1fr_1fr_1fr] lg:grid-rows-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] 2xl:grid-rows-2 ${
               hasActiveFilters &&
-              "md:grid-rows-2 lg:grid-rows-2 2xl:grid-cols-[1fr_1fr_1fr_1fr_auto]"
+              "md:grid-rows-5 lg:grid-rows-4 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]"
             } gap-4`}
           >
-            <InputGroup className="md:row-start-1">
+            <InputGroup
+              className={`col-span-full ${searchTerm !== "" && "border-primary"}`}
+            >
               <InputGroupAddon>
                 <SearchIcon />
               </InputGroupAddon>
@@ -83,72 +146,130 @@ export function GoalsFilters() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               {searchTerm && (
-                <InputGroupButton
-                  onClick={() => setSearchTerm("")}
-                  type="button"
-                >
-                  <XIcon />
-                </InputGroupButton>
+                <InputGroupAddon align="inline-end">
+                  <InputGroupButton
+                    className="rounded-full"
+                    size="icon-xs"
+                    onClick={() => setSearchTerm("")}
+                  >
+                    <XIcon />
+                  </InputGroupButton>
+                </InputGroupAddon>
               )}
             </InputGroup>
 
-            <Select
-              value={filterStatus}
-              onValueChange={(
-                value: "all" | "completed" | "active" | "overdue"
-              ) => setFilterStatus(value)}
+            <Popover
+              open={isDateRangeOpen}
+              onOpenChange={(open) => {
+                if (!open && dateRange.from && !dateRange.to) {
+                  return
+                }
+                setIsDateRangeOpen(open)
+              }}
             >
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={`w-full justify-between font-normal md:row-start-2 ${dateRange.from && "border-primary!"}`}
+                >
+                  {dateRange.from ? (
+                    dateRange.to ? (
+                      <>
+                        {formatDate(dateRange.from)} -{" "}
+                        {formatDate(dateRange.to)}
+                      </>
+                    ) : (
+                      formatDate(dateRange.from)
+                    )
+                  ) : (
+                    t("common.fe.selectDateRange")
+                  )}
+                  <ChevronDownIcon />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <div className="flex flex-col p-4 sm:flex-row">
+                  <div>
+                    <div className="mb-2 text-center text-sm font-medium">
+                      {t("common.fe.from")}
+                    </div>
+                    <Calendar
+                      autoFocus
+                      mode="single"
+                      selected={dateRange.from}
+                      defaultMonth={dateRange.from || new Date()}
+                      captionLayout="dropdown"
+                      onSelect={(date) => {
+                        setDateRange((prev) => ({
+                          from: date,
+                          to:
+                            prev.to && date && date > prev.to
+                              ? undefined
+                              : prev.to,
+                        }))
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <div className="mb-2 text-center text-sm font-medium">
+                      {t("common.fe.to")}
+                    </div>
+                    <Calendar
+                      autoFocus
+                      mode="single"
+                      selected={dateRange.to}
+                      defaultMonth={dateRange.to || new Date()}
+                      captionLayout="dropdown"
+                      onSelect={(date) => {
+                        if (date && dateRange.from && date >= dateRange.from) {
+                          handleDateRangeChange({
+                            from: dateRange.from,
+                            to: date,
+                          })
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            <Select value={filterMonth} onValueChange={handleMonthChange}>
               <SelectTrigger
-                className={`w-full md:row-start-1 ${filterStatus !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("goals.fe.status")} />
+                <SelectValue placeholder={t("common.fe.month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value="all">
-                    {t("goals.fe.allStatuses")}
+                    {t("common.fe.allMonths")}
                   </SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="completed">
-                    {t("goals.fe.completed")}
-                  </SelectItem>
-                  <SelectItem value="active">{t("goals.fe.active")}</SelectItem>
-                  <SelectItem value="overdue">
-                    {t("goals.fe.overdue")}
-                  </SelectItem>
+                  {allMonths.map((month) => (
+                    <SelectItem key={month.value} value={month.value}>
+                      {month.label}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
 
-            <Select
-              value={filterProgress}
-              onValueChange={(
-                value: "all" | "gray" | "green" | "yellow" | "red"
-              ) => setFilterProgress(value)}
-            >
+            <Select value={filterYear} onValueChange={handleYearChange}>
               <SelectTrigger
-                className={`w-full md:row-start-2 lg:row-start-1 2xl:row-start-1 ${filterProgress !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("goals.fe.progress")} />
+                <SelectValue placeholder={t("common.fe.year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("goals.fe.allProgress")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("common.fe.allYears")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="gray">
-                    {t("goals.fe.progressGray")}
-                  </SelectItem>
-                  <SelectItem value="green">
-                    {t("goals.fe.progressGreen")}
-                  </SelectItem>
-                  <SelectItem value="yellow">
-                    {t("goals.fe.progressYellow")}
-                  </SelectItem>
-                  <SelectItem value="red">
-                    {t("goals.fe.progressRed")}
-                  </SelectItem>
+                  {allYears.map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -158,7 +279,7 @@ export function GoalsFilters() {
               onValueChange={setFilterCategoryKey}
             >
               <SelectTrigger
-                className={`w-full md:row-start-2 2xl:row-start-1 ${filterCategoryKey !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.category")} />
               </SelectTrigger>
@@ -188,11 +309,72 @@ export function GoalsFilters() {
               </SelectContent>
             </Select>
 
+            <Select
+              value={filterProgress}
+              onValueChange={(
+                value: "all" | "gray" | "green" | "yellow" | "red"
+              ) => setFilterProgress(value)}
+            >
+              <SelectTrigger
+                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterProgress !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder={t("goals.fe.progress")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">
+                    {t("goals.fe.allProgress")}
+                  </SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="gray">
+                    {t("goals.fe.progressGray")}
+                  </SelectItem>
+                  <SelectItem value="green">
+                    {t("goals.fe.progressGreen")}
+                  </SelectItem>
+                  <SelectItem value="yellow">
+                    {t("goals.fe.progressYellow")}
+                  </SelectItem>
+                  <SelectItem value="red">
+                    {t("goals.fe.progressRed")}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={filterStatus}
+              onValueChange={(
+                value: "all" | "expired" | "active" | "upcoming"
+              ) => setFilterStatus(value)}
+            >
+              <SelectTrigger
+                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterStatus !== "all" && "border-primary"}`}
+              >
+                <SelectValue placeholder={t("goals.fe.status")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">
+                    {t("goals.fe.allStatuses")}
+                  </SelectItem>
+                  <SelectSeparator />
+                  <SelectItem value="expired">
+                    {t("goals.fe.expired")}
+                  </SelectItem>
+                  <SelectItem value="active">{t("goals.fe.active")}</SelectItem>
+                  <SelectItem value="upcoming">
+                    {t("goals.fe.upcoming")}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
             {hasActiveFilters && (
               <Button
                 variant="outline"
                 onClick={handleResetFilters}
-                className="col-span-full 2xl:col-auto 2xl:row-start-1"
+                className="col-span-full 2xl:col-auto 2xl:row-start-2"
               >
                 {t("common.fe.reset")}
               </Button>

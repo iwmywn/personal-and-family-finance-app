@@ -184,25 +184,6 @@ export const createGoalSchema = (t: TypedTranslationFunction) => {
         .max(100, {
           message: t("schemas.goal.nameMaxLength"),
         }),
-      targetAmount: z
-        .number()
-        .min(0.01, {
-          message: t("schemas.goal.targetAmountRequired"),
-        })
-        .max(100000000000, {
-          message: t("schemas.goal.targetAmountMaxLength"),
-        }),
-      currentAmount: z
-        .number()
-        .min(0, {
-          message: t("schemas.goal.currentAmountRequired"),
-        })
-        .max(100000000000, {
-          message: t("schemas.goal.currentAmountMaxLength"),
-        }),
-      deadline: z.date({
-        message: t("schemas.goal.deadlineRequired"),
-      }),
       categoryKey: z
         .string()
         .min(1, { message: t("schemas.goal.categoryRequired") })
@@ -212,12 +193,26 @@ export const createGoalSchema = (t: TypedTranslationFunction) => {
             val.startsWith("custom_"),
           { message: t("schemas.goal.categoryInvalid") }
         ),
+      targetAmount: z
+        .number()
+        .min(0.01, {
+          message: t("schemas.goal.targetAmountRequired"),
+        })
+        .max(100000000000, {
+          message: t("schemas.goal.targetAmountMaxLength"),
+        }),
+      startDate: z.date({
+        message: t("schemas.goal.startDateRequired"),
+      }),
+      endDate: z.date({
+        message: t("schemas.goal.endDateRequired"),
+      }),
     })
     .superRefine((data, ctx) => {
-      if (data.currentAmount > data.targetAmount) {
+      if (data.endDate <= data.startDate) {
         ctx.addIssue({
-          path: ["currentAmount"],
-          message: t("schemas.goal.currentAmountExceedsTarget"),
+          path: ["endDate"],
+          message: t("schemas.goal.endDateMustBeAfterStartDate"),
           code: "custom",
         })
       }

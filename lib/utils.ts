@@ -31,3 +31,9 @@ export function getUniqueYears(transactions: Transaction[]): number[] {
     new Set(transactions.map((t) => new Date(t.date).getFullYear()))
   ).sort((a, b) => b - a)
 }
+export const progressColorClass = {
+  gray: "[&>[data-slot=progress-indicator]]:bg-gray-600",
+  green: "[&>[data-slot=progress-indicator]]:bg-green-600",
+  yellow: "[&>[data-slot=progress-indicator]]:bg-yellow-600",
+  red: "[&>[data-slot=progress-indicator]]:bg-red-600",
+} as const

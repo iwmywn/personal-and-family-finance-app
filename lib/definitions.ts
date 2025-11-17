@@ -42,12 +42,11 @@ type BaseBudget<T> = {
 type BaseGoal<T> = {
   _id: T
   userId: T
+  categoryKey: CategoryKeyType
   name: string
   targetAmount: number
-  currentAmount: number
-  deadline: Date
-  categoryKey: CategoryKeyType
-  isCompleted: boolean
+  startDate: Date
+  endDate: Date
 }
 
 export type User = BaseUser<string>

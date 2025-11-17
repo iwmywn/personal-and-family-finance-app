@@ -48,7 +48,7 @@ import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import type { Goal } from "@/lib/definitions"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { cn, normalizeToUTCDate } from "@/lib/utils"
 
 interface GoalDialogProps {
   goal?: Goal
@@ -58,8 +58,8 @@ interface GoalDialogProps {
 
 export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [deadlineCalendarOpen, setDeadlineCalendarOpen] =
-    useState<boolean>(false)
+  const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
+  const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useTranslations()
   const formatDate = useFormatDate()
@@ -67,20 +67,25 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
+      categoryKey: goal?.categoryKey || "",
       name: goal?.name || "",
       targetAmount: goal?.targetAmount || 0,
-      currentAmount: goal?.currentAmount || 0,
-      deadline: goal?.deadline ? new Date(goal.deadline) : undefined,
-      categoryKey: goal?.categoryKey || "",
+      startDate: goal?.startDate ? new Date(goal.startDate) : undefined,
+      endDate: goal?.endDate ? new Date(goal.endDate) : undefined,
     },
   })
 
   const { customCategories } = useAppData()
   const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
 
-  const deadline = useWatch({
+  const startDate = useWatch({
     control: form.control,
-    name: "deadline",
+    name: "startDate",
+  })
+
+  const endDate = useWatch({
+    control: form.control,
+    name: "endDate",
   })
 
   async function onSubmit(values: GoalFormValues) {
@@ -89,7 +94,8 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
     if (goal) {
       const { success, error } = await updateGoal(goal._id, {
         ...values,
-        deadline: normalizeToUTCDate(values.deadline),
+        startDate: normalizeToUTCDate(values.startDate),
+        endDate: normalizeToUTCDate(values.endDate),
       })
 
       if (error || !success) {
@@ -101,7 +107,8 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
     } else {
       const { success, error } = await createGoal({
         ...values,
-        deadline: normalizeToUTCDate(values.deadline),
+        startDate: normalizeToUTCDate(values.startDate),
+        endDate: normalizeToUTCDate(values.endDate),
       })
 
       if (error || !success) {
@@ -110,10 +117,10 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
         toast.success(success)
         form.reset({
           name: "",
-          targetAmount: 0,
-          currentAmount: 0,
-          deadline: new Date(),
           categoryKey: "",
+          targetAmount: 0,
+          startDate: undefined,
+          endDate: undefined,
         })
         setOpen(false)
       }
@@ -138,121 +145,6 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("goals.fe.name")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t("goals.fe.namePlaceholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="targetAmount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("goals.fe.targetAmount")} (VND)</FormLabel>
-                  <FormControl>
-                    <Input
-                      inputMode="numeric"
-                      placeholder="0"
-                      value={
-                        field.value ? field.value.toLocaleString("vi-VN") : ""
-                      }
-                      onChange={(e) => {
-                        const rawValue = e.target.value.replace(/\./g, "")
-                        const numericValue = Number.parseInt(rawValue) || 0
-                        field.onChange(numericValue)
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="currentAmount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("goals.fe.currentAmount")} (VND)</FormLabel>
-                  <FormControl>
-                    <Input
-                      inputMode="numeric"
-                      placeholder="0"
-                      value={
-                        field.value ? field.value.toLocaleString("vi-VN") : ""
-                      }
-                      onChange={(e) => {
-                        const rawValue = e.target.value.replace(/\./g, "")
-                        const numericValue = Number.parseInt(rawValue) || 0
-                        field.onChange(numericValue)
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="deadline"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("goals.fe.deadline")}</FormLabel>
-                  <Popover
-                    open={deadlineCalendarOpen}
-                    onOpenChange={setDeadlineCalendarOpen}
-                  >
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          className="w-full justify-between font-normal"
-                          type="button"
-                        >
-                          {deadline
-                            ? formatDate(deadline)
-                            : t("common.fe.selectDate")}
-                          <CalendarIcon />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      className="w-auto overflow-hidden p-0"
-                      align="start"
-                    >
-                      <Calendar
-                        autoFocus
-                        mode="single"
-                        selected={deadline}
-                        captionLayout="dropdown"
-                        onSelect={(date) => {
-                          if (date) {
-                            field.onChange(date)
-                            setDeadlineCalendarOpen(false)
-                          }
-                        }}
-                        disabled={(date) => date < new Date("1900-01-01")}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name="categoryKey"
@@ -307,6 +199,154 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                         )}
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("goals.fe.goalName")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("goals.fe.goalNamePlaceholder")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="targetAmount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("goals.fe.targetAmount")} (VND)</FormLabel>
+                  <FormControl>
+                    <Input
+                      inputMode="numeric"
+                      placeholder="0"
+                      value={
+                        field.value ? field.value.toLocaleString("vi-VN") : ""
+                      }
+                      onChange={(e) => {
+                        const rawValue = e.target.value.replace(/\./g, "")
+                        const numericValue = Number.parseInt(rawValue) || 0
+                        field.onChange(numericValue)
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("goals.fe.startDate")}</FormLabel>
+                  <Popover
+                    open={startCalendarOpen}
+                    onOpenChange={setStartCalendarOpen}
+                  >
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-between font-normal",
+                            !startDate && "text-muted-foreground"
+                          )}
+                        >
+                          {startDate ? (
+                            formatDate(startDate)
+                          ) : (
+                            <span>{t("common.fe.selectDate")}</span>
+                          )}
+                          <CalendarIcon />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-auto overflow-hidden p-0"
+                      align="start"
+                    >
+                      <Calendar
+                        autoFocus
+                        mode="single"
+                        selected={startDate}
+                        captionLayout="dropdown"
+                        onSelect={(date) => {
+                          field.onChange(date)
+                          setStartCalendarOpen(false)
+                        }}
+                        disabled={(date) =>
+                          (endDate && date > endDate) ||
+                          date < new Date("1900-01-01")
+                        }
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("goals.fe.endDate")}</FormLabel>
+                  <Popover
+                    open={endCalendarOpen}
+                    onOpenChange={setEndCalendarOpen}
+                  >
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-between font-normal",
+                            !endDate && "text-muted-foreground"
+                          )}
+                        >
+                          {endDate ? (
+                            formatDate(endDate)
+                          ) : (
+                            <span>{t("common.fe.selectDate")}</span>
+                          )}
+                          <CalendarIcon />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-auto overflow-hidden p-0"
+                      align="start"
+                    >
+                      <Calendar
+                        autoFocus
+                        mode="single"
+                        selected={endDate}
+                        captionLayout="dropdown"
+                        onSelect={(date) => {
+                          field.onChange(date)
+                          setEndCalendarOpen(false)
+                        }}
+                        disabled={(date) =>
+                          (startDate && date <= startDate) ||
+                          date < new Date("1900-01-01")
+                        }
+                      />
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
