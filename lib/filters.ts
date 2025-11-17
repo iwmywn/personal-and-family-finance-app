@@ -1,6 +1,5 @@
-import { calculateBudgetsStats } from "@/lib/budgets"
 import type { Budget, Category, Goal, Transaction } from "@/lib/definitions"
-import { calculateGoalsStats } from "@/lib/goals"
+import { calculateBudgetsStats, calculateGoalsStats } from "@/lib/statistics"
 import { progressColorClass } from "@/lib/utils"
 
 interface Filters {

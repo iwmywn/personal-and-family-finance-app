@@ -34,7 +34,7 @@ type BaseBudget<T> = {
   _id: T
   userId: T
   categoryKey: CategoryKeyType
-  amount: number
+  allocatedAmount: number
   startDate: Date
   endDate: Date
 }

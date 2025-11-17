@@ -40,8 +40,8 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { calculateBudgetsStats } from "@/lib/budgets"
 import type { Budget } from "@/lib/definitions"
+import { calculateBudgetsStats } from "@/lib/statistics"
 import { formatCurrency } from "@/lib/utils"
 
 interface BudgetsTableProps {
@@ -68,7 +68,7 @@ export function BudgetsTable({
     <>
       <Card>
         <CardContent>
-          {budgetsWithSpent.length === 0 ? (
+          {filteredBudgets.length === 0 ? (
             <Empty
               className="border"
               style={{
@@ -83,7 +83,7 @@ export function BudgetsTable({
                 </EmptyMedia>
                 <EmptyTitle>{t("budgets.fe.noBudgetsFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {budgets!.length === 0
+                  {budgets.length === 0
                     ? t("budgets.fe.noBudgetsDescription")
                     : t("budgets.fe.noBudgetsFiltered")}
                 </EmptyDescription>
@@ -135,10 +135,12 @@ export function BudgetsTable({
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell>{formatCurrency(budget.amount)}</TableCell>
+                      <TableCell>
+                        {formatCurrency(budget.allocatedAmount)}
+                      </TableCell>
                       <TableCell>{formatCurrency(budget.spent)}</TableCell>
                       <TableCell>
-                        {formatCurrency(budget.amount - budget.spent)}
+                        {formatCurrency(budget.allocatedAmount - budget.spent)}
                       </TableCell>
                       <TableCell>
                         <Badge

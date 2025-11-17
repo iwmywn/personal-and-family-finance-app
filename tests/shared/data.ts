@@ -44,7 +44,7 @@ export const mockBudget: DBBudget = {
   _id: new ObjectId("68f795d4bdcc3c9a30717988"),
   userId: mockUser._id,
   categoryKey: "food_beverage",
-  amount: 1000000,
+  allocatedAmount: 1000000,
   startDate: normalizeToUTCDate(new Date("2024-01-01")),
   endDate: normalizeToUTCDate(new Date("2024-01-31")),
 }
@@ -87,7 +87,7 @@ export const mockValidCategoryValues = {
 
 export const mockValidBudgetValues = {
   categoryKey: "food_beverage",
-  amount: 1000000,
+  allocatedAmount: 1000000,
   startDate: normalizeToUTCDate(new Date("2024-01-01")),
   endDate: normalizeToUTCDate(new Date("2024-01-31")),
 }
@@ -209,7 +209,7 @@ export const mockBudgets: Budget[] = [
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "food_beverage",
-    amount: 1000000,
+    allocatedAmount: 1000000,
     startDate: new Date("2024-02-01"),
     endDate: new Date("2024-02-28"), // Completed (in the past)
   },
@@ -217,7 +217,7 @@ export const mockBudgets: Budget[] = [
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "transportation",
-    amount: 500000,
+    allocatedAmount: 500000,
     startDate: new Date("2024-03-01"),
     endDate: new Date("2024-03-28"), // Active (current month)
   },
@@ -225,7 +225,7 @@ export const mockBudgets: Budget[] = [
     _id: "3",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "housing",
-    amount: 2000000,
+    allocatedAmount: 2000000,
     startDate: new Date("2024-04-01"),
     endDate: new Date("2024-04-28"), // Active (future)
   },
@@ -233,7 +233,7 @@ export const mockBudgets: Budget[] = [
     _id: "4",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "food_beverage",
-    amount: 1500000,
+    allocatedAmount: 1500000,
     startDate: new Date("2024-03-01"),
     endDate: new Date("2024-03-28"), // Active (current month)
   },
@@ -241,7 +241,7 @@ export const mockBudgets: Budget[] = [
     _id: "5",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "business_freelance",
-    amount: 3000000,
+    allocatedAmount: 3000000,
     startDate: new Date("2023-01-01"),
     endDate: new Date("2023-01-31"), // Completed (last year)
   },

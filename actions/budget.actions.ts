@@ -45,7 +45,7 @@ export async function createBudget(values: BudgetFormValues) {
     const result = await budgetsCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey: values.categoryKey,
-      amount: values.amount,
+      allocatedAmount: values.allocatedAmount,
       startDate: values.startDate,
       endDate: values.endDate,
     })
@@ -102,7 +102,7 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
       {
         $set: {
           categoryKey: values.categoryKey,
-          amount: values.amount,
+          allocatedAmount: values.allocatedAmount,
           startDate: values.startDate,
           endDate: values.endDate,
         },

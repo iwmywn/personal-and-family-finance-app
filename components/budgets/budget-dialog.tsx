@@ -68,7 +68,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
     resolver: zodResolver(schema),
     defaultValues: {
       categoryKey: budget?.categoryKey || "",
-      amount: budget?.amount || 0,
+      allocatedAmount: budget?.allocatedAmount || 0,
       startDate: budget?.startDate ? new Date(budget.startDate) : undefined,
       endDate: budget?.endDate ? new Date(budget.endDate) : undefined,
     },
@@ -116,7 +116,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         toast.success(success)
         form.reset({
           categoryKey: "",
-          amount: 0,
+          allocatedAmount: 0,
           startDate: undefined,
           endDate: undefined,
         })
@@ -206,7 +206,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
             <FormField
               control={form.control}
-              name="amount"
+              name="allocatedAmount"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("common.fe.amount")} (VND)</FormLabel>

@@ -147,7 +147,7 @@ export const createBudgetSchema = (t: TypedTranslationFunction) => {
             val.startsWith("custom_"),
           { message: t("schemas.budget.categoryRequired") }
         ),
-      amount: z
+      allocatedAmount: z
         .number()
         .min(0.01, {
           message: t("schemas.budget.amountRequired"),

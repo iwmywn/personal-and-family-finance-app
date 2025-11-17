@@ -41,7 +41,7 @@ import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Goal } from "@/lib/definitions"
-import { calculateGoalsStats } from "@/lib/goals"
+import { calculateGoalsStats } from "@/lib/statistics"
 import { formatCurrency } from "@/lib/utils"
 
 interface GoalsTableProps {
@@ -65,7 +65,7 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
     <>
       <Card>
         <CardContent>
-          {goalsWithStats.length === 0 ? (
+          {filteredGoals.length === 0 ? (
             <Empty
               className="border"
               style={{
@@ -80,7 +80,7 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                 </EmptyMedia>
                 <EmptyTitle>{t("goals.fe.noGoalsFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {goals!.length === 0
+                  {goals.length === 0
                     ? t("goals.fe.noGoalsDescription")
                     : t("goals.fe.noGoalsFiltered")}
                 </EmptyDescription>

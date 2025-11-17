@@ -460,7 +460,9 @@ describe("Filters", () => {
         )
         const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
         const percentage =
-          budget.amount === 0 ? 0 : (spent / budget.amount) * 100
+          budget.allocatedAmount === 0
+            ? 0
+            : (spent / budget.allocatedAmount) * 100
         expect(percentage < 75).toBe(true)
       })
     })
@@ -486,7 +488,9 @@ describe("Filters", () => {
         )
         const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
         const percentage =
-          budget.amount === 0 ? 0 : (spent / budget.amount) * 100
+          budget.allocatedAmount === 0
+            ? 0
+            : (spent / budget.allocatedAmount) * 100
         expect(percentage >= 75 && percentage < 100).toBe(true)
       })
     })
@@ -512,7 +516,9 @@ describe("Filters", () => {
         )
         const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
         const percentage =
-          budget.amount === 0 ? 0 : (spent / budget.amount) * 100
+          budget.allocatedAmount === 0
+            ? 0
+            : (spent / budget.allocatedAmount) * 100
         expect(percentage >= 100).toBe(true)
       })
     })

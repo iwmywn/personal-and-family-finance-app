@@ -42,7 +42,7 @@ describe("Budgets", async () => {
 
       const result = await createBudget({
         categoryKey: "",
-        amount: -1,
+        allocatedAmount: -1,
         startDate: new Date("invalid"),
         endDate: new Date("invalid"),
       })
@@ -56,7 +56,7 @@ describe("Budgets", async () => {
 
       const result = await createBudget({
         categoryKey: "food_beverage",
-        amount: 1000000,
+        allocatedAmount: 1000000,
         startDate: normalizeToUTCDate(new Date("2024-12-31")),
         endDate: normalizeToUTCDate(new Date("2024-01-01")),
       })
@@ -71,7 +71,7 @@ describe("Budgets", async () => {
 
       const result = await createBudget({
         categoryKey: mockBudget.categoryKey,
-        amount: 2000000,
+        allocatedAmount: 2000000,
         startDate: normalizeToUTCDate(mockBudget.startDate),
         endDate: normalizeToUTCDate(mockBudget.endDate),
       })
@@ -103,7 +103,7 @@ describe("Budgets", async () => {
       })
 
       expect(addedBudget?.categoryKey).toBe("food_beverage")
-      expect(addedBudget?.amount).toBe(1000000)
+      expect(addedBudget?.allocatedAmount).toBe(1000000)
       expect(addedBudget?.startDate.toISOString()).toBe(
         "2024-01-01T00:00:00.000Z"
       )
@@ -143,7 +143,7 @@ describe("Budgets", async () => {
 
       const result = await updateBudget(mockBudget._id.toString(), {
         categoryKey: "",
-        amount: -1,
+        allocatedAmount: -1,
         startDate: new Date("2024-01-01"),
         endDate: new Date("2024-01-01"), // endDate <= startDate
       })
@@ -185,7 +185,7 @@ describe("Budgets", async () => {
 
       const result = await updateBudget(mockBudget._id.toString(), {
         categoryKey: "transportation",
-        amount: 2000000,
+        allocatedAmount: 2000000,
         startDate: normalizeToUTCDate(new Date("2024-02-01")),
         endDate: normalizeToUTCDate(new Date("2024-02-29")),
       })
@@ -198,7 +198,7 @@ describe("Budgets", async () => {
       })
 
       expect(updatedBudget?.categoryKey).toBe("transportation")
-      expect(updatedBudget?.amount).toBe(2000000)
+      expect(updatedBudget?.allocatedAmount).toBe(2000000)
       expect(updatedBudget?.startDate.toISOString()).toBe(
         "2024-02-01T00:00:00.000Z"
       )
@@ -206,7 +206,7 @@ describe("Budgets", async () => {
         "2024-02-29T00:00:00.000Z"
       )
       expect(unrelatedBudget?.categoryKey).toBe("food_beverage")
-      expect(unrelatedBudget?.amount).toBe(1000000)
+      expect(unrelatedBudget?.allocatedAmount).toBe(1000000)
       expect(unrelatedBudget?.startDate.toISOString()).toBe(
         "2024-01-01T00:00:00.000Z"
       )
@@ -314,7 +314,7 @@ describe("Budgets", async () => {
 
       expect(result.budgets).toHaveLength(1)
       expect(result.budgets?.[0].categoryKey).toBe("food_beverage")
-      expect(result.budgets?.[0].amount).toBe(1000000)
+      expect(result.budgets?.[0].allocatedAmount).toBe(1000000)
       expect(result.error).toBeUndefined()
     })
 

@@ -66,7 +66,7 @@ export function CategoriesTable({
                 </EmptyMedia>
                 <EmptyTitle>{t("categories.fe.noCategoriesFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {customCategories!.length === 0
+                  {customCategories.length === 0
                     ? t("categories.fe.noCategoriesDescription")
                     : t("categories.fe.noCategoriesFiltered")}
                 </EmptyDescription>
