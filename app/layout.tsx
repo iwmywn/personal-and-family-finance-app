@@ -13,7 +13,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { Spinner } from "@/components/ui/spinner"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
-import { env } from "@/env/client"
+import { env } from "@/env/client.mjs"
 import { LOCALE_CONFIG } from "@/i18n/config"
 import { siteConfig } from "@/app/pffa.config"
 

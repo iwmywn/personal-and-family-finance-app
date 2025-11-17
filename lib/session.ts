@@ -2,8 +2,8 @@ import { cache } from "react"
 import { cookies } from "next/headers"
 import { getIronSession, type SessionOptions } from "iron-session"
 
-import { env as clientEnv } from "@/env/client"
-import { env as serverEnv } from "@/env/server"
+import { env as clientEnv } from "@/env/client.mjs"
+import { env as serverEnv } from "@/env/server.mjs"
 
 interface UserSession {
   userId: string

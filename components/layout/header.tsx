@@ -15,7 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { env } from "@/env/client"
+import { env } from "@/env/client.mjs"
 import { mainNav, secondaryNav } from "@/lib/nav"
 
 const ColorDialog =
