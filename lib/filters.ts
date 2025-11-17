@@ -122,7 +122,6 @@ export function filterBudgets(
 
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
-  const nowDateOnly = toDateOnly(new Date())
 
   let filteredBudgets = budgets.filter((budget) => {
     const budgetStartDateOnly = toDateOnly(new Date(budget.startDate))
@@ -151,29 +150,10 @@ export function filterBudgets(
     const matchesCategory =
       filterCategoryKey === "all" || budget.categoryKey === filterCategoryKey
 
-    let matchesStatus = true
-    if (filterStatus !== "all") {
-      if (filterStatus === "expired") {
-        matchesStatus = budgetEndDateOnly.getTime() < nowDateOnly.getTime()
-      } else if (filterStatus === "active") {
-        matchesStatus =
-          budgetStartDateOnly.getTime() <= nowDateOnly.getTime() &&
-          budgetEndDateOnly.getTime() >= nowDateOnly.getTime()
-      } else if (filterStatus === "upcoming") {
-        matchesStatus = budgetStartDateOnly.getTime() > nowDateOnly.getTime()
-      }
-    }
-
-    return (
-      matchesDateRange &&
-      matchesMonth &&
-      matchesYear &&
-      matchesCategory &&
-      matchesStatus
-    )
+    return matchesDateRange && matchesMonth && matchesYear && matchesCategory
   })
 
-  if (filterProgress !== "all" && transactions) {
+  if (filterStatus !== "all" || filterProgress !== "all") {
     const budgetsWithStats = calculateBudgetsStats(
       filteredBudgets,
       transactions
@@ -181,19 +161,27 @@ export function filterBudgets(
 
     filteredBudgets = budgetsWithStats
       .filter((budget) => {
+        const matchesStatus =
+          filterStatus === "all" || budget.status === filterStatus
+
+        let matchesProgress = true
         if (filterProgress === "gray") {
-          return budget.progressColorClass === progressColorClass.gray
+          matchesProgress =
+            budget.progressColorClass === progressColorClass.gray
         }
         if (filterProgress === "green") {
-          return budget.progressColorClass === progressColorClass.green
+          matchesProgress =
+            budget.progressColorClass === progressColorClass.green
         }
         if (filterProgress === "yellow") {
-          return budget.progressColorClass === progressColorClass.yellow
+          matchesProgress =
+            budget.progressColorClass === progressColorClass.yellow
         }
         if (filterProgress === "red") {
-          return budget.progressColorClass === progressColorClass.red
+          matchesProgress = budget.progressColorClass === progressColorClass.red
         }
-        return true
+
+        return matchesStatus && matchesProgress
       })
       .map((budget) => budget)
   }
@@ -270,19 +258,15 @@ export function filterGoals(
           filterStatus === "all" || goal.status === filterStatus
 
         let matchesProgress = true
-        if (filterProgress !== "all") {
-          if (filterProgress === "gray") {
-            matchesProgress =
-              goal.progressColorClass === progressColorClass.gray
-          } else if (filterProgress === "green") {
-            matchesProgress =
-              goal.progressColorClass === progressColorClass.green
-          } else if (filterProgress === "yellow") {
-            matchesProgress =
-              goal.progressColorClass === progressColorClass.yellow
-          } else if (filterProgress === "red") {
-            matchesProgress = goal.progressColorClass === progressColorClass.red
-          }
+        if (filterProgress === "gray") {
+          matchesProgress = goal.progressColorClass === progressColorClass.gray
+        } else if (filterProgress === "green") {
+          matchesProgress = goal.progressColorClass === progressColorClass.green
+        } else if (filterProgress === "yellow") {
+          matchesProgress =
+            goal.progressColorClass === progressColorClass.yellow
+        } else if (filterProgress === "red") {
+          matchesProgress = goal.progressColorClass === progressColorClass.red
         }
 
         return matchesStatus && matchesProgress
