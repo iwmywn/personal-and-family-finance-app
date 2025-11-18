@@ -40,7 +40,7 @@ export async function createRecurringTransaction(
 
     const recurringCollection = await getRecurringTransactionsCollection()
 
-    const baseQuery: Filter<DBRecurringTransaction> = {
+    const query: Filter<DBRecurringTransaction> = {
       userId: new ObjectId(userId),
       type: values.type,
       categoryKey: values.categoryKey,
@@ -51,7 +51,7 @@ export async function createRecurringTransaction(
     }
 
     if (values.frequency === "weekly" || values.frequency === "bi-weekly") {
-      baseQuery.weekday = values.weekday
+      query.weekday = values.weekday
     }
 
     if (
@@ -59,25 +59,16 @@ export async function createRecurringTransaction(
       values.frequency === "quarterly" ||
       values.frequency === "yearly"
     ) {
-      baseQuery.dayOfMonth = values.dayOfMonth
+      query.dayOfMonth = values.dayOfMonth
     }
 
     if (values.frequency === "random") {
-      baseQuery.randomEveryXDays = values.randomEveryXDays
+      query.randomEveryXDays = values.randomEveryXDays
     }
 
-    const query: Filter<DBRecurringTransaction> = { ...baseQuery }
-
-    if (values.endDate !== undefined) {
-      query.endDate = values.endDate
-    } else {
-      query.$or = [
-        { endDate: { $exists: false } },
-        { endDate: undefined },
-      ] as Filter<DBRecurringTransaction>["$or"]
-    }
-
-    const existingRecurring = await recurringCollection.findOne(query)
+    const existingRecurring = await recurringCollection.findOne({
+      ...query,
+    })
 
     if (existingRecurring) {
       return { error: t("recurring.be.recurringExists") }
