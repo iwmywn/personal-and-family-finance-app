@@ -7,6 +7,9 @@ const withNextIntl = createNextIntlPlugin()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  devIndicators: {
+    position: "bottom-right",
+  },
   experimental: {
     scrollRestoration: true,
     cpus: 1,
