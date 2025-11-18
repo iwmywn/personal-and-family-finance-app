@@ -487,22 +487,17 @@ export function RecurringDialog({
                     <FormLabel>{t("recurring.fe.randomEveryXDays")}</FormLabel>
                     <FormControl>
                       <Input
-                        type="number"
-                        min={1}
+                        inputMode="numeric"
                         placeholder={t(
                           "recurring.fe.randomEveryXDaysPlaceholder"
                         )}
-                        value={field.value || ""}
+                        value={
+                          field.value ? field.value.toLocaleString("vi-VN") : ""
+                        }
                         onChange={(e) => {
-                          const value = e.target.value
-                          if (value === "") {
-                            field.onChange(undefined)
-                          } else {
-                            const numValue = Number.parseInt(value)
-                            if (!Number.isNaN(numValue) && numValue >= 1) {
-                              field.onChange(numValue)
-                            }
-                          }
+                          const rawValue = e.target.value.replace(/\./g, "")
+                          const numericValue = Number.parseInt(rawValue) || 0
+                          field.onChange(numericValue)
                         }}
                       />
                     </FormControl>
@@ -554,6 +549,7 @@ export function RecurringDialog({
                           setStartCalendarOpen(false)
                         }}
                         disabled={(date) =>
+                          date <= new Date() ||
                           (endDate && date > endDate) ||
                           date < new Date("1900-01-01")
                         }
@@ -612,6 +608,7 @@ export function RecurringDialog({
                           setEndCalendarOpen(false)
                         }}
                         disabled={(date) =>
+                          date <= new Date() ||
                           (startDate && date <= startDate) ||
                           date < new Date("1900-01-01")
                         }
