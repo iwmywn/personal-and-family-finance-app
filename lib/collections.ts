@@ -3,6 +3,7 @@ import type {
   DBBudget,
   DBCategory,
   DBGoal,
+  DBRecurringTransaction,
   DBTransaction,
   DBUser,
 } from "@/lib/definitions"
@@ -25,4 +26,8 @@ export function getBudgetsCollection() {
 
 export function getGoalsCollection() {
   return collection<DBGoal>("goals")
+}
+
+export function getRecurringTransactionsCollection() {
+  return collection<DBRecurringTransaction>("recurringTransactions")
 }

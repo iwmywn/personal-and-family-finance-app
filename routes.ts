@@ -8,6 +8,7 @@ const protectedRoutes = [
   "/categories",
   "/budgets",
   "/goals",
+  "/recurring",
   "/settings",
 ]
 const ignoredRoutes = ["/images/", "/opengraph-image.png", "/icon.png"]

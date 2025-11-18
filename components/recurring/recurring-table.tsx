@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreVerticalIcon, PiggyBankIcon } from "lucide-react"
+import { MoreVerticalIcon, RepeatIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -20,7 +20,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
-import { Progress } from "@/components/ui/progress"
 import {
   Table,
   TableBody,
@@ -34,41 +33,73 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { BudgetDialog } from "@/components/budgets/budget-dialog"
-import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
+import { DeleteRecurringDialog } from "@/components/recurring/delete-recurring-dialog"
+import { RecurringDialog } from "@/components/recurring/recurring-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import type { Budget } from "@/lib/definitions"
-import { calculateBudgetsStats } from "@/lib/statistics"
+import type { RecurringTransaction } from "@/lib/definitions"
 import { formatCurrency } from "@/lib/utils"
 
-interface BudgetsTableProps {
-  filteredBudgets: Budget[]
+interface RecurringTableProps {
+  filteredRecurring: RecurringTransaction[]
   offsetHeight: number
 }
 
-export function BudgetsTable({
-  filteredBudgets,
+export function RecurringTable({
+  filteredRecurring,
   offsetHeight,
-}: BudgetsTableProps) {
-  const { budgets, transactions, customCategories } = useAppData()
+}: RecurringTableProps) {
+  const { recurringTransactions, customCategories } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
+  const [selectedRecurring, setSelectedRecurring] =
+    useState<RecurringTransaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
   const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
 
-  const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions)
+  const getFrequencyLabel = (frequency: RecurringTransaction["frequency"]) => {
+    switch (frequency) {
+      case "daily":
+        return t("recurring.fe.frequencyDaily")
+      case "weekly":
+        return t("recurring.fe.frequencyWeekly")
+      case "bi-weekly":
+        return t("recurring.fe.frequencyBiWeekly")
+      case "monthly":
+        return t("recurring.fe.frequencyMonthly")
+      case "quarterly":
+        return t("recurring.fe.frequencyQuarterly")
+      case "yearly":
+        return t("recurring.fe.frequencyYearly")
+      case "random":
+        return t("recurring.fe.frequencyRandom")
+      default:
+        return frequency
+    }
+  }
+
+  const getWeekdayLabel = (weekday: number) => {
+    const weekdays = [
+      t("days.sunday"),
+      t("days.monday"),
+      t("days.tuesday"),
+      t("days.wednesday"),
+      t("days.thursday"),
+      t("days.friday"),
+      t("days.saturday"),
+    ]
+    return weekdays[weekday]
+  }
 
   return (
     <>
       <Card>
         <CardContent>
-          {filteredBudgets.length === 0 ? (
+          {filteredRecurring.length === 0 ? (
             <Empty
               className="border"
               style={{
@@ -79,13 +110,13 @@ export function BudgetsTable({
             >
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <PiggyBankIcon />
+                  <RepeatIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("budgets.fe.noBudgetsFound")}</EmptyTitle>
+                <EmptyTitle>{t("recurring.fe.noRecurringFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {budgets.length === 0
-                    ? t("budgets.fe.noBudgetsDescription")
-                    : t("budgets.fe.noBudgetsFiltered")}
+                  {recurringTransactions.length === 0
+                    ? t("recurring.fe.noRecurringDescription")
+                    : t("recurring.fe.noRecurringFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -103,74 +134,95 @@ export function BudgetsTable({
                   <TableRow className="[&>th]:text-center">
                     <TableHead>{t("common.fe.startDate")}</TableHead>
                     <TableHead>{t("common.fe.endDate")}</TableHead>
+                    <TableHead>{t("common.fe.description")}</TableHead>
+                    <TableHead>{t("common.fe.type")}</TableHead>
                     <TableHead>{t("common.fe.category")}</TableHead>
                     <TableHead>{t("common.fe.amount")}</TableHead>
-                    <TableHead>{t("budgets.fe.spent")}</TableHead>
-                    <TableHead>{t("common.fe.balance")}</TableHead>
+                    <TableHead>{t("recurring.fe.frequency")}</TableHead>
                     <TableHead>{t("common.fe.status")}</TableHead>
-                    <TableHead>{t("common.fe.progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {budgetsWithSpent.map((budget) => (
-                    <TableRow key={budget._id} className="[&>td]:text-center">
-                      <TableCell>{formatDate(budget.startDate)}</TableCell>
-                      <TableCell>{formatDate(budget.endDate)}</TableCell>
+                  {filteredRecurring.map((recurring) => (
+                    <TableRow
+                      key={recurring._id}
+                      className="[&>td]:text-center"
+                    >
+                      <TableCell>{formatDate(recurring.startDate)}</TableCell>
+                      <TableCell>
+                        {recurring.endDate
+                          ? formatDate(recurring.endDate)
+                          : t("common.fe.noEndDate")}
+                      </TableCell>
+                      <TableCell>{recurring.description}</TableCell>
+                      <TableCell>
+                        <Badge
+                          className={
+                            recurring.type === "income"
+                              ? "badge-green"
+                              : "badge-red"
+                          }
+                        >
+                          {recurring.type === "income"
+                            ? t("common.fe.income")
+                            : t("common.fe.expense")}
+                        </Badge>
+                      </TableCell>
                       <TableCell>
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
                               {getCategoryLabel(
-                                budget.categoryKey,
+                                recurring.categoryKey,
                                 customCategories
                               )}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
                             {getCategoryDescription(
-                              budget.categoryKey,
+                              recurring.categoryKey,
                               customCategories
                             )}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
+                      <TableCell>{formatCurrency(recurring.amount)}</TableCell>
                       <TableCell>
-                        {formatCurrency(budget.allocatedAmount)}
-                      </TableCell>
-                      <TableCell>{formatCurrency(budget.spent)}</TableCell>
-                      <TableCell>
-                        {formatCurrency(budget.allocatedAmount - budget.spent)}
+                        <div className="flex flex-col gap-1">
+                          <span>{getFrequencyLabel(recurring.frequency)}</span>
+                          {recurring.frequency === "weekly" ||
+                          recurring.frequency === "bi-weekly" ? (
+                            <span className="text-muted-foreground text-xs">
+                              {getWeekdayLabel(recurring.weekday!)}
+                            </span>
+                          ) : recurring.frequency === "monthly" ||
+                            recurring.frequency === "quarterly" ||
+                            recurring.frequency === "yearly" ? (
+                            <span className="text-muted-foreground text-xs">
+                              {t("recurring.fe.dayOfMonth", {
+                                day: recurring.dayOfMonth!,
+                              })}
+                            </span>
+                          ) : recurring.frequency === "random" ? (
+                            <span className="text-muted-foreground text-xs">
+                              {t("recurring.fe.everyXDays", {
+                                days: recurring.randomEveryXDays!,
+                              })}
+                            </span>
+                          ) : null}
+                        </div>
                       </TableCell>
                       <TableCell>
                         <Badge
                           className={
-                            budget.status === "expired"
-                              ? "badge-red"
-                              : budget.status === "active"
-                                ? "badge-green"
-                                : "badge-yellow"
+                            recurring.isActive ? "badge-green" : "badge-gray"
                           }
                         >
-                          {budget.status === "expired"
-                            ? t("common.fe.expired")
-                            : budget.status === "active"
-                              ? t("common.fe.active")
-                              : t("common.fe.upcoming")}
+                          {recurring.isActive
+                            ? t("common.fe.active")
+                            : t("common.fe.inactive")}
                         </Badge>
-                      </TableCell>
-                      <TableCell className="min-w-32">
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Progress
-                              value={Math.min(100, budget.percentage)}
-                              className={`flex-1 ${budget.progressColorClass}`}
-                            />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            {budget.percentage.toFixed(1)}%
-                          </TooltipContent>
-                        </Tooltip>
                       </TableCell>
                       <TableCell>
                         <DropdownMenu>
@@ -190,7 +242,7 @@ export function BudgetsTable({
                             <DropdownMenuItem
                               className="cursor-pointer"
                               onClick={() => {
-                                setSelectedBudget(budget)
+                                setSelectedRecurring(recurring)
                                 setIsEditOpen(true)
                               }}
                             >
@@ -200,7 +252,7 @@ export function BudgetsTable({
                               className="cursor-pointer"
                               variant="destructive"
                               onClick={() => {
-                                setSelectedBudget(budget)
+                                setSelectedRecurring(recurring)
                                 setIsDeleteOpen(true)
                               }}
                             >
@@ -218,17 +270,17 @@ export function BudgetsTable({
         </CardContent>
       </Card>
 
-      {selectedBudget && (
+      {selectedRecurring && (
         <>
-          <BudgetDialog
-            key={selectedBudget._id + "BudgetDialog"}
-            budget={selectedBudget}
+          <RecurringDialog
+            key={selectedRecurring._id + "RecurringDialog"}
+            recurring={selectedRecurring}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
-          <DeleteBudgetDialog
-            key={selectedBudget._id + "DeleteBudgetDialog"}
-            budgetId={selectedBudget._id}
+          <DeleteRecurringDialog
+            key={selectedRecurring._id + "DeleteRecurringDialog"}
+            recurringId={selectedRecurring._id}
             open={isDeleteOpen}
             setOpen={setIsDeleteOpen}
           />

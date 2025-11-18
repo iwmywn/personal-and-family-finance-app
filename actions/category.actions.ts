@@ -11,6 +11,7 @@ import {
   getBudgetsCollection,
   getCategoriesCollection,
   getGoalsCollection,
+  getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
 import { type Category } from "@/lib/definitions"
@@ -187,11 +188,13 @@ export async function deleteCustomCategory(categoryId: string) {
       transactionsCollection,
       budgetsCollection,
       goalsCollection,
+      recurringTransactionsCollection,
     ] = await Promise.all([
       getCategoriesCollection(),
       getTransactionsCollection(),
       getBudgetsCollection(),
       getGoalsCollection(),
+      getRecurringTransactionsCollection(),
     ])
 
     const existingCategory = await categoriesCollection.findOne({
@@ -204,7 +207,12 @@ export async function deleteCustomCategory(categoryId: string) {
       }
     }
 
-    const [transactionCount, budgetCount, goalCount] = await Promise.all([
+    const [
+      transactionCount,
+      budgetCount,
+      goalCount,
+      recurringTransactionCount,
+    ] = await Promise.all([
       transactionsCollection.countDocuments({
         userId: new ObjectId(userId),
         categoryKey: existingCategory.categoryKey,
@@ -214,6 +222,10 @@ export async function deleteCustomCategory(categoryId: string) {
         categoryKey: existingCategory.categoryKey,
       }),
       goalsCollection.countDocuments({
+        userId: new ObjectId(userId),
+        categoryKey: existingCategory.categoryKey,
+      }),
+      recurringTransactionsCollection.countDocuments({
         userId: new ObjectId(userId),
         categoryKey: existingCategory.categoryKey,
       }),
@@ -239,6 +251,14 @@ export async function deleteCustomCategory(categoryId: string) {
       return {
         error: t("categories.be.categoryInUseWithCountGoal", {
           count: goalCount,
+        }),
+      }
+    }
+
+    if (recurringTransactionCount > 0) {
+      return {
+        error: t("categories.be.categoryInUseWithCountRecurringTransaction", {
+          count: recurringTransactionCount,
         }),
       }
     }

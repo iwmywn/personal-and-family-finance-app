@@ -3,6 +3,7 @@ import {
   FolderOpenIcon,
   HomeIcon,
   PiggyBankIcon,
+  RepeatIcon,
   SettingsIcon,
   TargetIcon,
   WalletIcon,
@@ -47,6 +48,11 @@ export const mainNav: NavType[] = [
     key: "goals",
     url: "/goals",
     icon: TargetIcon,
+  },
+  {
+    key: "recurring",
+    url: "/recurring",
+    icon: RepeatIcon,
   },
 ]
 

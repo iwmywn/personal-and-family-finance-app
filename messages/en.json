@@ -65,8 +65,9 @@
       "categoryDeleted": "Category has been deleted.",
       "categoryExists": "Category with this name already exists!",
       "categoryFetchFailed": "Failed to load custom categories! Please try again later.",
-      "categoryInUseWithCountGoal": "Cannot delete category. There are {count} goals using this category. Please delete those goals first.",
       "categoryInUseWithCountBudget": "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first.",
+      "categoryInUseWithCountGoal": "Cannot delete category. There are {count} goals using this category. Please delete those goals first.",
+      "categoryInUseWithCountRecurringTransaction": "Cannot delete category. There are {count} recurring transactions using this category. Please delete those recurring transactions first.",
       "categoryInUseWithCountTransaction": "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first.",
       "categoryKeyError": "Error creating category key. Please try again.",
       "categoryNotFoundOrNoPermission": "Category not found or you don't have permission to edit!",
@@ -182,6 +183,7 @@
       "allMonths": "All Months",
       "allProgress": "All Progress",
       "allStatuses": "All Statuses",
+      "allTypes": "All Types",
       "allYears": "All Years",
       "amount": "Amount",
       "appDescription": "Personal and Family Finance Application",
@@ -197,16 +199,16 @@
       "edit": "Edit",
       "endDate": "End Date",
       "expense": "Expense",
-      "expenseCategory": "Expense Category",
       "expired": "Expired",
       "exportCsv": "Export Transactions (CSV)",
       "exportTransactions": "Export Transactions",
       "exportWithFilters": "Export transactions with current filters applied",
       "from": "From",
+      "inactive": "Inactive",
       "income": "Income",
-      "incomeCategory": "Income Category",
       "month": "Month",
       "negative": "Negative",
+      "noEndDate": "No end date",
       "noTransactionsFiltered": "No transactions found matching your filters.",
       "noTransactionsFound": "No transactions found",
       "notFound": "Not Found",
@@ -235,8 +237,18 @@
     "budgetsDataError": "CANNOT FETCH BUDGETS DATA",
     "categoriesDataError": "CANNOT FETCH CATEGORIES DATA",
     "goalsDataError": "CANNOT FETCH GOALS DATA",
+    "recurringTransactionsDataError": "CANNOT FETCH RECURRING TRANSACTIONS DATA",
     "transactionsDataError": "CANNOT FETCH TRANSACTIONS DATA",
     "userDataError": "CANNOT FETCH USER DATA"
+  },
+  "days": {
+    "friday": "Friday",
+    "monday": "Monday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "thursday": "Thursday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday"
   },
   "goals": {
     "be": {
@@ -316,6 +328,7 @@
     "categories": "Categories",
     "goals": "Goals",
     "home": "Home",
+    "recurring": "Recurring",
     "settings": "Settings",
     "signOut": "Sign Out",
     "statistics": "Statistics",
@@ -324,6 +337,51 @@
   "notFound": {
     "description": "The page you are looking for does not exist.",
     "title": "PAGE NOT FOUND"
+  },
+  "recurring": {
+    "be": {
+      "invalidRecurringId": "Invalid recurring transaction ID!",
+      "recurringAddFailed": "Failed to add recurring transaction! Please try again later.",
+      "recurringAdded": "Recurring transaction has been added.",
+      "recurringDeleteFailed": "Failed to delete recurring transaction! Please try again later.",
+      "recurringDeleted": "Recurring transaction has been deleted.",
+      "recurringExists": "Recurring transaction with this category, start date and end date already exists!",
+      "recurringFetchFailed": "Failed to load recurring transactions! Please try again later.",
+      "recurringNotFoundOrNoPermission": "Recurring transaction not found or you don't have permission to edit!",
+      "recurringNotFoundOrNoPermissionDelete": "Recurring transaction not found or you don't have permission to delete!",
+      "recurringUpdateFailed": "Failed to update recurring transaction! Please try again later.",
+      "recurringUpdated": "Recurring transaction has been updated."
+    },
+    "fe": {
+      "addRecurring": "Add Recurring Transaction",
+      "addRecurringDescription": "Create a recurring transaction that will be automatically generated.",
+      "dayOfMonth": "Day of Month",
+      "dayOfMonthPlaceholder": "Enter day (1-31)",
+      "deleteRecurringDescription": "Are you sure you want to delete this recurring transaction? This action cannot be undone.",
+      "deleteRecurringTitle": "Delete Recurring Transaction",
+      "description": "Manage recurring transactions that are automatically generated.",
+      "descriptionPlaceholder": "Enter a description for the recurring transaction...",
+      "editRecurring": "Edit Recurring Transaction",
+      "editRecurringDescription": "Update recurring transaction information.",
+      "everyXDays": "Every {days} days",
+      "frequency": "Frequency",
+      "frequencyBiWeekly": "Bi-weekly",
+      "frequencyDaily": "Daily",
+      "frequencyMonthly": "Monthly",
+      "frequencyQuarterly": "Quarterly",
+      "frequencyRandom": "Random",
+      "frequencyWeekly": "Weekly",
+      "frequencyYearly": "Yearly",
+      "noRecurringDescription": "You haven't created any recurring transactions yet. Add your first recurring transaction!",
+      "noRecurringFiltered": "No recurring transactions found matching your filters.",
+      "noRecurringFound": "No recurring transactions yet",
+      "randomEveryXDays": "Every X Days",
+      "randomEveryXDaysPlaceholder": "Enter number of days",
+      "searchPlaceholder": "Search recurring transactions...",
+      "selectWeekday": "Select weekday",
+      "weekday": "Weekday",
+      "dayOfMonthDescription": "If the month does not have a selected day, the transaction will be performed on the last day of the month."
+    }
   },
   "schemas": {
     "budget": {
@@ -357,6 +415,14 @@
       "currentPasswordRequired": "Current password is required.",
       "newPasswordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
       "passwordsNotMatch": "Passwords do not match."
+    },
+    "recurring": {
+      "dayOfMonthRequired": "Please enter the day of month (1-31).",
+      "endDateMustBeAfterStartDate": "End date must be after start date.",
+      "frequencyRequired": "Please select a frequency.",
+      "randomEveryXDaysRequired": "Please enter the number of days.",
+      "startDateRequired": "Please select a start date.",
+      "weekdayRequired": "Please select a weekday."
     },
     "signIn": {
       "passwordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
@@ -437,7 +503,6 @@
       "noCategoryFound": "Cannot find a suitable category?",
       "openMenu": "Open menu",
       "searchPlaceholder": "Search transactions...",
-      "selectCategory": "Select {type} category",
       "transactionType": "Transaction Type"
     }
   }

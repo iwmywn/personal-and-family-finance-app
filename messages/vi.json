@@ -65,8 +65,9 @@
       "categoryDeleted": "Danh mục đã được xóa.",
       "categoryExists": "Danh mục với tên này đã tồn tại!",
       "categoryFetchFailed": "Tải danh sách danh mục tùy chỉnh thất bại! Vui lòng thử lại sau.",
-      "categoryInUseWithCountGoal": "Không thể xóa danh mục. Có {count} mục tiêu đang sử dụng danh mục này. Vui lòng xóa các mục tiêu đó trước.",
       "categoryInUseWithCountBudget": "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước.",
+      "categoryInUseWithCountGoal": "Không thể xóa danh mục. Có {count} mục tiêu đang sử dụng danh mục này. Vui lòng xóa các mục tiêu đó trước.",
+      "categoryInUseWithCountRecurringTransaction": "Không thể xóa danh mục. Có {count} giao dịch định kỳ đang sử dụng danh mục này. Vui lòng xóa các giao dịch định kỳ đó trước.",
       "categoryInUseWithCountTransaction": "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước.",
       "categoryKeyError": "Lỗi tạo key danh mục. Vui lòng thử lại.",
       "categoryNotFoundOrNoPermission": "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!",
@@ -182,6 +183,7 @@
       "allMonths": "Tất cả tháng",
       "allProgress": "Tất cả tiến độ",
       "allStatuses": "Tất cả trạng thái",
+      "allTypes": "Tất cả loại",
       "allYears": "Tất cả năm",
       "amount": "Số tiền",
       "appDescription": "Ứng dụng quản lý tài chính cá nhân và gia đình",
@@ -197,16 +199,16 @@
       "edit": "Chỉnh sửa",
       "endDate": "Ngày kết thúc",
       "expense": "Chi tiêu",
-      "expenseCategory": "Danh mục chi tiêu",
       "expired": "Đã hết hạn",
       "exportCsv": "Xuất Giao dịch (CSV)",
       "exportTransactions": "Xuất giao dịch",
       "exportWithFilters": "Xuất giao dịch kèm theo bộ lọc hiện tại",
       "from": "Từ",
+      "inactive": "Không hoạt động",
       "income": "Thu nhập",
-      "incomeCategory": "Danh mục thu nhập",
       "month": "Tháng",
       "negative": "Âm",
+      "noEndDate": "Không có ngày kết thúc",
       "noTransactionsFiltered": "Không tìm thấy giao dịch nào phù hợp với bộ lọc của bạn.",
       "noTransactionsFound": "Không tìm thấy giao dịch",
       "notFound": "Không tìm thấy",
@@ -235,8 +237,18 @@
     "budgetsDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGÂN SÁCH",
     "categoriesDataError": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
     "goalsDataError": "KHÔNG THỂ LẤY DỮ LIỆU MỤC TIÊU",
+    "recurringTransactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH ĐỊNH KỲ",
     "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
     "userDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG"
+  },
+  "days": {
+    "friday": "Thứ Sáu",
+    "monday": "Thứ Hai",
+    "saturday": "Thứ Bảy",
+    "sunday": "Chủ Nhật",
+    "thursday": "Thứ Năm",
+    "tuesday": "Thứ Ba",
+    "wednesday": "Thứ Tư"
   },
   "goals": {
     "be": {
@@ -316,6 +328,7 @@
     "categories": "Danh mục",
     "goals": "Mục tiêu",
     "home": "Trang chủ",
+    "recurring": "Giao dịch định kỳ",
     "settings": "Cài đặt",
     "signOut": "Đăng xuất",
     "statistics": "Thống kê",
@@ -324,6 +337,51 @@
   "notFound": {
     "description": "Trang này không tồn tại.",
     "title": "KHÔNG TÌM THẤY TRANG BẠN ĐANG TÌM KIẾM"
+  },
+  "recurring": {
+    "be": {
+      "invalidRecurringId": "ID giao dịch định kỳ không hợp lệ!",
+      "recurringAddFailed": "Thêm giao dịch định kỳ thất bại! Vui lòng thử lại sau.",
+      "recurringAdded": "Giao dịch định kỳ đã được thêm.",
+      "recurringDeleteFailed": "Xóa giao dịch định kỳ thất bại! Vui lòng thử lại sau.",
+      "recurringDeleted": "Giao dịch định kỳ đã được xóa.",
+      "recurringExists": "Giao dịch định kỳ với danh mục, ngày bắt đầu và ngày kết thúc này đã tồn tại!",
+      "recurringFetchFailed": "Tải danh sách giao dịch định kỳ thất bại! Vui lòng thử lại sau.",
+      "recurringNotFoundOrNoPermission": "Không tìm thấy giao dịch định kỳ hoặc bạn không có quyền chỉnh sửa!",
+      "recurringNotFoundOrNoPermissionDelete": "Không tìm thấy giao dịch định kỳ hoặc bạn không có quyền xóa!",
+      "recurringUpdateFailed": "Cập nhật giao dịch định kỳ thất bại! Vui lòng thử lại sau.",
+      "recurringUpdated": "Giao dịch định kỳ đã được cập nhật."
+    },
+    "fe": {
+      "addRecurring": "Thêm giao dịch định kỳ",
+      "addRecurringDescription": "Tạo giao dịch định kỳ sẽ được tự động tạo.",
+      "dayOfMonth": "Ngày trong tháng",
+      "dayOfMonthPlaceholder": "Nhập ngày (1-31)",
+      "deleteRecurringDescription": "Bạn có chắc chắn muốn xóa giao dịch định kỳ này? Hành động này không thể hoàn tác.",
+      "deleteRecurringTitle": "Xóa giao dịch định kỳ",
+      "description": "Quản lý các giao dịch định kỳ được tự động tạo.",
+      "descriptionPlaceholder": "Nhập mô tả cho giao dịch định kỳ...",
+      "editRecurring": "Chỉnh sửa giao dịch định kỳ",
+      "editRecurringDescription": "Cập nhật thông tin giao dịch định kỳ.",
+      "everyXDays": "Cứ {days} ngày",
+      "frequency": "Tần suất",
+      "frequencyBiWeekly": "Hai tuần một lần",
+      "frequencyDaily": "Hàng ngày",
+      "frequencyMonthly": "Hàng tháng",
+      "frequencyQuarterly": "Hàng quý",
+      "frequencyRandom": "Ngẫu nhiên",
+      "frequencyWeekly": "Hàng tuần",
+      "frequencyYearly": "Hàng năm",
+      "noRecurringDescription": "Bạn chưa tạo giao dịch định kỳ nào. Hãy thêm giao dịch định kỳ đầu tiên!",
+      "noRecurringFiltered": "Không tìm thấy giao dịch định kỳ nào phù hợp với bộ lọc của bạn.",
+      "noRecurringFound": "Không có giao dịch định kỳ nào",
+      "randomEveryXDays": "Cứ X ngày",
+      "randomEveryXDaysPlaceholder": "Nhập số ngày",
+      "searchPlaceholder": "Tìm kiếm giao dịch định kỳ...",
+      "selectWeekday": "Chọn thứ trong tuần",
+      "weekday": "Thứ trong tuần",
+      "dayOfMonthDescription": "Nếu tháng không có ngày đã chọn, giao dịch sẽ được thực hiện vào ngày cuối cùng của tháng."
+    }
   },
   "schemas": {
     "budget": {
@@ -357,6 +415,14 @@
       "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc.",
       "newPasswordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
       "passwordsNotMatch": "Mật khẩu không khớp."
+    },
+    "recurring": {
+      "dayOfMonthRequired": "Vui lòng nhập ngày trong tháng (1-31).",
+      "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu.",
+      "frequencyRequired": "Vui lòng chọn tần suất.",
+      "randomEveryXDaysRequired": "Vui lòng nhập số ngày.",
+      "startDateRequired": "Vui lòng chọn ngày bắt đầu.",
+      "weekdayRequired": "Vui lòng chọn thứ trong tuần."
     },
     "signIn": {
       "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
@@ -437,7 +503,6 @@
       "noCategoryFound": "Không tìm thấy danh mục phù hợp?",
       "openMenu": "Mở menu",
       "searchPlaceholder": "Tìm kiếm giao dịch...",
-      "selectCategory": "Chọn danh mục {type}",
       "transactionType": "Loại giao dịch"
     }
   }

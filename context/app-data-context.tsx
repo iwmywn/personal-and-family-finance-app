@@ -6,6 +6,7 @@ import type {
   Budget,
   Category,
   Goal,
+  RecurringTransaction,
   Transaction,
   User,
 } from "@/lib/definitions"
@@ -16,6 +17,7 @@ type AppDataContextValue = {
   customCategories: Category[]
   budgets: Budget[]
   goals: Goal[]
+  recurringTransactions: RecurringTransaction[]
 }
 
 const AppDataContext = React.createContext<AppDataContextValue | null>(null)
@@ -27,6 +29,7 @@ export function AppDataProvider({
   customCategories,
   budgets,
   goals,
+  recurringTransactions,
 }: {
   children: React.ReactNode
   user: Omit<User, "password">
@@ -34,6 +37,7 @@ export function AppDataProvider({
   customCategories: Category[]
   budgets: Budget[]
   goals: Goal[]
+  recurringTransactions: RecurringTransaction[]
 }) {
   return (
     <AppDataContext.Provider
@@ -43,6 +47,7 @@ export function AppDataProvider({
         customCategories,
         budgets,
         goals,
+        recurringTransactions,
       }}
     >
       {children}

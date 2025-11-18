@@ -1,4 +1,10 @@
-import type { Budget, Category, Goal, Transaction } from "@/lib/definitions"
+import type {
+  Budget,
+  Category,
+  Goal,
+  RecurringTransaction,
+  Transaction,
+} from "@/lib/definitions"
 import { calculateBudgetsStats, calculateGoalsStats } from "@/lib/statistics"
 import { progressColorClass } from "@/lib/utils"
 
@@ -275,4 +281,79 @@ export function filterGoals(
   }
 
   return filteredGoals
+}
+
+export function filterRecurringTransactions(
+  recurringTransactions: RecurringTransaction[],
+  filters: Filters
+): RecurringTransaction[] {
+  const {
+    searchTerm = "",
+    dateRange = {},
+    filterMonth = "all",
+    filterYear = "all",
+    filterType = "all",
+    filterCategoryKey = "all",
+    filterStatus = "all",
+  } = filters
+
+  const normalizedSearchTerm = searchTerm.trim()
+  const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
+  const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
+
+  return recurringTransactions.filter((recurring) => {
+    const matchesSearch = includesCaseInsensitive(
+      recurring.description,
+      normalizedSearchTerm
+    )
+
+    const startDateOnly = toDateOnly(new Date(recurring.startDate))
+    const endDateOnly = recurring.endDate
+      ? toDateOnly(new Date(recurring.endDate))
+      : null
+
+    const matchesDateRange =
+      (!dateRange.from ||
+        (endDateOnly
+          ? endDateOnly.getTime() >= toDateOnly(dateRange.from).getTime()
+          : true)) &&
+      (!dateRange.to ||
+        startDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
+
+    const matchesMonth = !parsedMonth
+      ? true
+      : startDateOnly.getMonth() + 1 === parsedMonth ||
+        (endDateOnly && endDateOnly.getMonth() + 1 === parsedMonth) ||
+        (endDateOnly &&
+          startDateOnly.getMonth() + 1 < parsedMonth &&
+          endDateOnly.getMonth() + 1 > parsedMonth)
+
+    const matchesYear = !parsedYear
+      ? true
+      : startDateOnly.getFullYear() === parsedYear ||
+        (endDateOnly && endDateOnly.getFullYear() === parsedYear) ||
+        (endDateOnly &&
+          startDateOnly.getFullYear() < parsedYear &&
+          endDateOnly.getFullYear() > parsedYear)
+
+    const matchesType = filterType === "all" || recurring.type === filterType
+
+    const matchesCategory =
+      filterCategoryKey === "all" || recurring.categoryKey === filterCategoryKey
+
+    const matchesStatus =
+      filterStatus === "all" ||
+      (filterStatus === "active" && recurring.isActive) ||
+      (filterStatus === "inactive" && !recurring.isActive)
+
+    return (
+      matchesSearch &&
+      matchesDateRange &&
+      matchesMonth &&
+      matchesYear &&
+      matchesType &&
+      matchesCategory &&
+      matchesStatus
+    )
+  })
 }
