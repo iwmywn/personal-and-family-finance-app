@@ -2,12 +2,14 @@ import {
   mockBudgets,
   mockCustomCategories,
   mockGoals,
+  mockRecurringTransactions,
   mockTransactions,
 } from "@/tests/shared/data"
 import {
   filterBudgets,
   filterCustomCategories,
   filterGoals,
+  filterRecurringTransactions,
   filterTransactions,
   includesCaseInsensitive,
   toDateOnly,
@@ -901,6 +903,266 @@ describe("Filters", () => {
       )
 
       expect(result).toEqual([])
+    })
+  })
+
+  describe("filterRecurringTransactions", () => {
+    it("should filter by search term", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        searchTerm: "salary",
+      })
+
+      expect(result).toHaveLength(1)
+      expect(result[0].description).toBe("Monthly Salary")
+    })
+
+    it("should filter by transaction type", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterType: "income",
+      })
+
+      expect(result).toHaveLength(2)
+      expect(result.every((r) => r.type === "income")).toBe(true)
+      expect(result.map((r) => r._id)).toEqual(["1", "5"])
+    })
+
+    it("should filter by category key", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterCategoryKey: "food_beverage",
+      })
+
+      expect(result).toHaveLength(2)
+      expect(result.every((r) => r.categoryKey === "food_beverage")).toBe(true)
+      expect(result.map((r) => r._id)).toEqual(["2", "6"])
+    })
+
+    it("should filter by status - active", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterStatus: "active",
+      })
+
+      expect(result).toHaveLength(5)
+      expect(result.every((r) => r.isActive === true)).toBe(true)
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6", "7"])
+    })
+
+    it("should filter by status - inactive", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterStatus: "inactive",
+      })
+
+      expect(result).toHaveLength(2)
+      expect(result.every((r) => r.isActive === false)).toBe(true)
+      expect(result.map((r) => r._id)).toEqual(["4", "5"])
+    })
+
+    it("should filter by month", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterMonth: "1", // January
+      })
+
+      // Should include recurring transactions that start or end in January, or span January
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((recurring) => {
+        const startMonth = new Date(recurring.startDate).getMonth() + 1
+        const endMonth = recurring.endDate
+          ? new Date(recurring.endDate).getMonth() + 1
+          : null
+        expect(
+          startMonth === 1 ||
+            (endMonth && endMonth === 1) ||
+            (endMonth && startMonth < 1 && endMonth > 1)
+        ).toBe(true)
+      })
+    })
+
+    it("should filter by year", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterYear: "2024",
+      })
+
+      // Should include recurring transactions that start or end in 2024, or span 2024
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((recurring) => {
+        const startYear = new Date(recurring.startDate).getFullYear()
+        const endYear = recurring.endDate
+          ? new Date(recurring.endDate).getFullYear()
+          : null
+        expect(
+          startYear === 2024 ||
+            (endYear && endYear === 2024) ||
+            (endYear && startYear < 2024 && endYear > 2024)
+        ).toBe(true)
+      })
+    })
+
+    it("should filter by date range", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        dateRange: {
+          from: new Date("2024-01-01"),
+          to: new Date("2024-03-31"),
+        },
+      })
+
+      // Should include recurring transactions that overlap with the date range
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((recurring) => {
+        const startDate = new Date(recurring.startDate)
+        const endDate = recurring.endDate
+          ? new Date(recurring.endDate)
+          : new Date("2099-12-31") // Treat undefined endDate as far future
+        expect(
+          endDate >= new Date("2024-01-01") &&
+            startDate <= new Date("2024-03-31")
+        ).toBe(true)
+      })
+    })
+
+    it("should handle date range with only from date", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        dateRange: {
+          from: new Date("2024-03-01"),
+        },
+      })
+
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((recurring) => {
+        const endDate = recurring.endDate
+          ? new Date(recurring.endDate)
+          : new Date("2099-12-31")
+        expect(endDate >= new Date("2024-03-01")).toBe(true)
+      })
+    })
+
+    it("should handle date range with only to date", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        dateRange: {
+          to: new Date("2024-02-28"),
+        },
+      })
+
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((recurring) => {
+        const startDate = new Date(recurring.startDate)
+        expect(startDate <= new Date("2024-02-28")).toBe(true)
+      })
+    })
+
+    it("should handle recurring transactions without endDate", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        dateRange: {
+          from: new Date("2024-05-01"),
+        },
+      })
+
+      // Should include recurring transactions with undefined endDate
+      const withUndefinedEndDate = result.filter((r) => !r.endDate)
+      expect(withUndefinedEndDate.length).toBeGreaterThan(0)
+    })
+
+    it("should combine multiple filters", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        searchTerm: "monthly",
+        filterType: "income",
+        filterStatus: "active",
+      })
+
+      expect(result).toHaveLength(1)
+      expect(result[0]._id).toBe("1")
+      expect(result[0].description).toBe("Monthly Salary")
+    })
+
+    it("should return all recurring transactions when no filters applied", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {})
+
+      expect(result).toHaveLength(mockRecurringTransactions.length)
+    })
+
+    it("should handle empty recurring transactions array", () => {
+      const result = filterRecurringTransactions([], {
+        searchTerm: "test",
+      })
+
+      expect(result).toEqual([])
+    })
+
+    it("should handle case insensitive search", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        searchTerm: "SALARY",
+      })
+
+      expect(result).toHaveLength(1)
+      expect(result[0].description).toBe("Monthly Salary")
+    })
+
+    it("should handle partial search matches", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        searchTerm: "grocer",
+      })
+
+      expect(result).toHaveLength(1)
+      expect(result[0].description).toBe("Weekly Groceries")
+    })
+
+    it("should filter by month when recurring spans multiple months", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterMonth: "2", // February
+      })
+
+      // Should include recurring transactions that span February
+      expect(result.length).toBeGreaterThan(0)
+    })
+
+    it("should filter by year when recurring spans multiple years", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterYear: "2023",
+      })
+
+      // Should include recurring transactions that span 2023
+      expect(result.length).toBeGreaterThan(0)
+      result.forEach((recurring) => {
+        const startYear = new Date(recurring.startDate).getFullYear()
+        const endYear = recurring.endDate
+          ? new Date(recurring.endDate).getFullYear()
+          : null
+        expect(
+          startYear === 2023 ||
+            (endYear && endYear === 2023) ||
+            (endYear && startYear < 2023 && endYear > 2023)
+        ).toBe(true)
+      })
+    })
+
+    it("should return empty array when no matches found", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        searchTerm: "nonexistent",
+      })
+
+      expect(result).toEqual([])
+    })
+
+    it("should handle filterStatus 'all'", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterStatus: "all",
+      })
+
+      expect(result).toHaveLength(mockRecurringTransactions.length)
+    })
+
+    it("should handle filterType 'all'", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterType: "all",
+      })
+
+      expect(result).toHaveLength(mockRecurringTransactions.length)
+    })
+
+    it("should handle filterCategoryKey 'all'", () => {
+      const result = filterRecurringTransactions(mockRecurringTransactions, {
+        filterCategoryKey: "all",
+      })
+
+      expect(result).toHaveLength(mockRecurringTransactions.length)
     })
   })
 })
