@@ -36,7 +36,7 @@ function getClientPromise(): Promise<MongoClient> {
 //     const transactionsCollection = db.collection("transactions")
 //     const categoriesCollection = db.collection("categories")
 //     const budgetsCollection = db.collection("budgets")
-//     const recurringTransactionsCollection = db.collection("recurringTransactions")
+//     const recurringTransactionsCollection = db.collection("recurring_transactions")
 
 //     await Promise.all([
 //       transactionsCollection.createIndex(

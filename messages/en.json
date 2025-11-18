@@ -177,6 +177,7 @@
       "userNotFound": "User not found!"
     },
     "fe": {
+      "noData": "No data available",
       "active": "Active",
       "add": "Add",
       "allCategories": "All Categories",
@@ -298,7 +299,6 @@
       "monthlyBalance": "This Month's Balance",
       "monthlyExpense": "This Month's Expense",
       "monthlyIncome": "This Month's Income",
-      "noData": "No data available",
       "popularCategory": "Popular Category",
       "popularCategoryTooltip": "Category with the highest total amount in the month. Helps you identify your largest spending area or income source.",
       "quickStats": "Quick Stats",
@@ -360,7 +360,6 @@
       "deleteRecurringDescription": "Are you sure you want to delete this recurring transaction? This action cannot be undone.",
       "deleteRecurringTitle": "Delete Recurring Transaction",
       "description": "Manage recurring transactions that are automatically generated.",
-      "descriptionPlaceholder": "Enter a description for the recurring transaction...",
       "editRecurring": "Edit Recurring Transaction",
       "editRecurringDescription": "Update recurring transaction information.",
       "everyXDays": "Every {days} days",
@@ -493,7 +492,6 @@
       "allCategories": "All Categories",
       "allTransactionTypes": "All Transaction Types",
       "createCustomCategory": "Create Custom Category",
-      "customCategories": "Custom Categories",
       "deleteTransactionDescription": "Are you sure you want to delete the transaction \"{description}\"? This action cannot be undone.",
       "deleteTransactionTitle": "Delete Transaction",
       "description": "Manage income and expenses to track your personal finances.",

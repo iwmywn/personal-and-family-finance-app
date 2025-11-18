@@ -29,5 +29,5 @@ export function getGoalsCollection() {
 }
 
 export function getRecurringTransactionsCollection() {
-  return collection<DBRecurringTransaction>("recurringTransactions")
+  return collection<DBRecurringTransaction>("recurring_transactions")
 }

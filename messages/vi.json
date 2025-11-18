@@ -177,6 +177,7 @@
       "userNotFound": "Không tìm thấy người dùng!"
     },
     "fe": {
+      "noData": "Chưa có",
       "active": "Đang hoạt động",
       "add": "Thêm",
       "allCategories": "Tất cả danh mục",
@@ -298,7 +299,6 @@
       "monthlyBalance": "Số dư tháng này",
       "monthlyExpense": "Chi tiêu tháng này",
       "monthlyIncome": "Thu nhập tháng này",
-      "noData": "Chưa có",
       "popularCategory": "Danh mục phổ biến",
       "popularCategoryTooltip": "Danh mục có tổng số tiền cao nhất trong tháng. Giúp bạn nhận biết lĩnh vực chi tiêu hoặc nguồn thu lớn nhất của mình.",
       "quickStats": "Thống kê nhanh",
@@ -360,7 +360,6 @@
       "deleteRecurringDescription": "Bạn có chắc chắn muốn xóa giao dịch định kỳ này? Hành động này không thể hoàn tác.",
       "deleteRecurringTitle": "Xóa giao dịch định kỳ",
       "description": "Quản lý các giao dịch định kỳ được tự động tạo.",
-      "descriptionPlaceholder": "Nhập mô tả cho giao dịch định kỳ...",
       "editRecurring": "Chỉnh sửa giao dịch định kỳ",
       "editRecurringDescription": "Cập nhật thông tin giao dịch định kỳ.",
       "everyXDays": "Cứ {days} ngày",
@@ -493,7 +492,6 @@
       "allCategories": "Tất cả danh mục",
       "allTransactionTypes": "Tất cả loại giao dịch",
       "createCustomCategory": "Tạo danh mục tùy chỉnh",
-      "customCategories": "Danh mục tùy chỉnh",
       "deleteTransactionDescription": "Bạn có chắc chắn muốn xóa giao dịch \"{description}\"? Hành động này không thể hoàn tác.",
       "deleteTransactionTitle": "Xóa giao dịch",
       "description": "Quản lý thu nhập và chi tiêu để theo dõi tài chính cá nhân của bạn.",

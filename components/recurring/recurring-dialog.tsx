@@ -419,7 +419,13 @@ export function RecurringDialog({
                         <SelectTrigger className="w-full">
                           <SelectValue
                             placeholder={t("recurring.fe.selectWeekday")}
-                          />
+                          >
+                            {field.value
+                              ? weekdays.find(
+                                  (day) => day.value === field.value!.toString()
+                                )?.label
+                              : null}
+                          </SelectValue>
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

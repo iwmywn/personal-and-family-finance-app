@@ -79,7 +79,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {highestTransaction !== null
                     ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -105,7 +105,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {lowestTransaction !== null
                     ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -123,7 +123,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 <div className="right">
                   {avgExpense !== null
                     ? formatCurrency(avgExpense)
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -149,7 +149,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {savingsRate !== null
                     ? `${savingsRate}%`
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -167,7 +167,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                     ? popularCategory
                         .map((key) => getCategoryLabel(key, customCategories))
                         .join(", ")
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
