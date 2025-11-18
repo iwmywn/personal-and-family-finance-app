@@ -62,6 +62,7 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useWeekdaysI18n } from "@/hooks/use-weekdays-i18n"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
 
@@ -125,6 +126,8 @@ export function RecurringDialog({
     control: form.control,
     name: "frequency",
   })
+
+  const weekdays = useWeekdaysI18n()
 
   const handleTypeChange = (type: string) => {
     const transactionType = type as "income" | "expense"
@@ -250,16 +253,6 @@ export function RecurringDialog({
       )}
     />
   )
-
-  const weekdays = [
-    { value: 0, label: t("days.sunday") },
-    { value: 1, label: t("days.monday") },
-    { value: 2, label: t("days.tuesday") },
-    { value: 3, label: t("days.wednesday") },
-    { value: 4, label: t("days.thursday") },
-    { value: 5, label: t("days.friday") },
-    { value: 6, label: t("days.saturday") },
-  ]
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -431,10 +424,7 @@ export function RecurringDialog({
                       </FormControl>
                       <SelectContent>
                         {weekdays.map((day) => (
-                          <SelectItem
-                            key={day.value}
-                            value={day.value.toString()}
-                          >
+                          <SelectItem key={day.value} value={day.value}>
                             {day.label}
                           </SelectItem>
                         ))}

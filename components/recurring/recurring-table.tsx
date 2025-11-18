@@ -39,6 +39,7 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { useWeekdaysI18n } from "@/hooks/use-weekdays-i18n"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { formatCurrency } from "@/lib/utils"
 
@@ -61,6 +62,8 @@ export function RecurringTable({
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
 
+  const weekdays = useWeekdaysI18n()
+
   const getFrequencyLabel = (frequency: RecurringTransaction["frequency"]) => {
     switch (frequency) {
       case "daily":
@@ -80,19 +83,6 @@ export function RecurringTable({
       default:
         return frequency
     }
-  }
-
-  const getWeekdayLabel = (weekday: number) => {
-    const weekdays = [
-      t("days.sunday"),
-      t("days.monday"),
-      t("days.tuesday"),
-      t("days.wednesday"),
-      t("days.thursday"),
-      t("days.friday"),
-      t("days.saturday"),
-    ]
-    return weekdays[weekday]
   }
 
   return (
@@ -194,7 +184,12 @@ export function RecurringTable({
                           {recurring.frequency === "weekly" ||
                           recurring.frequency === "bi-weekly" ? (
                             <span className="text-muted-foreground text-xs">
-                              {getWeekdayLabel(recurring.weekday!)}
+                              {
+                                weekdays.find(
+                                  (day) =>
+                                    day.value === recurring.weekday!.toString()
+                                )?.label
+                              }
                             </span>
                           ) : recurring.frequency === "monthly" ||
                             recurring.frequency === "quarterly" ||
