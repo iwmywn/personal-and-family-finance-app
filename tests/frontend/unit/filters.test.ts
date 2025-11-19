@@ -12,25 +12,9 @@ import {
   filterRecurringTransactions,
   filterTransactions,
   includesCaseInsensitive,
-  toDateOnly,
 } from "@/lib/filters"
 
 describe("Filters", () => {
-  describe("toDateOnly", () => {
-    it("should normalize to local midnight with same Y-M-D", () => {
-      const d = new Date(2024, 0, 20, 15, 30, 45, 123)
-      const only = toDateOnly(d)!
-
-      expect(only.getFullYear()).toBe(d.getFullYear())
-      expect(only.getMonth()).toBe(d.getMonth())
-      expect(only.getDate()).toBe(d.getDate())
-      expect(only.getHours()).toBe(0)
-      expect(only.getMinutes()).toBe(0)
-      expect(only.getSeconds()).toBe(0)
-      expect(only.getMilliseconds()).toBe(0)
-    })
-  })
-
   describe("includesCaseInsensitive", () => {
     it("should return true when query is empty", () => {
       expect(includesCaseInsensitive("Hello World", "")).toBe(true)

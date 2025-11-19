@@ -1,7 +1,6 @@
 import type { CategoryKeyType } from "@/lib/categories"
 import type { Budget, Goal, Transaction } from "@/lib/definitions"
-import { toDateOnly } from "@/lib/filters"
-import { progressColorClass } from "@/lib/utils"
+import { normalizeToUTCDate, progressColorClass } from "@/lib/utils"
 
 export function getCurrentMonthTransactions(
   transactions: Transaction[]
@@ -165,14 +164,14 @@ export function calculateStatsBase<TBase extends Budget | Goal>(
   transactions: Transaction[],
   config: StatBaseConfig<TBase, Transaction>
 ) {
-  const startDateOnly = toDateOnly(new Date(base.startDate))
-  const endDateOnly = toDateOnly(new Date(base.endDate))
-  const nowDateOnly = toDateOnly(new Date())
+  const startDateOnly = normalizeToUTCDate(new Date(base.startDate))
+  const endDateOnly = normalizeToUTCDate(new Date(base.endDate))
+  const nowDateOnly = normalizeToUTCDate(new Date())
 
   const filtered = transactions.filter((t) => {
     if (t.type !== config.type) return false
 
-    const transactionDateOnly = toDateOnly(new Date(t.date))
+    const transactionDateOnly = normalizeToUTCDate(new Date(t.date))
 
     return (
       transactionDateOnly.getTime() >= startDateOnly.getTime() &&
