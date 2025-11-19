@@ -6,6 +6,7 @@ import type {
   DBBudget,
   DBCategory,
   DBGoal,
+  DBRecurringTransaction,
   DBTransaction,
   DBUser,
   Goal,
@@ -60,6 +61,23 @@ export const mockGoal: DBGoal = {
   endDate: normalizeToUTCDate(new Date("2024-12-31")),
 }
 
+export const mockRecurringTransaction: DBRecurringTransaction = {
+  _id: new ObjectId("68f896e5cda4897217a05a3e"),
+  userId: mockUser._id,
+  type: "income" as "income" | "expense",
+  categoryKey: "salary_bonus",
+  amount: 5000000,
+  description: "Monthly Salary",
+  frequency: "monthly",
+  weekday: undefined,
+  dayOfMonth: 1,
+  randomEveryXDays: undefined,
+  startDate: normalizeToUTCDate(new Date("2024-01-01")),
+  endDate: normalizeToUTCDate(new Date("2024-12-31")),
+  lastGenerated: undefined,
+  isActive: true,
+}
+
 export const mockValidSignInValues = {
   username: "testuser",
   password: "TestPassword123!",
@@ -99,6 +117,21 @@ export const mockValidGoalValues = {
   targetAmount: 50000000,
   startDate: normalizeToUTCDate(new Date("2024-01-01")),
   endDate: normalizeToUTCDate(new Date("2024-12-31")),
+}
+
+export const mockValidRecurringTransactionValues = {
+  type: "income" as "income" | "expense",
+  categoryKey: "business_freelance",
+  amount: 2500000,
+  description: "Freelance project payment",
+  frequency: "monthly" as const,
+  weekday: undefined,
+  dayOfMonth: 15,
+  randomEveryXDays: undefined,
+  startDate: normalizeToUTCDate(new Date("2024-02-01")),
+  endDate: normalizeToUTCDate(new Date("2024-12-31")),
+  lastGenerated: undefined,
+  isActive: true,
 }
 
 export const mockTransactions: Transaction[] = [
