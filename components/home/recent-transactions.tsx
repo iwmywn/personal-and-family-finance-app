@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment } from "react"
-import { ReceiptIcon } from "lucide-react"
+import { WalletIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -27,7 +27,7 @@ interface RecentTransactionsProps {
 
 export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const recentTransactions = transactions.slice(0, 10)
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useTranslations()
@@ -53,12 +53,10 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
             <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <ReceiptIcon />
+                  <WalletIcon />
                 </EmptyMedia>
-                <EmptyTitle className="text-base">
-                  {t("common.fe.noTransactionsFound")}
-                </EmptyTitle>
-                <EmptyDescription className="text-sm">
+                <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
+                <EmptyDescription>
                   {t("common.fe.startAddingTransactions")}
                 </EmptyDescription>
               </EmptyHeader>
@@ -76,10 +74,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                             : "badge-red"
                         }
                       >
-                        {getCategoryLabel(
-                          transaction.categoryKey,
-                          customCategories
-                        )}
+                        {getCategoryLabel(transaction.categoryKey)}
                       </Badge>
                       <div className="text-sm wrap-anywhere">
                         {transaction.description}

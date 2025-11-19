@@ -236,7 +236,7 @@ export function GoalsFilters() {
 
             <Select value={filterMonth} onValueChange={handleMonthChange}>
               <SelectTrigger
-                className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
+                className={`w-full justify-between font-normal md:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.month")} />
               </SelectTrigger>
@@ -257,7 +257,7 @@ export function GoalsFilters() {
 
             <Select value={filterYear} onValueChange={handleYearChange}>
               <SelectTrigger
-                className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-3 lg:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.year")} />
               </SelectTrigger>
@@ -279,7 +279,7 @@ export function GoalsFilters() {
               onValueChange={setFilterCategoryKey}
             >
               <SelectTrigger
-                className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
+                className={`w-full md:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
                 <SelectValue placeholder={t("common.fe.category")} />
               </SelectTrigger>
@@ -290,12 +290,12 @@ export function GoalsFilters() {
                   </SelectItem>
                   <SelectSeparator />
                   <SelectLabel>{t("common.fe.income")}</SelectLabel>
-                  {INCOME_CATEGORIES_KEY.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category, customCategories)}
+                  {INCOME_CATEGORIES_KEY.map((categoryKey) => (
+                    <SelectItem key={categoryKey} value={categoryKey}>
+                      {getCategoryLabel(categoryKey)}
                     </SelectItem>
                   ))}
-                  {customCategories!
+                  {customCategories
                     .filter((c) => c.type === "income")
                     .map((category) => (
                       <SelectItem

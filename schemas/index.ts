@@ -112,7 +112,7 @@ export const createTransactionSchema = (t: TypedTranslationFunction) => {
 
 export const createCategorySchema = (t: TypedTranslationFunction) => {
   return z.object({
-    categoryKey: z.string().optional(),
+    categoryKey: z.string().optional(), // auto generated
     type: z.enum(TRANSACTION_TYPES, {
       message: t("schemas.category.categoryTypeRequired"),
     }),
@@ -219,6 +219,114 @@ export const createGoalSchema = (t: TypedTranslationFunction) => {
     })
 }
 
+export const createRecurringTransactionSchema = (
+  t: TypedTranslationFunction
+) => {
+  return z
+    .object({
+      type: z.enum(TRANSACTION_TYPES, {
+        message: t("schemas.transaction.transactionTypeRequired"),
+      }),
+      categoryKey: z
+        .string()
+        .min(1, { message: t("schemas.transaction.categoryRequired") })
+        .refine(
+          (val) =>
+            (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
+            val.startsWith("custom_"),
+          { message: t("schemas.transaction.categoryRequired") }
+        ),
+      amount: z
+        .number()
+        .min(0.01, {
+          message: t("schemas.transaction.amountRequired"),
+        })
+        .max(100000000000, {
+          message: t("schemas.transaction.amountMaxLength"),
+        }),
+      description: z
+        .string()
+        .min(1, {
+          message: t("schemas.transaction.descriptionRequired"),
+        })
+        .max(200, {
+          message: t("schemas.transaction.descriptionMaxLength"),
+        }),
+      frequency: z.enum(
+        [
+          "daily",
+          "weekly",
+          "bi-weekly",
+          "monthly",
+          "quarterly",
+          "yearly",
+          "random",
+        ],
+        {
+          message: t("schemas.recurring.frequencyRequired"),
+        }
+      ),
+      weekday: z.number().min(0).max(6).optional(),
+      dayOfMonth: z.number().min(1).max(31).optional(),
+      randomEveryXDays: z
+        .number()
+        .min(1, {
+          message: t("schemas.recurring.randomEveryXDaysRequired"),
+        })
+        .max(365, {
+          message: t("schemas.recurring.randomEveryXDaysMax"),
+        })
+        .optional(),
+      startDate: z.date({
+        message: t("schemas.recurring.startDateRequired"),
+      }),
+      endDate: z.date().optional(),
+      lastGenerated: z.date().optional(), // auto generated
+      isActive: z.boolean(),
+    })
+    .superRefine((data, ctx) => {
+      if (data.endDate && data.endDate <= data.startDate) {
+        ctx.addIssue({
+          path: ["endDate"],
+          message: t("schemas.recurring.endDateMustBeAfterStartDate"),
+          code: "custom",
+        })
+      }
+
+      if (
+        (data.frequency === "weekly" || data.frequency === "bi-weekly") &&
+        data.weekday === undefined
+      ) {
+        ctx.addIssue({
+          path: ["weekday"],
+          message: t("schemas.recurring.weekdayRequired"),
+          code: "custom",
+        })
+      }
+
+      if (
+        (data.frequency === "monthly" ||
+          data.frequency === "quarterly" ||
+          data.frequency === "yearly") &&
+        data.dayOfMonth === undefined
+      ) {
+        ctx.addIssue({
+          path: ["dayOfMonth"],
+          message: t("schemas.recurring.dayOfMonthRequired"),
+          code: "custom",
+        })
+      }
+
+      if (data.frequency === "random" && data.randomEveryXDays === undefined) {
+        ctx.addIssue({
+          path: ["randomEveryXDays"],
+          message: t("schemas.recurring.randomEveryXDaysRequired"),
+          code: "custom",
+        })
+      }
+    })
+}
+
 export type SignInFormValues = z.infer<ReturnType<typeof createSignInSchema>>
 export type PasswordFormValues = z.infer<
   ReturnType<typeof createPasswordSchema>
@@ -231,3 +339,6 @@ export type CategoryFormValues = z.infer<
 >
 export type BudgetFormValues = z.infer<ReturnType<typeof createBudgetSchema>>
 export type GoalFormValues = z.infer<ReturnType<typeof createGoalSchema>>
+export type RecurringTransactionFormValues = z.infer<
+  ReturnType<typeof createRecurringTransactionSchema>
+>

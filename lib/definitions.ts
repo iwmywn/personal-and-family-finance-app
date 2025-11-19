@@ -49,6 +49,30 @@ type BaseGoal<T> = {
   endDate: Date
 }
 
+type BaseRecurringTransaction<T> = {
+  _id: T
+  userId: T
+  type: TransactionType
+  categoryKey: CategoryKeyType
+  amount: number
+  description: string
+  frequency:
+    | "daily"
+    | "weekly"
+    | "bi-weekly"
+    | "monthly"
+    | "quarterly"
+    | "yearly"
+    | "random"
+  weekday?: number
+  dayOfMonth?: number
+  randomEveryXDays?: number
+  startDate: Date
+  endDate?: Date
+  lastGenerated?: Date
+  isActive: boolean
+}
+
 export type User = BaseUser<string>
 export type DBUser = BaseUser<ObjectId>
 
@@ -63,3 +87,6 @@ export type DBBudget = BaseBudget<ObjectId>
 
 export type Goal = BaseGoal<string>
 export type DBGoal = BaseGoal<ObjectId>
+
+export type RecurringTransaction = BaseRecurringTransaction<string>
+export type DBRecurringTransaction = BaseRecurringTransaction<ObjectId>

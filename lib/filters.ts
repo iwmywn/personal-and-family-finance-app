@@ -1,6 +1,12 @@
-import type { Budget, Category, Goal, Transaction } from "@/lib/definitions"
+import type {
+  Budget,
+  Category,
+  Goal,
+  RecurringTransaction,
+  Transaction,
+} from "@/lib/definitions"
 import { calculateBudgetsStats, calculateGoalsStats } from "@/lib/statistics"
-import { progressColorClass } from "@/lib/utils"
+import { normalizeToUTCDate, progressColorClass } from "@/lib/utils"
 
 interface Filters {
   searchTerm?: string
@@ -15,10 +21,6 @@ interface Filters {
   filterCategoryKey?: string
   filterProgress?: string
   filterStatus?: string
-}
-
-export function toDateOnly(date: Date): Date {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
 
 export function includesCaseInsensitive(text: string, query: string): boolean {
@@ -50,18 +52,20 @@ export function filterTransactions(
       normalizedSearchTerm
     )
 
-    const transactionDateOnly = toDateOnly(new Date(transaction.date))
+    const transactionDateOnly = normalizeToUTCDate(new Date(transaction.date))
 
     const matchesSelectedDate = selectedDate
-      ? transactionDateOnly.getTime() === toDateOnly(selectedDate).getTime()
+      ? transactionDateOnly.getTime() ===
+        normalizeToUTCDate(selectedDate).getTime()
       : true
 
     const matchesDateRange =
       (!dateRange.from ||
         transactionDateOnly.getTime() >=
-          toDateOnly(dateRange.from).getTime()) &&
+          normalizeToUTCDate(dateRange.from).getTime()) &&
       (!dateRange.to ||
-        transactionDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
+        transactionDateOnly.getTime() <=
+          normalizeToUTCDate(dateRange.to).getTime())
 
     const matchesMonth =
       !parsedMonth || transactionDateOnly.getMonth() + 1 === parsedMonth
@@ -124,14 +128,16 @@ export function filterBudgets(
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
   let filteredBudgets = budgets.filter((budget) => {
-    const budgetStartDateOnly = toDateOnly(new Date(budget.startDate))
-    const budgetEndDateOnly = toDateOnly(new Date(budget.endDate))
+    const budgetStartDateOnly = normalizeToUTCDate(new Date(budget.startDate))
+    const budgetEndDateOnly = normalizeToUTCDate(new Date(budget.endDate))
 
     const matchesDateRange =
       (!dateRange.from ||
-        budgetEndDateOnly.getTime() >= toDateOnly(dateRange.from).getTime()) &&
+        budgetEndDateOnly.getTime() >=
+          normalizeToUTCDate(dateRange.from).getTime()) &&
       (!dateRange.to ||
-        budgetStartDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
+        budgetStartDateOnly.getTime() <=
+          normalizeToUTCDate(dateRange.to).getTime())
 
     const matchesMonth = !parsedMonth
       ? true
@@ -209,8 +215,8 @@ export function filterGoals(
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
   let filteredGoals = goals.filter((goal) => {
-    const goalStartDateOnly = toDateOnly(new Date(goal.startDate))
-    const goalEndDateOnly = toDateOnly(new Date(goal.endDate))
+    const goalStartDateOnly = normalizeToUTCDate(new Date(goal.startDate))
+    const goalEndDateOnly = normalizeToUTCDate(new Date(goal.endDate))
 
     const matchesSearch = includesCaseInsensitive(
       goal.name,
@@ -219,9 +225,11 @@ export function filterGoals(
 
     const matchesDateRange =
       (!dateRange.from ||
-        goalEndDateOnly.getTime() >= toDateOnly(dateRange.from).getTime()) &&
+        goalEndDateOnly.getTime() >=
+          normalizeToUTCDate(dateRange.from).getTime()) &&
       (!dateRange.to ||
-        goalStartDateOnly.getTime() <= toDateOnly(dateRange.to).getTime())
+        goalStartDateOnly.getTime() <=
+          normalizeToUTCDate(dateRange.to).getTime())
 
     const matchesMonth = !parsedMonth
       ? true
@@ -275,4 +283,80 @@ export function filterGoals(
   }
 
   return filteredGoals
+}
+
+export function filterRecurringTransactions(
+  recurringTransactions: RecurringTransaction[],
+  filters: Filters
+): RecurringTransaction[] {
+  const {
+    searchTerm = "",
+    dateRange = {},
+    filterMonth = "all",
+    filterYear = "all",
+    filterType = "all",
+    filterCategoryKey = "all",
+    filterStatus = "all",
+  } = filters
+
+  const normalizedSearchTerm = searchTerm.trim()
+  const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
+  const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
+
+  return recurringTransactions.filter((recurring) => {
+    const matchesSearch = includesCaseInsensitive(
+      recurring.description,
+      normalizedSearchTerm
+    )
+
+    const startDateOnly = normalizeToUTCDate(new Date(recurring.startDate))
+    const endDateOnly = recurring.endDate
+      ? normalizeToUTCDate(new Date(recurring.endDate))
+      : null
+
+    const matchesDateRange =
+      (!dateRange.from ||
+        (endDateOnly
+          ? endDateOnly.getTime() >=
+            normalizeToUTCDate(dateRange.from).getTime()
+          : true)) &&
+      (!dateRange.to ||
+        startDateOnly.getTime() <= normalizeToUTCDate(dateRange.to).getTime())
+
+    const matchesMonth = !parsedMonth
+      ? true
+      : startDateOnly.getMonth() + 1 === parsedMonth ||
+        (endDateOnly && endDateOnly.getMonth() + 1 === parsedMonth) ||
+        (endDateOnly &&
+          startDateOnly.getMonth() + 1 < parsedMonth &&
+          endDateOnly.getMonth() + 1 > parsedMonth)
+
+    const matchesYear = !parsedYear
+      ? true
+      : startDateOnly.getFullYear() === parsedYear ||
+        (endDateOnly && endDateOnly.getFullYear() === parsedYear) ||
+        (endDateOnly &&
+          startDateOnly.getFullYear() < parsedYear &&
+          endDateOnly.getFullYear() > parsedYear)
+
+    const matchesType = filterType === "all" || recurring.type === filterType
+
+    const matchesCategory =
+      filterCategoryKey === "all" || recurring.categoryKey === filterCategoryKey
+
+    const matchesStatus =
+      filterStatus === "all" ||
+      (filterStatus === "active" && recurring.isActive) ||
+      (filterStatus === "inactive" && !recurring.isActive)
+
+    return (
+      matchesSearch &&
+      matchesDateRange &&
+      matchesMonth &&
+      matchesYear &&
+      matchesType &&
+      matchesCategory &&
+      matchesStatus
+    )
+  })
 }

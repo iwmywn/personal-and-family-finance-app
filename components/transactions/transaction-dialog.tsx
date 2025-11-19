@@ -47,9 +47,8 @@ import {
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -149,84 +148,66 @@ export function TransactionDialog({
     form.resetField("categoryKey", { defaultValue: "" })
   }
 
-  const renderCategorySelect = (type: "income" | "expense") => {
-    const label =
-      type === "income"
-        ? t("common.fe.incomeCategory")
-        : t("common.fe.expenseCategory")
-    const placeholder = t("transactions.fe.selectCategory", {
-      type: t(`common.fe.${type}`).toLowerCase(),
-    })
-
-    return (
-      <FormField
-        control={form.control}
-        name="categoryKey"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>{label}</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value}>
-              <FormControl>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder={placeholder}>
-                    {field.value
-                      ? getCategoryLabel(field.value, customCategories)
-                      : null}
-                  </SelectValue>
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent
-                style={{
-                  maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
-                }}
-              >
-                <SelectGroup>
-                  {getCategoriesWithDetails(type).map((c) => (
-                    <SelectItem key={c.categoryKey} value={c.categoryKey}>
-                      <div className="flex flex-col">
-                        <span className="font-medium">{c.label}</span>
-                        <span className="text-muted-foreground wrap-anywhere">
-                          {c.description}
-                        </span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                  {customCategories &&
-                    customCategories.filter((c) => c.type === type).length >
-                      0 && (
-                      <>
-                        <SelectLabel>
-                          {t("transactions.fe.customCategories")}
-                        </SelectLabel>
-                        {customCategories
-                          .filter((c) => c.type === type)
-                          .map((c) => (
-                            <SelectItem key={c._id} value={c.categoryKey}>
-                              <div className="flex flex-col">
-                                <span className="font-medium">{c.label}</span>
-                                <span className="text-muted-foreground wrap-anywhere">
-                                  {c.description}
-                                </span>
-                              </div>
-                            </SelectItem>
-                          ))}
-                      </>
-                    )}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <FormDescription>
-              {t("transactions.fe.noCategoryFound")}{" "}
-              <FormLink href="/categories" className="text-foreground/85">
-                {t("transactions.fe.createCustomCategory")}
-              </FormLink>
-            </FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    )
-  }
+  const renderCategorySelect = (type: "income" | "expense") => (
+    <FormField
+      control={form.control}
+      name="categoryKey"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{t("common.fe.category")}</FormLabel>
+          <Select onValueChange={field.onChange} value={field.value}>
+            <FormControl>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t("common.fe.selectCategory")}>
+                  {field.value ? getCategoryLabel(field.value) : null}
+                </SelectValue>
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent
+              style={{
+                maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
+              }}
+            >
+              {getCategoriesWithDetails(type).map((c) => (
+                <SelectItem key={c.categoryKey} value={c.categoryKey}>
+                  <div className="flex flex-col">
+                    <span className="font-medium">{c.label}</span>
+                    <span className="text-muted-foreground wrap-anywhere">
+                      {c.description}
+                    </span>
+                  </div>
+                </SelectItem>
+              ))}
+              {customCategories.filter((c) => c.type === type).length > 0 && (
+                <>
+                  <SelectSeparator />
+                  {customCategories
+                    .filter((c) => c.type === type)
+                    .map((c) => (
+                      <SelectItem key={c._id} value={c.categoryKey}>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{c.label}</span>
+                          <span className="text-muted-foreground wrap-anywhere">
+                            {c.description}
+                          </span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                </>
+              )}
+            </SelectContent>
+          </Select>
+          <FormDescription>
+            {t("transactions.fe.noCategoryFound")}{" "}
+            <FormLink href="/categories" className="text-foreground/85">
+              {t("transactions.fe.createCustomCategory")}
+            </FormLink>
+          </FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

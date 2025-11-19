@@ -53,7 +53,7 @@ export function BudgetsTable({
   filteredBudgets,
   offsetHeight,
 }: BudgetsTableProps) {
-  const { budgets, transactions, customCategories } = useAppData()
+  const { budgets, transactions } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -121,17 +121,11 @@ export function BudgetsTable({
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
-                              {getCategoryLabel(
-                                budget.categoryKey,
-                                customCategories
-                              )}
+                              {getCategoryLabel(budget.categoryKey)}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            {getCategoryDescription(
-                              budget.categoryKey,
-                              customCategories
-                            )}
+                            {getCategoryDescription(budget.categoryKey)}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
@@ -172,7 +166,7 @@ export function BudgetsTable({
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell onClick={(e) => e.stopPropagation()}>
+                      <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button

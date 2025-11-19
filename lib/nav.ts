@@ -1,9 +1,10 @@
 import {
   ChartColumnIncreasingIcon,
-  FolderOpenIcon,
   HomeIcon,
   PiggyBankIcon,
+  RepeatIcon,
   SettingsIcon,
+  TagIcon,
   TargetIcon,
   WalletIcon,
   type LucideIcon,
@@ -36,7 +37,7 @@ export const mainNav: NavType[] = [
   {
     key: "categories",
     url: "/categories",
-    icon: FolderOpenIcon,
+    icon: TagIcon,
   },
   {
     key: "budgets",
@@ -47,6 +48,11 @@ export const mainNav: NavType[] = [
     key: "goals",
     url: "/goals",
     icon: TargetIcon,
+  },
+  {
+    key: "recurring",
+    url: "/recurring",
+    icon: RepeatIcon,
   },
 ]
 

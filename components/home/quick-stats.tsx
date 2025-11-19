@@ -23,7 +23,7 @@ interface QuickStatsProps {
 export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const t = useTranslations()
   const { getCategoryLabel } = useCategoryI18n()
 
@@ -79,7 +79,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {highestTransaction !== null
                     ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -105,7 +105,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {lowestTransaction !== null
                     ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -123,7 +123,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 <div className="right">
                   {avgExpense !== null
                     ? formatCurrency(avgExpense)
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -149,7 +149,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {savingsRate !== null
                     ? `${savingsRate}%`
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>
@@ -165,9 +165,9 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 <div className="right">
                   {popularCategory.length > 0
                     ? popularCategory
-                        .map((key) => getCategoryLabel(key, customCategories))
+                        .map((key) => getCategoryLabel(key))
                         .join(", ")
-                    : t("home.fe.noData")}
+                    : t("common.fe.noData")}
                 </div>
               </div>
             </TooltipTrigger>

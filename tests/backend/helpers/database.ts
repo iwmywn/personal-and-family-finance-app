@@ -2,6 +2,7 @@ import {
   getBudgetsCollection,
   getCategoriesCollection,
   getGoalsCollection,
+  getRecurringTransactionsCollection,
   getTransactionsCollection,
   getUsersCollection,
 } from "@/lib/collections"
@@ -9,6 +10,7 @@ import {
   type DBBudget,
   type DBCategory,
   type DBGoal,
+  type DBRecurringTransaction,
   type DBTransaction,
   type DBUser,
 } from "@/lib/definitions"
@@ -36,4 +38,11 @@ export const insertTestBudget = async (budget: DBBudget) => {
 export const insertTestGoal = async (goal: DBGoal) => {
   const collection = await getGoalsCollection()
   await collection.insertOne(goal)
+}
+
+export const insertTestRecurringTransaction = async (
+  recurringTransaction: DBRecurringTransaction
+) => {
+  const collection = await getRecurringTransactionsCollection()
+  await collection.insertOne(recurringTransaction)
 }

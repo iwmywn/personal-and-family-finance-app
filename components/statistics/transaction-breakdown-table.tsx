@@ -1,6 +1,6 @@
 "use client"
 
-import { ReceiptIcon } from "lucide-react"
+import { WalletIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -38,7 +38,7 @@ interface TransactionBreakdownTableProps {
 export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
 
@@ -51,7 +51,7 @@ export function TransactionBreakdownTable({
           <Empty className="border" style={{ minHeight: "300px" }}>
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <ReceiptIcon />
+                <WalletIcon />
               </EmptyMedia>
               <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
               <EmptyDescription>
@@ -82,17 +82,11 @@ export function TransactionBreakdownTable({
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Badge variant="outline">
-                            {getCategoryLabel(
-                              stat.categoryKey,
-                              customCategories
-                            )}
+                            {getCategoryLabel(stat.categoryKey)}
                           </Badge>
                         </TooltipTrigger>
                         <TooltipContent>
-                          {getCategoryDescription(
-                            stat.categoryKey,
-                            customCategories
-                          )}
+                          {getCategoryDescription(stat.categoryKey)}
                         </TooltipContent>
                       </Tooltip>
                     </TableCell>

@@ -9,6 +9,7 @@ import { getUser } from "@/actions/auth.actions"
 import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
 import { getGoals } from "@/actions/goal.actions"
+import { getRecurringTransactions } from "@/actions/recurring.actions"
 import { getTransactions } from "@/actions/transaction.actions"
 import {
   Empty,
@@ -77,12 +78,14 @@ async function DashboardProvider({
     categoriesResult,
     budgetsResult,
     goalsResult,
+    recurringResult,
   ] = await Promise.all([
     getUser(userId, t),
     getTransactions(userId, t),
     getCustomCategories(userId, t),
     getBudgets(userId, t),
     getGoals(userId, t),
+    getRecurringTransactions(userId, t),
   ])
 
   const renderEmptyState = (
@@ -105,6 +108,7 @@ async function DashboardProvider({
   const customCategories = categoriesResult.customCategories
   const budgets = budgetsResult.budgets
   const goals = goalsResult.goals
+  const recurringTransactions = recurringResult.recurringTransactions
 
   if (!user) return renderEmptyState("userDataError", userResult.error)
   if (!transactions)
@@ -113,6 +117,11 @@ async function DashboardProvider({
     return renderEmptyState("categoriesDataError", categoriesResult.error)
   if (!budgets) return renderEmptyState("budgetsDataError", budgetsResult.error)
   if (!goals) return renderEmptyState("goalsDataError", goalsResult.error)
+  if (!recurringTransactions)
+    return renderEmptyState(
+      "recurringTransactionsDataError",
+      recurringResult.error
+    )
 
   return (
     <AppDataProvider
@@ -121,6 +130,7 @@ async function DashboardProvider({
       customCategories={customCategories}
       budgets={budgets}
       goals={goals}
+      recurringTransactions={recurringTransactions}
     >
       {children}
     </AppDataProvider>

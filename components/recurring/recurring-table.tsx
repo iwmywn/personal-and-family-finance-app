@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreVerticalIcon, WalletIcon } from "lucide-react"
+import { MoreVerticalIcon, RepeatIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -33,39 +33,63 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
-import { TransactionDialog } from "@/components/transactions/transaction-dialog"
+import { DeleteRecurringDialog } from "@/components/recurring/delete-recurring-dialog"
+import { RecurringDialog } from "@/components/recurring/recurring-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { type Transaction } from "@/lib/definitions"
+import { useWeekdaysI18n } from "@/hooks/use-weekdays-i18n"
+import type { RecurringTransaction } from "@/lib/definitions"
 import { formatCurrency } from "@/lib/utils"
 
-interface TransactionsTableProps {
-  filteredTransactions: Transaction[]
+interface RecurringTableProps {
+  filteredRecurring: RecurringTransaction[]
   offsetHeight: number
 }
 
-export function TransactionsTable({
-  filteredTransactions,
+export function RecurringTable({
+  filteredRecurring,
   offsetHeight,
-}: TransactionsTableProps) {
-  const { transactions } = useAppData()
+}: RecurringTableProps) {
+  const { recurringTransactions } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
+  const [selectedRecurring, setSelectedRecurring] =
+    useState<RecurringTransaction | null>(null)
+  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
   const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<Transaction | null>(null)
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
+
+  const weekdays = useWeekdaysI18n()
+
+  const getFrequencyLabel = (frequency: RecurringTransaction["frequency"]) => {
+    switch (frequency) {
+      case "daily":
+        return t("recurring.fe.frequencyDaily")
+      case "weekly":
+        return t("recurring.fe.frequencyWeekly")
+      case "bi-weekly":
+        return t("recurring.fe.frequencyBiWeekly")
+      case "monthly":
+        return t("recurring.fe.frequencyMonthly")
+      case "quarterly":
+        return t("recurring.fe.frequencyQuarterly")
+      case "yearly":
+        return t("recurring.fe.frequencyYearly")
+      case "random":
+        return t("recurring.fe.frequencyRandom")
+      default:
+        return frequency
+    }
+  }
 
   return (
     <>
       <Card>
         <CardContent>
-          {filteredTransactions.length === 0 ? (
+          {filteredRecurring.length === 0 ? (
             <Empty
               className="border"
               style={{
@@ -76,13 +100,13 @@ export function TransactionsTable({
             >
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <WalletIcon />
+                  <RepeatIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
+                <EmptyTitle>{t("recurring.fe.noRecurringFound")}</EmptyTitle>
                 <EmptyDescription>
-                  {transactions.length === 0
-                    ? t("common.fe.startAddingTransactions")
-                    : t("common.fe.noTransactionsFiltered")}
+                  {recurringTransactions.length === 0
+                    ? t("recurring.fe.noRecurringDescription")
+                    : t("recurring.fe.noRecurringFiltered")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -98,33 +122,39 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("common.fe.date")}</TableHead>
+                    <TableHead>{t("common.fe.startDate")}</TableHead>
+                    <TableHead>{t("common.fe.endDate")}</TableHead>
                     <TableHead>{t("common.fe.description")}</TableHead>
                     <TableHead>{t("common.fe.type")}</TableHead>
                     <TableHead>{t("common.fe.category")}</TableHead>
                     <TableHead>{t("common.fe.amount")}</TableHead>
+                    <TableHead>{t("recurring.fe.frequency")}</TableHead>
+                    <TableHead>{t("common.fe.status")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredTransactions.map((transaction) => (
+                  {filteredRecurring.map((recurring) => (
                     <TableRow
-                      key={transaction._id.toString()}
+                      key={recurring._id}
                       className="[&>td]:text-center"
                     >
-                      <TableCell>{formatDate(transaction.date)}</TableCell>
-                      <TableCell className="max-w-md min-w-52 wrap-anywhere whitespace-normal">
-                        {transaction.description}
+                      <TableCell>{formatDate(recurring.startDate)}</TableCell>
+                      <TableCell>
+                        {recurring.endDate
+                          ? formatDate(recurring.endDate)
+                          : t("common.fe.noEndDate")}
                       </TableCell>
+                      <TableCell>{recurring.description}</TableCell>
                       <TableCell>
                         <Badge
                           className={
-                            transaction.type === "income"
+                            recurring.type === "income"
                               ? "badge-green"
                               : "badge-red"
                           }
                         >
-                          {transaction.type === "income"
+                          {recurring.type === "income"
                             ? t("common.fe.income")
                             : t("common.fe.expense")}
                         </Badge>
@@ -133,27 +163,57 @@ export function TransactionsTable({
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
-                              {getCategoryLabel(transaction.categoryKey)}
+                              {getCategoryLabel(recurring.categoryKey)}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            {getCategoryDescription(transaction.categoryKey)}
+                            {getCategoryDescription(recurring.categoryKey)}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
-                        <span
-                          className={`font-semibold ${
-                            transaction.type === "income"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          {transaction.type === "income" ? "+" : "-"}
-                          {formatCurrency(transaction.amount)}
-                        </span>
+                      <TableCell>{formatCurrency(recurring.amount)}</TableCell>
+                      <TableCell>
+                        <div className="flex flex-col gap-1">
+                          <span>{getFrequencyLabel(recurring.frequency)}</span>
+                          {recurring.frequency === "weekly" ||
+                          recurring.frequency === "bi-weekly" ? (
+                            <span className="text-muted-foreground text-xs">
+                              {
+                                weekdays.find(
+                                  (day) =>
+                                    day.value === recurring.weekday!.toString()
+                                )?.label
+                              }
+                            </span>
+                          ) : recurring.frequency === "monthly" ||
+                            recurring.frequency === "quarterly" ||
+                            recurring.frequency === "yearly" ? (
+                            <span className="text-muted-foreground text-xs">
+                              {t("recurring.fe.dayOfMonth", {
+                                day: recurring.dayOfMonth!,
+                              })}
+                            </span>
+                          ) : recurring.frequency === "random" ? (
+                            <span className="text-muted-foreground text-xs">
+                              {t("recurring.fe.everyXDays", {
+                                days: recurring.randomEveryXDays!,
+                              })}
+                            </span>
+                          ) : null}
+                        </div>
                       </TableCell>
-                      <TableCell className="space-x-2">
+                      <TableCell>
+                        <Badge
+                          className={
+                            recurring.isActive ? "badge-green" : "badge-gray"
+                          }
+                        >
+                          {recurring.isActive
+                            ? t("common.fe.active")
+                            : t("common.fe.inactive")}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button
@@ -163,7 +223,7 @@ export function TransactionsTable({
                             >
                               <MoreVerticalIcon />
                               <span className="sr-only">
-                                {t("transactions.fe.openMenu")}
+                                {t("common.fe.openMenu")}
                               </span>
                             </Button>
                           </DropdownMenuTrigger>
@@ -171,7 +231,7 @@ export function TransactionsTable({
                             <DropdownMenuItem
                               className="cursor-pointer"
                               onClick={() => {
-                                setSelectedTransaction(transaction)
+                                setSelectedRecurring(recurring)
                                 setIsEditOpen(true)
                               }}
                             >
@@ -181,7 +241,7 @@ export function TransactionsTable({
                               className="cursor-pointer"
                               variant="destructive"
                               onClick={() => {
-                                setSelectedTransaction(transaction)
+                                setSelectedRecurring(recurring)
                                 setIsDeleteOpen(true)
                               }}
                             >
@@ -199,18 +259,17 @@ export function TransactionsTable({
         </CardContent>
       </Card>
 
-      {selectedTransaction && (
+      {selectedRecurring && (
         <>
-          <TransactionDialog
-            key={selectedTransaction._id + "TransactionDialog"}
-            transaction={selectedTransaction}
+          <RecurringDialog
+            key={selectedRecurring._id + "RecurringDialog"}
+            recurring={selectedRecurring}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
-          <DeleteTransactionDialog
-            key={selectedTransaction._id + "DeleteTransactionDialog"}
-            transactionId={selectedTransaction._id}
-            transactionDescription={selectedTransaction.description}
+          <DeleteRecurringDialog
+            key={selectedRecurring._id + "DeleteRecurringDialog"}
+            recurringId={selectedRecurring._id}
             open={isDeleteOpen}
             setOpen={setIsDeleteOpen}
           />

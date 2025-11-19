@@ -5,6 +5,7 @@ import type {
   DBBudget,
   DBCategory,
   DBGoal,
+  DBRecurringTransaction,
   DBTransaction,
   DBUser,
 } from "@/lib/definitions"
@@ -50,6 +51,14 @@ const mockGoalCollection = {
   deleteOne: vi.fn(),
 }
 
+const mockRecurringTransactionCollection = {
+  findOne: vi.fn(),
+  find: vi.fn(),
+  updateOne: vi.fn(),
+  insertOne: vi.fn(),
+  deleteOne: vi.fn(),
+}
+
 export const setupUserCollectionMock = () => {
   vi.spyOn(collectionsLib, "getUsersCollection").mockResolvedValue(
     mockUserCollection as unknown as Collection<OptionalId<DBUser>>
@@ -87,6 +96,18 @@ export const setupGoalCollectionMock = () => {
   return mockGoalCollection
 }
 
+export const setupRecurringTransactionCollectionMock = () => {
+  vi.spyOn(
+    collectionsLib,
+    "getRecurringTransactionsCollection"
+  ).mockResolvedValue(
+    mockRecurringTransactionCollection as unknown as Collection<
+      OptionalId<DBRecurringTransaction>
+    >
+  )
+  return mockRecurringTransactionCollection
+}
+
 export const mockUserCollectionError = (
   error: Error = new Error("Database error")
 ) => {
@@ -115,4 +136,13 @@ export const mockGoalCollectionError = (
   error: Error = new Error("Database error")
 ) => {
   vi.spyOn(collectionsLib, "getGoalsCollection").mockRejectedValue(error)
+}
+
+export const mockRecurringTransactionCollectionError = (
+  error: Error = new Error("Database error")
+) => {
+  vi.spyOn(
+    collectionsLib,
+    "getRecurringTransactionsCollection"
+  ).mockRejectedValue(error)
 }
