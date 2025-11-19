@@ -9,6 +9,8 @@ import {
 import { normalizeToUTCDate } from "@/lib/utils"
 import { shouldGenerateToday } from "@/app/api/utils"
 
+// Vercel Cron Jobs only trigger HTTP GET requests.
+// [See official docs](https://vercel.com/docs/cron-jobs#how-cron-jobs-work)
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization")
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
