@@ -41,13 +41,11 @@ export async function GET(request: NextRequest) {
       }
 
       // Prevent duplicate transaction creation (if a transaction already exists for same day)
-      // We consider duplicates when userId + date + amount + categoryKey + type match
       const existing = await transactionsCollection.findOne({
         userId: rec.userId,
         amount: rec.amount,
         categoryKey: rec.categoryKey,
         type: rec.type,
-        // ensure date equality by normalizing date field in DB comparison
         date: {
           $gte: todayUTC,
           $lt: new Date(todayUTC.getTime() + 24 * 60 * 60 * 1000),
