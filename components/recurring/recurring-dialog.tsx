@@ -95,7 +95,7 @@ export function RecurringDialog({
       amount: recurring?.amount || 0,
       description: recurring?.description || "",
       frequency: recurring?.frequency || "monthly",
-      weekday: recurring?.weekday || undefined,
+      weekday: recurring?.weekday ?? undefined,
       dayOfMonth: recurring?.dayOfMonth || undefined,
       randomEveryXDays: recurring?.randomEveryXDays || undefined,
       startDate: recurring?.startDate
@@ -420,7 +420,7 @@ export function RecurringDialog({
                           <SelectValue
                             placeholder={t("recurring.fe.selectWeekday")}
                           >
-                            {field.value
+                            {field.value !== undefined
                               ? weekdays.find(
                                   (day) => day.value === field.value!.toString()
                                 )?.label
