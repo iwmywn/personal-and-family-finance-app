@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MoreVerticalIcon, ReceiptIcon } from "lucide-react"
+import { MoreVerticalIcon, WalletIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -76,7 +76,7 @@ export function TransactionsTable({
             >
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <ReceiptIcon />
+                  <WalletIcon />
                 </EmptyMedia>
                 <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
                 <EmptyDescription>

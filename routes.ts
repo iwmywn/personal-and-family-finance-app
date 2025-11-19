@@ -1,5 +1,5 @@
-const authRoutes = ["/signin"]
 const signInRoute = "/signin"
+const authRoutes = [signInRoute]
 const DEFAULT_SIGNIN_REDIRECT = "/home"
 const protectedRoutes = [
   "/home",
@@ -11,7 +11,7 @@ const protectedRoutes = [
   "/recurring",
   "/settings",
 ]
-const ignoredRoutes = ["/images/", "/opengraph-image.png", "/icon.png"]
+const ignoredRoutes = ["/images", "/opengraph-image.png", "/icon.png"]
 
 export {
   authRoutes,

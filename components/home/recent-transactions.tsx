@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment } from "react"
-import { ReceiptIcon } from "lucide-react"
+import { WalletIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
@@ -53,12 +53,10 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
             <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
-                  <ReceiptIcon />
+                  <WalletIcon />
                 </EmptyMedia>
-                <EmptyTitle className="text-base">
-                  {t("common.fe.noTransactionsFound")}
-                </EmptyTitle>
-                <EmptyDescription className="text-sm">
+                <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
+                <EmptyDescription>
                   {t("common.fe.startAddingTransactions")}
                 </EmptyDescription>
               </EmptyHeader>
