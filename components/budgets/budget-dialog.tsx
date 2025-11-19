@@ -155,9 +155,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                         <SelectValue
                           placeholder={t("common.fe.selectCategory")}
                         >
-                          {field.value
-                            ? getCategoryLabel(field.value, customCategories)
-                            : null}
+                          {field.value ? getCategoryLabel(field.value) : null}
                         </SelectValue>
                       </SelectTrigger>
                     </FormControl>
@@ -176,27 +174,24 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           </div>
                         </SelectItem>
                       ))}
-                      {customCategories &&
-                        customCategories.filter((c) => c.type === "expense")
-                          .length > 0 && (
-                          <>
-                            <SelectSeparator />
-                            {customCategories
-                              .filter((c) => c.type === "expense")
-                              .map((c) => (
-                                <SelectItem key={c._id} value={c.categoryKey}>
-                                  <div className="flex flex-col">
-                                    <span className="font-medium">
-                                      {c.label}
-                                    </span>
-                                    <span className="text-muted-foreground wrap-anywhere">
-                                      {c.description}
-                                    </span>
-                                  </div>
-                                </SelectItem>
-                              ))}
-                          </>
-                        )}
+                      {customCategories.filter((c) => c.type === "expense")
+                        .length > 0 && (
+                        <>
+                          <SelectSeparator />
+                          {customCategories
+                            .filter((c) => c.type === "expense")
+                            .map((c) => (
+                              <SelectItem key={c._id} value={c.categoryKey}>
+                                <div className="flex flex-col">
+                                  <span className="font-medium">{c.label}</span>
+                                  <span className="text-muted-foreground wrap-anywhere">
+                                    {c.description}
+                                  </span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

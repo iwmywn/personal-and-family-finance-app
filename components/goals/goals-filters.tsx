@@ -290,12 +290,12 @@ export function GoalsFilters() {
                   </SelectItem>
                   <SelectSeparator />
                   <SelectLabel>{t("common.fe.income")}</SelectLabel>
-                  {INCOME_CATEGORIES_KEY.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category, customCategories)}
+                  {INCOME_CATEGORIES_KEY.map((categoryKey) => (
+                    <SelectItem key={categoryKey} value={categoryKey}>
+                      {getCategoryLabel(categoryKey)}
                     </SelectItem>
                   ))}
-                  {customCategories!
+                  {customCategories
                     .filter((c) => c.type === "income")
                     .map((category) => (
                       <SelectItem

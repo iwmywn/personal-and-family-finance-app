@@ -52,7 +52,7 @@ export function RecurringTable({
   filteredRecurring,
   offsetHeight,
 }: RecurringTableProps) {
-  const { recurringTransactions, customCategories } = useAppData()
+  const { recurringTransactions } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedRecurring, setSelectedRecurring] =
     useState<RecurringTransaction | null>(null)
@@ -163,17 +163,11 @@ export function RecurringTable({
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
-                              {getCategoryLabel(
-                                recurring.categoryKey,
-                                customCategories
-                              )}
+                              {getCategoryLabel(recurring.categoryKey)}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            {getCategoryDescription(
-                              recurring.categoryKey,
-                              customCategories
-                            )}
+                            {getCategoryDescription(recurring.categoryKey)}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>

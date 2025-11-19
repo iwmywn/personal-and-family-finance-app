@@ -304,50 +304,48 @@ export function RecurringFilters() {
                   </SelectItem>
                   <SelectSeparator />
                   <SelectLabel>{t("common.fe.income")}</SelectLabel>
-                  {INCOME_CATEGORIES_KEY.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category, customCategories)}
+                  {INCOME_CATEGORIES_KEY.map((categoryKey) => (
+                    <SelectItem key={categoryKey} value={categoryKey}>
+                      {getCategoryLabel(categoryKey)}
                     </SelectItem>
                   ))}
-                  {customCategories &&
-                    customCategories.filter((c) => c.type === "income").length >
-                      0 && (
-                      <>
-                        {customCategories
-                          .filter((c) => c.type === "income")
-                          .map((category) => (
-                            <SelectItem
-                              key={category._id}
-                              value={category.categoryKey}
-                            >
-                              {category.label}
-                            </SelectItem>
-                          ))}
-                      </>
-                    )}
+                  {customCategories.filter((c) => c.type === "income").length >
+                    0 && (
+                    <>
+                      {customCategories
+                        .filter((c) => c.type === "income")
+                        .map((category) => (
+                          <SelectItem
+                            key={category._id}
+                            value={category.categoryKey}
+                          >
+                            {category.label}
+                          </SelectItem>
+                        ))}
+                    </>
+                  )}
                   <SelectSeparator />
                   <SelectLabel>{t("common.fe.expense")}</SelectLabel>
-                  {EXPENSE_CATEGORIES_KEY.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {getCategoryLabel(category, customCategories)}
+                  {EXPENSE_CATEGORIES_KEY.map((categoryKey) => (
+                    <SelectItem key={categoryKey} value={categoryKey}>
+                      {getCategoryLabel(categoryKey)}
                     </SelectItem>
                   ))}
-                  {customCategories &&
-                    customCategories.filter((c) => c.type === "expense")
-                      .length > 0 && (
-                      <>
-                        {customCategories
-                          .filter((c) => c.type === "expense")
-                          .map((category) => (
-                            <SelectItem
-                              key={category._id}
-                              value={category.categoryKey}
-                            >
-                              {category.label}
-                            </SelectItem>
-                          ))}
-                      </>
-                    )}
+                  {customCategories.filter((c) => c.type === "expense").length >
+                    0 && (
+                    <>
+                      {customCategories
+                        .filter((c) => c.type === "expense")
+                        .map((category) => (
+                          <SelectItem
+                            key={category._id}
+                            value={category.categoryKey}
+                          >
+                            {category.label}
+                          </SelectItem>
+                        ))}
+                    </>
+                  )}
                 </SelectGroup>
               </SelectContent>
             </Select>

@@ -11,7 +11,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import type { Transaction } from "@/lib/definitions"
@@ -25,7 +24,6 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
   const t = useTranslations()
   const formatDate = useFormatDate()
   const { getCategoryLabel } = useCategoryI18n()
-  const { customCategories } = useAppData()
 
   function formatTransactionsToCSV(
     filteredTransactions: Transaction[]
@@ -46,7 +44,7 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
       return [
         date,
         type,
-        getCategoryLabel(ft.categoryKey, customCategories),
+        getCategoryLabel(ft.categoryKey),
         amount,
         `"${description}"`,
       ]

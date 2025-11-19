@@ -23,7 +23,7 @@ interface QuickStatsProps {
 export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const t = useTranslations()
   const { getCategoryLabel } = useCategoryI18n()
 
@@ -165,7 +165,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 <div className="right">
                   {popularCategory.length > 0
                     ? popularCategory
-                        .map((key) => getCategoryLabel(key, customCategories))
+                        .map((key) => getCategoryLabel(key))
                         .join(", ")
                     : t("common.fe.noData")}
                 </div>

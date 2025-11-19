@@ -38,7 +38,7 @@ interface TransactionBreakdownTableProps {
 export function TransactionBreakdownTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
 
@@ -82,17 +82,11 @@ export function TransactionBreakdownTable({
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Badge variant="outline">
-                            {getCategoryLabel(
-                              stat.categoryKey,
-                              customCategories
-                            )}
+                            {getCategoryLabel(stat.categoryKey)}
                           </Badge>
                         </TooltipTrigger>
                         <TooltipContent>
-                          {getCategoryDescription(
-                            stat.categoryKey,
-                            customCategories
-                          )}
+                          {getCategoryDescription(stat.categoryKey)}
                         </TooltipContent>
                       </Tooltip>
                     </TableCell>

@@ -51,7 +51,7 @@ export function TransactionsTable({
   filteredTransactions,
   offsetHeight,
 }: TransactionsTableProps) {
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
@@ -133,17 +133,11 @@ export function TransactionsTable({
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
-                              {getCategoryLabel(
-                                transaction.categoryKey,
-                                customCategories
-                              )}
+                              {getCategoryLabel(transaction.categoryKey)}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            {getCategoryDescription(
-                              transaction.categoryKey,
-                              customCategories
-                            )}
+                            {getCategoryDescription(transaction.categoryKey)}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>

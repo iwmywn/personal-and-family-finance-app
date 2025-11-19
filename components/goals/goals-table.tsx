@@ -50,7 +50,7 @@ interface GoalsTableProps {
 }
 
 export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
-  const { goals, transactions, customCategories } = useAppData()
+  const { goals, transactions } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -119,17 +119,11 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Badge variant="outline">
-                              {getCategoryLabel(
-                                goal.categoryKey,
-                                customCategories
-                              )}
+                              {getCategoryLabel(goal.categoryKey)}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
-                            {getCategoryDescription(
-                              goal.categoryKey,
-                              customCategories
-                            )}
+                            {getCategoryDescription(goal.categoryKey)}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>

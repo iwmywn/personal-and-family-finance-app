@@ -27,7 +27,7 @@ interface RecentTransactionsProps {
 
 export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const recentTransactions = transactions.slice(0, 10)
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useTranslations()
@@ -76,10 +76,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                             : "badge-red"
                         }
                       >
-                        {getCategoryLabel(
-                          transaction.categoryKey,
-                          customCategories
-                        )}
+                        {getCategoryLabel(transaction.categoryKey)}
                       </Badge>
                       <div className="text-sm wrap-anywhere">
                         {transaction.description}
