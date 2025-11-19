@@ -268,7 +268,15 @@ export const createRecurringTransactionSchema = (
       ),
       weekday: z.number().min(1).max(7).optional(),
       dayOfMonth: z.number().min(1).max(31).optional(),
-      randomEveryXDays: z.number().min(1).optional(),
+      randomEveryXDays: z
+        .number()
+        .min(1, {
+          message: t("schemas.recurring.randomEveryXDaysRequired"),
+        })
+        .max(365, {
+          message: t("schemas.recurring.randomEveryXDaysMax"),
+        })
+        .optional(),
       startDate: z.date({
         message: t("schemas.recurring.startDateRequired"),
       }),

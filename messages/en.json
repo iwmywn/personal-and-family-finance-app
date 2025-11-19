@@ -177,7 +177,6 @@
       "userNotFound": "User not found!"
     },
     "fe": {
-      "noData": "No data available",
       "active": "Active",
       "add": "Add",
       "allCategories": "All Categories",
@@ -209,6 +208,7 @@
       "income": "Income",
       "month": "Month",
       "negative": "Negative",
+      "noData": "No data available",
       "noEndDate": "No end date",
       "noTransactionsFiltered": "No transactions found matching your filters.",
       "noTransactionsFound": "No transactions found",
@@ -356,6 +356,7 @@
       "addRecurring": "Add Recurring Transaction",
       "addRecurringDescription": "Create a recurring transaction that will be automatically generated.",
       "dayOfMonth": "Day of Month",
+      "dayOfMonthDescription": "If the month does not have a selected day, the transaction will be performed on the last day of the month.",
       "dayOfMonthPlaceholder": "Enter day (1-31)",
       "deleteRecurringDescription": "Are you sure you want to delete this recurring transaction? This action cannot be undone.",
       "deleteRecurringTitle": "Delete Recurring Transaction",
@@ -378,8 +379,7 @@
       "randomEveryXDaysPlaceholder": "Enter number of days",
       "searchPlaceholder": "Search recurring transactions...",
       "selectWeekday": "Select weekday",
-      "weekday": "Weekday",
-      "dayOfMonthDescription": "If the month does not have a selected day, the transaction will be performed on the last day of the month."
+      "weekday": "Weekday"
     }
   },
   "schemas": {
@@ -419,6 +419,7 @@
       "dayOfMonthRequired": "Please enter the day of month (1-31).",
       "endDateMustBeAfterStartDate": "End date must be after start date.",
       "frequencyRequired": "Please select a frequency.",
+      "randomEveryXDaysMax": "The number of days must not exceed 365.",
       "randomEveryXDaysRequired": "Please enter the number of days.",
       "startDateRequired": "Please select a start date.",
       "weekdayRequired": "Please select a weekday."

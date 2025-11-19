@@ -451,30 +451,29 @@ export function RecurringDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("recurring.fe.dayOfMonth")}</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        min={1}
-                        max={31}
-                        placeholder={t("recurring.fe.dayOfMonthPlaceholder")}
-                        value={field.value || ""}
-                        onChange={(e) => {
-                          const value = e.target.value
-                          if (value === "") {
-                            field.onChange(undefined)
-                          } else {
-                            const numValue = Number.parseInt(value)
-                            if (
-                              !Number.isNaN(numValue) &&
-                              numValue >= 1 &&
-                              numValue <= 31
-                            ) {
-                              field.onChange(numValue)
-                            }
-                          }
-                        }}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={(value) =>
+                        field.onChange(Number.parseInt(value))
+                      }
+                      value={field.value?.toString()}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder={t("common.fe.selectDate")}>
+                            {field.value ? field.value.toString() : null}
+                          </SelectValue>
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Array.from({ length: 31 }, (_, i) => i + 1).map(
+                          (day) => (
+                            <SelectItem key={day} value={day.toString()}>
+                              {day}
+                            </SelectItem>
+                          )
+                        )}
+                      </SelectContent>
+                    </Select>
                     <FormDescription>
                       {t("recurring.fe.dayOfMonthDescription")}
                     </FormDescription>
