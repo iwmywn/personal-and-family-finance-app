@@ -47,10 +47,7 @@ export async function GET(request: NextRequest) {
         amount: rec.amount,
         categoryKey: rec.categoryKey,
         type: rec.type,
-        date: {
-          $gte: todayUTC,
-          $lt: new Date(todayUTC.getTime() + 24 * 60 * 60 * 1000),
-        },
+        date: todayUTC,
       })
 
       if (existing) {
