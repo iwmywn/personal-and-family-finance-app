@@ -13,6 +13,9 @@ vi.mock("@/env/server", () => {
       get DB_NAME() {
         return "test-db-name"
       },
+      get CRON_SECRET() {
+        return "test-cron-secret"
+      },
     },
   }
 })
