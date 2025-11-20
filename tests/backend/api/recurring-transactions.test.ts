@@ -32,14 +32,12 @@ describe("Recurring Transactions", () => {
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
 
-      it("should return true when today is next day after start date with no lastGenerated", () => {
-        // When lastGenerated is undefined, function uses actual current date
-        // So we test with lastGenerated set to startDate - 1 day
+      it("should return true when today is start date with no lastGenerated", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
           startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-09")),
+          lastGenerated: undefined,
         }
         const today = normalizeToUTCDate(new Date("2024-01-10"))
 

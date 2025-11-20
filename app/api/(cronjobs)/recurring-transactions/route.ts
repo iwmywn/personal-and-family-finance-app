@@ -35,13 +35,11 @@ export async function GET(request: NextRequest) {
     const skippedReason: { id: string; reason: "notToday" | "existing" }[] = []
 
     for (const rec of activeRecurringTransactions) {
-      // Should we generate today?
       if (!shouldGenerateToday(rec, todayUTC)) {
         skippedReason.push({ id: rec._id.toString(), reason: "notToday" })
         continue
       }
 
-      // Prevent duplicate transaction creation (if a transaction already exists for same day)
       const existing = await transactionsCollection.findOne({
         userId: rec.userId,
         amount: rec.amount,
@@ -51,7 +49,7 @@ export async function GET(request: NextRequest) {
       })
 
       if (existing) {
-        // Skip creating duplicate, but still update lastGenerated to avoid repeated attempts
+        // skip creating duplicate, but still update lastGenerated to avoid repeated attempts
         await recurringCollection.updateOne(
           { _id: rec._id },
           { $set: { lastGenerated: todayUTC } }
