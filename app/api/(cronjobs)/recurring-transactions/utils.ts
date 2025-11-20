@@ -50,9 +50,12 @@ function nextYearlyDate(lastGeneratedUTC: Date, day: number): Date {
 }
 
 function getNextDate(rec: DBRecurringTransaction): Date {
-  const lastGeneratedUTC = rec.lastGenerated
-    ? normalizeToUTCDate(rec.lastGenerated)
-    : normalizeToUTCDate(new Date())
+  // If no last generated date, return the start date
+  if (!rec.lastGenerated) {
+    return normalizeToUTCDate(rec.startDate)
+  }
+
+  const lastGeneratedUTC = normalizeToUTCDate(rec.lastGenerated)
 
   switch (rec.frequency) {
     case "daily":
