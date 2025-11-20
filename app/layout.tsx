@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
-import { getLocale, getMessages, getTranslations } from "next-intl/server"
+import { getLocale, getTranslations } from "next-intl/server"
 
 import { nunito } from "@/app/fonts"
 
@@ -51,47 +51,35 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <Suspense
-      fallback={
-        <div className="center h-screen">
-          <Spinner className="size-8" />
-        </div>
-      }
-    >
-      <RootProviders>{children}</RootProviders>
-    </Suspense>
-  )
-}
-
-async function RootProviders({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  const [messages, locale] = await Promise.all([getMessages(), getLocale()])
-
-  return (
-    <html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth">
+    <html suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${nunito.className}`}>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ProgressProvider>
-              <Toaster richColors closeButton />
-              {children}
-            </ProgressProvider>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ProgressProvider>
+            <Suspense
+              fallback={
+                <div className="center h-screen">
+                  <Spinner className="size-8" />
+                </div>
+              }
+            >
+              <NextIntlClientProvider>
+                <Toaster richColors closeButton />
+                {children}
+              </NextIntlClientProvider>
+            </Suspense>
+          </ProgressProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
