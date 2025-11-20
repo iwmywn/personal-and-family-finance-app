@@ -8,9 +8,9 @@ import { nunito } from "@/app/fonts"
 import "./globals.css"
 
 import { Suspense } from "react"
+import Image from "next/image"
 
 import { Toaster } from "@/components/ui/sonner"
-import { Spinner } from "@/components/ui/spinner"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { env } from "@/env/client.mjs"
@@ -69,7 +69,14 @@ export default async function RootLayout({
             <Suspense
               fallback={
                 <div className="center h-screen">
-                  <Spinner className="size-8" />
+                  <Image
+                    src="/images/logo.png"
+                    alt={`${siteConfig.name} Logo`}
+                    width={32}
+                    height={32}
+                    aria-label="Loading"
+                    className="animate-spin"
+                  />
                 </div>
               }
             >
