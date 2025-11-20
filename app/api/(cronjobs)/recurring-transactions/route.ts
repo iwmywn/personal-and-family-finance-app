@@ -40,13 +40,16 @@ export async function GET(request: NextRequest) {
         continue
       }
 
-      const existing = await transactionsCollection.findOne({
+      const data = {
         userId: rec.userId,
-        amount: rec.amount,
-        categoryKey: rec.categoryKey,
         type: rec.type,
+        categoryKey: rec.categoryKey,
+        amount: rec.amount,
+        description: rec.description,
         date: todayUTC,
-      })
+      }
+
+      const existing = await transactionsCollection.findOne(data)
 
       if (existing) {
         // skip creating duplicate, but still update lastGenerated to avoid repeated attempts
@@ -58,14 +61,7 @@ export async function GET(request: NextRequest) {
         continue
       }
 
-      const insertResult = await transactionsCollection.insertOne({
-        userId: rec.userId,
-        type: rec.type,
-        categoryKey: rec.categoryKey,
-        amount: rec.amount,
-        description: rec.description,
-        date: todayUTC,
-      })
+      const insertResult = await transactionsCollection.insertOne(data)
 
       await recurringCollection.updateOne(
         { _id: rec._id },

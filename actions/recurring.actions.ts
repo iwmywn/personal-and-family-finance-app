@@ -66,9 +66,7 @@ export async function createRecurringTransaction(
       query.randomEveryXDays = values.randomEveryXDays
     }
 
-    const existingRecurring = await recurringCollection.findOne({
-      ...query,
-    })
+    const existingRecurring = await recurringCollection.findOne(query)
 
     if (existingRecurring) {
       return { error: t("recurring.be.recurringExists") }
