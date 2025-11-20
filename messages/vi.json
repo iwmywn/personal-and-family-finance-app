@@ -1,7 +1,6 @@
 {
   "appError": {
-    "title": "Đã xảy ra lỗi!",
-    "tryAgain": "Thử lại"
+    "title": "Đã xảy ra lỗi!"
   },
   "auth": {
     "be": {

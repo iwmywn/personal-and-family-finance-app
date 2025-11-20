@@ -1,7 +1,6 @@
 {
   "appError": {
-    "title": "An error occurred!",
-    "tryAgain": "Try again"
+    "title": "An error occurred!"
   },
   "auth": {
     "be": {
