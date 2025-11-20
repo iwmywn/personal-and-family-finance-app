@@ -1,11 +1,11 @@
 import type { DBRecurringTransaction } from "@/lib/definitions"
 import { normalizeToUTCDate } from "@/lib/utils"
 
-function getLastDayOfMonth(year: number, month: number) {
+function getLastDayOfMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate()
 }
 
-function normalizeDay(year: number, month: number, day: number) {
+function normalizeDay(year: number, month: number, day: number): number {
   const last = getLastDayOfMonth(year, month)
   return Math.min(day, last)
 }
@@ -50,7 +50,7 @@ function nextYearlyDate(lastGeneratedUTC: Date, day: number): Date {
 }
 
 function getNextDate(rec: DBRecurringTransaction): Date {
-  // If no last generated date, return the start date
+  // if no last generated date, return the start date
   if (!rec.lastGenerated) {
     return normalizeToUTCDate(rec.startDate)
   }
@@ -92,16 +92,15 @@ function isSameDate(a: Date, b: Date) {
 export function shouldGenerateToday(
   rec: DBRecurringTransaction,
   todayUTC: Date
-) {
+): boolean {
   const startUTC = normalizeToUTCDate(rec.startDate)
+  const endUTC = rec.endDate ? normalizeToUTCDate(rec.endDate) : null
 
-  if (todayUTC.getTime() < startUTC.getTime()) return false
-  if (
-    rec.endDate &&
-    todayUTC.getTime() > normalizeToUTCDate(rec.endDate).getTime()
-  )
+  if (todayUTC < startUTC || (endUTC && todayUTC > endUTC)) {
     return false
+  }
 
   const nextDate = getNextDate(rec)
+
   return isSameDate(nextDate, todayUTC)
 }
