@@ -160,7 +160,7 @@ export async function deleteBudget(budgetId: string) {
 }
 
 export async function getBudgets(userId: string, t: TypedTranslationFunction) {
-  "use cache"
+  "use cache: private"
   cacheTag("budgets")
 
   try {

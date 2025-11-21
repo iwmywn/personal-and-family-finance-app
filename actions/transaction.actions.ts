@@ -161,7 +161,7 @@ export async function getTransactions(
   userId: string,
   t: TypedTranslationFunction
 ) {
-  "use cache"
+  "use cache: private"
   cacheTag("transactions")
 
   try {

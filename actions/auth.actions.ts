@@ -71,7 +71,7 @@ export async function signOut() {
 }
 
 export async function getUser(userId: string, t: TypedTranslationFunction) {
-  "use cache"
+  "use cache: private"
   cacheTag("user")
 
   try {

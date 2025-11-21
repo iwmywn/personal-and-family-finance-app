@@ -199,7 +199,7 @@ export async function getRecurringTransactions(
   userId: string,
   t: TypedTranslationFunction
 ) {
-  "use cache"
+  "use cache: private"
   cacheTag("recurringTransactions")
 
   try {
