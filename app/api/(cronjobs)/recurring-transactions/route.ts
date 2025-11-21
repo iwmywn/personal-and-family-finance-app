@@ -26,6 +26,14 @@ export async function GET(request: NextRequest) {
 
     const todayUTC = normalizeToUTCDate(new Date())
 
+    const deactivatedResult = await recurringCollection.updateMany(
+      {
+        isActive: true,
+        endDate: { $exists: true, $lt: todayUTC },
+      },
+      { $set: { isActive: false } }
+    )
+
     const activeRecurringTransactions = await recurringCollection
       .find({ isActive: true })
       .toArray()
@@ -78,6 +86,7 @@ export async function GET(request: NextRequest) {
       createdIds,
       skippedCount: skippedReason.length,
       skippedReason,
+      deactivated: deactivatedResult.modifiedCount,
       timestamp: new Date().toISOString(),
     })
   } catch (err) {

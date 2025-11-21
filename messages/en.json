@@ -415,13 +415,12 @@
       "passwordsNotMatch": "Passwords do not match."
     },
     "recurring": {
-      "dayOfMonthRequired": "Please enter the day of month (1-31).",
+      "cannotActivateExpiredRecurring": "Cannot activate a recurring transaction that has already expired.",
       "endDateMustBeAfterStartDate": "End date must be after start date.",
       "frequencyRequired": "Please select a frequency.",
       "randomEveryXDaysMax": "The number of days must not exceed 365.",
       "randomEveryXDaysRequired": "Please enter the number of days.",
-      "startDateRequired": "Please select a start date.",
-      "weekdayRequired": "Please select a weekday."
+      "startDateRequired": "Please select a start date."
     },
     "signIn": {
       "passwordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",

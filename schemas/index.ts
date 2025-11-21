@@ -2,6 +2,7 @@ import { z } from "zod"
 
 import type { TypedTranslationFunction } from "@/i18n/types"
 import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
+import { normalizeToUTCDate } from "@/lib/utils"
 
 export const createSignInSchema = (t: TypedTranslationFunction) => {
   const basePasswordSchema = z
@@ -266,8 +267,6 @@ export const createRecurringTransactionSchema = (
           message: t("schemas.recurring.frequencyRequired"),
         }
       ),
-      weekday: z.number().min(0).max(6).optional(),
-      dayOfMonth: z.number().min(1).max(31).optional(),
       randomEveryXDays: z
         .number()
         .min(1, {
@@ -293,34 +292,23 @@ export const createRecurringTransactionSchema = (
         })
       }
 
-      if (
-        (data.frequency === "weekly" || data.frequency === "bi-weekly") &&
-        data.weekday === undefined
-      ) {
-        ctx.addIssue({
-          path: ["weekday"],
-          message: t("schemas.recurring.weekdayRequired"),
-          code: "custom",
-        })
-      }
-
-      if (
-        (data.frequency === "monthly" ||
-          data.frequency === "quarterly" ||
-          data.frequency === "yearly") &&
-        data.dayOfMonth === undefined
-      ) {
-        ctx.addIssue({
-          path: ["dayOfMonth"],
-          message: t("schemas.recurring.dayOfMonthRequired"),
-          code: "custom",
-        })
-      }
-
       if (data.frequency === "random" && data.randomEveryXDays === undefined) {
         ctx.addIssue({
           path: ["randomEveryXDays"],
           message: t("schemas.recurring.randomEveryXDaysRequired"),
+          code: "custom",
+        })
+      }
+
+      const today = normalizeToUTCDate(new Date())
+      if (
+        data.isActive &&
+        data.endDate &&
+        normalizeToUTCDate(data.endDate) < today
+      ) {
+        ctx.addIssue({
+          path: ["isActive"],
+          message: t("schemas.recurring.cannotActivateExpiredRecurring"),
           code: "custom",
         })
       }

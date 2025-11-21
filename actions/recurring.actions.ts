@@ -50,18 +50,6 @@ export async function createRecurringTransaction(
       startDate: values.startDate,
     }
 
-    if (values.frequency === "weekly" || values.frequency === "bi-weekly") {
-      query.weekday = values.weekday
-    }
-
-    if (
-      values.frequency === "monthly" ||
-      values.frequency === "quarterly" ||
-      values.frequency === "yearly"
-    ) {
-      query.dayOfMonth = values.dayOfMonth
-    }
-
     if (values.frequency === "random") {
       query.randomEveryXDays = values.randomEveryXDays
     }
@@ -79,8 +67,6 @@ export async function createRecurringTransaction(
       amount: values.amount,
       description: values.description,
       frequency: values.frequency,
-      weekday: values.weekday,
-      dayOfMonth: values.dayOfMonth,
       randomEveryXDays: values.randomEveryXDays,
       startDate: values.startDate,
       endDate: values.endDate,
@@ -148,8 +134,6 @@ export async function updateRecurringTransaction(
           amount: values.amount,
           description: values.description,
           frequency: values.frequency,
-          weekday: values.weekday,
-          dayOfMonth: values.dayOfMonth,
           randomEveryXDays: values.randomEveryXDays,
           startDate: values.startDate,
           endDate: values.endDate,

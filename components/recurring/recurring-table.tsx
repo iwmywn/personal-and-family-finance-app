@@ -39,7 +39,6 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { useWeekdaysI18n } from "@/hooks/use-weekdays-i18n"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { formatCurrency } from "@/lib/utils"
 
@@ -61,8 +60,6 @@ export function RecurringTable({
   const t = useTranslations()
   const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
   const formatDate = useFormatDate()
-
-  const weekdays = useWeekdaysI18n()
 
   const getFrequencyLabel = (frequency: RecurringTransaction["frequency"]) => {
     switch (frequency) {
@@ -175,25 +172,7 @@ export function RecurringTable({
                       <TableCell>
                         <div className="flex flex-col gap-1">
                           <span>{getFrequencyLabel(recurring.frequency)}</span>
-                          {recurring.frequency === "weekly" ||
-                          recurring.frequency === "bi-weekly" ? (
-                            <span className="text-muted-foreground text-xs">
-                              {
-                                weekdays.find(
-                                  (day) =>
-                                    day.value === recurring.weekday!.toString()
-                                )?.label
-                              }
-                            </span>
-                          ) : recurring.frequency === "monthly" ||
-                            recurring.frequency === "quarterly" ||
-                            recurring.frequency === "yearly" ? (
-                            <span className="text-muted-foreground text-xs">
-                              {t("recurring.fe.dayOfMonth", {
-                                day: recurring.dayOfMonth!,
-                              })}
-                            </span>
-                          ) : recurring.frequency === "random" ? (
+                          {recurring.frequency === "random" ? (
                             <span className="text-muted-foreground text-xs">
                               {t("recurring.fe.everyXDays", {
                                 days: recurring.randomEveryXDays!,

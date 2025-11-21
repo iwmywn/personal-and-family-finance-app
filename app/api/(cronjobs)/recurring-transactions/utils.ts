@@ -16,37 +16,25 @@ function addDays(lastGeneratedUTC: Date, days: number) {
   )
 }
 
-function nextWeeklyDate(lastGeneratedUTC: Date, weekday: number): Date {
-  const cur = lastGeneratedUTC.getDay()
-  let diff = weekday - cur
-  if (diff <= 0) diff += 7
-  return addDays(lastGeneratedUTC, diff)
-}
-
-function nextBiWeeklyDate(lastGeneratedUTC: Date, weekday: number): Date {
-  const next = nextWeeklyDate(lastGeneratedUTC, weekday)
-  const diff =
-    (next.getTime() - lastGeneratedUTC.getTime()) / (1000 * 60 * 60 * 24)
-  if (diff < 14) return addDays(next, 7)
-  return next
-}
-
-function nextMonthlyDate(lastGeneratedUTC: Date, day: number): Date {
+function nextMonthlyDate(lastGeneratedUTC: Date): Date {
   const y = lastGeneratedUTC.getFullYear()
   const m = lastGeneratedUTC.getMonth() + 1
-  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, day)))
+  const d = lastGeneratedUTC.getDate()
+  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, d)))
 }
 
-function nextQuarterlyDate(lastGeneratedUTC: Date, day: number): Date {
+function nextQuarterlyDate(lastGeneratedUTC: Date): Date {
   const y = lastGeneratedUTC.getFullYear()
   const m = lastGeneratedUTC.getMonth() + 3
-  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, day)))
+  const d = lastGeneratedUTC.getDate()
+  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, d)))
 }
 
-function nextYearlyDate(lastGeneratedUTC: Date, day: number): Date {
+function nextYearlyDate(lastGeneratedUTC: Date): Date {
   const y = lastGeneratedUTC.getFullYear() + 1
   const m = lastGeneratedUTC.getMonth()
-  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, day)))
+  const d = lastGeneratedUTC.getDate()
+  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, d)))
 }
 
 function getNextDate(rec: DBRecurringTransaction): Date {
@@ -62,19 +50,19 @@ function getNextDate(rec: DBRecurringTransaction): Date {
       return addDays(lastGeneratedUTC, 1)
 
     case "weekly":
-      return nextWeeklyDate(lastGeneratedUTC, rec.weekday!)
+      return addDays(lastGeneratedUTC, 7)
 
     case "bi-weekly":
-      return nextBiWeeklyDate(lastGeneratedUTC, rec.weekday!)
+      return addDays(lastGeneratedUTC, 14)
 
     case "monthly":
-      return nextMonthlyDate(lastGeneratedUTC, rec.dayOfMonth!)
+      return nextMonthlyDate(lastGeneratedUTC)
 
     case "quarterly":
-      return nextQuarterlyDate(lastGeneratedUTC, rec.dayOfMonth!)
+      return nextQuarterlyDate(lastGeneratedUTC)
 
     case "yearly":
-      return nextYearlyDate(lastGeneratedUTC, rec.dayOfMonth!)
+      return nextYearlyDate(lastGeneratedUTC)
 
     case "random":
       return addDays(lastGeneratedUTC, rec.randomEveryXDays!)

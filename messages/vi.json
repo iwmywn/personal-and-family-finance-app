@@ -415,13 +415,12 @@
       "passwordsNotMatch": "Mật khẩu không khớp."
     },
     "recurring": {
-      "dayOfMonthRequired": "Vui lòng nhập ngày trong tháng (1-31).",
+      "cannotActivateExpiredRecurring": "Không thể kích hoạt giao dịch tự động đã hết hạn.",
       "endDateMustBeAfterStartDate": "Ngày kết thúc phải sau ngày bắt đầu.",
       "frequencyRequired": "Vui lòng chọn tần suất.",
       "randomEveryXDaysMax": "Số ngày không được vượt quá 365.",
       "randomEveryXDaysRequired": "Vui lòng nhập số ngày.",
-      "startDateRequired": "Vui lòng chọn ngày bắt đầu.",
-      "weekdayRequired": "Vui lòng chọn thứ trong tuần."
+      "startDateRequired": "Vui lòng chọn ngày bắt đầu."
     },
     "signIn": {
       "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
