@@ -1,6 +1,6 @@
 "use server"
 
-import { cacheTag, updateTag } from "next/cache"
+import { cache } from "react"
 import { cookies } from "next/headers"
 import { ObjectId } from "mongodb"
 
@@ -10,10 +10,7 @@ import { session } from "@/lib/session"
 
 const COOKIE_NAME = "locale"
 
-export async function getUserLocale(): Promise<AppLocale> {
-  "use cache: private"
-  cacheTag("locale")
-
+export const getUserLocale = cache(async (): Promise<AppLocale> => {
   const [usersCollection, { userId }] = await Promise.all([
     getUsersCollection(),
     session.user.get(),
@@ -26,7 +23,7 @@ export async function getUserLocale(): Promise<AppLocale> {
   if (cookieLocale) return cookieLocale as AppLocale
 
   return DEFAULT_LOCALE
-}
+})
 
 const fourHundredDays = 400 * 24 * 60 * 60
 
@@ -38,6 +35,4 @@ export async function setUserLocale(locale: AppLocale) {
     path: "/",
     maxAge: fourHundredDays,
   })
-
-  updateTag("locale")
 }
