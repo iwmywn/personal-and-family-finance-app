@@ -354,9 +354,6 @@
     "fe": {
       "addRecurring": "Thêm giao dịch định kỳ",
       "addRecurringDescription": "Tạo giao dịch định kỳ sẽ được tự động tạo.",
-      "dayOfMonth": "Ngày trong tháng",
-      "dayOfMonthDescription": "Nếu tháng không có ngày đã chọn, giao dịch sẽ được thực hiện vào ngày cuối cùng của tháng.",
-      "dayOfMonthPlaceholder": "Nhập ngày (1-31)",
       "deleteRecurringDescription": "Bạn có chắc chắn muốn xóa giao dịch định kỳ này? Hành động này không thể hoàn tác.",
       "deleteRecurringTitle": "Xóa giao dịch định kỳ",
       "description": "Quản lý các giao dịch định kỳ được tự động tạo.",
@@ -373,12 +370,11 @@
       "frequencyYearly": "Hàng năm",
       "noRecurringDescription": "Bạn chưa tạo giao dịch định kỳ nào. Hãy thêm giao dịch định kỳ đầu tiên!",
       "noRecurringFiltered": "Không tìm thấy giao dịch định kỳ nào phù hợp với bộ lọc của bạn.",
+      "nextDate": "Tiếp theo: {date}",
       "noRecurringFound": "Không có giao dịch định kỳ nào",
       "randomEveryXDays": "Cứ X ngày",
       "randomEveryXDaysPlaceholder": "Nhập số ngày",
-      "searchPlaceholder": "Tìm kiếm giao dịch định kỳ...",
-      "selectWeekday": "Chọn thứ trong tuần",
-      "weekday": "Thứ trong tuần"
+      "searchPlaceholder": "Tìm kiếm giao dịch định kỳ..."
     }
   },
   "schemas": {

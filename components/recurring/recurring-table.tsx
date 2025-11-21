@@ -41,6 +41,7 @@ import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { formatCurrency } from "@/lib/utils"
+import { getNextDate } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
 interface RecurringTableProps {
   filteredRecurring: RecurringTransaction[]
@@ -179,6 +180,11 @@ export function RecurringTable({
                               })}
                             </span>
                           ) : null}
+                          <span className="text-muted-foreground text-xs">
+                            {t("recurring.fe.nextDate", {
+                              date: formatDate(getNextDate(recurring)),
+                            })}
+                          </span>
                         </div>
                       </TableCell>
                       <TableCell>

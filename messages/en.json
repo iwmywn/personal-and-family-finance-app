@@ -354,9 +354,6 @@
     "fe": {
       "addRecurring": "Add Recurring Transaction",
       "addRecurringDescription": "Create a recurring transaction that will be automatically generated.",
-      "dayOfMonth": "Day of Month",
-      "dayOfMonthDescription": "If the month does not have a selected day, the transaction will be performed on the last day of the month.",
-      "dayOfMonthPlaceholder": "Enter day (1-31)",
       "deleteRecurringDescription": "Are you sure you want to delete this recurring transaction? This action cannot be undone.",
       "deleteRecurringTitle": "Delete Recurring Transaction",
       "description": "Manage recurring transactions that are automatically generated.",
@@ -373,12 +370,11 @@
       "frequencyYearly": "Yearly",
       "noRecurringDescription": "You haven't created any recurring transactions yet. Add your first recurring transaction!",
       "noRecurringFiltered": "No recurring transactions found matching your filters.",
+      "nextDate": "Next: {date}",
       "noRecurringFound": "No recurring transactions yet",
       "randomEveryXDays": "Every X Days",
       "randomEveryXDaysPlaceholder": "Enter number of days",
-      "searchPlaceholder": "Search recurring transactions...",
-      "selectWeekday": "Select weekday",
-      "weekday": "Weekday"
+      "searchPlaceholder": "Search recurring transactions..."
     }
   },
   "schemas": {

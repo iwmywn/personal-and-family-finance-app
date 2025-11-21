@@ -1,4 +1,7 @@
-import type { DBRecurringTransaction } from "@/lib/definitions"
+import type {
+  DBRecurringTransaction,
+  RecurringTransaction,
+} from "@/lib/definitions"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 function getLastDayOfMonth(year: number, month: number): number {
@@ -37,7 +40,9 @@ function nextYearlyDate(lastGeneratedUTC: Date): Date {
   return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, d)))
 }
 
-function getNextDate(rec: DBRecurringTransaction): Date {
+export function getNextDate(
+  rec: DBRecurringTransaction | RecurringTransaction
+): Date {
   // if no last generated date, return the start date
   if (!rec.lastGenerated) {
     return normalizeToUTCDate(rec.startDate)
