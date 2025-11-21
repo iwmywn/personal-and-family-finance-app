@@ -9,6 +9,7 @@ import "./globals.css"
 
 import { Suspense } from "react"
 import Image from "next/image"
+import Script from "next/script"
 
 import { Toaster } from "@/components/ui/sonner"
 import { ProgressProvider } from "@/components/progress-provider"
@@ -59,6 +60,26 @@ export default async function RootLayout({
   return (
     <html suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${nunito.className}`}>
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              ;(function () {
+                try {
+                  const savedTheme = localStorage.getItem('theme');
+                  const prefersDark =
+                    window.matchMedia &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                  if (savedTheme === 'dark' || (savedTheme === null && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (_) {}
+              })();
+            `,
+          }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
