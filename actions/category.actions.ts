@@ -281,6 +281,7 @@ export async function getCustomCategories(
 ) {
   "use cache"
   cacheTag("categories")
+
   try {
     if (!userId) {
       return {

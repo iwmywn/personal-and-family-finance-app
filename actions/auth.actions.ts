@@ -73,6 +73,7 @@ export async function signOut() {
 export async function getUser(userId: string, t: TypedTranslationFunction) {
   "use cache"
   cacheTag("user")
+
   try {
     if (!userId) {
       return {

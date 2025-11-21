@@ -163,6 +163,7 @@ export async function getTransactions(
 ) {
   "use cache"
   cacheTag("transactions")
+
   try {
     if (!userId) {
       return {
