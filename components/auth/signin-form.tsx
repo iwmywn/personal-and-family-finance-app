@@ -86,58 +86,56 @@ export function SignInForm() {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid gap-4">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem className="grid gap-2">
-                  <FormLabel htmlFor="username">
-                    {t("auth.fe.username")}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      id="username"
-                      placeholder="admin"
-                      type="text"
-                      autoComplete="off"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="grid gap-2">
-                  <div className="flex items-center justify-between">
-                    <FormLabel htmlFor="password">
-                      {t("auth.fe.password")}
-                    </FormLabel>
-                  </div>
-                  <FormControl>
-                    <PasswordInput
-                      id="password"
-                      placeholder="********"
-                      autoComplete="off"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormButton
-              isSubmitting={isLoading || form.formState.isSubmitting}
-              text={t("auth.fe.signIn")}
-            />
-          </div>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="username">
+                  {t("auth.fe.username")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="username"
+                    placeholder="admin"
+                    type="text"
+                    autoComplete="off"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel htmlFor="password">
+                  {t("auth.fe.password")}
+                </FormLabel>
+                <FormControl>
+                  <PasswordInput
+                    id="password"
+                    placeholder="********"
+                    autoComplete="off"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormButton
+            isSubmitting={isLoading || form.formState.isSubmitting}
+            text={t("auth.fe.signIn")}
+            className="w-full"
+          />
         </form>
       </Form>
+
       <ReCaptchaDialog
         open={isReCaptchaOpen}
         setOpen={setIsReCaptchaOpen}
