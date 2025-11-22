@@ -162,8 +162,9 @@ export async function deleteGoal(goalId: string) {
 }
 
 export async function getGoals(userId: string, t: TypedTranslationFunction) {
-  "use cache"
+  "use cache: private"
   cacheTag("goals")
+
   try {
     if (!userId) {
       return {

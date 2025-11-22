@@ -104,12 +104,8 @@ export function calculateSummaryStats(
   const incomeTransactions = transactions.filter((t) => t.type === "income")
   const expenseTransactions = transactions.filter((t) => t.type === "expense")
 
-  const totalIncome = transactions
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0)
-  const totalExpense = transactions
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0)
+  const totalIncome = incomeTransactions.reduce((sum, t) => sum + t.amount, 0)
+  const totalExpense = expenseTransactions.reduce((sum, t) => sum + t.amount, 0)
   const balance = totalIncome - totalExpense
   const transactionCount = transactions.length
   const incomeCount = incomeTransactions.length

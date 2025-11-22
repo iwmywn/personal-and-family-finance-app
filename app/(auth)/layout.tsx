@@ -10,11 +10,10 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { theme, resolvedTheme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const mounted = useMounted()
 
-  const currentTheme = mounted ? resolvedTheme || theme : "dark"
-  const isDark = currentTheme === "dark"
+  const isDark = resolvedTheme === "dark"
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden p-6 md:p-10">

@@ -279,8 +279,9 @@ export async function getCustomCategories(
   userId: string,
   t: TypedTranslationFunction
 ) {
-  "use cache"
+  "use cache: private"
   cacheTag("categories")
+
   try {
     if (!userId) {
       return {

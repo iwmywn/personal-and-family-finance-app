@@ -64,8 +64,6 @@ type BaseRecurringTransaction<T> = {
     | "quarterly"
     | "yearly"
     | "random"
-  weekday?: number
-  dayOfMonth?: number
   randomEveryXDays?: number
   startDate: Date
   endDate?: Date
