@@ -22,7 +22,6 @@ export function StatisticsSummary({
   filteredTransactions,
 }: StatisticsSummaryProps) {
   const t = useTranslations()
-  const summaryStats = calculateSummaryStats(filteredTransactions)
   const {
     totalIncome,
     totalExpense,
@@ -30,7 +29,7 @@ export function StatisticsSummary({
     transactionCount,
     incomeCount,
     expenseCount,
-  } = summaryStats
+  } = calculateSummaryStats(filteredTransactions)
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
