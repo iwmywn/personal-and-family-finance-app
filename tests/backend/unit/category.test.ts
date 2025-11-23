@@ -5,6 +5,7 @@ import {
   insertTestBudget,
   insertTestCategory,
   insertTestGoal,
+  insertTestRecurringTransaction,
   insertTestTransaction,
 } from "@/tests/backend/helpers/database"
 import {
@@ -20,6 +21,7 @@ import {
   mockBudget,
   mockCustomCategory,
   mockGoal,
+  mockRecurringTransaction,
   mockTransaction,
   mockUser,
   mockValidCategoryValues,
@@ -359,11 +361,17 @@ describe("Categories", async () => {
         _id: new ObjectId("691ac8cd3cf60fa9f018a37c"),
         categoryKey: "custom_expense_abcdef14",
       }
+      const category4 = {
+        ...mockCustomCategory,
+        _id: new ObjectId("691da72dc1d54fad20174ab6"),
+        categoryKey: "custom_expense_abcdef15",
+      }
 
       await Promise.all([
         insertTestCategory(category1),
         insertTestCategory(category2),
         insertTestCategory(category3),
+        insertTestCategory(category4),
 
         insertTestTransaction({
           ...mockTransaction,
@@ -377,14 +385,19 @@ describe("Categories", async () => {
           ...mockGoal,
           categoryKey: category3.categoryKey,
         }),
+        insertTestRecurringTransaction({
+          ...mockRecurringTransaction,
+          categoryKey: category4.categoryKey,
+        }),
       ])
 
       mockAuthenticatedUser()
 
-      const [result1, result2, result3] = await Promise.all([
+      const [result1, result2, result3, result4] = await Promise.all([
         deleteCustomCategory(category1._id.toString()),
         deleteCustomCategory(category2._id.toString()),
         deleteCustomCategory(category3._id.toString()),
+        deleteCustomCategory(category4._id.toString()),
       ])
 
       expect(result1.success).toBeUndefined()
@@ -400,6 +413,13 @@ describe("Categories", async () => {
       expect(result3.success).toBeUndefined()
       expect(result3.error).toBe(
         t("categories.be.categoryInUseWithCountGoal", { count: 1 })
+      )
+
+      expect(result4.success).toBeUndefined()
+      expect(result4.error).toBe(
+        t("categories.be.categoryInUseWithCountRecurringTransaction", {
+          count: 1,
+        })
       )
     })
 

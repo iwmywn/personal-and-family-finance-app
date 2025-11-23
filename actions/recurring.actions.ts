@@ -50,25 +50,11 @@ export async function createRecurringTransaction(
       startDate: values.startDate,
     }
 
-    if (values.frequency === "weekly" || values.frequency === "bi-weekly") {
-      query.weekday = values.weekday
-    }
-
-    if (
-      values.frequency === "monthly" ||
-      values.frequency === "quarterly" ||
-      values.frequency === "yearly"
-    ) {
-      query.dayOfMonth = values.dayOfMonth
-    }
-
     if (values.frequency === "random") {
       query.randomEveryXDays = values.randomEveryXDays
     }
 
-    const existingRecurring = await recurringCollection.findOne({
-      ...query,
-    })
+    const existingRecurring = await recurringCollection.findOne(query)
 
     if (existingRecurring) {
       return { error: t("recurring.be.recurringExists") }
@@ -81,8 +67,6 @@ export async function createRecurringTransaction(
       amount: values.amount,
       description: values.description,
       frequency: values.frequency,
-      weekday: values.weekday,
-      dayOfMonth: values.dayOfMonth,
       randomEveryXDays: values.randomEveryXDays,
       startDate: values.startDate,
       endDate: values.endDate,
@@ -150,8 +134,6 @@ export async function updateRecurringTransaction(
           amount: values.amount,
           description: values.description,
           frequency: values.frequency,
-          weekday: values.weekday,
-          dayOfMonth: values.dayOfMonth,
           randomEveryXDays: values.randomEveryXDays,
           startDate: values.startDate,
           endDate: values.endDate,
@@ -217,8 +199,9 @@ export async function getRecurringTransactions(
   userId: string,
   t: TypedTranslationFunction
 ) {
-  "use cache"
+  "use cache: private"
   cacheTag("recurringTransactions")
+
   try {
     if (!userId) {
       return {

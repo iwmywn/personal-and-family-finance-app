@@ -27,6 +27,16 @@ import { normalizeToUTCDate } from "@/lib/utils"
 describe("Recurring Transactions", async () => {
   const t = await getTranslations()
 
+  beforeEach(() => {
+    // mock time to 2024-06-01 to ensure endDate 2024-12-31 is in the future
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date("2024-06-01T12:00:00.000Z"))
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   describe("createRecurringTransaction", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -67,8 +77,6 @@ describe("Recurring Transactions", async () => {
         amount: mockRecurringTransaction.amount,
         description: mockRecurringTransaction.description,
         frequency: mockRecurringTransaction.frequency,
-        weekday: mockRecurringTransaction.weekday,
-        dayOfMonth: mockRecurringTransaction.dayOfMonth,
         randomEveryXDays: mockRecurringTransaction.randomEveryXDays,
         startDate: mockRecurringTransaction.startDate,
         endDate: mockRecurringTransaction.endDate,
@@ -111,7 +119,6 @@ describe("Recurring Transactions", async () => {
       expect(addedRecurring?.amount).toBe(2500000)
       expect(addedRecurring?.description).toBe("Freelance project payment")
       expect(addedRecurring?.frequency).toBe("monthly")
-      expect(addedRecurring?.dayOfMonth).toBe(15)
       expect(addedRecurring?.startDate.toISOString()).toBe(
         "2024-02-01T00:00:00.000Z"
       )
@@ -129,8 +136,6 @@ describe("Recurring Transactions", async () => {
       const result = await createRecurringTransaction({
         ...mockValidRecurringTransactionValues,
         frequency: "weekly",
-        weekday: 1,
-        dayOfMonth: undefined,
       })
       const recurringCollection = await getRecurringTransactionsCollection()
       const addedRecurring = await recurringCollection.findOne({
@@ -139,8 +144,6 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(addedRecurring?.frequency).toBe("weekly")
-      expect(addedRecurring?.weekday).toBe(1)
-      expect(addedRecurring?.dayOfMonth).toBeNull()
       expect(result.success).toBe(t("recurring.be.recurringAdded"))
       expect(result.error).toBeUndefined()
     })
@@ -151,8 +154,6 @@ describe("Recurring Transactions", async () => {
       const result = await createRecurringTransaction({
         ...mockValidRecurringTransactionValues,
         frequency: "bi-weekly",
-        weekday: 5,
-        dayOfMonth: undefined,
       })
       const recurringCollection = await getRecurringTransactionsCollection()
       const addedRecurring = await recurringCollection.findOne({
@@ -161,8 +162,6 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(addedRecurring?.frequency).toBe("bi-weekly")
-      expect(addedRecurring?.weekday).toBe(5)
-      expect(addedRecurring?.dayOfMonth).toBeNull()
       expect(result.success).toBe(t("recurring.be.recurringAdded"))
       expect(result.error).toBeUndefined()
     })
@@ -173,8 +172,6 @@ describe("Recurring Transactions", async () => {
       const result = await createRecurringTransaction({
         ...mockValidRecurringTransactionValues,
         frequency: "random",
-        weekday: undefined,
-        dayOfMonth: undefined,
         randomEveryXDays: 3,
       })
       const recurringCollection = await getRecurringTransactionsCollection()
@@ -185,8 +182,6 @@ describe("Recurring Transactions", async () => {
 
       expect(addedRecurring?.frequency).toBe("random")
       expect(addedRecurring?.randomEveryXDays).toBe(3)
-      expect(addedRecurring?.weekday).toBeNull()
-      expect(addedRecurring?.dayOfMonth).toBeNull()
       expect(result.success).toBe(t("recurring.be.recurringAdded"))
       expect(result.error).toBeUndefined()
     })
@@ -282,8 +277,6 @@ describe("Recurring Transactions", async () => {
           amount: 100000,
           description: "Updated description",
           frequency: "weekly",
-          weekday: 2,
-          dayOfMonth: undefined,
           randomEveryXDays: undefined,
           startDate: normalizeToUTCDate(new Date("2024-02-04")),
           endDate: normalizeToUTCDate(new Date("2024-12-31")),
@@ -303,8 +296,6 @@ describe("Recurring Transactions", async () => {
       expect(updatedRecurring?.amount).toBe(100000)
       expect(updatedRecurring?.description).toBe("Updated description")
       expect(updatedRecurring?.frequency).toBe("weekly")
-      expect(updatedRecurring?.weekday).toBe(2)
-      expect(updatedRecurring?.dayOfMonth).toBeNull()
       expect(updatedRecurring?.startDate.toISOString()).toBe(
         "2024-02-04T00:00:00.000Z"
       )

@@ -62,7 +62,6 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useWeekdaysI18n } from "@/hooks/use-weekdays-i18n"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
 
@@ -95,8 +94,6 @@ export function RecurringDialog({
       amount: recurring?.amount || 0,
       description: recurring?.description || "",
       frequency: recurring?.frequency || "monthly",
-      weekday: recurring?.weekday ?? undefined,
-      dayOfMonth: recurring?.dayOfMonth || undefined,
       randomEveryXDays: recurring?.randomEveryXDays || undefined,
       startDate: recurring?.startDate
         ? new Date(recurring.startDate)
@@ -126,8 +123,6 @@ export function RecurringDialog({
     control: form.control,
     name: "frequency",
   })
-
-  const weekdays = useWeekdaysI18n()
 
   const handleTypeChange = (type: string) => {
     const transactionType = type as "income" | "expense"
@@ -176,8 +171,6 @@ export function RecurringDialog({
           amount: 0,
           description: "",
           frequency: "monthly",
-          weekday: undefined,
-          dayOfMonth: undefined,
           randomEveryXDays: undefined,
           startDate: undefined,
           endDate: undefined,
@@ -349,16 +342,6 @@ export function RecurringDialog({
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value)
-                      if (value !== "weekly" && value !== "bi-weekly") {
-                        form.setValue("weekday", undefined)
-                      }
-                      if (
-                        value !== "monthly" &&
-                        value !== "quarterly" &&
-                        value !== "yearly"
-                      ) {
-                        form.setValue("dayOfMonth", undefined)
-                      }
                       if (value !== "random") {
                         form.setValue("randomEveryXDays", undefined)
                       }
@@ -398,87 +381,6 @@ export function RecurringDialog({
                 </FormItem>
               )}
             />
-
-            {(frequency === "weekly" || frequency === "bi-weekly") && (
-              <FormField
-                control={form.control}
-                name="weekday"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("recurring.fe.weekday")}</FormLabel>
-                    <Select
-                      onValueChange={(value) =>
-                        field.onChange(Number.parseInt(value))
-                      }
-                      value={field.value?.toString()}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue
-                            placeholder={t("recurring.fe.selectWeekday")}
-                          >
-                            {field.value !== undefined
-                              ? weekdays.find(
-                                  (day) => day.value === field.value!.toString()
-                                )?.label
-                              : null}
-                          </SelectValue>
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {weekdays.map((day) => (
-                          <SelectItem key={day.value} value={day.value}>
-                            {day.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
-
-            {(frequency === "monthly" ||
-              frequency === "quarterly" ||
-              frequency === "yearly") && (
-              <FormField
-                control={form.control}
-                name="dayOfMonth"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t("recurring.fe.dayOfMonth")}</FormLabel>
-                    <Select
-                      onValueChange={(value) =>
-                        field.onChange(Number.parseInt(value))
-                      }
-                      value={field.value?.toString()}
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder={t("common.fe.selectDate")}>
-                            {field.value ? field.value.toString() : null}
-                          </SelectValue>
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Array.from({ length: 31 }, (_, i) => i + 1).map(
-                          (day) => (
-                            <SelectItem key={day} value={day.toString()}>
-                              {day}
-                            </SelectItem>
-                          )
-                        )}
-                      </SelectContent>
-                    </Select>
-                    <FormDescription>
-                      {t("recurring.fe.dayOfMonthDescription")}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
 
             {frequency === "random" && (
               <FormField

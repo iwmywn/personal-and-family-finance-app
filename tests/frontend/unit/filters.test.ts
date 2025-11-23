@@ -251,7 +251,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      expect(result).toHaveLength(2)
+      expect(result.map((b) => b._id)).toEqual(["1", "4"])
       expect(result.every((b) => b.categoryKey === "food_beverage")).toBe(true)
     })
 
@@ -267,12 +267,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets where endDate < now
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const endDate = new Date(budget.endDate)
-        expect(endDate < new Date()).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["1", "2", "4", "5"])
 
       vi.useRealTimers()
     })
@@ -289,14 +284,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets where startDate <= now && endDate >= now
-      expect(result.length).toBeGreaterThan(0)
-      const now = new Date()
-      result.forEach((budget) => {
-        const startDate = new Date(budget.startDate)
-        const endDate = new Date(budget.endDate)
-        expect(startDate <= now && endDate >= now).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["2", "4"])
 
       vi.useRealTimers()
     })
@@ -313,13 +301,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets where startDate > now
-      expect(result.length).toBeGreaterThan(0)
-      const now = new Date()
-      result.forEach((budget) => {
-        const startDate = new Date(budget.startDate)
-        expect(startDate > now).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["1", "2", "3", "4"])
 
       vi.useRealTimers()
     })
@@ -350,13 +332,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets that overlap with date range
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetStart = new Date(budget.startDate)
-        const budgetEnd = new Date(budget.endDate)
-        expect(budgetEnd >= fromDate && budgetStart <= toDate).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["2", "4"])
     })
 
     it("should filter by month", () => {
@@ -368,17 +344,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets that overlap with the selected month
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetStart = new Date(budget.startDate)
-        const budgetEnd = new Date(budget.endDate)
-        const startMonth = budgetStart.getMonth() + 1
-        const endMonth = budgetEnd.getMonth() + 1
-        expect(
-          startMonth === 3 || endMonth === 3 || (startMonth < 3 && endMonth > 3)
-        ).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["2", "4"])
     })
 
     it("should filter by year", () => {
@@ -390,19 +356,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets that overlap with the selected year
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetStart = new Date(budget.startDate)
-        const budgetEnd = new Date(budget.endDate)
-        const startYear = budgetStart.getFullYear()
-        const endYear = budgetEnd.getFullYear()
-        expect(
-          startYear === 2024 ||
-            endYear === 2024 ||
-            (startYear < 2024 && endYear > 2024)
-        ).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["1", "2", "3", "4"])
     })
 
     it("should filter by progress - gray (no transactions)", () => {
@@ -414,17 +368,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets with no transactions (gray progress)
-      result.forEach((budget) => {
-        const budgetTransactions = mockTransactions.filter(
-          (t) =>
-            t.type === "expense" &&
-            t.categoryKey === budget.categoryKey &&
-            new Date(t.date) >= new Date(budget.startDate) &&
-            new Date(t.date) <= new Date(budget.endDate)
-        )
-        expect(budgetTransactions.length).toBe(0)
-      })
+      expect(result.map((b) => b._id)).toEqual(["4", "5"])
     })
 
     it("should filter by progress - green (< 75%)", () => {
@@ -436,23 +380,8 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets with green progress (< 75%)
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetTransactions = mockTransactions.filter(
-          (t) =>
-            t.type === "expense" &&
-            t.categoryKey === budget.categoryKey &&
-            new Date(t.date) >= new Date(budget.startDate) &&
-            new Date(t.date) <= new Date(budget.endDate)
-        )
-        const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
-        const percentage =
-          budget.allocatedAmount === 0
-            ? 0
-            : (spent / budget.allocatedAmount) * 100
-        expect(percentage < 75).toBe(true)
-      })
+      // Budget 1: 500000 / 1000000 = 50% (green)
+      expect(result.map((b) => b._id)).toEqual(["1"])
     })
 
     it("should filter by progress - yellow (75-100%)", () => {
@@ -464,23 +393,8 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets with yellow progress (75-100%)
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetTransactions = mockTransactions.filter(
-          (t) =>
-            t.type === "expense" &&
-            t.categoryKey === budget.categoryKey &&
-            new Date(t.date) >= new Date(budget.startDate) &&
-            new Date(t.date) <= new Date(budget.endDate)
-        )
-        const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
-        const percentage =
-          budget.allocatedAmount === 0
-            ? 0
-            : (spent / budget.allocatedAmount) * 100
-        expect(percentage >= 75 && percentage < 100).toBe(true)
-      })
+      // Budget 2: 400000 / 500000 = 80% (yellow)
+      expect(result.map((b) => b._id)).toEqual(["2"])
     })
 
     it("should filter by progress - red (>= 100%)", () => {
@@ -492,23 +406,8 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      // Should return budgets with red progress (>= 100%)
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetTransactions = mockTransactions.filter(
-          (t) =>
-            t.type === "expense" &&
-            t.categoryKey === budget.categoryKey &&
-            new Date(t.date) >= new Date(budget.startDate) &&
-            new Date(t.date) <= new Date(budget.endDate)
-        )
-        const spent = budgetTransactions.reduce((sum, t) => sum + t.amount, 0)
-        const percentage =
-          budget.allocatedAmount === 0
-            ? 0
-            : (spent / budget.allocatedAmount) * 100
-        expect(percentage >= 100).toBe(true)
-      })
+      // Budget 3: 2100000 / 2000000 = 105% (red)
+      expect(result.map((b) => b._id)).toEqual(["3"])
     })
 
     it("should return all budgets when filterProgress is 'all'", () => {
@@ -533,17 +432,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        expect(budget.categoryKey).toBe("food_beverage")
-        const budgetStart = new Date(budget.startDate)
-        const budgetEnd = new Date(budget.endDate)
-        const startMonth = budgetStart.getMonth() + 1
-        const endMonth = budgetEnd.getMonth() + 1
-        expect(
-          startMonth === 3 || endMonth === 3 || (startMonth < 3 && endMonth > 3)
-        ).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["4"])
     })
 
     it("should return all budgets when no filters applied", () => {
@@ -576,11 +465,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetEnd = new Date(budget.endDate)
-        expect(budgetEnd >= fromDate).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["2", "3", "4"])
     })
 
     it("should handle date range with only to date", () => {
@@ -595,11 +480,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((budget) => {
-        const budgetStart = new Date(budget.startDate)
-        expect(budgetStart <= toDate).toBe(true)
-      })
+      expect(result.map((b) => b._id)).toEqual(["1", "2", "4", "5"])
     })
 
     it("should return empty array when no matches found", () => {
@@ -659,11 +540,6 @@ describe("Filters", () => {
       )
 
       expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4"])
-      result.forEach((goal) => {
-        const start = new Date(goal.startDate)
-        const end = new Date(goal.endDate)
-        expect(end >= fromDate && start <= toDate).toBe(true)
-      })
     })
 
     it("should filter by month", () => {
@@ -710,12 +586,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      const now = new Date()
       expect(result.map((goal) => goal._id)).toEqual(["3", "4", "5"])
-      result.forEach((goal) => {
-        const endDate = new Date(goal.endDate)
-        expect(endDate < now).toBe(true)
-      })
 
       vi.useRealTimers()
     })
@@ -732,13 +603,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      const now = new Date()
       expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4"])
-      result.forEach((goal) => {
-        const startDate = new Date(goal.startDate)
-        const endDate = new Date(goal.endDate)
-        expect(startDate <= now && endDate >= now).toBe(true)
-      })
 
       vi.useRealTimers()
     })
@@ -852,10 +717,6 @@ describe("Filters", () => {
       )
 
       expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4", "6"])
-      result.forEach((goal) => {
-        const end = new Date(goal.endDate)
-        expect(end >= fromDate).toBe(true)
-      })
     })
 
     it("should handle date range with only to date", () => {
@@ -871,10 +732,6 @@ describe("Filters", () => {
       )
 
       expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4", "5"])
-      result.forEach((goal) => {
-        const start = new Date(goal.startDate)
-        expect(start <= toDate).toBe(true)
-      })
     })
 
     it("should return empty array when no matches found", () => {
@@ -942,22 +799,10 @@ describe("Filters", () => {
 
     it("should filter by month", () => {
       const result = filterRecurringTransactions(mockRecurringTransactions, {
-        filterMonth: "1", // January
+        filterMonth: "1",
       })
 
-      // Should include recurring transactions that start or end in January, or span January
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((recurring) => {
-        const startMonth = new Date(recurring.startDate).getMonth() + 1
-        const endMonth = recurring.endDate
-          ? new Date(recurring.endDate).getMonth() + 1
-          : null
-        expect(
-          startMonth === 1 ||
-            (endMonth && endMonth === 1) ||
-            (endMonth && startMonth < 1 && endMonth > 1)
-        ).toBe(true)
-      })
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "6"])
     })
 
     it("should filter by year", () => {
@@ -965,19 +810,7 @@ describe("Filters", () => {
         filterYear: "2024",
       })
 
-      // Should include recurring transactions that start or end in 2024, or span 2024
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((recurring) => {
-        const startYear = new Date(recurring.startDate).getFullYear()
-        const endYear = recurring.endDate
-          ? new Date(recurring.endDate).getFullYear()
-          : null
-        expect(
-          startYear === 2024 ||
-            (endYear && endYear === 2024) ||
-            (endYear && startYear < 2024 && endYear > 2024)
-        ).toBe(true)
-      })
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "4", "6", "7"])
     })
 
     it("should filter by date range", () => {
@@ -988,18 +821,7 @@ describe("Filters", () => {
         },
       })
 
-      // Should include recurring transactions that overlap with the date range
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((recurring) => {
-        const startDate = new Date(recurring.startDate)
-        const endDate = recurring.endDate
-          ? new Date(recurring.endDate)
-          : new Date("2099-12-31") // Treat undefined endDate as far future
-        expect(
-          endDate >= new Date("2024-01-01") &&
-            startDate <= new Date("2024-03-31")
-        ).toBe(true)
-      })
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "4", "6"])
     })
 
     it("should handle date range with only from date", () => {
@@ -1009,13 +831,7 @@ describe("Filters", () => {
         },
       })
 
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((recurring) => {
-        const endDate = recurring.endDate
-          ? new Date(recurring.endDate)
-          : new Date("2099-12-31")
-        expect(endDate >= new Date("2024-03-01")).toBe(true)
-      })
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "4", "7"])
     })
 
     it("should handle date range with only to date", () => {
@@ -1025,11 +841,7 @@ describe("Filters", () => {
         },
       })
 
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((recurring) => {
-        const startDate = new Date(recurring.startDate)
-        expect(startDate <= new Date("2024-02-28")).toBe(true)
-      })
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "5", "6"])
     })
 
     it("should handle recurring transactions without endDate", () => {
@@ -1039,9 +851,9 @@ describe("Filters", () => {
         },
       })
 
-      // Should include recurring transactions with undefined endDate
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "7"])
       const withUndefinedEndDate = result.filter((r) => !r.endDate)
-      expect(withUndefinedEndDate.length).toBeGreaterThan(0)
+      expect(withUndefinedEndDate.map((r) => r._id)).toEqual(["3", "7"])
     })
 
     it("should combine multiple filters", () => {
@@ -1093,8 +905,7 @@ describe("Filters", () => {
         filterMonth: "2", // February
       })
 
-      // Should include recurring transactions that span February
-      expect(result.length).toBeGreaterThan(0)
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6"])
     })
 
     it("should filter by year when recurring spans multiple years", () => {
@@ -1102,19 +913,7 @@ describe("Filters", () => {
         filterYear: "2023",
       })
 
-      // Should include recurring transactions that span 2023
-      expect(result.length).toBeGreaterThan(0)
-      result.forEach((recurring) => {
-        const startYear = new Date(recurring.startDate).getFullYear()
-        const endYear = recurring.endDate
-          ? new Date(recurring.endDate).getFullYear()
-          : null
-        expect(
-          startYear === 2023 ||
-            (endYear && endYear === 2023) ||
-            (endYear && startYear < 2023 && endYear > 2023)
-        ).toBe(true)
-      })
+      expect(result.map((r) => r._id)).toEqual(["5"])
     })
 
     it("should return empty array when no matches found", () => {
