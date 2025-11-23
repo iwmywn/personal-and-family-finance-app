@@ -1,3 +1,24 @@
+## [25.48.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.47.0...v25.48.0)
+
+Thank you to all the contributors who made this release possible!
+
+### Features
+
+- recurring page (@iwmywn) ([#8](https://github.com/iwmywn/personal-and-family-finance-app/pull/8)) ([f281d77](https://github.com/iwmywn/personal-and-family-finance-app/commit/f281d77482d64b55e3fba77adbcf937d3cce7604))
+- goals page (@iwmywn) ([#7](https://github.com/iwmywn/personal-and-family-finance-app/pull/7)) ([c413440](https://github.com/iwmywn/personal-and-family-finance-app/commit/c413440974196d3c77e5e47298986dfacf0d30eb))
+
+### Bug Fixes
+
+- handle missing last generated date in recurring transactions ([83d7528](https://github.com/iwmywn/personal-and-family-finance-app/commit/83d752842c2fbbfc3a8e373f3b563734a88895a3))
+- refactor date handling in budget calculations and filters ([c142427](https://github.com/iwmywn/personal-and-family-finance-app/commit/c1424270acb5837be596fec33f4cb632b0ef242b))
+
+### Nerd stuff
+
+These changes will not be visible to users, but are included for completeness and to credit contributors.
+
+- **refactor:** cleanup (@iwmywn) ([#9](https://github.com/iwmywn/personal-and-family-finance-app/pull/9)) ([44bd5b4](https://github.com/iwmywn/personal-and-family-finance-app/commit/44bd5b478a70aa9ecee7d448c9910fc7cb2d9fae))
+- **refactor:** improve date handling and code clarity ([6431baa](https://github.com/iwmywn/personal-and-family-finance-app/commit/6431baaa05fd3fa31608ca93257edca418f57642))
+
 ## [25.47.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.46.0...v25.47.0)
 
 ### Nerd stuff
