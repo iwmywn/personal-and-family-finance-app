@@ -180,7 +180,7 @@ export const mockTransactions: Transaction[] = [
     _id: "6",
     userId: "68f712e4cda4897217a05a1c",
     type: "expense" as const,
-    amount: 500000, // 50% of 1000000 - green (< 75%) mockBudgets[0]
+    amount: 500000,
     description: "Food expense",
     categoryKey: "food_beverage",
     date: new Date("2024-02-15"),
@@ -189,7 +189,7 @@ export const mockTransactions: Transaction[] = [
     _id: "7",
     userId: "68f712e4cda4897217a05a1c",
     type: "expense" as const,
-    amount: 400000, // 80% of 500000 - yellow (75-100%) mockBudgets[1]
+    amount: 400000,
     description: "Transport expense",
     categoryKey: "transportation",
     date: new Date("2024-03-20"),
@@ -198,7 +198,7 @@ export const mockTransactions: Transaction[] = [
     _id: "8",
     userId: "68f712e4cda4897217a05a1c",
     type: "expense" as const,
-    amount: 2100000, // 105% of 2000000 - red (>= 100%) mockBudgets[2]
+    amount: 2100000,
     description: "Housing expense",
     categoryKey: "housing",
     date: new Date("2024-04-10"),
@@ -232,48 +232,51 @@ export const mockCustomCategories: Category[] = [
   },
 ]
 
-// Active: startDate <= now && endDate >= now
-// Completed: endDate < now
 export const mockBudgets: Budget[] = [
   {
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "food_beverage",
     allocatedAmount: 1000000,
+    // related transactions: [6]
     startDate: new Date("2024-02-01"),
-    endDate: new Date("2024-02-28"), // Completed (in the past)
+    endDate: new Date("2024-02-28"),
   },
   {
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "transportation",
     allocatedAmount: 500000,
+    // related transactions: [7]
     startDate: new Date("2024-03-01"),
-    endDate: new Date("2024-03-28"), // Active (current month)
+    endDate: new Date("2024-03-28"),
   },
   {
     _id: "3",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "housing",
     allocatedAmount: 2000000,
+    // related transactions: [8]
     startDate: new Date("2024-04-01"),
-    endDate: new Date("2024-04-28"), // Active (future)
+    endDate: new Date("2024-04-28"),
   },
   {
     _id: "4",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "food_beverage",
     allocatedAmount: 1500000,
+    // related transactions: [7]
     startDate: new Date("2024-03-01"),
-    endDate: new Date("2024-03-28"), // Active (current month)
+    endDate: new Date("2024-03-28"),
   },
   {
     _id: "5",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "business_freelance",
     allocatedAmount: 3000000,
+    // related transactions: [1, 2, 3, 4, 5]
     startDate: new Date("2023-01-01"),
-    endDate: new Date("2023-01-31"), // Completed (last year)
+    endDate: new Date("2023-01-31"),
   },
 ]
 
