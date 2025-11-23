@@ -31,14 +31,22 @@ export async function createTransaction(values: TransactionFormValues) {
 
     const transactionsCollection = await getTransactionsCollection()
 
-    const result = await transactionsCollection.insertOne({
+    const data = {
       userId: new ObjectId(userId),
       type: values.type,
       categoryKey: values.categoryKey,
       amount: values.amount,
       description: values.description,
       date: values.date,
-    })
+    }
+
+    const existingTransaction = await transactionsCollection.findOne(data)
+
+    if (existingTransaction) {
+      return { error: t("transactions.be.transactionExists") }
+    }
+
+    const result = await transactionsCollection.insertOne(data)
 
     if (!result.acknowledged)
       return { error: t("transactions.be.transactionAddFailed") }

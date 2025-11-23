@@ -85,6 +85,20 @@ describe("Transactions", async () => {
       expect(result.error).toBeUndefined()
     })
 
+    it("should return error when creating duplicate transaction on the same day", async () => {
+      mockAuthenticatedUser()
+
+      const firstResult = await createTransaction(mockValidTransactionValues)
+      const duplicateResult = await createTransaction(
+        mockValidTransactionValues
+      )
+
+      expect(firstResult.success).toBe(t("transactions.be.transactionAdded"))
+      expect(firstResult.error).toBeUndefined()
+      expect(duplicateResult.success).toBeUndefined()
+      expect(duplicateResult.error).toBe(t("transactions.be.transactionExists"))
+    })
+
     it("should return error when database operation throws error", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
