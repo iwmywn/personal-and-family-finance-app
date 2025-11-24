@@ -23,7 +23,7 @@ export default function HomePage() {
         <div ref={registerRef} className="header">
           <div>
             <div className="title">
-              {t("home.fe.welcome")}, {user.fullName}!
+              {t("home.fe.welcome")}, {user.name}!
             </div>
             <div className="description">{t("home.fe.description")}</div>
           </div>

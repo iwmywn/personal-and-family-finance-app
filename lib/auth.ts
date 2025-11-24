@@ -1,36 +1,48 @@
 import { betterAuth } from "better-auth"
 import { mongodbAdapter } from "better-auth/adapters/mongodb"
 import { nextCookies } from "better-auth/next-js"
-import { username } from "better-auth/plugins"
+import { captcha, username } from "better-auth/plugins"
 
 import { env as clientEnv } from "@/env/client.mjs"
 import { env as serverEnv } from "@/env/server.mjs"
+import { DEFAULT_LOCALE } from "@/i18n/config"
 import { connect } from "@/lib/db"
 import { siteConfig } from "@/app/pffa.config"
 
 export const auth = betterAuth({
+  appName: siteConfig.name,
   database: mongodbAdapter(await connect()),
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
+    requireEmailVerification: false,
   },
   user: {
     modelName: "users",
     additionalFields: {
       locale: {
         type: "string",
-        required: false,
-        defaultValue: "vi",
+        required: true,
+        defaultValue: DEFAULT_LOCALE,
       },
     },
   },
   session: {
     modelName: "sessions",
+    expiresIn: 60 * 60 * 24 * 7,
+    updateAge: 60 * 60 * 24,
   },
   account: {
     modelName: "accounts",
   },
-  plugins: [username(), nextCookies()],
+  plugins: [
+    username(),
+    nextCookies(),
+    captcha({
+      provider: "google-recaptcha",
+      secretKey: serverEnv.RECAPTCHA_SECRET,
+    }),
+  ],
   advanced: {
     cookiePrefix: siteConfig.name,
     database: {
@@ -40,5 +52,3 @@ export const auth = betterAuth({
   secret: serverEnv.BETTER_AUTH_SECRET,
   trustedOrigins: [clientEnv.NEXT_PUBLIC_URL],
 })
-
-export type Session = typeof auth.$Infer.Session

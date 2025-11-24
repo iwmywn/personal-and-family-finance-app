@@ -8,19 +8,22 @@ import { getTranslations } from "next-intl/server"
 import type { TypedTranslationFunction } from "@/i18n/types"
 import { getGoalsCollection } from "@/lib/collections"
 import { type Goal } from "@/lib/definitions"
-import { session } from "@/lib/session"
+
+import { getCurrentSession } from "./session.actions"
 
 export async function createGoal(values: GoalFormValues) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     const goalSchema = createGoalSchema(t)
     const parsedValues = goalSchema.safeParse(values)
@@ -65,9 +68,9 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
@@ -123,9 +126,9 @@ export async function deleteGoal(goalId: string) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }

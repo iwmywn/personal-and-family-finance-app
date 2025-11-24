@@ -15,19 +15,22 @@ import {
   getTransactionsCollection,
 } from "@/lib/collections"
 import { type Category } from "@/lib/definitions"
-import { session } from "@/lib/session"
+
+import { getCurrentSession } from "./session.actions"
 
 export async function createCustomCategory(values: CategoryFormValues) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     const customCategorySchema = createCategorySchema(t)
     const parsedValues = customCategorySchema.safeParse(values)
@@ -85,13 +88,15 @@ export async function updateCustomCategory(
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     const customCategorySchema = createCategorySchema(t)
     const parsedValues = customCategorySchema.safeParse(values)
@@ -169,13 +174,15 @@ export async function deleteCustomCategory(categoryId: string) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     if (!ObjectId.isValid(categoryId)) {
       return {

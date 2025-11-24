@@ -8,19 +8,22 @@ import { getTranslations } from "next-intl/server"
 import type { TypedTranslationFunction } from "@/i18n/types"
 import { getBudgetsCollection } from "@/lib/collections"
 import { type Budget } from "@/lib/definitions"
-import { session } from "@/lib/session"
+
+import { getCurrentSession } from "./session.actions"
 
 export async function createBudget(values: BudgetFormValues) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     const budgetSchema = createBudgetSchema(t)
     const parsedValues = budgetSchema.safeParse(values)
@@ -64,9 +67,9 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
@@ -121,9 +124,9 @@ export async function deleteBudget(budgetId: string) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }

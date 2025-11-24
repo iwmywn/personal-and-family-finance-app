@@ -1,20 +1,21 @@
 "use server"
 
+import { headers } from "next/headers"
 import { createPasswordSchema, type PasswordFormValues } from "@/schemas"
-import bcrypt from "bcryptjs"
-import { ObjectId } from "mongodb"
+import { APIError } from "better-auth"
 import { getTranslations } from "next-intl/server"
 
-import { getUsersCollection } from "@/lib/collections"
-import { session } from "@/lib/session"
+import { auth } from "@/lib/auth"
+
+import { getCurrentSession } from "./session.actions"
 
 export async function updatePassword(values: PasswordFormValues) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
@@ -28,51 +29,26 @@ export async function updatePassword(values: PasswordFormValues) {
     }
 
     const { currentPassword, newPassword } = parsedValues.data
+    const requestHeaders = await headers()
 
-    const usersCollection = await getUsersCollection()
-    const existingUser = await usersCollection.findOne({
-      _id: new ObjectId(userId),
+    await auth.api.changePassword({
+      body: {
+        currentPassword,
+        newPassword,
+      },
+      headers: requestHeaders,
     })
 
-    if (!existingUser) {
-      return { error: t("common.be.userNotFound") }
-    }
-
-    let hashedPassword: string
-
-    if (currentPassword && newPassword) {
-      const isPasswordValid = await bcrypt.compare(
-        currentPassword,
-        existingUser.password
-      )
-
-      if (!isPasswordValid) {
-        return { error: t("settings.be.passwordIncorrect") }
-      }
-
-      hashedPassword = await bcrypt.hash(newPassword, 10)
-    } else {
-      hashedPassword = existingUser.password
-    }
-
-    const isSame = hashedPassword === existingUser.password
-
-    if (isSame) {
-      return { success: t("settings.be.noChanges") }
-    }
-
-    await usersCollection.updateOne(
-      { _id: new ObjectId(userId) },
-      {
-        $set: {
-          password: hashedPassword,
-        },
-      }
-    )
+    await auth.api.revokeOtherSessions({
+      headers: requestHeaders,
+    })
 
     return { success: t("settings.be.passwordUpdated") }
   } catch (error) {
     console.error("Error updating password:", error)
-    return { error: t("settings.be.passwordUpdateFailed") }
+
+    if (error instanceof APIError && error.statusCode === 400)
+      return { error: t("settings.be.passwordIncorrect") }
+    else return { error: t("settings.be.passwordUpdateFailed") }
   }
 }

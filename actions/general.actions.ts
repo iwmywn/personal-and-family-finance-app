@@ -7,19 +7,22 @@ import { getTranslations } from "next-intl/server"
 import { LOCALES, type AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { getUsersCollection } from "@/lib/collections"
-import { session } from "@/lib/session"
+
+import { getCurrentSession } from "./session.actions"
 
 export async function updateLocale(locale: AppLocale) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     if (!LOCALES.includes(locale)) {
       return { error: t("settings.be.languageUpdateFailed") }

@@ -8,19 +8,22 @@ import { getTranslations } from "next-intl/server"
 import type { TypedTranslationFunction } from "@/i18n/types"
 import { getTransactionsCollection } from "@/lib/collections"
 import { type Transaction } from "@/lib/definitions"
-import { session } from "@/lib/session"
+
+import { getCurrentSession } from "./session.actions"
 
 export async function createTransaction(values: TransactionFormValues) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     const transactionSchema = createTransactionSchema(t)
     const parsedValues = transactionSchema.safeParse(values)
@@ -66,9 +69,9 @@ export async function updateTransaction(
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
@@ -127,9 +130,9 @@ export async function deleteTransaction(transactionId: string) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
