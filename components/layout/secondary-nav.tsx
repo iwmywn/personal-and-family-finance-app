@@ -6,7 +6,6 @@ import { LogOutIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { signOut } from "@/actions/auth.actions"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -14,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { client } from "@/lib/auth-client"
 import { secondaryNav } from "@/lib/nav"
 
 export function SecondaryNav() {
@@ -22,13 +22,13 @@ export function SecondaryNav() {
   const t = useTranslations()
 
   async function onSignOut() {
-    toast.promise(signOut(), {
+    toast.promise(client.signOut(), {
       loading: t("auth.fe.signingOut"),
-      success: ({ success }) => {
+      success: () => {
         router.push("/signin")
-        return success
+        return t("auth.be.signOutSuccess")
       },
-      error: ({ error }) => error,
+      error: () => t("auth.be.signOutFailed"),
     })
   }
 

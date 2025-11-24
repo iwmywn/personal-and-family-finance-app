@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { signIn } from "@/actions/auth.actions"
 import {
   Form,
   FormControl,
@@ -21,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { ReCaptchaDialog } from "@/components/auth/recaptcha-dialog"
 import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
+import { client } from "@/lib/auth-client"
 
 export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
@@ -43,21 +43,32 @@ export function SignInForm() {
 
       setIsLoading(true)
       try {
-        const { error } = await signIn(values, token)
+        await client.signIn.username({
+          username: values.username,
+          password: values.password,
+          fetchOptions: {
+            headers: {
+              "x-captcha-response": token,
+            },
+            onError: (ctx) => {
+              console.log(ctx)
+              if (ctx.error.status === 401)
+                toast.error(t("auth.be.signInError"))
+              else toast.error(t("auth.be.signInFailed"))
+            },
+            onSuccess: () => {
+              const searchParams = new URLSearchParams(window.location.search)
+              let callbackUrl = searchParams.get("next")
 
-        if (error) {
-          toast.error(error)
-        } else {
-          const searchParams = new URLSearchParams(window.location.search)
-          let callbackUrl = searchParams.get("next")
+              if (window.location.hash) {
+                callbackUrl = callbackUrl + window.location.hash
+              }
 
-          if (window.location.hash) {
-            callbackUrl = callbackUrl + window.location.hash
-          }
-
-          form.reset()
-          router.push(callbackUrl || "/home")
-        }
+              form.reset()
+              router.push(callbackUrl || "/home")
+            },
+          },
+        })
       } finally {
         setIsLoading(false)
         setRecaptchaToken(null)

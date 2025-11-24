@@ -41,6 +41,7 @@ export const auth = betterAuth({
     captcha({
       provider: "google-recaptcha",
       secretKey: serverEnv.RECAPTCHA_SECRET,
+      endpoints: ["/sign-in/username"],
     }),
   ],
   advanced: {
