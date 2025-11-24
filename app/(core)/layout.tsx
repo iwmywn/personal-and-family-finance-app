@@ -5,7 +5,7 @@ import { GhostIcon } from "lucide-react"
 import type { Messages } from "next-intl"
 import { getTranslations } from "next-intl/server"
 
-import { getUser } from "@/actions/auth.actions"
+import { getCurrentSession, getUser } from "@/actions/auth.actions"
 import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
 import { getGoals } from "@/actions/goal.actions"
@@ -23,7 +23,6 @@ import { Spinner } from "@/components/ui/spinner"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
 import { AppDataProvider } from "@/context/app-data-context"
-import { session } from "@/lib/session"
 
 export default async function DashboardLayout({
   children,
@@ -32,7 +31,9 @@ export default async function DashboardLayout({
 }>) {
   const cookieStore = await cookies()
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
+  const sessions = await getCurrentSession()
 
+  console.log(sessions)
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
@@ -64,13 +65,14 @@ async function DashboardProvider({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { userId } = await session.user.get()
+  const session = await getCurrentSession()
 
-  if (!userId) {
+  if (!session) {
     redirect("/signin")
   }
 
   const t = await getTranslations()
+  const userId = session.user.id
 
   const [
     userResult,

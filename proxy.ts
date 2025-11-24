@@ -1,10 +1,11 @@
 "use server"
 
 import { type NextURL } from "next/dist/server/web/next-url"
+import { headers } from "next/headers"
 import { NextResponse, type NextRequest } from "next/server"
 import * as routes from "@/routes"
 
-import { session } from "@/lib/session"
+import { auth } from "@/lib/auth"
 
 function redirectIfProtectedRoute(nextUrl: NextURL) {
   const { pathname, search } = nextUrl
@@ -33,12 +34,11 @@ export default async function proxy(req: NextRequest) {
   const { nextUrl } = req
   const { pathname } = nextUrl
 
-  const { userId, expires } = await session.user.get()
-  const expiresIn = new Date(expires).getTime() - Date.now()
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
 
-  if (!userId || !expires || expiresIn < 0) {
-    await session.user.delete()
-
+  if (!session) {
     return redirectIfProtectedRoute(nextUrl)
   }
 
@@ -47,10 +47,6 @@ export default async function proxy(req: NextRequest) {
     pathname === "/"
   ) {
     return redirectTo(routes.DEFAULT_SIGNIN_REDIRECT, nextUrl)
-  }
-
-  if (expiresIn < 24 * 60 * 60 * 1000) {
-    await session.user.update()
   }
 
   return NextResponse.next()

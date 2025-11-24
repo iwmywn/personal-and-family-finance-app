@@ -1,17 +1,17 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
+import { headers } from "next/headers"
 import { createSignInSchema, type SignInFormValues } from "@/schemas"
-import bcrypt from "bcryptjs"
+import { APIError } from "better-auth"
 import { ObjectId } from "mongodb"
 import { getTranslations } from "next-intl/server"
 
-import { setUserLocale } from "@/i18n/locale"
 import type { TypedTranslationFunction } from "@/i18n/types"
+import { auth } from "@/lib/auth"
 import { getUsersCollection } from "@/lib/collections"
 import { type User } from "@/lib/definitions"
 import { verifyRecaptchaToken } from "@/lib/recaptcha"
-import { session } from "@/lib/session"
 
 export async function signIn(
   values: SignInFormValues,
@@ -28,32 +28,41 @@ export async function signIn(
     if (!parsedValues.success) return { error: t("common.be.invalidData") }
 
     const { username, password } = parsedValues.data
-    const [verify, usersCollection] = await Promise.all([
+    const [verify] = await Promise.all([
       verifyRecaptchaToken(recaptchaToken),
       getUsersCollection(),
     ])
-    const existingUser = await usersCollection.findOne({ username })
 
     if (!verify) return { error: t("auth.be.recaptchaFailed") }
-    if (!existingUser) return { error: t("auth.be.signInError") }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      existingUser.password
-    )
+    // await auth.api.signUpEmail({
+    //   body: {
+    //     email: "email2@domain.com",
+    //     name: "Test User",
+    //     password: "Password@1234",
+    //     username: "betterauthusername2",
+    //   },
+    // })
 
-    if (!isPasswordValid) return { error: t("auth.be.signInError") }
+    const result = await auth.api.signInUsername({
+      body: {
+        username: username,
+        password: password,
+      },
+    })
 
-    await Promise.all([
-      session.user.create(existingUser._id.toString()),
-      setUserLocale(existingUser.locale),
-    ])
+    console.log(result)
 
+    // await setUserLocale(result?.user.locale)
     updateTag("user")
     return { error: undefined }
   } catch (error) {
     console.error("Error signing in: ", error)
-    return { error: t("auth.be.signInFailed") }
+
+    if (error instanceof APIError && error.statusCode === 401)
+      return { error: t("auth.be.signInError") }
+
+    if (error) return { error: t("auth.be.signInFailed") }
   }
 }
 
@@ -61,7 +70,9 @@ export async function signOut() {
   const t = await getTranslations()
 
   try {
-    await session.user.delete()
+    await auth.api.signOut({
+      headers: await headers(),
+    })
 
     return { success: t("auth.be.signOutSuccess"), error: undefined }
   } catch (error) {
@@ -101,5 +112,18 @@ export async function getUser(userId: string, t: TypedTranslationFunction) {
     return {
       error: t("auth.be.userFetchFailed"),
     }
+  }
+}
+
+export async function getCurrentSession() {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    })
+
+    return session
+  } catch (error) {
+    console.error("Error getting session: ", error)
+    return null
   }
 }

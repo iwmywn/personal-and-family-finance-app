@@ -8,6 +8,7 @@ export const env = createEnv({
     DB_URI: z.string().min(1),
     DB_NAME: z.string().min(1),
     CRON_SECRET: z.string().min(1),
+    BETTER_AUTH_SECRET: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 })
