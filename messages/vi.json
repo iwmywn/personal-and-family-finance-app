@@ -4,13 +4,10 @@
   },
   "auth": {
     "be": {
-      "recaptchaFailed": "Xác thực Captcha thất bại!",
-      "recaptchaMissing": "Thiếu token recaptcha!",
       "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",
       "signInFailed": "Đăng nhập thất bại! Vui lòng thử lại sau.",
       "signOutFailed": "Đăng xuất thất bại! Vui lòng thử lại sau.",
-      "signOutSuccess": "Bạn cần đăng nhập lại.",
-      "userFetchFailed": "Không thể tải thông tin người dùng! Vui lòng thử lại sau."
+      "signOutSuccess": "Bạn cần đăng nhập lại."
     },
     "fe": {
       "completeRecaptchaVerification": "Vui lòng hoàn thành xác thực CAPTCHA!",
@@ -20,7 +17,7 @@
       "signIn": "Đăng nhập",
       "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
       "signingOut": "Đang đăng xuất...",
-      "username": "Tên đăng nhập"
+      "username": "Tên người dùng"
     }
   },
   "budgets": {

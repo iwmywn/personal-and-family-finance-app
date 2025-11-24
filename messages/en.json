@@ -4,13 +4,10 @@
   },
   "auth": {
     "be": {
-      "recaptchaFailed": "Captcha verification failed!",
-      "recaptchaMissing": "Missing recaptcha token!",
       "signInError": "Incorrect username or password!",
       "signInFailed": "Sign in failed! Please try again later.",
       "signOutFailed": "Sign out failed! Please try again later.",
-      "signOutSuccess": "You need to sign in again.",
-      "userFetchFailed": "Failed to load user information! Please try again later."
+      "signOutSuccess": "You need to sign in again."
     },
     "fe": {
       "completeRecaptchaVerification": "Please complete CAPTCHA verification!",
