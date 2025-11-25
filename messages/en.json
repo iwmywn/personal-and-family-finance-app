@@ -235,8 +235,7 @@
     "categoriesDataError": "CANNOT FETCH CATEGORIES DATA",
     "goalsDataError": "CANNOT FETCH GOALS DATA",
     "recurringTransactionsDataError": "CANNOT FETCH RECURRING TRANSACTIONS DATA",
-    "transactionsDataError": "CANNOT FETCH TRANSACTIONS DATA",
-    "userDataError": "CANNOT FETCH USER DATA"
+    "transactionsDataError": "CANNOT FETCH TRANSACTIONS DATA"
   },
   "days": {
     "friday": "Friday",

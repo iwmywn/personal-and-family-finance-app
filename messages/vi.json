@@ -235,8 +235,7 @@
     "categoriesDataError": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
     "goalsDataError": "KHÔNG THỂ LẤY DỮ LIỆU MỤC TIÊU",
     "recurringTransactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH ĐỊNH KỲ",
-    "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
-    "userDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG"
+    "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH"
   },
   "days": {
     "friday": "Thứ Sáu",
