@@ -18,9 +18,6 @@ const nextConfig = {
   },
   cacheComponents: true,
   reactCompiler: true,
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 }
 
 export default withNextIntl(nextConfig)

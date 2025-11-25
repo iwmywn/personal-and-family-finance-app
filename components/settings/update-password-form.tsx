@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { updatePassword } from "@/actions/account.actions"
 import {
   Form,
   FormControl,
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/form"
 import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
+import { client } from "@/lib/auth-client"
 
 export function UpdatePasswordForm() {
   const t = useTranslations()
@@ -31,16 +31,24 @@ export function UpdatePasswordForm() {
   })
 
   async function onSubmit(values: PasswordFormValues) {
-    const { success, error } = await updatePassword(values)
-
-    if (error || !success) {
-      toast.error(error)
-    } else {
-      toast.success(success)
-      form.setValue("currentPassword", "")
-      form.setValue("newPassword", "")
-      form.setValue("confirmPassword", "")
-    }
+    await client.changePassword({
+      newPassword: values.newPassword,
+      currentPassword: values.currentPassword,
+      revokeOtherSessions: true,
+      fetchOptions: {
+        onError: (ctx) => {
+          if (ctx.error.status === 400)
+            toast.error(t("settings.be.passwordIncorrect"))
+          else toast.error(t("settings.be.passwordUpdateFailed"))
+        },
+        onSuccess: () => {
+          toast.success(t("settings.be.passwordUpdated"))
+          form.setValue("currentPassword", "")
+          form.setValue("newPassword", "")
+          form.setValue("confirmPassword", "")
+        },
+      },
+    })
   }
 
   return (

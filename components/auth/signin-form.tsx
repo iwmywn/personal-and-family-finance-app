@@ -51,7 +51,6 @@ export function SignInForm() {
               "x-captcha-response": token,
             },
             onError: (ctx) => {
-              console.log(ctx)
               if (ctx.error.status === 401)
                 toast.error(t("auth.be.signInError"))
               else toast.error(t("auth.be.signInFailed"))
