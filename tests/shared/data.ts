@@ -17,9 +17,14 @@ import { normalizeToUTCDate } from "@/lib/utils"
 
 export const mockUser: DBUser = {
   _id: new ObjectId("68f712e4cda4897217a05a1c"),
-  fullName: "Test User",
+  name: "Test User",
+  email: "testuser@gmail.com",
+  emailVerified: false,
+  image: undefined,
+  createdAt: new Date("2025-09-19T11:27:41.038Z"),
+  updatedAt: new Date("2025-09-19T12:50:48.129Z"),
   username: "testuser",
-  password: "$2a$10$uqIvouPdI5gzN95l3ct/zeOHzSICyxyRJJ7lCIqLbvUtKcqs4gRPe", //TestPassword123!
+  displayUsername: "testuser",
   locale: "en",
 }
 
@@ -74,17 +79,6 @@ export const mockRecurringTransaction: DBRecurringTransaction = {
   endDate: normalizeToUTCDate(new Date("2024-12-31")),
   lastGenerated: undefined,
   isActive: true,
-}
-
-export const mockValidSignInValues = {
-  username: "testuser",
-  password: "TestPassword123!",
-}
-
-export const mockValidPasswordValues = {
-  currentPassword: "TestPassword123!",
-  newPassword: "NewPassword456!",
-  confirmPassword: "NewPassword456!",
 }
 
 export const mockValidTransactionValues = {

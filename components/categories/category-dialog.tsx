@@ -36,8 +36,8 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group"
-import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { FormButton } from "@/components/custom/form-button"
 import type { Category } from "@/lib/definitions"
 
 interface CategoryDialogProps {
@@ -51,7 +51,6 @@ export function CategoryDialog({
   open,
   setOpen,
 }: CategoryDialogProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
     category?.type || "income"
   )
@@ -67,8 +66,6 @@ export function CategoryDialog({
   })
 
   async function onSubmit(values: CategoryFormValues) {
-    setIsLoading(true)
-
     if (category) {
       const { success, error } = await updateCustomCategory(
         category._id,
@@ -97,8 +94,6 @@ export function CategoryDialog({
         setOpen(false)
       }
     }
-
-    setIsLoading(false)
   }
 
   const handleTypeChange = (type: string) => {
@@ -184,10 +179,10 @@ export function CategoryDialog({
               <DialogClose asChild>
                 <Button variant="outline">{t("common.fe.cancel")}</Button>
               </DialogClose>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading && <Spinner />}{" "}
-                {category ? t("common.fe.update") : t("common.fe.add")}
-              </Button>
+              <FormButton
+                isSubmitting={form.formState.isSubmitting}
+                text={category ? t("common.fe.update") : t("common.fe.add")}
+              />
             </DialogFooter>
           </form>
         </Form>

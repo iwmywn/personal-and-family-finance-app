@@ -5,11 +5,11 @@ import { GhostIcon } from "lucide-react"
 import type { Messages } from "next-intl"
 import { getTranslations } from "next-intl/server"
 
-import { getUser } from "@/actions/auth.actions"
 import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
 import { getGoals } from "@/actions/goal.actions"
 import { getRecurringTransactions } from "@/actions/recurring.actions"
+import { getCurrentSession } from "@/actions/session.actions"
 import { getTransactions } from "@/actions/transaction.actions"
 import {
   Empty,
@@ -23,7 +23,6 @@ import { Spinner } from "@/components/ui/spinner"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
 import { AppDataProvider } from "@/context/app-data-context"
-import { session } from "@/lib/session"
 
 export default async function DashboardLayout({
   children,
@@ -64,23 +63,22 @@ async function DashboardProvider({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { userId } = await session.user.get()
+  const session = await getCurrentSession()
 
-  if (!userId) {
+  if (!session) {
     redirect("/signin")
   }
 
   const t = await getTranslations()
+  const userId = session.user.id
 
   const [
-    userResult,
     transactionsResult,
     categoriesResult,
     budgetsResult,
     goalsResult,
     recurringResult,
   ] = await Promise.all([
-    getUser(userId, t),
     getTransactions(userId, t),
     getCustomCategories(userId, t),
     getBudgets(userId, t),
@@ -103,14 +101,12 @@ async function DashboardProvider({
     </Empty>
   )
 
-  const user = userResult.user
   const transactions = transactionsResult.transactions
   const customCategories = categoriesResult.customCategories
   const budgets = budgetsResult.budgets
   const goals = goalsResult.goals
   const recurringTransactions = recurringResult.recurringTransactions
 
-  if (!user) return renderEmptyState("userDataError", userResult.error)
   if (!transactions)
     return renderEmptyState("transactionsDataError", transactionsResult.error)
   if (!customCategories)
@@ -125,7 +121,7 @@ async function DashboardProvider({
 
   return (
     <AppDataProvider
-      user={user}
+      user={session.user}
       transactions={transactions}
       customCategories={customCategories}
       budgets={budgets}

@@ -42,7 +42,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Spinner } from "@/components/ui/spinner"
+import { FormButton } from "@/components/custom/form-button"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
@@ -57,7 +57,6 @@ interface GoalDialogProps {
 }
 
 export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
@@ -89,8 +88,6 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   })
 
   async function onSubmit(values: GoalFormValues) {
-    setIsLoading(true)
-
     if (goal) {
       const { success, error } = await updateGoal(goal._id, {
         ...values,
@@ -125,8 +122,6 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
         setOpen(false)
       }
     }
-
-    setIsLoading(false)
   }
 
   return (
@@ -353,10 +348,10 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               <DialogClose asChild>
                 <Button variant="outline">{t("common.fe.cancel")}</Button>
               </DialogClose>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading && <Spinner />}{" "}
-                {goal ? t("common.fe.update") : t("common.fe.add")}
-              </Button>
+              <FormButton
+                isSubmitting={form.formState.isSubmitting}
+                text={goal ? t("common.fe.update") : t("common.fe.add")}
+              />
             </DialogFooter>
           </form>
         </Form>

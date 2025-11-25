@@ -1,15 +1,10 @@
-import type { ObjectId } from "mongodb"
+import { type ObjectId } from "mongodb"
 
-import type { AppLocale } from "@/i18n/config"
+import type { auth } from "@/lib/auth"
 import { type CategoryKeyType, type TransactionType } from "@/lib/categories"
 
-type BaseUser<T> = {
-  _id: T
-  fullName: string
-  username: string
-  password: string
-  locale: AppLocale
-}
+export type User = typeof auth.$Infer.Session.user
+export type DBUser = { _id: ObjectId } & Omit<User, "id">
 
 type BaseTransaction<T> = {
   _id: T
@@ -70,9 +65,6 @@ type BaseRecurringTransaction<T> = {
   lastGenerated?: Date
   isActive: boolean
 }
-
-export type User = BaseUser<string>
-export type DBUser = BaseUser<ObjectId>
 
 export type Transaction = BaseTransaction<string>
 export type DBTransaction = BaseTransaction<ObjectId>

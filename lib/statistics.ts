@@ -155,7 +155,7 @@ interface StatBaseConfig<TBase, Transaction> {
   pickColor: (percentage: number, hasItems: boolean) => string
 }
 
-export function calculateStatsBase<TBase extends Budget | Goal>(
+function calculateStatsBase<TBase extends Budget | Goal>(
   base: TBase,
   transactions: Transaction[],
   config: StatBaseConfig<TBase, Transaction>

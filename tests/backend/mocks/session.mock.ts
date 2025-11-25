@@ -1,32 +1,29 @@
 import { mockUser } from "@/tests/shared/data"
 
-const mockSession = {
-  user: {
-    get: vi.fn(),
-    create: vi.fn(),
-    update: vi.fn(),
-    delete: vi.fn(),
-  },
-}
+const mockGetCurrentSession = vi.fn()
 
-vi.mock("@/lib/session", () => ({ session: mockSession }))
+vi.mock("@/actions/session.actions", () => ({
+  getCurrentSession: mockGetCurrentSession,
+}))
 
-export const mockAuthenticatedUser = (
-  userId: string = mockUser._id.toString()
-) => {
-  mockSession.user.get.mockResolvedValue({ userId })
+export const mockAuthenticatedUser = () => {
+  mockGetCurrentSession.mockResolvedValue({
+    user: {
+      name: mockUser.name,
+      email: mockUser.email,
+      emailVerified: mockUser.emailVerified,
+      image: mockUser.image,
+      createdAt: mockUser.createdAt,
+      updatedAt: mockUser.updatedAt,
+      username: mockUser.username,
+      displayUsername: mockUser.displayUsername,
+      locale: mockUser.locale,
+      id: mockUser._id.toString(),
+    },
+    session: {},
+  })
 }
 
 export const mockUnauthenticatedUser = () => {
-  mockSession.user.get.mockResolvedValue({ userId: null })
-}
-
-export const mockSignOutSuccess = () => {
-  mockSession.user.delete.mockResolvedValue(undefined)
-}
-
-export const mockSignOutFailure = (
-  error: Error = new Error("Session error")
-) => {
-  mockSession.user.delete.mockRejectedValue(error)
+  mockGetCurrentSession.mockResolvedValue(null)
 }

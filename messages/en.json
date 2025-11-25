@@ -4,13 +4,10 @@
   },
   "auth": {
     "be": {
-      "recaptchaFailed": "Captcha verification failed!",
-      "recaptchaMissing": "Missing recaptcha token!",
       "signInError": "Incorrect username or password!",
       "signInFailed": "Sign in failed! Please try again later.",
       "signOutFailed": "Sign out failed! Please try again later.",
-      "signOutSuccess": "You need to sign in again.",
-      "userFetchFailed": "Failed to load user information! Please try again later."
+      "signOutSuccess": "You need to sign in again."
     },
     "fe": {
       "completeRecaptchaVerification": "Please complete CAPTCHA verification!",
@@ -238,8 +235,7 @@
     "categoriesDataError": "CANNOT FETCH CATEGORIES DATA",
     "goalsDataError": "CANNOT FETCH GOALS DATA",
     "recurringTransactionsDataError": "CANNOT FETCH RECURRING TRANSACTIONS DATA",
-    "transactionsDataError": "CANNOT FETCH TRANSACTIONS DATA",
-    "userDataError": "CANNOT FETCH USER DATA"
+    "transactionsDataError": "CANNOT FETCH TRANSACTIONS DATA"
   },
   "days": {
     "friday": "Friday",
@@ -435,8 +431,6 @@
   "settings": {
     "be": {
       "languageUpdateFailed": "Failed to update language! Please try again later.",
-      "languageUpdated": "Language has been updated.",
-      "noChanges": "No changes were made.",
       "passwordIncorrect": "Current password is incorrect!",
       "passwordUpdateFailed": "Failed to update password! Please try again later.",
       "passwordUpdated": "Your password has been changed."
@@ -455,6 +449,7 @@
       "languageDescription": "Choose the language for the application.",
       "light": "Light",
       "newPassword": "New Password",
+      "revokeOtherSessions": "Sign out from all other devices.",
       "system": "System",
       "toggleTheme": "Toggle theme"
     }

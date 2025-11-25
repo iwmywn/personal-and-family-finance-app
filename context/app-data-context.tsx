@@ -12,7 +12,7 @@ import type {
 } from "@/lib/definitions"
 
 type AppDataContextValue = {
-  user: Omit<User, "password">
+  user: User
   transactions: Transaction[]
   customCategories: Category[]
   budgets: Budget[]
@@ -32,7 +32,7 @@ export function AppDataProvider({
   recurringTransactions,
 }: {
   children: React.ReactNode
-  user: Omit<User, "password">
+  user: User
   transactions: Transaction[]
   customCategories: Category[]
   budgets: Budget[]

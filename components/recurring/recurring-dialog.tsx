@@ -55,8 +55,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { FormButton } from "@/components/custom/form-button"
 import { FormLink } from "@/components/custom/form-link"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
@@ -76,7 +76,6 @@ export function RecurringDialog({
   open,
   setOpen,
 }: RecurringDialogProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const [transactionType, setTransactionType] = useState<"income" | "expense">(
@@ -132,8 +131,6 @@ export function RecurringDialog({
   }
 
   async function onSubmit(values: RecurringTransactionFormValues) {
-    setIsLoading(true)
-
     if (recurring) {
       const { success, error } = await updateRecurringTransaction(
         recurring._id,
@@ -179,8 +176,6 @@ export function RecurringDialog({
         setOpen(false)
       }
     }
-
-    setIsLoading(false)
   }
 
   const renderCategorySelect = (type: "income" | "expense") => (
@@ -557,10 +552,11 @@ export function RecurringDialog({
               <DialogClose asChild>
                 <Button variant="outline">{t("common.fe.cancel")}</Button>
               </DialogClose>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading && <Spinner />}{" "}
-                {recurring ? t("common.fe.update") : t("common.fe.add")}
-              </Button>
+
+              <FormButton
+                isSubmitting={form.formState.isSubmitting}
+                text={recurring ? t("common.fe.update") : t("common.fe.add")}
+              />
             </DialogFooter>
           </form>
         </Form>

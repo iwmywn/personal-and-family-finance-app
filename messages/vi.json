@@ -4,13 +4,10 @@
   },
   "auth": {
     "be": {
-      "recaptchaFailed": "Xác thực Captcha thất bại!",
-      "recaptchaMissing": "Thiếu token recaptcha!",
       "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",
       "signInFailed": "Đăng nhập thất bại! Vui lòng thử lại sau.",
       "signOutFailed": "Đăng xuất thất bại! Vui lòng thử lại sau.",
-      "signOutSuccess": "Bạn cần đăng nhập lại.",
-      "userFetchFailed": "Không thể tải thông tin người dùng! Vui lòng thử lại sau."
+      "signOutSuccess": "Bạn cần đăng nhập lại."
     },
     "fe": {
       "completeRecaptchaVerification": "Vui lòng hoàn thành xác thực CAPTCHA!",
@@ -20,7 +17,7 @@
       "signIn": "Đăng nhập",
       "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
       "signingOut": "Đang đăng xuất...",
-      "username": "Tên đăng nhập"
+      "username": "Tên người dùng"
     }
   },
   "budgets": {
@@ -238,8 +235,7 @@
     "categoriesDataError": "KHÔNG THỂ LẤY DỮ LIỆU DANH MỤC",
     "goalsDataError": "KHÔNG THỂ LẤY DỮ LIỆU MỤC TIÊU",
     "recurringTransactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH ĐỊNH KỲ",
-    "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH",
-    "userDataError": "KHÔNG THỂ LẤY DỮ LIỆU NGƯỜI DÙNG"
+    "transactionsDataError": "KHÔNG THỂ LẤY DỮ LIỆU GIAO DỊCH"
   },
   "days": {
     "friday": "Thứ Sáu",
@@ -435,8 +431,6 @@
   "settings": {
     "be": {
       "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau.",
-      "languageUpdated": "Ngôn ngữ đã được cập nhật.",
-      "noChanges": "Không có thay đổi nào được thực hiện.",
       "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
       "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
       "passwordUpdated": "Mật khẩu của bạn đã được thay đổi."
@@ -455,6 +449,7 @@
       "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
       "light": "Sáng",
       "newPassword": "Mật khẩu mới",
+      "revokeOtherSessions": "Đăng xuất khỏi tất cả các thiết bị khác.",
       "system": "Hệ thống",
       "toggleTheme": "Chuyển đổi chủ đề"
     }

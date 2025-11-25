@@ -2,22 +2,15 @@
 
 import { cache } from "react"
 import { cookies } from "next/headers"
-import { ObjectId } from "mongodb"
 
+import { getCurrentSession } from "@/actions/session.actions"
 import { DEFAULT_LOCALE, type AppLocale } from "@/i18n/config"
-import { getUsersCollection } from "@/lib/collections"
-import { session } from "@/lib/session"
 
 const COOKIE_NAME = "locale"
 
 export const getUserLocale = cache(async (): Promise<AppLocale> => {
-  const [usersCollection, { userId }] = await Promise.all([
-    getUsersCollection(),
-    session.user.get(),
-  ])
-
-  const result = await usersCollection.findOne({ _id: new ObjectId(userId) })
-  if (result?.locale) return result.locale
+  const session = await getCurrentSession()
+  if (session?.user.locale) return session.user.locale as AppLocale
 
   const cookieLocale = (await cookies()).get(COOKIE_NAME)?.value
   if (cookieLocale) return cookieLocale as AppLocale
@@ -28,9 +21,10 @@ export const getUserLocale = cache(async (): Promise<AppLocale> => {
 const fourHundredDays = 400 * 24 * 60 * 60
 
 export async function setUserLocale(locale: AppLocale) {
-  const cookieStore = await cookies()
+  const store = await cookies()
+  if (store.get(COOKIE_NAME)?.value === locale) return
 
-  cookieStore.set(COOKIE_NAME, locale, {
+  store.set(COOKIE_NAME, locale, {
     sameSite: "lax",
     path: "/",
     maxAge: fourHundredDays,

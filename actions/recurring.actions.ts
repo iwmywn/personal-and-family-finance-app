@@ -15,7 +15,8 @@ import {
   type DBRecurringTransaction,
   type RecurringTransaction,
 } from "@/lib/definitions"
-import { session } from "@/lib/session"
+
+import { getCurrentSession } from "./session.actions"
 
 export async function createRecurringTransaction(
   values: RecurringTransactionFormValues
@@ -23,13 +24,15 @@ export async function createRecurringTransaction(
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
     }
+
+    const userId = session.user.id
 
     const recurringSchema = createRecurringTransactionSchema(t)
     const parsedValues = recurringSchema.safeParse(values)
@@ -92,9 +95,9 @@ export async function updateRecurringTransaction(
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }
@@ -157,9 +160,9 @@ export async function deleteRecurringTransaction(recurringId: string) {
   const t = await getTranslations()
 
   try {
-    const { userId } = await session.user.get()
+    const session = await getCurrentSession()
 
-    if (!userId) {
+    if (!session) {
       return {
         error: t("common.be.accessDenied"),
       }

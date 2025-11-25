@@ -52,8 +52,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Spinner } from "@/components/ui/spinner"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { FormButton } from "@/components/custom/form-button"
 import { FormLink } from "@/components/custom/form-link"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
@@ -73,7 +73,6 @@ export function TransactionDialog({
   open,
   setOpen,
 }: TransactionDialogProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [transactionType, setTransactionType] = useState<"income" | "expense">(
     transaction?.type || "income"
   )
@@ -102,8 +101,6 @@ export function TransactionDialog({
   })
 
   async function onSubmit(values: TransactionFormValues) {
-    setIsLoading(true)
-
     if (transaction) {
       const { success, error } = await updateTransaction(transaction._id, {
         ...values,
@@ -137,8 +134,6 @@ export function TransactionDialog({
         setOpen(false)
       }
     }
-
-    setIsLoading(false)
   }
 
   const handleTypeChange = (type: string) => {
@@ -351,10 +346,10 @@ export function TransactionDialog({
               <DialogClose asChild>
                 <Button variant="outline">{t("common.fe.cancel")}</Button>
               </DialogClose>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading && <Spinner />}{" "}
-                {transaction ? t("common.fe.update") : t("common.fe.add")}
-              </Button>
+              <FormButton
+                isSubmitting={form.formState.isSubmitting}
+                text={transaction ? t("common.fe.update") : t("common.fe.add")}
+              />
             </DialogFooter>
           </form>
         </Form>

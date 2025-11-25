@@ -4,73 +4,47 @@ import type { TypedTranslationFunction } from "@/i18n/types"
 import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
 import { normalizeToUTCDate } from "@/lib/utils"
 
-export const createSignInSchema = (t: TypedTranslationFunction) => {
-  const basePasswordSchema = z
+const basePasswordSchema = (
+  t: TypedTranslationFunction,
+  message: Parameters<TypedTranslationFunction>[0]
+) =>
+  z
     .string()
     .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
-      message: t("schemas.signIn.passwordRequired"),
+      message: t(message),
     })
 
+export const createSignInSchema = (t: TypedTranslationFunction) => {
   return z.object({
     username: z
       .string()
       .min(1, { message: t("schemas.signIn.usernameRequired") }),
-    password: basePasswordSchema,
+    password: basePasswordSchema(t, "schemas.signIn.passwordRequired"),
   })
 }
 
 export const createPasswordSchema = (t: TypedTranslationFunction) => {
-  const basePasswordSchema = z
-    .string()
-    .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
-      message: t("schemas.password.newPasswordRequired"),
-    })
-
   return z
     .object({
-      currentPassword: z.string().optional(),
-      newPassword: z.string().optional(),
-      confirmPassword: z.string().optional(),
+      currentPassword: z
+        .string()
+        .min(1, { message: t("schemas.password.currentPasswordRequired") }),
+      newPassword: basePasswordSchema(
+        t,
+        "schemas.password.newPasswordRequired"
+      ),
+      confirmPassword: z
+        .string()
+        .min(1, { message: t("schemas.password.confirmPasswordRequired") }),
+      revokeOtherSessions: z.boolean(),
     })
     .superRefine((data, ctx) => {
-      const { currentPassword, newPassword, confirmPassword } = data
-
-      const isChangingPassword =
-        currentPassword || newPassword || confirmPassword
-
-      if (isChangingPassword) {
-        if (!currentPassword) {
-          ctx.addIssue({
-            path: ["currentPassword"],
-            message: t("schemas.password.currentPasswordRequired"),
-            code: "custom",
-          })
-        }
-
-        if (
-          !newPassword ||
-          !basePasswordSchema.safeParse(newPassword).success
-        ) {
-          ctx.addIssue({
-            path: ["newPassword"],
-            message: t("schemas.password.newPasswordRequired"),
-            code: "custom",
-          })
-        }
-
-        if (!confirmPassword) {
-          ctx.addIssue({
-            path: ["confirmPassword"],
-            message: t("schemas.password.confirmPasswordRequired"),
-            code: "custom",
-          })
-        } else if (newPassword !== confirmPassword) {
-          ctx.addIssue({
-            path: ["confirmPassword"],
-            message: t("schemas.password.passwordsNotMatch"),
-            code: "custom",
-          })
-        }
+      if (data.newPassword !== data.confirmPassword) {
+        ctx.addIssue({
+          path: ["confirmPassword"],
+          message: t("schemas.password.passwordsNotMatch"),
+          code: "custom",
+        })
       }
     })
 }
