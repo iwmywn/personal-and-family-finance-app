@@ -432,8 +432,6 @@
   "settings": {
     "be": {
       "languageUpdateFailed": "Failed to update language! Please try again later.",
-      "languageUpdated": "Language has been updated.",
-      "noChanges": "No changes were made.",
       "passwordIncorrect": "Current password is incorrect!",
       "passwordUpdateFailed": "Failed to update password! Please try again later.",
       "passwordUpdated": "Your password has been changed."

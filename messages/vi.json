@@ -432,8 +432,6 @@
   "settings": {
     "be": {
       "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau.",
-      "languageUpdated": "Ngôn ngữ đã được cập nhật.",
-      "noChanges": "Không có thay đổi nào được thực hiện.",
       "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
       "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
       "passwordUpdated": "Mật khẩu của bạn đã được thay đổi."

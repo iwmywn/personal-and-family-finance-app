@@ -20,12 +20,14 @@ import { Input } from "@/components/ui/input"
 import { ReCaptchaDialog } from "@/components/auth/recaptcha-dialog"
 import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
+import type { AppLocale } from "@/i18n/config"
+import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
 
 export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const t = useTranslations()
   const schema = createSignInSchema(t)
   const form = useForm<SignInFormValues>({
@@ -39,9 +41,9 @@ export function SignInForm() {
 
   const processSignIn = useCallback(
     async (values: SignInFormValues, token: string) => {
-      if (isLoading) return
+      if (isSubmitting) return
 
-      setIsLoading(true)
+      setIsSubmitting(true)
       try {
         await client.signIn.username({
           username: values.username,
@@ -55,7 +57,7 @@ export function SignInForm() {
                 toast.error(t("auth.be.signInError"))
               else toast.error(t("auth.be.signInFailed"))
             },
-            onSuccess: () => {
+            onSuccess: async () => {
               const searchParams = new URLSearchParams(window.location.search)
               let callbackUrl = searchParams.get("next")
 
@@ -65,19 +67,27 @@ export function SignInForm() {
 
               form.reset()
               router.push(callbackUrl || "/home")
+
+              await client.getSession({
+                fetchOptions: {
+                  onSuccess: async (ctx) => {
+                    await setUserLocale(ctx.data.user.locale as AppLocale)
+                  },
+                },
+              })
             },
           },
         })
       } finally {
-        setIsLoading(false)
+        setIsSubmitting(false)
         setRecaptchaToken(null)
       }
     },
-    [isLoading, form, router]
+    [isSubmitting, form, router]
   )
 
   function onSubmit(values: SignInFormValues) {
-    if (isLoading) return
+    if (isSubmitting) return
 
     if (!recaptchaToken) {
       setIsReCaptchaOpen(true)
@@ -88,10 +98,10 @@ export function SignInForm() {
   }
 
   useEffect(() => {
-    if (recaptchaToken && !isLoading) {
+    if (recaptchaToken && !isSubmitting) {
       void processSignIn(form.getValues(), recaptchaToken)
     }
-  }, [recaptchaToken, isLoading, form, processSignIn])
+  }, [recaptchaToken, isSubmitting, form, processSignIn])
 
   return (
     <>
@@ -141,7 +151,7 @@ export function SignInForm() {
           />
 
           <FormButton
-            isSubmitting={isLoading || form.formState.isSubmitting}
+            isSubmitting={isSubmitting}
             text={t("auth.fe.signIn")}
             className="w-full"
           />

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select"
 import { useAppData } from "@/context/app-data-context"
 import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
+import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
 
 export function LanguageSelector() {
@@ -31,7 +32,8 @@ export function LanguageSelector() {
           toast.error(t("settings.be.languageUpdateFailed"))
         },
         onSuccess: () => {
-          router.refresh()
+          setUserLocale(locale)
+          setTimeout(() => router.refresh(), 1000)
         },
       },
     })
