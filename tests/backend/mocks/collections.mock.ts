@@ -7,16 +7,7 @@ import type {
   DBGoal,
   DBRecurringTransaction,
   DBTransaction,
-  DBUser,
 } from "@/lib/definitions"
-
-const mockUserCollection = {
-  findOne: vi.fn(),
-  find: vi.fn(),
-  updateOne: vi.fn(),
-  insertOne: vi.fn(),
-  deleteOne: vi.fn(),
-}
 
 const mockTransactionCollection = {
   findOne: vi.fn(),
@@ -59,13 +50,6 @@ const mockRecurringTransactionCollection = {
   deleteOne: vi.fn(),
 }
 
-export const setupUserCollectionMock = () => {
-  vi.spyOn(collectionsLib, "getUsersCollection").mockResolvedValue(
-    mockUserCollection as unknown as Collection<OptionalId<DBUser>>
-  )
-  return mockUserCollection
-}
-
 export const setupTransactionCollectionMock = () => {
   vi.spyOn(collectionsLib, "getTransactionsCollection").mockResolvedValue(
     mockTransactionCollection as unknown as Collection<
@@ -106,12 +90,6 @@ export const setupRecurringTransactionCollectionMock = () => {
     >
   )
   return mockRecurringTransactionCollection
-}
-
-export const mockUserCollectionError = (
-  error: Error = new Error("Database error")
-) => {
-  vi.spyOn(collectionsLib, "getUsersCollection").mockRejectedValue(error)
 }
 
 export const mockTransactionCollectionError = (

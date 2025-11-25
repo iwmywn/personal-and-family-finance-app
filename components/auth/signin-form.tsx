@@ -83,7 +83,7 @@ export function SignInForm() {
         setRecaptchaToken(null)
       }
     },
-    [isSubmitting, form, router]
+    [isSubmitting, t, form, router]
   )
 
   function onSubmit(values: SignInFormValues) {
