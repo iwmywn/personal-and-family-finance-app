@@ -1,11 +1,24 @@
 "use client"
 
+import { useState } from "react"
 import { createPasswordSchema, type PasswordFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import {
   Form,
   FormControl,
@@ -18,7 +31,7 @@ import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
 import { client } from "@/lib/auth-client"
 
-export function UpdatePasswordForm() {
+export function UpdatePasswordDialog() {
   const t = useTranslations()
   const schema = createPasswordSchema(t)
   const form = useForm<PasswordFormValues>({
@@ -27,14 +40,16 @@ export function UpdatePasswordForm() {
       currentPassword: "",
       newPassword: "",
       confirmPassword: "",
+      revokeOtherSessions: false,
     },
   })
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   async function onSubmit(values: PasswordFormValues) {
     await client.changePassword({
       newPassword: values.newPassword,
       currentPassword: values.currentPassword,
-      revokeOtherSessions: true,
+      revokeOtherSessions: values.revokeOtherSessions,
       fetchOptions: {
         onError: (ctx) => {
           if (ctx.error.status === 400)
@@ -43,40 +58,49 @@ export function UpdatePasswordForm() {
         },
         onSuccess: () => {
           toast.success(t("settings.be.passwordUpdated"))
-          form.setValue("currentPassword", "")
-          form.setValue("newPassword", "")
-          form.setValue("confirmPassword", "")
+          form.reset()
+          setIsOpen(false)
         },
       },
     })
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="currentPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="currentPassword">
-                {t("settings.fe.currentPassword")}
-              </FormLabel>
-              <FormControl>
-                <PasswordInput
-                  id="currentPassword"
-                  placeholder="********"
-                  autoComplete="off"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button>{t("settings.fe.changePassword")}</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t("settings.fe.changePassword")}</DialogTitle>
+          <DialogDescription>
+            {t("settings.fe.changePasswordDescription")}
+          </DialogDescription>
+        </DialogHeader>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="currentPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="currentPassword">
+                    {t("settings.fe.currentPassword")}
+                  </FormLabel>
+                  <FormControl>
+                    <PasswordInput
+                      id="currentPassword"
+                      placeholder="********"
+                      autoComplete="off"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="newPassword"
@@ -97,9 +121,7 @@ export function UpdatePasswordForm() {
                 </FormItem>
               )}
             />
-          </div>
 
-          <div className="space-y-2">
             <FormField
               control={form.control}
               name="confirmPassword"
@@ -120,16 +142,35 @@ export function UpdatePasswordForm() {
                 </FormItem>
               )}
             />
-          </div>
-        </div>
 
-        <div className="flex flex-row-reverse">
-          <FormButton
-            isSubmitting={form.formState.isSubmitting}
-            text={t("common.fe.save")}
-          />
-        </div>
-      </form>
-    </Form>
+            <FormField
+              control={form.control}
+              name="revokeOtherSessions"
+              render={({ field }) => (
+                <FormItem className="flex">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel>{t("settings.fe.revokeOtherSessions")}</FormLabel>
+                </FormItem>
+              )}
+            />
+
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">{t("common.fe.cancel")}</Button>
+              </DialogClose>
+              <FormButton
+                isSubmitting={form.formState.isSubmitting}
+                text={t("common.fe.save")}
+              />
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }

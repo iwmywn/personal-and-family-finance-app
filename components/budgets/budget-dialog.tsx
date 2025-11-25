@@ -42,7 +42,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Spinner } from "@/components/ui/spinner"
+import { FormButton } from "@/components/custom/form-button"
 import { useAppData } from "@/context/app-data-context"
 import { useCategoryI18n } from "@/hooks/use-category-i18n"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
@@ -57,7 +57,6 @@ interface BudgetDialogProps {
 }
 
 export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
@@ -88,8 +87,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   })
 
   async function onSubmit(values: BudgetFormValues) {
-    setIsLoading(true)
-
     if (budget) {
       const { success, error } = await updateBudget(budget._id, {
         ...values,
@@ -123,8 +120,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         setOpen(false)
       }
     }
-
-    setIsLoading(false)
   }
 
   return (
@@ -334,10 +329,10 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               <DialogClose asChild>
                 <Button variant="outline">{t("common.fe.cancel")}</Button>
               </DialogClose>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading && <Spinner />}{" "}
-                {budget ? t("common.fe.update") : t("common.fe.add")}
-              </Button>
+              <FormButton
+                isSubmitting={form.formState.isSubmitting}
+                text={budget ? t("common.fe.update") : t("common.fe.add")}
+              />
             </DialogFooter>
           </form>
         </Form>

@@ -36,6 +36,7 @@ export const createPasswordSchema = (t: TypedTranslationFunction) => {
       confirmPassword: z
         .string()
         .min(1, { message: t("schemas.password.confirmPasswordRequired") }),
+      revokeOtherSessions: z.boolean(),
     })
     .superRefine((data, ctx) => {
       if (data.newPassword !== data.confirmPassword) {

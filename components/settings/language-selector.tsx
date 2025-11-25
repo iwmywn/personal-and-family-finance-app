@@ -1,11 +1,10 @@
 "use client"
 
-import { useTransition } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
-import { updateLocale } from "@/actions/general.actions"
 import {
   Select,
   SelectContent,
@@ -15,24 +14,28 @@ import {
 } from "@/components/ui/select"
 import { useAppData } from "@/context/app-data-context"
 import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
+import { client } from "@/lib/auth-client"
 
 export function LanguageSelector() {
   const t = useTranslations()
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const { user } = useAppData()
 
   async function handleLocaleChange(locale: AppLocale) {
-    startTransition(async () => {
-      const result = await updateLocale(locale)
-
-      if (result.error) {
-        toast.error(result.error)
-      } else {
-        toast.success(result.success)
-        router.refresh()
-      }
+    setIsLoading(true)
+    await client.updateUser({
+      locale,
+      fetchOptions: {
+        onError: () => {
+          toast.error(t("settings.be.languageUpdateFailed"))
+        },
+        onSuccess: () => {
+          router.refresh()
+        },
+      },
     })
+    setIsLoading(false)
   }
 
   return (
@@ -40,7 +43,7 @@ export function LanguageSelector() {
       <Select
         value={user.locale}
         onValueChange={handleLocaleChange}
-        disabled={isPending}
+        disabled={isLoading}
       >
         <SelectTrigger>
           <SelectValue placeholder={t("settings.fe.language")} />

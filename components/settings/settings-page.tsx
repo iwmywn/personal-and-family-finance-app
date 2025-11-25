@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl"
 import {
   Card,
   CardAction,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -13,7 +12,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { LanguageSelector } from "@/components/settings/language-selector"
 import { ThemeSelector } from "@/components/settings/theme-selector"
-import { UpdatePasswordForm } from "@/components/settings/update-password-form"
+import { UpdatePasswordDialog } from "@/components/settings/update-password-dialog"
 
 export default function SettingsPage() {
   const t = useTranslations()
@@ -58,10 +57,10 @@ export default function SettingsPage() {
             <CardDescription>
               {t("settings.fe.changePasswordDescription")}
             </CardDescription>
+            <CardAction>
+              <UpdatePasswordDialog />
+            </CardAction>
           </CardHeader>
-          <CardContent>
-            <UpdatePasswordForm />
-          </CardContent>
         </Card>
       </TabsContent>
     </Tabs>

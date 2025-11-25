@@ -1,13 +1,12 @@
 "use server"
 
-import { cacheTag } from "next/cache"
 import { headers } from "next/headers"
+import { connection } from "next/server"
 
 import { auth } from "@/lib/auth"
 
 export async function getCurrentSession() {
-  "use cache: private"
-  cacheTag("user")
+  await connection()
 
   try {
     const session = await auth.api.getSession({

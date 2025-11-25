@@ -118,6 +118,7 @@ export function SignInForm() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="password"
@@ -138,6 +139,7 @@ export function SignInForm() {
               </FormItem>
             )}
           />
+
           <FormButton
             isSubmitting={isLoading || form.formState.isSubmitting}
             text={t("auth.fe.signIn")}

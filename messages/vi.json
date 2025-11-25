@@ -452,6 +452,7 @@
       "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
       "light": "Sáng",
       "newPassword": "Mật khẩu mới",
+      "revokeOtherSessions": "Đăng xuất khỏi tất cả các thiết bị khác.",
       "system": "Hệ thống",
       "toggleTheme": "Chuyển đổi chủ đề"
     }
