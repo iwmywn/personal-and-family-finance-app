@@ -7,6 +7,9 @@ vi.mock("@/env/server", () => {
       get CRON_SECRET() {
         return "test-cron-secret"
       },
+      get BETTER_AUTH_SECRET() {
+        return "test-better-auth-secret"
+      },
       get DB_URI() {
         return process.env.DB_URI
       },
