@@ -11,29 +11,9 @@ import {
   filterGoals,
   filterRecurringTransactions,
   filterTransactions,
-  includesCaseInsensitive,
 } from "@/lib/filters"
 
 describe("Filters", () => {
-  describe("includesCaseInsensitive", () => {
-    it("should return true when query is empty", () => {
-      expect(includesCaseInsensitive("Hello World", "")).toBe(true)
-    })
-
-    it("should match case-insensitively", () => {
-      expect(includesCaseInsensitive("Restaurant", "restaurant")).toBe(true)
-      expect(includesCaseInsensitive("Restaurant", "RESTAURANT")).toBe(true)
-    })
-
-    it("should match partial substrings", () => {
-      expect(includesCaseInsensitive("Freelance Work", "lance")).toBe(true)
-    })
-
-    it("should return false when no match", () => {
-      expect(includesCaseInsensitive("Taxi", "bus")).toBe(false)
-    })
-  })
-
   describe("filterTransactions", () => {
     it("should filter by search term", () => {
       const result = filterTransactions(mockTransactions, {

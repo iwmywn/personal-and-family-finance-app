@@ -1,3 +1,5 @@
+import MiniSearch from "minisearch"
+
 import type {
   Budget,
   Category,
@@ -23,9 +25,32 @@ interface Filters {
   filterStatus?: string
 }
 
-export function includesCaseInsensitive(text: string, query: string): boolean {
-  if (!query) return true
-  return text.toLowerCase().includes(query.toLowerCase())
+function searchWithMiniSearch<T extends Record<string, unknown>>(
+  documents: T[],
+  searchTerm: string,
+  fields: string[],
+  idField: string = "_id"
+): Set<string> {
+  const normalizedSearchTerm = searchTerm.trim()
+
+  if (!normalizedSearchTerm) {
+    return new Set(documents.map((doc) => String(doc[idField])))
+  }
+
+  const miniSearch = new MiniSearch({
+    idField,
+    fields,
+    storeFields: [idField],
+    searchOptions: {
+      prefix: true,
+    },
+  })
+
+  miniSearch.addAll(documents)
+
+  const results = miniSearch.search(normalizedSearchTerm)
+
+  return new Set(results.map((result) => String(result[idField])))
 }
 
 export function filterTransactions(
@@ -42,15 +67,15 @@ export function filterTransactions(
     filterCategoryKey = "all",
   } = filters
 
-  const normalizedSearchTerm = searchTerm.trim()
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
+  const matchingIds = searchTerm
+    ? searchWithMiniSearch(transactions, searchTerm, ["description"])
+    : null
+
   return transactions.filter((transaction) => {
-    const matchesSearch = includesCaseInsensitive(
-      transaction.description,
-      normalizedSearchTerm
-    )
+    const matchesSearch = matchingIds ? matchingIds.has(transaction._id) : true
 
     const transactionDateOnly = normalizeToUTCDate(new Date(transaction.date))
 
@@ -96,15 +121,15 @@ export function filterCustomCategories(
   filters: Filters
 ): Category[] {
   const { searchTerm = "", filterType = "all" } = filters
-  const normalizedSearchTerm = searchTerm.trim()
+
+  const matchingIds = searchTerm
+    ? searchWithMiniSearch(categories, searchTerm, ["label"])
+    : null
 
   return categories.filter((category) => {
     const matchesType = filterType === "all" || category.type === filterType
 
-    const matchesSearch = includesCaseInsensitive(
-      category.label,
-      normalizedSearchTerm
-    )
+    const matchesSearch = matchingIds ? matchingIds.has(category._id) : true
 
     return matchesType && matchesSearch
   })
@@ -210,18 +235,18 @@ export function filterGoals(
     filterCategoryKey = "all",
   } = filters
 
-  const normalizedSearchTerm = searchTerm.trim()
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
+
+  const matchingIds = searchTerm
+    ? searchWithMiniSearch(goals, searchTerm, ["name"])
+    : null
 
   let filteredGoals = goals.filter((goal) => {
     const goalStartDateOnly = normalizeToUTCDate(new Date(goal.startDate))
     const goalEndDateOnly = normalizeToUTCDate(new Date(goal.endDate))
 
-    const matchesSearch = includesCaseInsensitive(
-      goal.name,
-      normalizedSearchTerm
-    )
+    const matchesSearch = matchingIds ? matchingIds.has(goal._id) : true
 
     const matchesDateRange =
       (!dateRange.from ||
@@ -299,15 +324,15 @@ export function filterRecurringTransactions(
     filterStatus = "all",
   } = filters
 
-  const normalizedSearchTerm = searchTerm.trim()
   const parsedMonth = filterMonth === "all" ? null : parseInt(filterMonth)
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
+  const matchingIds = searchTerm
+    ? searchWithMiniSearch(recurringTransactions, searchTerm, ["description"])
+    : null
+
   return recurringTransactions.filter((recurring) => {
-    const matchesSearch = includesCaseInsensitive(
-      recurring.description,
-      normalizedSearchTerm
-    )
+    const matchesSearch = matchingIds ? matchingIds.has(recurring._id) : true
 
     const startDateOnly = normalizeToUTCDate(new Date(recurring.startDate))
     const endDateOnly = recurring.endDate
