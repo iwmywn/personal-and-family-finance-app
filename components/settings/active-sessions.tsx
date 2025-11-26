@@ -140,12 +140,17 @@ export function ActiveSessions() {
                 </ItemMedia>
                 <ItemContent>
                   <ItemTitle>
-                    {os.name || session.userAgent}
-                    {browser.name && `, ${browser.name}`}
+                    <div>
+                      {os.name || session.userAgent}
+                      {browser.name && `, ${browser.name}`}
+                    </div>
                     {isCurrentSession && (
-                      <span className="text-green-500">
-                        {t("settings.fe.current")}
-                      </span>
+                      <>
+                        <div>&middot;</div>
+                        <div className="text-green-500">
+                          {t("settings.fe.current")}
+                        </div>
+                      </>
                     )}
                   </ItemTitle>
                   <ItemDescription>
