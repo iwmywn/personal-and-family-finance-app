@@ -165,7 +165,6 @@ export function TransactionFilters({
               {searchTerm && (
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
-                    className="rounded-full"
                     size="icon-xs"
                     onClick={() => setSearchTerm("")}
                   >
