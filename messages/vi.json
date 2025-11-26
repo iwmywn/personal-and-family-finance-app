@@ -433,15 +433,22 @@
       "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau.",
       "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
       "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
-      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi."
+      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi.",
+      "sessionRevokeFailed": "Chấm dứt phiên đăng nhập thất bại! Vui lòng thử lại sau.",
+      "sessionRevoked": "Phiên đăng nhập đã được chấm dứt.",
+      "sessionsRevokeAllFailed": "Chấm dứt tất cả phiên đăng nhập thất bại! Vui lòng thử lại sau.",
+      "sessionsRevokedAll": "Tất cả phiên đăng nhập đã được chấm dứt."
     },
     "fe": {
       "account": "Tài khoản",
+      "activeSessions": "Phiên đăng nhập",
+      "activeSessionsDescription": "Quản lý các phiên đăng nhập đang hoạt động trên các thiết bị khác nhau.",
       "appearance": "Giao diện",
       "appearanceDescription": "Chọn chủ đề hiển thị cho ứng dụng.",
       "changePassword": "Đổi mật khẩu",
       "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
       "confirmPassword": "Xác nhận mật khẩu",
+      "current": "Hiện tại",
       "currentPassword": "Mật khẩu hiện tại",
       "dark": "Tối",
       "general": "Chung",
@@ -451,7 +458,11 @@
       "newPassword": "Mật khẩu mới",
       "revokeOtherSessions": "Đăng xuất khỏi tất cả các thiết bị khác.",
       "system": "Hệ thống",
-      "toggleTheme": "Chuyển đổi chủ đề"
+      "terminate": "Chấm dứt",
+      "terminateAll": "Chấm dứt tất cả",
+      "toggleTheme": "Chuyển đổi chủ đề",
+      "unknownLocation": "Không xác định",
+      "viewActiveSessions": "Xem phiên đăng nhập"
     }
   },
   "statistics": {

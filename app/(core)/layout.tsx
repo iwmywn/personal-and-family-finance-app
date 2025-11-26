@@ -9,7 +9,7 @@ import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
 import { getGoals } from "@/actions/goal.actions"
 import { getRecurringTransactions } from "@/actions/recurring.actions"
-import { getCurrentSession } from "@/actions/session.actions"
+import { getCurrentSession, getSessions } from "@/actions/session.actions"
 import { getTransactions } from "@/actions/transaction.actions"
 import {
   Empty,
@@ -63,9 +63,12 @@ async function DashboardProvider({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const session = await getCurrentSession()
+  const [session, activeSessions] = await Promise.all([
+    getCurrentSession(),
+    getSessions(),
+  ])
 
-  if (!session) {
+  if (!session || !activeSessions) {
     redirect("/signin")
   }
 
@@ -127,6 +130,8 @@ async function DashboardProvider({
       budgets={budgets}
       goals={goals}
       recurringTransactions={recurringTransactions}
+      currentSession={session}
+      activeSessions={activeSessions}
     >
       {children}
     </AppDataProvider>

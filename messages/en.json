@@ -433,15 +433,22 @@
       "languageUpdateFailed": "Failed to update language! Please try again later.",
       "passwordIncorrect": "Current password is incorrect!",
       "passwordUpdateFailed": "Failed to update password! Please try again later.",
-      "passwordUpdated": "Your password has been changed."
+      "passwordUpdated": "Your password has been changed.",
+      "sessionRevokeFailed": "Failed to terminate session! Please try again later.",
+      "sessionRevoked": "Session terminated.",
+      "sessionsRevokeAllFailed": "Failed to terminate all sessions! Please try again later.",
+      "sessionsRevokedAll": "All sessions terminated."
     },
     "fe": {
       "account": "Account",
+      "activeSessions": "Sessions",
+      "activeSessionsDescription": "Manage your active sessions across different devices.",
       "appearance": "Appearance",
       "appearanceDescription": "Choose the display theme for the application.",
       "changePassword": "Change Password",
       "changePasswordDescription": "Change your password.",
       "confirmPassword": "Confirm Password",
+      "current": "Current",
       "currentPassword": "Current Password",
       "dark": "Dark",
       "general": "General",
@@ -451,7 +458,11 @@
       "newPassword": "New Password",
       "revokeOtherSessions": "Sign out from all other devices.",
       "system": "System",
-      "toggleTheme": "Toggle theme"
+      "terminate": "Terminate",
+      "terminateAll": "Terminate All",
+      "toggleTheme": "Toggle theme",
+      "unknownLocation": "Unknown",
+      "viewActiveSessions": "View Active Sessions"
     }
   },
   "statistics": {

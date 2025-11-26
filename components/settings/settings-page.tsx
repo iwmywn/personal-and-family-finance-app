@@ -10,9 +10,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ActiveSessions } from "@/components/settings/active-sessions"
+import { ChangePasswordDialog } from "@/components/settings/change-password-dialog"
 import { LanguageSelector } from "@/components/settings/language-selector"
 import { ThemeSelector } from "@/components/settings/theme-selector"
-import { UpdatePasswordDialog } from "@/components/settings/update-password-dialog"
 
 export default function SettingsPage() {
   const t = useTranslations()
@@ -58,7 +59,19 @@ export default function SettingsPage() {
               {t("settings.fe.changePasswordDescription")}
             </CardDescription>
             <CardAction>
-              <UpdatePasswordDialog />
+              <ChangePasswordDialog />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("settings.fe.activeSessions")}</CardTitle>
+            <CardDescription>
+              {t("settings.fe.activeSessionsDescription")}
+            </CardDescription>
+            <CardAction>
+              <ActiveSessions />
             </CardAction>
           </CardHeader>
         </Card>
