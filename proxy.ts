@@ -1,11 +1,10 @@
 "use server"
 
 import { type NextURL } from "next/dist/server/web/next-url"
-import { headers } from "next/headers"
 import { NextResponse, type NextRequest } from "next/server"
 import * as routes from "@/routes"
 
-import { auth } from "@/lib/auth"
+import { getCurrentSession } from "@/actions/session.actions"
 
 function redirectIfProtectedRoute(nextUrl: NextURL) {
   const { pathname, search } = nextUrl
@@ -34,9 +33,7 @@ export default async function proxy(req: NextRequest) {
   const { nextUrl } = req
   const { pathname } = nextUrl
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
+  const session = await getCurrentSession()
 
   if (!session) {
     return redirectIfProtectedRoute(nextUrl)
