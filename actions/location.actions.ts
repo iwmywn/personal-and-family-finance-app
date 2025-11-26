@@ -1,6 +1,12 @@
 "use server"
 
+import { cacheLife, cacheTag } from "next/cache"
+
 export async function getLocationFromIP(ipAddress: string | null | undefined) {
+  "use cache: remote"
+  cacheTag(`location-${ipAddress}`)
+  cacheLife({ expire: 120 })
+
   if (!ipAddress) return null
   if (ipAddress === "127.0.0.1" || ipAddress === "::1") {
     return "Local"
