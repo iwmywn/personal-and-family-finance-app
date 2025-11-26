@@ -38,12 +38,19 @@ export function ActiveSessions() {
   const [open, setOpen] = useState<boolean>(false)
   const [locations, setLocations] = useState<Record<string, string | null>>({})
 
-  const filteredSessions = activeSessions.filter((session) => session.userAgent)
+  const sortedSessions = activeSessions
+    .filter((session) => session.userAgent)
+    .sort((a, b) => {
+      const aIsCurrent = a.id === currentSession.session.id
+      const bIsCurrent = b.id === currentSession.session.id
+      if (aIsCurrent === bIsCurrent) return 0
+      return aIsCurrent ? -1 : 1
+    })
 
   useEffect(() => {
-    if (open && filteredSessions.length > 0) {
+    if (open && sortedSessions.length > 0) {
       const fetchLocations = async () => {
-        const locationPromises = filteredSessions.map(async (session) => {
+        const locationPromises = sortedSessions.map(async (session) => {
           const location = await getLocationFromIP(session.ipAddress)
           return { id: session.id, location: location || null }
         })
@@ -58,7 +65,7 @@ export function ActiveSessions() {
 
       fetchLocations()
     }
-  }, [open, filteredSessions])
+  }, [open, sortedSessions])
 
   async function handleRevokeSession(sessionId: string, token: string) {
     setIsTerminating(sessionId)
@@ -97,7 +104,7 @@ export function ActiveSessions() {
     setIsRevokingAll(false)
   }
 
-  if (filteredSessions.length === 0) {
+  if (sortedSessions.length === 0) {
     return null
   }
 
@@ -114,7 +121,7 @@ export function ActiveSessions() {
           </DialogDescription>
         </DialogHeader>
         <div className="max-h-[60vh] space-y-3 overflow-y-auto">
-          {filteredSessions.map((session) => {
+          {sortedSessions.map((session) => {
             const parser = new UAParser(session.userAgent || "")
             const device = parser.getDevice()
             const os = parser.getOS()
