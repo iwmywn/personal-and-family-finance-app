@@ -25,6 +25,7 @@ export function LanguageSelector() {
 
   async function handleLocaleChange(locale: AppLocale) {
     setIsLoading(true)
+
     await client.updateUser({
       locale,
       fetchOptions: {
@@ -37,6 +38,7 @@ export function LanguageSelector() {
         },
       },
     })
+
     setIsLoading(false)
   }
 
