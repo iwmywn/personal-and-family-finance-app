@@ -43,23 +43,21 @@ export function LanguageSelector() {
   }
 
   return (
-    <div className="flex items-center space-x-2">
-      <Select
-        value={user.locale}
-        onValueChange={handleLocaleChange}
-        disabled={isLoading}
-      >
-        <SelectTrigger>
-          <SelectValue placeholder={t("settings.fe.language")} />
-        </SelectTrigger>
-        <SelectContent>
-          {Object.entries(LOCALE_CONFIG).map(([locale, config]) => (
-            <SelectItem key={locale} value={locale}>
-              {config.displayName}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <Select
+      value={user.locale}
+      onValueChange={handleLocaleChange}
+      disabled={isLoading}
+    >
+      <SelectTrigger>
+        <SelectValue placeholder={t("settings.fe.language")} />
+      </SelectTrigger>
+      <SelectContent>
+        {Object.entries(LOCALE_CONFIG).map(([locale, config]) => (
+          <SelectItem key={locale} value={locale}>
+            {config.displayName}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }

@@ -44,6 +44,7 @@ export function SignInForm() {
       if (isSubmitting) return
 
       setIsSubmitting(true)
+
       try {
         await client.signIn.username({
           username: values.username,
