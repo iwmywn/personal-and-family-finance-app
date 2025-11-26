@@ -52,7 +52,7 @@ export function ActiveSessions() {
       const fetchLocations = async () => {
         const locationPromises = sortedSessions.map(async (session) => {
           const location = await getLocationFromIP(session.ipAddress)
-          return { id: session.id, location: location || null }
+          return { id: session.id, location: location }
         })
 
         const results = await Promise.all(locationPromises)
