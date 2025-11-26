@@ -66,8 +66,8 @@ export function SignInForm() {
                 callbackUrl = callbackUrl + window.location.hash
               }
 
-              form.reset()
               router.push(callbackUrl || "/home")
+              form.reset()
 
               await client.getSession({
                 fetchOptions: {
