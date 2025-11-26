@@ -20,7 +20,7 @@ export async function getCurrentSession() {
   }
 }
 
-export async function getSessions() {
+export async function getActiveSessions() {
   await connection()
 
   try {

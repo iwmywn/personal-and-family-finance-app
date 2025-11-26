@@ -9,7 +9,7 @@ import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
 import { getGoals } from "@/actions/goal.actions"
 import { getRecurringTransactions } from "@/actions/recurring.actions"
-import { getCurrentSession, getSessions } from "@/actions/session.actions"
+import { getActiveSessions, getCurrentSession } from "@/actions/session.actions"
 import { getTransactions } from "@/actions/transaction.actions"
 import {
   Empty,
@@ -65,7 +65,7 @@ async function DashboardProvider({
 }>) {
   const [session, activeSessions] = await Promise.all([
     getCurrentSession(),
-    getSessions(),
+    getActiveSessions(),
   ])
 
   if (!session || !activeSessions) {
