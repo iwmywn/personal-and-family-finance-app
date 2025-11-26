@@ -127,8 +127,7 @@ export function ActiveSessions() {
             const os = parser.getOS()
             const browser = parser.getBrowser()
             const isCurrentSession = session.id === currentSession.session.id
-            const location =
-              locations[session.id] ?? t("settings.fe.unknownLocation")
+            const location = locations[session.id]
 
             return (
               <Item key={session.id} variant="outline">
@@ -149,7 +148,13 @@ export function ActiveSessions() {
                       </span>
                     )}
                   </ItemTitle>
-                  <ItemDescription>{location}</ItemDescription>
+                  <ItemDescription>
+                    {location === undefined ? (
+                      <Spinner className="size-3.5" />
+                    ) : (
+                      (location ?? t("settings.fe.unknownLocation"))
+                    )}
+                  </ItemDescription>
                 </ItemContent>
                 <ItemActions>
                   <Button
