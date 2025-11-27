@@ -77,7 +77,7 @@ export function ActiveSessions() {
           toast.error(t("settings.be.sessionRevokeFailed"))
         },
         onSuccess: () => {
-          setTimeout(() => router.refresh(), 1000)
+          router.refresh()
           toast.success(t("settings.be.sessionRevoked"))
         },
       },
@@ -95,7 +95,7 @@ export function ActiveSessions() {
           toast.error(t("settings.be.sessionsRevokeAllFailed"))
         },
         onSuccess: () => {
-          setTimeout(() => router.refresh(), 1000)
+          router.refresh()
           toast.success(t("settings.be.sessionsRevokedAll"))
         },
       },

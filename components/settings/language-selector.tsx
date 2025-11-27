@@ -33,7 +33,7 @@ export function LanguageSelector() {
           toast.error(t("settings.be.languageUpdateFailed"))
         },
         onSuccess: async () => {
-          setTimeout(() => router.refresh(), 1000)
+          router.refresh()
           await setUserLocale(locale)
         },
       },

@@ -62,7 +62,7 @@ export function ChangeUsernameDialog() {
             toast.error(t("settings.be.usernameUpdateFailed"))
           },
           onSuccess: () => {
-            setTimeout(() => router.refresh(), 1000)
+            router.refresh()
             toast.success(t("settings.be.usernameUpdated"))
             form.reset({ username: values.username })
             setOpen(false)
