@@ -464,6 +464,7 @@
       "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
       "light": "Sáng",
       "name": "Tên",
+      "namePlaceholder": "Nhập tên của bạn...",
       "newPassword": "Mật khẩu mới",
       "revokeOtherSessions": "Đăng xuất khỏi tất cả các thiết bị khác.",
       "system": "Hệ thống",

@@ -464,6 +464,7 @@
       "languageDescription": "Choose the language for the application.",
       "light": "Light",
       "name": "Name",
+      "namePlaceholder": "Enter your name...",
       "newPassword": "New Password",
       "revokeOtherSessions": "Sign out from all other devices.",
       "system": "System",

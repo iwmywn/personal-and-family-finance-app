@@ -40,7 +40,7 @@ export function ChangeNameDialog() {
   const form = useForm<NameFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      name: "",
+      name: user.name,
     },
   })
   const [open, setOpen] = useState<boolean>(false)
@@ -86,7 +86,7 @@ export function ChangeNameDialog() {
                   <FormControl>
                     <Input
                       id="name"
-                      placeholder={user.name}
+                      placeholder={t("settings.fe.namePlaceholder")}
                       autoComplete="name"
                       {...field}
                     />
