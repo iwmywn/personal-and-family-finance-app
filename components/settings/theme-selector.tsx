@@ -1,44 +1,38 @@
 "use client"
 
-import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/components/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export function ThemeSelector() {
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
   const t = useTranslations()
 
+  const themeLabels: Record<"light" | "dark" | "system", string> = {
+    light: t("settings.fe.light"),
+    dark: t("settings.fe.dark"),
+    system: t("settings.fe.system"),
+  }
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <SunIcon className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">{t("settings.fe.toggleTheme")}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          <SunIcon />
-          {t("settings.fe.light")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          <MoonIcon />
-          {t("settings.fe.dark")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          <MonitorIcon />
-          {t("settings.fe.system")}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Select value={theme} onValueChange={setTheme}>
+      <SelectTrigger>
+        <SelectValue placeholder={t("settings.fe.toggleTheme")} />
+      </SelectTrigger>
+      <SelectContent>
+        {(["light", "dark", "system"] as const).map((value) => (
+          <SelectItem key={value} value={value}>
+            {themeLabels[value]}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }
