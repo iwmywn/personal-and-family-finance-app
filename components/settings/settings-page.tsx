@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ActiveSessions } from "@/components/settings/active-sessions"
+import { ChangeNameDialog } from "@/components/settings/change-name-dialog"
 import { ChangePasswordDialog } from "@/components/settings/change-password-dialog"
 import { LanguageSelector } from "@/components/settings/language-selector"
 import { ThemeSelector } from "@/components/settings/theme-selector"
@@ -52,6 +53,18 @@ export default function SettingsPage() {
       </TabsContent>
 
       <TabsContent value="account" className="space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("settings.fe.changeName")}</CardTitle>
+            <CardDescription>
+              {t("settings.fe.changeNameDescription")}
+            </CardDescription>
+            <CardAction>
+              <ChangeNameDialog />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>{t("settings.fe.changePassword")}</CardTitle>

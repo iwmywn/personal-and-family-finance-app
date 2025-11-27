@@ -400,6 +400,10 @@
       "targetAmountMaxLength": "Số tiền mục tiêu tối đa là 100 tỷ.",
       "targetAmountRequired": "Số tiền mục tiêu phải lớn hơn 0."
     },
+    "name": {
+      "nameMaxLength": "Tên tối đa 100 ký tự.",
+      "nameRequired": "Tên là bắt buộc."
+    },
     "password": {
       "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu mới của bạn.",
       "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc.",
@@ -431,6 +435,8 @@
   "settings": {
     "be": {
       "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau.",
+      "nameUpdateFailed": "Cập nhật tên thất bại! Vui lòng thử lại sau.",
+      "nameUpdated": "Tên của bạn đã được cập nhật.",
       "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
       "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
       "passwordUpdated": "Mật khẩu của bạn đã được thay đổi.",
@@ -445,6 +451,8 @@
       "activeSessionsDescription": "Quản lý các phiên đăng nhập đang hoạt động trên các thiết bị khác nhau.",
       "appearance": "Giao diện",
       "appearanceDescription": "Chọn chủ đề hiển thị cho ứng dụng.",
+      "changeName": "Đổi tên",
+      "changeNameDescription": "Thay đổi tên hiển thị của bạn.",
       "changePassword": "Đổi mật khẩu",
       "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
       "confirmPassword": "Xác nhận mật khẩu",
@@ -455,6 +463,7 @@
       "language": "Ngôn ngữ",
       "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
       "light": "Sáng",
+      "name": "Tên",
       "newPassword": "Mật khẩu mới",
       "revokeOtherSessions": "Đăng xuất khỏi tất cả các thiết bị khác.",
       "system": "Hệ thống",

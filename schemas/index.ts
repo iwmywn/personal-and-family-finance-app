@@ -49,6 +49,15 @@ export const createPasswordSchema = (t: TypedTranslationFunction) => {
     })
 }
 
+export const createNameSchema = (t: TypedTranslationFunction) => {
+  return z.object({
+    name: z
+      .string()
+      .min(1, { message: t("schemas.name.nameRequired") })
+      .max(100, { message: t("schemas.name.nameMaxLength") }),
+  })
+}
+
 export const createTransactionSchema = (t: TypedTranslationFunction) => {
   return z.object({
     type: z.enum(TRANSACTION_TYPES, {
@@ -293,6 +302,7 @@ export type SignInFormValues = z.infer<ReturnType<typeof createSignInSchema>>
 export type PasswordFormValues = z.infer<
   ReturnType<typeof createPasswordSchema>
 >
+export type NameFormValues = z.infer<ReturnType<typeof createNameSchema>>
 export type TransactionFormValues = z.infer<
   ReturnType<typeof createTransactionSchema>
 >
