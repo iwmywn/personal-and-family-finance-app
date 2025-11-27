@@ -430,6 +430,11 @@
       "descriptionMaxLength": "Mô tả tối đa là 200 ký tự.",
       "descriptionRequired": "Mô tả là bắt buộc.",
       "transactionTypeRequired": "Vui lòng chọn loại giao dịch."
+    },
+    "username": {
+      "usernameInvalid": "Tên người dùng chỉ có thể chứa chữ cái, số, dấu gạch dưới và dấu chấm.",
+      "usernameMaxLength": "Tên người dùng tối đa 50 ký tự.",
+      "usernameMinLength": "Tên người dùng phải có ít nhất 3 ký tự."
     }
   },
   "settings": {
@@ -443,7 +448,11 @@
       "sessionRevokeFailed": "Chấm dứt phiên đăng nhập thất bại! Vui lòng thử lại sau.",
       "sessionRevoked": "Phiên đăng nhập đã được chấm dứt.",
       "sessionsRevokeAllFailed": "Chấm dứt tất cả phiên đăng nhập thất bại! Vui lòng thử lại sau.",
-      "sessionsRevokedAll": "Tất cả phiên đăng nhập đã được chấm dứt."
+      "sessionsRevokedAll": "Tất cả phiên đăng nhập đã được chấm dứt.",
+      "usernameCheckFailed": "Kiểm tra tên người dùng thất bại! Vui lòng thử lại sau.",
+      "usernameNotAvailable": "Tên người dùng này đã được sử dụng.",
+      "usernameUpdateFailed": "Cập nhật tên người dùng thất bại! Vui lòng thử lại sau.",
+      "usernameUpdated": "Tên người dùng của bạn đã được cập nhật."
     },
     "fe": {
       "account": "Tài khoản",
@@ -455,6 +464,8 @@
       "changeNameDescription": "Thay đổi tên hiển thị của bạn.",
       "changePassword": "Đổi mật khẩu",
       "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
+      "changeUsername": "Đổi tên người dùng",
+      "changeUsernameDescription": "Thay đổi tên người dùng của bạn.",
       "confirmPassword": "Xác nhận mật khẩu",
       "current": "Hiện tại",
       "currentPassword": "Mật khẩu hiện tại",
@@ -472,6 +483,8 @@
       "terminateAll": "Chấm dứt tất cả",
       "toggleTheme": "Chuyển đổi chủ đề",
       "unknownLocation": "Không xác định",
+      "username": "Tên người dùng",
+      "usernamePlaceholder": "Nhập tên người dùng của bạn...",
       "viewActiveSessions": "Xem phiên đăng nhập"
     }
   },

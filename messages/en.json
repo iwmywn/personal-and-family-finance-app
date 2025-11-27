@@ -430,6 +430,11 @@
       "descriptionMaxLength": "Description must be at most 200 characters.",
       "descriptionRequired": "Description is required.",
       "transactionTypeRequired": "Please select a transaction type."
+    },
+    "username": {
+      "usernameInvalid": "Username can only contain letters, numbers, underscores, and dots.",
+      "usernameMaxLength": "Username must be at most 30 characters.",
+      "usernameMinLength": "Username must have at least 3 characters."
     }
   },
   "settings": {
@@ -443,7 +448,11 @@
       "sessionRevokeFailed": "Failed to terminate session! Please try again later.",
       "sessionRevoked": "Session terminated.",
       "sessionsRevokeAllFailed": "Failed to terminate all sessions! Please try again later.",
-      "sessionsRevokedAll": "All sessions terminated."
+      "sessionsRevokedAll": "All sessions terminated.",
+      "usernameCheckFailed": "Failed to check username availability! Please try again later.",
+      "usernameNotAvailable": "This username is already taken.",
+      "usernameUpdateFailed": "Failed to update username! Please try again later.",
+      "usernameUpdated": "Your username has been updated."
     },
     "fe": {
       "account": "Account",
@@ -455,6 +464,8 @@
       "changeNameDescription": "Change your display name.",
       "changePassword": "Change Password",
       "changePasswordDescription": "Change your password.",
+      "changeUsername": "Change Username",
+      "changeUsernameDescription": "Change your username.",
       "confirmPassword": "Confirm Password",
       "current": "Current",
       "currentPassword": "Current Password",
@@ -472,6 +483,8 @@
       "terminateAll": "Terminate All",
       "toggleTheme": "Toggle theme",
       "unknownLocation": "Unknown",
+      "username": "Username",
+      "usernamePlaceholder": "Enter your username...",
       "viewActiveSessions": "View Active Sessions"
     }
   },
