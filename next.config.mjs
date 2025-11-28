@@ -3,7 +3,19 @@ import createNextIntlPlugin from "next-intl/plugin"
 import "./env/client.mjs"
 import "./env/server.mjs"
 
-const withNextIntl = createNextIntlPlugin()
+const withNextIntl = createNextIntlPlugin({
+  experimental: {
+    srcPath: ["./actions", "./app", "./components", "./hooks", "./lib", "./schemas"],
+    extract: {
+      sourceLocale: 'en'
+    },
+    messages: {
+      path: './messages',
+      format: 'po',
+      locales: 'infer'
+    }
+  }
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
