@@ -7,7 +7,8 @@
       "signInError": "Incorrect username or password!",
       "signInFailed": "Sign in failed! Please try again later.",
       "signOutFailed": "Sign out failed! Please try again later.",
-      "signOutSuccess": "You need to sign in again."
+      "signOutSuccess": "You need to sign in again.",
+      "twoFactorVerifyFailed": "Invalid authentication code. Please try again."
     },
     "fe": {
       "completeRecaptchaVerification": "Please complete CAPTCHA verification!",
@@ -17,6 +18,13 @@
       "signIn": "Sign In",
       "signInDescription": "Enter your username and password to sign in to your account.",
       "signingOut": "Signing out...",
+      "twoFactorCodeLabel": "Authenticator Code",
+      "twoFactorHeading": "Verify your identity",
+      "twoFactorPageDescription": "Enter a code from your authenticator app or a backup code to finish signing in.",
+      "twoFactorPageTitle": "Two-Factor Verification",
+      "twoFactorSubmit": "Verify",
+      "twoFactorTrustDevice": "Trust this device for 30 days",
+      "twoFactorTrustDeviceDescription": "Skip 2FA prompts on this browser for the next 30 days.",
       "username": "Username"
     }
   },
@@ -400,10 +408,14 @@
       "targetAmountMaxLength": "Maximum target amount is 100 billion.",
       "targetAmountRequired": "Target amount must be greater than 0."
     },
+    "name": {
+      "nameMaxLength": "Name must be at most 100 characters.",
+      "nameRequired": "Name is required."
+    },
     "password": {
       "confirmPasswordRequired": "Please confirm your new password.",
       "currentPasswordRequired": "Current password is required.",
-      "newPasswordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
+      "passwordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
       "passwordsNotMatch": "Passwords do not match."
     },
     "recurring": {
@@ -415,7 +427,6 @@
       "startDateRequired": "Please select a start date."
     },
     "signIn": {
-      "passwordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
       "usernameRequired": "Username is required."
     },
     "transaction": {
@@ -426,32 +437,86 @@
       "descriptionMaxLength": "Description must be at most 200 characters.",
       "descriptionRequired": "Description is required.",
       "transactionTypeRequired": "Please select a transaction type."
+    },
+    "twoFactor": {
+      "codeDigits": "Code can only contain digits.",
+      "codeMaxLength": "Code must be at most 10 digits.",
+      "codeRequired": "Enter the 6-digit code from your authenticator app."
+    },
+    "username": {
+      "usernameInvalid": "Username can only contain letters, numbers, underscores, and dots.",
+      "usernameMaxLength": "Username must be at most 30 characters.",
+      "usernameMinLength": "Username must have at least 3 characters."
     }
   },
   "settings": {
     "be": {
+      "invalidPassword": "Invalid password!",
       "languageUpdateFailed": "Failed to update language! Please try again later.",
+      "nameUpdateFailed": "Failed to update name! Please try again later.",
+      "nameUpdated": "Your name has been updated.",
       "passwordIncorrect": "Current password is incorrect!",
       "passwordUpdateFailed": "Failed to update password! Please try again later.",
-      "passwordUpdated": "Your password has been changed."
+      "passwordUpdated": "Your password has been changed.",
+      "sessionRevokeFailed": "Failed to terminate session! Please try again later.",
+      "sessionRevoked": "Session terminated.",
+      "sessionsRevokeAllFailed": "Failed to terminate all sessions! Please try again later.",
+      "sessionsRevokedAll": "All sessions terminated.",
+      "twoFactorDisableFailed": "Failed to disable two-factor authentication. Please try again.",
+      "twoFactorDisabled": "Two-factor authentication has been disabled.",
+      "twoFactorEnableFailed": "Unable to generate 2FA secret. Please try again.",
+      "twoFactorEnabled": "Two-factor authentication is now enabled.",
+      "twoFactorVerifyFailed": "Invalid 2FA code. Please try again.",
+      "usernameCheckFailed": "Failed to check username availability! Please try again later.",
+      "usernameNotAvailable": "This username is already taken.",
+      "usernameUpdateFailed": "Failed to update username! Please try again later.",
+      "usernameUpdated": "Your username has been updated."
     },
     "fe": {
       "account": "Account",
+      "activeSessions": "Sessions",
+      "activeSessionsDescription": "Manage your active sessions across different devices.",
       "appearance": "Appearance",
       "appearanceDescription": "Choose the display theme for the application.",
+      "changeName": "Change Name",
+      "changeNameDescription": "Change your display name.",
       "changePassword": "Change Password",
       "changePasswordDescription": "Change your password.",
+      "changeUsername": "Change Username",
+      "changeUsernameDescription": "Change your username.",
       "confirmPassword": "Confirm Password",
+      "current": "Current",
       "currentPassword": "Current Password",
       "dark": "Dark",
       "general": "General",
       "language": "Language",
       "languageDescription": "Choose the language for the application.",
       "light": "Light",
+      "name": "Name",
+      "namePlaceholder": "Enter your name...",
       "newPassword": "New Password",
       "revokeOtherSessions": "Sign out from all other devices.",
       "system": "System",
-      "toggleTheme": "Toggle theme"
+      "terminate": "Terminate",
+      "terminateAll": "Terminate All",
+      "toggleTheme": "Toggle theme",
+      "twoFactorCodeLabel": "Verification Code",
+      "twoFactorDescription": "Add an extra security layer to your account with TOTP codes and backup codes.",
+      "twoFactorDisable": "Disable 2FA",
+      "twoFactorDisableDialogDescription": "Enter your password to disable two-factor authentication.",
+      "twoFactorDisableDialogTitle": "Disable Two-Factor Authentication",
+      "twoFactorEnable": "Enable 2FA",
+      "twoFactorEnableDialogDescription": "Enable 2FA to secure your account.",
+      "twoFactorEnableDialogTitle": "Enable 2FA",
+      "twoFactorSecretLabel": "Secret key",
+      "twoFactorTitle": "Two-Factor Authentication",
+      "twoFactorTrustDevice": "Trust this device for 30 days",
+      "twoFactorTrustDeviceDescription": "Skip 2FA prompts on this browser for the next 30 days.",
+      "twoFactorVerify": "Complete Setup",
+      "unknownLocation": "Unknown",
+      "username": "Username",
+      "usernamePlaceholder": "Enter your username...",
+      "viewActiveSessions": "View Active Sessions"
     }
   },
   "statistics": {

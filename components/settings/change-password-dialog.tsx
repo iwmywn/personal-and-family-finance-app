@@ -31,11 +31,10 @@ import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
 import { client } from "@/lib/auth-client"
 
-export function UpdatePasswordDialog() {
+export function ChangePasswordDialog() {
   const t = useTranslations()
-  const schema = createPasswordSchema(t)
   const form = useForm<PasswordFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createPasswordSchema(t)),
     defaultValues: {
       currentPassword: "",
       newPassword: "",
@@ -43,7 +42,7 @@ export function UpdatePasswordDialog() {
       revokeOtherSessions: false,
     },
   })
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: PasswordFormValues) {
     await client.changePassword({
@@ -52,23 +51,23 @@ export function UpdatePasswordDialog() {
       revokeOtherSessions: values.revokeOtherSessions,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.status === 400)
+          if (ctx.error.code === "INVALID_PASSWORD")
             toast.error(t("settings.be.passwordIncorrect"))
           else toast.error(t("settings.be.passwordUpdateFailed"))
         },
         onSuccess: () => {
           toast.success(t("settings.be.passwordUpdated"))
           form.reset()
-          setIsOpen(false)
+          setOpen(false)
         },
       },
     })
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>{t("settings.fe.changePassword")}</Button>
+        <Button variant="outline">{t("settings.fe.changePassword")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

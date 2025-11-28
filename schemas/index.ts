@@ -19,7 +19,7 @@ export const createSignInSchema = (t: TypedTranslationFunction) => {
     username: z
       .string()
       .min(1, { message: t("schemas.signIn.usernameRequired") }),
-    password: basePasswordSchema(t, "schemas.signIn.passwordRequired"),
+    password: basePasswordSchema(t, "schemas.password.passwordRequired"),
   })
 }
 
@@ -29,10 +29,7 @@ export const createPasswordSchema = (t: TypedTranslationFunction) => {
       currentPassword: z
         .string()
         .min(1, { message: t("schemas.password.currentPasswordRequired") }),
-      newPassword: basePasswordSchema(
-        t,
-        "schemas.password.newPasswordRequired"
-      ),
+      newPassword: basePasswordSchema(t, "schemas.password.passwordRequired"),
       confirmPassword: z
         .string()
         .min(1, { message: t("schemas.password.confirmPasswordRequired") }),
@@ -47,6 +44,46 @@ export const createPasswordSchema = (t: TypedTranslationFunction) => {
         })
       }
     })
+}
+
+export const createTwoFactorPasswordSchema = (t: TypedTranslationFunction) => {
+  return z.object({
+    password: basePasswordSchema(t, "schemas.password.passwordRequired"),
+  })
+}
+
+export const createTwoFactorCodeSchema = (t: TypedTranslationFunction) => {
+  return z.object({
+    code: z
+      .string()
+      .min(6, { message: t("schemas.twoFactor.codeRequired") })
+      .max(10, { message: t("schemas.twoFactor.codeMaxLength") })
+      .regex(/^\d+$/, {
+        message: t("schemas.twoFactor.codeDigits"),
+      }),
+    trustDevice: z.boolean().optional(),
+  })
+}
+
+export const createNameSchema = (t: TypedTranslationFunction) => {
+  return z.object({
+    name: z
+      .string()
+      .min(1, { message: t("schemas.name.nameRequired") })
+      .max(100, { message: t("schemas.name.nameMaxLength") }),
+  })
+}
+
+export const createUsernameSchema = (t: TypedTranslationFunction) => {
+  return z.object({
+    username: z
+      .string()
+      .min(3, { message: t("schemas.username.usernameMinLength") })
+      .max(30, { message: t("schemas.username.usernameMaxLength") })
+      .regex(/^[a-zA-Z0-9_.]+$/, {
+        message: t("schemas.username.usernameInvalid"),
+      }),
+  })
 }
 
 export const createTransactionSchema = (t: TypedTranslationFunction) => {
@@ -293,6 +330,10 @@ export type SignInFormValues = z.infer<ReturnType<typeof createSignInSchema>>
 export type PasswordFormValues = z.infer<
   ReturnType<typeof createPasswordSchema>
 >
+export type NameFormValues = z.infer<ReturnType<typeof createNameSchema>>
+export type UsernameFormValues = z.infer<
+  ReturnType<typeof createUsernameSchema>
+>
 export type TransactionFormValues = z.infer<
   ReturnType<typeof createTransactionSchema>
 >
@@ -303,4 +344,10 @@ export type BudgetFormValues = z.infer<ReturnType<typeof createBudgetSchema>>
 export type GoalFormValues = z.infer<ReturnType<typeof createGoalSchema>>
 export type RecurringTransactionFormValues = z.infer<
   ReturnType<typeof createRecurringTransactionSchema>
+>
+export type TwoFactorPasswordFormValues = z.infer<
+  ReturnType<typeof createTwoFactorPasswordSchema>
+>
+export type TwoFactorCodeFormValues = z.infer<
+  ReturnType<typeof createTwoFactorCodeSchema>
 >

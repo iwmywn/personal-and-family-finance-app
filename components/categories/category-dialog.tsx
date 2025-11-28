@@ -55,9 +55,8 @@ export function CategoryDialog({
     category?.type || "income"
   )
   const t = useTranslations()
-  const schema = createCategorySchema(t)
   const form = useForm<CategoryFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createCategorySchema(t)),
     defaultValues: {
       type: category?.type || "income",
       label: category?.label || "",

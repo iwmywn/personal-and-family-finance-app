@@ -10,9 +10,13 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ActiveSessions } from "@/components/settings/active-sessions"
+import { ChangeNameDialog } from "@/components/settings/change-name-dialog"
+import { ChangePasswordDialog } from "@/components/settings/change-password-dialog"
+import { ChangeUsernameDialog } from "@/components/settings/change-username-dialog"
 import { LanguageSelector } from "@/components/settings/language-selector"
 import { ThemeSelector } from "@/components/settings/theme-selector"
-import { UpdatePasswordDialog } from "@/components/settings/update-password-dialog"
+import { TwoFactorManager } from "@/components/settings/two-factor-manager"
 
 export default function SettingsPage() {
   const t = useTranslations()
@@ -53,12 +57,60 @@ export default function SettingsPage() {
       <TabsContent value="account" className="space-y-4">
         <Card>
           <CardHeader>
+            <CardTitle>{t("settings.fe.changeName")}</CardTitle>
+            <CardDescription>
+              {t("settings.fe.changeNameDescription")}
+            </CardDescription>
+            <CardAction>
+              <ChangeNameDialog />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("settings.fe.changeUsername")}</CardTitle>
+            <CardDescription>
+              {t("settings.fe.changeUsernameDescription")}
+            </CardDescription>
+            <CardAction>
+              <ChangeUsernameDialog />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <CardTitle>{t("settings.fe.changePassword")}</CardTitle>
             <CardDescription>
               {t("settings.fe.changePasswordDescription")}
             </CardDescription>
             <CardAction>
-              <UpdatePasswordDialog />
+              <ChangePasswordDialog />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("settings.fe.twoFactorTitle")}</CardTitle>
+            <CardDescription>
+              {t("settings.fe.twoFactorDescription")}
+            </CardDescription>
+            <CardAction>
+              <TwoFactorManager />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("settings.fe.activeSessions")}</CardTitle>
+            <CardDescription>
+              {t("settings.fe.activeSessionsDescription")}
+            </CardDescription>
+            <CardAction>
+              <ActiveSessions />
             </CardAction>
           </CardHeader>
         </Card>

@@ -180,11 +180,13 @@ export function RecurringTable({
                               })}
                             </span>
                           ) : null}
-                          <span className="text-muted-foreground text-xs">
-                            {t("recurring.fe.nextDate", {
-                              date: formatDate(getNextDate(recurring)),
-                            })}
-                          </span>
+                          {recurring.isActive ? (
+                            <span className="text-muted-foreground text-xs">
+                              {t("recurring.fe.nextDate", {
+                                date: formatDate(getNextDate(recurring)),
+                              })}
+                            </span>
+                          ) : null}
                         </div>
                       </TableCell>
                       <TableCell>

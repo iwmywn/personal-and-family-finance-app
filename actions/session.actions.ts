@@ -19,3 +19,18 @@ export async function getCurrentSession() {
     return null
   }
 }
+
+export async function getActiveSessions() {
+  await connection()
+
+  try {
+    const activeSessions = await auth.api.listSessions({
+      headers: await headers(),
+    })
+
+    return activeSessions
+  } catch (error) {
+    console.error("Error getting session: ", error)
+    return null
+  }
+}

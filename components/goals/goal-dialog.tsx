@@ -62,9 +62,8 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useTranslations()
   const formatDate = useFormatDate()
-  const schema = createGoalSchema(t)
   const form = useForm<GoalFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createGoalSchema(t)),
     defaultValues: {
       categoryKey: goal?.categoryKey || "",
       name: goal?.name || "",

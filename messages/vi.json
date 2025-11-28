@@ -7,7 +7,8 @@
       "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",
       "signInFailed": "Đăng nhập thất bại! Vui lòng thử lại sau.",
       "signOutFailed": "Đăng xuất thất bại! Vui lòng thử lại sau.",
-      "signOutSuccess": "Bạn cần đăng nhập lại."
+      "signOutSuccess": "Bạn cần đăng nhập lại.",
+      "twoFactorVerifyFailed": "Mã xác thực không hợp lệ. Vui lòng thử lại."
     },
     "fe": {
       "completeRecaptchaVerification": "Vui lòng hoàn thành xác thực CAPTCHA!",
@@ -17,6 +18,13 @@
       "signIn": "Đăng nhập",
       "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
       "signingOut": "Đang đăng xuất...",
+      "twoFactorCodeLabel": "Mã từ ứng dụng",
+      "twoFactorHeading": "Xác minh danh tính",
+      "twoFactorPageDescription": "Nhập mã từ ứng dụng xác thực hoặc mã dự phòng để hoàn tất đăng nhập.",
+      "twoFactorPageTitle": "Xác thực hai bước",
+      "twoFactorSubmit": "Xác minh",
+      "twoFactorTrustDevice": "Tin cậy thiết bị này trong 30 ngày",
+      "twoFactorTrustDeviceDescription": "Bỏ qua bước 2FA trên trình duyệt này trong 30 ngày tới.",
       "username": "Tên người dùng"
     }
   },
@@ -400,10 +408,14 @@
       "targetAmountMaxLength": "Số tiền mục tiêu tối đa là 100 tỷ.",
       "targetAmountRequired": "Số tiền mục tiêu phải lớn hơn 0."
     },
+    "name": {
+      "nameMaxLength": "Tên tối đa 100 ký tự.",
+      "nameRequired": "Tên là bắt buộc."
+    },
     "password": {
       "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu mới của bạn.",
       "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc.",
-      "newPasswordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+      "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
       "passwordsNotMatch": "Mật khẩu không khớp."
     },
     "recurring": {
@@ -415,7 +427,6 @@
       "startDateRequired": "Vui lòng chọn ngày bắt đầu."
     },
     "signIn": {
-      "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
       "usernameRequired": "Tên người dùng là bắt buộc."
     },
     "transaction": {
@@ -426,32 +437,86 @@
       "descriptionMaxLength": "Mô tả tối đa là 200 ký tự.",
       "descriptionRequired": "Mô tả là bắt buộc.",
       "transactionTypeRequired": "Vui lòng chọn loại giao dịch."
+    },
+    "twoFactor": {
+      "codeDigits": "Mã chỉ được chứa chữ số.",
+      "codeMaxLength": "Mã tối đa 10 chữ số.",
+      "codeRequired": "Vui lòng nhập mã 6 chữ số."
+    },
+    "username": {
+      "usernameInvalid": "Tên người dùng chỉ có thể chứa chữ cái, số, dấu gạch dưới và dấu chấm.",
+      "usernameMaxLength": "Tên người dùng tối đa 50 ký tự.",
+      "usernameMinLength": "Tên người dùng phải có ít nhất 3 ký tự."
     }
   },
   "settings": {
     "be": {
+      "invalidPassword": "Mật khẩu không hợp lệ!",
       "languageUpdateFailed": "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau.",
+      "nameUpdateFailed": "Cập nhật tên thất bại! Vui lòng thử lại sau.",
+      "nameUpdated": "Tên của bạn đã được cập nhật.",
       "passwordIncorrect": "Mật khẩu hiện tại không đúng!",
       "passwordUpdateFailed": "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau.",
-      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi."
+      "passwordUpdated": "Mật khẩu của bạn đã được thay đổi.",
+      "sessionRevokeFailed": "Chấm dứt phiên đăng nhập thất bại! Vui lòng thử lại sau.",
+      "sessionRevoked": "Phiên đăng nhập đã được chấm dứt.",
+      "sessionsRevokeAllFailed": "Chấm dứt tất cả phiên đăng nhập thất bại! Vui lòng thử lại sau.",
+      "sessionsRevokedAll": "Tất cả phiên đăng nhập đã được chấm dứt.",
+      "twoFactorDisableFailed": "Tắt xác thực hai bước thất bại. Vui lòng thử lại.",
+      "twoFactorDisabled": "Đã tắt xác thực hai bước.",
+      "twoFactorEnableFailed": "Không thể tạo bí mật 2FA. Vui lòng thử lại.",
+      "twoFactorEnabled": "Đã bật xác thực hai bước.",
+      "twoFactorVerifyFailed": "Mã 2FA không hợp lệ. Vui lòng thử lại.",
+      "usernameCheckFailed": "Kiểm tra tên người dùng thất bại! Vui lòng thử lại sau.",
+      "usernameNotAvailable": "Tên người dùng này đã được sử dụng.",
+      "usernameUpdateFailed": "Cập nhật tên người dùng thất bại! Vui lòng thử lại sau.",
+      "usernameUpdated": "Tên người dùng của bạn đã được cập nhật."
     },
     "fe": {
       "account": "Tài khoản",
+      "activeSessions": "Phiên đăng nhập",
+      "activeSessionsDescription": "Quản lý các phiên đăng nhập đang hoạt động trên các thiết bị khác nhau.",
       "appearance": "Giao diện",
       "appearanceDescription": "Chọn chủ đề hiển thị cho ứng dụng.",
+      "changeName": "Đổi tên",
+      "changeNameDescription": "Thay đổi tên hiển thị của bạn.",
       "changePassword": "Đổi mật khẩu",
       "changePasswordDescription": "Thay đổi mật khẩu của bạn.",
+      "changeUsername": "Đổi tên người dùng",
+      "changeUsernameDescription": "Thay đổi tên người dùng của bạn.",
       "confirmPassword": "Xác nhận mật khẩu",
+      "current": "Hiện tại",
       "currentPassword": "Mật khẩu hiện tại",
       "dark": "Tối",
       "general": "Chung",
       "language": "Ngôn ngữ",
       "languageDescription": "Chọn ngôn ngữ cho ứng dụng.",
       "light": "Sáng",
+      "name": "Tên",
+      "namePlaceholder": "Nhập tên của bạn...",
       "newPassword": "Mật khẩu mới",
       "revokeOtherSessions": "Đăng xuất khỏi tất cả các thiết bị khác.",
       "system": "Hệ thống",
-      "toggleTheme": "Chuyển đổi chủ đề"
+      "terminate": "Chấm dứt",
+      "terminateAll": "Chấm dứt tất cả",
+      "toggleTheme": "Chuyển đổi chủ đề",
+      "twoFactorCodeLabel": "Mã xác minh",
+      "twoFactorDescription": "Thêm một lớp bảo mật bằng mã TOTP và mã dự phòng.",
+      "twoFactorDisable": "Tắt 2FA",
+      "twoFactorDisableDialogDescription": "Nhập mật khẩu của bạn để tắt xác thực hai bước.",
+      "twoFactorDisableDialogTitle": "Tắt xác thực hai bước",
+      "twoFactorEnable": "Bật 2FA",
+      "twoFactorEnableDialogDescription": "Bật 2FA để bảo vệ tài khoản của bạn.",
+      "twoFactorEnableDialogTitle": "Bật 2FA",
+      "twoFactorSecretLabel": "Mã bí mật",
+      "twoFactorTitle": "Xác thực hai bước",
+      "twoFactorTrustDevice": "Tin cậy thiết bị này trong 30 ngày",
+      "twoFactorTrustDeviceDescription": "Bỏ qua bước 2FA trên trình duyệt này trong 30 ngày.",
+      "twoFactorVerify": "Hoàn tất thiết lập",
+      "unknownLocation": "Không xác định",
+      "username": "Tên người dùng",
+      "usernamePlaceholder": "Nhập tên người dùng của bạn...",
+      "viewActiveSessions": "Xem phiên đăng nhập"
     }
   },
   "statistics": {

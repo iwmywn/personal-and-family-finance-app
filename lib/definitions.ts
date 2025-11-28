@@ -6,6 +6,8 @@ import { type CategoryKeyType, type TransactionType } from "@/lib/categories"
 export type User = typeof auth.$Infer.Session.user
 export type DBUser = { _id: ObjectId } & Omit<User, "id">
 
+export type Session = typeof auth.$Infer.Session.session
+
 type BaseTransaction<T> = {
   _id: T
   userId: T

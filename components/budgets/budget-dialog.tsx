@@ -62,9 +62,8 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useTranslations()
   const formatDate = useFormatDate()
-  const schema = createBudgetSchema(t)
   const form = useForm<BudgetFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createBudgetSchema(t)),
     defaultValues: {
       categoryKey: budget?.categoryKey || "",
       allocatedAmount: budget?.allocatedAmount || 0,

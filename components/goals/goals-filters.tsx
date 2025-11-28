@@ -148,7 +148,6 @@ export function GoalsFilters() {
               {searchTerm && (
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
-                    className="rounded-full"
                     size="icon-xs"
                     onClick={() => setSearchTerm("")}
                   >

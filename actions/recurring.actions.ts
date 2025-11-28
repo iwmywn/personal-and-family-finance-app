@@ -34,8 +34,7 @@ export async function createRecurringTransaction(
 
     const userId = session.user.id
 
-    const recurringSchema = createRecurringTransactionSchema(t)
-    const parsedValues = recurringSchema.safeParse(values)
+    const parsedValues = createRecurringTransactionSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }
@@ -103,8 +102,7 @@ export async function updateRecurringTransaction(
       }
     }
 
-    const recurringSchema = createRecurringTransactionSchema(t)
-    const parsedValues = recurringSchema.safeParse(values)
+    const parsedValues = createRecurringTransactionSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }
