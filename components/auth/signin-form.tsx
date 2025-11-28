@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { createSignInSchema, type SignInFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
@@ -37,6 +37,7 @@ export function SignInForm() {
     },
   })
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const processSignIn = useCallback(
     async (values: SignInFormValues, token: string) => {
@@ -58,7 +59,6 @@ export function SignInForm() {
               else toast.error(t("auth.be.signInFailed"))
             },
             onSuccess: async (ctx) => {
-              const searchParams = new URLSearchParams(window.location.search)
               const callbackUrl = searchParams.get("next") || "/home"
 
               if (ctx.data.twoFactorRedirect) {

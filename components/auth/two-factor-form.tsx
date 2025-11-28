@@ -30,7 +30,7 @@ export function TwoFactorVerificationForm() {
   const t = useTranslations()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams?.get("next") || "/home"
+  const callbackUrl = searchParams.get("next") || "/home"
 
   const form = useForm<TwoFactorCodeFormValues>({
     resolver: zodResolver(createTwoFactorCodeSchema(t)),
