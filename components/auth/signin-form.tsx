@@ -53,7 +53,6 @@ export function SignInForm() {
               "x-captcha-response": token,
             },
             onError: (ctx) => {
-              console.log(ctx)
               if (ctx.error.code === "INVALID_USERNAME_OR_PASSWORD")
                 toast.error(t("auth.be.signInError"))
               else toast.error(t("auth.be.signInFailed"))

@@ -42,8 +42,7 @@ export function TwoFactorVerificationForm() {
       code: values.code,
       trustDevice: values.trustDevice,
       fetchOptions: {
-        onError: (ctx) => {
-          console.log(ctx)
+        onError: () => {
           toast.error(t("auth.be.twoFactorVerifyFailed"))
         },
         onSuccess: async () => {
