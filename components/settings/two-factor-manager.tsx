@@ -93,9 +93,11 @@ export function TwoFactorManager() {
         ) : (
           <>
             <DialogHeader>
-              <DialogTitle>{t("settings.fe.twoFactorDialogTitle")}</DialogTitle>
+              <DialogTitle>
+                {t("settings.fe.twoFactorDisableDialogTitle")}
+              </DialogTitle>
               <DialogDescription>
-                {t("settings.fe.twoFactorDialogDescriptionEnabled")}
+                {t("settings.fe.twoFactorDisableDialogDescription")}
               </DialogDescription>
             </DialogHeader>
             <DisableTwoFactorForm setOpen={setOpen} />
