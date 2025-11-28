@@ -20,7 +20,7 @@ type AppDataContextValue = {
   goals: Goal[]
   recurringTransactions: RecurringTransaction[]
   currentSession: Session
-  activeSessions: Session["session"][]
+  activeSessions: Session[]
 }
 
 const AppDataContext = React.createContext<AppDataContextValue | null>(null)
@@ -44,7 +44,7 @@ export function AppDataProvider({
   goals: Goal[]
   recurringTransactions: RecurringTransaction[]
   currentSession: Session
-  activeSessions: Session["session"][]
+  activeSessions: Session[]
 }) {
   return (
     <AppDataContext.Provider

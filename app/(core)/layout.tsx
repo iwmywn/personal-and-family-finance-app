@@ -130,7 +130,7 @@ async function DashboardProvider({
       budgets={budgets}
       goals={goals}
       recurringTransactions={recurringTransactions}
-      currentSession={session}
+      currentSession={session.session}
       activeSessions={activeSessions}
     >
       {children}

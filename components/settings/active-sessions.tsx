@@ -41,8 +41,8 @@ export function ActiveSessions() {
   const sortedSessions = activeSessions
     .filter((session) => session.userAgent)
     .sort((a, b) => {
-      const aIsCurrent = a.id === currentSession.session.id
-      const bIsCurrent = b.id === currentSession.session.id
+      const aIsCurrent = a.id === currentSession.id
+      const bIsCurrent = b.id === currentSession.id
       if (aIsCurrent === bIsCurrent) return 0
       return aIsCurrent ? -1 : 1
     })
@@ -126,7 +126,7 @@ export function ActiveSessions() {
             const device = parser.getDevice()
             const os = parser.getOS()
             const browser = parser.getBrowser()
-            const isCurrentSession = session.id === currentSession.session.id
+            const isCurrentSession = session.id === currentSession.id
             const location = locations[session.id]
 
             return (
