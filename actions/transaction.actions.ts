@@ -25,8 +25,7 @@ export async function createTransaction(values: TransactionFormValues) {
 
     const userId = session.user.id
 
-    const transactionSchema = createTransactionSchema(t)
-    const parsedValues = transactionSchema.safeParse(values)
+    const parsedValues = createTransactionSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }
@@ -77,8 +76,7 @@ export async function updateTransaction(
       }
     }
 
-    const transactionSchema = createTransactionSchema(t)
-    const parsedValues = transactionSchema.safeParse(values)
+    const parsedValues = createTransactionSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }

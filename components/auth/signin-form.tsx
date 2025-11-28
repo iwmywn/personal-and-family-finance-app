@@ -29,9 +29,8 @@ export function SignInForm() {
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const t = useTranslations()
-  const schema = createSignInSchema(t)
   const form = useForm<SignInFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createSignInSchema(t)),
     defaultValues: {
       username: "",
       password: "",
@@ -54,19 +53,24 @@ export function SignInForm() {
               "x-captcha-response": token,
             },
             onError: (ctx) => {
-              if (ctx.error.status === 401)
+              console.log(ctx)
+              if (ctx.error.code === "INVALID_USERNAME_OR_PASSWORD")
                 toast.error(t("auth.be.signInError"))
               else toast.error(t("auth.be.signInFailed"))
             },
-            onSuccess: async () => {
+            onSuccess: async (ctx) => {
               const searchParams = new URLSearchParams(window.location.search)
-              let callbackUrl = searchParams.get("next")
+              const callbackUrl = searchParams.get("next") || "/home"
 
-              if (window.location.hash) {
-                callbackUrl = callbackUrl + window.location.hash
+              if (ctx.data.twoFactorRedirect) {
+                const target = new URL("/two-factor", window.location.origin)
+                target.searchParams.set("next", callbackUrl)
+                router.push(`${target.pathname}${target.search}`)
+                form.reset()
+                return
               }
 
-              router.push(callbackUrl || "/home")
+              router.push(callbackUrl)
               form.reset()
 
               await client.getSession({

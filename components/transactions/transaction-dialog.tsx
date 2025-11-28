@@ -80,9 +80,8 @@ export function TransactionDialog({
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useTranslations()
   const formatDate = useFormatDate()
-  const schema = createTransactionSchema(t)
   const form = useForm<TransactionFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createTransactionSchema(t)),
     defaultValues: {
       type: transaction?.type || "income",
       amount: transaction?.amount || 0,

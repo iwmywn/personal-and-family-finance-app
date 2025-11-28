@@ -7,7 +7,8 @@
       "signInError": "Tên đăng nhập hoặc mật khẩu không đúng!",
       "signInFailed": "Đăng nhập thất bại! Vui lòng thử lại sau.",
       "signOutFailed": "Đăng xuất thất bại! Vui lòng thử lại sau.",
-      "signOutSuccess": "Bạn cần đăng nhập lại."
+      "signOutSuccess": "Bạn cần đăng nhập lại.",
+      "twoFactorVerifyFailed": "Mã xác thực không hợp lệ. Vui lòng thử lại."
     },
     "fe": {
       "completeRecaptchaVerification": "Vui lòng hoàn thành xác thực CAPTCHA!",
@@ -17,7 +18,14 @@
       "signIn": "Đăng nhập",
       "signInDescription": "Nhập tên người dùng và mật khẩu của bạn để đăng nhập vào tài khoản.",
       "signingOut": "Đang đăng xuất...",
-      "username": "Tên người dùng"
+      "username": "Tên người dùng",
+      "twoFactorPageTitle": "Xác thực hai bước",
+      "twoFactorHeading": "Xác minh danh tính",
+      "twoFactorPageDescription": "Nhập mã từ ứng dụng xác thực hoặc mã dự phòng để hoàn tất đăng nhập.",
+      "twoFactorCodeLabel": "Mã từ ứng dụng",
+      "twoFactorTrustDevice": "Tin cậy thiết bị này trong 30 ngày",
+      "twoFactorTrustDeviceDescription": "Bỏ qua bước 2FA trên trình duyệt này trong 30 ngày tới.",
+      "twoFactorSubmit": "Xác minh"
     }
   },
   "budgets": {
@@ -374,6 +382,12 @@
     }
   },
   "schemas": {
+    "twoFactor": {
+      "passwordRequired": "Mật khẩu là bắt buộc.",
+      "codeRequired": "Vui lòng nhập mã 6 chữ số.",
+      "codeMaxLength": "Mã tối đa 10 chữ số.",
+      "codeDigits": "Mã chỉ được chứa chữ số."
+    },
     "budget": {
       "amountMaxLength": "Số tiền tối đa là 100 tỉ.",
       "amountRequired": "Số tiền phải lớn hơn 0.",
@@ -452,7 +466,13 @@
       "usernameCheckFailed": "Kiểm tra tên người dùng thất bại! Vui lòng thử lại sau.",
       "usernameNotAvailable": "Tên người dùng này đã được sử dụng.",
       "usernameUpdateFailed": "Cập nhật tên người dùng thất bại! Vui lòng thử lại sau.",
-      "usernameUpdated": "Tên người dùng của bạn đã được cập nhật."
+      "usernameUpdated": "Tên người dùng của bạn đã được cập nhật.",
+      "twoFactorEnableFailed": "Không thể tạo bí mật 2FA. Vui lòng thử lại.",
+      "twoFactorVerifyFailed": "Mã 2FA không hợp lệ. Vui lòng thử lại.",
+      "twoFactorEnabled": "Đã bật xác thực hai bước.",
+      "twoFactorDisableFailed": "Tắt xác thực hai bước thất bại. Vui lòng thử lại.",
+      "twoFactorDisabled": "Đã tắt xác thực hai bước.",
+      "invalidPassword": "Mật khẩu không hợp lệ!"
     },
     "fe": {
       "account": "Tài khoản",
@@ -485,7 +505,21 @@
       "unknownLocation": "Không xác định",
       "username": "Tên người dùng",
       "usernamePlaceholder": "Nhập tên người dùng của bạn...",
-      "viewActiveSessions": "Xem phiên đăng nhập"
+      "viewActiveSessions": "Xem phiên đăng nhập",
+      "twoFactorTitle": "Xác thực hai bước",
+      "twoFactorDescription": "Thêm một lớp bảo mật bằng mã TOTP và mã dự phòng.",
+      "twoFactorEnable": "Bật 2FA",
+      "twoFactorDialogTitle": "Quản lý xác thực hai bước",
+      "twoFactorEnableDialogTitle": "Bật 2FA",
+      "twoFactorEnableDialogDescription": "Bật 2FA để bảo vệ tài khoản của bạn.",
+      "twoFactorDialogDescriptionEnabled": "Cập nhật mã dự phòng hoặc tắt xác thực hai bước.",
+      "twoFactorPasswordLabel": "Mật khẩu tài khoản",
+      "twoFactorCodeLabel": "Mã xác minh",
+      "twoFactorTrustDevice": "Tin cậy thiết bị này trong 30 ngày",
+      "twoFactorTrustDeviceDescription": "Bỏ qua bước 2FA trên trình duyệt này trong 30 ngày.",
+      "twoFactorVerify": "Hoàn tất thiết lập",
+      "twoFactorDisable": "Tắt 2FA",
+      "twoFactorSecretLabel": "Mã bí mật"
     }
   },
   "statistics": {

@@ -25,8 +25,7 @@ export async function createBudget(values: BudgetFormValues) {
 
     const userId = session.user.id
 
-    const budgetSchema = createBudgetSchema(t)
-    const parsedValues = budgetSchema.safeParse(values)
+    const parsedValues = createBudgetSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }
@@ -75,8 +74,7 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
       }
     }
 
-    const budgetSchema = createBudgetSchema(t)
-    const parsedValues = budgetSchema.safeParse(values)
+    const parsedValues = createBudgetSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }

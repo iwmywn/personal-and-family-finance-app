@@ -32,8 +32,7 @@ export async function createCustomCategory(values: CategoryFormValues) {
 
     const userId = session.user.id
 
-    const customCategorySchema = createCategorySchema(t)
-    const parsedValues = customCategorySchema.safeParse(values)
+    const parsedValues = createCategorySchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }
@@ -98,8 +97,7 @@ export async function updateCustomCategory(
 
     const userId = session.user.id
 
-    const customCategorySchema = createCategorySchema(t)
-    const parsedValues = customCategorySchema.safeParse(values)
+    const parsedValues = createCategorySchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }

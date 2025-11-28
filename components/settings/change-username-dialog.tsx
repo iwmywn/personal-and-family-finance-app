@@ -36,9 +36,8 @@ export function ChangeUsernameDialog() {
   const t = useTranslations()
   const router = useRouter()
   const { user } = useAppData()
-  const schema = createUsernameSchema(t)
   const form = useForm<UsernameFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createUsernameSchema(t)),
     defaultValues: {
       username: user.username || "",
     },

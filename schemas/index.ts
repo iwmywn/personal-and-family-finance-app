@@ -49,6 +49,27 @@ export const createPasswordSchema = (t: TypedTranslationFunction) => {
     })
 }
 
+export const createTwoFactorPasswordSchema = (t: TypedTranslationFunction) => {
+  return z.object({
+    password: z
+      .string()
+      .min(1, { message: t("schemas.twoFactor.passwordRequired") }),
+  })
+}
+
+export const createTwoFactorCodeSchema = (t: TypedTranslationFunction) => {
+  return z.object({
+    code: z
+      .string()
+      .min(6, { message: t("schemas.twoFactor.codeRequired") })
+      .max(10, { message: t("schemas.twoFactor.codeMaxLength") })
+      .regex(/^\d+$/, {
+        message: t("schemas.twoFactor.codeDigits"),
+      }),
+    trustDevice: z.boolean().optional(),
+  })
+}
+
 export const createNameSchema = (t: TypedTranslationFunction) => {
   return z.object({
     name: z
@@ -328,4 +349,10 @@ export type BudgetFormValues = z.infer<ReturnType<typeof createBudgetSchema>>
 export type GoalFormValues = z.infer<ReturnType<typeof createGoalSchema>>
 export type RecurringTransactionFormValues = z.infer<
   ReturnType<typeof createRecurringTransactionSchema>
+>
+export type TwoFactorPasswordFormValues = z.infer<
+  ReturnType<typeof createTwoFactorPasswordSchema>
+>
+export type TwoFactorCodeFormValues = z.infer<
+  ReturnType<typeof createTwoFactorCodeSchema>
 >

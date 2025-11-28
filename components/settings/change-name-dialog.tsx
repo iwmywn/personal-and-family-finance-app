@@ -36,9 +36,8 @@ export function ChangeNameDialog() {
   const t = useTranslations()
   const router = useRouter()
   const { user } = useAppData()
-  const schema = createNameSchema(t)
   const form = useForm<NameFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createNameSchema(t)),
     defaultValues: {
       name: user.name,
     },

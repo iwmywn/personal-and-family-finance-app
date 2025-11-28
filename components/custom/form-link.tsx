@@ -15,7 +15,6 @@ type FormLinkProps = Omit<
 
 export function FormLink({
   href,
-  side = "none",
   children,
   className,
   ...props
@@ -25,9 +24,6 @@ export function FormLink({
       href={href}
       className={cn(
         "relative inline-flex w-fit shrink-0 items-center justify-center gap-1 text-sm whitespace-nowrap after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:origin-center after:scale-x-0 after:bg-black after:transition-all after:duration-500 hover:after:scale-x-100 dark:after:bg-white [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",
-        side === "left" && "mr-auto",
-        side === "right" && "ml-auto",
-        side === "center" && "mx-auto",
         className
       )}
       {...props}

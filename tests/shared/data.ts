@@ -26,6 +26,7 @@ export const mockUser: DBUser = {
   username: "testuser",
   displayUsername: "testuser",
   locale: "en",
+  twoFactorEnabled: false,
 }
 
 export const mockTransaction: DBTransaction = {

@@ -5,18 +5,27 @@ import { NextResponse, type NextRequest } from "next/server"
 import * as routes from "@/routes"
 
 import { getCurrentSession } from "@/actions/session.actions"
+import { siteConfig } from "@/app/pffa.config"
 
-function redirectIfProtectedRoute(nextUrl: NextURL) {
-  const { pathname, search } = nextUrl
+function redirectIfProtectedRoute(request: NextRequest) {
+  const { nextUrl } = request
+  const { pathname } = nextUrl
 
   if (
-    pathname !== routes.signInRoute &&
+    pathname === routes.twoFactorRoute &&
+    !request.cookies.has(`${siteConfig.name}.two_factor`)
+  ) {
+    return redirectTo(routes.signInRoute, nextUrl)
+  }
+
+  if (
+    !routes.authRoutes.some((route) => pathname.startsWith(route)) &&
     !routes.ignoredRoutes.some((route) => pathname.startsWith(route))
   ) {
     const redirectUrl = new URL(routes.signInRoute, nextUrl)
 
     if (routes.protectedRoutes.some((route) => pathname.startsWith(route))) {
-      redirectUrl.searchParams.set("next", pathname + search)
+      redirectUrl.searchParams.set("next", pathname)
     }
 
     return NextResponse.redirect(redirectUrl)
@@ -36,7 +45,7 @@ export default async function proxy(req: NextRequest) {
   const session = await getCurrentSession()
 
   if (!session) {
-    return redirectIfProtectedRoute(nextUrl)
+    return redirectIfProtectedRoute(req)
   }
 
   if (

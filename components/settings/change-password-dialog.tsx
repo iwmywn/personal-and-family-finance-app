@@ -33,9 +33,8 @@ import { client } from "@/lib/auth-client"
 
 export function ChangePasswordDialog() {
   const t = useTranslations()
-  const schema = createPasswordSchema(t)
   const form = useForm<PasswordFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createPasswordSchema(t)),
     defaultValues: {
       currentPassword: "",
       newPassword: "",
@@ -52,7 +51,7 @@ export function ChangePasswordDialog() {
       revokeOtherSessions: values.revokeOtherSessions,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.status === 400)
+          if (ctx.error.code === "INVALID_PASSWORD")
             toast.error(t("settings.be.passwordIncorrect"))
           else toast.error(t("settings.be.passwordUpdateFailed"))
         },

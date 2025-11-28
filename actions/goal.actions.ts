@@ -25,8 +25,7 @@ export async function createGoal(values: GoalFormValues) {
 
     const userId = session.user.id
 
-    const goalSchema = createGoalSchema(t)
-    const parsedValues = goalSchema.safeParse(values)
+    const parsedValues = createGoalSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }
@@ -76,8 +75,7 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
       }
     }
 
-    const goalSchema = createGoalSchema(t)
-    const parsedValues = goalSchema.safeParse(values)
+    const parsedValues = createGoalSchema(t).safeParse(values)
 
     if (!parsedValues.success) {
       return { error: t("common.be.invalidData") }

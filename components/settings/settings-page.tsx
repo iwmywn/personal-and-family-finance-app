@@ -16,6 +16,7 @@ import { ChangePasswordDialog } from "@/components/settings/change-password-dial
 import { ChangeUsernameDialog } from "@/components/settings/change-username-dialog"
 import { LanguageSelector } from "@/components/settings/language-selector"
 import { ThemeSelector } from "@/components/settings/theme-selector"
+import { TwoFactorManager } from "@/components/settings/two-factor-manager"
 
 export default function SettingsPage() {
   const t = useTranslations()
@@ -86,6 +87,18 @@ export default function SettingsPage() {
             </CardDescription>
             <CardAction>
               <ChangePasswordDialog />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("settings.fe.twoFactorTitle")}</CardTitle>
+            <CardDescription>
+              {t("settings.fe.twoFactorDescription")}
+            </CardDescription>
+            <CardAction>
+              <TwoFactorManager />
             </CardAction>
           </CardHeader>
         </Card>

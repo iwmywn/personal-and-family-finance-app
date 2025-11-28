@@ -7,7 +7,8 @@
       "signInError": "Incorrect username or password!",
       "signInFailed": "Sign in failed! Please try again later.",
       "signOutFailed": "Sign out failed! Please try again later.",
-      "signOutSuccess": "You need to sign in again."
+      "signOutSuccess": "You need to sign in again.",
+      "twoFactorVerifyFailed": "Invalid authentication code. Please try again."
     },
     "fe": {
       "completeRecaptchaVerification": "Please complete CAPTCHA verification!",
@@ -17,7 +18,14 @@
       "signIn": "Sign In",
       "signInDescription": "Enter your username and password to sign in to your account.",
       "signingOut": "Signing out...",
-      "username": "Username"
+      "username": "Username",
+      "twoFactorPageTitle": "Two-Factor Verification",
+      "twoFactorHeading": "Verify your identity",
+      "twoFactorPageDescription": "Enter a code from your authenticator app or a backup code to finish signing in.",
+      "twoFactorCodeLabel": "Authenticator Code",
+      "twoFactorTrustDevice": "Trust this device for 30 days",
+      "twoFactorTrustDeviceDescription": "Skip 2FA prompts on this browser for the next 30 days.",
+      "twoFactorSubmit": "Verify"
     }
   },
   "budgets": {
@@ -374,6 +382,12 @@
     }
   },
   "schemas": {
+    "twoFactor": {
+      "passwordRequired": "Password is required.",
+      "codeRequired": "Enter the 6-digit code from your authenticator app.",
+      "codeMaxLength": "Code must be at most 10 digits.",
+      "codeDigits": "Code can only contain digits."
+    },
     "budget": {
       "amountMaxLength": "Maximum amount is 100 billion.",
       "amountRequired": "Amount must be greater than 0.",
@@ -452,7 +466,13 @@
       "usernameCheckFailed": "Failed to check username availability! Please try again later.",
       "usernameNotAvailable": "This username is already taken.",
       "usernameUpdateFailed": "Failed to update username! Please try again later.",
-      "usernameUpdated": "Your username has been updated."
+      "usernameUpdated": "Your username has been updated.",
+      "twoFactorEnableFailed": "Unable to generate 2FA secret. Please try again.",
+      "twoFactorVerifyFailed": "Invalid 2FA code. Please try again.",
+      "twoFactorEnabled": "Two-factor authentication is now enabled.",
+      "twoFactorDisableFailed": "Failed to disable two-factor authentication. Please try again.",
+      "twoFactorDisabled": "Two-factor authentication has been disabled.",
+      "invalidPassword": "Invalid password!"
     },
     "fe": {
       "account": "Account",
@@ -485,7 +505,21 @@
       "unknownLocation": "Unknown",
       "username": "Username",
       "usernamePlaceholder": "Enter your username...",
-      "viewActiveSessions": "View Active Sessions"
+      "viewActiveSessions": "View Active Sessions",
+      "twoFactorTitle": "Two-Factor Authentication",
+      "twoFactorDescription": "Add an extra security layer to your account with TOTP codes and backup codes.",
+      "twoFactorEnable": "Enable 2FA",
+      "twoFactorDialogTitle": "Manage Two-Factor Authentication",
+      "twoFactorEnableDialogTitle": "Enable 2FA",
+      "twoFactorEnableDialogDescription": "Enable 2FA to secure your account.",
+      "twoFactorDialogDescriptionEnabled": "Update your backup codes or disable two-factor authentication.",
+      "twoFactorPasswordLabel": "Account Password",
+      "twoFactorCodeLabel": "Verification Code",
+      "twoFactorTrustDevice": "Trust this device for 30 days",
+      "twoFactorTrustDeviceDescription": "Skip 2FA prompts on this browser for the next 30 days.",
+      "twoFactorVerify": "Complete setup",
+      "twoFactorDisable": "Disable 2FA",
+      "twoFactorSecretLabel": "Secret key"
     }
   },
   "statistics": {

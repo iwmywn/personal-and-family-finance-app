@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth"
 import { mongodbAdapter } from "better-auth/adapters/mongodb"
 import { nextCookies } from "better-auth/next-js"
-import { captcha, username } from "better-auth/plugins"
+import { captcha, twoFactor, username } from "better-auth/plugins"
 
 import { env as clientEnv } from "@/env/client.mjs"
 import { env as serverEnv } from "@/env/server.mjs"
@@ -36,13 +36,14 @@ export const auth = betterAuth({
     modelName: "accounts",
   },
   plugins: [
-    username(),
-    nextCookies(),
     captcha({
       provider: "google-recaptcha",
       secretKey: serverEnv.RECAPTCHA_SECRET,
       endpoints: ["/sign-in/username"],
     }),
+    twoFactor(),
+    username(),
+    nextCookies(),
   ],
   advanced: {
     cookiePrefix: siteConfig.name,

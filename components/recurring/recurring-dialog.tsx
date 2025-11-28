@@ -84,9 +84,8 @@ export function RecurringDialog({
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useTranslations()
   const formatDate = useFormatDate()
-  const schema = createRecurringTransactionSchema(t)
   const form = useForm<RecurringTransactionFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createRecurringTransactionSchema(t)),
     defaultValues: {
       type: recurring?.type || "income",
       categoryKey: recurring?.categoryKey || "",
