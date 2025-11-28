@@ -515,7 +515,7 @@
       "twoFactorTitle": "Two-Factor Authentication",
       "twoFactorTrustDevice": "Trust this device for 30 days",
       "twoFactorTrustDeviceDescription": "Skip 2FA prompts on this browser for the next 30 days.",
-      "twoFactorVerify": "Complete setup",
+      "twoFactorVerify": "Complete Setup",
       "unknownLocation": "Unknown",
       "username": "Username",
       "usernamePlaceholder": "Enter your username...",

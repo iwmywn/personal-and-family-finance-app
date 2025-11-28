@@ -17,6 +17,14 @@ export const auth = betterAuth({
     autoSignIn: false,
     requireEmailVerification: false,
   },
+  account: {
+    modelName: "accounts",
+  },
+  session: {
+    modelName: "sessions",
+    expiresIn: 60 * 60 * 24 * 7,
+    updateAge: 60 * 60 * 24,
+  },
   user: {
     modelName: "users",
     additionalFields: {
@@ -27,13 +35,8 @@ export const auth = betterAuth({
       },
     },
   },
-  session: {
-    modelName: "sessions",
-    expiresIn: 60 * 60 * 24 * 7,
-    updateAge: 60 * 60 * 24,
-  },
-  account: {
-    modelName: "accounts",
+  verification: {
+    modelName: "verifications",
   },
   plugins: [
     captcha({
@@ -41,7 +44,13 @@ export const auth = betterAuth({
       secretKey: serverEnv.RECAPTCHA_SECRET,
       endpoints: ["/sign-in/username"],
     }),
-    twoFactor(),
+    twoFactor({
+      schema: {
+        twoFactor: {
+          modelName: "twoFactors",
+        },
+      },
+    }),
     username(),
     nextCookies(),
   ],
