@@ -19,7 +19,7 @@ export const createSignInSchema = (t: TypedTranslationFunction) => {
     username: z
       .string()
       .min(1, { message: t("schemas.signIn.usernameRequired") }),
-    password: basePasswordSchema(t, "schemas.signIn.passwordRequired"),
+    password: basePasswordSchema(t, "schemas.password.passwordRequired"),
   })
 }
 
@@ -29,10 +29,7 @@ export const createPasswordSchema = (t: TypedTranslationFunction) => {
       currentPassword: z
         .string()
         .min(1, { message: t("schemas.password.currentPasswordRequired") }),
-      newPassword: basePasswordSchema(
-        t,
-        "schemas.password.newPasswordRequired"
-      ),
+      newPassword: basePasswordSchema(t, "schemas.password.passwordRequired"),
       confirmPassword: z
         .string()
         .min(1, { message: t("schemas.password.confirmPasswordRequired") }),
@@ -51,9 +48,7 @@ export const createPasswordSchema = (t: TypedTranslationFunction) => {
 
 export const createTwoFactorPasswordSchema = (t: TypedTranslationFunction) => {
   return z.object({
-    password: z
-      .string()
-      .min(1, { message: t("schemas.twoFactor.passwordRequired") }),
+    password: basePasswordSchema(t, "schemas.password.passwordRequired"),
   })
 }
 

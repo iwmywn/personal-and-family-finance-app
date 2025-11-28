@@ -146,7 +146,7 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("settings.fe.twoFactorPasswordLabel")}</FormLabel>
+              <FormLabel>{t("auth.fe.password")}</FormLabel>
               <FormControl>
                 <PasswordInput
                   placeholder="********"
@@ -272,7 +272,7 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("settings.fe.twoFactorPasswordLabel")}</FormLabel>
+              <FormLabel>{t("auth.fe.password")}</FormLabel>
               <FormControl>
                 <PasswordInput
                   placeholder="********"

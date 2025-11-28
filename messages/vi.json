@@ -415,7 +415,7 @@
     "password": {
       "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu mới của bạn.",
       "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc.",
-      "newPasswordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+      "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
       "passwordsNotMatch": "Mật khẩu không khớp."
     },
     "recurring": {
@@ -427,7 +427,6 @@
       "startDateRequired": "Vui lòng chọn ngày bắt đầu."
     },
     "signIn": {
-      "passwordRequired": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
       "usernameRequired": "Tên người dùng là bắt buộc."
     },
     "transaction": {
@@ -442,8 +441,7 @@
     "twoFactor": {
       "codeDigits": "Mã chỉ được chứa chữ số.",
       "codeMaxLength": "Mã tối đa 10 chữ số.",
-      "codeRequired": "Vui lòng nhập mã 6 chữ số.",
-      "passwordRequired": "Mật khẩu là bắt buộc."
+      "codeRequired": "Vui lòng nhập mã 6 chữ số."
     },
     "username": {
       "usernameInvalid": "Tên người dùng chỉ có thể chứa chữ cái, số, dấu gạch dưới và dấu chấm.",
@@ -510,7 +508,6 @@
       "twoFactorEnable": "Bật 2FA",
       "twoFactorEnableDialogDescription": "Bật 2FA để bảo vệ tài khoản của bạn.",
       "twoFactorEnableDialogTitle": "Bật 2FA",
-      "twoFactorPasswordLabel": "Mật khẩu tài khoản",
       "twoFactorSecretLabel": "Mã bí mật",
       "twoFactorTitle": "Xác thực hai bước",
       "twoFactorTrustDevice": "Tin cậy thiết bị này trong 30 ngày",

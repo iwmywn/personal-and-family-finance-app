@@ -415,7 +415,7 @@
     "password": {
       "confirmPasswordRequired": "Please confirm your new password.",
       "currentPasswordRequired": "Current password is required.",
-      "newPasswordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
+      "passwordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
       "passwordsNotMatch": "Passwords do not match."
     },
     "recurring": {
@@ -427,7 +427,6 @@
       "startDateRequired": "Please select a start date."
     },
     "signIn": {
-      "passwordRequired": "Password must have at least 8 characters, including uppercase, lowercase, number and special character.",
       "usernameRequired": "Username is required."
     },
     "transaction": {
@@ -442,8 +441,7 @@
     "twoFactor": {
       "codeDigits": "Code can only contain digits.",
       "codeMaxLength": "Code must be at most 10 digits.",
-      "codeRequired": "Enter the 6-digit code from your authenticator app.",
-      "passwordRequired": "Password is required."
+      "codeRequired": "Enter the 6-digit code from your authenticator app."
     },
     "username": {
       "usernameInvalid": "Username can only contain letters, numbers, underscores, and dots.",
@@ -510,7 +508,6 @@
       "twoFactorEnable": "Enable 2FA",
       "twoFactorEnableDialogDescription": "Enable 2FA to secure your account.",
       "twoFactorEnableDialogTitle": "Enable 2FA",
-      "twoFactorPasswordLabel": "Account Password",
       "twoFactorSecretLabel": "Secret key",
       "twoFactorTitle": "Two-Factor Authentication",
       "twoFactorTrustDevice": "Trust this device for 30 days",
