@@ -469,6 +469,7 @@ msgstr "Amount"
 #: components\goals\goals-page.tsx
 #: components\home\homepage.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-page.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-page.tsx
 #: components\recurring\recurring-transactions-page.tsx
@@ -517,6 +518,7 @@ msgstr "Update"
 #: components\goals\goals-filters.tsx
 #: components\goals\goals-table.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
@@ -524,6 +526,7 @@ msgstr "Update"
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
 #: components\recurring\recurring-transactions-table.tsx
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -593,6 +596,7 @@ msgstr "Warning (75-100%)"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -607,6 +611,7 @@ msgstr "All Categories"
 #: components\goals\goals-filters.tsx
 #: components\goals\goals-table.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
@@ -621,6 +626,7 @@ msgstr "Active"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -642,6 +648,7 @@ msgstr "Upcoming"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -655,6 +662,7 @@ msgstr "To"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -673,6 +681,7 @@ msgstr "Exceeded (≥ 100%)"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -686,6 +695,7 @@ msgstr "Year"
 #: components\categories\category-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -698,6 +708,7 @@ msgstr "Reset"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -710,6 +721,7 @@ msgstr "Select Date Range"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -740,6 +752,7 @@ msgstr "Progress"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -750,6 +763,7 @@ msgstr "All Statuses"
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -772,6 +786,7 @@ msgstr "No Transactions"
 #: components\goals\goals-filters.tsx
 #: components\goals\goals-table.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
@@ -788,6 +803,7 @@ msgstr "Status"
 #: components\categories\category-dialog.tsx
 #: components\categories\category-filters.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
@@ -795,6 +811,7 @@ msgstr "Status"
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
 #: components\recurring\recurring-transactions-table.tsx
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -890,12 +907,14 @@ msgstr "Manage your custom categories."
 
 #: components\categories\categories-table.tsx
 #: components\categories\category-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
 #: components\recurring\recurring-transactions-table.tsx
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-filters.tsx
@@ -921,6 +940,7 @@ msgstr "No categories found matching your filters."
 #: components\goals\goal-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
@@ -928,6 +948,7 @@ msgstr "No categories found matching your filters."
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
 #: components\recurring\recurring-transactions-table.tsx
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -985,6 +1006,7 @@ msgid "T83iU7"
 msgstr "Search categories..."
 
 #: components\categories\category-filters.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-transaction-filters.tsx
 #: components\recurring\recurring-transactions-filters.tsx
@@ -1148,12 +1170,14 @@ msgid "GMkXVd"
 msgstr "Recent Transactions"
 
 #: components\home\recent-transactions.tsx
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\transactions-table.tsx
 msgid "JWV3aB"
 msgstr "Start adding your transactions."
 
 #: components\home\recent-transactions.tsx
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transactions-table.tsx
@@ -1204,6 +1228,7 @@ msgstr "Personal and Family Finance Application"
 
 #: components\layout\header.tsx
 #: components\layout\main-nav.tsx
+#: components\recurring-transactions\recurring-transactions-page.tsx
 #: components\recurring\recurring-page.tsx
 #: components\recurring\recurring-transactions-page.tsx
 #: hooks\use-nav.ts
@@ -1258,6 +1283,7 @@ msgid "5nuO2v"
 msgstr "Edit Recurring Transaction"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
@@ -1359,6 +1385,19 @@ msgstr "Monthly"
 msgid "zxvhnE"
 msgstr "Daily"
 
+#: components\recurring-transactions\recurring-transactions-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+msgid "jZimtU"
+msgstr "Search recurring transactions..."
+
+#: components\recurring-transactions\recurring-transactions-page.tsx
+#: components\recurring\recurring-page.tsx
+#: components\recurring\recurring-transactions-page.tsx
+msgid "w8tTYc"
+msgstr "Manage your recurring transactions."
+
 #: components\recurring-transactions\recurring-transactions-table.tsx
 #: components\recurring\recurring-table.tsx
 #: components\recurring\recurring-transactions-table.tsx
@@ -1388,17 +1427,6 @@ msgstr "Every {days} days"
 #: components\recurring\recurring-transactions-table.tsx
 msgid "xRs5e/"
 msgstr "No recurring transactions found"
-
-#: components\recurring\recurring-filters.tsx
-#: components\recurring\recurring-transaction-filters.tsx
-#: components\recurring\recurring-transactions-filters.tsx
-msgid "jZimtU"
-msgstr "Search recurring transactions..."
-
-#: components\recurring\recurring-page.tsx
-#: components\recurring\recurring-transactions-page.tsx
-msgid "w8tTYc"
-msgstr "Manage your recurring transactions."
 
 #: components\settings\active-sessions.tsx
 msgid "bLQmWN"
@@ -1668,15 +1696,18 @@ msgstr "Total Expense"
 msgid "q2bcKc"
 msgstr "Total Income"
 
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 msgid "CDTMW3"
 msgstr "Total Amount"
 
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\transactions-table.tsx
 msgid "Cl5VLx"
 msgstr "No transactions found matching your filters."
 
+#: components\statistics\statistics-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 msgid "gsAs8V"
 msgstr "Transaction Count"

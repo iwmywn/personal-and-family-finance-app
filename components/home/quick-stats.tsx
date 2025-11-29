@@ -184,7 +184,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {t("Category with the highest number of transactions.")}
+              {t("Category with the highest total amount in the month.")}
             </TooltipContent>
           </Tooltip>
         </div>
