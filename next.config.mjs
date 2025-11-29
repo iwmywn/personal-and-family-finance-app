@@ -10,8 +10,6 @@ const withNextIntl = createNextIntlPlugin({
       "./app",
       "./components",
       "./hooks",
-      "./lib",
-      "./schemas",
     ],
     extract: {
       sourceLocale: "en",
@@ -19,7 +17,7 @@ const withNextIntl = createNextIntlPlugin({
     messages: {
       path: "./messages",
       format: "po",
-      locales: ["en", "vi"],
+      locales: 'infer',
     },
   },
 })
