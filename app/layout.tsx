@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
-import { getLocale, getTranslations } from "next-intl/server"
+import { getExtracted, getLocale } from "next-intl/server"
 
 import { nunito } from "@/app/fonts"
 
@@ -19,14 +19,14 @@ import { siteConfig } from "@/app/pffa.config"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   return {
     title: {
       template: `%s | ${siteConfig.name}`,
       default: siteConfig.name,
     },
-    description: t("common.fe.appDescription"),
+    description: t("Personal & Family Finance App"),
     authors: [
       {
         name: "iwmywn",
@@ -39,13 +39,13 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: LOCALE_CONFIG[locale].intlLocale,
       url: env.NEXT_PUBLIC_URL,
       title: siteConfig.name,
-      description: t("common.fe.appDescription"),
+      description: t("Personal & Family Finance App"),
       siteName: siteConfig.name,
     },
     twitter: {
       card: "summary_large_image",
       title: siteConfig.name,
-      description: t("common.fe.appDescription"),
+      description: t("Personal & Family Finance App"),
       creator: "@ctcuasaunay",
     },
   }

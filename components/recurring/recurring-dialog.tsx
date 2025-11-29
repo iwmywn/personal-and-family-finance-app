@@ -1,13 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import {
-  createRecurringTransactionSchema,
-  type RecurringTransactionFormValues,
-} from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -59,11 +55,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormButton } from "@/components/custom/form-button"
 import { FormLink } from "@/components/custom/form-link"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useSchemas } from "@/hooks/use-schemas"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
+import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 interface RecurringDialogProps {
   recurring?: RecurringTransaction
@@ -82,10 +80,12 @@ export function RecurringDialog({
     recurring?.type || "income"
   )
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createRecurringTransactionSchema } = useSchemas()
+
   const formatDate = useFormatDate()
   const form = useForm<RecurringTransactionFormValues>({
-    resolver: zodResolver(createRecurringTransactionSchema(t)),
+    resolver: zodResolver(createRecurringTransactionSchema()),
     defaultValues: {
       type: recurring?.type || "income",
       categoryKey: recurring?.categoryKey || "",
@@ -105,7 +105,7 @@ export function RecurringDialog({
   })
 
   const { customCategories } = useAppData()
-  const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
+  const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
 
   const startDate = useWatch({
     control: form.control,
@@ -130,6 +130,13 @@ export function RecurringDialog({
   }
 
   async function onSubmit(values: RecurringTransactionFormValues) {
+    const parsedValues = createRecurringTransactionSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     if (recurring) {
       const { success, error } = await updateRecurringTransaction(
         recurring._id,
@@ -183,11 +190,11 @@ export function RecurringDialog({
       name="categoryKey"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{t("common.fe.category")}</FormLabel>
+          <FormLabel>{t("Category")}</FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder={t("common.fe.selectCategory")}>
+                <SelectValue placeholder={t("Select category")}>
                   {field.value ? getCategoryLabel(field.value) : null}
                 </SelectValue>
               </SelectTrigger>
@@ -227,9 +234,9 @@ export function RecurringDialog({
             </SelectContent>
           </Select>
           <FormDescription>
-            {t("transactions.fe.noCategoryFound")}{" "}
+            {t("No category found.")}{" "}
             <FormLink href="/categories" className="text-foreground/85">
-              {t("transactions.fe.createCustomCategory")}
+              {t("Create a custom category")}
             </FormLink>
           </FormDescription>
           <FormMessage />
@@ -244,13 +251,13 @@ export function RecurringDialog({
         <DialogHeader>
           <DialogTitle>
             {recurring
-              ? t("recurring.fe.editRecurring")
-              : t("recurring.fe.addRecurring")}
+              ? t("Edit Recurring Transaction")
+              : t("Add Recurring Transaction")}
           </DialogTitle>
           <DialogDescription>
             {recurring
-              ? t("recurring.fe.editRecurringDescription")
-              : t("recurring.fe.addRecurringDescription")}
+              ? t("Update recurring transaction information.")
+              : t("Create a recurring transaction.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -258,12 +265,8 @@ export function RecurringDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={transactionType} onValueChange={handleTypeChange}>
               <TabsList className="w-full">
-                <TabsTrigger value="income">
-                  {t("common.fe.income")}
-                </TabsTrigger>
-                <TabsTrigger value="expense">
-                  {t("common.fe.expense")}
-                </TabsTrigger>
+                <TabsTrigger value="income">{t("Income")}</TabsTrigger>
+                <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="income" className="space-y-4">
@@ -280,7 +283,7 @@ export function RecurringDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.amount")} (VND)</FormLabel>
+                  <FormLabel>{t("Amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -305,13 +308,11 @@ export function RecurringDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.description")}</FormLabel>
+                  <FormLabel>{t("Description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
-                        placeholder={t(
-                          "transactions.fe.descriptionPlaceholder"
-                        )}
+                        placeholder={t("Enter a description...")}
                         maxLength={200}
                         {...field}
                       />
@@ -332,7 +333,7 @@ export function RecurringDialog({
               name="frequency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("recurring.fe.frequency")}</FormLabel>
+                  <FormLabel>{t("Frequency")}</FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value)
@@ -348,27 +349,17 @@ export function RecurringDialog({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="daily">
-                        {t("recurring.fe.frequencyDaily")}
-                      </SelectItem>
-                      <SelectItem value="weekly">
-                        {t("recurring.fe.frequencyWeekly")}
-                      </SelectItem>
+                      <SelectItem value="daily">{t("Daily")}</SelectItem>
+                      <SelectItem value="weekly">{t("Weekly")}</SelectItem>
                       <SelectItem value="bi-weekly">
-                        {t("recurring.fe.frequencyBiWeekly")}
+                        {t("Bi-Weekly")}
                       </SelectItem>
-                      <SelectItem value="monthly">
-                        {t("recurring.fe.frequencyMonthly")}
-                      </SelectItem>
+                      <SelectItem value="monthly">{t("Monthly")}</SelectItem>
                       <SelectItem value="quarterly">
-                        {t("recurring.fe.frequencyQuarterly")}
+                        {t("Quarterly")}
                       </SelectItem>
-                      <SelectItem value="yearly">
-                        {t("recurring.fe.frequencyYearly")}
-                      </SelectItem>
-                      <SelectItem value="random">
-                        {t("recurring.fe.frequencyRandom")}
-                      </SelectItem>
+                      <SelectItem value="yearly">{t("Yearly")}</SelectItem>
+                      <SelectItem value="random">{t("Random")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -382,13 +373,11 @@ export function RecurringDialog({
                 name="randomEveryXDays"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("recurring.fe.randomEveryXDays")}</FormLabel>
+                    <FormLabel>{t("Every X Days")}</FormLabel>
                     <FormControl>
                       <Input
                         inputMode="numeric"
-                        placeholder={t(
-                          "recurring.fe.randomEveryXDaysPlaceholder"
-                        )}
+                        placeholder={t("e.g. 15")}
                         value={
                           field.value ? field.value.toLocaleString("vi-VN") : ""
                         }
@@ -410,7 +399,7 @@ export function RecurringDialog({
               name="startDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.startDate")}</FormLabel>
+                  <FormLabel>{t("Start Date")}</FormLabel>
                   <Popover
                     open={startCalendarOpen}
                     onOpenChange={setStartCalendarOpen}
@@ -427,7 +416,7 @@ export function RecurringDialog({
                           {startDate ? (
                             formatDate(startDate)
                           ) : (
-                            <span>{t("common.fe.selectDate")}</span>
+                            <span>{t("Select date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -464,7 +453,7 @@ export function RecurringDialog({
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.endDate")} (Optional)</FormLabel>
+                  <FormLabel>{t("End Date")} (Optional)</FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}
@@ -486,7 +475,7 @@ export function RecurringDialog({
                           {endDate ? (
                             formatDate(endDate)
                           ) : (
-                            <span>{t("common.fe.noEndDate")}</span>
+                            <span>{t("No end date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -523,7 +512,7 @@ export function RecurringDialog({
               name="isActive"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.status")}</FormLabel>
+                  <FormLabel>{t("Status")}</FormLabel>
                   <Select
                     onValueChange={(value) => field.onChange(value === "true")}
                     value={field.value ? "true" : "false"}
@@ -534,12 +523,8 @@ export function RecurringDialog({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="true">
-                        {t("common.fe.active")}
-                      </SelectItem>
-                      <SelectItem value="false">
-                        {t("common.fe.inactive")}
-                      </SelectItem>
+                      <SelectItem value="true">{t("Active")}</SelectItem>
+                      <SelectItem value="false">{t("Inactive")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -549,12 +534,12 @@ export function RecurringDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{t("common.fe.cancel")}</Button>
+                <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
 
               <FormButton
                 isSubmitting={form.formState.isSubmitting}
-                text={recurring ? t("common.fe.update") : t("common.fe.add")}
+                text={recurring ? t("Update") : t("Add")}
               />
             </DialogFooter>
           </form>

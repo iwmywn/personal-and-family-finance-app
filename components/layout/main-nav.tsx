@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useTranslations } from "next-intl"
 
 import {
   SidebarGroup,
@@ -11,27 +10,27 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { mainNav } from "@/lib/nav"
+import { useNav } from "@/hooks/use-nav"
 
 export function MainNav() {
   const pathname = usePathname()
-  const t = useTranslations()
+  const { mainNav } = useNav()
 
   return (
     <>
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            {mainNav.map(({ key, url, icon: Icon }) => (
+            {mainNav.map(({ url, icon: Icon, label }) => (
               <SidebarMenuItem key={url}>
                 <SidebarMenuButton
                   isActive={pathname === url}
-                  tooltip={t(`navigation.${key}`)}
+                  tooltip={label}
                   asChild
                 >
                   <Link href={url}>
                     <Icon />
-                    {t(`navigation.${key}`)}
+                    {label}
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

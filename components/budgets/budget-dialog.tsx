@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { createBudgetSchema, type BudgetFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -44,11 +43,13 @@ import {
 } from "@/components/ui/select"
 import { FormButton } from "@/components/custom/form-button"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useSchemas } from "@/hooks/use-schemas"
 import type { Budget } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
+import type { BudgetFormValues } from "@/schemas/types"
 
 interface BudgetDialogProps {
   budget?: Budget
@@ -60,10 +61,12 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createBudgetSchema } = useSchemas()
+
   const formatDate = useFormatDate()
   const form = useForm<BudgetFormValues>({
-    resolver: zodResolver(createBudgetSchema(t)),
+    resolver: zodResolver(createBudgetSchema()),
     defaultValues: {
       categoryKey: budget?.categoryKey || "",
       allocatedAmount: budget?.allocatedAmount || 0,
@@ -73,7 +76,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   })
 
   const { customCategories } = useAppData()
-  const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
+  const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
 
   const startDate = useWatch({
     control: form.control,
@@ -86,6 +89,13 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   })
 
   async function onSubmit(values: BudgetFormValues) {
+    const parsedValues = createBudgetSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     if (budget) {
       const { success, error } = await updateBudget(budget._id, {
         ...values,
@@ -126,12 +136,12 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {budget ? t("budgets.fe.editBudget") : t("budgets.fe.addBudget")}
+            {budget ? t("Edit Budget") : t("Add Budget")}
           </DialogTitle>
           <DialogDescription>
             {budget
-              ? t("budgets.fe.editBudgetDescription")
-              : t("budgets.fe.addBudgetDescription")}
+              ? t("Update budget information.")
+              : t("Create a budget for a category to track your spending.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -142,13 +152,11 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="categoryKey"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.category")}</FormLabel>
+                  <FormLabel>{t("Category")}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue
-                          placeholder={t("common.fe.selectCategory")}
-                        >
+                        <SelectValue placeholder={t("Select category")}>
                           {field.value ? getCategoryLabel(field.value) : null}
                         </SelectValue>
                       </SelectTrigger>
@@ -198,7 +206,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="allocatedAmount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.amount")} (VND)</FormLabel>
+                  <FormLabel>{t("Amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -223,7 +231,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="startDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.startDate")}</FormLabel>
+                  <FormLabel>{t("Start Date")}</FormLabel>
                   <Popover
                     open={startCalendarOpen}
                     onOpenChange={setStartCalendarOpen}
@@ -240,7 +248,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           {startDate ? (
                             formatDate(startDate)
                           ) : (
-                            <span>{t("common.fe.selectDate")}</span>
+                            <span>{t("Select date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -276,7 +284,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.endDate")}</FormLabel>
+                  <FormLabel>{t("End Date")}</FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}
@@ -293,7 +301,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           {endDate ? (
                             formatDate(endDate)
                           ) : (
-                            <span>{t("common.fe.selectDate")}</span>
+                            <span>{t("Select date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -326,11 +334,11 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{t("common.fe.cancel")}</Button>
+                <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
               <FormButton
                 isSubmitting={form.formState.isSubmitting}
-                text={budget ? t("common.fe.update") : t("common.fe.add")}
+                text={budget ? t("Update") : t("Add")}
               />
             </DialogFooter>
           </form>

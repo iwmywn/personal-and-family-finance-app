@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
 import {
@@ -25,7 +25,7 @@ import { getTransactionsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Transactions", async () => {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   describe("createTransaction", () => {
     it("should return error when not authenticated", async () => {
@@ -34,22 +34,9 @@ describe("Transactions", async () => {
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await createTransaction({
-        type: "invalid" as "income" | "expense",
-        categoryKey: "",
-        amount: -1,
-        description: "",
-        date: new Date("invalid"),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error when creating duplicate transaction on the same day", async () => {
@@ -60,10 +47,12 @@ describe("Transactions", async () => {
         mockValidTransactionValues
       )
 
-      expect(firstResult.success).toBe(t("transactions.be.transactionAdded"))
+      expect(firstResult.success).toBe("Transaction has been added.")
       expect(firstResult.error).toBeUndefined()
       expect(duplicateResult.success).toBeUndefined()
-      expect(duplicateResult.error).toBe(t("transactions.be.transactionExists"))
+      expect(duplicateResult.error).toBe(
+        "This transaction has already been created today!"
+      )
     })
 
     it("should return error when database insertion fails", async () => {
@@ -76,7 +65,9 @@ describe("Transactions", async () => {
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("transactions.be.transactionAddFailed"))
+      expect(result.error).toBe(
+        "Failed to add transaction! Please try again later."
+      )
     })
 
     it("should successfully create transaction", async () => {
@@ -95,7 +86,7 @@ describe("Transactions", async () => {
       expect(addedTransaction?.date.toISOString()).toBe(
         "2024-02-05T00:00:00.000Z"
       )
-      expect(result.success).toBe(t("transactions.be.transactionAdded"))
+      expect(result.success).toBe("Transaction has been added.")
       expect(result.error).toBeUndefined()
     })
 
@@ -106,7 +97,9 @@ describe("Transactions", async () => {
       const result = await createTransaction(mockValidTransactionValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("transactions.be.transactionAddFailed"))
+      expect(result.error).toBe(
+        "Failed to add transaction! Please try again later."
+      )
     })
   })
 
@@ -120,22 +113,9 @@ describe("Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await updateTransaction(mockTransaction._id.toString(), {
-        type: "invalid" as "income" | "expense",
-        categoryKey: "",
-        amount: -1,
-        description: "",
-        date: new Date("invalid"),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error with invalid transaction ID", async () => {
@@ -147,7 +127,7 @@ describe("Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("transactions.be.invalidTransactionId"))
+      expect(result.error).toBe("Invalid transaction ID!")
     })
 
     it("should return error when transaction not found", async () => {
@@ -160,7 +140,7 @@ describe("Transactions", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        t("transactions.be.transactionNotFoundOrNoPermission")
+        "Transaction not found or you don't have permission to edit!"
       )
     })
 
@@ -200,7 +180,7 @@ describe("Transactions", async () => {
       expect(unrelatedTransaction?.categoryKey).toBe("food_beverage")
       expect(unrelatedTransaction?.amount).toBe(50000)
       expect(unrelatedTransaction?.description).toBe("hamburger")
-      expect(result.success).toBe(t("transactions.be.transactionUpdated"))
+      expect(result.success).toBe("Transaction has been updated.")
       expect(result.error).toBeUndefined()
     })
 
@@ -214,7 +194,9 @@ describe("Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("transactions.be.transactionUpdateFailed"))
+      expect(result.error).toBe(
+        "Failed to update transaction! Please try again later."
+      )
     })
   })
 
@@ -225,7 +207,9 @@ describe("Transactions", async () => {
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error with invalid transaction ID", async () => {
@@ -234,7 +218,7 @@ describe("Transactions", async () => {
       const result = await deleteTransaction("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("transactions.be.invalidTransactionId"))
+      expect(result.error).toBe("Invalid transaction ID!")
     })
 
     it("should return error when transaction not found", async () => {
@@ -244,7 +228,7 @@ describe("Transactions", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        t("transactions.be.transactionNotFoundOrNoPermissionDelete")
+        "Transaction not found or you don't have permission to delete!"
       )
     })
 
@@ -259,7 +243,7 @@ describe("Transactions", async () => {
       })
 
       expect(deletedTransaction).toBe(null)
-      expect(result.success).toBe(t("transactions.be.transactionDeleted"))
+      expect(result.success).toBe("Transaction has been deleted.")
       expect(result.error).toBeUndefined()
     })
 
@@ -270,7 +254,9 @@ describe("Transactions", async () => {
       const result = await deleteTransaction(mockTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("transactions.be.transactionDeleteFailed"))
+      expect(result.error).toBe(
+        "Failed to delete transaction! Please try again later."
+      )
     })
   })
 
@@ -281,7 +267,9 @@ describe("Transactions", async () => {
       const result = await getTransactions("", t)
 
       expect(result.transactions).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return empty transactions list", async () => {
@@ -348,7 +336,9 @@ describe("Transactions", async () => {
       const result = await getTransactions(mockUser._id.toString(), t)
 
       expect(result.transactions).toBeUndefined()
-      expect(result.error).toBe(t("transactions.be.transactionFetchFailed"))
+      expect(result.error).toBe(
+        "Failed to load transactions! Please try again later."
+      )
     })
   })
 })

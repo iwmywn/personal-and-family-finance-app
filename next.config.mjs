@@ -5,17 +5,24 @@ import "./env/server.mjs"
 
 const withNextIntl = createNextIntlPlugin({
   experimental: {
-    srcPath: ["./actions", "./app", "./components", "./hooks", "./lib", "./schemas"],
+    srcPath: [
+      "./actions",
+      "./app",
+      "./components",
+      "./hooks",
+      "./lib",
+      "./schemas",
+    ],
     extract: {
-      sourceLocale: 'en'
+      sourceLocale: "en",
     },
     messages: {
-      path: './messages',
-      format: 'po',
-      locales: 'infer'
-    }
-  }
-});
+      path: "./messages",
+      format: "po",
+      locales: ["en", "vi"],
+    },
+  },
+})
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

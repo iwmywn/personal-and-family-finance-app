@@ -1,35 +1,28 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
-import type { TypedTranslationFunction } from "@/i18n/types"
 import { getTransactionsCollection } from "@/lib/collections"
 import { type Transaction } from "@/lib/definitions"
+import type { TransactionFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
 
 export async function createTransaction(values: TransactionFormValues) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     const userId = session.user.id
-
-    const parsedValues = createTransactionSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
-    }
 
     const transactionsCollection = await getTransactionsCollection()
 
@@ -45,19 +38,19 @@ export async function createTransaction(values: TransactionFormValues) {
     const existingTransaction = await transactionsCollection.findOne(data)
 
     if (existingTransaction) {
-      return { error: t("transactions.be.transactionExists") }
+      return { error: t("This transaction has already been created today!") }
     }
 
     const result = await transactionsCollection.insertOne(data)
 
     if (!result.acknowledged)
-      return { error: t("transactions.be.transactionAddFailed") }
+      return { error: t("Failed to add transaction! Please try again later.") }
 
     updateTag("transactions")
-    return { success: t("transactions.be.transactionAdded"), error: undefined }
+    return { success: t("Transaction has been added."), error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
-    return { error: t("transactions.be.transactionAddFailed") }
+    return { error: t("Failed to add transaction! Please try again later.") }
   }
 }
 
@@ -65,26 +58,20 @@ export async function updateTransaction(
   transactionId: string,
   values: TransactionFormValues
 ) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
-    }
-
-    const parsedValues = createTransactionSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: t("transactions.be.invalidTransactionId"),
+        error: t("Invalid transaction ID!"),
       }
     }
 
@@ -96,7 +83,7 @@ export async function updateTransaction(
 
     if (!existingTransaction) {
       return {
-        error: t("transactions.be.transactionNotFoundOrNoPermission"),
+        error: t("Transaction not found or you don't have permission to edit!"),
       }
     }
 
@@ -115,30 +102,30 @@ export async function updateTransaction(
 
     updateTag("transactions")
     return {
-      success: t("transactions.be.transactionUpdated"),
+      success: t("Transaction has been updated."),
       error: undefined,
     }
   } catch (error) {
     console.error("Error updating transaction:", error)
-    return { error: t("transactions.be.transactionUpdateFailed") }
+    return { error: t("Failed to update transaction! Please try again later.") }
   }
 }
 
 export async function deleteTransaction(transactionId: string) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     if (!ObjectId.isValid(transactionId)) {
       return {
-        error: t("transactions.be.invalidTransactionId"),
+        error: t("Invalid transaction ID!"),
       }
     }
 
@@ -150,7 +137,9 @@ export async function deleteTransaction(transactionId: string) {
 
     if (!existingTransaction) {
       return {
-        error: t("transactions.be.transactionNotFoundOrNoPermissionDelete"),
+        error: t(
+          "Transaction not found or you don't have permission to delete!"
+        ),
       }
     }
 
@@ -159,24 +148,23 @@ export async function deleteTransaction(transactionId: string) {
     })
 
     updateTag("transactions")
-    return { success: t("transactions.be.transactionDeleted") }
+    return { success: t("Transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
-    return { error: t("transactions.be.transactionDeleteFailed") }
+    return { error: t("Failed to delete transaction! Please try again later.") }
   }
 }
 
-export async function getTransactions(
-  userId: string,
-  t: TypedTranslationFunction
-) {
+export async function getTransactions(userId: string) {
   "use cache: private"
   cacheTag("transactions")
+
+  const t = await getExtracted()
 
   try {
     if (!userId) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
@@ -196,6 +184,6 @@ export async function getTransactions(
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)
-    return { error: t("transactions.be.transactionFetchFailed") }
+    return { error: t("Failed to load transactions! Please try again later.") }
   }
 }

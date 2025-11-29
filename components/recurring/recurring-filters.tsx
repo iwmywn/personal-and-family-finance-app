@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -30,10 +30,10 @@ import {
 } from "@/components/ui/select"
 import { RecurringTable } from "@/components/recurring/recurring-table"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMonthsI18n } from "@/hooks/use-months-i18n"
+import { useMonths } from "@/hooks/use-months"
 import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import { filterRecurringTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
@@ -57,11 +57,11 @@ export function RecurringFilters() {
   >("all")
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const t = useTranslations()
-  const { getCategoryLabel } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel } = useCategory()
   const formatDate = useFormatDate()
 
-  const allMonths = useMonthsI18n()
+  const allMonths = useMonths()
   const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
@@ -135,7 +135,7 @@ export function RecurringFilters() {
                 <SearchIcon />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder={t("recurring.fe.searchPlaceholder")}
+                placeholder={t("Search recurring transactions...")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -175,7 +175,7 @@ export function RecurringFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    t("common.fe.selectDateRange")
+                    t("Select Date Range")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -184,7 +184,7 @@ export function RecurringFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.from")}
+                      {t("From")}
                     </div>
                     <Calendar
                       autoFocus
@@ -205,7 +205,7 @@ export function RecurringFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.to")}
+                      {t("To")}
                     </div>
                     <Calendar
                       autoFocus
@@ -231,13 +231,11 @@ export function RecurringFilters() {
               <SelectTrigger
                 className={`w-full justify-between font-normal md:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.month")} />
+                <SelectValue placeholder={t("Month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allMonths")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Months")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -252,11 +250,11 @@ export function RecurringFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.year")} />
+                <SelectValue placeholder={t("Year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{t("common.fe.allYears")}</SelectItem>
+                  <SelectItem value="all">{t("All Years")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -271,18 +269,14 @@ export function RecurringFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 2xl:row-start-2 ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.type")} />
+                <SelectValue placeholder={t("Type")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{t("common.fe.allTypes")}</SelectItem>
+                  <SelectItem value="all">{t("All Types")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="income">
-                    {t("common.fe.income")}
-                  </SelectItem>
-                  <SelectItem value="expense">
-                    {t("common.fe.expense")}
-                  </SelectItem>
+                  <SelectItem value="income">{t("Income")}</SelectItem>
+                  <SelectItem value="expense">{t("Expense")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -294,15 +288,13 @@ export function RecurringFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.category")} />
+                <SelectValue placeholder={t("Category")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allCategories")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Categories")}</SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{t("common.fe.income")}</SelectLabel>
+                  <SelectLabel>{t("Income")}</SelectLabel>
                   {INCOME_CATEGORIES_KEY.map((categoryKey) => (
                     <SelectItem key={categoryKey} value={categoryKey}>
                       {getCategoryLabel(categoryKey)}
@@ -324,7 +316,7 @@ export function RecurringFilters() {
                     </>
                   )}
                   <SelectSeparator />
-                  <SelectLabel>{t("common.fe.expense")}</SelectLabel>
+                  <SelectLabel>{t("Expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES_KEY.map((categoryKey) => (
                     <SelectItem key={categoryKey} value={categoryKey}>
                       {getCategoryLabel(categoryKey)}
@@ -358,20 +350,14 @@ export function RecurringFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterStatus !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.status")} />
+                <SelectValue placeholder={t("Status")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allStatuses")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Statuses")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="active">
-                    {t("common.fe.active")}
-                  </SelectItem>
-                  <SelectItem value="inactive">
-                    {t("common.fe.inactive")}
-                  </SelectItem>
+                  <SelectItem value="active">{t("Active")}</SelectItem>
+                  <SelectItem value="inactive">{t("Inactive")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -382,7 +368,7 @@ export function RecurringFilters() {
                 onClick={handleResetFilters}
                 className="col-span-full 2xl:col-auto 2xl:row-start-2"
               >
-                {t("common.fe.reset")}
+                {t("Reset")}
               </Button>
             )}
           </div>

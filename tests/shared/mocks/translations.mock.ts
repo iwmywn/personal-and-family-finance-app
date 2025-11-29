@@ -1,8 +1,18 @@
 vi.mock("next-intl/server", async () => ({
   ...(await vi.importActual("next-intl/server")),
   getExtracted: vi.fn(() => {
-    return vi.fn((message: string) => message)
+    return vi.fn((message: string, values?: Record<string, string>) => {
+      if (!values) return message
+
+      return message.replace(/\{(\w+)\}/g, (_, key) => {
+        return values[key] ?? `{${key}}`
+      })
+    })
   }),
+}))
+
+vi.mock("next-intl", async () => ({
+  useExtracted: vi.fn(() => vi.fn((message: string) => message)),
 }))
 
 export {}

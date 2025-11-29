@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { LogOutIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
 import {
@@ -13,22 +13,23 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useNav } from "@/hooks/use-nav"
 import { client } from "@/lib/auth-client"
-import { secondaryNav } from "@/lib/nav"
 
 export function SecondaryNav() {
   const router = useRouter()
   const pathname = usePathname()
-  const t = useTranslations()
+  const t = useExtracted()
+  const { secondaryNav } = useNav()
 
   async function onSignOut() {
     toast.promise(client.signOut(), {
-      loading: t("auth.fe.signingOut"),
+      loading: t("Signing out..."),
       success: () => {
         router.push("/signin")
-        return t("auth.be.signOutSuccess")
+        return t("You need to sign in again.")
       },
-      error: () => t("auth.be.signOutFailed"),
+      error: () => t("Failed to sign out! Please try again later."),
     })
   }
 
@@ -36,27 +37,24 @@ export function SecondaryNav() {
     <SidebarGroup>
       <SidebarGroupContent>
         <SidebarMenu>
-          {secondaryNav.map(({ key, url, icon: Icon }) => (
+          {secondaryNav.map(({ url, icon: Icon, label }) => (
             <SidebarMenuItem key={url}>
               <SidebarMenuButton
                 isActive={pathname === url}
-                tooltip={t(`navigation.${key}`)}
+                tooltip={label}
                 asChild
               >
                 <Link href={url}>
                   <Icon />
-                  {t(`navigation.${key}`)}
+                  {label}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
           <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip={t("navigation.signOut")}
-              onClick={onSignOut}
-            >
+            <SidebarMenuButton tooltip={t("Sign Out")} onClick={onSignOut}>
               <LogOutIcon />
-              {t("navigation.signOut")}
+              {t("Sign Out")}
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -2,9 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createUsernameSchema, type UsernameFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -30,14 +29,18 @@ import {
 import { Input } from "@/components/ui/input"
 import { FormButton } from "@/components/custom/form-button"
 import { useAppData } from "@/context/app-data-context"
+import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
+import { type UsernameFormValues } from "@/schemas/types"
 
 export function ChangeUsernameDialog() {
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createUsernameSchema } = useSchemas()
+
   const router = useRouter()
   const { user } = useAppData()
   const form = useForm<UsernameFormValues>({
-    resolver: zodResolver(createUsernameSchema(t)),
+    resolver: zodResolver(createUsernameSchema()),
     defaultValues: {
       username: user.username || "",
     },
@@ -45,24 +48,33 @@ export function ChangeUsernameDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: UsernameFormValues) {
+    const parsedValues = createUsernameSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     const { data: response, error } = await client.isUsernameAvailable({
       username: values.username,
     })
 
     if (error || !response) {
-      toast.error(t("settings.be.usernameCheckFailed"))
+      toast.error(
+        t("Failed to check username availability! Please try again later.")
+      )
     } else if (!response.available && user.username !== values.username) {
-      toast.error(t("settings.be.usernameNotAvailable"))
+      toast.error(t("This username is already taken."))
     } else {
       await client.updateUser({
         username: values.username,
         fetchOptions: {
           onError: () => {
-            toast.error(t("settings.be.usernameUpdateFailed"))
+            toast.error(t("Failed to update username! Please try again later."))
           },
           onSuccess: () => {
             router.refresh()
-            toast.success(t("settings.be.usernameUpdated"))
+            toast.success(t("Your username has been changed."))
             form.reset({ username: values.username })
             setOpen(false)
           },
@@ -74,13 +86,13 @@ export function ChangeUsernameDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{t("settings.fe.changeUsername")}</Button>
+        <Button variant="outline">{t("Change Username")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("settings.fe.changeUsername")}</DialogTitle>
+          <DialogTitle>{t("Change Username")}</DialogTitle>
           <DialogDescription>
-            {t("settings.fe.changeUsernameDescription")}
+            {t("Update your unique username.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -91,13 +103,11 @@ export function ChangeUsernameDialog() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="username">
-                    {t("settings.fe.username")}
-                  </FormLabel>
+                  <FormLabel htmlFor="username">{t("Username")}</FormLabel>
                   <FormControl>
                     <Input
                       id="username"
-                      placeholder={t("settings.fe.usernamePlaceholder")}
+                      placeholder={t("Enter your username...")}
                       autoComplete="username"
                       {...field}
                     />
@@ -109,11 +119,11 @@ export function ChangeUsernameDialog() {
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{t("common.fe.cancel")}</Button>
+                <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
               <FormButton
                 isSubmitting={form.formState.isSubmitting}
-                text={t("common.fe.save")}
+                text={t("Save")}
               />
             </DialogFooter>
           </form>

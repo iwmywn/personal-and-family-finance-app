@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDownIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -25,13 +25,13 @@ import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
 import { useAppData } from "@/context/app-data-context"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMonthsI18n } from "@/hooks/use-months-i18n"
+import { useMonths } from "@/hooks/use-months"
 import { filterTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
   const { transactions } = useAppData()
-  const t = useTranslations()
+  const t = useExtracted()
   const formatDate = useFormatDate()
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -46,7 +46,7 @@ export function StatisticsFilters() {
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
 
-  const allMonths = useMonthsI18n()
+  const allMonths = useMonths()
   const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
@@ -122,9 +122,7 @@ export function StatisticsFilters() {
                   variant="outline"
                   className={`w-full justify-between font-normal ${selectedDate && "border-primary!"}`}
                 >
-                  {selectedDate
-                    ? formatDate(selectedDate)
-                    : t("common.fe.selectDate")}
+                  {selectedDate ? formatDate(selectedDate) : t("Select Date")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -163,7 +161,7 @@ export function StatisticsFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    t("common.fe.selectDateRange")
+                    t("Select Date Range")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -172,7 +170,7 @@ export function StatisticsFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.from")}
+                      {t("From")}
                     </div>
                     <Calendar
                       autoFocus
@@ -193,7 +191,7 @@ export function StatisticsFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.to")}
+                      {t("To")}
                     </div>
                     <Calendar
                       autoFocus
@@ -219,13 +217,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.month")} />
+                <SelectValue placeholder={t("Month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allMonths")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Months")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -240,11 +236,11 @@ export function StatisticsFilters() {
               <SelectTrigger
                 className={`w-full ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.year")} />
+                <SelectValue placeholder={t("Year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{t("common.fe.allYears")}</SelectItem>
+                  <SelectItem value="all">{t("All Years")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -261,7 +257,7 @@ export function StatisticsFilters() {
                 onClick={handleResetFilters}
                 className="sm:col-span-2 lg:col-span-1"
               >
-                {t("common.fe.reset")}
+                {t("Reset")}
               </Button>
             )}
           </div>

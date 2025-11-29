@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { CategoryDialog } from "@/components/categories/category-dialog"
@@ -9,19 +9,19 @@ import { CategoryFilters } from "@/components/categories/category-filters"
 
 export default function CategoriesPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const t = useTranslations()
+  const t = useExtracted()
 
   return (
     <>
       <div className="h-auto max-h-none space-y-4">
         <div className="header">
           <div>
-            <div className="title">{t("navigation.categories")}</div>
-            <div className="description">{t("categories.fe.description")}</div>
+            <div className="title">{t("Categories")}</div>
+            <div className="description">
+              {t("Manage your custom categories.")}
+            </div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>
-            {t("common.fe.add")}
-          </Button>
+          <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
         </div>
 
         <CategoryFilters />

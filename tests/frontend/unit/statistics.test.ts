@@ -298,22 +298,22 @@ describe("Statistics", () => {
     })
 
     it("should correctly identify status (active, expired, upcoming)", () => {
-      const now = new Date()
+      vi.setSystemTime(new Date(2024, 0, 15))
       const budgets = [
         {
           ...mockBudgets[0],
-          startDate: new Date(now.getFullYear(), now.getMonth(), 1),
-          endDate: new Date(now.getFullYear(), now.getMonth(), 28),
+          startDate: new Date(2024, 0, 1),
+          endDate: new Date(2024, 0, 28),
         },
         {
           ...mockBudgets[0],
-          startDate: new Date(now.getFullYear(), now.getMonth() - 2, 1),
-          endDate: new Date(now.getFullYear(), now.getMonth() - 1, 28),
+          startDate: new Date(2023, 10, 1),
+          endDate: new Date(2023, 11, 28),
         },
         {
           ...mockBudgets[0],
-          startDate: new Date(now.getFullYear(), now.getMonth() + 1, 1),
-          endDate: new Date(now.getFullYear(), now.getMonth() + 1, 28),
+          startDate: new Date(2024, 1, 1),
+          endDate: new Date(2024, 1, 28),
         },
       ]
       const result = calculateBudgetsStats(budgets, mockTransactions)
@@ -552,22 +552,22 @@ describe("Statistics", () => {
     })
 
     it("should correctly identify status (active, expired, upcoming)", () => {
-      const now = new Date()
+      vi.setSystemTime(new Date(2024, 0, 15))
       const goals = [
         {
           ...mockGoals[0],
-          startDate: new Date(now.getFullYear(), now.getMonth(), 1),
-          endDate: new Date(now.getFullYear(), now.getMonth(), 28),
+          startDate: new Date(2024, 0, 1),
+          endDate: new Date(2024, 0, 28),
         },
         {
           ...mockGoals[0],
-          startDate: new Date(now.getFullYear(), now.getMonth() - 2, 1),
-          endDate: new Date(now.getFullYear(), now.getMonth() - 1, 28),
+          startDate: new Date(2023, 10, 1),
+          endDate: new Date(2023, 11, 28),
         },
         {
           ...mockGoals[0],
-          startDate: new Date(now.getFullYear(), now.getMonth() + 1, 1),
-          endDate: new Date(now.getFullYear(), now.getMonth() + 1, 28),
+          startDate: new Date(2024, 1, 1),
+          endDate: new Date(2024, 1, 28),
         },
       ]
       const result = calculateGoalsStats(goals, mockTransactions)

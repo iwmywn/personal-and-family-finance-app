@@ -2,7 +2,7 @@
 
 import { type Dispatch, type SetStateAction } from "react"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
-import { useLocale, useTranslations } from "next-intl"
+import { useExtracted, useLocale } from "next-intl"
 import ReCAPTCHA from "react-google-recaptcha"
 import { toast } from "sonner"
 
@@ -21,11 +21,11 @@ export function ReCaptchaDialog({
   setRecaptchaToken,
 }: ReCaptchaPopupProps) {
   const locale = useLocale()
-  const t = useTranslations()
+  const t = useExtracted()
 
   const handleRecaptchaChange = async (token: string | null) => {
     if (!token) {
-      toast.error(t("auth.fe.recaptchaVerificationFailed"))
+      toast.error(t("CAPTCHA verification failed! Please try again later."))
       return
     }
 
@@ -34,7 +34,7 @@ export function ReCaptchaDialog({
   }
 
   const handleDialogClose = () => {
-    toast.error(t("auth.fe.completeRecaptchaVerification"))
+    toast.error(t("Please complete CAPTCHA verification!"))
     setOpen(false)
   }
 
@@ -42,7 +42,7 @@ export function ReCaptchaDialog({
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="w-fit">
         <VisuallyHidden>
-          <DialogTitle>{t("auth.fe.recaptchaVerification")}</DialogTitle>
+          <DialogTitle>{t("CAPTCHA Verification")}</DialogTitle>
         </VisuallyHidden>
         <ReCAPTCHA
           sitekey={env.NEXT_PUBLIC_RECAPTCHA}

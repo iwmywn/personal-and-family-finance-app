@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
 import { deleteRecurringTransaction } from "@/actions/recurring.actions"
@@ -28,7 +28,7 @@ export function DeleteRecurringDialog({
   open,
   setOpen,
 }: DeleteRecurringDialogProps) {
-  const t = useTranslations()
+  const t = useExtracted()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -51,16 +51,18 @@ export function DeleteRecurringDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {t("recurring.fe.deleteRecurringTitle")}
+            {t("Delete Recurring Transaction")}
           </AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            {t("recurring.fe.deleteRecurringDescription")}
+            {t(
+              "Are you sure you want to delete this recurring transaction? This action cannot be undone."
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("common.fe.cancel")}</AlertDialogCancel>
+          <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} {t("common.fe.delete")}
+            {isLoading && <Spinner />} {t("Delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

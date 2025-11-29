@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
 import {
   Card,
@@ -11,20 +11,20 @@ import {
 import { TwoFactorVerificationForm } from "@/components/auth/two-factor-form"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
-  return { title: t("auth.fe.twoFactorPageTitle") }
+  return { title: t("Two-Factor Authentication") }
 }
 
 export default async function page() {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("auth.fe.twoFactorHeading")}</CardTitle>
+        <CardTitle>{t("Two-Factor Authentication")}</CardTitle>
         <CardDescription>
-          {t("auth.fe.twoFactorPageDescription")}
+          {t("Enter the code from your authenticator app.")}
         </CardDescription>
       </CardHeader>
       <CardContent>

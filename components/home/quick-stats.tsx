@@ -1,6 +1,6 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { calculateQuickStats } from "@/lib/statistics"
@@ -24,8 +24,8 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const isMediumScreens = useMediaQuery("(max-width: 767px)")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const { transactions } = useAppData()
-  const t = useTranslations()
-  const { getCategoryLabel } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel } = useCategory()
 
   const {
     currentMonthCount,
@@ -39,7 +39,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
       <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
-        <CardTitle>{t("home.fe.quickStats")}</CardTitle>
+        <CardTitle>{t("Quick Stats")}</CardTitle>
       </CardHeader>
       <CardContent
         className="h-full overflow-y-auto"
@@ -53,12 +53,14 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{t("common.fe.totalTransactions")}:</div>
+                <div className="left">{t("Total Transactions")}:</div>
                 <div className="right">{currentMonthCount}</div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {t("home.fe.totalTransactionsTooltip")}
+              {t(
+                "Total number of transactions (both income and expenses) you have made."
+              )}
             </TooltipContent>
           </Tooltip>
 
@@ -67,7 +69,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{t("home.fe.highestTransaction")}:</div>
+                <div className="left">{t("Highest Transaction")}:</div>
                 <div
                   className={`right ${
                     highestTransaction !== null
@@ -79,12 +81,14 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {highestTransaction !== null
                     ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
-                    : t("common.fe.noData")}
+                    : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {t("home.fe.highestTransactionTooltip")}
+              {t(
+                "Transaction with the highest value in the month (can be income or expense)."
+              )}
             </TooltipContent>
           </Tooltip>
 
@@ -93,7 +97,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{t("home.fe.lowestTransaction")}:</div>
+                <div className="left">{t("Lowest Transaction")}:</div>
                 <div
                   className={`right ${
                     lowestTransaction !== null
@@ -105,12 +109,14 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                 >
                   {lowestTransaction !== null
                     ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
-                    : t("common.fe.noData")}
+                    : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {t("home.fe.lowestTransactionTooltip")}
+              {t(
+                "Transaction with the lowest value in the month (can be income or expense)."
+              )}
             </TooltipContent>
           </Tooltip>
 
@@ -119,15 +125,19 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{t("home.fe.avgExpense")}:</div>
+                <div className="left">{t("Average Expense")}:</div>
                 <div className="right">
                   {avgExpense !== null
                     ? formatCurrency(avgExpense)
-                    : t("common.fe.noData")}
+                    : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
-            <TooltipContent>{t("home.fe.avgExpenseTooltip")}</TooltipContent>
+            <TooltipContent>
+              {t(
+                "Average amount per expense (Total Expense / Number of expense transactions)."
+              )}
+            </TooltipContent>
           </Tooltip>
 
           <Separator />
@@ -135,7 +145,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{t("home.fe.savingsRate")}:</div>
+                <div className="left">{t("Savings Rate")}:</div>
                 <div
                   className={`right ${
                     savingsRate !== null
@@ -147,13 +157,15 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
                       : ""
                   } `}
                 >
-                  {savingsRate !== null
-                    ? `${savingsRate}%`
-                    : t("common.fe.noData")}
+                  {savingsRate !== null ? `${savingsRate}%` : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
-            <TooltipContent>{t("home.fe.savingsRateTooltip")}</TooltipContent>
+            <TooltipContent>
+              {t(
+                "The percentage of money you save compared to income ((Income - Expense) / Income × 100%)."
+              )}
+            </TooltipContent>
           </Tooltip>
 
           <Separator />
@@ -161,18 +173,18 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{t("home.fe.popularCategory")}:</div>
+                <div className="left">{t("Popular Category")}:</div>
                 <div className="right">
                   {popularCategory.length > 0
                     ? popularCategory
                         .map((key) => getCategoryLabel(key))
                         .join(", ")
-                    : t("common.fe.noData")}
+                    : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {t("home.fe.popularCategoryTooltip")}
+              {t("Category with the highest number of transactions.")}
             </TooltipContent>
           </Tooltip>
         </div>

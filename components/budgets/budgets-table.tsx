@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { MoreVerticalIcon, PiggyBankIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -37,7 +37,7 @@ import {
 import { BudgetDialog } from "@/components/budgets/budget-dialog"
 import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Budget } from "@/lib/definitions"
@@ -58,8 +58,8 @@ export function BudgetsTable({
   const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-  const t = useTranslations()
-  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
 
   const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions)
@@ -81,11 +81,13 @@ export function BudgetsTable({
                 <EmptyMedia variant="icon">
                   <PiggyBankIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("budgets.fe.noBudgetsFound")}</EmptyTitle>
+                <EmptyTitle>{t("No budgets yet")}</EmptyTitle>
                 <EmptyDescription>
                   {budgets.length === 0
-                    ? t("budgets.fe.noBudgetsDescription")
-                    : t("budgets.fe.noBudgetsFiltered")}
+                    ? t(
+                        "You haven't created any budgets yet. Add your first budget!"
+                      )
+                    : t("No budgets found matching your filters.")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -101,14 +103,14 @@ export function BudgetsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("common.fe.startDate")}</TableHead>
-                    <TableHead>{t("common.fe.endDate")}</TableHead>
-                    <TableHead>{t("common.fe.category")}</TableHead>
-                    <TableHead>{t("common.fe.amount")}</TableHead>
-                    <TableHead>{t("budgets.fe.spent")}</TableHead>
-                    <TableHead>{t("common.fe.balance")}</TableHead>
-                    <TableHead>{t("common.fe.status")}</TableHead>
-                    <TableHead>{t("common.fe.progress")}</TableHead>
+                    <TableHead>{t("Start Date")}</TableHead>
+                    <TableHead>{t("End Date")}</TableHead>
+                    <TableHead>{t("Category")}</TableHead>
+                    <TableHead>{t("Amount")}</TableHead>
+                    <TableHead>{t("Spent")}</TableHead>
+                    <TableHead>{t("Balance")}</TableHead>
+                    <TableHead>{t("Status")}</TableHead>
+                    <TableHead>{t("Progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -147,10 +149,10 @@ export function BudgetsTable({
                           }
                         >
                           {budget.status === "expired"
-                            ? t("common.fe.expired")
+                            ? t("Expired")
                             : budget.status === "active"
-                              ? t("common.fe.active")
-                              : t("common.fe.upcoming")}
+                              ? t("Active")
+                              : t("Upcoming")}
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">
@@ -175,9 +177,7 @@ export function BudgetsTable({
                               size="icon"
                             >
                               <MoreVerticalIcon />
-                              <span className="sr-only">
-                                {t("common.fe.openMenu")}
-                              </span>
+                              <span className="sr-only">{t("Open menu")}</span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -188,7 +188,7 @@ export function BudgetsTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {t("common.fe.edit")}
+                              {t("Edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -198,7 +198,7 @@ export function BudgetsTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {t("common.fe.delete")}
+                              {t("Delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

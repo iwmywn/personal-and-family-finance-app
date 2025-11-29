@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDownIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -24,10 +24,10 @@ import {
 } from "@/components/ui/select"
 import { BudgetsTable } from "@/components/budgets/budgets-table"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMonthsI18n } from "@/hooks/use-months-i18n"
+import { useMonths } from "@/hooks/use-months"
 import { EXPENSE_CATEGORIES_KEY } from "@/lib/categories"
 import { filterBudgets } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
@@ -52,11 +52,11 @@ export function BudgetsFilters() {
     "all" | "expired" | "active" | "upcoming"
   >("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const t = useTranslations()
-  const { getCategoryLabel } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel } = useCategory()
   const formatDate = useFormatDate()
 
-  const allMonths = useMonthsI18n()
+  const allMonths = useMonths()
   const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
@@ -148,7 +148,7 @@ export function BudgetsFilters() {
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    t("common.fe.selectDateRange")
+                    t("Select Date Range")
                   )}
                   <ChevronDownIcon />
                 </Button>
@@ -157,7 +157,7 @@ export function BudgetsFilters() {
                 <div className="flex flex-col p-4 sm:flex-row">
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.from")}
+                      {t("From")}
                     </div>
                     <Calendar
                       autoFocus
@@ -178,7 +178,7 @@ export function BudgetsFilters() {
                   </div>
                   <div>
                     <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.to")}
+                      {t("To")}
                     </div>
                     <Calendar
                       autoFocus
@@ -204,13 +204,11 @@ export function BudgetsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-1 ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.month")} />
+                <SelectValue placeholder={t("Month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allMonths")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Months")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -225,11 +223,11 @@ export function BudgetsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-2 lg:row-start-1 ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.year")} />
+                <SelectValue placeholder={t("Year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{t("common.fe.allYears")}</SelectItem>
+                  <SelectItem value="all">{t("All Years")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -247,15 +245,13 @@ export function BudgetsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-2 2xl:row-start-1 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.category")} />
+                <SelectValue placeholder={t("Category")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allCategories")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Categories")}</SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{t("common.fe.expense")}</SelectLabel>
+                  <SelectLabel>{t("Expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES_KEY.map((categoryKey) => (
                     <SelectItem key={categoryKey} value={categoryKey}>
                       {getCategoryLabel(categoryKey)}
@@ -284,26 +280,18 @@ export function BudgetsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterProgress !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.progress")} />
+                <SelectValue placeholder={t("Progress")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allProgress")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Progress")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="gray">
-                    {t("budgets.fe.progressGray")}
-                  </SelectItem>
-                  <SelectItem value="green">
-                    {t("budgets.fe.progressGreen")}
-                  </SelectItem>
+                  <SelectItem value="gray">{t("No Transactions")}</SelectItem>
+                  <SelectItem value="green">{t("Good (< 75%)")}</SelectItem>
                   <SelectItem value="yellow">
-                    {t("budgets.fe.progressYellow")}
+                    {t("Warning (75-100%)")}
                   </SelectItem>
-                  <SelectItem value="red">
-                    {t("budgets.fe.progressRed")}
-                  </SelectItem>
+                  <SelectItem value="red">{t("Exceeded (≥ 100%)")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -317,23 +305,15 @@ export function BudgetsFilters() {
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 2xl:row-start-1 ${filterStatus !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.status")} />
+                <SelectValue placeholder={t("Status")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allStatuses")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Statuses")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="expired">
-                    {t("common.fe.expired")}
-                  </SelectItem>
-                  <SelectItem value="active">
-                    {t("common.fe.active")}
-                  </SelectItem>
-                  <SelectItem value="upcoming">
-                    {t("common.fe.upcoming")}
-                  </SelectItem>
+                  <SelectItem value="expired">{t("Expired")}</SelectItem>
+                  <SelectItem value="active">{t("Active")}</SelectItem>
+                  <SelectItem value="upcoming">{t("Upcoming")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -344,7 +324,7 @@ export function BudgetsFilters() {
                 onClick={handleResetFilters}
                 className="col-span-full 2xl:col-auto 2xl:row-start-1"
               >
-                {t("common.fe.reset")}
+                {t("Reset")}
               </Button>
             )}
           </div>

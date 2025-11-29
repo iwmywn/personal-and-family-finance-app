@@ -1,44 +1,34 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import {
-  createRecurringTransactionSchema,
-  type RecurringTransactionFormValues,
-} from "@/schemas"
 import type { Filter } from "mongodb"
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
-import type { TypedTranslationFunction } from "@/i18n/types"
 import { getRecurringTransactionsCollection } from "@/lib/collections"
 import {
   type DBRecurringTransaction,
   type RecurringTransaction,
 } from "@/lib/definitions"
+import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
 
 export async function createRecurringTransaction(
   values: RecurringTransactionFormValues
 ) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     const userId = session.user.id
-
-    const parsedValues = createRecurringTransactionSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
-    }
 
     const recurringCollection = await getRecurringTransactionsCollection()
 
@@ -59,7 +49,7 @@ export async function createRecurringTransaction(
     const existingRecurring = await recurringCollection.findOne(query)
 
     if (existingRecurring) {
-      return { error: t("recurring.be.recurringExists") }
+      return { error: t("This recurring transaction already exists!") }
     }
 
     const result = await recurringCollection.insertOne({
@@ -77,13 +67,22 @@ export async function createRecurringTransaction(
     })
 
     if (!result.acknowledged)
-      return { error: t("recurring.be.recurringAddFailed") }
+      return {
+        error: t(
+          "Failed to add recurring transaction! Please try again later."
+        ),
+      }
 
     updateTag("recurringTransactions")
-    return { success: t("recurring.be.recurringAdded"), error: undefined }
+    return {
+      success: t("Recurring transaction has been added."),
+      error: undefined,
+    }
   } catch (error) {
     console.error("Error creating recurring transaction:", error)
-    return { error: t("recurring.be.recurringAddFailed") }
+    return {
+      error: t("Failed to add recurring transaction! Please try again later."),
+    }
   }
 }
 
@@ -91,26 +90,20 @@ export async function updateRecurringTransaction(
   recurringId: string,
   values: RecurringTransactionFormValues
 ) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
-    }
-
-    const parsedValues = createRecurringTransactionSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
     }
 
     if (!ObjectId.isValid(recurringId)) {
       return {
-        error: t("recurring.be.invalidRecurringId"),
+        error: t("Invalid recurring transaction ID!"),
       }
     }
 
@@ -122,7 +115,9 @@ export async function updateRecurringTransaction(
 
     if (!existingRecurring) {
       return {
-        error: t("recurring.be.recurringNotFoundOrNoPermission"),
+        error: t(
+          "Recurring transaction not found or you don't have permission to edit."
+        ),
       }
     }
 
@@ -145,30 +140,34 @@ export async function updateRecurringTransaction(
 
     updateTag("recurringTransactions")
     return {
-      success: t("recurring.be.recurringUpdated"),
+      success: t("Recurring transaction has been updated."),
       error: undefined,
     }
   } catch (error) {
     console.error("Error updating recurring transaction:", error)
-    return { error: t("recurring.be.recurringUpdateFailed") }
+    return {
+      error: t(
+        "Failed to update recurring transaction! Please try again later."
+      ),
+    }
   }
 }
 
 export async function deleteRecurringTransaction(recurringId: string) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     if (!ObjectId.isValid(recurringId)) {
       return {
-        error: t("recurring.be.invalidRecurringId"),
+        error: t("Invalid recurring transaction ID!"),
       }
     }
 
@@ -180,7 +179,9 @@ export async function deleteRecurringTransaction(recurringId: string) {
 
     if (!existingRecurring) {
       return {
-        error: t("recurring.be.recurringNotFoundOrNoPermissionDelete"),
+        error: t(
+          "Recurring transaction not found or you don't have permission to delete!"
+        ),
       }
     }
 
@@ -189,24 +190,27 @@ export async function deleteRecurringTransaction(recurringId: string) {
     })
 
     updateTag("recurringTransactions")
-    return { success: t("recurring.be.recurringDeleted") }
+    return { success: t("Recurring transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting recurring transaction:", error)
-    return { error: t("recurring.be.recurringDeleteFailed") }
+    return {
+      error: t(
+        "Failed to delete recurring transaction! Please try again later."
+      ),
+    }
   }
 }
 
-export async function getRecurringTransactions(
-  userId: string,
-  t: TypedTranslationFunction
-) {
+export async function getRecurringTransactions(userId: string) {
   "use cache: private"
   cacheTag("recurringTransactions")
+
+  const t = await getExtracted()
 
   try {
     if (!userId) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
@@ -227,7 +231,9 @@ export async function getRecurringTransactions(
   } catch (error) {
     console.error("Error fetching recurring transactions:", error)
     return {
-      error: t("recurring.be.recurringFetchFailed"),
+      error: t(
+        "Failed to load recurring transactions! Please try again later."
+      ),
     }
   }
 }

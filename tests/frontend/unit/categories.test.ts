@@ -1,19 +1,20 @@
-import { getTranslations } from "next-intl/server"
+import { renderHook } from "@testing-library/react"
 
+import { useCategoryConfig } from "@/hooks/use-category"
 import {
-  createCategoryConfig,
   getDescription,
   getDetails,
   getLabel,
+  type CategoryConfigType,
 } from "@/lib/categories"
 import { type Category } from "@/lib/definitions"
 
-let CATEGORY_CONFIG: ReturnType<typeof createCategoryConfig>
+let CATEGORY_CONFIG: CategoryConfigType
 
 describe("Categories", () => {
   beforeAll(async () => {
-    const t = await getTranslations()
-    CATEGORY_CONFIG = createCategoryConfig(t)
+    const { result } = renderHook(() => useCategoryConfig())
+    CATEGORY_CONFIG = result.current
   })
 
   describe("getDetails", () => {

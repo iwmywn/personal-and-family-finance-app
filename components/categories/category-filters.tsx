@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -32,7 +32,7 @@ export function CategoryFilters() {
     "all"
   )
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const t = useTranslations()
+  const t = useExtracted()
 
   const filteredCategories = filterCustomCategories(customCategories, {
     searchTerm,
@@ -62,7 +62,7 @@ export function CategoryFilters() {
                 <SearchIcon />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder={t("categories.fe.searchPlaceholder")}
+                placeholder={t("Search categories...")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -86,17 +86,13 @@ export function CategoryFilters() {
               <SelectTrigger
                 className={`w-full md:w-fit ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("categories.fe.categoryType")} />
+                <SelectValue placeholder={t("Type")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">
-                  {t("categories.fe.allCategoryTypes")}
-                </SelectItem>
+                <SelectItem value="all">{t("All Types")}</SelectItem>
                 <SelectSeparator />
-                <SelectItem value="income">{t("common.fe.income")}</SelectItem>
-                <SelectItem value="expense">
-                  {t("common.fe.expense")}
-                </SelectItem>
+                <SelectItem value="income">{t("Income")}</SelectItem>
+                <SelectItem value="expense">{t("Expense")}</SelectItem>
               </SelectContent>
             </Select>
             {hasActiveFilters && (
@@ -106,7 +102,7 @@ export function CategoryFilters() {
                 onClick={handleResetFilters}
                 className="w-full md:w-fit"
               >
-                {t("common.fe.reset")}
+                {t("Reset")}
               </Button>
             )}
           </div>

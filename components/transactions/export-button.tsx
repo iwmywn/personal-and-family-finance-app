@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
@@ -11,7 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import type { Transaction } from "@/lib/definitions"
 
@@ -21,24 +21,23 @@ interface ExportButtonProps {
 
 export function ExportButton({ filteredTransactions }: ExportButtonProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const t = useTranslations()
+  const t = useExtracted()
   const formatDate = useFormatDate()
-  const { getCategoryLabel } = useCategoryI18n()
+  const { getCategoryLabel } = useCategory()
 
   function formatTransactionsToCSV(
     filteredTransactions: Transaction[]
   ): string {
     const headers = [
-      t("common.fe.date"),
-      t("common.fe.type"),
-      t("common.fe.category"),
-      t("common.fe.amount"),
-      t("common.fe.description"),
+      t("Date"),
+      t("Type"),
+      t("Category"),
+      t("Amount"),
+      t("Description"),
     ]
     const rows = filteredTransactions.map((ft) => {
       const date = `"${formatDate(ft.date)}"`
-      const type =
-        ft.type === "income" ? t("common.fe.income") : t("common.fe.expense")
+      const type = ft.type === "income" ? t("Income") : t("Expense")
       const amount = ft.amount.toString()
       const description = ft.description.replace(/"/g, '""')
       return [
@@ -55,7 +54,7 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
 
   function handleExport() {
     if (filteredTransactions.length === 0) {
-      toast.error(t("common.fe.noTransactionsFound"))
+      toast.error(t("No transactions found"))
       return
     }
 
@@ -72,10 +71,10 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
           filteredTransactions[filteredTransactions.length - 1].date
         )
         const lastDate = formatDate(filteredTransactions[0].date)
-        dateStr = `${t("common.fe.from")}_${firstDate}_${t("common.fe.to")}_${lastDate}`
+        dateStr = `${t("From")}_${firstDate}_${t("To")}_${lastDate}`
       }
 
-      const filename = `${t("common.fe.transactions")}_${dateStr}.csv`
+      const filename = `${t("transactions")}_${dateStr}.csv`
         .replace(/[, ]+/g, "_")
         .toLowerCase()
 
@@ -93,10 +92,10 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
       document.body.removeChild(link)
       URL.revokeObjectURL(url)
 
-      toast.success(t("common.fe.exportCsv") + " " + filename)
+      toast.success(t("Export Transactions (CSV)") + " " + filename)
     } catch (error) {
       console.error("Error exporting CSV:", error)
-      toast.error(t("common.fe.transactionsExportFailed"))
+      toast.error(t("Failed to export data! Please try again later."))
     } finally {
       setIsLoading(false)
     }
@@ -107,10 +106,12 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
       <TooltipTrigger asChild>
         <Button variant="outline" onClick={handleExport} disabled={isLoading}>
           {isLoading && <Spinner />}
-          {t("common.fe.exportTransactions")}
+          {t("Export Transactions")}
         </Button>
       </TooltipTrigger>
-      <TooltipContent>{t("common.fe.exportWithFilters")}</TooltipContent>
+      <TooltipContent>
+        {t("Export transactions with current filters applied")}
+      </TooltipContent>
     </Tooltip>
   )
 }

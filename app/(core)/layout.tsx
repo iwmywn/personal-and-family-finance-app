@@ -2,8 +2,7 @@ import { Suspense } from "react"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { GhostIcon } from "lucide-react"
-import type { Messages } from "next-intl"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
 import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
@@ -72,7 +71,7 @@ async function DashboardProvider({
     redirect("/signin")
   }
 
-  const t = await getTranslations()
+  const t = await getExtracted()
   const userId = session.user.id
 
   const [
@@ -82,23 +81,20 @@ async function DashboardProvider({
     goalsResult,
     recurringResult,
   ] = await Promise.all([
-    getTransactions(userId, t),
-    getCustomCategories(userId, t),
-    getBudgets(userId, t),
-    getGoals(userId, t),
-    getRecurringTransactions(userId, t),
+    getTransactions(userId),
+    getCustomCategories(userId),
+    getBudgets(userId),
+    getGoals(userId),
+    getRecurringTransactions(userId),
   ])
 
-  const renderEmptyState = (
-    title: keyof Messages["dataError"],
-    description: string
-  ) => (
+  const renderEmptyState = (title: string, description: string) => (
     <Empty className="h-full border">
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <GhostIcon />
         </EmptyMedia>
-        <EmptyTitle>{t(`dataError.${title}`)}</EmptyTitle>
+        <EmptyTitle>{title}</EmptyTitle>
         <EmptyDescription>{description}</EmptyDescription>
       </EmptyHeader>
     </Empty>
@@ -111,14 +107,22 @@ async function DashboardProvider({
   const recurringTransactions = recurringResult.recurringTransactions
 
   if (!transactions)
-    return renderEmptyState("transactionsDataError", transactionsResult.error)
+    return renderEmptyState(
+      t("CANNOT FETCH TRANSACTIONS DATA"),
+      transactionsResult.error
+    )
   if (!customCategories)
-    return renderEmptyState("categoriesDataError", categoriesResult.error)
-  if (!budgets) return renderEmptyState("budgetsDataError", budgetsResult.error)
-  if (!goals) return renderEmptyState("goalsDataError", goalsResult.error)
+    return renderEmptyState(
+      t("CANNOT FETCH CATEGORIES DATA"),
+      categoriesResult.error
+    )
+  if (!budgets)
+    return renderEmptyState(t("CANNOT FETCH BUDGETS DATA"), budgetsResult.error)
+  if (!goals)
+    return renderEmptyState(t("CANNOT FETCH GOALS DATA"), goalsResult.error)
   if (!recurringTransactions)
     return renderEmptyState(
-      "recurringTransactionsDataError",
+      t("CANNOT FETCH RECURRING TRANSACTIONS DATA"),
       recurringResult.error
     )
 

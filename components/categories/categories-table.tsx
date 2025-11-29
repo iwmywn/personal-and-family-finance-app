@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { MoreVerticalIcon, TagIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -48,7 +48,7 @@ export function CategoriesTable({
   )
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-  const t = useTranslations()
+  const t = useExtracted()
 
   return (
     <>
@@ -64,11 +64,11 @@ export function CategoriesTable({
                 <EmptyMedia variant="icon">
                   <TagIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("categories.fe.noCategoriesFound")}</EmptyTitle>
+                <EmptyTitle>{t("No categories found")}</EmptyTitle>
                 <EmptyDescription>
                   {customCategories.length === 0
-                    ? t("categories.fe.noCategoriesDescription")
-                    : t("categories.fe.noCategoriesFiltered")}
+                    ? t("You haven't created any custom categories yet.")
+                    : t("No categories found matching your filters.")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -82,9 +82,9 @@ export function CategoriesTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("categories.fe.categoryName")}</TableHead>
-                    <TableHead>{t("common.fe.description")}</TableHead>
-                    <TableHead>{t("common.fe.type")}</TableHead>
+                    <TableHead>{t("Category Name")}</TableHead>
+                    <TableHead>{t("Description")}</TableHead>
+                    <TableHead>{t("Type")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -106,8 +106,8 @@ export function CategoriesTable({
                           }
                         >
                           {category.type === "income"
-                            ? t("common.fe.income")
-                            : t("common.fe.expense")}
+                            ? t("Income")
+                            : t("Expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -119,9 +119,7 @@ export function CategoriesTable({
                               size="icon"
                             >
                               <MoreVerticalIcon />
-                              <span className="sr-only">
-                                {t("categories.fe.openMenu")}
-                              </span>
+                              <span className="sr-only">{t("Open menu")}</span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -132,7 +130,7 @@ export function CategoriesTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {t("common.fe.edit")}
+                              {t("Edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -142,7 +140,7 @@ export function CategoriesTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {t("common.fe.delete")}
+                              {t("Delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

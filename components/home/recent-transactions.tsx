@@ -2,7 +2,7 @@
 
 import { Fragment } from "react"
 import { WalletIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/empty"
 import { Separator } from "@/components/ui/separator"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
@@ -30,14 +30,14 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const { transactions } = useAppData()
   const recentTransactions = transactions.slice(0, 10)
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
-  const t = useTranslations()
-  const { getCategoryLabel } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel } = useCategory()
   const formatDate = useFormatDate()
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">
       <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
-        <CardTitle>{t("home.fe.recentTransactions")}</CardTitle>
+        <CardTitle>{t("Recent Transactions")}</CardTitle>
       </CardHeader>
       <CardContent
         className="overflow-y-auto"
@@ -55,9 +55,9 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
                 <EmptyMedia variant="icon">
                   <WalletIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
+                <EmptyTitle>{t("No transactions found")}</EmptyTitle>
                 <EmptyDescription>
-                  {t("common.fe.startAddingTransactions")}
+                  {t("Start adding your transactions.")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>

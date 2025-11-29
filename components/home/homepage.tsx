@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { QuickStats } from "@/components/home/quick-stats"
@@ -15,7 +15,7 @@ export default function HomePage() {
   const { user } = useAppData()
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
-  const t = useTranslations()
+  const t = useExtracted()
 
   return (
     <>
@@ -23,13 +23,13 @@ export default function HomePage() {
         <div ref={registerRef} className="header">
           <div>
             <div className="title">
-              {t("home.fe.welcome")}, {user.name}!
+              {t("Welcome back")}, {user.name}!
             </div>
-            <div className="description">{t("home.fe.description")}</div>
+            <div className="description">
+              {t("Here's what's happening with your finances this month.")}
+            </div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>
-            {t("common.fe.add")}
-          </Button>
+          <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
         </div>
 
         <div ref={registerRef}>

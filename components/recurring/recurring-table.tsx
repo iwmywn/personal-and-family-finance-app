@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { MoreVerticalIcon, RepeatIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -36,7 +36,7 @@ import {
 import { DeleteRecurringDialog } from "@/components/recurring/delete-recurring-dialog"
 import { RecurringDialog } from "@/components/recurring/recurring-dialog"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { RecurringTransaction } from "@/lib/definitions"
@@ -58,26 +58,26 @@ export function RecurringTable({
     useState<RecurringTransaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-  const t = useTranslations()
-  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
 
   const getFrequencyLabel = (frequency: RecurringTransaction["frequency"]) => {
     switch (frequency) {
       case "daily":
-        return t("recurring.fe.frequencyDaily")
+        return t("Daily")
       case "weekly":
-        return t("recurring.fe.frequencyWeekly")
+        return t("Weekly")
       case "bi-weekly":
-        return t("recurring.fe.frequencyBiWeekly")
+        return t("Bi-Weekly")
       case "monthly":
-        return t("recurring.fe.frequencyMonthly")
+        return t("Monthly")
       case "quarterly":
-        return t("recurring.fe.frequencyQuarterly")
+        return t("Quarterly")
       case "yearly":
-        return t("recurring.fe.frequencyYearly")
+        return t("Yearly")
       case "random":
-        return t("recurring.fe.frequencyRandom")
+        return t("Random")
       default:
         return frequency
     }
@@ -100,11 +100,13 @@ export function RecurringTable({
                 <EmptyMedia variant="icon">
                   <RepeatIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("recurring.fe.noRecurringFound")}</EmptyTitle>
+                <EmptyTitle>{t("No recurring transactions found")}</EmptyTitle>
                 <EmptyDescription>
                   {recurringTransactions.length === 0
-                    ? t("recurring.fe.noRecurringDescription")
-                    : t("recurring.fe.noRecurringFiltered")}
+                    ? t("Start adding your recurring transactions.")
+                    : t(
+                        "No recurring transactions found matching your filters."
+                      )}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -120,14 +122,14 @@ export function RecurringTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("common.fe.startDate")}</TableHead>
-                    <TableHead>{t("common.fe.endDate")}</TableHead>
-                    <TableHead>{t("common.fe.description")}</TableHead>
-                    <TableHead>{t("common.fe.type")}</TableHead>
-                    <TableHead>{t("common.fe.category")}</TableHead>
-                    <TableHead>{t("common.fe.amount")}</TableHead>
-                    <TableHead>{t("recurring.fe.frequency")}</TableHead>
-                    <TableHead>{t("common.fe.status")}</TableHead>
+                    <TableHead>{t("Start Date")}</TableHead>
+                    <TableHead>{t("End Date")}</TableHead>
+                    <TableHead>{t("Description")}</TableHead>
+                    <TableHead>{t("Type")}</TableHead>
+                    <TableHead>{t("Category")}</TableHead>
+                    <TableHead>{t("Amount")}</TableHead>
+                    <TableHead>{t("Frequency")}</TableHead>
+                    <TableHead>{t("Status")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -141,7 +143,7 @@ export function RecurringTable({
                       <TableCell>
                         {recurring.endDate
                           ? formatDate(recurring.endDate)
-                          : t("common.fe.noEndDate")}
+                          : t("No end date")}
                       </TableCell>
                       <TableCell>{recurring.description}</TableCell>
                       <TableCell>
@@ -153,8 +155,8 @@ export function RecurringTable({
                           }
                         >
                           {recurring.type === "income"
-                            ? t("common.fe.income")
-                            : t("common.fe.expense")}
+                            ? t("Income")
+                            : t("Expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -175,14 +177,14 @@ export function RecurringTable({
                           <span>{getFrequencyLabel(recurring.frequency)}</span>
                           {recurring.frequency === "random" ? (
                             <span className="text-muted-foreground text-xs">
-                              {t("recurring.fe.everyXDays", {
-                                days: recurring.randomEveryXDays!,
+                              {t("Every {days} days", {
+                                days: recurring.randomEveryXDays!.toString(),
                               })}
                             </span>
                           ) : null}
                           {recurring.isActive ? (
                             <span className="text-muted-foreground text-xs">
-                              {t("recurring.fe.nextDate", {
+                              {t("Next: {date}", {
                                 date: formatDate(getNextDate(recurring)),
                               })}
                             </span>
@@ -195,9 +197,7 @@ export function RecurringTable({
                             recurring.isActive ? "badge-green" : "badge-gray"
                           }
                         >
-                          {recurring.isActive
-                            ? t("common.fe.active")
-                            : t("common.fe.inactive")}
+                          {recurring.isActive ? t("Active") : t("Inactive")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -209,9 +209,7 @@ export function RecurringTable({
                               size="icon"
                             >
                               <MoreVerticalIcon />
-                              <span className="sr-only">
-                                {t("common.fe.openMenu")}
-                              </span>
+                              <span className="sr-only">{t("Open menu")}</span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -222,7 +220,7 @@ export function RecurringTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {t("common.fe.edit")}
+                              {t("Edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -232,7 +230,7 @@ export function RecurringTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {t("common.fe.delete")}
+                              {t("Delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

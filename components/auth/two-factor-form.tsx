@@ -1,12 +1,8 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import {
-  createTwoFactorCodeSchema,
-  type TwoFactorCodeFormValues,
-} from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -22,28 +18,39 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { FormButton } from "@/components/custom/form-button"
+import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
+import { type TwoFactorCodeFormValues } from "@/schemas/types"
 
 export function TwoFactorVerificationForm() {
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createTwoFactorCodeSchema } = useSchemas()
+
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get("next") || "/home"
 
   const form = useForm<TwoFactorCodeFormValues>({
-    resolver: zodResolver(createTwoFactorCodeSchema(t)),
+    resolver: zodResolver(createTwoFactorCodeSchema()),
     defaultValues: { code: "", trustDevice: false },
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
+    const parsedValues = createTwoFactorCodeSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     await client.twoFactor.verifyTotp({
       code: values.code,
       trustDevice: values.trustDevice,
       fetchOptions: {
         onError: () => {
-          toast.error(t("auth.be.twoFactorVerifyFailed"))
+          toast.error(t("Invalid authentication code! Please try again later."))
         },
         onSuccess: async () => {
           router.replace(callbackUrl)
@@ -68,7 +75,7 @@ export function TwoFactorVerificationForm() {
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("auth.fe.twoFactorCodeLabel")}</FormLabel>
+              <FormLabel>{t("Verification Code")}</FormLabel>
               <FormControl>
                 <Input
                   inputMode="numeric"
@@ -94,11 +101,9 @@ export function TwoFactorVerificationForm() {
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel className="">
-                  {t("settings.fe.twoFactorTrustDevice")}
-                </FormLabel>
+                <FormLabel className="">{t("Trust this device")}</FormLabel>
                 <FormDescription>
-                  {t("settings.fe.twoFactorTrustDeviceDescription")}
+                  {t("Don't ask for 2FA code on this device for 30 days.")}
                 </FormDescription>
               </div>
             </FormItem>
@@ -106,7 +111,7 @@ export function TwoFactorVerificationForm() {
         />
 
         <FormButton
-          text={t("auth.fe.twoFactorSubmit")}
+          text={t("Verify")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
         />

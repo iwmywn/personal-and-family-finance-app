@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { ExportButton } from "@/components/transactions/export-button"
@@ -14,23 +14,21 @@ export default function TransactionsPage() {
   const [filteredTransactions, setFilteredTransactions] = useState<
     Transaction[]
   >([])
-  const t = useTranslations()
+  const t = useExtracted()
 
   return (
     <>
       <div className="h-auto max-h-none space-y-4 lg:h-full lg:max-h-[calc(100vh-4.375rem)]">
         <div className="header">
           <div>
-            <div className="title">{t("navigation.transactions")}</div>
+            <div className="title">{t("Transactions")}</div>
             <div className="description">
-              {t("transactions.fe.description")}
+              {t("Manage income and expenses to track your personal finances.")}
             </div>
           </div>
           <div className="flex gap-2">
             <ExportButton filteredTransactions={filteredTransactions} />
-            <Button onClick={() => setIsEditOpen(true)}>
-              {t("common.fe.add")}
-            </Button>
+            <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
           </div>
         </div>
 

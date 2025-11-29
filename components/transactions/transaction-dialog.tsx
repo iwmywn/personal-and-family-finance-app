@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { createTransactionSchema, type TransactionFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -56,11 +55,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormButton } from "@/components/custom/form-button"
 import { FormLink } from "@/components/custom/form-link"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { useSchemas } from "@/hooks/use-schemas"
 import type { Transaction } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
+import type { TransactionFormValues } from "@/schemas/types"
 
 interface TransactionDialogProps {
   transaction?: Transaction
@@ -78,10 +79,12 @@ export function TransactionDialog({
   )
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createTransactionSchema } = useSchemas()
+
   const formatDate = useFormatDate()
   const form = useForm<TransactionFormValues>({
-    resolver: zodResolver(createTransactionSchema(t)),
+    resolver: zodResolver(createTransactionSchema()),
     defaultValues: {
       type: transaction?.type || "income",
       amount: transaction?.amount || 0,
@@ -92,7 +95,7 @@ export function TransactionDialog({
   })
 
   const { customCategories } = useAppData()
-  const { getCategoryLabel, getCategoriesWithDetails } = useCategoryI18n()
+  const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
 
   const selectedDate = useWatch({
     control: form.control,
@@ -100,6 +103,13 @@ export function TransactionDialog({
   })
 
   async function onSubmit(values: TransactionFormValues) {
+    const parsedValues = createTransactionSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     if (transaction) {
       const { success, error } = await updateTransaction(transaction._id, {
         ...values,
@@ -148,11 +158,11 @@ export function TransactionDialog({
       name="categoryKey"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{t("common.fe.category")}</FormLabel>
+          <FormLabel>{t("Category")}</FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder={t("common.fe.selectCategory")}>
+                <SelectValue placeholder={t("Select category")}>
                   {field.value ? getCategoryLabel(field.value) : null}
                 </SelectValue>
               </SelectTrigger>
@@ -192,9 +202,9 @@ export function TransactionDialog({
             </SelectContent>
           </Select>
           <FormDescription>
-            {t("transactions.fe.noCategoryFound")}{" "}
+            {t("Cannot find a suitable category?")}{" "}
             <FormLink href="/categories" className="text-foreground/85">
-              {t("transactions.fe.createCustomCategory")}
+              {t("Create Custom Category")}
             </FormLink>
           </FormDescription>
           <FormMessage />
@@ -208,14 +218,14 @@ export function TransactionDialog({
       <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {transaction
-              ? t("transactions.fe.editTransaction")
-              : t("transactions.fe.addTransaction")}
+            {transaction ? t("Edit Transaction") : t("Add Transaction")}
           </DialogTitle>
           <DialogDescription>
             {transaction
-              ? t("transactions.fe.editTransactionDescription")
-              : t("transactions.fe.addTransactionDescription")}
+              ? t("Update transaction information.")
+              : t(
+                  "Add your income or expense to track your personal finances."
+                )}
           </DialogDescription>
         </DialogHeader>
 
@@ -223,12 +233,8 @@ export function TransactionDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={transactionType} onValueChange={handleTypeChange}>
               <TabsList className="w-full">
-                <TabsTrigger value="income">
-                  {t("common.fe.income")}
-                </TabsTrigger>
-                <TabsTrigger value="expense">
-                  {t("common.fe.expense")}
-                </TabsTrigger>
+                <TabsTrigger value="income">{t("Income")}</TabsTrigger>
+                <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>
               </TabsList>
 
               <TabsContent value="income" className="space-y-4">
@@ -245,7 +251,7 @@ export function TransactionDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.amount")} (VND)</FormLabel>
+                  <FormLabel>{t("Amount")} (VND)</FormLabel>
                   <FormControl>
                     <Input
                       inputMode="numeric"
@@ -270,12 +276,12 @@ export function TransactionDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.description")}</FormLabel>
+                  <FormLabel>{t("Description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
                         placeholder={t(
-                          "transactions.fe.descriptionPlaceholder"
+                          "Enter a description for the transaction..."
                         )}
                         maxLength={200}
                         {...field}
@@ -297,7 +303,7 @@ export function TransactionDialog({
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.date")}</FormLabel>
+                  <FormLabel>{t("Date")}</FormLabel>
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -311,7 +317,7 @@ export function TransactionDialog({
                           {selectedDate ? (
                             formatDate(selectedDate)
                           ) : (
-                            <span>{t("common.fe.selectDate")}</span>
+                            <span>{t("Select date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -343,11 +349,11 @@ export function TransactionDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{t("common.fe.cancel")}</Button>
+                <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
               <FormButton
                 isSubmitting={form.formState.isSubmitting}
-                text={transaction ? t("common.fe.update") : t("common.fe.add")}
+                text={transaction ? t("Update") : t("Add")}
               />
             </DialogFooter>
           </form>

@@ -2,14 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import {
-  createTwoFactorCodeSchema,
-  createTwoFactorPasswordSchema,
-  type TwoFactorCodeFormValues,
-  type TwoFactorPasswordFormValues,
-} from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import QRCode from "react-qr-code"
 import { toast } from "sonner"
@@ -36,10 +30,15 @@ import { Label } from "@/components/ui/label"
 import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
 import { useAppData } from "@/context/app-data-context"
+import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
+import {
+  type TwoFactorCodeFormValues,
+  type TwoFactorPasswordFormValues,
+} from "@/schemas/types"
 
 export function TwoFactorManager() {
-  const t = useTranslations()
+  const t = useExtracted()
   const { user } = useAppData()
   const [open, setOpen] = useState<boolean>(false)
   const [totpURI, setTotpURI] = useState<string | null>(null)
@@ -50,20 +49,16 @@ export function TwoFactorManager() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
-          {user.twoFactorEnabled
-            ? t("settings.fe.twoFactorDisable")
-            : t("settings.fe.twoFactorEnable")}
+          {user.twoFactorEnabled ? t("Disable 2FA") : t("Enable 2FA")}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         {!user.twoFactorEnabled ? (
           <>
             <DialogHeader>
-              <DialogTitle>
-                {t("settings.fe.twoFactorEnableDialogTitle")}
-              </DialogTitle>
+              <DialogTitle>{t("Enable Two-Factor Authentication")}</DialogTitle>
               <DialogDescription>
-                {t("settings.fe.twoFactorEnableDialogDescription")}
+                {t("Scan the QR code with your authenticator app.")}
               </DialogDescription>
             </DialogHeader>
             {!totpURI ? (
@@ -74,7 +69,7 @@ export function TwoFactorManager() {
                   <QRCode value={totpURI} />
                 </div>
                 <div className="grid gap-2">
-                  <Label>{t("settings.fe.twoFactorSecretLabel")}</Label>
+                  <Label>{t("Secret Key")}</Label>
                   <Input
                     value={secret}
                     readOnly
@@ -94,10 +89,10 @@ export function TwoFactorManager() {
           <>
             <DialogHeader>
               <DialogTitle>
-                {t("settings.fe.twoFactorDisableDialogTitle")}
+                {t("Disable Two-Factor Authentication")}
               </DialogTitle>
               <DialogDescription>
-                {t("settings.fe.twoFactorDisableDialogDescription")}
+                {t("Enter your password to disable 2FA.")}
               </DialogDescription>
             </DialogHeader>
             <DisableTwoFactorForm setOpen={setOpen} />
@@ -113,21 +108,29 @@ interface EnableTwoFactorFormProps {
 }
 
 function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createTwoFactorPasswordSchema } = useSchemas()
   const form = useForm<TwoFactorPasswordFormValues>({
-    resolver: zodResolver(createTwoFactorPasswordSchema(t)),
+    resolver: zodResolver(createTwoFactorPasswordSchema()),
     defaultValues: { password: "" },
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
+    const parsedValues = createTwoFactorPasswordSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     await client.twoFactor.enable({
       password: values.password,
       fetchOptions: {
         onError: (ctx) => {
           if (ctx.error.code === "INVALID_PASSWORD") {
-            toast.error(t("settings.be.invalidPassword"))
+            toast.error(t("Invalid password."))
           } else {
-            toast.error(t("settings.be.twoFactorEnableFailed"))
+            toast.error(t("Failed to enable 2FA! Please try again later."))
           }
         },
         onSuccess: (ctx) => {
@@ -146,7 +149,7 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("auth.fe.password")}</FormLabel>
+              <FormLabel>{t("Password")}</FormLabel>
               <FormControl>
                 <PasswordInput
                   placeholder="********"
@@ -160,7 +163,7 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
         />
 
         <FormButton
-          text={t("settings.fe.twoFactorEnable")}
+          text={t("Enable 2FA")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
         />
@@ -178,23 +181,32 @@ function VerifyTwoFactorForm({
   setTotpURI,
   setOpen,
 }: VerifyTwoFactorFormProps) {
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createTwoFactorCodeSchema } = useSchemas()
+
   const router = useRouter()
   const form = useForm<TwoFactorCodeFormValues>({
-    resolver: zodResolver(createTwoFactorCodeSchema(t)),
+    resolver: zodResolver(createTwoFactorCodeSchema()),
     defaultValues: { code: "" },
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
+    const parsedValues = createTwoFactorCodeSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     await client.twoFactor.verifyTotp({
       code: values.code,
       fetchOptions: {
         onError: () => {
-          toast.error(t("settings.be.twoFactorVerifyFailed"))
+          toast.error(t("Failed to verify 2FA code! Please try again later."))
         },
         onSuccess: () => {
           router.refresh()
-          toast.success(t("settings.be.twoFactorEnabled"))
+          toast.success(t("Two-factor authentication is now enabled."))
           form.reset()
           setTotpURI(null)
           setOpen(false)
@@ -211,7 +223,7 @@ function VerifyTwoFactorForm({
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("settings.fe.twoFactorCodeLabel")}</FormLabel>
+              <FormLabel>{t("Verification Code")}</FormLabel>
               <FormControl>
                 <Input
                   inputMode="numeric"
@@ -226,7 +238,7 @@ function VerifyTwoFactorForm({
         />
 
         <FormButton
-          text={t("settings.fe.twoFactorVerify")}
+          text={t("Verify")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
         />
@@ -240,23 +252,32 @@ interface DisableTwoFactorFormProps {
 }
 
 function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createTwoFactorPasswordSchema } = useSchemas()
+
   const router = useRouter()
   const form = useForm<TwoFactorPasswordFormValues>({
-    resolver: zodResolver(createTwoFactorPasswordSchema(t)),
+    resolver: zodResolver(createTwoFactorPasswordSchema()),
     defaultValues: { password: "" },
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
+    const parsedValues = createTwoFactorPasswordSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     await client.twoFactor.disable({
       password: values.password,
       fetchOptions: {
         onError: () => {
-          toast.error(t("settings.be.twoFactorDisableFailed"))
+          toast.error(t("Failed to disable 2FA! Please try again later."))
         },
         onSuccess: () => {
           router.refresh()
-          toast.success(t("settings.be.twoFactorDisabled"))
+          toast.success(t("Two-factor authentication is now disabled."))
           form.reset()
           setOpen(false)
         },
@@ -272,7 +293,7 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("auth.fe.password")}</FormLabel>
+              <FormLabel>{t("Password")}</FormLabel>
               <FormControl>
                 <PasswordInput
                   placeholder="********"
@@ -286,7 +307,7 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
         />
 
         <FormButton
-          text={t("settings.fe.twoFactorDisable")}
+          text={t("Disable 2FA")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
         />

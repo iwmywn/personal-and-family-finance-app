@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
 import {
@@ -18,7 +18,7 @@ import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
 
 export function LanguageSelector() {
-  const t = useTranslations()
+  const t = useExtracted()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { user } = useAppData()
@@ -30,7 +30,7 @@ export function LanguageSelector() {
       locale,
       fetchOptions: {
         onError: () => {
-          toast.error(t("settings.be.languageUpdateFailed"))
+          toast.error(t("Failed to update language! Please try again later."))
         },
         onSuccess: async () => {
           router.refresh()
@@ -49,7 +49,7 @@ export function LanguageSelector() {
       disabled={isLoading}
     >
       <SelectTrigger>
-        <SelectValue placeholder={t("settings.fe.language")} />
+        <SelectValue placeholder={t("Language")} />
       </SelectTrigger>
       <SelectContent>
         {Object.entries(LOCALE_CONFIG).map(([locale, config]) => (

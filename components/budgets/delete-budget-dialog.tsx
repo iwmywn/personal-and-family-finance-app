@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
 import { deleteBudget } from "@/actions/budget.actions"
@@ -28,7 +28,7 @@ export function DeleteBudgetDialog({
   open,
   setOpen,
 }: DeleteBudgetDialogProps) {
-  const t = useTranslations()
+  const t = useExtracted()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -50,17 +50,17 @@ export function DeleteBudgetDialog({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            {t("budgets.fe.deleteBudgetTitle")}
-          </AlertDialogTitle>
+          <AlertDialogTitle>{t("Delete Budget")}</AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            {t("budgets.fe.deleteBudgetDescription")}
+            {t(
+              "Are you sure you want to delete this budget? This action cannot be undone."
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("common.fe.cancel")}</AlertDialogCancel>
+          <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} {t("common.fe.delete")}
+            {isLoading && <Spinner />} {t("Delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
