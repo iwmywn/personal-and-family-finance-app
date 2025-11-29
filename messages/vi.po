@@ -1,0 +1,1908 @@
+msgid ""
+msgstr ""
+"Language: vi\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: next-intl\n"
+"X-Crowdin-SourceKey: msgstr\n"
+
+#: actions\budget.actions.ts
+msgid "3pMkv5"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "5BmD1W"
+msgstr ""
+
+#: actions\budget.actions.ts
+#: actions\category.actions.ts
+#: actions\goal.actions.ts
+#: actions\recurring.actions.ts
+#: actions\transaction.actions.ts
+#: components\auth\signin-form.tsx
+#: components\auth\two-factor-form.tsx
+#: components\budgets\budget-dialog.tsx
+#: components\categories\category-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\settings\change-name-dialog.tsx
+#: components\settings\change-password-dialog.tsx
+#: components\settings\change-username-dialog.tsx
+#: components\settings\two-factor-manager.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "5GmpFA"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "fDrjqQ"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "ge/1ga"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "GeSZei"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "hcutYI"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "Ipw0W1"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "kwvIdb"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "niO8qC"
+msgstr ""
+
+#: actions\budget.actions.ts
+#: actions\category.actions.ts
+#: actions\goal.actions.ts
+#: actions\recurring.actions.ts
+#: actions\transaction.actions.ts
+msgid "QWvB5t"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "xFeLWs"
+msgstr ""
+
+#: actions\budget.actions.ts
+msgid "ZUfwUz"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "7Al4tw"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "C7NEmI"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "G0Twr1"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "gzfdvr"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "iNZspt"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "IzwrSe"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "Jau5xo"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "Jfen4M"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "LzesyV"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "OQ79b6"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "PoUgbk"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "Q/Y/ED"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "RMEY96"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "SyYZuO"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "TgxdcM"
+msgstr ""
+
+#: actions\category.actions.ts
+msgid "XWfgXI"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "3SCa/T"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "7UB8uM"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "9Buhj/"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "Av4WTA"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "iQpYZg"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "J+nrjG"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "Lmu8yS"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "MT417I"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "SpmGQk"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "uwewg6"
+msgstr ""
+
+#: actions\goal.actions.ts
+msgid "xwvGbl"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "+HBMWc"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "0L6Kzl"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "5Mtoe5"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "9p5fYg"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "D92YlY"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "FgrcGc"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "FLPmpu"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "oyoqPq"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "qlYMTi"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "TJXAsr"
+msgstr ""
+
+#: actions\recurring.actions.ts
+msgid "Yamhgo"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "+VVz7r"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "A9rBEo"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "DcqDur"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "Fxn2/P"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "pU1r4y"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "qyC85x"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "tz6kfd"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "v+aP8j"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "VHOeqA"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "w/J6M7"
+msgstr ""
+
+#: actions\transaction.actions.ts
+msgid "zb35o3"
+msgstr ""
+
+#: app\(auth)\signin\page.tsx
+msgid "gvGdmL"
+msgstr ""
+
+#: app\(auth)\signin\page.tsx
+#: components\auth\signin-form.tsx
+msgid "Ub+AGc"
+msgstr ""
+
+#: app\(auth)\two-factor\page.tsx
+#: components\settings\settings-page.tsx
+msgid "AJyYQz"
+msgstr ""
+
+#: app\(auth)\two-factor\page.tsx
+msgid "PsYaj1"
+msgstr ""
+
+#: app\(core)\[...not-found]\page.tsx
+#: components\layout\header.tsx
+msgid "k1s9UW"
+msgstr ""
+
+#: app\(core)\[...not-found]\page.tsx
+#: app\error.tsx
+msgid "kfoc7z"
+msgstr ""
+
+#: app\(core)\[...not-found]\page.tsx
+msgid "QRccCM"
+msgstr ""
+
+#: app\(core)\[...not-found]\page.tsx
+msgid "yAbaof"
+msgstr ""
+
+#: app\(core)\budgets\page.tsx
+#: components\budgets\budgets-page.tsx
+#: components\layout\header.tsx
+#: components\layout\main-nav.tsx
+#: hooks\use-nav.ts
+msgid "mJeXSX"
+msgstr ""
+
+#: app\(core)\categories\page.tsx
+#: components\categories\categories-page.tsx
+#: components\layout\header.tsx
+#: components\layout\main-nav.tsx
+#: hooks\use-nav.ts
+msgid "VKb1MS"
+msgstr ""
+
+#: app\(core)\goals\page.tsx
+#: components\goals\goals-page.tsx
+#: components\layout\header.tsx
+#: components\layout\main-nav.tsx
+#: hooks\use-nav.ts
+msgid "XHLYdJ"
+msgstr ""
+
+#: app\(core)\home\page.tsx
+#: components\layout\header.tsx
+#: components\layout\main-nav.tsx
+#: hooks\use-nav.ts
+msgid "ejEGdx"
+msgstr ""
+
+#: app\(core)\layout.tsx
+msgid "3aju6V"
+msgstr ""
+
+#: app\(core)\layout.tsx
+msgid "iKuJb1"
+msgstr ""
+
+#: app\(core)\layout.tsx
+msgid "iriWHm"
+msgstr ""
+
+#: app\(core)\layout.tsx
+msgid "pvUtk6"
+msgstr ""
+
+#: app\(core)\layout.tsx
+msgid "V9Jq49"
+msgstr ""
+
+#: app\(core)\recurring\page.tsx
+msgid "VgzOzy"
+msgstr ""
+
+#: app\(core)\settings\page.tsx
+#: components\layout\header.tsx
+#: components\layout\secondary-nav.tsx
+#: hooks\use-nav.ts
+msgid "D3idYv"
+msgstr ""
+
+#: app\(core)\statistics\page.tsx
+#: components\layout\header.tsx
+#: components\layout\main-nav.tsx
+#: components\statistics\statistics-page.tsx
+#: hooks\use-nav.ts
+msgid "H3eDAS"
+msgstr ""
+
+#: app\(core)\transactions\page.tsx
+#: components\layout\header.tsx
+#: components\layout\main-nav.tsx
+#: components\transactions\transactions-page.tsx
+#: hooks\use-nav.ts
+msgid "/jJLYy"
+msgstr ""
+
+#: app\error.tsx
+msgid "/WMCDd"
+msgstr ""
+
+#: app\layout.tsx
+msgid "hyu/OZ"
+msgstr ""
+
+#: components\auth\recaptcha-dialog.tsx
+msgid "E4J/N3"
+msgstr ""
+
+#: components\auth\recaptcha-dialog.tsx
+msgid "ExP2LI"
+msgstr ""
+
+#: components\auth\recaptcha-dialog.tsx
+msgid "ItmvCq"
+msgstr ""
+
+#: components\auth\signin-form.tsx
+#: components\settings\two-factor-manager.tsx
+msgid "5sg7KC"
+msgstr ""
+
+#: components\auth\signin-form.tsx
+msgid "b8+mgZ"
+msgstr ""
+
+#: components\auth\signin-form.tsx
+#: components\settings\change-username-dialog.tsx
+msgid "JCIgkj"
+msgstr ""
+
+#: components\auth\signin-form.tsx
+msgid "pxIiYc"
+msgstr ""
+
+#: components\auth\two-factor-form.tsx
+msgid "hyw/Cv"
+msgstr ""
+
+#: components\auth\two-factor-form.tsx
+msgid "mXmfR7"
+msgstr ""
+
+#: components\auth\two-factor-form.tsx
+#: components\settings\two-factor-manager.tsx
+msgid "q5Xl0M"
+msgstr ""
+
+#: components\auth\two-factor-form.tsx
+#: components\settings\two-factor-manager.tsx
+msgid "Tjv3UC"
+msgstr ""
+
+#: components\auth\two-factor-form.tsx
+msgid "ZcMAT1"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\budgets\budgets-table.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transactions-table.tsx
+msgid "/0TOL5"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\budgets\budgets-page.tsx
+#: components\categories\categories-page.tsx
+#: components\categories\category-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\goals\goals-page.tsx
+#: components\home\homepage.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-page.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transactions-page.tsx
+msgid "2/2yg+"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+msgid "2g82CP"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\budgets\delete-budget-dialog.tsx
+#: components\categories\category-dialog.tsx
+#: components\categories\delete-category-dialog.tsx
+#: components\goals\delete-goal-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring\delete-recurring-dialog.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\settings\change-name-dialog.tsx
+#: components\settings\change-password-dialog.tsx
+#: components\settings\change-username-dialog.tsx
+#: components\transactions\delete-transaction-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "47FYwb"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\categories\category-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "BWpuKl"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\budgets\budgets-filters.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goal-dialog.tsx
+#: components\goals\goals-filters.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-table.tsx
+#: components\statistics\transaction-breakdown-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transaction-filters.tsx
+#: components\transactions\transactions-table.tsx
+msgid "ccXLVi"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "gjwFsT"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+msgid "PVSBse"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goal-dialog.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "QirE3M"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "RUJYth"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goal-dialog.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "T4GOiX"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+msgid "zMoeFN"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+msgid "zSiCkT"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+msgid "1TM0t6"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "1X6HtI"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goals-filters.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-table.tsx
+msgid "3a5wL8"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "5JGC4V"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goals-filters.tsx
+#: components\goals\goals-table.tsx
+msgid "6/aEFZ"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "9j3hXO"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "dM+p3/"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+msgid "DSmOlH"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "IFo1oo"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\categories\category-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "jm/spn"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "KAX9q+"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "O+ZfC8"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goals-filters.tsx
+#: components\goals\goals-table.tsx
+msgid "RahCRH"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goals-filters.tsx
+#: components\goals\goals-table.tsx
+msgid "sIMS7i"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+msgid "tADQQm"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "TBovrx"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+msgid "tlzCDY"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\budgets\budgets-table.tsx
+#: components\goals\goals-filters.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-table.tsx
+msgid "tzMNF3"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\categories\categories-table.tsx
+#: components\categories\category-dialog.tsx
+#: components\categories\category-filters.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-table.tsx
+#: components\statistics\transaction-breakdown-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transaction-filters.tsx
+#: components\transactions\transactions-table.tsx
+msgid "URe+qA"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+#: components\goals\goals-filters.tsx
+msgid "W8OX/r"
+msgstr ""
+
+#: components\budgets\budgets-filters.tsx
+msgid "ZLbolA"
+msgstr ""
+
+#: components\budgets\budgets-page.tsx
+msgid "UxaXqH"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+msgid "111qQK"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+msgid "6HxSkI"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+#: components\categories\categories-table.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\recurring-table.tsx
+#: components\transactions\transactions-table.tsx
+msgid "bdcMGy"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+#: components\statistics\statistics-summary.tsx
+msgid "H5+NAX"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+#: components\budgets\delete-budget-dialog.tsx
+#: components\categories\categories-table.tsx
+#: components\categories\delete-category-dialog.tsx
+#: components\goals\delete-goal-dialog.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\delete-recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+#: components\transactions\delete-transaction-dialog.tsx
+#: components\transactions\transactions-table.tsx
+msgid "K3r6DQ"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+msgid "PZ97Zd"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+#: components\categories\categories-table.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring\recurring-table.tsx
+#: components\transactions\transactions-table.tsx
+msgid "wEQDC6"
+msgstr ""
+
+#: components\budgets\budgets-table.tsx
+msgid "XYhPPe"
+msgstr ""
+
+#: components\budgets\delete-budget-dialog.tsx
+msgid "q6vl7b"
+msgstr ""
+
+#: components\budgets\delete-budget-dialog.tsx
+msgid "x1Tqbe"
+msgstr ""
+
+#: components\categories\categories-page.tsx
+msgid "5reIsh"
+msgstr ""
+
+#: components\categories\categories-table.tsx
+#: components\categories\category-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-table.tsx
+#: components\statistics\transaction-breakdown-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+#: components\transactions\transactions-table.tsx
+msgid "+U6ozc"
+msgstr ""
+
+#: components\categories\categories-table.tsx
+msgid "7vjOuF"
+msgstr ""
+
+#: components\categories\categories-table.tsx
+msgid "dM86a2"
+msgstr ""
+
+#: components\categories\categories-table.tsx
+msgid "Dojtt1"
+msgstr ""
+
+#: components\categories\categories-table.tsx
+#: components\categories\category-dialog.tsx
+#: components\categories\category-filters.tsx
+#: components\goals\goals-filters.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-table.tsx
+#: components\statistics\transaction-breakdown-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transaction-filters.tsx
+#: components\transactions\transactions-table.tsx
+msgid "gJkHZk"
+msgstr ""
+
+#: components\categories\categories-table.tsx
+#: components\categories\category-dialog.tsx
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transactions-table.tsx
+msgid "Q8Qw5B"
+msgstr ""
+
+#: components\categories\categories-table.tsx
+#: components\categories\category-dialog.tsx
+msgid "vEYtiq"
+msgstr ""
+
+#: components\categories\category-dialog.tsx
+msgid "0jMR1h"
+msgstr ""
+
+#: components\categories\category-dialog.tsx
+msgid "1VRDDQ"
+msgstr ""
+
+#: components\categories\category-dialog.tsx
+msgid "5Fs4aA"
+msgstr ""
+
+#: components\categories\category-dialog.tsx
+#: components\recurring\recurring-dialog.tsx
+msgid "s0F42g"
+msgstr ""
+
+#: components\categories\category-dialog.tsx
+msgid "THThZY"
+msgstr ""
+
+#: components\categories\category-dialog.tsx
+msgid "TxCpcX"
+msgstr ""
+
+#: components\categories\category-filters.tsx
+msgid "T83iU7"
+msgstr ""
+
+#: components\categories\category-filters.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "UjTL+F"
+msgstr ""
+
+#: components\categories\delete-category-dialog.tsx
+msgid "iSK5Jx"
+msgstr ""
+
+#: components\categories\delete-category-dialog.tsx
+msgid "JtR9Fg"
+msgstr ""
+
+#: components\goals\delete-goal-dialog.tsx
+msgid "EwRebq"
+msgstr ""
+
+#: components\goals\delete-goal-dialog.tsx
+msgid "F3XA9+"
+msgstr ""
+
+#: components\goals\goal-dialog.tsx
+msgid "/kQug4"
+msgstr ""
+
+#: components\goals\goal-dialog.tsx
+msgid "5WuADX"
+msgstr ""
+
+#: components\goals\goal-dialog.tsx
+msgid "dzmlX3"
+msgstr ""
+
+#: components\goals\goal-dialog.tsx
+#: components\goals\goals-table.tsx
+msgid "gQxxlw"
+msgstr ""
+
+#: components\goals\goal-dialog.tsx
+#: components\goals\goals-table.tsx
+msgid "MPOzul"
+msgstr ""
+
+#: components\goals\goal-dialog.tsx
+msgid "rH4tSt"
+msgstr ""
+
+#: components\goals\goal-dialog.tsx
+msgid "sOXElg"
+msgstr ""
+
+#: components\goals\goals-filters.tsx
+msgid "+xHZ7x"
+msgstr ""
+
+#: components\goals\goals-filters.tsx
+msgid "7IAF5Y"
+msgstr ""
+
+#: components\goals\goals-filters.tsx
+msgid "8MCUlP"
+msgstr ""
+
+#: components\goals\goals-filters.tsx
+msgid "O7nOCr"
+msgstr ""
+
+#: components\goals\goals-page.tsx
+msgid "6rbe1E"
+msgstr ""
+
+#: components\goals\goals-table.tsx
+msgid "GkiQMs"
+msgstr ""
+
+#: components\goals\goals-table.tsx
+msgid "iB1AMy"
+msgstr ""
+
+#: components\goals\goals-table.tsx
+msgid "RB30ZK"
+msgstr ""
+
+#: components\goals\goals-table.tsx
+msgid "uuJSCu"
+msgstr ""
+
+#: components\home\homepage.tsx
+msgid "9A7jRV"
+msgstr ""
+
+#: components\home\homepage.tsx
+msgid "UKxoV8"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "5+Kbgx"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "5pB6eY"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "9AS2Qs"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+#: components\statistics\statistics-summary.tsx
+msgid "a3+VDd"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "AUkgKt"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "g28wjp"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "gaBuAW"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "gkpkvE"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "O8QihK"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "Prh2Lb"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "Q0mewJ"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "Rxqw9g"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "UG5qoS"
+msgstr ""
+
+#: components\home\quick-stats.tsx
+msgid "VP5MQP"
+msgstr ""
+
+#: components\home\recent-transactions.tsx
+msgid "GMkXVd"
+msgstr ""
+
+#: components\home\recent-transactions.tsx
+#: components\statistics\transaction-breakdown-table.tsx
+#: components\transactions\transactions-table.tsx
+msgid "JWV3aB"
+msgstr ""
+
+#: components\home\recent-transactions.tsx
+#: components\statistics\transaction-breakdown-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transactions-table.tsx
+msgid "LER0RZ"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+#: components\statistics\statistics-summary.tsx
+#: components\transactions\export-button.tsx
+msgid "5+nDxs"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+#: components\statistics\statistics-summary.tsx
+msgid "dHVUaP"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+msgid "FR0il4"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+#: components\statistics\statistics-summary.tsx
+msgid "kVQ1fo"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+#: components\statistics\statistics-summary.tsx
+msgid "qTQZsz"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+#: components\statistics\statistics-summary.tsx
+msgid "r0q/a1"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+msgid "XUYy4C"
+msgstr ""
+
+#: components\home\transaction-summary.tsx
+msgid "ZLrViM"
+msgstr ""
+
+#: components\layout\app-sidebar.tsx
+msgid "zmL+Bn"
+msgstr ""
+
+#: components\layout\header.tsx
+#: components\layout\main-nav.tsx
+#: components\recurring\recurring-page.tsx
+#: hooks\use-nav.ts
+msgid "v84fNv"
+msgstr ""
+
+#: components\layout\secondary-nav.tsx
+msgid "F62y+K"
+msgstr ""
+
+#: components\layout\secondary-nav.tsx
+msgid "oj0aXj"
+msgstr ""
+
+#: components\layout\secondary-nav.tsx
+msgid "r98Ya2"
+msgstr ""
+
+#: components\layout\secondary-nav.tsx
+msgid "XuxYAf"
+msgstr ""
+
+#: components\recurring\delete-recurring-dialog.tsx
+msgid "B58bFw"
+msgstr ""
+
+#: components\recurring\delete-recurring-dialog.tsx
+msgid "mwZmom"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "/clOBU"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "03X4YH"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "5nuO2v"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-table.tsx
+msgid "6Tps09"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "adePxB"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "b1Ou36"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "CpM7W/"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "CrEhnK"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "D9n+q2"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "dqD39h"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "FP2XQQ"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "fxcttM"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "gKA6Xf"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "gq0oif"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+msgid "sYXY5N"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "vAW30j"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "wYsv4Z"
+msgstr ""
+
+#: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-table.tsx
+msgid "zxvhnE"
+msgstr ""
+
+#: components\recurring\recurring-filters.tsx
+msgid "jZimtU"
+msgstr ""
+
+#: components\recurring\recurring-page.tsx
+msgid "w8tTYc"
+msgstr ""
+
+#: components\recurring\recurring-table.tsx
+msgid "b+8NFf"
+msgstr ""
+
+#: components\recurring\recurring-table.tsx
+msgid "bhzq2y"
+msgstr ""
+
+#: components\recurring\recurring-table.tsx
+msgid "hZPPxy"
+msgstr ""
+
+#: components\recurring\recurring-table.tsx
+msgid "qYXK93"
+msgstr ""
+
+#: components\recurring\recurring-table.tsx
+msgid "xRs5e/"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "bLQmWN"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "DC/DQF"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "fF376U"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "h/tqwp"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "HuQudj"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "i3aVwj"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "M3ZAZv"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "oA2uW/"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+msgid "tNzaek"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+#: components\settings\settings-page.tsx
+msgid "V3ka34"
+msgstr ""
+
+#: components\settings\active-sessions.tsx
+#: components\settings\settings-page.tsx
+msgid "xLvLBD"
+msgstr ""
+
+#: components\settings\change-name-dialog.tsx
+msgid "g4FbZ5"
+msgstr ""
+
+#: components\settings\change-name-dialog.tsx
+msgid "HAlOn1"
+msgstr ""
+
+#: components\settings\change-name-dialog.tsx
+#: components\settings\change-password-dialog.tsx
+#: components\settings\change-username-dialog.tsx
+msgid "jvo0vs"
+msgstr ""
+
+#: components\settings\change-name-dialog.tsx
+msgid "oALrPz"
+msgstr ""
+
+#: components\settings\change-name-dialog.tsx
+msgid "pdaEmb"
+msgstr ""
+
+#: components\settings\change-name-dialog.tsx
+#: components\settings\settings-page.tsx
+msgid "r5LPv0"
+msgstr ""
+
+#: components\settings\change-name-dialog.tsx
+#: components\settings\settings-page.tsx
+msgid "z7OVdl"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+msgid "Ev6SEF"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+msgid "GretYf"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+msgid "I+C2uX"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+msgid "kgHPAz"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+#: components\settings\settings-page.tsx
+msgid "luD+rc"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+#: components\settings\settings-page.tsx
+msgid "QiKKFz"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+msgid "UR3aU3"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+msgid "vfG+nh"
+msgstr ""
+
+#: components\settings\change-password-dialog.tsx
+msgid "zFD28X"
+msgstr ""
+
+#: components\settings\change-username-dialog.tsx
+#: components\settings\settings-page.tsx
+msgid "19mdX0"
+msgstr ""
+
+#: components\settings\change-username-dialog.tsx
+msgid "8KK2w+"
+msgstr ""
+
+#: components\settings\change-username-dialog.tsx
+msgid "IaZaQX"
+msgstr ""
+
+#: components\settings\change-username-dialog.tsx
+msgid "K3OKU5"
+msgstr ""
+
+#: components\settings\change-username-dialog.tsx
+#: components\settings\settings-page.tsx
+msgid "TXe4LX"
+msgstr ""
+
+#: components\settings\change-username-dialog.tsx
+msgid "v60thv"
+msgstr ""
+
+#: components\settings\change-username-dialog.tsx
+msgid "wb3MSp"
+msgstr ""
+
+#: components\settings\language-selector.tsx
+msgid "Ax3Nmj"
+msgstr ""
+
+#: components\settings\language-selector.tsx
+#: components\settings\settings-page.tsx
+msgid "y1Z3or"
+msgstr ""
+
+#: components\settings\settings-page.tsx
+msgid "1iEPTM"
+msgstr ""
+
+#: components\settings\settings-page.tsx
+msgid "2GURQY"
+msgstr ""
+
+#: components\settings\settings-page.tsx
+msgid "9ar+T+"
+msgstr ""
+
+#: components\settings\settings-page.tsx
+msgid "Gr0AtT"
+msgstr ""
+
+#: components\settings\settings-page.tsx
+msgid "NAnTXq"
+msgstr ""
+
+#: components\settings\settings-page.tsx
+msgid "TwyMau"
+msgstr ""
+
+#: components\settings\theme-selector.tsx
+msgid "+CwN9C"
+msgstr ""
+
+#: components\settings\theme-selector.tsx
+msgid "3cc4Ct"
+msgstr ""
+
+#: components\settings\theme-selector.tsx
+msgid "EQpyb8"
+msgstr ""
+
+#: components\settings\theme-selector.tsx
+msgid "tOdNiY"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "02Huvd"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "0onqf3"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "6vQ8Z2"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "BBb4xb"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "deAXlH"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "e7Db3T"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "FSRmm9"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "fUrrOz"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "JHBmG8"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "Lq08V/"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "VNORmj"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "Y1o/zZ"
+msgstr ""
+
+#: components\settings\two-factor-manager.tsx
+msgid "ZhrNZz"
+msgstr ""
+
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "ftg7GK"
+msgstr ""
+
+#: components\statistics\statistics-page.tsx
+msgid "wqp6W5"
+msgstr ""
+
+#: components\statistics\statistics-summary.tsx
+msgid "cX8/D7"
+msgstr ""
+
+#: components\statistics\statistics-summary.tsx
+msgid "F3K//T"
+msgstr ""
+
+#: components\statistics\statistics-summary.tsx
+msgid "q2bcKc"
+msgstr ""
+
+#: components\statistics\transaction-breakdown-table.tsx
+msgid "CDTMW3"
+msgstr ""
+
+#: components\statistics\transaction-breakdown-table.tsx
+#: components\transactions\transactions-table.tsx
+msgid "Cl5VLx"
+msgstr ""
+
+#: components\statistics\transaction-breakdown-table.tsx
+msgid "gsAs8V"
+msgstr ""
+
+#: components\transactions\delete-transaction-dialog.tsx
+msgid "nPfy7y"
+msgstr ""
+
+#: components\transactions\delete-transaction-dialog.tsx
+msgid "vGedJ1"
+msgstr ""
+
+#: components\transactions\export-button.tsx
+msgid "0S1jq/"
+msgstr ""
+
+#: components\transactions\export-button.tsx
+msgid "6L1Gl2"
+msgstr ""
+
+#: components\transactions\export-button.tsx
+msgid "hTOF+7"
+msgstr ""
+
+#: components\transactions\export-button.tsx
+msgid "jRf7yh"
+msgstr ""
+
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transactions-table.tsx
+msgid "P7PLVj"
+msgstr ""
+
+#: components\transactions\transaction-dialog.tsx
+msgid "9WG2aE"
+msgstr ""
+
+#: components\transactions\transaction-dialog.tsx
+msgid "DJIUi0"
+msgstr ""
+
+#: components\transactions\transaction-dialog.tsx
+msgid "ET95oG"
+msgstr ""
+
+#: components\transactions\transaction-dialog.tsx
+msgid "J0Y6yy"
+msgstr ""
+
+#: components\transactions\transaction-dialog.tsx
+msgid "m3AQtz"
+msgstr ""
+
+#: components\transactions\transaction-dialog.tsx
+msgid "P5C72A"
+msgstr ""
+
+#: components\transactions\transaction-dialog.tsx
+msgid "PmRC5G"
+msgstr ""
+
+#: components\transactions\transaction-filters.tsx
+msgid "gD5509"
+msgstr ""
+
+#: components\transactions\transactions-page.tsx
+msgid "PRC7nC"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "/x7aOj"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "+PDYFb"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "+vWFfX"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "0zQ/kK"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "3M2DQp"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "4Vdjbv"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "7MY/4L"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "ASzmVA"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "AURASB"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "AvfH/3"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "B2jc7q"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "BNse/p"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "dpjEgD"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "flIwoN"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "HowRY4"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "igDrI+"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "jyebiC"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "KjBENf"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "LCwChs"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "lW1Dvw"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "Mhg8/5"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "mhXJmF"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "my1MLn"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "n6fmhq"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "oKluKH"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "oXnjbh"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "QRzRc0"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "r3fFt1"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "rLxG+6"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "U5tQLZ"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "UsRS8G"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "VCWKjW"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "VoH7HP"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "X/LFZv"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "yJZOmD"
+msgstr ""
+
+#: hooks\use-category.ts
+msgid "zJU6tX"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "0TR0PD"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "EuK7yR"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "h7xti1"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "lINtN6"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "NGWumB"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "pn+jQD"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "SsiZK7"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "T5W0CV"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "t8QlFE"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "TFf5u+"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "xBaHKe"
+msgstr ""
+
+#: hooks\use-months-i18n.ts
+#: hooks\use-months.ts
+msgid "zUpHdf"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "/4pQDl"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "++E1JO"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "136ad6"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "5huJG4"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "6B/vXl"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "8Y5qyI"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "9I9BOz"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "aAADUG"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "be3kp3"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "BErLOD"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "c+1x/V"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "eEFyJl"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "EtmyBh"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "eX6daX"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "F8BDEm"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "GNwfGD"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "gpW0lx"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "H5adYw"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "hjtyTg"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "HxXJtm"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "ICgNGL"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "LmVuiu"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "MhMNy6"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "MSqoQ2"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "N4OgtE"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "O3egh+"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "O4PhlQ"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "qVUStI"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "RKK2dE"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "tb8z8V"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "uDAfoc"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "w/77fi"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "Y1VHB3"
+msgstr ""
+
+#: hooks\use-schemas.ts
+msgid "YeRtBx"
+msgstr ""
