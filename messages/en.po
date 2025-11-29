@@ -1154,16 +1154,16 @@ msgid "Q0mewJ"
 msgstr "The percentage of money you save compared to income ((Income - Expense) / Income × 100%)."
 
 #: components\home\quick-stats.tsx
-msgid "Rxqw9g"
-msgstr "Category with the highest number of transactions."
-
-#: components\home\quick-stats.tsx
 msgid "UG5qoS"
 msgstr "No data"
 
 #: components\home\quick-stats.tsx
 msgid "VP5MQP"
 msgstr "Average amount per expense (Total Expense / Number of expense transactions)."
+
+#: components\home\quick-stats.tsx
+msgid "wEyaDt"
+msgstr "Category with the highest total amount in the month."
 
 #: components\home\recent-transactions.tsx
 msgid "GMkXVd"
@@ -2077,6 +2077,10 @@ msgstr "Please select a date."
 #: hooks\use-schemas.ts
 msgid "MSqoQ2"
 msgstr "Username must be at most 30 characters."
+
+#: hooks\use-schemas.ts
+msgid "MsWwGp"
+msgstr "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
 
 #: hooks\use-schemas.ts
 msgid "N4OgtE"

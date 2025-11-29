@@ -6,24 +6,23 @@ import { z } from "zod"
 import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
 import { normalizeToUTCDate } from "@/lib/utils"
 
-const basePasswordSchema = (t: (m: string) => string, message: string) =>
-  z
-    .string()
-    .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
-      message: t(message),
-    })
-
 export function useSchemas() {
   const t = useExtracted()
+
+  const basePasswordSchema = () =>
+    z
+      .string()
+      .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
+        message: t(
+          "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
+        ),
+      })
 
   // ---------- Sign In ----------
   const createSignInSchema = () =>
     z.object({
       username: z.string().min(1, { message: t("Username is required.") }),
-      password: basePasswordSchema(
-        t,
-        "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
-      ),
+      password: basePasswordSchema(),
     })
 
   // ---------- Change Password ----------
@@ -33,10 +32,7 @@ export function useSchemas() {
         currentPassword: z
           .string()
           .min(1, { message: t("Current password is required.") }),
-        newPassword: basePasswordSchema(
-          t,
-          "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
-        ),
+        newPassword: basePasswordSchema(),
         confirmPassword: z
           .string()
           .min(1, { message: t("Please confirm your new password.") }),
@@ -55,10 +51,7 @@ export function useSchemas() {
   // ---------- 2FA: Password ----------
   const createTwoFactorPasswordSchema = () =>
     z.object({
-      password: basePasswordSchema(
-        t,
-        "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
-      ),
+      password: basePasswordSchema(),
     })
 
   // ---------- 2FA: Code ----------
