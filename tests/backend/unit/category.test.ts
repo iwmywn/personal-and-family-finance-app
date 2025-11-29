@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getExtracted } from "next-intl/server"
 
 import {
   insertTestBudget,
@@ -38,8 +37,6 @@ import {
 } from "@/lib/collections"
 
 describe("Categories", async () => {
-  const t = await getExtracted()
-
   describe("createCustomCategory", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -446,7 +443,7 @@ describe("Categories", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getCustomCategories("", t)
+      const result = await getCustomCategories("")
 
       expect(result.customCategories).toBeUndefined()
       expect(result.error).toBe(
@@ -457,7 +454,7 @@ describe("Categories", async () => {
     it("should return empty categories list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getCustomCategories(mockUser._id.toString(), t)
+      const result = await getCustomCategories(mockUser._id.toString())
 
       expect(result.customCategories).toEqual([])
       expect(result.error).toBeUndefined()
@@ -467,7 +464,7 @@ describe("Categories", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
-      const result = await getCustomCategories(mockUser._id.toString(), t)
+      const result = await getCustomCategories(mockUser._id.toString())
 
       expect(result.customCategories).toHaveLength(1)
       expect(result.customCategories?.[0].label).toBe("Entertainment")
@@ -498,7 +495,7 @@ describe("Categories", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getCustomCategories(mockUser._id.toString(), t)
+      const result = await getCustomCategories(mockUser._id.toString())
 
       expect(result.customCategories).toHaveLength(3)
       // Should be sorted by _id descending
@@ -512,7 +509,7 @@ describe("Categories", async () => {
       mockAuthenticatedUser()
       mockCategoryCollectionError()
 
-      const result = await getCustomCategories(mockUser._id.toString(), t)
+      const result = await getCustomCategories(mockUser._id.toString())
 
       expect(result.customCategories).toBeUndefined()
       expect(result.error).toBe(

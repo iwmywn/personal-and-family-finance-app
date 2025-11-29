@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getExtracted } from "next-intl/server"
 
 import { insertTestBudget } from "@/tests/backend/helpers/database"
 import {
@@ -25,8 +24,6 @@ import { getBudgetsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Budgets", async () => {
-  const t = await getExtracted()
-
   describe("createBudget", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -225,7 +222,7 @@ describe("Budgets", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        t("Budget not found or you don't have permission to delete!")
+        "Budget not found or you don't have permission to delete!"
       )
     })
 
@@ -261,7 +258,7 @@ describe("Budgets", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getBudgets("", t)
+      const result = await getBudgets("")
 
       expect(result.budgets).toBeUndefined()
       expect(result.error).toBe(
@@ -272,7 +269,7 @@ describe("Budgets", async () => {
     it("should return empty budgets list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toEqual([])
       expect(result.error).toBeUndefined()
@@ -282,7 +279,7 @@ describe("Budgets", async () => {
       await insertTestBudget(mockBudget)
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toHaveLength(1)
       expect(result.budgets?.[0].categoryKey).toBe("food_beverage")
@@ -314,7 +311,7 @@ describe("Budgets", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toHaveLength(3)
       // Should be sorted by startDate descending, then _id descending
@@ -330,7 +327,7 @@ describe("Budgets", async () => {
       mockAuthenticatedUser()
       mockBudgetCollectionError()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toBeUndefined()
       expect(result.error).toBe(

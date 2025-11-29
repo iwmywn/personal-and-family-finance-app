@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getExtracted } from "next-intl/server"
 
 import { insertTestGoal } from "@/tests/backend/helpers/database"
 import {
@@ -21,8 +20,6 @@ import { getGoalsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Goals", async () => {
-  const t = await getExtracted()
-
   describe("createGoal", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -253,7 +250,7 @@ describe("Goals", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getGoals("", t)
+      const result = await getGoals("")
 
       expect(result.goals).toBeUndefined()
       expect(result.error).toBe(
@@ -264,7 +261,7 @@ describe("Goals", async () => {
     it("should return empty goals list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toEqual([])
       expect(result.error).toBeUndefined()
@@ -274,7 +271,7 @@ describe("Goals", async () => {
       await insertTestGoal(mockGoal)
       mockAuthenticatedUser()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toHaveLength(1)
       expect(result.goals?.[0].name).toBe("buy a motorbike")
@@ -307,7 +304,7 @@ describe("Goals", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toHaveLength(3)
       // Should be sorted by startDate descending, then _id descending
@@ -323,7 +320,7 @@ describe("Goals", async () => {
       mockAuthenticatedUser()
       mockGoalCollectionError()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toBeUndefined()
       expect(result.error).toBe("Failed to load goals! Please try again later.")

@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getExtracted } from "next-intl/server"
 
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
 import {
@@ -25,8 +24,6 @@ import { getTransactionsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Transactions", async () => {
-  const t = await getExtracted()
-
   describe("createTransaction", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -264,7 +261,7 @@ describe("Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getTransactions("", t)
+      const result = await getTransactions("")
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(
@@ -275,7 +272,7 @@ describe("Transactions", async () => {
     it("should return empty transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), t)
+      const result = await getTransactions(mockUser._id.toString())
 
       expect(result.transactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -285,7 +282,7 @@ describe("Transactions", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), t)
+      const result = await getTransactions(mockUser._id.toString())
 
       expect(result.transactions).toHaveLength(1)
       expect(result.transactions?.[0].description).toBe("hamburger")
@@ -317,10 +314,10 @@ describe("Transactions", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), t)
+      const result = await getTransactions(mockUser._id.toString())
 
       expect(result.transactions).toHaveLength(3)
-      // Should be sorted by date descending, then _id descending
+      // Should be sorted by date descendinghen _id descending
       expect(result.transactions?.[0].date.toISOString()).toBe(
         "2024-02-15T00:00:00.000Z"
       )
@@ -333,7 +330,7 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await getTransactions(mockUser._id.toString(), t)
+      const result = await getTransactions(mockUser._id.toString())
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(

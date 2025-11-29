@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getExtracted } from "next-intl/server"
 
 import { insertTestRecurringTransaction } from "@/tests/backend/helpers/database"
 import {
@@ -25,8 +24,6 @@ import { getRecurringTransactionsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Recurring Transactions", async () => {
-  const t = await getExtracted()
-
   beforeEach(() => {
     // mock time to 2024-06-01 to ensure endDate 2024-12-31 is in the future
     vi.useFakeTimers()
@@ -367,7 +364,7 @@ describe("Recurring Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getRecurringTransactions("", t)
+      const result = await getRecurringTransactions("")
 
       expect(result.recurringTransactions).toBeUndefined()
       expect(result.error).toBe(
@@ -378,7 +375,7 @@ describe("Recurring Transactions", async () => {
     it("should return empty recurring transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -388,7 +385,7 @@ describe("Recurring Transactions", async () => {
       await insertTestRecurringTransaction(mockRecurringTransaction)
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toHaveLength(1)
       expect(result.recurringTransactions?.[0].description).toBe(
@@ -422,10 +419,10 @@ describe("Recurring Transactions", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toHaveLength(3)
-      // Should be sorted by startDate descending, then _id descending
+      // Should be sorted by startDate descendinghen _id descending
       expect(result.recurringTransactions?.[0].startDate.toISOString()).toBe(
         "2024-02-15T00:00:00.000Z"
       )
@@ -442,7 +439,7 @@ describe("Recurring Transactions", async () => {
       mockAuthenticatedUser()
       mockRecurringTransactionCollectionError()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toBeUndefined()
       expect(result.error).toBe(
