@@ -69,7 +69,7 @@ interface RecurringDialogProps {
   setOpen: (open: boolean) => void
 }
 
-export function RecurringDialog({
+export function RecurringTransactionDialog({
   recurring,
   open,
   setOpen,

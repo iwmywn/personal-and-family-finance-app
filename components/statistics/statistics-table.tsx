@@ -35,7 +35,7 @@ interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]
 }
 
-export function TransactionBreakdownTable({
+export function StatisticsTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
   const { transactions } = useAppData()

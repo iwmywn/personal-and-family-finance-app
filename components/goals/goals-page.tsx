@@ -5,7 +5,7 @@ import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { GoalDialog } from "@/components/goals/goal-dialog"
-import { GoalsFilters } from "@/components/goals/goals-filters"
+import { GoalFilters } from "@/components/goals/goal-filters"
 
 export default function GoalsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -24,7 +24,7 @@ export default function GoalsPage() {
           <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
         </div>
 
-        <GoalsFilters />
+        <GoalFilters />
       </div>
 
       <GoalDialog open={isEditOpen} setOpen={setIsEditOpen} />

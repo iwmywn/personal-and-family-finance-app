@@ -32,7 +32,7 @@ import { EXPENSE_CATEGORIES_KEY } from "@/lib/categories"
 import { filterBudgets } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
-export function BudgetsFilters() {
+export function BudgetFilters() {
   const { budgets, transactions, customCategories } = useAppData()
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [dateRange, setDateRange] = useState<{
@@ -154,11 +154,9 @@ export function BudgetsFilters() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <div className="flex flex-col p-4 sm:flex-row">
+                <div className="flex flex-col pt-3 sm:flex-row">
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("From")}
-                    </div>
+                    <div className="text-center text-sm">{t("From")}</div>
                     <Calendar
                       autoFocus
                       mode="single"
@@ -177,9 +175,7 @@ export function BudgetsFilters() {
                     />
                   </div>
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("To")}
-                    </div>
+                    <div className="text-center text-sm">{t("To")}</div>
                     <Calendar
                       autoFocus
                       mode="single"

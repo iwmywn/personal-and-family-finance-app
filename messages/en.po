@@ -25,6 +25,7 @@ msgstr "Budget not found or you don't have permission to edit!"
 #: components\categories\category-dialog.tsx
 #: components\goals\goal-dialog.tsx
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 #: components\settings\change-name-dialog.tsx
 #: components\settings\change-password-dialog.tsx
 #: components\settings\change-username-dialog.tsx
@@ -451,6 +452,8 @@ msgstr "Don't ask for 2FA code on this device for 30 days."
 #: components\budgets\budgets-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
 #: components\transactions\transactions-table.tsx
@@ -464,8 +467,11 @@ msgstr "Amount"
 #: components\goals\goal-dialog.tsx
 #: components\goals\goals-page.tsx
 #: components\home\homepage.tsx
+#: components\recurring-transactions\recurring-transactions-page.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-page.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-page.tsx
 #: components\transactions\transaction-dialog.tsx
 #: components\transactions\transactions-page.tsx
 msgid "2/2yg+"
@@ -481,8 +487,10 @@ msgstr "Edit Budget"
 #: components\categories\delete-category-dialog.tsx
 #: components\goals\delete-goal-dialog.tsx
 #: components\goals\goal-dialog.tsx
+#: components\recurring-transactions\delete-recurring-transaction-dialog.tsx
 #: components\recurring\delete-recurring-dialog.tsx
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 #: components\settings\change-name-dialog.tsx
 #: components\settings\change-password-dialog.tsx
 #: components\settings\change-username-dialog.tsx
@@ -495,11 +503,13 @@ msgstr "Cancel"
 #: components\categories\category-dialog.tsx
 #: components\goals\goal-dialog.tsx
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "BWpuKl"
 msgstr "Update"
 
 #: components\budgets\budget-dialog.tsx
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\budgets\budgets-table.tsx
 #: components\goals\goal-dialog.tsx
@@ -508,6 +518,10 @@ msgstr "Update"
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -519,6 +533,7 @@ msgstr "Category"
 #: components\budgets\budget-dialog.tsx
 #: components\goals\goal-dialog.tsx
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "gjwFsT"
 msgstr "Select date"
@@ -533,12 +548,15 @@ msgstr "Create a budget for a category to track your spending."
 #: components\goals\goals-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "QirE3M"
 msgstr "Start Date"
 
 #: components\budgets\budget-dialog.tsx
 #: components\goals\goal-dialog.tsx
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "RUJYth"
 msgstr "Select category"
@@ -549,6 +567,8 @@ msgstr "Select category"
 #: components\goals\goals-table.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "T4GOiX"
 msgstr "End Date"
 
@@ -560,17 +580,22 @@ msgstr "Add Budget"
 msgid "zSiCkT"
 msgstr "Update budget information."
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 msgid "1TM0t6"
 msgstr "Warning (75-100%)"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "1X6HtI"
 msgstr "All Categories"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\budgets\budgets-table.tsx
 #: components\goals\goals-filters.tsx
@@ -578,17 +603,25 @@ msgstr "All Categories"
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "3a5wL8"
 msgstr "Active"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "5JGC4V"
 msgstr "All Years"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\budgets\budgets-table.tsx
 #: components\goals\goals-filters.tsx
@@ -596,61 +629,81 @@ msgstr "All Years"
 msgid "6/aEFZ"
 msgstr "Upcoming"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "9j3hXO"
 msgstr "To"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "dM+p3/"
 msgstr "From"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 msgid "DSmOlH"
 msgstr "Exceeded (≥ 100%)"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "IFo1oo"
 msgstr "Year"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\categories\category-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "jm/spn"
 msgstr "Reset"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "KAX9q+"
 msgstr "Select Date Range"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "O+ZfC8"
 msgstr "All Months"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\budgets\budgets-table.tsx
 #: components\goals\goals-filters.tsx
@@ -658,6 +711,7 @@ msgstr "All Months"
 msgid "RahCRH"
 msgstr "Expired"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\budgets\budgets-table.tsx
 #: components\goals\goals-filters.tsx
@@ -665,25 +719,33 @@ msgstr "Expired"
 msgid "sIMS7i"
 msgstr "Progress"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 msgid "tADQQm"
 msgstr "All Statuses"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\statistics\statistics-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "TBovrx"
 msgstr "Month"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 msgid "tlzCDY"
 msgstr "No Transactions"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\budgets\budgets-table.tsx
 #: components\goals\goals-filters.tsx
@@ -691,9 +753,14 @@ msgstr "No Transactions"
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "tzMNF3"
 msgstr "Status"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\categories\categories-table.tsx
 #: components\categories\category-dialog.tsx
@@ -701,6 +768,10 @@ msgstr "Status"
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -709,11 +780,13 @@ msgstr "Status"
 msgid "URe+qA"
 msgstr "Expense"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 #: components\goals\goals-filters.tsx
 msgid "W8OX/r"
 msgstr "All Progress"
 
+#: components\budgets\budget-filters.tsx
 #: components\budgets\budgets-filters.tsx
 msgid "ZLbolA"
 msgstr "Good (< 75%)"
@@ -734,6 +807,7 @@ msgstr "No budgets yet"
 #: components\categories\categories-table.tsx
 #: components\goals\goals-table.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\transactions\transactions-table.tsx
 msgid "bdcMGy"
 msgstr "Open menu"
@@ -749,8 +823,10 @@ msgstr "Balance"
 #: components\categories\delete-category-dialog.tsx
 #: components\goals\delete-goal-dialog.tsx
 #: components\goals\goals-table.tsx
+#: components\recurring-transactions\delete-recurring-transaction-dialog.tsx
 #: components\recurring\delete-recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\transactions\delete-transaction-dialog.tsx
 #: components\transactions\transactions-table.tsx
 msgid "K3r6DQ"
@@ -764,6 +840,7 @@ msgstr "No budgets found matching your filters."
 #: components\categories\categories-table.tsx
 #: components\goals\goals-table.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\transactions\transactions-table.tsx
 msgid "wEQDC6"
 msgstr "Edit"
@@ -788,6 +865,9 @@ msgstr "Manage your custom categories."
 #: components\categories\category-filters.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-filters.tsx
@@ -814,6 +894,10 @@ msgstr "No categories found matching your filters."
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\statistics\transaction-breakdown-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -826,6 +910,8 @@ msgstr "Income"
 #: components\categories\category-dialog.tsx
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 #: components\transactions\export-button.tsx
 #: components\transactions\transaction-dialog.tsx
 #: components\transactions\transactions-table.tsx
@@ -851,6 +937,7 @@ msgstr "Add Category"
 
 #: components\categories\category-dialog.tsx
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "s0F42g"
 msgstr "Enter a description..."
 
@@ -868,6 +955,8 @@ msgstr "Search categories..."
 
 #: components\categories\category-filters.tsx
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 #: components\transactions\transaction-filters.tsx
 msgid "UjTL+F"
 msgstr "All Types"
@@ -1080,7 +1169,9 @@ msgstr "Personal and Family Finance Application"
 
 #: components\layout\header.tsx
 #: components\layout\main-nav.tsx
+#: components\recurring-transactions\recurring-transactions-page.tsx
 #: components\recurring\recurring-page.tsx
+#: components\recurring\recurring-transactions-page.tsx
 #: hooks\use-nav.ts
 msgid "v84fNv"
 msgstr "Recurring"
@@ -1101,122 +1192,163 @@ msgstr "You need to sign in again."
 msgid "XuxYAf"
 msgstr "Failed to sign out! Please try again later."
 
+#: components\recurring-transactions\delete-recurring-transaction-dialog.tsx
 #: components\recurring\delete-recurring-dialog.tsx
 msgid "B58bFw"
 msgstr "Are you sure you want to delete this recurring transaction? This action cannot be undone."
 
+#: components\recurring-transactions\delete-recurring-transaction-dialog.tsx
 #: components\recurring\delete-recurring-dialog.tsx
 msgid "mwZmom"
 msgstr "Delete Recurring Transaction"
 
+#: components\recurring-transactions\recurring-transactions-page.tsx
+#: components\recurring\recurring-page.tsx
+#: components\recurring\recurring-transactions-page.tsx
+msgid "w8tTYc"
+msgstr "Manage your recurring transactions."
+
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "/clOBU"
 msgstr "Weekly"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "03X4YH"
 msgstr "Bi-Weekly"
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "5nuO2v"
 msgstr "Edit Recurring Transaction"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-filters.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "6Tps09"
 msgstr "Inactive"
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "adePxB"
 msgstr "Create a recurring transaction."
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "b1Ou36"
 msgstr "Quarterly"
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "CpM7W/"
 msgstr "Every X Days"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "CrEhnK"
 msgstr "No end date"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "D9n+q2"
 msgstr "Random"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "dqD39h"
 msgstr "Yearly"
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "FP2XQQ"
 msgstr "e.g. 15"
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "fxcttM"
 msgstr "Create a custom category"
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "gKA6Xf"
 msgstr "Update recurring transaction information."
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "gq0oif"
 msgstr "No category found."
 
 #: components\recurring\recurring-dialog.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
 msgid "sYXY5N"
 msgstr "Add Recurring Transaction"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "vAW30j"
 msgstr "Frequency"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "wYsv4Z"
 msgstr "Monthly"
 
 #: components\recurring\recurring-dialog.tsx
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transaction-dialog.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "zxvhnE"
 msgstr "Daily"
 
 #: components\recurring\recurring-filters.tsx
+#: components\recurring\recurring-transaction-filters.tsx
+#: components\recurring\recurring-transactions-filters.tsx
 msgid "jZimtU"
 msgstr "Search recurring transactions..."
 
-#: components\recurring\recurring-page.tsx
-msgid "w8tTYc"
-msgstr "Manage your recurring transactions."
-
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "b+8NFf"
 msgstr "Next: {date}"
 
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "bhzq2y"
 msgstr "Start adding your recurring transactions."
 
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "hZPPxy"
 msgstr "No recurring transactions found matching your filters."
 
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "qYXK93"
 msgstr "Every {days} days"
 
 #: components\recurring\recurring-table.tsx
+#: components\recurring\recurring-transactions-table.tsx
 msgid "xRs5e/"
 msgstr "No recurring transactions found"
 

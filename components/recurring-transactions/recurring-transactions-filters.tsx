@@ -28,7 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { RecurringTable } from "@/components/recurring/recurring-table"
+import { RecurringTransactionsTable } from "@/components/recurring-transactions/recurring-transactions-table"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
@@ -38,7 +38,7 @@ import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import { filterRecurringTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
-export function RecurringFilters() {
+export function RecurringTransactionsFilters() {
   const { recurringTransactions, transactions, customCategories } = useAppData()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -181,11 +181,9 @@ export function RecurringFilters() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <div className="flex flex-col p-4 sm:flex-row">
+                <div className="flex flex-col pt-3 sm:flex-row">
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("From")}
-                    </div>
+                    <div className="text-center text-sm">{t("From")}</div>
                     <Calendar
                       autoFocus
                       mode="single"
@@ -204,9 +202,7 @@ export function RecurringFilters() {
                     />
                   </div>
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("To")}
-                    </div>
+                    <div className="text-center text-sm">{t("To")}</div>
                     <Calendar
                       autoFocus
                       mode="single"
@@ -375,7 +371,7 @@ export function RecurringFilters() {
         </CardContent>
       </Card>
 
-      <RecurringTable
+      <RecurringTransactionsTable
         filteredRecurring={filteredRecurring}
         offsetHeight={calculatedHeight}
       />

@@ -23,7 +23,7 @@ interface DeleteRecurringDialogProps {
   setOpen: (open: boolean) => void
 }
 
-export function DeleteRecurringDialog({
+export function DeleteRecurringTransactionDialog({
   recurringId,
   open,
   setOpen,

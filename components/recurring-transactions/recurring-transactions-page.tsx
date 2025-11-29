@@ -4,10 +4,10 @@ import { useState } from "react"
 import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
-import { RecurringDialog } from "@/components/recurring/recurring-dialog"
-import { RecurringFilters } from "@/components/recurring/recurring-filters"
+import { RecurringTransactionDialog } from "@/components/recurring-transactions/recurring-transaction-dialog"
+import { RecurringTransactionsFilters } from "@/components/recurring-transactions/recurring-transactions-filters"
 
-export default function RecurringPage() {
+export default function RecurringTransactionsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const t = useExtracted()
 
@@ -24,10 +24,10 @@ export default function RecurringPage() {
           <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
         </div>
 
-        <RecurringFilters />
+        <RecurringTransactionsFilters />
       </div>
 
-      <RecurringDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <RecurringTransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>
   )
 }

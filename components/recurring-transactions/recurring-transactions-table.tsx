@@ -33,8 +33,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DeleteRecurringDialog } from "@/components/recurring/delete-recurring-dialog"
-import { RecurringDialog } from "@/components/recurring/recurring-dialog"
+import { DeleteRecurringTransactionDialog } from "@/components/recurring-transactions/delete-recurring-transaction-dialog"
+import { RecurringTransactionDialog } from "@/components/recurring-transactions/recurring-transaction-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
@@ -48,7 +48,7 @@ interface RecurringTableProps {
   offsetHeight: number
 }
 
-export function RecurringTable({
+export function RecurringTransactionsTable({
   filteredRecurring,
   offsetHeight,
 }: RecurringTableProps) {
@@ -246,13 +246,13 @@ export function RecurringTable({
 
       {selectedRecurring && (
         <>
-          <RecurringDialog
+          <RecurringTransactionDialog
             key={selectedRecurring._id + "RecurringDialog"}
             recurring={selectedRecurring}
             open={isEditOpen}
             setOpen={setIsEditOpen}
           />
-          <DeleteRecurringDialog
+          <DeleteRecurringTransactionDialog
             key={selectedRecurring._id + "DeleteRecurringDialog"}
             recurringId={selectedRecurring._id}
             open={isDeleteOpen}

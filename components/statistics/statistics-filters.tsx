@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
-import { TransactionBreakdownTable } from "@/components/statistics/transaction-breakdown-table"
+import { StatisticsTable } from "@/components/statistics/statistics-table"
 import { useAppData } from "@/context/app-data-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
@@ -167,11 +167,9 @@ export function StatisticsFilters() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <div className="flex flex-col p-4 sm:flex-row">
+                <div className="flex flex-col pt-3 sm:flex-row">
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("From")}
-                    </div>
+                    <div className="text-center text-sm">{t("From")}</div>
                     <Calendar
                       autoFocus
                       mode="single"
@@ -190,9 +188,7 @@ export function StatisticsFilters() {
                     />
                   </div>
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("To")}
-                    </div>
+                    <div className="text-center text-sm">{t("To")}</div>
                     <Calendar
                       autoFocus
                       mode="single"
@@ -266,7 +262,7 @@ export function StatisticsFilters() {
 
       <StatisticsSummary filteredTransactions={filteredTransactions} />
 
-      <TransactionBreakdownTable filteredTransactions={filteredTransactions} />
+      <StatisticsTable filteredTransactions={filteredTransactions} />
     </div>
   )
 }

@@ -5,7 +5,7 @@ import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { BudgetDialog } from "@/components/budgets/budget-dialog"
-import { BudgetsFilters } from "@/components/budgets/budgets-filters"
+import { BudgetFilters } from "@/components/budgets/budget-filters"
 
 export default function BudgetsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -24,7 +24,7 @@ export default function BudgetsPage() {
           <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
         </div>
 
-        <BudgetsFilters />
+        <BudgetFilters />
       </div>
 
       <BudgetDialog open={isEditOpen} setOpen={setIsEditOpen} />
