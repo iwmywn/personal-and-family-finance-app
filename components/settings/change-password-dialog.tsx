@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { createPasswordSchema, type PasswordFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -29,12 +28,15 @@ import {
 } from "@/components/ui/form"
 import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
+import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
+import { type PasswordFormValues } from "@/schemas/types"
 
 export function ChangePasswordDialog() {
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createPasswordSchema } = useSchemas()
   const form = useForm<PasswordFormValues>({
-    resolver: zodResolver(createPasswordSchema(t)),
+    resolver: zodResolver(createPasswordSchema()),
     defaultValues: {
       currentPassword: "",
       newPassword: "",
@@ -45,6 +47,13 @@ export function ChangePasswordDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: PasswordFormValues) {
+    const parsedValues = createPasswordSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     await client.changePassword({
       newPassword: values.newPassword,
       currentPassword: values.currentPassword,
@@ -52,11 +61,12 @@ export function ChangePasswordDialog() {
       fetchOptions: {
         onError: (ctx) => {
           if (ctx.error.code === "INVALID_PASSWORD")
-            toast.error(t("settings.be.passwordIncorrect"))
-          else toast.error(t("settings.be.passwordUpdateFailed"))
+            toast.error(t("Current password is incorrect!"))
+          else
+            toast.error(t("Failed to update password! Please try again later."))
         },
         onSuccess: () => {
-          toast.success(t("settings.be.passwordUpdated"))
+          toast.success(t("Your password has been changed."))
           form.reset()
           setOpen(false)
         },
@@ -67,14 +77,12 @@ export function ChangePasswordDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{t("settings.fe.changePassword")}</Button>
+        <Button variant="outline">{t("Change Password")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("settings.fe.changePassword")}</DialogTitle>
-          <DialogDescription>
-            {t("settings.fe.changePasswordDescription")}
-          </DialogDescription>
+          <DialogTitle>{t("Change Password")}</DialogTitle>
+          <DialogDescription>{t("Update your password.")}</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -85,7 +93,7 @@ export function ChangePasswordDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="currentPassword">
-                    {t("settings.fe.currentPassword")}
+                    {t("Current Password")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
@@ -106,7 +114,7 @@ export function ChangePasswordDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="newPassword">
-                    {t("settings.fe.newPassword")}
+                    {t("New Password")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
@@ -127,7 +135,7 @@ export function ChangePasswordDialog() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="confirmPassword">
-                    {t("settings.fe.confirmPassword")}
+                    {t("Confirm Password")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
@@ -153,18 +161,18 @@ export function ChangePasswordDialog() {
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
-                  <FormLabel>{t("settings.fe.revokeOtherSessions")}</FormLabel>
+                  <FormLabel>{t("Sign out from all other devices.")}</FormLabel>
                 </FormItem>
               )}
             />
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{t("common.fe.cancel")}</Button>
+                <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
               <FormButton
                 isSubmitting={form.formState.isSubmitting}
-                text={t("common.fe.save")}
+                text={t("Save")}
               />
             </DialogFooter>
           </form>

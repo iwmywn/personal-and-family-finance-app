@@ -7,7 +7,7 @@ import {
   TrendingDownIcon,
   TrendingUpIcon,
 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { type Transaction } from "@/lib/definitions"
@@ -21,7 +21,7 @@ interface StatisticsSummaryProps {
 export function StatisticsSummary({
   filteredTransactions,
 }: StatisticsSummaryProps) {
-  const t = useTranslations()
+  const t = useExtracted()
   const {
     totalIncome,
     totalExpense,
@@ -35,7 +35,7 @@ export function StatisticsSummary({
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("statistics.fe.totalIncome")}</CardTitle>
+          <CardTitle>{t("Total Income")}</CardTitle>
           <ArrowUpIcon className="size-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -43,14 +43,14 @@ export function StatisticsSummary({
             {formatCurrency(totalIncome)}
           </div>
           <div className="text-muted-foreground text-sm">
-            {incomeCount} {t("common.fe.transactions")}
+            {incomeCount} {t("transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("statistics.fe.totalExpense")}</CardTitle>
+          <CardTitle>{t("Total Expense")}</CardTitle>
           <ArrowDownIcon className="size-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -58,14 +58,14 @@ export function StatisticsSummary({
             {formatCurrency(totalExpense)}
           </div>
           <div className="text-muted-foreground text-sm">
-            {expenseCount} {t("common.fe.transactions")}
+            {expenseCount} {t("transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("common.fe.balance")}</CardTitle>
+          <CardTitle>{t("Balance")}</CardTitle>
           {balance >= 0 ? (
             <TrendingUpIcon className="size-4 text-green-600" />
           ) : (
@@ -82,18 +82,18 @@ export function StatisticsSummary({
           </div>
           <div className="text-muted-foreground text-sm">
             {balance > 0
-              ? t("common.fe.positive")
+              ? t("Positive")
               : balance < 0
-                ? t("common.fe.negative")
-                : t("common.fe.balanced")}{" "}
-            {t("common.fe.comparedToIncome")}
+                ? t("Negative")
+                : t("Balanced")}{" "}
+            {t("compared to income")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("common.fe.totalTransactions")}</CardTitle>
+          <CardTitle>{t("Total Transactions")}</CardTitle>
           <ActivityIcon className="size-4 text-blue-600" />
         </CardHeader>
         <CardContent>
@@ -101,7 +101,7 @@ export function StatisticsSummary({
             {transactionCount}
           </div>
           <div className="text-muted-foreground text-sm">
-            {t("statistics.fe.transactionCount")}
+            {t("Total number of transactions")}
           </div>
         </CardContent>
       </Card>

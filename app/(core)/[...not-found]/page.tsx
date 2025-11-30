@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { GhostIcon } from "lucide-react"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,15 +14,15 @@ import {
 } from "@/components/ui/empty"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   return {
-    title: t("common.fe.notFound"),
+    title: t("Not Found"),
   }
 }
 
 export default async function page() {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   return (
     <Empty className="h-full border">
@@ -30,12 +30,14 @@ export default async function page() {
         <EmptyMedia variant="icon">
           <GhostIcon />
         </EmptyMedia>
-        <EmptyTitle>{t("notFound.title")}</EmptyTitle>
-        <EmptyDescription>{t("notFound.description")}</EmptyDescription>
+        <EmptyTitle>{t("Page not found")}</EmptyTitle>
+        <EmptyDescription>
+          {t("The page you are looking for does not exist.")}
+        </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <Button asChild>
-          <Link href="/home">{t("common.fe.backToHome")}</Link>
+          <Link href="/home">{t("Back to Home")}</Link>
         </Button>
       </EmptyContent>
     </Empty>

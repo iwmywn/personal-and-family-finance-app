@@ -4,10 +4,10 @@ import { useState } from "react"
 import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
-import { GoalDialog } from "@/components/goals/goal-dialog"
-import { GoalFilters } from "@/components/goals/goal-filters"
+import { RecurringTransactionDialog } from "@/components/recurring-transactions/recurring-transaction-dialog"
+import { RecurringTransactionsFilters } from "@/components/recurring-transactions/recurring-transactions-filters"
 
-export default function GoalsPage() {
+export default function RecurringTransactionsPage() {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const t = useExtracted()
 
@@ -16,18 +16,18 @@ export default function GoalsPage() {
       <div className="h-auto max-h-none space-y-4 lg:h-full lg:max-h-[calc(100vh-4.375rem)]">
         <div className="header">
           <div>
-            <div className="title">{t("Goals")}</div>
+            <div className="title">{t("Recurring")}</div>
             <div className="description">
-              {t("Set and track your financial goals.")}
+              {t("Manage your recurring transactions.")}
             </div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
         </div>
 
-        <GoalFilters />
+        <RecurringTransactionsFilters />
       </div>
 
-      <GoalDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <RecurringTransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
     </>
   )
 }

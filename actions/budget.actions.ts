@@ -1,35 +1,28 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import { createBudgetSchema, type BudgetFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
-import type { TypedTranslationFunction } from "@/i18n/types"
 import { getBudgetsCollection } from "@/lib/collections"
 import { type Budget } from "@/lib/definitions"
+import type { BudgetFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
 
 export async function createBudget(values: BudgetFormValues) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     const userId = session.user.id
-
-    const parsedValues = createBudgetSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
-    }
 
     const budgetsCollection = await getBudgetsCollection()
 
@@ -41,7 +34,7 @@ export async function createBudget(values: BudgetFormValues) {
     })
 
     if (existingBudget) {
-      return { error: t("budgets.be.budgetExists") }
+      return { error: t("This budget already exists!") }
     }
 
     const result = await budgetsCollection.insertOne({
@@ -52,37 +45,32 @@ export async function createBudget(values: BudgetFormValues) {
       endDate: values.endDate,
     })
 
-    if (!result.acknowledged) return { error: t("budgets.be.budgetAddFailed") }
+    if (!result.acknowledged)
+      return { error: t("Failed to add budget! Please try again later.") }
 
     updateTag("budgets")
-    return { success: t("budgets.be.budgetAdded"), error: undefined }
+    return { success: t("Budget has been added."), error: undefined }
   } catch (error) {
     console.error("Error creating budget:", error)
-    return { error: t("budgets.be.budgetAddFailed") }
+    return { error: t("Failed to add budget! Please try again later.") }
   }
 }
 
 export async function updateBudget(budgetId: string, values: BudgetFormValues) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
-    }
-
-    const parsedValues = createBudgetSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
     }
 
     if (!ObjectId.isValid(budgetId)) {
       return {
-        error: t("budgets.be.invalidBudgetId"),
+        error: t("Invalid budget ID!"),
       }
     }
 
@@ -94,7 +82,7 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
 
     if (!existingBudget) {
       return {
-        error: t("budgets.be.budgetNotFoundOrNoPermission"),
+        error: t("Budget not found or you don't have permission to edit!"),
       }
     }
 
@@ -111,28 +99,28 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
     )
 
     updateTag("budgets")
-    return { success: t("budgets.be.budgetUpdated"), error: undefined }
+    return { success: t("Budget has been updated."), error: undefined }
   } catch (error) {
     console.error("Error updating budget:", error)
-    return { error: t("budgets.be.budgetUpdateFailed") }
+    return { error: t("Failed to update budget! Please try again later.") }
   }
 }
 
 export async function deleteBudget(budgetId: string) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     if (!ObjectId.isValid(budgetId)) {
       return {
-        error: t("budgets.be.invalidBudgetId"),
+        error: t("Invalid budget ID!"),
       }
     }
 
@@ -144,7 +132,7 @@ export async function deleteBudget(budgetId: string) {
 
     if (!existingBudget) {
       return {
-        error: t("budgets.be.budgetNotFoundOrNoPermissionDelete"),
+        error: t("Budget not found or you don't have permission to delete!"),
       }
     }
 
@@ -153,21 +141,23 @@ export async function deleteBudget(budgetId: string) {
     })
 
     updateTag("budgets")
-    return { success: t("budgets.be.budgetDeleted") }
+    return { success: t("Budget has been deleted.") }
   } catch (error) {
     console.error("Error deleting budget:", error)
-    return { error: t("budgets.be.budgetDeleteFailed") }
+    return { error: t("Failed to delete budget! Please try again later.") }
   }
 }
 
-export async function getBudgets(userId: string, t: TypedTranslationFunction) {
+export async function getBudgets(userId: string) {
   "use cache: private"
   cacheTag("budgets")
+
+  const t = await getExtracted()
 
   try {
     if (!userId) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
@@ -188,7 +178,7 @@ export async function getBudgets(userId: string, t: TypedTranslationFunction) {
   } catch (error) {
     console.error("Error fetching budgets:", error)
     return {
-      error: t("budgets.be.budgetFetchFailed"),
+      error: t("Failed to load budgets! Please try again later."),
     }
   }
 }

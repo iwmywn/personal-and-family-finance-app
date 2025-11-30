@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import {
   Sidebar,
@@ -15,7 +15,7 @@ import { SecondaryNav } from "@/components/layout/secondary-nav"
 import { siteConfig } from "@/app/pffa.config"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const t = useTranslations()
+  const t = useExtracted()
 
   return (
     <Sidebar
@@ -25,7 +25,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {...props}
     >
       <SidebarHeader>
-        <SidebarMenuButton size="lg" tooltip={t("common.fe.appDescription")}>
+        <SidebarMenuButton
+          size="lg"
+          tooltip={t("Personal and Family Finance Application")}
+        >
           <Image
             src="/images/logo.png"
             alt={`${siteConfig.name} Logo`}

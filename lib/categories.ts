@@ -1,4 +1,3 @@
-import type { TypedTranslationFunction } from "@/i18n/types"
 import type { Category } from "@/lib/definitions"
 
 export const TRANSACTION_TYPES = ["income", "expense"] as const
@@ -36,113 +35,12 @@ type AllCategoriesKeyType = (typeof ALL_CATEGORIES_KEY)[number]
 
 export type CategoryKeyType = AllCategoriesKeyType | string
 
-type CategoryConfigType = {
+export type CategoryConfigType = {
   [K in AllCategoriesKeyType]: {
     label: string
     description: string
     type: TransactionType
   }
-}
-
-export function createCategoryConfig(
-  t: TypedTranslationFunction
-): CategoryConfigType {
-  const CATEGORY_CONFIG: CategoryConfigType = {
-    // Incomes
-    salary_bonus: {
-      label: t("categoriesConfig.salaryBonus.label"),
-      description: t("categoriesConfig.salaryBonus.description"),
-      type: "income",
-    },
-    business_freelance: {
-      label: t("categoriesConfig.businessFreelance.label"),
-      description: t("categoriesConfig.businessFreelance.description"),
-      type: "income",
-    },
-    investment_passive: {
-      label: t("categoriesConfig.investmentPassive.label"),
-      description: t("categoriesConfig.investmentPassive.description"),
-      type: "income",
-    },
-    gift_support: {
-      label: t("categoriesConfig.giftSupport.label"),
-      description: t("categoriesConfig.giftSupport.description"),
-      type: "income",
-    },
-    other_income: {
-      label: t("categoriesConfig.otherIncome.label"),
-      description: t("categoriesConfig.otherIncome.description"),
-      type: "income",
-    },
-    // Expenses
-    food_beverage: {
-      label: t("categoriesConfig.foodBeverage.label"),
-      description: t("categoriesConfig.foodBeverage.description"),
-      type: "expense",
-    },
-    transportation: {
-      label: t("categoriesConfig.transportation.label"),
-      description: t("categoriesConfig.transportation.description"),
-      type: "expense",
-    },
-    personal_care: {
-      label: t("categoriesConfig.personalCare.label"),
-      description: t("categoriesConfig.personalCare.description"),
-      type: "expense",
-    },
-    shopping: {
-      label: t("categoriesConfig.shopping.label"),
-      description: t("categoriesConfig.shopping.description"),
-      type: "expense",
-    },
-    family_support: {
-      label: t("categoriesConfig.familySupport.label"),
-      description: t("categoriesConfig.familySupport.description"),
-      type: "expense",
-    },
-    housing: {
-      label: t("categoriesConfig.housing.label"),
-      description: t("categoriesConfig.housing.description"),
-      type: "expense",
-    },
-    healthcare_insurance: {
-      label: t("categoriesConfig.healthcareInsurance.label"),
-      description: t("categoriesConfig.healthcareInsurance.description"),
-      type: "expense",
-    },
-    education_development: {
-      label: t("categoriesConfig.educationDevelopment.label"),
-      description: t("categoriesConfig.educationDevelopment.description"),
-      type: "expense",
-    },
-    entertainment_leisure: {
-      label: t("categoriesConfig.entertainmentLeisure.label"),
-      description: t("categoriesConfig.entertainmentLeisure.description"),
-      type: "expense",
-    },
-    social_gifts: {
-      label: t("categoriesConfig.socialGifts.label"),
-      description: t("categoriesConfig.socialGifts.description"),
-      type: "expense",
-    },
-    savings_investment: {
-      label: t("categoriesConfig.savingsInvestment.label"),
-      description: t("categoriesConfig.savingsInvestment.description"),
-      type: "expense",
-    },
-    debt_payment: {
-      label: t("categoriesConfig.debtPayment.label"),
-      description: t("categoriesConfig.debtPayment.description"),
-      type: "expense",
-    },
-    other_expense: {
-      label: t("categoriesConfig.otherExpense.label"),
-      description: t("categoriesConfig.otherExpense.description"),
-      type: "expense",
-    },
-  }
-
-  return CATEGORY_CONFIG
 }
 
 interface CategoryDetail {

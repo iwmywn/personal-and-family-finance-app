@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
 import { deleteGoal } from "@/actions/goal.actions"
@@ -28,7 +28,7 @@ export function DeleteGoalDialog({
   open,
   setOpen,
 }: DeleteGoalDialogProps) {
-  const t = useTranslations()
+  const t = useExtracted()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function handleDelete() {
@@ -50,15 +50,17 @@ export function DeleteGoalDialog({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("goals.fe.deleteGoalTitle")}</AlertDialogTitle>
+          <AlertDialogTitle>{t("Delete Goal")}</AlertDialogTitle>
           <AlertDialogDescription className="wrap-anywhere">
-            {t("goals.fe.deleteGoalDescription")}
+            {t(
+              "Are you sure you want to delete this goal? This action cannot be undone."
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("common.fe.cancel")}</AlertDialogCancel>
+          <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} {t("common.fe.delete")}
+            {isLoading && <Spinner />} {t("Delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

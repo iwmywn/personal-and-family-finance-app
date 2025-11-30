@@ -1,6 +1,6 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useTheme } from "next-themes"
 
 import {
@@ -13,18 +13,18 @@ import {
 
 export function ThemeSelector() {
   const { theme, setTheme } = useTheme()
-  const t = useTranslations()
+  const t = useExtracted()
 
   const themeLabels: Record<"light" | "dark" | "system", string> = {
-    light: t("settings.fe.light"),
-    dark: t("settings.fe.dark"),
-    system: t("settings.fe.system"),
+    light: t("Light"),
+    dark: t("Dark"),
+    system: t("System"),
   }
 
   return (
     <Select value={theme} onValueChange={setTheme}>
       <SelectTrigger>
-        <SelectValue placeholder={t("settings.fe.toggleTheme")} />
+        <SelectValue placeholder={t("Toggle theme")} />
       </SelectTrigger>
       <SelectContent>
         {(["light", "dark", "system"] as const).map((value) => (

@@ -1,35 +1,28 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import { createGoalSchema, type GoalFormValues } from "@/schemas"
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
-import type { TypedTranslationFunction } from "@/i18n/types"
 import { getGoalsCollection } from "@/lib/collections"
 import { type Goal } from "@/lib/definitions"
+import type { GoalFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
 
 export async function createGoal(values: GoalFormValues) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     const userId = session.user.id
-
-    const parsedValues = createGoalSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
-    }
 
     const goalsCollection = await getGoalsCollection()
 
@@ -41,7 +34,7 @@ export async function createGoal(values: GoalFormValues) {
     })
 
     if (existingGoal) {
-      return { error: t("goals.be.goalExists") }
+      return { error: t("This goal already exists!") }
     }
 
     const result = await goalsCollection.insertOne({
@@ -53,37 +46,32 @@ export async function createGoal(values: GoalFormValues) {
       endDate: values.endDate,
     })
 
-    if (!result.acknowledged) return { error: t("goals.be.goalAddFailed") }
+    if (!result.acknowledged)
+      return { error: t("Failed to add goal! Please try again later.") }
 
     updateTag("goals")
-    return { success: t("goals.be.goalAdded"), error: undefined }
+    return { success: t("Goal has been added."), error: undefined }
   } catch (error) {
     console.error("Error creating goal:", error)
-    return { error: t("goals.be.goalAddFailed") }
+    return { error: t("Failed to add goal! Please try again later.") }
   }
 }
 
 export async function updateGoal(goalId: string, values: GoalFormValues) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
-    }
-
-    const parsedValues = createGoalSchema(t).safeParse(values)
-
-    if (!parsedValues.success) {
-      return { error: t("common.be.invalidData") }
     }
 
     if (!ObjectId.isValid(goalId)) {
       return {
-        error: t("goals.be.invalidGoalId"),
+        error: t("Invalid goal ID!"),
       }
     }
 
@@ -95,7 +83,7 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
 
     if (!existingGoal) {
       return {
-        error: t("goals.be.goalNotFoundOrNoPermission"),
+        error: t("Goal not found or you don't have permission to edit!"),
       }
     }
 
@@ -113,28 +101,28 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
     )
 
     updateTag("goals")
-    return { success: t("goals.be.goalUpdated"), error: undefined }
+    return { success: t("Goal has been updated."), error: undefined }
   } catch (error) {
     console.error("Error updating goal:", error)
-    return { error: t("goals.be.goalUpdateFailed") }
+    return { error: t("Failed to update goal! Please try again later.") }
   }
 }
 
 export async function deleteGoal(goalId: string) {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
   try {
     const session = await getCurrentSession()
 
     if (!session) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
     if (!ObjectId.isValid(goalId)) {
       return {
-        error: t("goals.be.invalidGoalId"),
+        error: t("Invalid goal ID!"),
       }
     }
 
@@ -146,7 +134,7 @@ export async function deleteGoal(goalId: string) {
 
     if (!existingGoal) {
       return {
-        error: t("goals.be.goalNotFoundOrNoPermissionDelete"),
+        error: t("Goal not found or you don't have permission to delete!"),
       }
     }
 
@@ -155,21 +143,23 @@ export async function deleteGoal(goalId: string) {
     })
 
     updateTag("goals")
-    return { success: t("goals.be.goalDeleted") }
+    return { success: t("Goal has been deleted.") }
   } catch (error) {
     console.error("Error deleting goal:", error)
-    return { error: t("goals.be.goalDeleteFailed") }
+    return { error: t("Failed to delete goal! Please try again later.") }
   }
 }
 
-export async function getGoals(userId: string, t: TypedTranslationFunction) {
+export async function getGoals(userId: string) {
   "use cache: private"
   cacheTag("goals")
+
+  const t = await getExtracted()
 
   try {
     if (!userId) {
       return {
-        error: t("common.be.accessDenied"),
+        error: t("Access denied! Please refresh the page and try again."),
       }
     }
 
@@ -190,7 +180,7 @@ export async function getGoals(userId: string, t: TypedTranslationFunction) {
   } catch (error) {
     console.error("Error fetching goals:", error)
     return {
-      error: t("goals.be.goalFetchFailed"),
+      error: t("Failed to load goals! Please try again later."),
     }
   }
 }

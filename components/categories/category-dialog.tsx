@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { createCategorySchema, type CategoryFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -38,7 +37,9 @@ import {
 } from "@/components/ui/input-group"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormButton } from "@/components/custom/form-button"
+import { useSchemas } from "@/hooks/use-schemas"
 import type { Category } from "@/lib/definitions"
+import type { CategoryFormValues } from "@/schemas/types"
 
 interface CategoryDialogProps {
   category?: Category
@@ -54,9 +55,11 @@ export function CategoryDialog({
   const [categoryType, setCategoryType] = useState<"income" | "expense">(
     category?.type || "income"
   )
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createCategorySchema } = useSchemas()
+
   const form = useForm<CategoryFormValues>({
-    resolver: zodResolver(createCategorySchema(t)),
+    resolver: zodResolver(createCategorySchema()),
     defaultValues: {
       type: category?.type || "income",
       label: category?.label || "",
@@ -65,6 +68,13 @@ export function CategoryDialog({
   })
 
   async function onSubmit(values: CategoryFormValues) {
+    const parsedValues = createCategorySchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     if (category) {
       const { success, error } = await updateCustomCategory(
         category._id,
@@ -106,14 +116,12 @@ export function CategoryDialog({
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {category
-              ? t("categories.fe.editCategory")
-              : t("categories.fe.addCategory")}
+            {category ? t("Edit Category") : t("Add Category")}
           </DialogTitle>
           <DialogDescription>
             {category
-              ? t("categories.fe.editCategoryDescription")
-              : t("categories.fe.addCategoryDescription")}
+              ? t("Update custom category information.")
+              : t("Create a custom category for your transactions.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -121,12 +129,8 @@ export function CategoryDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <Tabs value={categoryType} onValueChange={handleTypeChange}>
               <TabsList className="w-full">
-                <TabsTrigger value="income">
-                  {t("common.fe.income")}
-                </TabsTrigger>
-                <TabsTrigger value="expense">
-                  {t("common.fe.expense")}
-                </TabsTrigger>
+                <TabsTrigger value="income">{t("Income")}</TabsTrigger>
+                <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>
               </TabsList>
             </Tabs>
 
@@ -135,10 +139,10 @@ export function CategoryDialog({
               name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("categories.fe.categoryName")}</FormLabel>
+                  <FormLabel>{t("Category Name")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={t("categories.fe.categoryNamePlaceholder")}
+                      placeholder={t("e.g. Salary, Groceries")}
                       {...field}
                     />
                   </FormControl>
@@ -152,13 +156,11 @@ export function CategoryDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("common.fe.description")}</FormLabel>
+                  <FormLabel>{t("Description")}</FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
-                        placeholder={t(
-                          "categories.fe.categoryDescriptionPlaceholder"
-                        )}
+                        placeholder={t("Enter a description...")}
                         maxLength={200}
                         {...field}
                       />
@@ -176,11 +178,11 @@ export function CategoryDialog({
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{t("common.fe.cancel")}</Button>
+                <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
               <FormButton
                 isSubmitting={form.formState.isSubmitting}
-                text={category ? t("common.fe.update") : t("common.fe.add")}
+                text={category ? t("Update") : t("Add")}
               />
             </DialogFooter>
           </form>

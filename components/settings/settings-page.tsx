@@ -1,6 +1,6 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import {
   Card,
@@ -19,21 +19,21 @@ import { ThemeSelector } from "@/components/settings/theme-selector"
 import { TwoFactorManager } from "@/components/settings/two-factor-manager"
 
 export default function SettingsPage() {
-  const t = useTranslations()
+  const t = useExtracted()
 
   return (
     <Tabs defaultValue="general">
       <TabsList className="w-full">
-        <TabsTrigger value="general">{t("settings.fe.general")}</TabsTrigger>
-        <TabsTrigger value="account">{t("settings.fe.account")}</TabsTrigger>
+        <TabsTrigger value="general">{t("General")}</TabsTrigger>
+        <TabsTrigger value="account">{t("Account")}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="general" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.fe.appearance")}</CardTitle>
+            <CardTitle>{t("Appearance")}</CardTitle>
             <CardDescription>
-              {t("settings.fe.appearanceDescription")}
+              {t("Choose the display theme for the application.")}
             </CardDescription>
             <CardAction>
               <ThemeSelector />
@@ -43,9 +43,9 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.fe.language")}</CardTitle>
+            <CardTitle>{t("Language")}</CardTitle>
             <CardDescription>
-              {t("settings.fe.languageDescription")}
+              {t("Select your preferred language.")}
             </CardDescription>
             <CardAction>
               <LanguageSelector />
@@ -57,10 +57,8 @@ export default function SettingsPage() {
       <TabsContent value="account" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.fe.changeName")}</CardTitle>
-            <CardDescription>
-              {t("settings.fe.changeNameDescription")}
-            </CardDescription>
+            <CardTitle>{t("Change Name")}</CardTitle>
+            <CardDescription>{t("Update your display name.")}</CardDescription>
             <CardAction>
               <ChangeNameDialog />
             </CardAction>
@@ -69,9 +67,9 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.fe.changeUsername")}</CardTitle>
+            <CardTitle>{t("Change Username")}</CardTitle>
             <CardDescription>
-              {t("settings.fe.changeUsernameDescription")}
+              {t("Update your unique username.")}
             </CardDescription>
             <CardAction>
               <ChangeUsernameDialog />
@@ -81,10 +79,8 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.fe.changePassword")}</CardTitle>
-            <CardDescription>
-              {t("settings.fe.changePasswordDescription")}
-            </CardDescription>
+            <CardTitle>{t("Change Password")}</CardTitle>
+            <CardDescription>{t("Update your password.")}</CardDescription>
             <CardAction>
               <ChangePasswordDialog />
             </CardAction>
@@ -93,9 +89,9 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.fe.twoFactorTitle")}</CardTitle>
+            <CardTitle>{t("Two-Factor Authentication")}</CardTitle>
             <CardDescription>
-              {t("settings.fe.twoFactorDescription")}
+              {t("Add an extra layer of security to your account.")}
             </CardDescription>
             <CardAction>
               <TwoFactorManager />
@@ -105,9 +101,9 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("settings.fe.activeSessions")}</CardTitle>
+            <CardTitle>{t("Active Sessions")}</CardTitle>
             <CardDescription>
-              {t("settings.fe.activeSessionsDescription")}
+              {t("Manage your active sessions.")}
             </CardDescription>
             <CardAction>
               <ActiveSessions />

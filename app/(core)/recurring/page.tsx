@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
-import { getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
-import RecurringPage from "@/components/recurring/recurring-page"
+import RecurringTransactionsPage from "@/components/recurring-transactions/recurring-transactions-page"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations()
+  const t = await getExtracted()
 
-  return { title: t("navigation.recurring") }
+  return { title: t("Recurring Transactions") }
 }
 
 export default function page() {
-  return <RecurringPage />
+  return <RecurringTransactionsPage />
 }

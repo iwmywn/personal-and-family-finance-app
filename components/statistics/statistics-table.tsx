@@ -1,7 +1,7 @@
 "use client"
 
 import { WalletIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -26,7 +26,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { type Transaction } from "@/lib/definitions"
 import { calculateCategoriesStats } from "@/lib/statistics"
 import { formatCurrency } from "@/lib/utils"
@@ -35,12 +35,12 @@ interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]
 }
 
-export function TransactionBreakdownTable({
+export function StatisticsTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
   const { transactions } = useAppData()
-  const t = useTranslations()
-  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel, getCategoryDescription } = useCategory()
 
   const categoryStats = calculateCategoriesStats(filteredTransactions)
 
@@ -53,11 +53,11 @@ export function TransactionBreakdownTable({
               <EmptyMedia variant="icon">
                 <WalletIcon />
               </EmptyMedia>
-              <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
+              <EmptyTitle>{t("No transactions found")}</EmptyTitle>
               <EmptyDescription>
                 {transactions.length === 0
-                  ? t("common.fe.startAddingTransactions")
-                  : t("common.fe.noTransactionsFiltered")}
+                  ? t("Start adding your transactions.")
+                  : t("No transactions found matching your filters.")}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -66,10 +66,10 @@ export function TransactionBreakdownTable({
             <Table>
               <TableHeader className="bg-muted sticky top-0">
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>{t("common.fe.category")}</TableHead>
-                  <TableHead>{t("common.fe.type")}</TableHead>
-                  <TableHead>{t("statistics.fe.transactionCount")}</TableHead>
-                  <TableHead>{t("statistics.fe.totalAmount")}</TableHead>
+                  <TableHead>{t("Category")}</TableHead>
+                  <TableHead>{t("Type")}</TableHead>
+                  <TableHead>{t("Transaction Count")}</TableHead>
+                  <TableHead>{t("Total Amount")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -96,9 +96,7 @@ export function TransactionBreakdownTable({
                           stat.type === "income" ? "badge-green" : "badge-red"
                         }
                       >
-                        {stat.type === "income"
-                          ? t("common.fe.income")
-                          : t("common.fe.expense")}
+                        {stat.type === "income" ? t("Income") : t("Expense")}
                       </Badge>
                     </TableCell>
                     <TableCell>{stat.count}</TableCell>

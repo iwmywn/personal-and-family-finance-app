@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -30,10 +30,10 @@ import {
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMonthsI18n } from "@/hooks/use-months-i18n"
+import { useMonths } from "@/hooks/use-months"
 import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { filterTransactions } from "@/lib/filters"
@@ -47,7 +47,7 @@ export function TransactionFilters({
   onFilteredTransactionsChange,
 }: TransactionFiltersProps) {
   const { transactions, customCategories } = useAppData()
-  const t = useTranslations()
+  const t = useExtracted()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
@@ -67,9 +67,9 @@ export function TransactionFilters({
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const formatDate = useFormatDate()
-  const { getCategoryLabel } = useCategoryI18n()
+  const { getCategoryLabel } = useCategory()
 
-  const allMonths = useMonthsI18n()
+  const allMonths = useMonths()
   const allYears = getUniqueYears(transactions)
 
   const hasActiveFilters =
@@ -158,7 +158,7 @@ export function TransactionFilters({
                 <SearchIcon />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder={t("transactions.fe.searchPlaceholder")}
+                placeholder={t("Search transactions...")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -180,9 +180,7 @@ export function TransactionFilters({
                   variant="outline"
                   className={`w-full justify-between font-normal md:row-start-2 ${selectedDate && "border-primary!"}`}
                 >
-                  {selectedDate
-                    ? formatDate(selectedDate)
-                    : t("common.fe.selectDate")}
+                  {selectedDate ? formatDate(selectedDate) : t("Select Date")}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
@@ -221,17 +219,15 @@ export function TransactionFilters({
                       formatDate(dateRange.from)
                     )
                   ) : (
-                    t("common.fe.selectDateRange")
+                    t("Select Date Range")
                   )}
                   <ChevronDownIcon />
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
-                <div className="flex flex-col p-4 sm:flex-row">
+                <div className="flex flex-col pt-3 sm:flex-row">
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.from")}
-                    </div>
+                    <div className="text-center text-sm">{t("From")}</div>
                     <Calendar
                       autoFocus
                       mode="single"
@@ -250,9 +246,7 @@ export function TransactionFilters({
                     />
                   </div>
                   <div>
-                    <div className="mb-2 text-center text-sm font-medium">
-                      {t("common.fe.to")}
-                    </div>
+                    <div className="text-center text-sm">{t("To")}</div>
                     <Calendar
                       autoFocus
                       mode="single"
@@ -277,13 +271,11 @@ export function TransactionFilters({
               <SelectTrigger
                 className={`w-full md:row-start-3 lg:row-start-2 ${filterMonth !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.month")} />
+                <SelectValue placeholder={t("Month")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("common.fe.allMonths")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Months")}</SelectItem>
                   <SelectSeparator />
                   {allMonths.map((month) => (
                     <SelectItem key={month.value} value={month.value}>
@@ -298,11 +290,11 @@ export function TransactionFilters({
               <SelectTrigger
                 className={`w-full md:row-start-3 2xl:row-start-2 ${filterYear !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.year")} />
+                <SelectValue placeholder={t("Year")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">{t("common.fe.allYears")}</SelectItem>
+                  <SelectItem value="all">{t("All Years")}</SelectItem>
                   <SelectSeparator />
                   {allYears.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
@@ -322,22 +314,14 @@ export function TransactionFilters({
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterType !== "all" && "border-primary"}`}
               >
-                <SelectValue
-                  placeholder={t("transactions.fe.transactionType")}
-                />
+                <SelectValue placeholder={t("Type")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("transactions.fe.allTransactionTypes")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Types")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="income">
-                    {t("common.fe.income")}
-                  </SelectItem>
-                  <SelectItem value="expense">
-                    {t("common.fe.expense")}
-                  </SelectItem>
+                  <SelectItem value="income">{t("Income")}</SelectItem>
+                  <SelectItem value="expense">{t("Expense")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -349,15 +333,13 @@ export function TransactionFilters({
               <SelectTrigger
                 className={`w-full md:row-start-4 lg:row-start-3 2xl:row-start-2 ${filterCategoryKey !== "all" && "border-primary"}`}
               >
-                <SelectValue placeholder={t("common.fe.category")} />
+                <SelectValue placeholder={t("Category")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">
-                    {t("transactions.fe.allCategories")}
-                  </SelectItem>
+                  <SelectItem value="all">{t("All Categories")}</SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{t("common.fe.income")}</SelectLabel>
+                  <SelectLabel>{t("Income")}</SelectLabel>
                   {INCOME_CATEGORIES_KEY.map((categoryKey) => (
                     <SelectItem key={categoryKey} value={categoryKey}>
                       {getCategoryLabel(categoryKey)}
@@ -373,7 +355,7 @@ export function TransactionFilters({
                         {category.label}
                       </SelectItem>
                     ))}
-                  <SelectLabel>{t("common.fe.expense")}</SelectLabel>
+                  <SelectLabel>{t("Expense")}</SelectLabel>
                   {EXPENSE_CATEGORIES_KEY.map((categoryKey) => (
                     <SelectItem key={categoryKey} value={categoryKey}>
                       {getCategoryLabel(categoryKey)}
@@ -399,7 +381,7 @@ export function TransactionFilters({
                 onClick={handleResetFilters}
                 className="col-span-full 2xl:col-auto 2xl:row-start-2"
               >
-                {t("common.fe.reset")}
+                {t("Reset")}
               </Button>
             )}
           </div>

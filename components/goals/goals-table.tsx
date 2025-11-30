@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { MoreVerticalIcon, TargetIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -37,7 +37,7 @@ import {
 import { DeleteGoalDialog } from "@/components/goals/delete-goal-dialog"
 import { GoalDialog } from "@/components/goals/goal-dialog"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Goal } from "@/lib/definitions"
@@ -55,8 +55,8 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
-  const t = useTranslations()
-  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
 
   const goalsWithStats = calculateGoalsStats(filteredGoals, transactions)
@@ -78,11 +78,11 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                 <EmptyMedia variant="icon">
                   <TargetIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("goals.fe.noGoalsFound")}</EmptyTitle>
+                <EmptyTitle>{t("No goals found")}</EmptyTitle>
                 <EmptyDescription>
                   {goals.length === 0
-                    ? t("goals.fe.noGoalsDescription")
-                    : t("goals.fe.noGoalsFiltered")}
+                    ? t("Start setting your financial goals.")
+                    : t("No goals found matching your filters.")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -98,14 +98,14 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("common.fe.startDate")}</TableHead>
-                    <TableHead>{t("common.fe.endDate")}</TableHead>
-                    <TableHead>{t("goals.fe.goalName")}</TableHead>
-                    <TableHead>{t("common.fe.category")}</TableHead>
-                    <TableHead>{t("goals.fe.targetAmount")}</TableHead>
-                    <TableHead>{t("goals.fe.accumulated")}</TableHead>
-                    <TableHead>{t("common.fe.status")}</TableHead>
-                    <TableHead>{t("common.fe.progress")}</TableHead>
+                    <TableHead>{t("Start Date")}</TableHead>
+                    <TableHead>{t("End Date")}</TableHead>
+                    <TableHead>{t("Goal Name")}</TableHead>
+                    <TableHead>{t("Category")}</TableHead>
+                    <TableHead>{t("Target Amount")}</TableHead>
+                    <TableHead>{t("Accumulated")}</TableHead>
+                    <TableHead>{t("Status")}</TableHead>
+                    <TableHead>{t("Progress")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -140,10 +140,10 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                           }
                         >
                           {goal.status === "expired"
-                            ? t("common.fe.expired")
+                            ? t("Expired")
                             : goal.status === "active"
-                              ? t("common.fe.active")
-                              : t("common.fe.upcoming")}
+                              ? t("Active")
+                              : t("Upcoming")}
                         </Badge>
                       </TableCell>
                       <TableCell className="min-w-32">
@@ -168,9 +168,7 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                               size="icon"
                             >
                               <MoreVerticalIcon />
-                              <span className="sr-only">
-                                {t("common.fe.openMenu")}
-                              </span>
+                              <span className="sr-only">{t("Open menu")}</span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -181,7 +179,7 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                                 setIsEditOpen(true)
                               }}
                             >
-                              {t("common.fe.edit")}
+                              {t("Edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -191,7 +189,7 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {t("common.fe.delete")}
+                              {t("Delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

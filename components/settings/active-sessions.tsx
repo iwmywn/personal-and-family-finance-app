@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Laptop, Smartphone } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 import { UAParser } from "ua-parser-js"
 
@@ -30,7 +30,7 @@ import { useAppData } from "@/context/app-data-context"
 import { client } from "@/lib/auth-client"
 
 export function ActiveSessions() {
-  const t = useTranslations()
+  const t = useExtracted()
   const router = useRouter()
   const { activeSessions, currentSession } = useAppData()
   const [isTerminating, setIsTerminating] = useState<string | undefined>()
@@ -74,11 +74,11 @@ export function ActiveSessions() {
       token,
       fetchOptions: {
         onError: () => {
-          toast.error(t("settings.be.sessionRevokeFailed"))
+          toast.error(t("Failed to terminate session! Please try again later."))
         },
         onSuccess: () => {
           router.refresh()
-          toast.success(t("settings.be.sessionRevoked"))
+          toast.success(t("Session terminated."))
         },
       },
     })
@@ -92,11 +92,13 @@ export function ActiveSessions() {
     await client.revokeSessions({
       fetchOptions: {
         onError: () => {
-          toast.error(t("settings.be.sessionsRevokeAllFailed"))
+          toast.error(
+            t("Failed to terminate all sessions! Please try again later.")
+          )
         },
         onSuccess: () => {
           router.refresh()
-          toast.success(t("settings.be.sessionsRevokedAll"))
+          toast.success(t("All sessions terminated."))
         },
       },
     })
@@ -111,13 +113,13 @@ export function ActiveSessions() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{t("settings.fe.viewActiveSessions")}</Button>
+        <Button variant="outline">{t("View Active Sessions")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("settings.fe.activeSessions")}</DialogTitle>
+          <DialogTitle>{t("Active Sessions")}</DialogTitle>
           <DialogDescription>
-            {t("settings.fe.activeSessionsDescription")}
+            {t("Manage your active sessions.")}
           </DialogDescription>
         </DialogHeader>
         <div className="max-h-[60vh] space-y-3 overflow-y-auto">
@@ -147,9 +149,7 @@ export function ActiveSessions() {
                     {isCurrentSession && (
                       <>
                         <div>&middot;</div>
-                        <div className="text-green-500">
-                          {t("settings.fe.current")}
-                        </div>
+                        <div className="text-green-500">{t("Current")}</div>
                       </>
                     )}
                   </ItemTitle>
@@ -157,7 +157,7 @@ export function ActiveSessions() {
                     {location === undefined ? (
                       <Spinner className="size-3.5" />
                     ) : (
-                      (location ?? t("settings.fe.unknownLocation"))
+                      (location ?? t("Unknown Location"))
                     )}
                   </ItemDescription>
                 </ItemContent>
@@ -171,7 +171,7 @@ export function ActiveSessions() {
                     disabled={isTerminating === session.id || isRevokingAll}
                   >
                     {isTerminating === session.id && <Spinner />}
-                    {t("settings.fe.terminate")}
+                    {t("Terminate")}
                   </Button>
                 </ItemActions>
               </Item>
@@ -182,7 +182,7 @@ export function ActiveSessions() {
           onClick={handleRevokeAllSessions}
           disabled={isRevokingAll || isTerminating !== undefined}
         >
-          {isRevokingAll && <Spinner />} {t("settings.fe.terminateAll")}
+          {isRevokingAll && <Spinner />} {t("Terminate All")}
         </Button>
       </DialogContent>
     </Dialog>

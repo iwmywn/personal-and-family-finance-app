@@ -6,7 +6,7 @@ import {
   TrendingDownIcon,
   TrendingUpIcon,
 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useAppData } from "@/context/app-data-context"
@@ -18,7 +18,7 @@ import { formatCurrency } from "@/lib/utils"
 
 export function TransactionSummary() {
   const { transactions } = useAppData()
-  const t = useTranslations()
+  const t = useExtracted()
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions)
 
@@ -30,7 +30,7 @@ export function TransactionSummary() {
     <div className="grid gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("home.fe.monthlyIncome")}</CardTitle>
+          <CardTitle>{t("Monthly Income")}</CardTitle>
           <ArrowUpIcon className="size-4 text-green-600" />
         </CardHeader>
         <CardContent>
@@ -43,14 +43,14 @@ export function TransactionSummary() {
                 (tHomeFE) => tHomeFE.type === "income"
               ).length
             }{" "}
-            {t("common.fe.transactions")}
+            {t("transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("home.fe.monthlyExpense")}</CardTitle>
+          <CardTitle>{t("Monthly Expense")}</CardTitle>
           <ArrowDownIcon className="size-4 text-red-600" />
         </CardHeader>
         <CardContent>
@@ -63,14 +63,14 @@ export function TransactionSummary() {
                 (tHomeFE) => tHomeFE.type === "expense"
               ).length
             }{" "}
-            {t("common.fe.transactions")}
+            {t("transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("home.fe.monthlyBalance")}</CardTitle>
+          <CardTitle>{t("Monthly Balance")}</CardTitle>
           {balance >= 0 ? (
             <TrendingUpIcon className="size-4 text-green-600" />
           ) : (
@@ -87,11 +87,11 @@ export function TransactionSummary() {
           </div>
           <div className="text-muted-foreground text-sm">
             {balance > 0
-              ? t("common.fe.positive")
+              ? t("Positive")
               : balance < 0
-                ? t("common.fe.negative")
-                : t("common.fe.balanced")}{" "}
-            {t("common.fe.comparedToIncome")}
+                ? t("Negative")
+                : t("Balanced")}{" "}
+            {t("compared to income")}
           </div>
         </CardContent>
       </Card>

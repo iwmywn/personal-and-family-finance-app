@@ -2,9 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { createSignInSchema, type SignInFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -20,17 +19,20 @@ import { Input } from "@/components/ui/input"
 import { ReCaptchaDialog } from "@/components/auth/recaptcha-dialog"
 import { FormButton } from "@/components/custom/form-button"
 import { PasswordInput } from "@/components/custom/password-input"
+import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
+import { type SignInFormValues } from "@/schemas/types"
 
 export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createSignInSchema } = useSchemas()
   const form = useForm<SignInFormValues>({
-    resolver: zodResolver(createSignInSchema(t)),
+    resolver: zodResolver(createSignInSchema()),
     defaultValues: {
       username: "",
       password: "",
@@ -42,6 +44,13 @@ export function SignInForm() {
   const processSignIn = useCallback(
     async (values: SignInFormValues, token: string) => {
       if (isSubmitting) return
+
+      const parsedValues = createSignInSchema().safeParse(values)
+
+      if (!parsedValues.success) {
+        toast.error(t("Invalid data!"))
+        return
+      }
 
       setIsSubmitting(true)
 
@@ -55,8 +64,8 @@ export function SignInForm() {
             },
             onError: (ctx) => {
               if (ctx.error.code === "INVALID_USERNAME_OR_PASSWORD")
-                toast.error(t("auth.be.signInError"))
-              else toast.error(t("auth.be.signInFailed"))
+                toast.error(t("Invalid username or password!"))
+              else toast.error(t("Failed to sign in! Please try again later."))
             },
             onSuccess: async (ctx) => {
               const callbackUrl = searchParams.get("next") || "/home"
@@ -87,7 +96,7 @@ export function SignInForm() {
         setRecaptchaToken(null)
       }
     },
-    [isSubmitting, t, form, router]
+    [isSubmitting, t, searchParams, form, router]
   )
 
   function onSubmit(values: SignInFormValues) {
@@ -116,9 +125,7 @@ export function SignInForm() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="username">
-                  {t("auth.fe.username")}
-                </FormLabel>
+                <FormLabel htmlFor="username">{t("Username")}</FormLabel>
                 <FormControl>
                   <Input
                     id="username"
@@ -138,9 +145,7 @@ export function SignInForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="password">
-                  {t("auth.fe.password")}
-                </FormLabel>
+                <FormLabel htmlFor="password">{t("Password")}</FormLabel>
                 <FormControl>
                   <PasswordInput
                     id="password"
@@ -156,7 +161,7 @@ export function SignInForm() {
 
           <FormButton
             isSubmitting={isSubmitting}
-            text={t("auth.fe.signIn")}
+            text={t("Sign In")}
             className="w-full"
           />
         </form>

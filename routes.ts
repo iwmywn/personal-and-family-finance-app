@@ -1,8 +1,8 @@
-const signInRoute = "/signin"
-const twoFactorRoute = "/two-factor"
-const authRoutes = [signInRoute, twoFactorRoute]
-const DEFAULT_SIGNIN_REDIRECT = "/home"
-const protectedRoutes = [
+export const signInRoute = "/signin"
+export const twoFactorRoute = "/two-factor"
+export const authRoutes = [signInRoute, twoFactorRoute]
+export const DEFAULT_SIGNIN_REDIRECT = "/home"
+export const protectedRoutes = [
   "/home",
   "/statistics",
   "/transactions",
@@ -12,13 +12,4 @@ const protectedRoutes = [
   "/recurring",
   "/settings",
 ]
-const ignoredRoutes = ["/images", "/opengraph-image.png", "/icon.png"]
-
-export {
-  signInRoute,
-  twoFactorRoute,
-  authRoutes,
-  DEFAULT_SIGNIN_REDIRECT,
-  protectedRoutes,
-  ignoredRoutes,
-}
+export const ignoredRoutes = ["/images", "/opengraph-image.png", "/icon.png"]

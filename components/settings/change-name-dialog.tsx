@@ -2,9 +2,8 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createNameSchema, type NameFormValues } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
@@ -30,14 +29,18 @@ import {
 import { Input } from "@/components/ui/input"
 import { FormButton } from "@/components/custom/form-button"
 import { useAppData } from "@/context/app-data-context"
+import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
+import { type NameFormValues } from "@/schemas/types"
 
 export function ChangeNameDialog() {
-  const t = useTranslations()
+  const t = useExtracted()
+  const { createNameSchema } = useSchemas()
+
   const router = useRouter()
   const { user } = useAppData()
   const form = useForm<NameFormValues>({
-    resolver: zodResolver(createNameSchema(t)),
+    resolver: zodResolver(createNameSchema()),
     defaultValues: {
       name: user.name,
     },
@@ -45,15 +48,22 @@ export function ChangeNameDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: NameFormValues) {
+    const parsedValues = createNameSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      toast.error(t("Invalid data!"))
+      return
+    }
+
     await client.updateUser({
       name: values.name,
       fetchOptions: {
         onError: () => {
-          toast.error(t("settings.be.nameUpdateFailed"))
+          toast.error(t("Failed to update name! Please try again later."))
         },
         onSuccess: () => {
           router.refresh()
-          toast.success(t("settings.be.nameUpdated"))
+          toast.success(t("Your name has been updated."))
           form.reset({ name: values.name })
           setOpen(false)
         },
@@ -64,13 +74,13 @@ export function ChangeNameDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{t("settings.fe.changeName")}</Button>
+        <Button variant="outline">{t("Change Name")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("settings.fe.changeName")}</DialogTitle>
+          <DialogTitle>{t("Change Name")}</DialogTitle>
           <DialogDescription>
-            {t("settings.fe.changeNameDescription")}
+            {t("Update your display name.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -81,11 +91,11 @@ export function ChangeNameDialog() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="name">{t("settings.fe.name")}</FormLabel>
+                  <FormLabel htmlFor="name">{t("Name")}</FormLabel>
                   <FormControl>
                     <Input
                       id="name"
-                      placeholder={t("settings.fe.namePlaceholder")}
+                      placeholder={t("Enter your name...")}
                       autoComplete="name"
                       {...field}
                     />
@@ -97,11 +107,11 @@ export function ChangeNameDialog() {
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">{t("common.fe.cancel")}</Button>
+                <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
               <FormButton
                 isSubmitting={form.formState.isSubmitting}
-                text={t("common.fe.save")}
+                text={t("Save")}
               />
             </DialogFooter>
           </form>

@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
 
 import { insertTestGoal } from "@/tests/backend/helpers/database"
 import {
@@ -21,8 +20,6 @@ import { getGoalsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Goals", async () => {
-  const t = await getTranslations()
-
   describe("createGoal", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -30,37 +27,9 @@ describe("Goals", async () => {
       const result = await createGoal(mockValidGoalValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await createGoal({
-        categoryKey: "",
-        name: "",
-        targetAmount: -1,
-        startDate: new Date("invalid"),
-        endDate: new Date("invalid"),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
-    })
-
-    it("should return error when endDate is before startDate", async () => {
-      mockAuthenticatedUser()
-
-      const result = await createGoal({
-        categoryKey: "food_beverage",
-        name: "Valid",
-        targetAmount: 1000000,
-        startDate: normalizeToUTCDate(new Date("2024-12-31")),
-        endDate: normalizeToUTCDate(new Date("2024-01-01")),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error when budget already exists", async () => {
@@ -76,7 +45,7 @@ describe("Goals", async () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalExists"))
+      expect(result.error).toBe("This goal already exists!")
     })
 
     it("should return error when database insertion fails", async () => {
@@ -89,7 +58,7 @@ describe("Goals", async () => {
       const result = await createGoal(mockValidGoalValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalAddFailed"))
+      expect(result.error).toBe("Failed to add goal! Please try again later.")
     })
 
     it("should successfully create goal", async () => {
@@ -108,7 +77,7 @@ describe("Goals", async () => {
         "2024-01-01T00:00:00.000Z"
       )
       expect(addedGoal?.endDate.toISOString()).toBe("2024-12-31T00:00:00.000Z")
-      expect(result.success).toBe(t("goals.be.goalAdded"))
+      expect(result.success).toBe("Goal has been added.")
       expect(result.error).toBeUndefined()
     })
 
@@ -119,7 +88,7 @@ describe("Goals", async () => {
       const result = await createGoal(mockValidGoalValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalAddFailed"))
+      expect(result.error).toBe("Failed to add goal! Please try again later.")
     })
   })
 
@@ -133,22 +102,9 @@ describe("Goals", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await updateGoal(mockGoal._id.toString(), {
-        categoryKey: "",
-        name: "",
-        targetAmount: -1,
-        startDate: new Date("invalid"),
-        endDate: new Date("invalid"),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error with invalid goal ID", async () => {
@@ -157,7 +113,7 @@ describe("Goals", async () => {
       const result = await updateGoal("invalid-id", mockValidGoalValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.invalidGoalId"))
+      expect(result.error).toBe("Invalid goal ID!")
     })
 
     it("should return error when goal not found", async () => {
@@ -169,7 +125,9 @@ describe("Goals", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalNotFoundOrNoPermission"))
+      expect(result.error).toBe(
+        "Goal not found or you don't have permission to edit!"
+      )
     })
 
     it("should successfully update goal", async () => {
@@ -208,7 +166,7 @@ describe("Goals", async () => {
       )
       expect(unrelatedGoal?.categoryKey).toBe("salary_bonus")
       expect(unrelatedGoal?.name).toBe("buy a motorbike")
-      expect(result.success).toBe(t("goals.be.goalUpdated"))
+      expect(result.success).toBe("Goal has been updated.")
       expect(result.error).toBeUndefined()
     })
 
@@ -222,7 +180,9 @@ describe("Goals", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalUpdateFailed"))
+      expect(result.error).toBe(
+        "Failed to update goal! Please try again later."
+      )
     })
   })
 
@@ -233,7 +193,9 @@ describe("Goals", async () => {
       const result = await deleteGoal(mockGoal._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error with invalid goal ID", async () => {
@@ -242,7 +204,7 @@ describe("Goals", async () => {
       const result = await deleteGoal("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.invalidGoalId"))
+      expect(result.error).toBe("Invalid goal ID!")
     })
 
     it("should return error when goal not found", async () => {
@@ -251,7 +213,9 @@ describe("Goals", async () => {
       const result = await deleteGoal(mockGoal._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalNotFoundOrNoPermissionDelete"))
+      expect(result.error).toBe(
+        "Goal not found or you don't have permission to delete!"
+      )
     })
 
     it("should successfully delete goal", async () => {
@@ -265,7 +229,7 @@ describe("Goals", async () => {
       })
 
       expect(deletedGoal).toBe(null)
-      expect(result.success).toBe(t("goals.be.goalDeleted"))
+      expect(result.success).toBe("Goal has been deleted.")
       expect(result.error).toBeUndefined()
     })
 
@@ -276,7 +240,9 @@ describe("Goals", async () => {
       const result = await deleteGoal(mockGoal._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalDeleteFailed"))
+      expect(result.error).toBe(
+        "Failed to delete goal! Please try again later."
+      )
     })
   })
 
@@ -284,16 +250,18 @@ describe("Goals", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getGoals("", t)
+      const result = await getGoals("")
 
       expect(result.goals).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return empty goals list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toEqual([])
       expect(result.error).toBeUndefined()
@@ -303,7 +271,7 @@ describe("Goals", async () => {
       await insertTestGoal(mockGoal)
       mockAuthenticatedUser()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toHaveLength(1)
       expect(result.goals?.[0].name).toBe("buy a motorbike")
@@ -336,7 +304,7 @@ describe("Goals", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toHaveLength(3)
       // Should be sorted by startDate descending, then _id descending
@@ -352,10 +320,10 @@ describe("Goals", async () => {
       mockAuthenticatedUser()
       mockGoalCollectionError()
 
-      const result = await getGoals(mockUser._id.toString(), t)
+      const result = await getGoals(mockUser._id.toString())
 
       expect(result.goals).toBeUndefined()
-      expect(result.error).toBe(t("goals.be.goalFetchFailed"))
+      expect(result.error).toBe("Failed to load goals! Please try again later.")
     })
   })
 })

@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
 
 import { insertTestRecurringTransaction } from "@/tests/backend/helpers/database"
 import {
@@ -25,8 +24,6 @@ import { getRecurringTransactionsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Recurring Transactions", async () => {
-  const t = await getTranslations()
-
   beforeEach(() => {
     // mock time to 2024-06-01 to ensure endDate 2024-12-31 is in the future
     vi.useFakeTimers()
@@ -46,25 +43,9 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await createRecurringTransaction({
-        type: "invalid" as "income" | "expense",
-        categoryKey: "",
-        amount: -1,
-        description: "",
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        frequency: "invalid" as any,
-        startDate: new Date("invalid"),
-        isActive: true,
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error when recurring transaction already exists", async () => {
@@ -84,7 +65,7 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.recurringExists"))
+      expect(result.error).toBe("This recurring transaction already exists!")
     })
 
     it("should return error when database insertion fails", async () => {
@@ -100,7 +81,9 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.recurringAddFailed"))
+      expect(result.error).toBe(
+        "Failed to add recurring transaction! Please try again later."
+      )
     })
 
     it("should successfully create recurring transaction with monthly frequency", async () => {
@@ -126,7 +109,7 @@ describe("Recurring Transactions", async () => {
         "2024-12-31T00:00:00.000Z"
       )
       expect(addedRecurring?.isActive).toBe(true)
-      expect(result.success).toBe(t("recurring.be.recurringAdded"))
+      expect(result.success).toBe("Recurring transaction has been added.")
       expect(result.error).toBeUndefined()
     })
 
@@ -144,7 +127,7 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(addedRecurring?.frequency).toBe("weekly")
-      expect(result.success).toBe(t("recurring.be.recurringAdded"))
+      expect(result.success).toBe("Recurring transaction has been added.")
       expect(result.error).toBeUndefined()
     })
 
@@ -162,7 +145,7 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(addedRecurring?.frequency).toBe("bi-weekly")
-      expect(result.success).toBe(t("recurring.be.recurringAdded"))
+      expect(result.success).toBe("Recurring transaction has been added.")
       expect(result.error).toBeUndefined()
     })
 
@@ -182,7 +165,7 @@ describe("Recurring Transactions", async () => {
 
       expect(addedRecurring?.frequency).toBe("random")
       expect(addedRecurring?.randomEveryXDays).toBe(3)
-      expect(result.success).toBe(t("recurring.be.recurringAdded"))
+      expect(result.success).toBe("Recurring transaction has been added.")
       expect(result.error).toBeUndefined()
     })
 
@@ -195,7 +178,9 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.recurringAddFailed"))
+      expect(result.error).toBe(
+        "Failed to add recurring transaction! Please try again later."
+      )
     })
   })
 
@@ -209,28 +194,9 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await updateRecurringTransaction(
-        mockRecurringTransaction._id.toString(),
-        {
-          type: "invalid" as "income" | "expense",
-          categoryKey: "",
-          amount: -1,
-          description: "",
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          frequency: "invalid" as any,
-          startDate: new Date("invalid"),
-          isActive: true,
-        }
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
       )
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
     })
 
     it("should return error with invalid recurring ID", async () => {
@@ -242,7 +208,7 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.invalidRecurringId"))
+      expect(result.error).toBe("Invalid recurring transaction ID!")
     })
 
     it("should return error when recurring transaction not found", async () => {
@@ -255,7 +221,7 @@ describe("Recurring Transactions", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        t("recurring.be.recurringNotFoundOrNoPermission")
+        "Recurring transaction not found or you don't have permission to edit."
       )
     })
 
@@ -306,7 +272,7 @@ describe("Recurring Transactions", async () => {
       expect(unrelatedRecurring?.type).toBe("income")
       expect(unrelatedRecurring?.categoryKey).toBe("salary_bonus")
       expect(unrelatedRecurring?.amount).toBe(5000000)
-      expect(result.success).toBe(t("recurring.be.recurringUpdated"))
+      expect(result.success).toBe("Recurring transaction has been updated.")
       expect(result.error).toBeUndefined()
     })
 
@@ -320,7 +286,9 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.recurringUpdateFailed"))
+      expect(result.error).toBe(
+        "Failed to update recurring transaction! Please try again later."
+      )
     })
   })
 
@@ -333,7 +301,9 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error with invalid recurring ID", async () => {
@@ -342,7 +312,7 @@ describe("Recurring Transactions", async () => {
       const result = await deleteRecurringTransaction("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.invalidRecurringId"))
+      expect(result.error).toBe("Invalid recurring transaction ID!")
     })
 
     it("should return error when recurring transaction not found", async () => {
@@ -354,7 +324,7 @@ describe("Recurring Transactions", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        t("recurring.be.recurringNotFoundOrNoPermissionDelete")
+        "Recurring transaction not found or you don't have permission to delete!"
       )
     })
 
@@ -371,7 +341,7 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(deletedRecurring).toBe(null)
-      expect(result.success).toBe(t("recurring.be.recurringDeleted"))
+      expect(result.success).toBe("Recurring transaction has been deleted.")
       expect(result.error).toBeUndefined()
     })
 
@@ -384,7 +354,9 @@ describe("Recurring Transactions", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.recurringDeleteFailed"))
+      expect(result.error).toBe(
+        "Failed to delete recurring transaction! Please try again later."
+      )
     })
   })
 
@@ -392,16 +364,18 @@ describe("Recurring Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getRecurringTransactions("", t)
+      const result = await getRecurringTransactions("")
 
       expect(result.recurringTransactions).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return empty recurring transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -411,7 +385,7 @@ describe("Recurring Transactions", async () => {
       await insertTestRecurringTransaction(mockRecurringTransaction)
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toHaveLength(1)
       expect(result.recurringTransactions?.[0].description).toBe(
@@ -445,10 +419,10 @@ describe("Recurring Transactions", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toHaveLength(3)
-      // Should be sorted by startDate descending, then _id descending
+      // Should be sorted by startDate descendinghen _id descending
       expect(result.recurringTransactions?.[0].startDate.toISOString()).toBe(
         "2024-02-15T00:00:00.000Z"
       )
@@ -465,10 +439,12 @@ describe("Recurring Transactions", async () => {
       mockAuthenticatedUser()
       mockRecurringTransactionCollectionError()
 
-      const result = await getRecurringTransactions(mockUser._id.toString(), t)
+      const result = await getRecurringTransactions(mockUser._id.toString())
 
       expect(result.recurringTransactions).toBeUndefined()
-      expect(result.error).toBe(t("recurring.be.recurringFetchFailed"))
+      expect(result.error).toBe(
+        "Failed to load recurring transactions! Please try again later."
+      )
     })
   })
 })

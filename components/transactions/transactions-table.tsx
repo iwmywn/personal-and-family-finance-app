@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { MoreVerticalIcon, WalletIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -36,7 +36,7 @@ import {
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useAppData } from "@/context/app-data-context"
-import { useCategoryI18n } from "@/hooks/use-category-i18n"
+import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { type Transaction } from "@/lib/definitions"
@@ -53,8 +53,8 @@ export function TransactionsTable({
 }: TransactionsTableProps) {
   const { transactions } = useAppData()
   const isLargeScreens = useMediaQuery("(max-width: 1023px)")
-  const t = useTranslations()
-  const { getCategoryLabel, getCategoryDescription } = useCategoryI18n()
+  const t = useExtracted()
+  const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
@@ -78,11 +78,11 @@ export function TransactionsTable({
                 <EmptyMedia variant="icon">
                   <WalletIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("common.fe.noTransactionsFound")}</EmptyTitle>
+                <EmptyTitle>{t("No transactions found")}</EmptyTitle>
                 <EmptyDescription>
                   {transactions.length === 0
-                    ? t("common.fe.startAddingTransactions")
-                    : t("common.fe.noTransactionsFiltered")}
+                    ? t("Start adding your transactions.")
+                    : t("No transactions found matching your filters.")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>
@@ -98,11 +98,11 @@ export function TransactionsTable({
               <Table>
                 <TableHeader className="bg-muted sticky top-0">
                   <TableRow className="[&>th]:text-center">
-                    <TableHead>{t("common.fe.date")}</TableHead>
-                    <TableHead>{t("common.fe.description")}</TableHead>
-                    <TableHead>{t("common.fe.type")}</TableHead>
-                    <TableHead>{t("common.fe.category")}</TableHead>
-                    <TableHead>{t("common.fe.amount")}</TableHead>
+                    <TableHead>{t("Date")}</TableHead>
+                    <TableHead>{t("Description")}</TableHead>
+                    <TableHead>{t("Type")}</TableHead>
+                    <TableHead>{t("Category")}</TableHead>
+                    <TableHead>{t("Amount")}</TableHead>
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -125,8 +125,8 @@ export function TransactionsTable({
                           }
                         >
                           {transaction.type === "income"
-                            ? t("common.fe.income")
-                            : t("common.fe.expense")}
+                            ? t("Income")
+                            : t("Expense")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -162,9 +162,7 @@ export function TransactionsTable({
                               size="icon"
                             >
                               <MoreVerticalIcon />
-                              <span className="sr-only">
-                                {t("transactions.fe.openMenu")}
-                              </span>
+                              <span className="sr-only">{t("Open menu")}</span>
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
@@ -175,7 +173,7 @@ export function TransactionsTable({
                                 setIsEditOpen(true)
                               }}
                             >
-                              {t("common.fe.edit")}
+                              {t("Edit")}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
@@ -185,7 +183,7 @@ export function TransactionsTable({
                                 setIsDeleteOpen(true)
                               }}
                             >
-                              {t("common.fe.delete")}
+                              {t("Delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>

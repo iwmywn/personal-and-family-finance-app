@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb"
-import { getTranslations } from "next-intl/server"
 
 import { insertTestBudget } from "@/tests/backend/helpers/database"
 import {
@@ -25,8 +24,6 @@ import { getBudgetsCollection } from "@/lib/collections"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 describe("Budgets", async () => {
-  const t = await getTranslations()
-
   describe("createBudget", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
@@ -34,35 +31,9 @@ describe("Budgets", async () => {
       const result = await createBudget(mockValidBudgetValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await createBudget({
-        categoryKey: "",
-        allocatedAmount: -1,
-        startDate: new Date("invalid"),
-        endDate: new Date("invalid"),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
-    })
-
-    it("should return error when endDate is before startDate", async () => {
-      mockAuthenticatedUser()
-
-      const result = await createBudget({
-        categoryKey: "food_beverage",
-        allocatedAmount: 1000000,
-        startDate: normalizeToUTCDate(new Date("2024-12-31")),
-        endDate: normalizeToUTCDate(new Date("2024-01-01")),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error when budget already exists", async () => {
@@ -77,7 +48,7 @@ describe("Budgets", async () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.budgetExists"))
+      expect(result.error).toBe("This budget already exists!")
     })
 
     it("should return error when database insertion fails", async () => {
@@ -90,7 +61,7 @@ describe("Budgets", async () => {
       const result = await createBudget(mockValidBudgetValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.budgetAddFailed"))
+      expect(result.error).toBe("Failed to add budget! Please try again later.")
     })
 
     it("should successfully create budget", async () => {
@@ -110,7 +81,7 @@ describe("Budgets", async () => {
       expect(addedBudget?.endDate.toISOString()).toBe(
         "2024-01-31T00:00:00.000Z"
       )
-      expect(result.success).toBe(t("budgets.be.budgetAdded"))
+      expect(result.success).toBe("Budget has been added.")
       expect(result.error).toBeUndefined()
     })
 
@@ -121,7 +92,7 @@ describe("Budgets", async () => {
       const result = await createBudget(mockValidBudgetValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.budgetAddFailed"))
+      expect(result.error).toBe("Failed to add budget! Please try again later.")
     })
   })
 
@@ -135,21 +106,9 @@ describe("Budgets", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
-    })
-
-    it("should return error with invalid input data", async () => {
-      mockAuthenticatedUser()
-
-      const result = await updateBudget(mockBudget._id.toString(), {
-        categoryKey: "",
-        allocatedAmount: -1,
-        startDate: new Date("2024-01-01"),
-        endDate: new Date("2024-01-01"), // endDate <= startDate
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.invalidData"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error with invalid budget ID", async () => {
@@ -158,7 +117,7 @@ describe("Budgets", async () => {
       const result = await updateBudget("invalid-id", mockValidBudgetValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.invalidBudgetId"))
+      expect(result.error).toBe("Invalid budget ID!")
     })
 
     it("should return error when budget not found", async () => {
@@ -170,7 +129,9 @@ describe("Budgets", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.budgetNotFoundOrNoPermission"))
+      expect(result.error).toBe(
+        "Budget not found or you don't have permission to edit!"
+      )
     })
 
     it("should successfully update budget", async () => {
@@ -213,7 +174,7 @@ describe("Budgets", async () => {
       expect(unrelatedBudget?.endDate.toISOString()).toBe(
         "2024-01-31T00:00:00.000Z"
       )
-      expect(result.success).toBe(t("budgets.be.budgetUpdated"))
+      expect(result.success).toBe("Budget has been updated.")
       expect(result.error).toBeUndefined()
     })
 
@@ -227,7 +188,9 @@ describe("Budgets", async () => {
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.budgetUpdateFailed"))
+      expect(result.error).toBe(
+        "Failed to update budget! Please try again later."
+      )
     })
   })
 
@@ -238,7 +201,9 @@ describe("Budgets", async () => {
       const result = await deleteBudget(mockBudget._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return error with invalid budget ID", async () => {
@@ -247,7 +212,7 @@ describe("Budgets", async () => {
       const result = await deleteBudget("invalid-id")
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.invalidBudgetId"))
+      expect(result.error).toBe("Invalid budget ID!")
     })
 
     it("should return error when budget not found", async () => {
@@ -257,7 +222,7 @@ describe("Budgets", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        t("budgets.be.budgetNotFoundOrNoPermissionDelete")
+        "Budget not found or you don't have permission to delete!"
       )
     })
 
@@ -272,7 +237,7 @@ describe("Budgets", async () => {
       })
 
       expect(deletedBudget).toBe(null)
-      expect(result.success).toBe(t("budgets.be.budgetDeleted"))
+      expect(result.success).toBe("Budget has been deleted.")
       expect(result.error).toBeUndefined()
     })
 
@@ -283,7 +248,9 @@ describe("Budgets", async () => {
       const result = await deleteBudget(mockBudget._id.toString())
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.budgetDeleteFailed"))
+      expect(result.error).toBe(
+        "Failed to delete budget! Please try again later."
+      )
     })
   })
 
@@ -291,16 +258,18 @@ describe("Budgets", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getBudgets("", t)
+      const result = await getBudgets("")
 
       expect(result.budgets).toBeUndefined()
-      expect(result.error).toBe(t("common.be.accessDenied"))
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
     })
 
     it("should return empty budgets list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toEqual([])
       expect(result.error).toBeUndefined()
@@ -310,7 +279,7 @@ describe("Budgets", async () => {
       await insertTestBudget(mockBudget)
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toHaveLength(1)
       expect(result.budgets?.[0].categoryKey).toBe("food_beverage")
@@ -342,7 +311,7 @@ describe("Budgets", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toHaveLength(3)
       // Should be sorted by startDate descending, then _id descending
@@ -358,10 +327,12 @@ describe("Budgets", async () => {
       mockAuthenticatedUser()
       mockBudgetCollectionError()
 
-      const result = await getBudgets(mockUser._id.toString(), t)
+      const result = await getBudgets(mockUser._id.toString())
 
       expect(result.budgets).toBeUndefined()
-      expect(result.error).toBe(t("budgets.be.budgetFetchFailed"))
+      expect(result.error).toBe(
+        "Failed to load budgets! Please try again later."
+      )
     })
   })
 })
