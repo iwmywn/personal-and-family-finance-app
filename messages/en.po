@@ -463,6 +463,7 @@ msgstr "Edit Budget"
 #: components\categories\delete-category-dialog.tsx
 #: components\goals\delete-goal-dialog.tsx
 #: components\goals\goal-dialog.tsx
+#: components\layout\secondary-nav.tsx
 #: components\recurring-transactions\delete-recurring-transaction-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\settings\change-name-dialog.tsx
@@ -1077,16 +1078,24 @@ msgid "zmL+Bn"
 msgstr "Personal and Family Finance Application"
 
 #: components\layout\secondary-nav.tsx
+msgid "BHBJUz"
+msgstr "Are you sure you want to sign out?"
+
+#: components\layout\secondary-nav.tsx
 msgid "F62y+K"
 msgstr "Sign Out"
 
 #: components\layout\secondary-nav.tsx
-msgid "oj0aXj"
-msgstr "Signing out..."
+msgid "hlp8qc"
+msgstr "Signed out."
 
 #: components\layout\secondary-nav.tsx
-msgid "r98Ya2"
-msgstr "You need to sign in again."
+msgid "naYgGy"
+msgstr "You will need to sign in again to access your account."
+
+#: components\layout\secondary-nav.tsx
+msgid "oj0aXj"
+msgstr "Signing out..."
 
 #: components\layout\secondary-nav.tsx
 msgid "XuxYAf"

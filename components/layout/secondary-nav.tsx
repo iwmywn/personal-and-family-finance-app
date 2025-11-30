@@ -7,6 +7,17 @@ import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
@@ -27,7 +38,7 @@ export function SecondaryNav() {
       loading: t("Signing out..."),
       success: () => {
         router.push("/signin")
-        return t("You need to sign in again.")
+        return t("Signed out.")
       },
       error: () => t("Failed to sign out! Please try again later."),
     })
@@ -52,10 +63,32 @@ export function SecondaryNav() {
             </SidebarMenuItem>
           ))}
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip={t("Sign Out")} onClick={onSignOut}>
-              <LogOutIcon />
-              {t("Sign Out")}
-            </SidebarMenuButton>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <SidebarMenuButton tooltip={t("Sign Out")}>
+                  <LogOutIcon />
+                  {t("Sign Out")}
+                </SidebarMenuButton>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    {t("Are you sure you want to sign out?")}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {t(
+                      "You will need to sign in again to access your account."
+                    )}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
+                  <AlertDialogAction onClick={onSignOut}>
+                    {t("Sign Out")}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroupContent>
