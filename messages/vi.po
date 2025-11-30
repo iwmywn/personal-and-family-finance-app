@@ -501,8 +501,24 @@ msgstr ""
 #: components\budgets\budget-dialog.tsx
 #: components\goals\goal-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "ftg7GK"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "gjwFsT"
+msgstr ""
+
+#: components\budgets\budget-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "IkXLzZ"
 msgstr ""
 
 #: components\budgets\budget-dialog.tsx
@@ -1137,15 +1153,21 @@ msgid "FP2XQQ"
 msgstr ""
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
-msgid "fxcttM"
-msgstr ""
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "gKA6Xf"
 msgstr ""
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
-msgid "gq0oif"
+#: components\transactions\transaction-dialog.tsx
+msgid "J0Y6yy"
+msgstr ""
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+msgid "mpcI7I"
+msgstr ""
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "PmRC5G"
 msgstr ""
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
@@ -1447,11 +1469,6 @@ msgstr ""
 msgid "ZhrNZz"
 msgstr ""
 
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "ftg7GK"
-msgstr ""
-
 #: components\statistics\statistics-page.tsx
 msgid "wqp6W5"
 msgstr ""
@@ -1524,19 +1541,11 @@ msgid "ET95oG"
 msgstr ""
 
 #: components\transactions\transaction-dialog.tsx
-msgid "J0Y6yy"
-msgstr ""
-
-#: components\transactions\transaction-dialog.tsx
 msgid "m3AQtz"
 msgstr ""
 
 #: components\transactions\transaction-dialog.tsx
 msgid "P5C72A"
-msgstr ""
-
-#: components\transactions\transaction-dialog.tsx
-msgid "PmRC5G"
 msgstr ""
 
 #: components\transactions\transaction-filters.tsx

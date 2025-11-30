@@ -501,9 +501,25 @@ msgstr "Category"
 #: components\budgets\budget-dialog.tsx
 #: components\goals\goal-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "ftg7GK"
+msgstr "Select Date"
+
+#: components\budgets\budget-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "gjwFsT"
 msgstr "Select date"
+
+#: components\budgets\budget-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "IkXLzZ"
+msgstr "Select Category"
 
 #: components\budgets\budget-dialog.tsx
 msgid "PVSBse"
@@ -1137,16 +1153,22 @@ msgid "FP2XQQ"
 msgstr "e.g. 15"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
-msgid "fxcttM"
-msgstr "Create a custom category"
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "gKA6Xf"
 msgstr "Update recurring transaction information."
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
-msgid "gq0oif"
-msgstr "No category found."
+#: components\transactions\transaction-dialog.tsx
+msgid "J0Y6yy"
+msgstr "Cannot find a suitable category?"
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+msgid "mpcI7I"
+msgstr "No End Date"
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "PmRC5G"
+msgstr "Create Custom Category"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "sYXY5N"
@@ -1447,11 +1469,6 @@ msgstr "Failed to disable 2FA! Please try again later."
 msgid "ZhrNZz"
 msgstr "Enable 2FA"
 
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "ftg7GK"
-msgstr "Select Date"
-
 #: components\statistics\statistics-page.tsx
 msgid "wqp6W5"
 msgstr "View your financial statistics."
@@ -1524,20 +1541,12 @@ msgid "ET95oG"
 msgstr "Update transaction information."
 
 #: components\transactions\transaction-dialog.tsx
-msgid "J0Y6yy"
-msgstr "Cannot find a suitable category?"
-
-#: components\transactions\transaction-dialog.tsx
 msgid "m3AQtz"
 msgstr "Add your income or expense to track your personal finances."
 
 #: components\transactions\transaction-dialog.tsx
 msgid "P5C72A"
 msgstr "Edit Transaction"
-
-#: components\transactions\transaction-dialog.tsx
-msgid "PmRC5G"
-msgstr "Create Custom Category"
 
 #: components\transactions\transaction-filters.tsx
 msgid "gD5509"

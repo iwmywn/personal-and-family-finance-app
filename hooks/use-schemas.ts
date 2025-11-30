@@ -18,14 +18,12 @@ export function useSchemas() {
         ),
       })
 
-  // ---------- Sign In ----------
   const createSignInSchema = () =>
     z.object({
       username: z.string().min(1, { message: t("Username is required.") }),
       password: basePasswordSchema(),
     })
 
-  // ---------- Change Password ----------
   const createPasswordSchema = () =>
     z
       .object({
@@ -48,13 +46,11 @@ export function useSchemas() {
         }
       })
 
-  // ---------- 2FA: Password ----------
   const createTwoFactorPasswordSchema = () =>
     z.object({
       password: basePasswordSchema(),
     })
 
-  // ---------- 2FA: Code ----------
   const createTwoFactorCodeSchema = () =>
     z.object({
       code: z
@@ -69,7 +65,6 @@ export function useSchemas() {
       trustDevice: z.boolean().optional(),
     })
 
-  // ---------- Name ----------
   const createNameSchema = () =>
     z.object({
       name: z
@@ -78,7 +73,6 @@ export function useSchemas() {
         .max(100, { message: t("Name must be at most 100 characters.") }),
     })
 
-  // ---------- Username ----------
   const createUsernameSchema = () =>
     z.object({
       username: z
@@ -92,7 +86,6 @@ export function useSchemas() {
         }),
     })
 
-  // ---------- Transaction ----------
   const createTransactionSchema = () =>
     z.object({
       type: z.enum(TRANSACTION_TYPES, {
@@ -128,7 +121,6 @@ export function useSchemas() {
       }),
     })
 
-  // ---------- Category ----------
   const createCategorySchema = () =>
     z.object({
       categoryKey: z.string().optional(),
@@ -149,7 +141,6 @@ export function useSchemas() {
         }),
     })
 
-  // ---------- Budget ----------
   const createBudgetSchema = () =>
     z
       .object({
@@ -187,7 +178,6 @@ export function useSchemas() {
         }
       })
 
-  // ---------- Goal ----------
   const createGoalSchema = () =>
     z
       .object({
@@ -231,7 +221,6 @@ export function useSchemas() {
         }
       })
 
-  // ---------- Recurring Transaction ----------
   const createRecurringTransactionSchema = () =>
     z
       .object({

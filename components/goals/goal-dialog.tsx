@@ -156,7 +156,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t("Select category")}>
+                        <SelectValue placeholder={t("Select Category")}>
                           {field.value ? getCategoryLabel(field.value) : null}
                         </SelectValue>
                       </SelectTrigger>
@@ -265,7 +265,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                           {startDate ? (
                             formatDate(startDate)
                           ) : (
-                            <span>{t("Select date")}</span>
+                            <span>{t("Select Date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -318,7 +318,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                           {endDate ? (
                             formatDate(endDate)
                           ) : (
-                            <span>{t("Select date")}</span>
+                            <span>{t("Select Date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>

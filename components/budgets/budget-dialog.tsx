@@ -156,7 +156,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t("Select category")}>
+                        <SelectValue placeholder={t("Select Category")}>
                           {field.value ? getCategoryLabel(field.value) : null}
                         </SelectValue>
                       </SelectTrigger>
@@ -248,7 +248,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           {startDate ? (
                             formatDate(startDate)
                           ) : (
-                            <span>{t("Select date")}</span>
+                            <span>{t("Select Date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -301,7 +301,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           {endDate ? (
                             formatDate(endDate)
                           ) : (
-                            <span>{t("Select date")}</span>
+                            <span>{t("Select Date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>

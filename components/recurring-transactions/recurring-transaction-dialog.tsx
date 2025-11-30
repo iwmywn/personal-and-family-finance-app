@@ -194,7 +194,7 @@ export function RecurringTransactionDialog({
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder={t("Select category")}>
+                <SelectValue placeholder={t("Select Category")}>
                   {field.value ? getCategoryLabel(field.value) : null}
                 </SelectValue>
               </SelectTrigger>
@@ -234,9 +234,9 @@ export function RecurringTransactionDialog({
             </SelectContent>
           </Select>
           <FormDescription>
-            {t("No category found.")}{" "}
+            {t("Cannot find a suitable category?")}{" "}
             <FormLink href="/categories" className="text-foreground/85">
-              {t("Create a custom category")}
+              {t("Create Custom Category")}
             </FormLink>
           </FormDescription>
           <FormMessage />
@@ -416,7 +416,7 @@ export function RecurringTransactionDialog({
                           {startDate ? (
                             formatDate(startDate)
                           ) : (
-                            <span>{t("Select date")}</span>
+                            <span>{t("Select Date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
@@ -475,7 +475,7 @@ export function RecurringTransactionDialog({
                           {endDate ? (
                             formatDate(endDate)
                           ) : (
-                            <span>{t("No end date")}</span>
+                            <span>{t("No End Date")}</span>
                           )}
                           <CalendarIcon />
                         </Button>
