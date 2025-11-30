@@ -1,0 +1,23 @@
+name: Check PO Files
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  check-po:
+    runs-on: ubuntu-latest
+    name: Check PO Files
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Check PO files
+        run: node scripts/check-po.js
