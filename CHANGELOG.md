@@ -1,3 +1,18 @@
+## [25.49.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.48.0...v25.49.0)
+
+Thank you to all the contributors who made this release possible!
+
+### Features
+
+- add account settings features (@iwmywn) ([#11](https://github.com/iwmywn/personal-and-family-finance-app/pull/11)) ([f0afcb5](https://github.com/iwmywn/personal-and-family-finance-app/commit/f0afcb5d625452fcbe02bc883e173b0c3275e31e))
+- better auth (@iwmywn) ([#10](https://github.com/iwmywn/personal-and-family-finance-app/pull/10)) ([c90adab](https://github.com/iwmywn/personal-and-family-finance-app/commit/c90adaba6c5353b1688a234b2b19fa66b070de26))
+
+### Nerd stuff
+
+These changes will not be visible to users, but are included for completeness and to credit contributors.
+
+- **refactor:** i18n (@iwmywn) ([#12](https://github.com/iwmywn/personal-and-family-finance-app/pull/12)) ([97f4c75](https://github.com/iwmywn/personal-and-family-finance-app/commit/97f4c7583b3adbe011898ae9c703d11521cc8524))
+
 ## [25.48.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.47.0...v25.48.0)
 
 Thank you to all the contributors who made this release possible!
