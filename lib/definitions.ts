@@ -1,7 +1,7 @@
 import { type ObjectId } from "mongodb"
 
 import type { auth } from "@/lib/auth"
-import { type CategoryKeyType, type TransactionType } from "@/lib/categories"
+import { type CategoryKeyType, type CategoryType } from "@/lib/categories"
 
 export type User = typeof auth.$Infer.Session.user
 export type DBUser = { _id: ObjectId } & Omit<User, "id">
@@ -11,7 +11,7 @@ export type Session = typeof auth.$Infer.Session.session
 type BaseTransaction<T> = {
   _id: T
   userId: T
-  type: TransactionType
+  type: CategoryType
   categoryKey: CategoryKeyType
   amount: number
   description: string
@@ -22,7 +22,7 @@ type BaseCategory<T> = {
   _id: T
   userId: T
   categoryKey: string
-  type: TransactionType
+  type: CategoryType
   label: string
   description: string
 }
@@ -49,7 +49,7 @@ type BaseGoal<T> = {
 type BaseRecurringTransaction<T> = {
   _id: T
   userId: T
-  type: TransactionType
+  type: CategoryType
   categoryKey: CategoryKeyType
   amount: number
   description: string

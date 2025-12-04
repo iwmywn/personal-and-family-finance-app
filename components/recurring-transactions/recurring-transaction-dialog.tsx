@@ -47,18 +47,17 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormButton } from "@/components/custom/form-button"
 import { FormLink } from "@/components/custom/form-link"
-import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
+import type { CategoryType } from "@/lib/categories"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
@@ -76,9 +75,7 @@ export function RecurringTransactionDialog({
 }: RecurringDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
-  const [transactionType, setTransactionType] = useState<"income" | "expense">(
-    recurring?.type || "income"
-  )
+  const [type, setType] = useState<CategoryType>(recurring?.type || "income")
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createRecurringTransactionSchema } = useSchemas()
@@ -104,7 +101,6 @@ export function RecurringTransactionDialog({
     },
   })
 
-  const { customCategories } = useAppData()
   const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
 
   const startDate = useWatch({
@@ -121,13 +117,6 @@ export function RecurringTransactionDialog({
     control: form.control,
     name: "frequency",
   })
-
-  const handleTypeChange = (type: string) => {
-    const transactionType = type as "income" | "expense"
-    setTransactionType(transactionType)
-    form.setValue("type", transactionType)
-    form.resetField("categoryKey", { defaultValue: "" })
-  }
 
   async function onSubmit(values: RecurringTransactionFormValues) {
     const parsedValues = createRecurringTransactionSchema().safeParse(values)
@@ -169,7 +158,7 @@ export function RecurringTransactionDialog({
       } else {
         toast.success(success)
         form.reset({
-          type: "income",
+          type: type,
           categoryKey: "",
           amount: 0,
           description: "",
@@ -184,7 +173,13 @@ export function RecurringTransactionDialog({
     }
   }
 
-  const renderCategorySelect = (type: "income" | "expense") => (
+  const handleTypeChange = (type: CategoryType) => {
+    setType(type)
+    form.setValue("type", type)
+    form.resetField("categoryKey", { defaultValue: "" })
+  }
+
+  const renderCategorySelect = (type: CategoryType) => (
     <FormField
       control={form.control}
       name="categoryKey"
@@ -205,7 +200,7 @@ export function RecurringTransactionDialog({
               }}
             >
               {getCategoriesWithDetails(type).map((c) => (
-                <SelectItem key={c.categoryKey} value={c.categoryKey}>
+                <SelectItem key={c.key} value={c.key}>
                   <div className="flex flex-col">
                     <span className="font-medium">{c.label}</span>
                     <span className="text-muted-foreground wrap-anywhere">
@@ -214,23 +209,6 @@ export function RecurringTransactionDialog({
                   </div>
                 </SelectItem>
               ))}
-              {customCategories.filter((c) => c.type === type).length > 0 && (
-                <>
-                  <SelectSeparator />
-                  {customCategories
-                    .filter((c) => c.type === type)
-                    .map((c) => (
-                      <SelectItem key={c._id} value={c.categoryKey}>
-                        <div className="flex flex-col">
-                          <span className="font-medium">{c.label}</span>
-                          <span className="text-muted-foreground wrap-anywhere">
-                            {c.description}
-                          </span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                </>
-              )}
             </SelectContent>
           </Select>
           <FormDescription>
@@ -263,7 +241,10 @@ export function RecurringTransactionDialog({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <Tabs value={transactionType} onValueChange={handleTypeChange}>
+            <Tabs
+              value={type}
+              onValueChange={(value) => handleTypeChange(value as CategoryType)}
+            >
               <TabsList className="w-full">
                 <TabsTrigger value="income">{t("Income")}</TabsTrigger>
                 <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>
@@ -453,7 +434,9 @@ export function RecurringTransactionDialog({
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("End Date")} (Optional)</FormLabel>
+                  <FormLabel>
+                    {t("End Date")} ({t("Optional")})
+                  </FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}

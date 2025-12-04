@@ -3,7 +3,7 @@
 import { useExtracted } from "next-intl"
 import { z } from "zod"
 
-import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
+import { ALL_CATEGORIES_KEY, CATEGORY_TYPES } from "@/lib/categories"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 export function useSchemas() {
@@ -88,7 +88,7 @@ export function useSchemas() {
 
   const createTransactionSchema = () =>
     z.object({
-      type: z.enum(TRANSACTION_TYPES, {
+      type: z.enum(CATEGORY_TYPES, {
         message: t("Please select a transaction type."),
       }),
       categoryKey: z
@@ -124,7 +124,7 @@ export function useSchemas() {
   const createCategorySchema = () =>
     z.object({
       categoryKey: z.string().optional(),
-      type: z.enum(TRANSACTION_TYPES, {
+      type: z.enum(CATEGORY_TYPES, {
         message: t("Please select a type."),
       }),
       label: z
@@ -224,7 +224,7 @@ export function useSchemas() {
   const createRecurringTransactionSchema = () =>
     z
       .object({
-        type: z.enum(TRANSACTION_TYPES, {
+        type: z.enum(CATEGORY_TYPES, {
           message: t("Please select a type."),
         }),
         categoryKey: z

@@ -1,4 +1,4 @@
-my personal & family financial management app
+my personal & family finance app
 
 ---
 

@@ -96,7 +96,7 @@ export function SignInForm() {
         setRecaptchaToken(null)
       }
     },
-    [isSubmitting, t, searchParams, form, router]
+    [createSignInSchema, isSubmitting, t, searchParams, form, router]
   )
 
   function onSubmit(values: SignInFormValues) {

@@ -360,6 +360,7 @@ msgid "/WMCDd"
 msgstr "Đã xảy ra lỗi!"
 
 #: app\layout.tsx
+#: components\layout\app-sidebar.tsx
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
 
@@ -384,13 +385,13 @@ msgstr "Xác minh CAPTCHA"
 #: components\settings\change-name-dialog.tsx
 #: components\settings\change-password-dialog.tsx
 #: components\settings\change-username-dialog.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "5GmpFA"
 msgstr "Dữ liệu không hợp lệ!"
 
 #: components\auth\signin-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "5sg7KC"
 msgstr "Mật khẩu"
 
@@ -416,12 +417,12 @@ msgid "mXmfR7"
 msgstr "Mã xác thực không hợp lệ! Vui lòng thử lại sau."
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "q5Xl0M"
 msgstr "Xác minh"
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Tjv3UC"
 msgstr "Mã xác minh"
 
@@ -512,13 +513,6 @@ msgstr "Chọn ngày"
 #: components\goals\goal-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
-msgid "gjwFsT"
-msgstr "Chọn ngày"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
 msgid "IkXLzZ"
 msgstr "Chọn danh mục"
 
@@ -534,13 +528,6 @@ msgstr "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của b
 #: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "QirE3M"
 msgstr "Ngày bắt đầu"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
-msgid "RUJYth"
-msgstr "Chọn danh mục"
 
 #: components\budgets\budget-dialog.tsx
 #: components\budgets\budgets-table.tsx
@@ -1073,10 +1060,6 @@ msgstr "Thu nhập hàng tháng"
 msgid "ZLrViM"
 msgstr "Số dư hàng tháng"
 
-#: components\layout\app-sidebar.tsx
-msgid "zmL+Bn"
-msgstr "Ứng dụng Tài chính Cá nhân và Gia đình"
-
 #: components\layout\secondary-nav.tsx
 msgid "BHBJUz"
 msgstr "Bạn có chắc chắn muốn đăng xuất không?"
@@ -1144,11 +1127,6 @@ msgstr "Mỗi X ngày"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
-msgid "CrEhnK"
-msgstr "Không có ngày kết thúc"
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "D9n+q2"
 msgstr "Ngẫu nhiên"
 
@@ -1164,6 +1142,10 @@ msgstr "ví dụ: 15"
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "gKA6Xf"
 msgstr "Cập nhật thông tin giao dịch định kỳ."
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+msgid "InWqys"
+msgstr "Không bắt buộc"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -1220,6 +1202,10 @@ msgid "bhzq2y"
 msgstr "Bắt đầu thêm các giao dịch định kỳ của bạn."
 
 #: components\recurring-transactions\recurring-transactions-table.tsx
+msgid "CrEhnK"
+msgstr "Không có ngày kết thúc"
+
+#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "hZPPxy"
 msgstr "Không tìm thấy giao dịch định kỳ phù hợp với bộ lọc của bạn."
 
@@ -1231,48 +1217,48 @@ msgstr "Mỗi {days} ngày"
 msgid "xRs5e/"
 msgstr "Không tìm thấy giao dịch định kỳ"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "bLQmWN"
 msgstr "Vị trí không xác định"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "DC/DQF"
 msgstr "Chấm dứt tất cả"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "fF376U"
 msgstr "Hiện tại"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "h/tqwp"
 msgstr "Xem các phiên đang hoạt động"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "HuQudj"
 msgstr "Chấm dứt tất cả các phiên thất bại! Vui lòng thử lại sau."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "i3aVwj"
 msgstr "Tất cả các phiên đã bị chấm dứt."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "M3ZAZv"
 msgstr "Chấm dứt phiên thất bại! Vui lòng thử lại sau."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "oA2uW/"
 msgstr "Chấm dứt"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "tNzaek"
 msgstr "Phiên đã bị chấm dứt."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "V3ka34"
 msgstr "Các phiên đang hoạt động"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "xLvLBD"
 msgstr "Quản lý các phiên đang hoạt động của bạn."
@@ -1426,55 +1412,55 @@ msgstr "Chuyển đổi chủ đề"
 msgid "tOdNiY"
 msgstr "Tối"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "02Huvd"
 msgstr "Xác minh mã 2FA thất bại! Vui lòng thử lại sau."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "0onqf3"
 msgstr "Tắt xác thực hai yếu tố"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "6vQ8Z2"
 msgstr "Mật khẩu không hợp lệ."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "BBb4xb"
 msgstr "Xác thực hai yếu tố đã được tắt."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "deAXlH"
 msgstr "Bật xác thực hai yếu tố"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "e7Db3T"
 msgstr "Tắt 2FA"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "FSRmm9"
 msgstr "Xác thực hai yếu tố đã được bật."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "fUrrOz"
 msgstr "Nhập mật khẩu của bạn để tắt 2FA."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "JHBmG8"
 msgstr "Khóa bí mật"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Lq08V/"
 msgstr "Bật 2FA thất bại! Vui lòng thử lại sau."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "VNORmj"
 msgstr "Quét mã QR bằng ứng dụng xác thực của bạn."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Y1o/zZ"
 msgstr "Tắt 2FA thất bại! Vui lòng thử lại sau."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "ZhrNZz"
 msgstr "Bật 2FA"
 
@@ -1565,147 +1551,147 @@ msgstr "Tìm kiếm giao dịch..."
 msgid "PRC7nC"
 msgstr "Quản lý thu nhập và chi tiêu để theo dõi tài chính cá nhân."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "/x7aOj"
 msgstr "Di chuyển"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "+PDYFb"
 msgstr "Tiết kiệm & Đầu tư"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "+vWFfX"
 msgstr "Hoàn tiền, bán đồ cũ, giải thưởng, các khoản bất ngờ, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "0zQ/kK"
 msgstr "Thuê nhà, điện, nước, gas, internet, điện thoại, phí quản lý, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "3M2DQp"
 msgstr "Thu nhập khác"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "4Vdjbv"
 msgstr "Tạp hóa, chợ, nhà hàng, quán cà phê, ăn sáng/trưa/tối, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "7MY/4L"
 msgstr "Lương & Thưởng"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "ASzmVA"
 msgstr "Du lịch, phim ảnh, âm nhạc, trò chơi, gym, sở thích, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "AURASB"
 msgstr "Hỗ trợ gia đình"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "AvfH/3"
 msgstr "Y tế & Bảo hiểm"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "B2jc7q"
 msgstr "Kinh doanh & Tự do"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "BNse/p"
 msgstr "Lương cơ bản, thưởng hiệu suất, thưởng lễ tết, phụ cấp, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "dpjEgD"
 msgstr "Lãi tiết kiệm, cổ tức, lãi trái phiếu, tiền thuê nhà, tiền bản quyền, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "flIwoN"
 msgstr "Chi tiêu khác"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "HowRY4"
 msgstr "Quần áo, giày dép, mỹ phẩm, phụ kiện, đồ điện tử, đồ gia dụng, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "igDrI+"
 msgstr "Đầu tư & Thu nhập thụ động"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "jyebiC"
 msgstr "Ăn uống"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "KjBENf"
 msgstr "Cắt tóc, làm móng, spa, massage, nhuộm tóc, chăm sóc da, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "LCwChs"
 msgstr "Tiền biếu bố mẹ, hỗ trợ anh chị em, họ hàng, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "lW1Dvw"
 msgstr "Tiết kiệm, cổ phiếu, quỹ, bất động sản, tiền điện tử, quỹ khẩn cấp, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "Mhg8/5"
 msgstr "Xã giao & Quà tặng"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "mhXJmF"
 msgstr "Đám cưới, đám tang, sinh nhật, quà tặng bạn bè, tụ tập, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "my1MLn"
 msgstr "Mua sắm"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "n6fmhq"
 msgstr "Giáo dục & Phát triển"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "oKluKH"
 msgstr "Doanh thu bán hàng, dịch vụ, làm việc tự do, hợp đồng ngắn hạn, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "oXnjbh"
 msgstr "Trả nợ"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "QRzRc0"
 msgstr "Quà tặng tiền mặt, hỗ trợ gia đình, tiền mừng, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "r3fFt1"
 msgstr "Sửa chữa bất ngờ, tiền phạt, mất mát, chi tiêu không xác định, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "rLxG+6"
 msgstr "Giải trí & Thư giãn"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "U5tQLZ"
 msgstr "Học phí, sách, khóa học online/offline, chứng chỉ, hội thảo, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "UsRS8G"
 msgstr "Quà tặng & Hỗ trợ"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "VCWKjW"
 msgstr "Nhà ở & Tiện ích"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "VoH7HP"
 msgstr "Chăm sóc cá nhân"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "X/LFZv"
 msgstr "Xăng xe, xe buýt/grab, bảo dưỡng xe, phí đỗ xe, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "yJZOmD"
 msgstr "Thanh toán khoản vay ngân hàng, thẻ tín dụng, nợ cá nhân, v.v."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "zJU6tX"
 msgstr "Khám bệnh, thuốc men, bảo hiểm y tế/nhân thọ, v.v."
 

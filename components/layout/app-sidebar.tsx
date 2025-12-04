@@ -27,7 +27,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenuButton
           size="lg"
-          tooltip={t("Personal and Family Finance Application")}
+          tooltip={t("Personal & Family Finance App")}
         >
           <Image
             src="/images/logo.png"

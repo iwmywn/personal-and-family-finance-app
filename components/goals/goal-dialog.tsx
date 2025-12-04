@@ -37,12 +37,10 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
 import { FormButton } from "@/components/custom/form-button"
-import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
@@ -76,7 +74,6 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
     },
   })
 
-  const { customCategories } = useAppData()
   const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
 
   const startDate = useWatch({
@@ -167,7 +164,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                       }}
                     >
                       {getCategoriesWithDetails("income").map((c) => (
-                        <SelectItem key={c.categoryKey} value={c.categoryKey}>
+                        <SelectItem key={c.key} value={c.key}>
                           <div className="flex flex-col">
                             <span className="font-medium">{c.label}</span>
                             <span className="text-muted-foreground wrap-anywhere">
@@ -176,24 +173,6 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                           </div>
                         </SelectItem>
                       ))}
-                      {customCategories.filter((c) => c.type === "income")
-                        .length > 0 && (
-                        <>
-                          <SelectSeparator />
-                          {customCategories
-                            .filter((c) => c.type === "income")
-                            .map((c) => (
-                              <SelectItem key={c._id} value={c.categoryKey}>
-                                <div className="flex flex-col">
-                                  <span className="font-medium">{c.label}</span>
-                                  <span className="text-muted-foreground wrap-anywhere">
-                                    {c.description}
-                                  </span>
-                                </div>
-                              </SelectItem>
-                            ))}
-                        </>
-                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

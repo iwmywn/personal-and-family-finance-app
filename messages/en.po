@@ -360,6 +360,7 @@ msgid "/WMCDd"
 msgstr "Something went wrong!"
 
 #: app\layout.tsx
+#: components\layout\app-sidebar.tsx
 msgid "hyu/OZ"
 msgstr "Personal & Family Finance App"
 
@@ -384,13 +385,13 @@ msgstr "CAPTCHA Verification"
 #: components\settings\change-name-dialog.tsx
 #: components\settings\change-password-dialog.tsx
 #: components\settings\change-username-dialog.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "5GmpFA"
 msgstr "Invalid data!"
 
 #: components\auth\signin-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "5sg7KC"
 msgstr "Password"
 
@@ -416,12 +417,12 @@ msgid "mXmfR7"
 msgstr "Invalid authentication code! Please try again later."
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "q5Xl0M"
 msgstr "Verify"
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Tjv3UC"
 msgstr "Verification Code"
 
@@ -512,13 +513,6 @@ msgstr "Select Date"
 #: components\goals\goal-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
-msgid "gjwFsT"
-msgstr "Select date"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
 msgid "IkXLzZ"
 msgstr "Select Category"
 
@@ -534,13 +528,6 @@ msgstr "Create a budget for a category to track your spending."
 #: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "QirE3M"
 msgstr "Start Date"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
-msgid "RUJYth"
-msgstr "Select category"
 
 #: components\budgets\budget-dialog.tsx
 #: components\budgets\budgets-table.tsx
@@ -1073,10 +1060,6 @@ msgstr "Monthly Income"
 msgid "ZLrViM"
 msgstr "Monthly Balance"
 
-#: components\layout\app-sidebar.tsx
-msgid "zmL+Bn"
-msgstr "Personal and Family Finance Application"
-
 #: components\layout\secondary-nav.tsx
 msgid "BHBJUz"
 msgstr "Are you sure you want to sign out?"
@@ -1144,11 +1127,6 @@ msgstr "Every X Days"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
-msgid "CrEhnK"
-msgstr "No end date"
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "D9n+q2"
 msgstr "Random"
 
@@ -1164,6 +1142,10 @@ msgstr "e.g. 15"
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "gKA6Xf"
 msgstr "Update recurring transaction information."
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+msgid "InWqys"
+msgstr "Optional"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -1220,6 +1202,10 @@ msgid "bhzq2y"
 msgstr "Start adding your recurring transactions."
 
 #: components\recurring-transactions\recurring-transactions-table.tsx
+msgid "CrEhnK"
+msgstr "No end date"
+
+#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "hZPPxy"
 msgstr "No recurring transactions found matching your filters."
 
@@ -1231,48 +1217,48 @@ msgstr "Every {days} days"
 msgid "xRs5e/"
 msgstr "No recurring transactions found"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "bLQmWN"
 msgstr "Unknown Location"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "DC/DQF"
 msgstr "Terminate All"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "fF376U"
 msgstr "Current"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "h/tqwp"
 msgstr "View Active Sessions"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "HuQudj"
 msgstr "Failed to terminate all sessions! Please try again later."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "i3aVwj"
 msgstr "All sessions terminated."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "M3ZAZv"
 msgstr "Failed to terminate session! Please try again later."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "oA2uW/"
 msgstr "Terminate"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "tNzaek"
 msgstr "Session terminated."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "V3ka34"
 msgstr "Active Sessions"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "xLvLBD"
 msgstr "Manage your active sessions."
@@ -1426,55 +1412,55 @@ msgstr "Toggle theme"
 msgid "tOdNiY"
 msgstr "Dark"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "02Huvd"
 msgstr "Failed to verify 2FA code! Please try again later."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "0onqf3"
 msgstr "Disable Two-Factor Authentication"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "6vQ8Z2"
 msgstr "Invalid password."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "BBb4xb"
 msgstr "Two-factor authentication is now disabled."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "deAXlH"
 msgstr "Enable Two-Factor Authentication"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "e7Db3T"
 msgstr "Disable 2FA"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "FSRmm9"
 msgstr "Two-factor authentication is now enabled."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "fUrrOz"
 msgstr "Enter your password to disable 2FA."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "JHBmG8"
 msgstr "Secret Key"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Lq08V/"
 msgstr "Failed to enable 2FA! Please try again later."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "VNORmj"
 msgstr "Scan the QR code with your authenticator app."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Y1o/zZ"
 msgstr "Failed to disable 2FA! Please try again later."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "ZhrNZz"
 msgstr "Enable 2FA"
 
@@ -1565,147 +1551,147 @@ msgstr "Search transactions..."
 msgid "PRC7nC"
 msgstr "Manage income and expenses to track your personal finances."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "/x7aOj"
 msgstr "Transportation"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "+PDYFb"
 msgstr "Savings & Investment"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "+vWFfX"
 msgstr "Refunds, selling used items, prizes, unexpected amounts, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "0zQ/kK"
 msgstr "Rent, electricity, water, gas, internet, phone, management fees, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "3M2DQp"
 msgstr "Other Income"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "4Vdjbv"
 msgstr "Groceries, markets, restaurants, cafes, breakfast/lunch/dinner, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "7MY/4L"
 msgstr "Salary & Bonus"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "ASzmVA"
 msgstr "Travel, movies, music, games, gym, hobbies, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "AURASB"
 msgstr "Family Support"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "AvfH/3"
 msgstr "Healthcare & Insurance"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "B2jc7q"
 msgstr "Business & Freelance"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "BNse/p"
 msgstr "Base salary, performance bonus, holiday bonus, allowances, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "dpjEgD"
 msgstr "Savings interest, dividends, bonds interest, rental, royalties, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "flIwoN"
 msgstr "Other Expenses"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "HowRY4"
 msgstr "Clothes, shoes, cosmetics, accessories, electronics, household items, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "igDrI+"
 msgstr "Investment & Passive Income"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "jyebiC"
 msgstr "Food & Beverage"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "KjBENf"
 msgstr "Haircut, manicure, spa, massage, hair dye, skincare, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "LCwChs"
 msgstr "Money for parents, support for siblings, relatives, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "lW1Dvw"
 msgstr "Savings, stocks, funds, real estate, crypto, emergency fund, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "Mhg8/5"
 msgstr "Social & Gifts"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "mhXJmF"
 msgstr "Weddings, funerals, birthdays, gifts for friends, gatherings, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "my1MLn"
 msgstr "Shopping"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "n6fmhq"
 msgstr "Education & Development"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "oKluKH"
 msgstr "Sales revenue, services, freelance, short-term contracts, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "oXnjbh"
 msgstr "Debt Payment"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "QRzRc0"
 msgstr "Cash gifts, family support, celebration money, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "r3fFt1"
 msgstr "Unexpected repairs, fines, losses, unidentified expenses, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "rLxG+6"
 msgstr "Entertainment & Leisure"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "U5tQLZ"
 msgstr "Tuition, books, online/offline courses, certificates, seminars, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "UsRS8G"
 msgstr "Gifts & Support"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "VCWKjW"
 msgstr "Housing & Utilities"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "VoH7HP"
 msgstr "Personal Care"
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "X/LFZv"
 msgstr "Fuel, bus/grab, vehicle maintenance, parking fees, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "yJZOmD"
 msgstr "Bank loan payments, credit cards, personal debts, etc."
 
-#: hooks\use-category.ts
+#: hooks\use-category-config.ts
 msgid "zJU6tX"
 msgstr "Medical visits, medicine, health/life insurance, etc."
 
