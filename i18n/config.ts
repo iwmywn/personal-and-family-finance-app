@@ -1,9 +1,9 @@
 import { enUS, vi } from "date-fns/locale"
 import type { Locale as DateFnsLocale } from "date-fns/locale"
 
-export type AppLocale = (typeof LOCALES)[number]
+export type AppLocale = (typeof _LOCALES)[number]
 
-export const LOCALES = ["vi", "en"] as const
+const _LOCALES = ["vi", "en"] as const
 export const DEFAULT_LOCALE: AppLocale = "vi"
 
 type LocaleConfigType = {
