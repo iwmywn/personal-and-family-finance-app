@@ -91,7 +91,7 @@ export function TransactionDialog({
     },
   })
 
-  const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
+  const { getCategoryLabel, getCategoriesByType } = useCategory()
 
   const selectedDate = useWatch({
     control: form.control,
@@ -166,7 +166,7 @@ export function TransactionDialog({
                 maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
               }}
             >
-              {getCategoriesWithDetails(type).map((c) => (
+              {getCategoriesByType(type).map((c) => (
                 <SelectItem key={c.key} value={c.key}>
                   <div className="flex flex-col">
                     <span className="font-medium">{c.label}</span>

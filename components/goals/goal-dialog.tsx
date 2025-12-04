@@ -74,7 +74,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
     },
   })
 
-  const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
+  const { getCategoryLabel, getCategoriesByType } = useCategory()
 
   const startDate = useWatch({
     control: form.control,
@@ -163,7 +163,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                         maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
                       }}
                     >
-                      {getCategoriesWithDetails("income").map((c) => (
+                      {getCategoriesByType("income").map((c) => (
                         <SelectItem key={c.key} value={c.key}>
                           <div className="flex flex-col">
                             <span className="font-medium">{c.label}</span>

@@ -132,16 +132,16 @@ export function useCategoryConfig() {
   }
 
   return [
-    ...Object.entries(CATEGORY_CONFIG).map(([key, value]) => ({
-      key,
-      ...value,
-    })),
-
     ...(customCategories?.map((c) => ({
       key: c.categoryKey,
       label: c.label,
       description: c.description,
       type: c.type,
     })) ?? []),
+
+    ...Object.entries(CATEGORY_CONFIG).map(([key, value]) => ({
+      key,
+      ...value,
+    })),
   ]
 }

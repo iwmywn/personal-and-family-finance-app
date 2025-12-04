@@ -17,7 +17,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectSeparator,
   SelectTrigger,
   SelectValue,
@@ -28,12 +27,11 @@ import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
-import { EXPENSE_CATEGORIES_KEY } from "@/lib/categories"
 import { filterBudgets } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
 export function BudgetFilters() {
-  const { budgets, transactions, customCategories } = useAppData()
+  const { budgets, transactions } = useAppData()
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [dateRange, setDateRange] = useState<{
     from: Date | undefined
@@ -53,7 +51,7 @@ export function BudgetFilters() {
   >("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useExtracted()
-  const { getCategoryLabel } = useCategory()
+  const { getCategoriesByType } = useCategory()
   const formatDate = useFormatDate()
 
   const allMonths = useMonths()
@@ -244,26 +242,13 @@ export function BudgetFilters() {
                 <SelectValue placeholder={t("Category")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="all">{t("All Categories")}</SelectItem>
-                  <SelectSeparator />
-                  <SelectLabel>{t("Expense")}</SelectLabel>
-                  {EXPENSE_CATEGORIES_KEY.map((categoryKey) => (
-                    <SelectItem key={categoryKey} value={categoryKey}>
-                      {getCategoryLabel(categoryKey)}
-                    </SelectItem>
-                  ))}
-                  {customCategories
-                    .filter((c) => c.type === "expense")
-                    .map((category) => (
-                      <SelectItem
-                        key={category._id}
-                        value={category.categoryKey}
-                      >
-                        {category.label}
-                      </SelectItem>
-                    ))}
-                </SelectGroup>
+                <SelectItem value="all">{t("All Categories")}</SelectItem>
+                <SelectSeparator />
+                {getCategoriesByType("expense").map((category) => (
+                  <SelectItem key={category.key} value={category.key}>
+                    {category.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
 

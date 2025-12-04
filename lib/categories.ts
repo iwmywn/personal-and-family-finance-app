@@ -1,7 +1,7 @@
 export const CATEGORY_TYPES = ["income", "expense"] as const
 export type CategoryType = (typeof CATEGORY_TYPES)[number]
 
-export const INCOME_CATEGORIES_KEY = [
+const INCOME_CATEGORIES_KEY = [
   "salary_bonus",
   "business_freelance",
   "investment_passive",
@@ -9,7 +9,7 @@ export const INCOME_CATEGORIES_KEY = [
   "other_income",
 ] as const
 
-export const EXPENSE_CATEGORIES_KEY = [
+const EXPENSE_CATEGORIES_KEY = [
   "food_beverage",
   "transportation",
   "personal_care",

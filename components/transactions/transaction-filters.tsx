@@ -34,7 +34,6 @@ import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
-import { EXPENSE_CATEGORIES_KEY, INCOME_CATEGORIES_KEY } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { filterTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
@@ -46,7 +45,7 @@ interface TransactionFiltersProps {
 export function TransactionFilters({
   onFilteredTransactionsChange,
 }: TransactionFiltersProps) {
-  const { transactions, customCategories } = useAppData()
+  const { transactions } = useAppData()
   const t = useExtracted()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
@@ -67,7 +66,7 @@ export function TransactionFilters({
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
   const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const formatDate = useFormatDate()
-  const { getCategoryLabel } = useCategory()
+  const { getCategoriesByType } = useCategory()
 
   const allMonths = useMonths()
   const allYears = getUniqueYears(transactions)
@@ -340,37 +339,18 @@ export function TransactionFilters({
                   <SelectItem value="all">{t("All Categories")}</SelectItem>
                   <SelectSeparator />
                   <SelectLabel>{t("Income")}</SelectLabel>
-                  {INCOME_CATEGORIES_KEY.map((categoryKey) => (
-                    <SelectItem key={categoryKey} value={categoryKey}>
-                      {getCategoryLabel(categoryKey)}
+                  {getCategoriesByType("income").map((category) => (
+                    <SelectItem key={category.key} value={category.key}>
+                      {category.label}
                     </SelectItem>
                   ))}
-                  {customCategories
-                    .filter((c) => c.type === "income")
-                    .map((category) => (
-                      <SelectItem
-                        key={category._id}
-                        value={category.categoryKey}
-                      >
-                        {category.label}
-                      </SelectItem>
-                    ))}
+                  <SelectSeparator />
                   <SelectLabel>{t("Expense")}</SelectLabel>
-                  {EXPENSE_CATEGORIES_KEY.map((categoryKey) => (
-                    <SelectItem key={categoryKey} value={categoryKey}>
-                      {getCategoryLabel(categoryKey)}
+                  {getCategoriesByType("expense").map((category) => (
+                    <SelectItem key={category.key} value={category.key}>
+                      {category.label}
                     </SelectItem>
                   ))}
-                  {customCategories
-                    .filter((c) => c.type === "expense")
-                    .map((category) => (
-                      <SelectItem
-                        key={category._id}
-                        value={category.categoryKey}
-                      >
-                        {category.label}
-                      </SelectItem>
-                    ))}
                 </SelectGroup>
               </SelectContent>
             </Select>

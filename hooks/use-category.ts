@@ -14,13 +14,13 @@ export function useCategory() {
     return categories.find((c) => c.key === key)?.description ?? ""
   }
 
-  const getCategoriesWithDetails = (type: CategoryType) => {
+  const getCategoriesByType = (type: CategoryType) => {
     return categories.filter((c) => c.type === type)
   }
 
   return {
     getCategoryLabel,
     getCategoryDescription,
-    getCategoriesWithDetails,
+    getCategoriesByType,
   }
 }

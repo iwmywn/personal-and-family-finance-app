@@ -101,7 +101,7 @@ export function RecurringTransactionDialog({
     },
   })
 
-  const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
+  const { getCategoryLabel, getCategoriesByType } = useCategory()
 
   const startDate = useWatch({
     control: form.control,
@@ -199,7 +199,7 @@ export function RecurringTransactionDialog({
                 maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
               }}
             >
-              {getCategoriesWithDetails(type).map((c) => (
+              {getCategoriesByType(type).map((c) => (
                 <SelectItem key={c.key} value={c.key}>
                   <div className="flex flex-col">
                     <span className="font-medium">{c.label}</span>
