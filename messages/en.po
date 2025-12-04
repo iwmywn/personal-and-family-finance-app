@@ -1551,147 +1551,147 @@ msgstr "Search transactions..."
 msgid "PRC7nC"
 msgstr "Manage income and expenses to track your personal finances."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "/x7aOj"
 msgstr "Transportation"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "+PDYFb"
 msgstr "Savings & Investment"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "+vWFfX"
 msgstr "Refunds, selling used items, prizes, unexpected amounts, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "0zQ/kK"
 msgstr "Rent, electricity, water, gas, internet, phone, management fees, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "3M2DQp"
 msgstr "Other Income"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "4Vdjbv"
 msgstr "Groceries, markets, restaurants, cafes, breakfast/lunch/dinner, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "7MY/4L"
 msgstr "Salary & Bonus"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "ASzmVA"
 msgstr "Travel, movies, music, games, gym, hobbies, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "AURASB"
 msgstr "Family Support"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "AvfH/3"
 msgstr "Healthcare & Insurance"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "B2jc7q"
 msgstr "Business & Freelance"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "BNse/p"
 msgstr "Base salary, performance bonus, holiday bonus, allowances, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "dpjEgD"
 msgstr "Savings interest, dividends, bonds interest, rental, royalties, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "flIwoN"
 msgstr "Other Expenses"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "HowRY4"
 msgstr "Clothes, shoes, cosmetics, accessories, electronics, household items, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "igDrI+"
 msgstr "Investment & Passive Income"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "jyebiC"
 msgstr "Food & Beverage"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "KjBENf"
 msgstr "Haircut, manicure, spa, massage, hair dye, skincare, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "LCwChs"
 msgstr "Money for parents, support for siblings, relatives, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "lW1Dvw"
 msgstr "Savings, stocks, funds, real estate, crypto, emergency fund, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "Mhg8/5"
 msgstr "Social & Gifts"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "mhXJmF"
 msgstr "Weddings, funerals, birthdays, gifts for friends, gatherings, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "my1MLn"
 msgstr "Shopping"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "n6fmhq"
 msgstr "Education & Development"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "oKluKH"
 msgstr "Sales revenue, services, freelance, short-term contracts, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "oXnjbh"
 msgstr "Debt Payment"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "QRzRc0"
 msgstr "Cash gifts, family support, celebration money, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "r3fFt1"
 msgstr "Unexpected repairs, fines, losses, unidentified expenses, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "rLxG+6"
 msgstr "Entertainment & Leisure"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "U5tQLZ"
 msgstr "Tuition, books, online/offline courses, certificates, seminars, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "UsRS8G"
 msgstr "Gifts & Support"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "VCWKjW"
 msgstr "Housing & Utilities"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "VoH7HP"
 msgstr "Personal Care"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "X/LFZv"
 msgstr "Fuel, bus/grab, vehicle maintenance, parking fees, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "yJZOmD"
 msgstr "Bank loan payments, credit cards, personal debts, etc."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "zJU6tX"
 msgstr "Medical visits, medicine, health/life insurance, etc."
 
@@ -1870,10 +1870,6 @@ msgstr "Please select a frequency."
 #: hooks\use-schemas.ts
 msgid "uDAfoc"
 msgstr "Category is required."
-
-#: hooks\use-schemas.ts
-msgid "w/77fi"
-msgstr "Please select a category."
 
 #: hooks\use-schemas.ts
 msgid "Y1VHB3"

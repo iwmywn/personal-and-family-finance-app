@@ -25,11 +25,11 @@ const EXPENSE_CATEGORIES_KEY = [
   "other_expense",
 ] as const
 
-export const ALL_CATEGORIES_KEY = [
+const _ALL_CATEGORIES_KEY = [
   ...INCOME_CATEGORIES_KEY,
   ...EXPENSE_CATEGORIES_KEY,
 ] as const
-type AllCategoriesKeyType = (typeof ALL_CATEGORIES_KEY)[number]
+type AllCategoriesKeyType = (typeof _ALL_CATEGORIES_KEY)[number]
 
 export type CategoryKeyType = AllCategoriesKeyType | string
 

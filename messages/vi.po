@@ -1551,147 +1551,147 @@ msgstr "Tìm kiếm giao dịch..."
 msgid "PRC7nC"
 msgstr "Quản lý thu nhập và chi tiêu để theo dõi tài chính cá nhân."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "/x7aOj"
 msgstr "Di chuyển"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "+PDYFb"
 msgstr "Tiết kiệm & Đầu tư"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "+vWFfX"
 msgstr "Hoàn tiền, bán đồ cũ, giải thưởng, các khoản bất ngờ, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "0zQ/kK"
 msgstr "Thuê nhà, điện, nước, gas, internet, điện thoại, phí quản lý, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "3M2DQp"
 msgstr "Thu nhập khác"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "4Vdjbv"
 msgstr "Tạp hóa, chợ, nhà hàng, quán cà phê, ăn sáng/trưa/tối, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "7MY/4L"
 msgstr "Lương & Thưởng"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "ASzmVA"
 msgstr "Du lịch, phim ảnh, âm nhạc, trò chơi, gym, sở thích, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "AURASB"
 msgstr "Hỗ trợ gia đình"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "AvfH/3"
 msgstr "Y tế & Bảo hiểm"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "B2jc7q"
 msgstr "Kinh doanh & Tự do"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "BNse/p"
 msgstr "Lương cơ bản, thưởng hiệu suất, thưởng lễ tết, phụ cấp, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "dpjEgD"
 msgstr "Lãi tiết kiệm, cổ tức, lãi trái phiếu, tiền thuê nhà, tiền bản quyền, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "flIwoN"
 msgstr "Chi tiêu khác"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "HowRY4"
 msgstr "Quần áo, giày dép, mỹ phẩm, phụ kiện, đồ điện tử, đồ gia dụng, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "igDrI+"
 msgstr "Đầu tư & Thu nhập thụ động"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "jyebiC"
 msgstr "Ăn uống"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "KjBENf"
 msgstr "Cắt tóc, làm móng, spa, massage, nhuộm tóc, chăm sóc da, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "LCwChs"
 msgstr "Tiền biếu bố mẹ, hỗ trợ anh chị em, họ hàng, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "lW1Dvw"
 msgstr "Tiết kiệm, cổ phiếu, quỹ, bất động sản, tiền điện tử, quỹ khẩn cấp, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "Mhg8/5"
 msgstr "Xã giao & Quà tặng"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "mhXJmF"
 msgstr "Đám cưới, đám tang, sinh nhật, quà tặng bạn bè, tụ tập, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "my1MLn"
 msgstr "Mua sắm"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "n6fmhq"
 msgstr "Giáo dục & Phát triển"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "oKluKH"
 msgstr "Doanh thu bán hàng, dịch vụ, làm việc tự do, hợp đồng ngắn hạn, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "oXnjbh"
 msgstr "Trả nợ"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "QRzRc0"
 msgstr "Quà tặng tiền mặt, hỗ trợ gia đình, tiền mừng, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "r3fFt1"
 msgstr "Sửa chữa bất ngờ, tiền phạt, mất mát, chi tiêu không xác định, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "rLxG+6"
 msgstr "Giải trí & Thư giãn"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "U5tQLZ"
 msgstr "Học phí, sách, khóa học online/offline, chứng chỉ, hội thảo, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "UsRS8G"
 msgstr "Quà tặng & Hỗ trợ"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "VCWKjW"
 msgstr "Nhà ở & Tiện ích"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "VoH7HP"
 msgstr "Chăm sóc cá nhân"
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "X/LFZv"
 msgstr "Xăng xe, xe buýt/grab, bảo dưỡng xe, phí đỗ xe, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "yJZOmD"
 msgstr "Thanh toán khoản vay ngân hàng, thẻ tín dụng, nợ cá nhân, v.v."
 
-#: hooks\use-category-config.ts
+#: hooks\use-category.ts
 msgid "zJU6tX"
 msgstr "Khám bệnh, thuốc men, bảo hiểm y tế/nhân thọ, v.v."
 
@@ -1870,10 +1870,6 @@ msgstr "Vui lòng chọn tần suất."
 #: hooks\use-schemas.ts
 msgid "uDAfoc"
 msgstr "Danh mục là bắt buộc."
-
-#: hooks\use-schemas.ts
-msgid "w/77fi"
-msgstr "Vui lòng chọn một danh mục."
 
 #: hooks\use-schemas.ts
 msgid "Y1VHB3"
