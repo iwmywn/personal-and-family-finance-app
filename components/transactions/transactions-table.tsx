@@ -208,7 +208,6 @@ export function TransactionsTable({
           <DeleteTransactionDialog
             key={selectedTransaction._id + "DeleteTransactionDialog"}
             transactionId={selectedTransaction._id}
-            transactionDescription={selectedTransaction.description}
             open={isDeleteOpen}
             setOpen={setIsDeleteOpen}
           />

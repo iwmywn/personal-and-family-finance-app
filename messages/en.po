@@ -859,12 +859,12 @@ msgid "UjTL+F"
 msgstr "All Types"
 
 #: components\categories\delete-category-dialog.tsx
-msgid "iSK5Jx"
-msgstr "Are you sure you want to delete the category \"{label}\"? This action cannot be undone."
-
-#: components\categories\delete-category-dialog.tsx
 msgid "JtR9Fg"
 msgstr "Delete Category"
+
+#: components\categories\delete-category-dialog.tsx
+msgid "qjLKlD"
+msgstr "Are you sure you want to delete this category? This action cannot be undone."
 
 #: components\goals\delete-goal-dialog.tsx
 msgid "EwRebq"
@@ -1494,12 +1494,12 @@ msgid "gsAs8V"
 msgstr "Transaction Count"
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "nPfy7y"
-msgstr "Delete Transaction"
+msgid "cj6kmp"
+msgstr "Are you sure you want to delete this transaction? This action cannot be undone."
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "vGedJ1"
-msgstr "Are you sure you want to delete the transaction \"{description}\"? This action cannot be undone."
+msgid "nPfy7y"
+msgstr "Delete Transaction"
 
 #: components\transactions\export-button.tsx
 msgid "0S1jq/"

@@ -859,12 +859,12 @@ msgid "UjTL+F"
 msgstr "Tất cả các loại"
 
 #: components\categories\delete-category-dialog.tsx
-msgid "iSK5Jx"
-msgstr "Bạn có chắc chắn muốn xóa danh mục \"{label}\" không? Hành động này không thể hoàn tác."
-
-#: components\categories\delete-category-dialog.tsx
 msgid "JtR9Fg"
 msgstr "Xóa danh mục"
+
+#: components\categories\delete-category-dialog.tsx
+msgid "qjLKlD"
+msgstr "Bạn có chắc chắn muốn xóa danh mục này không? Hành động này không thể hoàn tác."
 
 #: components\goals\delete-goal-dialog.tsx
 msgid "EwRebq"
@@ -1494,12 +1494,12 @@ msgid "gsAs8V"
 msgstr "Số lượng giao dịch"
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "nPfy7y"
-msgstr "Xóa giao dịch"
+msgid "cj6kmp"
+msgstr "Bạn có chắc chắn muốn xóa giao dịch này không? Hành động này không thể hoàn tác."
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "vGedJ1"
-msgstr "Bạn có chắc chắn muốn xóa giao dịch \"{description}\" không? Hành động này không thể hoàn tác."
+msgid "nPfy7y"
+msgstr "Xóa giao dịch"
 
 #: components\transactions\export-button.tsx
 msgid "0S1jq/"
