@@ -22,9 +22,9 @@ export function TransactionSummary() {
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions)
 
-  const summaryStats = calculateSummaryStats(currentMonthTransactions)
-
-  const { totalIncome, totalExpense, balance } = summaryStats
+  const { totalIncome, totalExpense, balance } = calculateSummaryStats(
+    currentMonthTransactions
+  )
 
   return (
     <div className="grid gap-4 md:grid-cols-3">
