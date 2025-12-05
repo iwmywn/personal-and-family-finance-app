@@ -67,8 +67,10 @@ describe("Categories", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
-      vi.mock("nanoid", () => ({
-        nanoid: () => "abcdef12",
+      vi.mock("crypto", () => ({
+        randomBytes: () => ({
+          toString: () => "abcdef12",
+        }),
       }))
 
       const result = await createCustomCategory({
@@ -108,7 +110,6 @@ describe("Categories", async () => {
         userId: mockUser._id,
       })
 
-      expect(addedCategory?.categoryKey).toMatch(/^custom_/)
       expect(addedCategory?.type).toBe("income")
       expect(addedCategory?.label).toBe("Salary")
       expect(addedCategory?.description).toBe("Monthly job income")
@@ -175,7 +176,7 @@ describe("Categories", async () => {
       await insertTestCategory({
         ...mockCustomCategory,
         _id: new ObjectId("68f795d4bdcc3c9a30717977"),
-        categoryKey: "custom_expense_abcdef34",
+        categoryKey: "abcdef34",
         label: "Different Label",
       })
       mockAuthenticatedUser()
@@ -200,7 +201,7 @@ describe("Categories", async () => {
           ...mockCustomCategory,
           _id: new ObjectId("68f795d4bdcc3c9a30717977"),
           userId: new ObjectId("690d2cdc200d6a719f9a438e"),
-          categoryKey: "custom_expense_abcdef34",
+          categoryKey: "abcdef34",
           type: "expense",
           label: "Updated Label",
         }),
@@ -251,7 +252,7 @@ describe("Categories", async () => {
           }),
         ])
 
-      expect(updatedCategory?.categoryKey).toBe("custom_expense_abcdef12")
+      expect(updatedCategory?.categoryKey).toBe("abcdef12")
       expect(updatedCategory?.type).toBe("expense")
       expect(updatedCategory?.label).toBe("Updated Label")
       expect(updatedCategory?.description).toBe("Updated description")
@@ -333,22 +334,22 @@ describe("Categories", async () => {
       const category1 = {
         ...mockCustomCategory,
         _id: new ObjectId("691ac8b98629369bb1da9214"),
-        categoryKey: "custom_expense_abcdef12",
+        categoryKey: "abcdef12",
       }
       const category2 = {
         ...mockCustomCategory,
         _id: new ObjectId("691ac8c4fb168bfba59615c8"),
-        categoryKey: "custom_expense_abcdef13",
+        categoryKey: "abcdef13",
       }
       const category3 = {
         ...mockCustomCategory,
         _id: new ObjectId("691ac8cd3cf60fa9f018a37c"),
-        categoryKey: "custom_expense_abcdef14",
+        categoryKey: "abcdef14",
       }
       const category4 = {
         ...mockCustomCategory,
         _id: new ObjectId("691da72dc1d54fad20174ab6"),
-        categoryKey: "custom_expense_abcdef15",
+        categoryKey: "abcdef15",
       }
 
       await Promise.all([
@@ -475,17 +476,17 @@ describe("Categories", async () => {
       const category1 = {
         ...mockCustomCategory,
         _id: new ObjectId("68f732914e63e5aa249cc173"),
-        categoryKey: "custom_expense_abcdef12",
+        categoryKey: "abcdef12",
       }
       const category2 = {
         ...mockCustomCategory,
         _id: new ObjectId("68f732914e63e5aa249cc174"),
-        categoryKey: "custom_expense_abcdef13",
+        categoryKey: "abcdef13",
       }
       const category3 = {
         ...mockCustomCategory,
         _id: new ObjectId("68f732914e63e5aa249cc175"),
-        categoryKey: "custom_expense_abcdef14",
+        categoryKey: "abcdef14",
       }
 
       await Promise.all([
