@@ -29,14 +29,19 @@ const _ALL_CATEGORIES_KEY = [
   ...INCOME_CATEGORIES_KEY,
   ...EXPENSE_CATEGORIES_KEY,
 ] as const
-type AllCategoriesKeyType = (typeof _ALL_CATEGORIES_KEY)[number]
+export type AllCategoriesKeyType = (typeof _ALL_CATEGORIES_KEY)[number]
 
 export type CategoryKeyType = AllCategoriesKeyType | string
 
-export type CategoryConfigType = {
+export type CategoryConfigBaseType = {
   [K in AllCategoriesKeyType]: {
     label: string
     description: string
-    type: CategoryType
   }
+}
+
+export function getCategoryType(key: AllCategoriesKeyType) {
+  return (INCOME_CATEGORIES_KEY as readonly string[]).includes(key)
+    ? "income"
+    : "expense"
 }
