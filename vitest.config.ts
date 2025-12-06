@@ -3,6 +3,7 @@ import { defineConfig, type UserWorkspaceConfig } from "vitest/config"
 
 const baseTestConfig = {
   globals: true,
+  environment: "node",
 }
 const baseResolveConfig = {
   alias: { "@": resolve(__dirname, "./") },
@@ -15,7 +16,6 @@ const projects: UserWorkspaceConfig[] = [
       name: "frontend",
       include: ["tests/frontend/**/*.test.ts"],
       setupFiles: ["./tests/frontend/setup.ts"],
-      environment: "jsdom",
     },
     resolve: {
       ...baseResolveConfig,
@@ -27,7 +27,6 @@ const projects: UserWorkspaceConfig[] = [
       name: "backend",
       include: ["tests/backend/**/*.test.ts"],
       setupFiles: ["./tests/backend/setup.ts"],
-      environment: "node",
       testTimeout: 120_000,
       hookTimeout: 300_000,
     },

@@ -141,7 +141,6 @@ export function filterBudgets(
   transactions: Transaction[]
 ): Budget[] {
   const {
-    dateRange = {},
     filterMonth = "all",
     filterYear = "all",
     filterCategoryKey = "all",
@@ -155,14 +154,6 @@ export function filterBudgets(
   let filteredBudgets = budgets.filter((budget) => {
     const budgetStartDateOnly = normalizeToUTCDate(new Date(budget.startDate))
     const budgetEndDateOnly = normalizeToUTCDate(new Date(budget.endDate))
-
-    const matchesDateRange =
-      (!dateRange.from ||
-        budgetEndDateOnly.getTime() >=
-          normalizeToUTCDate(dateRange.from).getTime()) &&
-      (!dateRange.to ||
-        budgetStartDateOnly.getTime() <=
-          normalizeToUTCDate(dateRange.to).getTime())
 
     const matchesMonth = !parsedMonth
       ? true
@@ -181,7 +172,7 @@ export function filterBudgets(
     const matchesCategory =
       filterCategoryKey === "all" || budget.categoryKey === filterCategoryKey
 
-    return matchesDateRange && matchesMonth && matchesYear && matchesCategory
+    return matchesMonth && matchesYear && matchesCategory
   })
 
   if (filterStatus !== "all" || filterProgress !== "all") {
@@ -227,7 +218,6 @@ export function filterGoals(
 ): Goal[] {
   const {
     searchTerm = "",
-    dateRange = {},
     filterMonth = "all",
     filterYear = "all",
     filterStatus = "all",
@@ -248,14 +238,6 @@ export function filterGoals(
 
     const matchesSearch = matchingIds ? matchingIds.has(goal._id) : true
 
-    const matchesDateRange =
-      (!dateRange.from ||
-        goalEndDateOnly.getTime() >=
-          normalizeToUTCDate(dateRange.from).getTime()) &&
-      (!dateRange.to ||
-        goalStartDateOnly.getTime() <=
-          normalizeToUTCDate(dateRange.to).getTime())
-
     const matchesMonth = !parsedMonth
       ? true
       : goalStartDateOnly.getMonth() + 1 === parsedMonth ||
@@ -273,13 +255,7 @@ export function filterGoals(
     const matchesCategory =
       filterCategoryKey === "all" || goal.categoryKey === filterCategoryKey
 
-    return (
-      matchesSearch &&
-      matchesDateRange &&
-      matchesMonth &&
-      matchesYear &&
-      matchesCategory
-    )
+    return matchesSearch && matchesMonth && matchesYear && matchesCategory
   })
 
   if (filterStatus !== "all" || filterProgress !== "all") {
@@ -316,7 +292,6 @@ export function filterRecurringTransactions(
 ): RecurringTransaction[] {
   const {
     searchTerm = "",
-    dateRange = {},
     filterMonth = "all",
     filterYear = "all",
     filterType = "all",
@@ -338,15 +313,6 @@ export function filterRecurringTransactions(
     const endDateOnly = recurring.endDate
       ? normalizeToUTCDate(new Date(recurring.endDate))
       : null
-
-    const matchesDateRange =
-      (!dateRange.from ||
-        (endDateOnly
-          ? endDateOnly.getTime() >=
-            normalizeToUTCDate(dateRange.from).getTime()
-          : true)) &&
-      (!dateRange.to ||
-        startDateOnly.getTime() <= normalizeToUTCDate(dateRange.to).getTime())
 
     const matchesMonth = !parsedMonth
       ? true
@@ -376,7 +342,6 @@ export function filterRecurringTransactions(
 
     return (
       matchesSearch &&
-      matchesDateRange &&
       matchesMonth &&
       matchesYear &&
       matchesType &&

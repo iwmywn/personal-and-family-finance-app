@@ -53,7 +53,7 @@ export function DeleteRecurringTransactionDialog({
           <AlertDialogTitle>
             {t("Delete Recurring Transaction")}
           </AlertDialogTitle>
-          <AlertDialogDescription className="wrap-anywhere">
+          <AlertDialogDescription>
             {t(
               "Are you sure you want to delete this recurring transaction? This action cannot be undone."
             )}

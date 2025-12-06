@@ -37,7 +37,7 @@ import {
   type TwoFactorPasswordFormValues,
 } from "@/schemas/types"
 
-export function TwoFactorManager() {
+export function TwoFactorManagerDialog() {
   const t = useExtracted()
   const { user } = useAppData()
   const [open, setOpen] = useState<boolean>(false)

@@ -1,8 +1,8 @@
 "use server"
 
+import { randomBytes } from "crypto"
 import { cacheTag, updateTag } from "next/cache"
 import { ObjectId } from "mongodb"
-import { nanoid } from "nanoid"
 import { getExtracted } from "next-intl/server"
 
 import {
@@ -43,8 +43,7 @@ export async function createCustomCategory(values: CategoryFormValues) {
       return { error: t("This category already exists!") }
     }
 
-    const shortId = nanoid(8)
-    const categoryKey = `custom_${values.type}_${shortId}`
+    const categoryKey = randomBytes(4).toString("hex")
 
     const duplicateCategoryKey = await categoriesCollection.findOne({
       categoryKey,

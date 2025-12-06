@@ -51,7 +51,7 @@ export function DeleteBudgetDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("Delete Budget")}</AlertDialogTitle>
-          <AlertDialogDescription className="wrap-anywhere">
+          <AlertDialogDescription>
             {t(
               "Are you sure you want to delete this budget? This action cannot be undone."
             )}

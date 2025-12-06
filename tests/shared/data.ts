@@ -42,7 +42,7 @@ export const mockTransaction: DBTransaction = {
 export const mockCustomCategory: DBCategory = {
   _id: new ObjectId("68f732914e63e5aa249cc173"),
   userId: mockUser._id,
-  categoryKey: "custom_expense_abcdef12",
+  categoryKey: "abcdef12",
   type: "expense" as "income" | "expense",
   label: "Entertainment",
   description: "Movies and games",
@@ -204,7 +204,7 @@ export const mockCustomCategories: Category[] = [
   {
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "custom_work",
+    categoryKey: "abcdef12",
     type: "income",
     label: "Freelance Work",
     description: "Custom freelance category",
@@ -212,7 +212,7 @@ export const mockCustomCategories: Category[] = [
   {
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "custom_food",
+    categoryKey: "abcdef13",
     type: "expense",
     label: "Restaurant",
     description: "Custom food category",
@@ -220,7 +220,7 @@ export const mockCustomCategories: Category[] = [
   {
     _id: "3",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "custom_transport",
+    categoryKey: "abcdef14",
     type: "expense",
     label: "Taxi",
     description: "Custom transport category",

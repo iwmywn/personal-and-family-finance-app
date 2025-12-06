@@ -29,7 +29,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { useAppData } from "@/context/app-data-context"
 import { client } from "@/lib/auth-client"
 
-export function ActiveSessions() {
+export function ActiveSessionsDialog() {
   const t = useExtracted()
   const router = useRouter()
   const { activeSessions, currentSession } = useAppData()

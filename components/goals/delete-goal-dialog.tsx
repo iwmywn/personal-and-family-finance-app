@@ -51,7 +51,7 @@ export function DeleteGoalDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("Delete Goal")}</AlertDialogTitle>
-          <AlertDialogDescription className="wrap-anywhere">
+          <AlertDialogDescription>
             {t(
               "Are you sure you want to delete this goal? This action cannot be undone."
             )}
