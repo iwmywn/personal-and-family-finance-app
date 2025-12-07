@@ -51,8 +51,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FormButton } from "@/components/custom/form-button"
-import { FormLink } from "@/components/custom/form-link"
+import { FormButton } from "@/components/form-button"
+import { FormLink } from "@/components/form-link"
 import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"

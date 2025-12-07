@@ -36,7 +36,7 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FormButton } from "@/components/custom/form-button"
+import { FormButton } from "@/components/form-button"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/categories"
 import type { Category } from "@/lib/definitions"

@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes"
 
-import { Particles } from "@/components/ui/particles"
+import { Particles } from "@/components/particles"
 import { useMounted } from "@/hooks/use-mounted"
 
 export default function AuthLayout({

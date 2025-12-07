@@ -26,8 +26,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { FormButton } from "@/components/custom/form-button"
-import { PasswordInput } from "@/components/custom/password-input"
+import { FormButton } from "@/components/form-button"
+import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
 import { type PasswordFormValues } from "@/schemas/types"

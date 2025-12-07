@@ -27,7 +27,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { FormButton } from "@/components/custom/form-button"
+import { FormButton } from "@/components/form-button"
 import { useAppData } from "@/context/app-data-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
