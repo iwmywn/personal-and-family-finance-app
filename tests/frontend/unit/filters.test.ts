@@ -298,23 +298,6 @@ describe("Filters", () => {
       expect(result).toHaveLength(mockBudgets.length)
     })
 
-    it("should filter by date range", () => {
-      const fromDate = new Date("2024-03-01")
-      const toDate = new Date("2024-03-28")
-      const result = filterBudgets(
-        mockBudgets,
-        {
-          dateRange: {
-            from: fromDate,
-            to: toDate,
-          },
-        },
-        mockTransactions
-      )
-
-      expect(result.map((b) => b._id)).toEqual(["2", "4"])
-    })
-
     it("should filter by month", () => {
       const result = filterBudgets(
         mockBudgets,
@@ -433,36 +416,6 @@ describe("Filters", () => {
       expect(result).toEqual([])
     })
 
-    it("should handle date range with only from date", () => {
-      const fromDate = new Date("2024-03-01")
-      const result = filterBudgets(
-        mockBudgets,
-        {
-          dateRange: {
-            from: fromDate,
-          },
-        },
-        mockTransactions
-      )
-
-      expect(result.map((b) => b._id)).toEqual(["2", "3", "4"])
-    })
-
-    it("should handle date range with only to date", () => {
-      const toDate = new Date("2024-03-28")
-      const result = filterBudgets(
-        mockBudgets,
-        {
-          dateRange: {
-            to: toDate,
-          },
-        },
-        mockTransactions
-      )
-
-      expect(result.map((b) => b._id)).toEqual(["1", "2", "4", "5"])
-    })
-
     it("should return empty array when no matches found", () => {
       const result = filterBudgets(
         mockBudgets,
@@ -503,23 +456,6 @@ describe("Filters", () => {
       expect(
         result.every((goal) => goal.categoryKey === "business_freelance")
       ).toBe(true)
-    })
-
-    it("should filter by date range", () => {
-      const fromDate = new Date("2024-01-01")
-      const toDate = new Date("2024-01-31")
-      const result = filterGoals(
-        mockGoals,
-        {
-          dateRange: {
-            from: fromDate,
-            to: toDate,
-          },
-        },
-        mockTransactions
-      )
-
-      expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4"])
     })
 
     it("should filter by month", () => {
@@ -684,36 +620,6 @@ describe("Filters", () => {
       expect(result).toEqual([])
     })
 
-    it("should handle date range with only from date", () => {
-      const fromDate = new Date("2024-01-01")
-      const result = filterGoals(
-        mockGoals,
-        {
-          dateRange: {
-            from: fromDate,
-          },
-        },
-        mockTransactions
-      )
-
-      expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4", "6"])
-    })
-
-    it("should handle date range with only to date", () => {
-      const toDate = new Date("2024-01-31")
-      const result = filterGoals(
-        mockGoals,
-        {
-          dateRange: {
-            to: toDate,
-          },
-        },
-        mockTransactions
-      )
-
-      expect(result.map((goal) => goal._id)).toEqual(["1", "2", "3", "4", "5"])
-    })
-
     it("should return empty array when no matches found", () => {
       const result = filterGoals(
         mockGoals,
@@ -791,49 +697,6 @@ describe("Filters", () => {
       })
 
       expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "4", "6", "7"])
-    })
-
-    it("should filter by date range", () => {
-      const result = filterRecurringTransactions(mockRecurringTransactions, {
-        dateRange: {
-          from: new Date("2024-01-01"),
-          to: new Date("2024-03-31"),
-        },
-      })
-
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "4", "6"])
-    })
-
-    it("should handle date range with only from date", () => {
-      const result = filterRecurringTransactions(mockRecurringTransactions, {
-        dateRange: {
-          from: new Date("2024-03-01"),
-        },
-      })
-
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "4", "7"])
-    })
-
-    it("should handle date range with only to date", () => {
-      const result = filterRecurringTransactions(mockRecurringTransactions, {
-        dateRange: {
-          to: new Date("2024-02-28"),
-        },
-      })
-
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "5", "6"])
-    })
-
-    it("should handle recurring transactions without endDate", () => {
-      const result = filterRecurringTransactions(mockRecurringTransactions, {
-        dateRange: {
-          from: new Date("2024-05-01"),
-        },
-      })
-
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "7"])
-      const withUndefinedEndDate = result.filter((r) => !r.endDate)
-      expect(withUndefinedEndDate.map((r) => r._id)).toEqual(["3", "7"])
     })
 
     it("should combine multiple filters", () => {

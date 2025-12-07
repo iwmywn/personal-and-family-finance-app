@@ -19,14 +19,12 @@ import { Spinner } from "@/components/ui/spinner"
 
 interface DeleteTransactionDialogProps {
   transactionId: string
-  transactionDescription: string
   open: boolean
   setOpen: (open: boolean) => void
 }
 
 export function DeleteTransactionDialog({
   transactionId,
-  transactionDescription,
   open,
   setOpen,
 }: DeleteTransactionDialogProps) {
@@ -53,12 +51,9 @@ export function DeleteTransactionDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("Delete Transaction")}</AlertDialogTitle>
-          <AlertDialogDescription className="wrap-anywhere">
+          <AlertDialogDescription>
             {t(
-              'Are you sure you want to delete the transaction "{description}"? This action cannot be undone.',
-              {
-                description: transactionDescription,
-              }
+              "Are you sure you want to delete this transaction? This action cannot be undone."
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>

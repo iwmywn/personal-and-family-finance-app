@@ -360,6 +360,7 @@ msgid "/WMCDd"
 msgstr "Đã xảy ra lỗi!"
 
 #: app\layout.tsx
+#: components\layout\app-sidebar.tsx
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
 
@@ -384,13 +385,13 @@ msgstr "Xác minh CAPTCHA"
 #: components\settings\change-name-dialog.tsx
 #: components\settings\change-password-dialog.tsx
 #: components\settings\change-username-dialog.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "5GmpFA"
 msgstr "Dữ liệu không hợp lệ!"
 
 #: components\auth\signin-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "5sg7KC"
 msgstr "Mật khẩu"
 
@@ -416,12 +417,12 @@ msgid "mXmfR7"
 msgstr "Mã xác thực không hợp lệ! Vui lòng thử lại sau."
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "q5Xl0M"
 msgstr "Xác minh"
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Tjv3UC"
 msgstr "Mã xác minh"
 
@@ -512,13 +513,6 @@ msgstr "Chọn ngày"
 #: components\goals\goal-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
-msgid "gjwFsT"
-msgstr "Chọn ngày"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
 msgid "IkXLzZ"
 msgstr "Chọn danh mục"
 
@@ -534,13 +528,6 @@ msgstr "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của b
 #: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "QirE3M"
 msgstr "Ngày bắt đầu"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
-msgid "RUJYth"
-msgstr "Chọn danh mục"
 
 #: components\budgets\budget-dialog.tsx
 #: components\budgets\budgets-table.tsx
@@ -872,12 +859,12 @@ msgid "UjTL+F"
 msgstr "Tất cả các loại"
 
 #: components\categories\delete-category-dialog.tsx
-msgid "iSK5Jx"
-msgstr "Bạn có chắc chắn muốn xóa danh mục \"{label}\" không? Hành động này không thể hoàn tác."
-
-#: components\categories\delete-category-dialog.tsx
 msgid "JtR9Fg"
 msgstr "Xóa danh mục"
+
+#: components\categories\delete-category-dialog.tsx
+msgid "qjLKlD"
+msgstr "Bạn có chắc chắn muốn xóa danh mục này không? Hành động này không thể hoàn tác."
 
 #: components\goals\delete-goal-dialog.tsx
 msgid "EwRebq"
@@ -1073,10 +1060,6 @@ msgstr "Thu nhập hàng tháng"
 msgid "ZLrViM"
 msgstr "Số dư hàng tháng"
 
-#: components\layout\app-sidebar.tsx
-msgid "zmL+Bn"
-msgstr "Ứng dụng Tài chính Cá nhân và Gia đình"
-
 #: components\layout\secondary-nav.tsx
 msgid "BHBJUz"
 msgstr "Bạn có chắc chắn muốn đăng xuất không?"
@@ -1144,11 +1127,6 @@ msgstr "Mỗi X ngày"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
-msgid "CrEhnK"
-msgstr "Không có ngày kết thúc"
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "D9n+q2"
 msgstr "Ngẫu nhiên"
 
@@ -1164,6 +1142,10 @@ msgstr "ví dụ: 15"
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "gKA6Xf"
 msgstr "Cập nhật thông tin giao dịch định kỳ."
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+msgid "InWqys"
+msgstr "Không bắt buộc"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -1220,6 +1202,10 @@ msgid "bhzq2y"
 msgstr "Bắt đầu thêm các giao dịch định kỳ của bạn."
 
 #: components\recurring-transactions\recurring-transactions-table.tsx
+msgid "CrEhnK"
+msgstr "Không có ngày kết thúc"
+
+#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "hZPPxy"
 msgstr "Không tìm thấy giao dịch định kỳ phù hợp với bộ lọc của bạn."
 
@@ -1231,48 +1217,48 @@ msgstr "Mỗi {days} ngày"
 msgid "xRs5e/"
 msgstr "Không tìm thấy giao dịch định kỳ"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "bLQmWN"
 msgstr "Vị trí không xác định"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "DC/DQF"
 msgstr "Chấm dứt tất cả"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "fF376U"
 msgstr "Hiện tại"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "h/tqwp"
 msgstr "Xem các phiên đang hoạt động"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "HuQudj"
 msgstr "Chấm dứt tất cả các phiên thất bại! Vui lòng thử lại sau."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "i3aVwj"
 msgstr "Tất cả các phiên đã bị chấm dứt."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "M3ZAZv"
 msgstr "Chấm dứt phiên thất bại! Vui lòng thử lại sau."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "oA2uW/"
 msgstr "Chấm dứt"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "tNzaek"
 msgstr "Phiên đã bị chấm dứt."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "V3ka34"
 msgstr "Các phiên đang hoạt động"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "xLvLBD"
 msgstr "Quản lý các phiên đang hoạt động của bạn."
@@ -1426,55 +1412,55 @@ msgstr "Chuyển đổi chủ đề"
 msgid "tOdNiY"
 msgstr "Tối"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "02Huvd"
 msgstr "Xác minh mã 2FA thất bại! Vui lòng thử lại sau."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "0onqf3"
 msgstr "Tắt xác thực hai yếu tố"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "6vQ8Z2"
 msgstr "Mật khẩu không hợp lệ."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "BBb4xb"
 msgstr "Xác thực hai yếu tố đã được tắt."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "deAXlH"
 msgstr "Bật xác thực hai yếu tố"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "e7Db3T"
 msgstr "Tắt 2FA"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "FSRmm9"
 msgstr "Xác thực hai yếu tố đã được bật."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "fUrrOz"
 msgstr "Nhập mật khẩu của bạn để tắt 2FA."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "JHBmG8"
 msgstr "Khóa bí mật"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Lq08V/"
 msgstr "Bật 2FA thất bại! Vui lòng thử lại sau."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "VNORmj"
 msgstr "Quét mã QR bằng ứng dụng xác thực của bạn."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Y1o/zZ"
 msgstr "Tắt 2FA thất bại! Vui lòng thử lại sau."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "ZhrNZz"
 msgstr "Bật 2FA"
 
@@ -1508,12 +1494,12 @@ msgid "gsAs8V"
 msgstr "Số lượng giao dịch"
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "nPfy7y"
-msgstr "Xóa giao dịch"
+msgid "cj6kmp"
+msgstr "Bạn có chắc chắn muốn xóa giao dịch này không? Hành động này không thể hoàn tác."
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "vGedJ1"
-msgstr "Bạn có chắc chắn muốn xóa giao dịch \"{description}\" không? Hành động này không thể hoàn tác."
+msgid "nPfy7y"
+msgstr "Xóa giao dịch"
 
 #: components\transactions\export-button.tsx
 msgid "0S1jq/"
@@ -1884,10 +1870,6 @@ msgstr "Vui lòng chọn tần suất."
 #: hooks\use-schemas.ts
 msgid "uDAfoc"
 msgstr "Danh mục là bắt buộc."
-
-#: hooks\use-schemas.ts
-msgid "w/77fi"
-msgstr "Vui lòng chọn một danh mục."
 
 #: hooks\use-schemas.ts
 msgid "Y1VHB3"

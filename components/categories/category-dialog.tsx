@@ -36,8 +36,9 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FormButton } from "@/components/custom/form-button"
+import { FormButton } from "@/components/form-button"
 import { useSchemas } from "@/hooks/use-schemas"
+import type { CategoryType } from "@/lib/categories"
 import type { Category } from "@/lib/definitions"
 import type { CategoryFormValues } from "@/schemas/types"
 
@@ -52,9 +53,7 @@ export function CategoryDialog({
   open,
   setOpen,
 }: CategoryDialogProps) {
-  const [categoryType, setCategoryType] = useState<"income" | "expense">(
-    category?.type || "income"
-  )
+  const [type, setType] = useState<CategoryType>(category?.type || "income")
   const t = useExtracted()
   const { createCategorySchema } = useSchemas()
 
@@ -95,20 +94,18 @@ export function CategoryDialog({
       } else {
         toast.success(success)
         form.reset({
-          type: "income",
+          type: type,
           label: "",
           description: "",
         })
-        setCategoryType("income")
         setOpen(false)
       }
     }
   }
 
-  const handleTypeChange = (type: string) => {
-    const categoryType = type as "income" | "expense"
-    setCategoryType(categoryType)
-    form.setValue("type", categoryType)
+  const handleTypeChange = (type: CategoryType) => {
+    setType(type)
+    form.setValue("type", type)
   }
 
   return (
@@ -127,7 +124,10 @@ export function CategoryDialog({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <Tabs value={categoryType} onValueChange={handleTypeChange}>
+            <Tabs
+              value={type}
+              onValueChange={(value) => handleTypeChange(value as CategoryType)}
+            >
               <TabsList className="w-full">
                 <TabsTrigger value="income">{t("Income")}</TabsTrigger>
                 <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>

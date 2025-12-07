@@ -360,6 +360,7 @@ msgid "/WMCDd"
 msgstr "Something went wrong!"
 
 #: app\layout.tsx
+#: components\layout\app-sidebar.tsx
 msgid "hyu/OZ"
 msgstr "Personal & Family Finance App"
 
@@ -384,13 +385,13 @@ msgstr "CAPTCHA Verification"
 #: components\settings\change-name-dialog.tsx
 #: components\settings\change-password-dialog.tsx
 #: components\settings\change-username-dialog.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "5GmpFA"
 msgstr "Invalid data!"
 
 #: components\auth\signin-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "5sg7KC"
 msgstr "Password"
 
@@ -416,12 +417,12 @@ msgid "mXmfR7"
 msgstr "Invalid authentication code! Please try again later."
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "q5Xl0M"
 msgstr "Verify"
 
 #: components\auth\two-factor-form.tsx
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Tjv3UC"
 msgstr "Verification Code"
 
@@ -512,13 +513,6 @@ msgstr "Select Date"
 #: components\goals\goal-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
-msgid "gjwFsT"
-msgstr "Select date"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
 msgid "IkXLzZ"
 msgstr "Select Category"
 
@@ -534,13 +528,6 @@ msgstr "Create a budget for a category to track your spending."
 #: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "QirE3M"
 msgstr "Start Date"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
-msgid "RUJYth"
-msgstr "Select category"
 
 #: components\budgets\budget-dialog.tsx
 #: components\budgets\budgets-table.tsx
@@ -872,12 +859,12 @@ msgid "UjTL+F"
 msgstr "All Types"
 
 #: components\categories\delete-category-dialog.tsx
-msgid "iSK5Jx"
-msgstr "Are you sure you want to delete the category \"{label}\"? This action cannot be undone."
-
-#: components\categories\delete-category-dialog.tsx
 msgid "JtR9Fg"
 msgstr "Delete Category"
+
+#: components\categories\delete-category-dialog.tsx
+msgid "qjLKlD"
+msgstr "Are you sure you want to delete this category? This action cannot be undone."
 
 #: components\goals\delete-goal-dialog.tsx
 msgid "EwRebq"
@@ -1073,10 +1060,6 @@ msgstr "Monthly Income"
 msgid "ZLrViM"
 msgstr "Monthly Balance"
 
-#: components\layout\app-sidebar.tsx
-msgid "zmL+Bn"
-msgstr "Personal and Family Finance Application"
-
 #: components\layout\secondary-nav.tsx
 msgid "BHBJUz"
 msgstr "Are you sure you want to sign out?"
@@ -1144,11 +1127,6 @@ msgstr "Every X Days"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
-msgid "CrEhnK"
-msgstr "No end date"
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "D9n+q2"
 msgstr "Random"
 
@@ -1164,6 +1142,10 @@ msgstr "e.g. 15"
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "gKA6Xf"
 msgstr "Update recurring transaction information."
+
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+msgid "InWqys"
+msgstr "Optional"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
@@ -1220,6 +1202,10 @@ msgid "bhzq2y"
 msgstr "Start adding your recurring transactions."
 
 #: components\recurring-transactions\recurring-transactions-table.tsx
+msgid "CrEhnK"
+msgstr "No end date"
+
+#: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "hZPPxy"
 msgstr "No recurring transactions found matching your filters."
 
@@ -1231,48 +1217,48 @@ msgstr "Every {days} days"
 msgid "xRs5e/"
 msgstr "No recurring transactions found"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "bLQmWN"
 msgstr "Unknown Location"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "DC/DQF"
 msgstr "Terminate All"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "fF376U"
 msgstr "Current"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "h/tqwp"
 msgstr "View Active Sessions"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "HuQudj"
 msgstr "Failed to terminate all sessions! Please try again later."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "i3aVwj"
 msgstr "All sessions terminated."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "M3ZAZv"
 msgstr "Failed to terminate session! Please try again later."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "oA2uW/"
 msgstr "Terminate"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 msgid "tNzaek"
 msgstr "Session terminated."
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "V3ka34"
 msgstr "Active Sessions"
 
-#: components\settings\active-sessions.tsx
+#: components\settings\active-sessions-dialog.tsx
 #: components\settings\settings-page.tsx
 msgid "xLvLBD"
 msgstr "Manage your active sessions."
@@ -1426,55 +1412,55 @@ msgstr "Toggle theme"
 msgid "tOdNiY"
 msgstr "Dark"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "02Huvd"
 msgstr "Failed to verify 2FA code! Please try again later."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "0onqf3"
 msgstr "Disable Two-Factor Authentication"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "6vQ8Z2"
 msgstr "Invalid password."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "BBb4xb"
 msgstr "Two-factor authentication is now disabled."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "deAXlH"
 msgstr "Enable Two-Factor Authentication"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "e7Db3T"
 msgstr "Disable 2FA"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "FSRmm9"
 msgstr "Two-factor authentication is now enabled."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "fUrrOz"
 msgstr "Enter your password to disable 2FA."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "JHBmG8"
 msgstr "Secret Key"
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Lq08V/"
 msgstr "Failed to enable 2FA! Please try again later."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "VNORmj"
 msgstr "Scan the QR code with your authenticator app."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "Y1o/zZ"
 msgstr "Failed to disable 2FA! Please try again later."
 
-#: components\settings\two-factor-manager.tsx
+#: components\settings\two-factor-manager-dialog.tsx
 msgid "ZhrNZz"
 msgstr "Enable 2FA"
 
@@ -1508,12 +1494,12 @@ msgid "gsAs8V"
 msgstr "Transaction Count"
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "nPfy7y"
-msgstr "Delete Transaction"
+msgid "cj6kmp"
+msgstr "Are you sure you want to delete this transaction? This action cannot be undone."
 
 #: components\transactions\delete-transaction-dialog.tsx
-msgid "vGedJ1"
-msgstr "Are you sure you want to delete the transaction \"{description}\"? This action cannot be undone."
+msgid "nPfy7y"
+msgstr "Delete Transaction"
 
 #: components\transactions\export-button.tsx
 msgid "0S1jq/"
@@ -1884,10 +1870,6 @@ msgstr "Please select a frequency."
 #: hooks\use-schemas.ts
 msgid "uDAfoc"
 msgstr "Category is required."
-
-#: hooks\use-schemas.ts
-msgid "w/77fi"
-msgstr "Please select a category."
 
 #: hooks\use-schemas.ts
 msgid "Y1VHB3"

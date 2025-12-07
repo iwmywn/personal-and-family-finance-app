@@ -1,5 +1,4 @@
 import { clsx, type ClassValue } from "clsx"
-import { format } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
 import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
@@ -17,9 +16,14 @@ export function formatCurrency(amount: number) {
 }
 
 export function formatDate(date: Date, locale: AppLocale) {
-  return format(date, LOCALE_CONFIG[locale].formatStr, {
-    locale: LOCALE_CONFIG[locale].dateFnsLocale,
-  })
+  const config = LOCALE_CONFIG[locale]
+
+  return new Intl.DateTimeFormat(config.intlLocale, {
+    weekday: "short",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(date)
 }
 
 export function normalizeToUTCDate(date: Date) {

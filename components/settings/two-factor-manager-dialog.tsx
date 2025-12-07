@@ -27,8 +27,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { FormButton } from "@/components/custom/form-button"
-import { PasswordInput } from "@/components/custom/password-input"
+import { FormButton } from "@/components/form-button"
+import { PasswordInput } from "@/components/password-input"
 import { useAppData } from "@/context/app-data-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
@@ -37,7 +37,7 @@ import {
   type TwoFactorPasswordFormValues,
 } from "@/schemas/types"
 
-export function TwoFactorManager() {
+export function TwoFactorManagerDialog() {
   const t = useExtracted()
   const { user } = useAppData()
   const [open, setOpen] = useState<boolean>(false)

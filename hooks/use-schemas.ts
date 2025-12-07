@@ -3,7 +3,7 @@
 import { useExtracted } from "next-intl"
 import { z } from "zod"
 
-import { ALL_CATEGORIES_KEY, TRANSACTION_TYPES } from "@/lib/categories"
+import { CATEGORY_TYPES } from "@/lib/categories"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 export function useSchemas() {
@@ -88,18 +88,10 @@ export function useSchemas() {
 
   const createTransactionSchema = () =>
     z.object({
-      type: z.enum(TRANSACTION_TYPES, {
+      type: z.enum(CATEGORY_TYPES, {
         message: t("Please select a transaction type."),
       }),
-      categoryKey: z
-        .string()
-        .min(1, { message: t("Category is required.") })
-        .refine(
-          (val) =>
-            (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
-            val.startsWith("custom_"),
-          { message: t("Please select a category.") }
-        ),
+      categoryKey: z.string().min(1, { message: t("Category is required.") }),
       amount: z
         .number()
         .min(0.01, {
@@ -124,7 +116,7 @@ export function useSchemas() {
   const createCategorySchema = () =>
     z.object({
       categoryKey: z.string().optional(),
-      type: z.enum(TRANSACTION_TYPES, {
+      type: z.enum(CATEGORY_TYPES, {
         message: t("Please select a type."),
       }),
       label: z
@@ -144,15 +136,7 @@ export function useSchemas() {
   const createBudgetSchema = () =>
     z
       .object({
-        categoryKey: z
-          .string()
-          .min(1, { message: t("Category is required.") })
-          .refine(
-            (val) =>
-              (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
-              val.startsWith("custom_"),
-            { message: t("Please select a category.") }
-          ),
+        categoryKey: z.string().min(1, { message: t("Category is required.") }),
         allocatedAmount: z
           .number()
           .min(0.01, {
@@ -187,15 +171,7 @@ export function useSchemas() {
           .max(100, {
             message: t("Goal name must be at most 100 characters."),
           }),
-        categoryKey: z
-          .string()
-          .min(1, { message: t("Category is required.") })
-          .refine(
-            (val) =>
-              (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
-              val.startsWith("custom_"),
-            { message: t("Please select a category.") }
-          ),
+        categoryKey: z.string().min(1, { message: t("Category is required.") }),
         targetAmount: z
           .number()
           .min(0.01, {
@@ -224,18 +200,10 @@ export function useSchemas() {
   const createRecurringTransactionSchema = () =>
     z
       .object({
-        type: z.enum(TRANSACTION_TYPES, {
+        type: z.enum(CATEGORY_TYPES, {
           message: t("Please select a type."),
         }),
-        categoryKey: z
-          .string()
-          .min(1, { message: t("Category is required.") })
-          .refine(
-            (val) =>
-              (ALL_CATEGORIES_KEY as readonly string[]).includes(val) ||
-              val.startsWith("custom_"),
-            { message: t("Please select a category.") }
-          ),
+        categoryKey: z.string().min(1, { message: t("Category is required.") }),
         amount: z
           .number()
           .min(0.01, {

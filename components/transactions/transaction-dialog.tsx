@@ -47,18 +47,17 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FormButton } from "@/components/custom/form-button"
-import { FormLink } from "@/components/custom/form-link"
-import { useAppData } from "@/context/app-data-context"
+import { FormButton } from "@/components/form-button"
+import { FormLink } from "@/components/form-link"
 import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
+import type { CategoryType } from "@/lib/categories"
 import type { Transaction } from "@/lib/definitions"
 import { cn, normalizeToUTCDate } from "@/lib/utils"
 import type { TransactionFormValues } from "@/schemas/types"
@@ -74,9 +73,7 @@ export function TransactionDialog({
   open,
   setOpen,
 }: TransactionDialogProps) {
-  const [transactionType, setTransactionType] = useState<"income" | "expense">(
-    transaction?.type || "income"
-  )
+  const [type, setType] = useState<CategoryType>(transaction?.type || "income")
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
@@ -94,8 +91,7 @@ export function TransactionDialog({
     },
   })
 
-  const { customCategories } = useAppData()
-  const { getCategoryLabel, getCategoriesWithDetails } = useCategory()
+  const { getCategoryLabel, getCategoriesByType } = useCategory()
 
   const selectedDate = useWatch({
     control: form.control,
@@ -133,26 +129,24 @@ export function TransactionDialog({
       } else {
         toast.success(success)
         form.reset({
-          type: "income",
+          type: type,
           amount: 0,
           description: "",
           categoryKey: "",
           date: undefined,
         })
-        setTransactionType("income")
         setOpen(false)
       }
     }
   }
 
-  const handleTypeChange = (type: string) => {
-    const transactionType = type as "income" | "expense"
-    setTransactionType(transactionType)
-    form.setValue("type", transactionType)
+  const handleTypeChange = (type: CategoryType) => {
+    setType(type)
+    form.setValue("type", type)
     form.resetField("categoryKey", { defaultValue: "" })
   }
 
-  const renderCategorySelect = (type: "income" | "expense") => (
+  const renderCategorySelect = (type: CategoryType) => (
     <FormField
       control={form.control}
       name="categoryKey"
@@ -172,8 +166,8 @@ export function TransactionDialog({
                 maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
               }}
             >
-              {getCategoriesWithDetails(type).map((c) => (
-                <SelectItem key={c.categoryKey} value={c.categoryKey}>
+              {getCategoriesByType(type).map((c) => (
+                <SelectItem key={c.key} value={c.key}>
                   <div className="flex flex-col">
                     <span className="font-medium">{c.label}</span>
                     <span className="text-muted-foreground wrap-anywhere">
@@ -182,23 +176,6 @@ export function TransactionDialog({
                   </div>
                 </SelectItem>
               ))}
-              {customCategories.filter((c) => c.type === type).length > 0 && (
-                <>
-                  <SelectSeparator />
-                  {customCategories
-                    .filter((c) => c.type === type)
-                    .map((c) => (
-                      <SelectItem key={c._id} value={c.categoryKey}>
-                        <div className="flex flex-col">
-                          <span className="font-medium">{c.label}</span>
-                          <span className="text-muted-foreground wrap-anywhere">
-                            {c.description}
-                          </span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                </>
-              )}
             </SelectContent>
           </Select>
           <FormDescription>
@@ -231,7 +208,10 @@ export function TransactionDialog({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <Tabs value={transactionType} onValueChange={handleTypeChange}>
+            <Tabs
+              value={type}
+              onValueChange={(value) => handleTypeChange(value as CategoryType)}
+            >
               <TabsList className="w-full">
                 <TabsTrigger value="income">{t("Income")}</TabsTrigger>
                 <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>

@@ -1,31 +1,27 @@
-import { enUS, vi } from "date-fns/locale"
-import type { Locale as DateFnsLocale } from "date-fns/locale"
+import { enUS, vi, type DayPickerLocale } from "react-day-picker/locale"
 
-export type AppLocale = (typeof LOCALES)[number]
+export type AppLocale = (typeof _LOCALES)[number]
 
-export const LOCALES = ["vi", "en"] as const
+const _LOCALES = ["vi", "en"] as const
 export const DEFAULT_LOCALE: AppLocale = "vi"
 
 type LocaleConfigType = {
   [K in AppLocale]: {
-    dateFnsLocale: DateFnsLocale
+    dateLocale: DayPickerLocale
     intlLocale: string
     displayName: string
-    formatStr: string
   }
 }
 
 export const LOCALE_CONFIG: LocaleConfigType = {
   vi: {
-    dateFnsLocale: vi,
+    dateLocale: vi,
     intlLocale: "vi-VN",
     displayName: "Tiếng Việt",
-    formatStr: "EEEEEE, dd/MM/yyyy",
   },
   en: {
-    dateFnsLocale: enUS,
+    dateLocale: enUS,
     intlLocale: "en-US",
     displayName: "English",
-    formatStr: "EEEEEE, MM/dd/yyyy",
   },
 }

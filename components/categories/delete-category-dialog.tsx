@@ -19,14 +19,12 @@ import { Spinner } from "@/components/ui/spinner"
 
 interface DeleteCategoryDialogProps {
   categoryId: string
-  categoryLabel: string
   open: boolean
   setOpen: (open: boolean) => void
 }
 
 export function DeleteCategoryDialog({
   categoryId,
-  categoryLabel,
   open,
   setOpen,
 }: DeleteCategoryDialogProps) {
@@ -53,12 +51,9 @@ export function DeleteCategoryDialog({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("Delete Category")}</AlertDialogTitle>
-          <AlertDialogDescription className="wrap-anywhere">
+          <AlertDialogDescription>
             {t(
-              'Are you sure you want to delete the category "{label}"? This action cannot be undone.',
-              {
-                label: categoryLabel,
-              }
+              "Are you sure you want to delete this category? This action cannot be undone."
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>
