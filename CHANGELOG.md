@@ -1,3 +1,11 @@
+## [25.50.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.49.0...v25.50.0)
+
+### Nerd stuff
+
+These changes will not be visible to users, but are included for completeness and to credit contributors.
+
+- **refactor:** cleanup (@iwmywn) ([#13](https://github.com/iwmywn/personal-and-family-finance-app/pull/13)) ([4d5d7a5](https://github.com/iwmywn/personal-and-family-finance-app/commit/4d5d7a52089726df5c292fac9cdbdd685df94477))
+
 ## [25.49.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.48.0...v25.49.0)
 
 Thank you to all the contributors who made this release possible!
