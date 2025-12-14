@@ -583,24 +583,6 @@ msgid "6/aEFZ"
 msgstr "Upcoming"
 
 #: components\budgets\budget-filters.tsx
-#: components\goals\goal-filters.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\export-button.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "9j3hXO"
-msgstr "To"
-
-#: components\budgets\budget-filters.tsx
-#: components\goals\goal-filters.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\export-button.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "dM+p3/"
-msgstr "From"
-
-#: components\budgets\budget-filters.tsx
 msgid "DSmOlH"
 msgstr "Exceeded (≥ 100%)"
 
@@ -620,14 +602,6 @@ msgstr "Year"
 #: components\transactions\transaction-filters.tsx
 msgid "jm/spn"
 msgstr "Reset"
-
-#: components\budgets\budget-filters.tsx
-#: components\goals\goal-filters.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "KAX9q+"
-msgstr "Select Date Range"
 
 #: components\budgets\budget-filters.tsx
 #: components\goals\goal-filters.tsx
@@ -679,21 +653,6 @@ msgstr "No Transactions"
 #: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "tzMNF3"
 msgstr "Status"
-
-#: components\budgets\budget-filters.tsx
-#: components\categories\categories-table.tsx
-#: components\categories\category-dialog.tsx
-#: components\categories\category-filters.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\recurring-transactions\recurring-transactions-table.tsx
-#: components\statistics\statistics-table.tsx
-#: components\transactions\export-button.tsx
-#: components\transactions\transaction-dialog.tsx
-#: components\transactions\transaction-filters.tsx
-#: components\transactions\transactions-table.tsx
-msgid "URe+qA"
-msgstr "Expense"
 
 #: components\budgets\budget-filters.tsx
 #: components\goals\goal-filters.tsx
@@ -796,7 +755,6 @@ msgstr "No categories found matching your filters."
 #: components\categories\categories-table.tsx
 #: components\categories\category-dialog.tsx
 #: components\categories\category-filters.tsx
-#: components\goals\goal-filters.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
@@ -817,6 +775,20 @@ msgstr "Income"
 #: components\transactions\transactions-table.tsx
 msgid "Q8Qw5B"
 msgstr "Description"
+
+#: components\categories\categories-table.tsx
+#: components\categories\category-dialog.tsx
+#: components\categories\category-filters.tsx
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
+#: components\recurring-transactions\recurring-transactions-table.tsx
+#: components\statistics\statistics-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transaction-filters.tsx
+#: components\transactions\transactions-table.tsx
+msgid "URe+qA"
+msgstr "Expense"
 
 #: components\categories\categories-table.tsx
 #: components\categories\category-dialog.tsx
@@ -1463,6 +1435,23 @@ msgstr "Failed to disable 2FA! Please try again later."
 #: components\settings\two-factor-manager-dialog.tsx
 msgid "ZhrNZz"
 msgstr "Enable 2FA"
+
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "9j3hXO"
+msgstr "To"
+
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "dM+p3/"
+msgstr "From"
+
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "KAX9q+"
+msgstr "Select Date Range"
 
 #: components\statistics\statistics-page.tsx
 msgid "wqp6W5"

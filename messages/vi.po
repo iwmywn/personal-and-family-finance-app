@@ -583,24 +583,6 @@ msgid "6/aEFZ"
 msgstr "Sắp tới"
 
 #: components\budgets\budget-filters.tsx
-#: components\goals\goal-filters.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\export-button.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "9j3hXO"
-msgstr "Đến"
-
-#: components\budgets\budget-filters.tsx
-#: components\goals\goal-filters.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\export-button.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "dM+p3/"
-msgstr "Từ"
-
-#: components\budgets\budget-filters.tsx
 msgid "DSmOlH"
 msgstr "Vượt quá (≥ 100%)"
 
@@ -620,14 +602,6 @@ msgstr "Năm"
 #: components\transactions\transaction-filters.tsx
 msgid "jm/spn"
 msgstr "Đặt lại"
-
-#: components\budgets\budget-filters.tsx
-#: components\goals\goal-filters.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\statistics\statistics-filters.tsx
-#: components\transactions\transaction-filters.tsx
-msgid "KAX9q+"
-msgstr "Chọn khoảng thời gian"
 
 #: components\budgets\budget-filters.tsx
 #: components\goals\goal-filters.tsx
@@ -679,21 +653,6 @@ msgstr "Không có giao dịch"
 #: components\recurring-transactions\recurring-transactions-table.tsx
 msgid "tzMNF3"
 msgstr "Trạng thái"
-
-#: components\budgets\budget-filters.tsx
-#: components\categories\categories-table.tsx
-#: components\categories\category-dialog.tsx
-#: components\categories\category-filters.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\recurring-transactions\recurring-transactions-table.tsx
-#: components\statistics\statistics-table.tsx
-#: components\transactions\export-button.tsx
-#: components\transactions\transaction-dialog.tsx
-#: components\transactions\transaction-filters.tsx
-#: components\transactions\transactions-table.tsx
-msgid "URe+qA"
-msgstr "Chi tiêu"
 
 #: components\budgets\budget-filters.tsx
 #: components\goals\goal-filters.tsx
@@ -796,7 +755,6 @@ msgstr "Không tìm thấy danh mục phù hợp với bộ lọc của bạn."
 #: components\categories\categories-table.tsx
 #: components\categories\category-dialog.tsx
 #: components\categories\category-filters.tsx
-#: components\goals\goal-filters.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\recurring-transactions\recurring-transactions-filters.tsx
 #: components\recurring-transactions\recurring-transactions-table.tsx
@@ -817,6 +775,20 @@ msgstr "Thu nhập"
 #: components\transactions\transactions-table.tsx
 msgid "Q8Qw5B"
 msgstr "Mô tả"
+
+#: components\categories\categories-table.tsx
+#: components\categories\category-dialog.tsx
+#: components\categories\category-filters.tsx
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
+#: components\recurring-transactions\recurring-transactions-table.tsx
+#: components\statistics\statistics-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-dialog.tsx
+#: components\transactions\transaction-filters.tsx
+#: components\transactions\transactions-table.tsx
+msgid "URe+qA"
+msgstr "Chi tiêu"
 
 #: components\categories\categories-table.tsx
 #: components\categories\category-dialog.tsx
@@ -1463,6 +1435,23 @@ msgstr "Tắt 2FA thất bại! Vui lòng thử lại sau."
 #: components\settings\two-factor-manager-dialog.tsx
 msgid "ZhrNZz"
 msgstr "Bật 2FA"
+
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "9j3hXO"
+msgstr "Đến"
+
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "dM+p3/"
+msgstr "Từ"
+
+#: components\statistics\statistics-filters.tsx
+#: components\transactions\transaction-filters.tsx
+msgid "KAX9q+"
+msgstr "Chọn khoảng thời gian"
 
 #: components\statistics\statistics-page.tsx
 msgid "wqp6W5"

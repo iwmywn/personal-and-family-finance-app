@@ -43,35 +43,58 @@ function nextYearlyDate(lastGeneratedUTC: Date): Date {
 export function getNextDate(
   rec: DBRecurringTransaction | RecurringTransaction
 ): Date {
+  const todayUTC = normalizeToUTCDate(new Date())
+
   // if no last generated date, return the start date
   if (!rec.lastGenerated) {
-    return normalizeToUTCDate(rec.startDate)
+    const startDate = normalizeToUTCDate(rec.startDate)
+    // if we've missed the start date, return today
+    if (todayUTC > startDate) {
+      return normalizeToUTCDate(todayUTC)
+    }
+    return startDate
   }
 
   const lastGeneratedUTC = normalizeToUTCDate(rec.lastGenerated)
 
+  let nextDate: Date
   switch (rec.frequency) {
     case "daily":
-      return addDays(lastGeneratedUTC, 1)
+      nextDate = addDays(lastGeneratedUTC, 1)
+      break
 
     case "weekly":
-      return addDays(lastGeneratedUTC, 7)
+      nextDate = addDays(lastGeneratedUTC, 7)
+      break
 
     case "bi-weekly":
-      return addDays(lastGeneratedUTC, 14)
+      nextDate = addDays(lastGeneratedUTC, 14)
+      break
 
     case "monthly":
-      return nextMonthlyDate(lastGeneratedUTC)
+      nextDate = nextMonthlyDate(lastGeneratedUTC)
+      break
 
     case "quarterly":
-      return nextQuarterlyDate(lastGeneratedUTC)
+      nextDate = nextQuarterlyDate(lastGeneratedUTC)
+      break
 
     case "yearly":
-      return nextYearlyDate(lastGeneratedUTC)
+      nextDate = nextYearlyDate(lastGeneratedUTC)
+      break
 
     case "random":
-      return addDays(lastGeneratedUTC, rec.randomEveryXDays!)
+      nextDate = addDays(lastGeneratedUTC, rec.randomEveryXDays!)
+      break
   }
+
+  // if we've missed the next date, return today
+  // (e.g., when recurring transaction was deactivated and then reactivated)
+  if (todayUTC > nextDate) {
+    return normalizeToUTCDate(todayUTC)
+  }
+
+  return nextDate
 }
 
 function isSameDate(a: Date, b: Date) {
