@@ -1,6 +1,6 @@
 {
   "name": "my-personal-and-family-finance-app",
-  "version": "25.50.0",
+  "version": "25.51.0",
   "type": "module",
   "private": true,
   "scripts": {

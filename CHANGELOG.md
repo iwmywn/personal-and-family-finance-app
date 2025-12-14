@@ -1,3 +1,15 @@
+## [25.51.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.50.0...v25.51.0)
+
+### Bug Fixes
+
+- tests failed ([525fcfd](https://github.com/iwmywn/personal-and-family-finance-app/commit/525fcfd8e193111b52b2dee2bcb4145095387874))
+
+### Nerd stuff
+
+These changes will not be visible to users, but are included for completeness and to credit contributors.
+
+- **chore:** update ([928483d](https://github.com/iwmywn/personal-and-family-finance-app/commit/928483d2825b7bf55a9d6f4cc98a3ecce734ef6b))
+
 ## [25.50.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.49.0...v25.50.0)
 
 ### Nerd stuff
