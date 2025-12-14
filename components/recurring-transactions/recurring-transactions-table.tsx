@@ -40,7 +40,7 @@ import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { formatCurrency } from "@/lib/utils"
+import { formatCurrency, normalizeToUTCDate } from "@/lib/utils"
 import { getNextDate } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
 interface RecurringTableProps {
@@ -185,7 +185,12 @@ export function RecurringTransactionsTable({
                           {recurring.isActive ? (
                             <span className="text-muted-foreground text-xs">
                               {t("Next: {date}", {
-                                date: formatDate(getNextDate(recurring)),
+                                date: formatDate(
+                                  getNextDate(
+                                    recurring,
+                                    normalizeToUTCDate(new Date())
+                                  )
+                                ),
                               })}
                             </span>
                           ) : null}

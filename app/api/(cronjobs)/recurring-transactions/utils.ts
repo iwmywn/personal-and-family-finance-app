@@ -41,10 +41,9 @@ function nextYearlyDate(lastGeneratedUTC: Date): Date {
 }
 
 export function getNextDate(
-  rec: DBRecurringTransaction | RecurringTransaction
+  rec: DBRecurringTransaction | RecurringTransaction,
+  todayUTC: Date
 ): Date {
-  const todayUTC = normalizeToUTCDate(new Date())
-
   // if no last generated date, return the start date
   if (!rec.lastGenerated) {
     const startDate = normalizeToUTCDate(rec.startDate)
@@ -116,7 +115,7 @@ export function shouldGenerateToday(
     return false
   }
 
-  const nextDate = getNextDate(rec)
+  const nextDate = getNextDate(rec, todayUTC)
 
   return isSameDate(nextDate, todayUTC)
 }
