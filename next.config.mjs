@@ -7,7 +7,7 @@ const withNextIntl = createNextIntlPlugin({
   experimental: {
     srcPath: ["./actions", "./app", "./components", "./hooks"],
     extract: {
-      sourceLocale: "en",
+      sourceLocale: "en-US",
     },
     messages: {
       path: "./messages",

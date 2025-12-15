@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
-import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
+import { type AppLocale } from "@/i18n/config"
 import type { Transaction } from "@/lib/definitions"
 
 export function cn(...inputs: ClassValue[]) {
@@ -16,9 +16,7 @@ export function formatCurrency(amount: number) {
 }
 
 export function formatDate(date: Date, locale: AppLocale) {
-  const config = LOCALE_CONFIG[locale]
-
-  return new Intl.DateTimeFormat(config.intlLocale, {
+  return new Intl.DateTimeFormat(locale, {
     weekday: "short",
     day: "2-digit",
     month: "2-digit",

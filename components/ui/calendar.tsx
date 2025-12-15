@@ -45,7 +45,7 @@ function Calendar({
       captionLayout={captionLayout}
       formatters={{
         formatMonthDropdown: (date) =>
-          date.toLocaleString(LOCALE_CONFIG[locale].intlLocale, {
+          date.toLocaleString(locale, {
             month: "long",
           }),
         ...formatters,

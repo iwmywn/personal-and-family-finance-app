@@ -14,7 +14,6 @@ import { Toaster } from "@/components/ui/sonner"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { env } from "@/env/client.mjs"
-import { LOCALE_CONFIG } from "@/i18n/config"
 import { siteConfig } from "@/app/pffa.config"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -36,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: "iwmywn",
     openGraph: {
       type: "website",
-      locale: LOCALE_CONFIG[locale].intlLocale,
+      locale: locale,
       url: env.NEXT_PUBLIC_URL,
       title: siteConfig.name,
       description: t("Personal & Family Finance App"),
