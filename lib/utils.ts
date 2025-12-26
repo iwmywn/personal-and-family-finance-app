@@ -1,18 +1,24 @@
 import { clsx, type ClassValue } from "clsx"
+import Decimal from "decimal.js"
 import { twMerge } from "tailwind-merge"
 
 import { type AppLocale } from "@/i18n/config"
+import { ZERO_DECIMAL_CURRENCIES, type AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("vi-VN", {
+export function formatCurrency(
+  amount: string,
+  locale: AppLocale,
+  currency: AppCurrency
+) {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: "VND",
-  }).format(amount)
+    currency,
+  }).format(parseFloat(amount))
 }
 
 export function formatDate(date: Date, locale: AppLocale) {
@@ -25,7 +31,9 @@ export function formatDate(date: Date, locale: AppLocale) {
 }
 
 export function normalizeToUTCDate(date: Date) {
-  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  return new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+  )
 }
 
 export function getUniqueYears(transactions: Transaction[]): number[] {
@@ -40,3 +48,11 @@ export const progressColorClass = {
   yellow: "[&>[data-slot=progress-indicator]]:bg-yellow-600",
   red: "[&>[data-slot=progress-indicator]]:bg-red-600",
 } as const
+
+export function toDecimal(value: string): Decimal {
+  return new Decimal(value.toString())
+}
+
+export function isZeroDecimalCurrency(currency: AppCurrency): boolean {
+  return ZERO_DECIMAL_CURRENCIES.has(currency)
+}

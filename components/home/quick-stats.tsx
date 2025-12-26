@@ -12,9 +12,9 @@ import {
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { calculateQuickStats } from "@/lib/statistics"
-import { formatCurrency } from "@/lib/utils"
 
 interface QuickStatsProps {
   offsetHeight: number
@@ -26,6 +26,7 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   const { transactions } = useAppData()
   const t = useExtracted()
   const { getCategoryLabel } = useCategory()
+  const formatCurrency = useFormatCurrency()
 
   const {
     currentMonthCount,

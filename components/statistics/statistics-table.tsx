@@ -27,9 +27,9 @@ import {
 } from "@/components/ui/tooltip"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { type Transaction } from "@/lib/definitions"
 import { calculateCategoriesStats } from "@/lib/statistics"
-import { formatCurrency } from "@/lib/utils"
 
 interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]
@@ -41,6 +41,7 @@ export function StatisticsTable({
   const { transactions } = useAppData()
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
+  const formatCurrency = useFormatCurrency()
 
   const categoryStats = calculateCategoriesStats(filteredTransactions)
 

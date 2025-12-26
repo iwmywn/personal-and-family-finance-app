@@ -10,9 +10,10 @@ import {
 import { useExtracted } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { type Transaction } from "@/lib/definitions"
 import { calculateSummaryStats } from "@/lib/statistics"
-import { formatCurrency } from "@/lib/utils"
+import { toDecimal } from "@/lib/utils"
 
 interface StatisticsSummaryProps {
   filteredTransactions: Transaction[]
@@ -22,6 +23,7 @@ export function StatisticsSummary({
   filteredTransactions,
 }: StatisticsSummaryProps) {
   const t = useExtracted()
+  const formatCurrency = useFormatCurrency()
   const {
     totalIncome,
     totalExpense,
@@ -66,7 +68,7 @@ export function StatisticsSummary({
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle>{t("Balance")}</CardTitle>
-          {balance >= 0 ? (
+          {toDecimal(balance).greaterThanOrEqualTo(0) ? (
             <TrendingUpIcon className="size-4 text-green-600" />
           ) : (
             <TrendingDownIcon className="size-4 text-red-600" />
@@ -75,15 +77,19 @@ export function StatisticsSummary({
         <CardContent>
           <div
             className={`text-2xl wrap-anywhere ${
-              balance > 0 ? "text-green-600" : balance < 0 ? "text-red-600" : ""
+              toDecimal(balance).greaterThan(0)
+                ? "text-green-600"
+                : toDecimal(balance).lessThan(0)
+                  ? "text-red-600"
+                  : ""
             }`}
           >
             {formatCurrency(balance)}
           </div>
           <div className="text-muted-foreground text-sm">
-            {balance > 0
+            {toDecimal(balance).greaterThan(0)
               ? t("Positive")
-              : balance < 0
+              : toDecimal(balance).lessThan(0)
                 ? t("Negative")
                 : t("Balanced")}{" "}
             {t("compared to income")}

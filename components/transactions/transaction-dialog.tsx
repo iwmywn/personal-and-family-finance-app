@@ -25,13 +25,11 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import {
   InputGroup,
   InputGroupAddon,
@@ -51,15 +49,17 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CategoryFormSelect } from "@/components/category-form-select"
+import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { FormLink } from "@/components/form-link"
-import { useCategory } from "@/hooks/use-category"
+import { useAppData } from "@/context/app-data-context"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/categories"
+import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
-import { cn, normalizeToUTCDate } from "@/lib/utils"
+import { cn, isZeroDecimalCurrency, normalizeToUTCDate } from "@/lib/utils"
 import type { TransactionFormValues } from "@/schemas/types"
 
 interface TransactionDialogProps {
@@ -78,20 +78,23 @@ export function TransactionDialog({
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createTransactionSchema } = useSchemas()
-
+  const { user } = useAppData()
   const formatDate = useFormatDate()
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(createTransactionSchema()),
     defaultValues: {
       type: transaction?.type || "income",
-      amount: transaction?.amount || 0,
+      currency: transaction?.currency ?? (user.currency as AppCurrency),
+      amount: transaction?.amount
+        ? parseFloat(transaction.amount)
+            .toFixed(isZeroDecimalCurrency(transaction.currency) ? 0 : 2)
+            .toString()
+        : "",
       description: transaction?.description || "",
       categoryKey: transaction?.categoryKey || "",
       date: transaction?.date ? new Date(transaction.date) : undefined,
     },
   })
-
-  const { getCategoryLabel, getCategoriesByType } = useCategory()
 
   const selectedDate = useWatch({
     control: form.control,
@@ -130,7 +133,7 @@ export function TransactionDialog({
         toast.success(success)
         form.reset({
           type: type,
-          amount: 0,
+          amount: "",
           description: "",
           categoryKey: "",
           date: undefined,
@@ -145,50 +148,6 @@ export function TransactionDialog({
     form.setValue("type", type)
     form.resetField("categoryKey", { defaultValue: "" })
   }
-
-  const renderCategorySelect = (type: CategoryType) => (
-    <FormField
-      control={form.control}
-      name="categoryKey"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{t("Category")}</FormLabel>
-          <Select onValueChange={field.onChange} value={field.value}>
-            <FormControl>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={t("Select Category")}>
-                  {field.value ? getCategoryLabel(field.value) : null}
-                </SelectValue>
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent
-              style={{
-                maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
-              }}
-            >
-              {getCategoriesByType(type).map((c) => (
-                <SelectItem key={c.key} value={c.key}>
-                  <div className="flex flex-col">
-                    <span className="font-medium">{c.label}</span>
-                    <span className="text-muted-foreground wrap-anywhere">
-                      {c.description}
-                    </span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FormDescription>
-            {t("Cannot find a suitable category?")}{" "}
-            <FormLink href="/categories" className="text-foreground/85">
-              {t("Create Custom Category")}
-            </FormLink>
-          </FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  )
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -218,32 +177,66 @@ export function TransactionDialog({
               </TabsList>
 
               <TabsContent value="income" className="space-y-4">
-                {renderCategorySelect("income")}
+                <CategoryFormSelect
+                  control={form.control}
+                  type="income"
+                  calculatedWidth={calculatedWidth}
+                  showDescription
+                />
               </TabsContent>
 
               <TabsContent value="expense" className="space-y-4">
-                {renderCategorySelect("expense")}
+                <CategoryFormSelect
+                  control={form.control}
+                  type="expense"
+                  calculatedWidth={calculatedWidth}
+                  showDescription
+                />
               </TabsContent>
             </Tabs>
+
+            <FormField
+              control={form.control}
+              name="currency"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("Currency")}</FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      form.setValue("amount", "")
+                    }}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {CURRENCIES.map((currency) => (
+                        <SelectItem key={currency} value={currency}>
+                          {CURRENCY_CONFIG[currency].displayName}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Amount")} (VND)</FormLabel>
+                  <FormLabel>{t("Amount")}</FormLabel>
                   <FormControl>
-                    <Input
-                      inputMode="numeric"
-                      placeholder="0"
-                      value={
-                        field.value ? field.value.toLocaleString("vi-VN") : ""
-                      }
-                      onChange={(e) => {
-                        const rawValue = e.target.value.replace(/\./g, "")
-                        const numericValue = Number.parseInt(rawValue) || 0
-                        field.onChange(numericValue)
-                      }}
+                    <CurrencyInput
+                      value={field.value}
+                      onChange={field.onChange}
+                      currency={form.getValues("currency")}
                     />
                   </FormControl>
                   <FormMessage />
@@ -317,7 +310,7 @@ export function TransactionDialog({
                           setCalendarOpen(false)
                         }}
                         disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
+                          date > new Date() || date < new Date(2025, 8, 1)
                         }
                       />
                     </PopoverContent>

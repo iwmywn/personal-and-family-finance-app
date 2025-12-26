@@ -4,11 +4,14 @@ import { cacheTag, updateTag } from "next/cache"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
+import { convertTransactionsToCurrency } from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
+import type { AppCurrency } from "@/lib/currency"
 import { type Transaction } from "@/lib/definitions"
 import type { TransactionFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
+import { toDecimal128 } from "./utils"
 
 export async function createTransaction(values: TransactionFormValues) {
   const t = await getExtracted()
@@ -30,7 +33,8 @@ export async function createTransaction(values: TransactionFormValues) {
       userId: new ObjectId(userId),
       type: values.type,
       categoryKey: values.categoryKey,
-      amount: values.amount,
+      amount: toDecimal128(values.amount),
+      currency: values.currency,
       description: values.description,
       date: values.date,
     }
@@ -46,7 +50,7 @@ export async function createTransaction(values: TransactionFormValues) {
     if (!result.acknowledged)
       return { error: t("Failed to add transaction! Please try again later.") }
 
-    updateTag("transactions")
+    updateTag(`transactions-${userId}`)
     return { success: t("Transaction has been added."), error: undefined }
   } catch (error) {
     console.error("Error creating transaction:", error)
@@ -93,14 +97,15 @@ export async function updateTransaction(
         $set: {
           type: values.type,
           categoryKey: values.categoryKey,
-          amount: values.amount,
+          amount: toDecimal128(values.amount),
+          currency: values.currency,
           description: values.description,
           date: values.date,
         },
       }
     )
 
-    updateTag("transactions")
+    updateTag(`transactions-${session.user.id}`)
     return {
       success: t("Transaction has been updated."),
       error: undefined,
@@ -147,7 +152,7 @@ export async function deleteTransaction(transactionId: string) {
       _id: new ObjectId(transactionId),
     })
 
-    updateTag("transactions")
+    updateTag(`transactions-${session.user.id}`)
     return { success: t("Transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
@@ -155,9 +160,12 @@ export async function deleteTransaction(transactionId: string) {
   }
 }
 
-export async function getTransactions(userId: string) {
+export async function getTransactions(
+  userId: string,
+  targetCurrency: AppCurrency
+) {
   "use cache: private"
-  cacheTag("transactions")
+  cacheTag(`transactions-${userId}`)
 
   const t = await getExtracted()
 
@@ -175,12 +183,20 @@ export async function getTransactions(userId: string) {
       .sort({ date: -1, _id: -1 })
       .toArray()
 
+    const mapped = transactions.map((transaction) => ({
+      ...transaction,
+      _id: transaction._id.toString(),
+      userId: transaction.userId.toString(),
+      amount: transaction.amount.toString(),
+    })) as Transaction[]
+
+    const converted = await convertTransactionsToCurrency(
+      mapped,
+      targetCurrency
+    )
+
     return {
-      transactions: transactions.map((transaction) => ({
-        ...transaction,
-        _id: transaction._id.toString(),
-        userId: transaction.userId.toString(),
-      })) as Transaction[],
+      transactions: converted,
     }
   } catch (error) {
     console.error("Error fetching transactions:", error)

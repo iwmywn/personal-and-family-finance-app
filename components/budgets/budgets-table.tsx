@@ -38,11 +38,12 @@ import { BudgetDialog } from "@/components/budgets/budget-dialog"
 import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Budget } from "@/lib/definitions"
 import { calculateBudgetsStats } from "@/lib/statistics"
-import { formatCurrency } from "@/lib/utils"
+import { toDecimal } from "@/lib/utils"
 
 interface BudgetsTableProps {
   filteredBudgets: Budget[]
@@ -61,6 +62,7 @@ export function BudgetsTable({
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
+  const formatCurrency = useFormatCurrency()
 
   const budgetsWithSpent = calculateBudgetsStats(filteredBudgets, transactions)
 
@@ -136,7 +138,11 @@ export function BudgetsTable({
                       </TableCell>
                       <TableCell>{formatCurrency(budget.spent)}</TableCell>
                       <TableCell>
-                        {formatCurrency(budget.allocatedAmount - budget.spent)}
+                        {formatCurrency(
+                          toDecimal(budget.allocatedAmount)
+                            .minus(toDecimal(budget.spent))
+                            .toString()
+                        )}
                       </TableCell>
                       <TableCell>
                         <Badge

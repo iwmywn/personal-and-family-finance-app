@@ -27,7 +27,7 @@ jobs:
         uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
-          version: 10.25.0
+          version: 10.26.2
           run_install: false
 
       - name: Get pnpm store directory
@@ -47,7 +47,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/mongodb-binaries
-          key: ${{ runner.os }}-mongodb-binaries-7.0.24
+          key: ${{ runner.os }}-mongodb-binaries-8.2.1
           restore-keys: |
             ${{ runner.os }}-mongodb-binaries-
 

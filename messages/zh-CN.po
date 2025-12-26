@@ -476,29 +476,21 @@ msgid "47FYwb"
 msgstr "取消"
 
 #: components\budgets\budget-dialog.tsx
+#: components\goals\goal-dialog.tsx
+#: components\recurring-transactions\recurring-transaction-dialog.tsx
+#: components\settings\currency-selector.tsx
+#: components\settings\settings-page.tsx
+#: components\transactions\transaction-dialog.tsx
+msgid "55hdQy"
+msgstr "货币"
+
+#: components\budgets\budget-dialog.tsx
 #: components\categories\category-dialog.tsx
 #: components\goals\goal-dialog.tsx
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 #: components\transactions\transaction-dialog.tsx
 msgid "BWpuKl"
 msgstr "更新"
-
-#: components\budgets\budget-dialog.tsx
-#: components\budgets\budget-filters.tsx
-#: components\budgets\budgets-table.tsx
-#: components\goals\goal-dialog.tsx
-#: components\goals\goal-filters.tsx
-#: components\goals\goals-table.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\recurring-transactions\recurring-transactions-filters.tsx
-#: components\recurring-transactions\recurring-transactions-table.tsx
-#: components\statistics\statistics-table.tsx
-#: components\transactions\export-button.tsx
-#: components\transactions\transaction-dialog.tsx
-#: components\transactions\transaction-filters.tsx
-#: components\transactions\transactions-table.tsx
-msgid "ccXLVi"
-msgstr "分类"
 
 #: components\budgets\budget-dialog.tsx
 #: components\goals\goal-dialog.tsx
@@ -508,13 +500,6 @@ msgstr "分类"
 #: components\transactions\transaction-filters.tsx
 msgid "ftg7GK"
 msgstr "选择日期"
-
-#: components\budgets\budget-dialog.tsx
-#: components\goals\goal-dialog.tsx
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
-msgid "IkXLzZ"
-msgstr "选择分类"
 
 #: components\budgets\budget-dialog.tsx
 msgid "PVSBse"
@@ -581,6 +566,20 @@ msgstr "所有年份"
 #: components\goals\goals-table.tsx
 msgid "6/aEFZ"
 msgstr "即将到来"
+
+#: components\budgets\budget-filters.tsx
+#: components\budgets\budgets-table.tsx
+#: components\category-form-select.tsx
+#: components\goals\goal-filters.tsx
+#: components\goals\goals-table.tsx
+#: components\recurring-transactions\recurring-transactions-filters.tsx
+#: components\recurring-transactions\recurring-transactions-table.tsx
+#: components\statistics\statistics-table.tsx
+#: components\transactions\export-button.tsx
+#: components\transactions\transaction-filters.tsx
+#: components\transactions\transactions-table.tsx
+msgid "ccXLVi"
+msgstr "分类"
 
 #: components\budgets\budget-filters.tsx
 msgid "DSmOlH"
@@ -837,6 +836,18 @@ msgstr "删除分类"
 #: components\categories\delete-category-dialog.tsx
 msgid "qjLKlD"
 msgstr "您确定要删除此分类吗？此操作无法撤销。"
+
+#: components\category-form-select.tsx
+msgid "IkXLzZ"
+msgstr "选择分类"
+
+#: components\category-form-select.tsx
+msgid "J0Y6yy"
+msgstr "找不到合适的分类？"
+
+#: components\category-form-select.tsx
+msgid "PmRC5G"
+msgstr "创建自定义分类"
 
 #: components\goals\delete-goal-dialog.tsx
 msgid "EwRebq"
@@ -1120,18 +1131,8 @@ msgid "InWqys"
 msgstr "可选"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
-msgid "J0Y6yy"
-msgstr "找不到合适的分类？"
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "mpcI7I"
 msgstr "无结束日期"
-
-#: components\recurring-transactions\recurring-transaction-dialog.tsx
-#: components\transactions\transaction-dialog.tsx
-msgid "PmRC5G"
-msgstr "创建自定义分类"
 
 #: components\recurring-transactions\recurring-transaction-dialog.tsx
 msgid "sYXY5N"
@@ -1335,6 +1336,10 @@ msgstr "输入您的用户名..."
 msgid "wb3MSp"
 msgstr "此用户名已被占用。"
 
+#: components\settings\currency-selector.tsx
+msgid "d6wGcQ"
+msgstr "更新货币失败！请稍后再试。"
+
 #: components\settings\language-selector.tsx
 msgid "Ax3Nmj"
 msgstr "更新语言失败！请稍后再试。"
@@ -1359,6 +1364,10 @@ msgstr "选择您的首选语言。"
 #: components\settings\settings-page.tsx
 msgid "Gr0AtT"
 msgstr "为您的帐户添加额外的安全层。"
+
+#: components\settings\settings-page.tsx
+msgid "mgyPZS"
+msgstr "选择您的首选货币以显示金额。"
 
 #: components\settings\settings-page.tsx
 msgid "NAnTXq"
@@ -1733,24 +1742,24 @@ msgid "zUpHdf"
 msgstr "五月"
 
 #: hooks\use-schemas.ts
-msgid "/4pQDl"
-msgstr "必须填写姓名。"
+msgid "/1byDa"
+msgstr "必须填写金额。"
 
 #: hooks\use-schemas.ts
-msgid "++E1JO"
-msgstr "目标金额必须大于 0。"
+msgid "/4pQDl"
+msgstr "必须填写姓名。"
 
 #: hooks\use-schemas.ts
 msgid "136ad6"
 msgstr "请确认您的新密码。"
 
 #: hooks\use-schemas.ts
-msgid "5huJG4"
-msgstr "必须填写分类名称。"
+msgid "2saJxm"
+msgstr "请选择货币。"
 
 #: hooks\use-schemas.ts
-msgid "6B/vXl"
-msgstr "最大目标金额为 1000 亿。"
+msgid "5huJG4"
+msgstr "必须填写分类名称。"
 
 #: hooks\use-schemas.ts
 msgid "8Y5qyI"
@@ -1803,6 +1812,10 @@ msgstr "必须填写当前密码。"
 #: hooks\use-schemas.ts
 msgid "H5adYw"
 msgstr "密码不匹配。"
+
+#: hooks\use-schemas.ts
+msgid "HCzfe9"
+msgstr "金额必须是有效数字。"
 
 #: hooks\use-schemas.ts
 msgid "hjtyTg"

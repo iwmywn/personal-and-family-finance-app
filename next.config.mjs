@@ -26,7 +26,6 @@ const nextConfig = {
     scrollRestoration: true,
     cpus: 1,
     inlineCss: true,
-    turbopackFileSystemCacheForDev: true,
   },
   cacheComponents: true,
   reactCompiler: true,

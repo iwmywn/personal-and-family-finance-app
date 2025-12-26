@@ -6,6 +6,7 @@ import { captcha, twoFactor, username } from "better-auth/plugins"
 import { env as clientEnv } from "@/env/client.mjs"
 import { env as serverEnv } from "@/env/server.mjs"
 import { DEFAULT_LOCALE } from "@/i18n/config"
+import { DEFAULT_CURRENCY } from "@/lib/currency"
 import { connect } from "@/lib/db"
 import { siteConfig } from "@/app/pffa.config"
 
@@ -32,6 +33,11 @@ export const auth = betterAuth({
         type: "string",
         required: true,
         defaultValue: DEFAULT_LOCALE,
+      },
+      currency: {
+        type: "string",
+        required: true,
+        defaultValue: DEFAULT_CURRENCY,
       },
     },
   },

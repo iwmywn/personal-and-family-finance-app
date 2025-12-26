@@ -4,6 +4,10 @@
     {
       "path": "/api/recurring-transactions",
       "schedule": "1 0 * * *"
+    },
+    {
+      "path": "/api/exchange-rates",
+      "schedule": "1 0 * * *"
     }
   ]
 }

@@ -25,7 +25,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -51,15 +50,17 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CategoryFormSelect } from "@/components/category-form-select"
+import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { FormLink } from "@/components/form-link"
-import { useCategory } from "@/hooks/use-category"
+import { useAppData } from "@/context/app-data-context"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/categories"
+import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { cn, normalizeToUTCDate } from "@/lib/utils"
+import { cn, isZeroDecimalCurrency, normalizeToUTCDate } from "@/lib/utils"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 interface RecurringDialogProps {
@@ -79,14 +80,19 @@ export function RecurringTransactionDialog({
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createRecurringTransactionSchema } = useSchemas()
-
+  const { user } = useAppData()
   const formatDate = useFormatDate()
   const form = useForm<RecurringTransactionFormValues>({
     resolver: zodResolver(createRecurringTransactionSchema()),
     defaultValues: {
       type: recurring?.type || "income",
       categoryKey: recurring?.categoryKey || "",
-      amount: recurring?.amount || 0,
+      currency: recurring?.currency ?? (user.currency as AppCurrency),
+      amount: recurring?.amount
+        ? parseFloat(recurring.amount)
+            .toFixed(isZeroDecimalCurrency(recurring.currency) ? 0 : 2)
+            .toString()
+        : "",
       description: recurring?.description || "",
       frequency: recurring?.frequency || "monthly",
       randomEveryXDays: recurring?.randomEveryXDays || undefined,
@@ -100,8 +106,6 @@ export function RecurringTransactionDialog({
       isActive: recurring?.isActive ?? true,
     },
   })
-
-  const { getCategoryLabel, getCategoriesByType } = useCategory()
 
   const startDate = useWatch({
     control: form.control,
@@ -160,7 +164,7 @@ export function RecurringTransactionDialog({
         form.reset({
           type: type,
           categoryKey: "",
-          amount: 0,
+          amount: "",
           description: "",
           frequency: "monthly",
           randomEveryXDays: undefined,
@@ -178,50 +182,6 @@ export function RecurringTransactionDialog({
     form.setValue("type", type)
     form.resetField("categoryKey", { defaultValue: "" })
   }
-
-  const renderCategorySelect = (type: CategoryType) => (
-    <FormField
-      control={form.control}
-      name="categoryKey"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{t("Category")}</FormLabel>
-          <Select onValueChange={field.onChange} value={field.value}>
-            <FormControl>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder={t("Select Category")}>
-                  {field.value ? getCategoryLabel(field.value) : null}
-                </SelectValue>
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent
-              style={{
-                maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
-              }}
-            >
-              {getCategoriesByType(type).map((c) => (
-                <SelectItem key={c.key} value={c.key}>
-                  <div className="flex flex-col">
-                    <span className="font-medium">{c.label}</span>
-                    <span className="text-muted-foreground wrap-anywhere">
-                      {c.description}
-                    </span>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <FormDescription>
-            {t("Cannot find a suitable category?")}{" "}
-            <FormLink href="/categories" className="text-foreground/85">
-              {t("Create Custom Category")}
-            </FormLink>
-          </FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  )
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -251,32 +211,66 @@ export function RecurringTransactionDialog({
               </TabsList>
 
               <TabsContent value="income" className="space-y-4">
-                {renderCategorySelect("income")}
+                <CategoryFormSelect
+                  control={form.control}
+                  type="income"
+                  calculatedWidth={calculatedWidth}
+                  showDescription
+                />
               </TabsContent>
 
               <TabsContent value="expense" className="space-y-4">
-                {renderCategorySelect("expense")}
+                <CategoryFormSelect
+                  control={form.control}
+                  type="expense"
+                  calculatedWidth={calculatedWidth}
+                  showDescription
+                />
               </TabsContent>
             </Tabs>
+
+            <FormField
+              control={form.control}
+              name="currency"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("Currency")}</FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      form.setValue("amount", "")
+                    }}
+                    value={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {CURRENCIES.map((currency) => (
+                        <SelectItem key={currency} value={currency}>
+                          {CURRENCY_CONFIG[currency].displayName}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Amount")} (VND)</FormLabel>
+                  <FormLabel>{t("Amount")}</FormLabel>
                   <FormControl>
-                    <Input
-                      inputMode="numeric"
-                      placeholder="0"
-                      value={
-                        field.value ? field.value.toLocaleString("vi-VN") : ""
-                      }
-                      onChange={(e) => {
-                        const rawValue = e.target.value.replace(/\./g, "")
-                        const numericValue = Number.parseInt(rawValue) || 0
-                        field.onChange(numericValue)
-                      }}
+                    <CurrencyInput
+                      currency={form.getValues("currency")}
+                      value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />
@@ -417,9 +411,7 @@ export function RecurringTransactionDialog({
                           setStartCalendarOpen(false)
                         }}
                         disabled={(date) =>
-                          date <= new Date() ||
-                          (endDate && date > endDate) ||
-                          date < new Date("1900-01-01")
+                          (endDate && date > endDate) || date <= new Date()
                         }
                       />
                     </PopoverContent>
@@ -478,9 +470,7 @@ export function RecurringTransactionDialog({
                           setEndCalendarOpen(false)
                         }}
                         disabled={(date) =>
-                          date <= new Date() ||
-                          (startDate && date <= startDate) ||
-                          date < new Date("1900-01-01")
+                          (startDate && date <= startDate) || date <= new Date()
                         }
                       />
                     </PopoverContent>

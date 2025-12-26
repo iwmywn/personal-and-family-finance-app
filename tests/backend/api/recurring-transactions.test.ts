@@ -531,6 +531,7 @@ describe("Recurring Transactions", () => {
           type: recurringTransaction.type,
           categoryKey: recurringTransaction.categoryKey,
           amount: recurringTransaction.amount,
+          currency: recurringTransaction.currency,
           description: recurringTransaction.description,
           date: todayUTC,
         }

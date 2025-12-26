@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
@@ -19,7 +18,6 @@ import { client } from "@/lib/auth-client"
 
 export function LanguageSelector() {
   const t = useExtracted()
-  const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { user } = useAppData()
 
@@ -33,8 +31,8 @@ export function LanguageSelector() {
           toast.error(t("Failed to update language! Please try again later."))
         },
         onSuccess: async () => {
-          router.refresh()
           await setUserLocale(locale)
+          window.location.reload()
         },
       },
     })

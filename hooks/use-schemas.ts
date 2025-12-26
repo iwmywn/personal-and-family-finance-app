@@ -4,6 +4,7 @@ import { useExtracted } from "next-intl"
 import { z } from "zod"
 
 import { CATEGORY_TYPES } from "@/lib/categories"
+import { CURRENCIES } from "@/lib/currency"
 import { normalizeToUTCDate } from "@/lib/utils"
 
 export function useSchemas() {
@@ -17,6 +18,22 @@ export function useSchemas() {
           "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
         ),
       })
+
+  const baseAmount = () =>
+    z
+      .string()
+      .min(1, { message: t("Amount is required.") })
+      .regex(/^\d+(\.\d+)?$/, {
+        message: t("Amount must be a valid number."),
+      })
+      .transform((val) => parseFloat(val))
+      .refine((num) => num >= 0.01, {
+        message: t("Amount must be greater than 0."),
+      })
+      .refine((num) => num <= 100000000000, {
+        message: t("Maximum amount is 100 billion."),
+      })
+      .transform((num) => num.toString())
 
   const createSignInSchema = () =>
     z.object({
@@ -92,14 +109,10 @@ export function useSchemas() {
         message: t("Please select a transaction type."),
       }),
       categoryKey: z.string().min(1, { message: t("Category is required.") }),
-      amount: z
-        .number()
-        .min(0.01, {
-          message: t("Amount must be greater than 0."),
-        })
-        .max(100000000000, {
-          message: t("Maximum amount is 100 billion."),
-        }),
+      currency: z.enum(CURRENCIES, {
+        message: t("Please select a currency."),
+      }),
+      amount: baseAmount(),
       description: z
         .string()
         .min(1, {
@@ -137,14 +150,10 @@ export function useSchemas() {
     z
       .object({
         categoryKey: z.string().min(1, { message: t("Category is required.") }),
-        allocatedAmount: z
-          .number()
-          .min(0.01, {
-            message: t("Amount must be greater than 0."),
-          })
-          .max(100000000000, {
-            message: t("Maximum amount is 100 billion."),
-          }),
+        currency: z.enum(CURRENCIES, {
+          message: t("Please select a currency."),
+        }),
+        allocatedAmount: baseAmount(),
         startDate: z.date({
           message: t("Please select a start date."),
         }),
@@ -172,14 +181,10 @@ export function useSchemas() {
             message: t("Goal name must be at most 100 characters."),
           }),
         categoryKey: z.string().min(1, { message: t("Category is required.") }),
-        targetAmount: z
-          .number()
-          .min(0.01, {
-            message: t("Target amount must be greater than 0."),
-          })
-          .max(100000000000, {
-            message: t("Maximum target amount is 100 billion."),
-          }),
+        currency: z.enum(CURRENCIES, {
+          message: t("Please select a currency."),
+        }),
+        targetAmount: baseAmount(),
         startDate: z.date({
           message: t("Please select a start date."),
         }),
@@ -204,14 +209,10 @@ export function useSchemas() {
           message: t("Please select a type."),
         }),
         categoryKey: z.string().min(1, { message: t("Category is required.") }),
-        amount: z
-          .number()
-          .min(0.01, {
-            message: t("Amount must be greater than 0."),
-          })
-          .max(100000000000, {
-            message: t("Maximum amount is 100 billion."),
-          }),
+        currency: z.enum(CURRENCIES, {
+          message: t("Please select a currency."),
+        }),
+        amount: baseAmount(),
         description: z
           .string()
           .min(1, {

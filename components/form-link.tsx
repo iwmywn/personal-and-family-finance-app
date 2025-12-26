@@ -8,7 +8,6 @@ type FormLinkProps = Omit<
   keyof LinkProps
 > &
   LinkProps & {
-    side?: "none" | "left" | "right" | "center"
     children: ReactNode
     className?: string
   }

@@ -17,9 +17,9 @@ import { Separator } from "@/components/ui/separator"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { formatCurrency } from "@/lib/utils"
 
 interface RecentTransactionsProps {
   offsetHeight: number
@@ -33,6 +33,7 @@ export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
   const t = useExtracted()
   const { getCategoryLabel } = useCategory()
   const formatDate = useFormatDate()
+  const formatCurrency = useFormatCurrency()
 
   return (
     <Card className="relative overflow-hidden py-0 pb-6">

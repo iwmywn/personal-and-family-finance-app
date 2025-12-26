@@ -18,6 +18,7 @@ export const mockAuthenticatedUser = () => {
       username: mockUser.username,
       displayUsername: mockUser.displayUsername,
       locale: mockUser.locale,
+      currency: mockUser.currency,
       twoFactorEnabled: mockUser.twoFactorEnabled,
       id: mockUser._id.toString(),
     },

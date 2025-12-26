@@ -1,3 +1,5 @@
+import Decimal from "decimal.js"
+
 import type { CategoryKeyType } from "@/lib/categories"
 import type { Budget, Goal, Transaction } from "@/lib/definitions"
 import { normalizeToUTCDate, progressColorClass } from "@/lib/utils"
@@ -21,7 +23,7 @@ interface QuickStats {
   currentMonthCount: number
   highestTransaction: Transaction | null
   lowestTransaction: Transaction | null
-  avgExpense: number | null
+  avgExpense: string | null
   savingsRate: string | null
   popularCategory: CategoryKeyType[]
 }
@@ -44,39 +46,52 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
 
   let highestTransaction = currentMonthTransactions[0]
   let lowestTransaction = currentMonthTransactions[0]
-  let totalIncome = 0
-  let totalExpense = 0
+  let totalIncome = new Decimal(0)
+  let totalExpense = new Decimal(0)
   let expenseCount = 0
-  const categorySums: Record<string, number> = {}
+  const categorySums: Record<string, Decimal> = {}
 
   for (const t of currentMonthTransactions) {
-    if (t.amount > highestTransaction.amount) highestTransaction = t
-    if (t.amount < lowestTransaction.amount) lowestTransaction = t
+    const amount = new Decimal(t.amount)
+
+    if (amount.greaterThan(new Decimal(highestTransaction.amount))) {
+      highestTransaction = t
+    }
+    if (amount.lessThan(new Decimal(lowestTransaction.amount))) {
+      lowestTransaction = t
+    }
 
     if (t.type === "income") {
-      totalIncome += t.amount
+      totalIncome = totalIncome.plus(amount)
     } else if (t.type === "expense") {
-      totalExpense += t.amount
+      totalExpense = totalExpense.plus(amount)
       expenseCount++
     }
 
-    categorySums[t.categoryKey] = (categorySums[t.categoryKey] || 0) + t.amount
+    categorySums[t.categoryKey] = (
+      categorySums[t.categoryKey] || new Decimal(0)
+    ).plus(amount)
   }
 
-  const avgExpense = expenseCount > 0 ? totalExpense / expenseCount : null
+  const avgExpense =
+    expenseCount > 0 ? totalExpense.dividedBy(expenseCount).toString() : null
 
-  const savingsRate =
-    totalIncome > 0
-      ? Number(
-          (((totalIncome - totalExpense) / totalIncome) * 100).toFixed(1)
-        ).toLocaleString("fullwide", {
-          useGrouping: false,
-        })
-      : null
+  const savingsRate = totalIncome.greaterThan(0)
+    ? totalIncome
+        .minus(totalExpense)
+        .dividedBy(totalIncome)
+        .mul(100)
+        .toDecimalPlaces(1)
+        .toFixed(0)
+    : null
 
-  const maxTotal = Math.max(...Object.values(categorySums))
+  const maxTotal = Object.values(categorySums).reduce(
+    (max, val) => (val.greaterThan(max) ? val : max),
+    new Decimal(0)
+  )
+
   const popularCategory = Object.entries(categorySums)
-    .filter(([, total]) => total === maxTotal)
+    .filter(([, total]) => total.equals(maxTotal))
     .map(([key]) => key as CategoryKeyType)
 
   return {
@@ -90,9 +105,9 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
 }
 
 interface SummaryStats {
-  totalIncome: number
-  totalExpense: number
-  balance: number
+  totalIncome: string
+  totalExpense: string
+  balance: string
   transactionCount: number
   incomeCount: number
   expenseCount: number
@@ -104,17 +119,23 @@ export function calculateSummaryStats(
   const incomeTransactions = transactions.filter((t) => t.type === "income")
   const expenseTransactions = transactions.filter((t) => t.type === "expense")
 
-  const totalIncome = incomeTransactions.reduce((sum, t) => sum + t.amount, 0)
-  const totalExpense = expenseTransactions.reduce((sum, t) => sum + t.amount, 0)
-  const balance = totalIncome - totalExpense
+  const totalIncome = incomeTransactions.reduce(
+    (sum, t) => sum.plus(new Decimal(t.amount)),
+    new Decimal(0)
+  )
+  const totalExpense = expenseTransactions.reduce(
+    (sum, t) => sum.plus(new Decimal(t.amount)),
+    new Decimal(0)
+  )
+  const balance = totalIncome.minus(totalExpense)
   const transactionCount = transactions.length
   const incomeCount = incomeTransactions.length
   const expenseCount = expenseTransactions.length
 
   return {
-    totalIncome,
-    totalExpense,
-    balance,
+    totalIncome: totalIncome.toString(),
+    totalExpense: totalExpense.toString(),
+    balance: balance.toString(),
     transactionCount,
     incomeCount,
     expenseCount,
@@ -124,7 +145,7 @@ export function calculateSummaryStats(
 interface CategoryStats {
   categoryKey: string
   count: number
-  total: number
+  total: string
   type: "income" | "expense"
 }
 
@@ -136,22 +157,29 @@ export function calculateCategoriesStats(
   return categories
     .map((categoryKey) => {
       const filtered = transactions.filter((t) => t.categoryKey === categoryKey)
-      const total = filtered.reduce((sum, t) => sum + t.amount, 0)
+      const total = filtered.reduce(
+        (sum, t) => sum.plus(new Decimal(t.amount)),
+        new Decimal(0)
+      )
       return {
         categoryKey,
         count: filtered.length,
-        total,
+        total: total.toString(),
         type: filtered[0].type,
       }
     })
-    .sort((a, b) => b.total - a.total)
+    .sort((a, b) => {
+      const aDecimal = new Decimal(a.total)
+      const bDecimal = new Decimal(b.total)
+      return bDecimal.greaterThan(aDecimal) ? 1 : -1
+    })
 }
 
 interface StatBaseConfig<TBase, Transaction> {
   type: "income" | "expense"
-  getTarget: (item: TBase) => number
+  getTarget: (item: TBase) => string
   getCategoryKey: (item: TBase) => string
-  getAmount: (t: Transaction) => number
+  getAmount: (t: Transaction) => string
   pickColor: (percentage: number, hasItems: boolean) => string
 }
 
@@ -176,10 +204,15 @@ function calculateStatsBase<TBase extends Budget | Goal>(
     )
   })
 
-  const total = filtered.reduce((sum, t) => sum + config.getAmount(t), 0)
+  const total = filtered.reduce(
+    (sum, t) => sum.plus(new Decimal(config.getAmount(t))),
+    new Decimal(0)
+  )
 
-  const target = config.getTarget(base)
-  const percentage = target === 0 ? 0 : (total / target) * 100
+  const target = new Decimal(config.getTarget(base))
+  const percentage = target.equals(0)
+    ? 0
+    : total.div(target).mul(100).toNumber()
 
   let status: "expired" | "active" | "upcoming"
   if (endDateOnly.getTime() < nowDateOnly.getTime()) {
@@ -195,11 +228,11 @@ function calculateStatsBase<TBase extends Budget | Goal>(
 
   const colorClass = config.pickColor(percentage, filtered.length > 0)
 
-  return { total, percentage, status, colorClass }
+  return { total: total.toString(), percentage, status, colorClass }
 }
 
 interface BudgetWithStats extends Budget {
-  spent: number
+  spent: string
   percentage: number
   progressColorClass: string
   status: "expired" | "active" | "upcoming"
@@ -234,7 +267,7 @@ export function calculateBudgetsStats(
 }
 
 interface GoalWithStats extends Goal {
-  accumulated: number
+  accumulated: string
   percentage: number
   progressColorClass: string
   status: "expired" | "active" | "upcoming"

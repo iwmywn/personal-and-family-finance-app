@@ -38,11 +38,11 @@ import { DeleteGoalDialog } from "@/components/goals/delete-goal-dialog"
 import { GoalDialog } from "@/components/goals/goal-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Goal } from "@/lib/definitions"
 import { calculateGoalsStats } from "@/lib/statistics"
-import { formatCurrency } from "@/lib/utils"
 
 interface GoalsTableProps {
   filteredGoals: Goal[]
@@ -58,6 +58,7 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
+  const formatCurrency = useFormatCurrency()
 
   const goalsWithStats = calculateGoalsStats(filteredGoals, transactions)
 

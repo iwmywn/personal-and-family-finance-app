@@ -2,6 +2,7 @@ import { collection } from "@/lib/db"
 import type {
   DBBudget,
   DBCategory,
+  DBExchangeRate,
   DBGoal,
   DBRecurringTransaction,
   DBTransaction,
@@ -30,4 +31,8 @@ export function getGoalsCollection() {
 
 export function getRecurringTransactionsCollection() {
   return collection<DBRecurringTransaction>("recurringTransactions")
+}
+
+export function getExchangeRatesCollection() {
+  return collection<DBExchangeRate>("exchangeRates")
 }

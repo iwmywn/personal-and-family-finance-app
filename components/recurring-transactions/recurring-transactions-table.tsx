@@ -37,10 +37,11 @@ import { DeleteRecurringTransactionDialog } from "@/components/recurring-transac
 import { RecurringTransactionDialog } from "@/components/recurring-transactions/recurring-transaction-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { formatCurrency, normalizeToUTCDate } from "@/lib/utils"
+import { normalizeToUTCDate } from "@/lib/utils"
 import { getNextDate } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
 interface RecurringTableProps {
@@ -61,6 +62,7 @@ export function RecurringTransactionsTable({
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
+  const formatCurrency = useFormatCurrency()
 
   const getFrequencyLabel = (frequency: RecurringTransaction["frequency"]) => {
     switch (frequency) {

@@ -42,7 +42,8 @@ describe("Budgets", async () => {
 
       const result = await createBudget({
         categoryKey: mockBudget.categoryKey,
-        allocatedAmount: 2000000,
+        currency: mockBudget.currency,
+        allocatedAmount: "2000000",
         startDate: normalizeToUTCDate(mockBudget.startDate),
         endDate: normalizeToUTCDate(mockBudget.endDate),
       })
@@ -74,7 +75,7 @@ describe("Budgets", async () => {
       })
 
       expect(addedBudget?.categoryKey).toBe("food_beverage")
-      expect(addedBudget?.allocatedAmount).toBe(1000000)
+      expect(addedBudget?.allocatedAmount.toString()).toBe("1000000")
       expect(addedBudget?.startDate.toISOString()).toBe(
         "2024-01-01T00:00:00.000Z"
       )
@@ -146,7 +147,8 @@ describe("Budgets", async () => {
 
       const result = await updateBudget(mockBudget._id.toString(), {
         categoryKey: "transportation",
-        allocatedAmount: 2000000,
+        allocatedAmount: "2000000",
+        currency: "VND",
         startDate: normalizeToUTCDate(new Date("2024-02-01")),
         endDate: normalizeToUTCDate(new Date("2024-02-29")),
       })
@@ -159,7 +161,7 @@ describe("Budgets", async () => {
       })
 
       expect(updatedBudget?.categoryKey).toBe("transportation")
-      expect(updatedBudget?.allocatedAmount).toBe(2000000)
+      expect(updatedBudget?.allocatedAmount.toString()).toBe("2000000")
       expect(updatedBudget?.startDate.toISOString()).toBe(
         "2024-02-01T00:00:00.000Z"
       )
@@ -167,7 +169,7 @@ describe("Budgets", async () => {
         "2024-02-29T00:00:00.000Z"
       )
       expect(unrelatedBudget?.categoryKey).toBe("food_beverage")
-      expect(unrelatedBudget?.allocatedAmount).toBe(1000000)
+      expect(unrelatedBudget?.allocatedAmount.toString()).toBe("1000000")
       expect(unrelatedBudget?.startDate.toISOString()).toBe(
         "2024-01-01T00:00:00.000Z"
       )
@@ -283,7 +285,7 @@ describe("Budgets", async () => {
 
       expect(result.budgets).toHaveLength(1)
       expect(result.budgets?.[0].categoryKey).toBe("food_beverage")
-      expect(result.budgets?.[0].allocatedAmount).toBe(1000000)
+      expect(result.budgets?.[0].allocatedAmount).toBe("1000000")
       expect(result.error).toBeUndefined()
     })
 

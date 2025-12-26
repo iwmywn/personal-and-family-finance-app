@@ -38,8 +38,9 @@ describe("Goals", async () => {
 
       const result = await createGoal({
         categoryKey: mockGoal.categoryKey,
+        currency: mockGoal.currency,
         name: "Valid",
-        targetAmount: 2000000,
+        targetAmount: "2000000",
         startDate: normalizeToUTCDate(mockGoal.startDate),
         endDate: normalizeToUTCDate(mockGoal.endDate),
       })
@@ -72,7 +73,7 @@ describe("Goals", async () => {
 
       expect(addedGoal?.categoryKey).toBe("food_beverage")
       expect(addedGoal?.name).toBe("buy a motorbike")
-      expect(addedGoal?.targetAmount).toBe(50000000)
+      expect(addedGoal?.targetAmount.toString()).toBe("50000000")
       expect(addedGoal?.startDate.toISOString()).toBe(
         "2024-01-01T00:00:00.000Z"
       )
@@ -143,7 +144,8 @@ describe("Goals", async () => {
       const result = await updateGoal(mockGoal._id.toString(), {
         categoryKey: "housing",
         name: "Mua nhà",
-        targetAmount: 2000000000,
+        targetAmount: "2000000000",
+        currency: "VND",
         startDate: normalizeToUTCDate(new Date("2024-01-01")),
         endDate: normalizeToUTCDate(new Date("2025-12-31")),
       })
@@ -157,7 +159,7 @@ describe("Goals", async () => {
 
       expect(updatedGoal?.categoryKey).toBe("housing")
       expect(updatedGoal?.name).toBe("Mua nhà")
-      expect(updatedGoal?.targetAmount).toBe(2000000000)
+      expect(updatedGoal?.targetAmount.toString()).toBe("2000000000")
       expect(updatedGoal?.startDate.toISOString()).toBe(
         "2024-01-01T00:00:00.000Z"
       )
@@ -275,7 +277,7 @@ describe("Goals", async () => {
 
       expect(result.goals).toHaveLength(1)
       expect(result.goals?.[0].name).toBe("buy a motorbike")
-      expect(result.goals?.[0].targetAmount).toBe(50000000)
+      expect(result.goals?.[0].targetAmount).toBe("50000000")
       expect(result.goals?.[0].categoryKey).toBe("salary_bonus")
       expect(result.error).toBeUndefined()
     })

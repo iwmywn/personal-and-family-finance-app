@@ -78,7 +78,7 @@ describe("Transactions", async () => {
 
       expect(addedTransaction?.type).toBe("income")
       expect(addedTransaction?.categoryKey).toBe("business_freelance")
-      expect(addedTransaction?.amount).toBe(2500000)
+      expect(addedTransaction?.amount.toString()).toBe("2500000")
       expect(addedTransaction?.description).toBe("freelance project payment")
       expect(addedTransaction?.date.toISOString()).toBe(
         "2024-02-05T00:00:00.000Z"
@@ -154,7 +154,8 @@ describe("Transactions", async () => {
       const result = await updateTransaction(mockTransaction._id.toString(), {
         type: "expense",
         categoryKey: "personal_care",
-        amount: 100000,
+        amount: "100000",
+        currency: "VND",
         description: "Updated description",
         date: normalizeToUTCDate(new Date("2024-02-04")),
       })
@@ -168,14 +169,14 @@ describe("Transactions", async () => {
 
       expect(updatedTransaction?.type).toBe("expense")
       expect(updatedTransaction?.categoryKey).toBe("personal_care")
-      expect(updatedTransaction?.amount).toBe(100000)
+      expect(updatedTransaction?.amount.toString()).toBe("100000")
       expect(updatedTransaction?.description).toBe("Updated description")
       expect(updatedTransaction?.date.toISOString()).toBe(
         "2024-02-04T00:00:00.000Z"
       )
       expect(unrelatedTransaction?.type).toBe("expense")
       expect(unrelatedTransaction?.categoryKey).toBe("food_beverage")
-      expect(unrelatedTransaction?.amount).toBe(50000)
+      expect(unrelatedTransaction?.amount.toString()).toBe("50000")
       expect(unrelatedTransaction?.description).toBe("hamburger")
       expect(result.success).toBe("Transaction has been updated.")
       expect(result.error).toBeUndefined()
@@ -261,7 +262,7 @@ describe("Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getTransactions("")
+      const result = await getTransactions("", "VND")
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(
@@ -272,7 +273,7 @@ describe("Transactions", async () => {
     it("should return empty transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString())
+      const result = await getTransactions(mockUser._id.toString(), "VND")
 
       expect(result.transactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -282,11 +283,11 @@ describe("Transactions", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString())
+      const result = await getTransactions(mockUser._id.toString(), "VND")
 
       expect(result.transactions).toHaveLength(1)
       expect(result.transactions?.[0].description).toBe("hamburger")
-      expect(result.transactions?.[0].amount).toBe(50000)
+      expect(result.transactions?.[0].amount).toBe("50000")
       expect(result.error).toBeUndefined()
     })
 
@@ -314,7 +315,7 @@ describe("Transactions", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString())
+      const result = await getTransactions(mockUser._id.toString(), "VND")
 
       expect(result.transactions).toHaveLength(3)
       // Should be sorted by date descendinghen _id descending
@@ -330,7 +331,7 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await getTransactions(mockUser._id.toString())
+      const result = await getTransactions(mockUser._id.toString(), "VND")
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(

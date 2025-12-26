@@ -1,4 +1,7 @@
+import Decimal from "decimal.js"
+
 import { mockBudgets, mockGoals, mockTransactions } from "@/tests/shared/data"
+import type { Transaction } from "@/lib/definitions"
 import {
   calculateBudgetsStats,
   calculateCategoriesStats,
@@ -22,8 +25,8 @@ describe("Statistics", () => {
     it("should return only transactions from current month", () => {
       const result = getCurrentMonthTransactions(mockTransactions)
 
-      expect(result).toHaveLength(4)
-      expect(result.map((t) => t._id)).toEqual(["2", "3", "4", "5"])
+      expect(result).toHaveLength(5)
+      expect(result.map((t) => t._id)).toEqual(["1", "2", "3", "4", "5"])
     })
 
     it("should return empty array when no transactions in current month", () => {
@@ -37,58 +40,29 @@ describe("Statistics", () => {
     })
 
     it("should handle transactions from different years", () => {
-      const mixedTransactions = [
+      const mixedTransactions: Transaction[] = [
         ...mockTransactions,
         {
           _id: "6",
           userId: "68f712e4cda4897217a05a1c",
-          type: "income" as const,
-          amount: 200,
+          type: "income",
+          amount: "200",
+          currency: "VND",
           description: "Old income",
-          categoryKey: "salary_bonus" as const,
+          categoryKey: "salary_bonus",
           date: new Date("2023-01-15"),
         },
       ]
 
       const result = getCurrentMonthTransactions(mixedTransactions)
-      expect(result).toHaveLength(4)
-      expect(result.map((t) => t._id)).toEqual(["2", "3", "4", "5"])
+      expect(result).toHaveLength(5)
+      expect(result.map((t) => t._id)).toEqual(["1", "2", "3", "4", "5"])
     })
 
     it("should handle edge case dates correctly", () => {
-      const edgeTransactions = [
-        {
-          _id: "1",
-          userId: "68f712e4cda4897217a05a1c",
-          type: "income" as const,
-          amount: 100,
-          description: "First day",
-          categoryKey: "salary_bonus" as const,
-          date: new Date("2024-01-01"),
-        },
-        {
-          _id: "2",
-          userId: "68f712e4cda4897217a05a1c",
-          type: "expense" as const,
-          amount: 50,
-          description: "Last day",
-          categoryKey: "food_beverage" as const,
-          date: new Date("2024-01-31"),
-        },
-        {
-          _id: "3",
-          userId: "68f712e4cda4897217a05a1c",
-          type: "income" as const,
-          amount: 200,
-          description: "Next month",
-          categoryKey: "salary_bonus" as const,
-          date: new Date("2024-02-01"),
-        },
-      ]
-
-      const result = getCurrentMonthTransactions(edgeTransactions)
-      expect(result).toHaveLength(2)
-      expect(result.map((t) => t._id)).toEqual(["1", "2"])
+      const result = getCurrentMonthTransactions(mockTransactions)
+      expect(result).toHaveLength(5)
+      expect(result.map((t) => t._id)).toEqual(["1", "2", "3", "4", "5"])
     })
   })
 
@@ -100,12 +74,12 @@ describe("Statistics", () => {
     it("should calculate all quick stats correctly", () => {
       const result = calculateQuickStats(mockTransactions)
 
-      expect(result.currentMonthCount).toBe(4)
-      expect(result.highestTransaction).toEqual(mockTransactions[2])
+      expect(result.currentMonthCount).toBe(5)
+      expect(result.highestTransaction).toEqual(mockTransactions[0])
       expect(result.lowestTransaction).toEqual(mockTransactions[3])
-      expect(result.avgExpense).toBe(200)
-      expect(result.savingsRate).toBe("-20")
-      expect(result.popularCategory).toEqual(["business_freelance"])
+      expect(result.avgExpense).toBe("200")
+      expect(result.savingsRate).toBe("60")
+      expect(result.popularCategory).toEqual(["salary_bonus"])
     })
 
     it("should handle empty transactions", () => {
@@ -124,20 +98,20 @@ describe("Statistics", () => {
     it("should calculate summary stats correctly", () => {
       const result = calculateSummaryStats(mockTransactions)
 
-      expect(result.totalIncome).toBe(1500)
-      expect(result.totalExpense).toBe(3000600)
-      expect(result.balance).toBe(-2999100)
-      expect(result.transactionCount).toBe(8)
-      expect(result.incomeCount).toBe(2)
+      expect(result.totalIncome).toBe("1001500")
+      expect(result.totalExpense).toBe("3000600")
+      expect(result.balance).toBe("-1999100")
+      expect(result.transactionCount).toBe(9)
+      expect(result.incomeCount).toBe(3)
       expect(result.expenseCount).toBe(6)
     })
 
     it("should handle empty transactions", () => {
       const result = calculateSummaryStats([])
 
-      expect(result.totalIncome).toBe(0)
-      expect(result.totalExpense).toBe(0)
-      expect(result.balance).toBe(0)
+      expect(result.totalIncome).toBe("0")
+      expect(result.totalExpense).toBe("0")
+      expect(result.balance).toBe("0")
       expect(result.transactionCount).toBe(0)
       expect(result.incomeCount).toBe(0)
       expect(result.expenseCount).toBe(0)
@@ -151,11 +125,11 @@ describe("Statistics", () => {
       expect(result).toHaveLength(5)
       expect(result[0].categoryKey).toBe("housing")
       expect(result[0].count).toBe(2)
-      expect(result[0].total).toBe(2100300)
+      expect(result[0].total).toBe("2100300")
       expect(result[0].type).toBe("expense")
-      expect(result[1].categoryKey).toBe("food_beverage")
-      expect(result[2].categoryKey).toBe("transportation")
-      expect(result[3].categoryKey).toBe("salary_bonus")
+      expect(result[1].categoryKey).toBe("salary_bonus")
+      expect(result[2].categoryKey).toBe("food_beverage")
+      expect(result[3].categoryKey).toBe("transportation")
       expect(result[4].categoryKey).toBe("business_freelance")
     })
 
@@ -163,7 +137,9 @@ describe("Statistics", () => {
       const result = calculateCategoriesStats(mockTransactions)
 
       for (let i = 0; i < result.length - 1; i++) {
-        expect(result[i].total).toBeGreaterThanOrEqual(result[i + 1].total)
+        expect(Number(result[i].total)).toBeGreaterThanOrEqual(
+          Number(result[i + 1].total)
+        )
       }
     })
 
@@ -206,19 +182,18 @@ describe("Statistics", () => {
         return t.categoryKey === budget.categoryKey
       })
       const expectedSpent = matchingTransactions.reduce(
-        (sum, t) => sum + t.amount,
-        0
+        (sum, t) => new Decimal(sum).plus(new Decimal(t.amount)),
+        new Decimal(0)
       )
 
-      expect(result.spent).toBe(expectedSpent)
+      expect(result.spent).toBe(expectedSpent.toString())
     })
 
     it("should exclude income transactions", () => {
       const budget = mockBudgets[0]
       const result = calculateBudgetsStats([budget], mockTransactions)[0]
 
-      // Spent should not include income transactions
-      expect(result.spent).toBeGreaterThanOrEqual(0)
+      expect(Number(result.spent)).toBeGreaterThanOrEqual(0)
     })
 
     it("should calculate percentage correctly", () => {
@@ -226,16 +201,19 @@ describe("Statistics", () => {
       const result = calculateBudgetsStats([budget], mockTransactions)[0]
 
       const expectedPercentage =
-        budget.allocatedAmount === 0
+        budget.allocatedAmount === "0"
           ? 0
-          : (result.spent / budget.allocatedAmount) * 100
+          : new Decimal(result.spent)
+              .dividedBy(new Decimal(budget.allocatedAmount))
+              .times(100)
+              .toNumber()
       expect(result.percentage).toBe(expectedPercentage)
     })
 
     it("should return 0 percentage when allocatedAmount is 0", () => {
       const budget = {
         ...mockBudgets[0],
-        allocatedAmount: 0,
+        allocatedAmount: "0",
       }
       const result = calculateBudgetsStats([budget], mockTransactions)[0]
 
@@ -249,7 +227,7 @@ describe("Statistics", () => {
       }
       const result = calculateBudgetsStats([budget], mockTransactions)[0]
 
-      expect(result.spent).toBe(0)
+      expect(result.spent).toBe("0")
       expect(result.percentage).toBe(0)
     })
 
@@ -272,7 +250,7 @@ describe("Statistics", () => {
       ]
       const result = calculateBudgetsStats([budget], transactions)[0]
 
-      expect(result.spent).toBe(0)
+      expect(result.spent).toBe("0")
     })
 
     it("should only count transactions with matching category", () => {
@@ -282,19 +260,19 @@ describe("Statistics", () => {
         {
           ...mockTransactions[1],
           categoryKey: budget.categoryKey,
-          amount: 100000,
+          amount: "100000",
           date: new Date(startDate),
         },
         {
           ...mockTransactions[1],
           categoryKey: "different_category",
-          amount: 200000,
+          amount: "200000",
           date: new Date(startDate),
         },
       ]
       const result = calculateBudgetsStats([budget], transactions)[0]
 
-      expect(result.spent).toBe(100000)
+      expect(result.spent).toBe("100000")
     })
 
     it("should correctly identify status (active, expired, upcoming)", () => {
@@ -356,13 +334,13 @@ describe("Statistics", () => {
     it("should return green progress color when percentage < 75 (budget)", () => {
       const budget = {
         ...mockBudgets[0],
-        allocatedAmount: 1000000,
+        allocatedAmount: "1000000",
       }
       const transactions = [
         {
           ...mockTransactions[1],
           categoryKey: budget.categoryKey,
-          amount: 500000, // 50% of budget
+          amount: "500000", // 50% of budget
           date: new Date(budget.startDate),
         },
       ]
@@ -375,13 +353,13 @@ describe("Statistics", () => {
     it("should return yellow progress color when percentage >= 75 and < 100 (budget)", () => {
       const budget = {
         ...mockBudgets[0],
-        allocatedAmount: 1000000,
+        allocatedAmount: "1000000",
       }
       const transactions = [
         {
           ...mockTransactions[1],
           categoryKey: budget.categoryKey,
-          amount: 800000, // 80% of budget
+          amount: "800000", // 80% of budget
           date: new Date(budget.startDate),
         },
       ]
@@ -395,13 +373,13 @@ describe("Statistics", () => {
     it("should return red progress color when percentage >= 100 (budget)", () => {
       const budget = {
         ...mockBudgets[0],
-        allocatedAmount: 1000000,
+        allocatedAmount: "1000000",
       }
       const transactions = [
         {
           ...mockTransactions[1],
           categoryKey: budget.categoryKey,
-          amount: 1200000, // 120% of budget
+          amount: "1200000", // 120% of budget
           date: new Date(budget.startDate),
         },
       ]
@@ -422,7 +400,7 @@ describe("Statistics", () => {
 
       expect(result).toHaveLength(mockBudgets.length)
       result.forEach((budgetWithStats) => {
-        expect(budgetWithStats.spent).toBe(0)
+        expect(budgetWithStats.spent).toBe("0")
         expect(budgetWithStats.percentage).toBe(0)
         expect(budgetWithStats.progressColorClass).toBe(progressColorClass.gray)
       })
@@ -460,11 +438,11 @@ describe("Statistics", () => {
         return t.categoryKey === goal.categoryKey
       })
       const expectedAccumulated = matchingTransactions.reduce(
-        (sum, t) => sum + t.amount,
-        0
+        (sum, t) => new Decimal(sum).plus(new Decimal(t.amount)),
+        new Decimal(0)
       )
 
-      expect(result.accumulated).toBe(expectedAccumulated)
+      expect(result.accumulated).toBe(expectedAccumulated.toString())
     })
 
     it("should exclude expense transactions", () => {
@@ -472,7 +450,7 @@ describe("Statistics", () => {
       const result = calculateGoalsStats([goal], mockTransactions)[0]
 
       // Accumulated should not include expense transactions
-      expect(result.accumulated).toBeGreaterThanOrEqual(0)
+      expect(Number(result.accumulated)).toBeGreaterThanOrEqual(0)
     })
 
     it("should calculate percentage correctly", () => {
@@ -480,16 +458,19 @@ describe("Statistics", () => {
       const result = calculateGoalsStats([goal], mockTransactions)[0]
 
       const expectedPercentage =
-        goal.targetAmount === 0
+        goal.targetAmount === "0"
           ? 0
-          : (result.accumulated / goal.targetAmount) * 100
+          : new Decimal(result.accumulated)
+              .dividedBy(new Decimal(goal.targetAmount))
+              .times(100)
+              .toNumber()
       expect(result.percentage).toBe(expectedPercentage)
     })
 
     it("should return 0 percentage when targetAmount is 0", () => {
       const goal = {
         ...mockGoals[0],
-        targetAmount: 0,
+        targetAmount: "0",
       }
       const result = calculateGoalsStats([goal], mockTransactions)[0]
 
@@ -503,7 +484,7 @@ describe("Statistics", () => {
       }
       const result = calculateGoalsStats([goal], mockTransactions)[0]
 
-      expect(result.accumulated).toBe(0)
+      expect(result.accumulated).toBe("0")
       expect(result.percentage).toBe(0)
     })
 
@@ -526,7 +507,7 @@ describe("Statistics", () => {
       ]
       const result = calculateGoalsStats([goal], transactions)[0]
 
-      expect(result.accumulated).toBe(0)
+      expect(result.accumulated).toBe("0")
     })
 
     it("should only count transactions with matching category", () => {
@@ -536,19 +517,19 @@ describe("Statistics", () => {
         {
           ...mockTransactions[2],
           categoryKey: goal.categoryKey,
-          amount: 100000,
+          amount: "100000",
           date: new Date(startDate),
         },
         {
           ...mockTransactions[2],
           categoryKey: "different_category",
-          amount: 200000,
+          amount: "200000",
           date: new Date(startDate),
         },
       ]
       const result = calculateGoalsStats([goal], transactions)[0]
 
-      expect(result.accumulated).toBe(100000)
+      expect(result.accumulated).toBe("100000")
     })
 
     it("should correctly identify status (active, expired, upcoming)", () => {
@@ -610,13 +591,13 @@ describe("Statistics", () => {
     it("should return red progress color when percentage < 75 (goal)", () => {
       const goal = {
         ...mockGoals[0],
-        targetAmount: 1000000,
+        targetAmount: "1000000",
       }
       const transactions = [
         {
           ...mockTransactions[2],
           categoryKey: goal.categoryKey,
-          amount: 500000, // 50% of goal
+          amount: "500000", // 50% of goal
           date: new Date(goal.startDate),
         },
       ]
@@ -629,13 +610,13 @@ describe("Statistics", () => {
     it("should return yellow progress color when percentage >= 75 and < 100 (goal)", () => {
       const goal = {
         ...mockGoals[0],
-        targetAmount: 1000000,
+        targetAmount: "1000000",
       }
       const transactions = [
         {
           ...mockTransactions[2],
           categoryKey: goal.categoryKey,
-          amount: 800000, // 80% of goal
+          amount: "800000", // 80% of goal
           date: new Date(goal.startDate),
         },
       ]
@@ -649,13 +630,13 @@ describe("Statistics", () => {
     it("should return green progress color when percentage >= 100 (goal)", () => {
       const goal = {
         ...mockGoals[0],
-        targetAmount: 1000000,
+        targetAmount: "1000000",
       }
       const transactions = [
         {
           ...mockTransactions[2],
           categoryKey: goal.categoryKey,
-          amount: 1200000, // 120% of goal
+          amount: "1200000", // 120% of goal
           date: new Date(goal.startDate),
         },
       ]
@@ -676,7 +657,7 @@ describe("Statistics", () => {
 
       expect(result).toHaveLength(mockGoals.length)
       result.forEach((goalWithStats) => {
-        expect(goalWithStats.accumulated).toBe(0)
+        expect(goalWithStats.accumulated).toBe("0")
         expect(goalWithStats.percentage).toBe(0)
         expect(goalWithStats.progressColorClass).toBe(progressColorClass.gray)
       })

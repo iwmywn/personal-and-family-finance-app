@@ -14,6 +14,7 @@ import { ActiveSessionsDialog } from "@/components/settings/active-sessions-dial
 import { ChangeNameDialog } from "@/components/settings/change-name-dialog"
 import { ChangePasswordDialog } from "@/components/settings/change-password-dialog"
 import { ChangeUsernameDialog } from "@/components/settings/change-username-dialog"
+import { CurrencySelector } from "@/components/settings/currency-selector"
 import { LanguageSelector } from "@/components/settings/language-selector"
 import { ThemeSelector } from "@/components/settings/theme-selector"
 import { TwoFactorManagerDialog } from "@/components/settings/two-factor-manager-dialog"
@@ -49,6 +50,18 @@ export default function SettingsPage() {
             </CardDescription>
             <CardAction>
               <LanguageSelector />
+            </CardAction>
+          </CardHeader>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("Currency")}</CardTitle>
+            <CardDescription>
+              {t("Select your preferred currency for displaying amounts.")}
+            </CardDescription>
+            <CardAction>
+              <CurrencySelector />
             </CardAction>
           </CardHeader>
         </Card>

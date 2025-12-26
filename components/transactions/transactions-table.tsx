@@ -37,10 +37,10 @@ import { DeleteTransactionDialog } from "@/components/transactions/delete-transa
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
+import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { type Transaction } from "@/lib/definitions"
-import { formatCurrency } from "@/lib/utils"
 
 interface TransactionsTableProps {
   filteredTransactions: Transaction[]
@@ -56,6 +56,7 @@ export function TransactionsTable({
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
+  const formatCurrency = useFormatCurrency()
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)

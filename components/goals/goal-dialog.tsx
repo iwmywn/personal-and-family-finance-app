@@ -40,13 +40,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { CategoryFormSelect } from "@/components/category-form-select"
+import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useCategory } from "@/hooks/use-category"
+import { useAppData } from "@/context/app-data-context"
 import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
+import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
 import type { Goal } from "@/lib/definitions"
-import { cn, normalizeToUTCDate } from "@/lib/utils"
+import { cn, isZeroDecimalCurrency, normalizeToUTCDate } from "@/lib/utils"
 import type { GoalFormValues } from "@/schemas/types"
 
 interface GoalDialogProps {
@@ -61,20 +64,23 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createGoalSchema } = useSchemas()
-
+  const { user } = useAppData()
   const formatDate = useFormatDate()
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(createGoalSchema()),
     defaultValues: {
       categoryKey: goal?.categoryKey || "",
       name: goal?.name || "",
-      targetAmount: goal?.targetAmount || 0,
+      currency: goal?.currency ?? (user.currency as AppCurrency),
+      targetAmount: goal?.targetAmount
+        ? parseFloat(goal.targetAmount)
+            .toFixed(isZeroDecimalCurrency(goal.currency) ? 0 : 2)
+            .toString()
+        : "",
       startDate: goal?.startDate ? new Date(goal.startDate) : undefined,
       endDate: goal?.endDate ? new Date(goal.endDate) : undefined,
     },
   })
-
-  const { getCategoryLabel, getCategoriesByType } = useCategory()
 
   const startDate = useWatch({
     control: form.control,
@@ -121,7 +127,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
         form.reset({
           name: "",
           categoryKey: "",
-          targetAmount: 0,
+          targetAmount: "",
           startDate: undefined,
           endDate: undefined,
         })
@@ -144,33 +150,34 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <CategoryFormSelect
+              control={form.control}
+              type="income"
+              calculatedWidth={calculatedWidth}
+            />
+
             <FormField
               control={form.control}
-              name="categoryKey"
+              name="currency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Category")}</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <FormLabel>{t("Currency")}</FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value)
+                      form.setValue("targetAmount", "")
+                    }}
+                    value={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t("Select Category")}>
-                          {field.value ? getCategoryLabel(field.value) : null}
-                        </SelectValue>
+                        <SelectValue />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent
-                      style={{
-                        maxWidth: `calc(${calculatedWidth}px - 3.125rem)`,
-                      }}
-                    >
-                      {getCategoriesByType("income").map((c) => (
-                        <SelectItem key={c.key} value={c.key}>
-                          <div className="flex flex-col">
-                            <span className="font-medium">{c.label}</span>
-                            <span className="text-muted-foreground wrap-anywhere">
-                              {c.description}
-                            </span>
-                          </div>
+                    <SelectContent>
+                      {CURRENCIES.map((currency) => (
+                        <SelectItem key={currency} value={currency}>
+                          {CURRENCY_CONFIG[currency].displayName}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -202,19 +209,12 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="targetAmount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Target Amount")} (VND)</FormLabel>
+                  <FormLabel>{t("Target Amount")}</FormLabel>
                   <FormControl>
-                    <Input
-                      inputMode="numeric"
-                      placeholder="0"
-                      value={
-                        field.value ? field.value.toLocaleString("vi-VN") : ""
-                      }
-                      onChange={(e) => {
-                        const rawValue = e.target.value.replace(/\./g, "")
-                        const numericValue = Number.parseInt(rawValue) || 0
-                        field.onChange(numericValue)
-                      }}
+                    <CurrencyInput
+                      currency={form.getValues("currency")}
+                      value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />
@@ -265,7 +265,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                         }}
                         disabled={(date) =>
                           (endDate && date > endDate) ||
-                          date < new Date("1900-01-01")
+                          date < new Date(2025, 8, 1)
                         }
                       />
                     </PopoverContent>
@@ -318,7 +318,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                         }}
                         disabled={(date) =>
                           (startDate && date <= startDate) ||
-                          date < new Date("1900-01-01")
+                          date < new Date(2025, 8, 1)
                         }
                       />
                     </PopoverContent>

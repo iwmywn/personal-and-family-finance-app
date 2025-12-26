@@ -9,6 +9,7 @@ import { type Budget } from "@/lib/definitions"
 import type { BudgetFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
+import { toDecimal128 } from "./utils"
 
 export async function createBudget(values: BudgetFormValues) {
   const t = await getExtracted()
@@ -29,6 +30,7 @@ export async function createBudget(values: BudgetFormValues) {
     const existingBudget = await budgetsCollection.findOne({
       userId: new ObjectId(userId),
       categoryKey: values.categoryKey,
+      currency: values.currency,
       startDate: values.startDate,
       endDate: values.endDate,
     })
@@ -40,7 +42,8 @@ export async function createBudget(values: BudgetFormValues) {
     const result = await budgetsCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey: values.categoryKey,
-      allocatedAmount: values.allocatedAmount,
+      currency: values.currency,
+      allocatedAmount: toDecimal128(values.allocatedAmount),
       startDate: values.startDate,
       endDate: values.endDate,
     })
@@ -48,7 +51,7 @@ export async function createBudget(values: BudgetFormValues) {
     if (!result.acknowledged)
       return { error: t("Failed to add budget! Please try again later.") }
 
-    updateTag("budgets")
+    updateTag(`budgets-${userId}`)
     return { success: t("Budget has been added."), error: undefined }
   } catch (error) {
     console.error("Error creating budget:", error)
@@ -91,14 +94,15 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
       {
         $set: {
           categoryKey: values.categoryKey,
-          allocatedAmount: values.allocatedAmount,
+          currency: values.currency,
+          allocatedAmount: toDecimal128(values.allocatedAmount),
           startDate: values.startDate,
           endDate: values.endDate,
         },
       }
     )
 
-    updateTag("budgets")
+    updateTag(`budgets-${session.user.id}`)
     return { success: t("Budget has been updated."), error: undefined }
   } catch (error) {
     console.error("Error updating budget:", error)
@@ -140,7 +144,7 @@ export async function deleteBudget(budgetId: string) {
       _id: new ObjectId(budgetId),
     })
 
-    updateTag("budgets")
+    updateTag(`budgets-${session.user.id}`)
     return { success: t("Budget has been deleted.") }
   } catch (error) {
     console.error("Error deleting budget:", error)
@@ -150,7 +154,7 @@ export async function deleteBudget(budgetId: string) {
 
 export async function getBudgets(userId: string) {
   "use cache: private"
-  cacheTag("budgets")
+  cacheTag(`budgets-${userId}`)
 
   const t = await getExtracted()
 
@@ -173,6 +177,7 @@ export async function getBudgets(userId: string) {
         ...budget,
         _id: budget._id.toString(),
         userId: budget.userId.toString(),
+        allocatedAmount: budget.allocatedAmount.toString(),
       })) as Budget[],
     }
   } catch (error) {

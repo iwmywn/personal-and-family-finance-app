@@ -5,7 +5,7 @@ import type {
 import { normalizeToUTCDate } from "@/lib/utils"
 
 function getLastDayOfMonth(year: number, month: number): number {
-  return new Date(year, month + 1, 0).getDate()
+  return new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
 }
 
 function normalizeDay(year: number, month: number, day: number): number {
@@ -20,24 +20,24 @@ function addDays(lastGeneratedUTC: Date, days: number) {
 }
 
 function nextMonthlyDate(lastGeneratedUTC: Date): Date {
-  const y = lastGeneratedUTC.getFullYear()
-  const m = lastGeneratedUTC.getMonth() + 1
-  const d = lastGeneratedUTC.getDate()
-  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, d)))
+  const y = lastGeneratedUTC.getUTCFullYear()
+  const m = lastGeneratedUTC.getUTCMonth() + 1
+  const d = lastGeneratedUTC.getUTCDate()
+  return new Date(Date.UTC(y, m, normalizeDay(y, m, d)))
 }
 
 function nextQuarterlyDate(lastGeneratedUTC: Date): Date {
-  const y = lastGeneratedUTC.getFullYear()
-  const m = lastGeneratedUTC.getMonth() + 3
-  const d = lastGeneratedUTC.getDate()
-  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, d)))
+  const y = lastGeneratedUTC.getUTCFullYear()
+  const m = lastGeneratedUTC.getUTCMonth() + 3
+  const d = lastGeneratedUTC.getUTCDate()
+  return new Date(Date.UTC(y, m, normalizeDay(y, m, d)))
 }
 
 function nextYearlyDate(lastGeneratedUTC: Date): Date {
-  const y = lastGeneratedUTC.getFullYear() + 1
-  const m = lastGeneratedUTC.getMonth()
-  const d = lastGeneratedUTC.getDate()
-  return normalizeToUTCDate(new Date(y, m, normalizeDay(y, m, d)))
+  const y = lastGeneratedUTC.getUTCFullYear() + 1
+  const m = lastGeneratedUTC.getUTCMonth()
+  const d = lastGeneratedUTC.getUTCDate()
+  return new Date(Date.UTC(y, m, normalizeDay(y, m, d)))
 }
 
 export function getNextDate(
@@ -98,9 +98,9 @@ export function getNextDate(
 
 function isSameDate(a: Date, b: Date) {
   return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
+    a.getUTCFullYear() === b.getUTCFullYear() &&
+    a.getUTCMonth() === b.getUTCMonth() &&
+    a.getUTCDate() === b.getUTCDate()
   )
 }
 

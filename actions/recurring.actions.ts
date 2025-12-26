@@ -13,6 +13,7 @@ import {
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
+import { toDecimal128 } from "./utils"
 
 export async function createRecurringTransaction(
   values: RecurringTransactionFormValues
@@ -36,7 +37,8 @@ export async function createRecurringTransaction(
       userId: new ObjectId(userId),
       type: values.type,
       categoryKey: values.categoryKey,
-      amount: values.amount,
+      amount: toDecimal128(values.amount),
+      currency: values.currency,
       description: values.description,
       frequency: values.frequency,
       startDate: values.startDate,
@@ -56,7 +58,8 @@ export async function createRecurringTransaction(
       userId: new ObjectId(userId),
       type: values.type,
       categoryKey: values.categoryKey,
-      amount: values.amount,
+      amount: toDecimal128(values.amount),
+      currency: values.currency,
       description: values.description,
       frequency: values.frequency,
       randomEveryXDays: values.randomEveryXDays,
@@ -73,7 +76,7 @@ export async function createRecurringTransaction(
         ),
       }
 
-    updateTag("recurringTransactions")
+    updateTag(`recurringTransactions-${userId}`)
     return {
       success: t("Recurring transaction has been added."),
       error: undefined,
@@ -127,7 +130,8 @@ export async function updateRecurringTransaction(
         $set: {
           type: values.type,
           categoryKey: values.categoryKey,
-          amount: values.amount,
+          amount: toDecimal128(values.amount),
+          currency: values.currency,
           description: values.description,
           frequency: values.frequency,
           randomEveryXDays: values.randomEveryXDays,
@@ -138,7 +142,7 @@ export async function updateRecurringTransaction(
       }
     )
 
-    updateTag("recurringTransactions")
+    updateTag(`recurringTransactions-${session.user.id}`)
     return {
       success: t("Recurring transaction has been updated."),
       error: undefined,
@@ -189,7 +193,7 @@ export async function deleteRecurringTransaction(recurringId: string) {
       _id: new ObjectId(recurringId),
     })
 
-    updateTag("recurringTransactions")
+    updateTag(`recurringTransactions-${session.user.id}`)
     return { success: t("Recurring transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting recurring transaction:", error)
@@ -203,7 +207,7 @@ export async function deleteRecurringTransaction(recurringId: string) {
 
 export async function getRecurringTransactions(userId: string) {
   "use cache: private"
-  cacheTag("recurringTransactions")
+  cacheTag(`recurringTransactions-${userId}`)
 
   const t = await getExtracted()
 
@@ -226,6 +230,7 @@ export async function getRecurringTransactions(userId: string) {
         ...recurring,
         _id: recurring._id.toString(),
         userId: recurring.userId.toString(),
+        amount: recurring.amount.toString(),
       })) as RecurringTransaction[],
     }
   } catch (error) {

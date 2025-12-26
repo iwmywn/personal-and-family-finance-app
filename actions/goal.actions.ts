@@ -9,6 +9,7 @@ import { type Goal } from "@/lib/definitions"
 import type { GoalFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
+import { toDecimal128 } from "./utils"
 
 export async function createGoal(values: GoalFormValues) {
   const t = await getExtracted()
@@ -29,6 +30,7 @@ export async function createGoal(values: GoalFormValues) {
     const existingGoal = await goalsCollection.findOne({
       userId: new ObjectId(userId),
       categoryKey: values.categoryKey,
+      currency: values.currency,
       startDate: values.startDate,
       endDate: values.endDate,
     })
@@ -41,7 +43,8 @@ export async function createGoal(values: GoalFormValues) {
       userId: new ObjectId(userId),
       categoryKey: values.categoryKey,
       name: values.name,
-      targetAmount: values.targetAmount,
+      targetAmount: toDecimal128(values.targetAmount),
+      currency: values.currency,
       startDate: values.startDate,
       endDate: values.endDate,
     })
@@ -49,7 +52,7 @@ export async function createGoal(values: GoalFormValues) {
     if (!result.acknowledged)
       return { error: t("Failed to add goal! Please try again later.") }
 
-    updateTag("goals")
+    updateTag(`goals-${userId}`)
     return { success: t("Goal has been added."), error: undefined }
   } catch (error) {
     console.error("Error creating goal:", error)
@@ -93,14 +96,15 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
         $set: {
           categoryKey: values.categoryKey,
           name: values.name,
-          targetAmount: values.targetAmount,
+          targetAmount: toDecimal128(values.targetAmount),
+          currency: values.currency,
           startDate: values.startDate,
           endDate: values.endDate,
         },
       }
     )
 
-    updateTag("goals")
+    updateTag(`goals-${session.user.id}`)
     return { success: t("Goal has been updated."), error: undefined }
   } catch (error) {
     console.error("Error updating goal:", error)
@@ -142,7 +146,7 @@ export async function deleteGoal(goalId: string) {
       _id: new ObjectId(goalId),
     })
 
-    updateTag("goals")
+    updateTag(`goals-${session.user.id}`)
     return { success: t("Goal has been deleted.") }
   } catch (error) {
     console.error("Error deleting goal:", error)
@@ -152,7 +156,7 @@ export async function deleteGoal(goalId: string) {
 
 export async function getGoals(userId: string) {
   "use cache: private"
-  cacheTag("goals")
+  cacheTag(`goals-${userId}`)
 
   const t = await getExtracted()
 
@@ -175,6 +179,7 @@ export async function getGoals(userId: string) {
         ...goal,
         _id: goal._id.toString(),
         userId: goal.userId.toString(),
+        targetAmount: goal.targetAmount.toString(),
       })) as Goal[],
     }
   } catch (error) {

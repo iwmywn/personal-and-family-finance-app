@@ -1,8 +1,16 @@
-import { enUS, vi, zhCN, type DayPickerLocale } from "react-day-picker/locale"
+import {
+  enUS,
+  ja,
+  ko,
+  vi,
+  zhCN,
+  type DayPickerLocale,
+} from "react-day-picker/locale"
 
-export type AppLocale = (typeof _LOCALES)[number]
+export const LOCALES = ["en-US", "zh-CN", "ja-JP", "ko-KR", "vi-VN"] as const
 
-const _LOCALES = ["vi-VN", "en-US", "zh-CN"] as const
+export type AppLocale = (typeof LOCALES)[number]
+
 export const DEFAULT_LOCALE: AppLocale = "vi-VN"
 
 type LocaleConfigType = {
@@ -13,10 +21,6 @@ type LocaleConfigType = {
 }
 
 export const LOCALE_CONFIG: LocaleConfigType = {
-  "vi-VN": {
-    dateLocale: vi,
-    displayName: "Tiếng Việt",
-  },
   "en-US": {
     dateLocale: enUS,
     displayName: "English",
@@ -24,5 +28,17 @@ export const LOCALE_CONFIG: LocaleConfigType = {
   "zh-CN": {
     dateLocale: zhCN,
     displayName: "简体中文",
+  },
+  "ja-JP": {
+    dateLocale: ja,
+    displayName: "日本語",
+  },
+  "ko-KR": {
+    dateLocale: ko,
+    displayName: "한국어",
+  },
+  "vi-VN": {
+    dateLocale: vi,
+    displayName: "Tiếng Việt",
   },
 }

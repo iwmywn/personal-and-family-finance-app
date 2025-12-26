@@ -8,9 +8,9 @@ import { nunito } from "@/app/fonts"
 import "./globals.css"
 
 import { Suspense } from "react"
-import Image from "next/image"
 
 import { Toaster } from "@/components/ui/sonner"
+import { Logo } from "@/components/logo"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { env } from "@/env/client.mjs"
@@ -56,26 +56,45 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className={`${nunito.className}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+    <Suspense
+      fallback={
+        <html lang="vi-VN">
+          <body>
+            <ThemeProvider>
+              <div className="center h-screen">
+                <Logo isLoading />
+              </div>
+            </ThemeProvider>
+          </body>
+        </html>
+      }
+    >
+      <AppLayout>{children}</AppLayout>
+    </Suspense>
+  )
+}
+
+async function AppLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  const locale = await getLocale()
+
+  return (
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+      className={nunito.className}
+    >
+      <body>
+        <ThemeProvider>
           <ProgressProvider>
             <Suspense
               fallback={
                 <div className="center h-screen">
-                  <Image
-                    src="/images/logo.png"
-                    alt={`${siteConfig.name} Logo`}
-                    width={32}
-                    height={32}
-                    aria-label="Loading"
-                    className="animate-spin"
-                  />
+                  <Logo isLoading />
                 </div>
               }
             >

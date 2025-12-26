@@ -49,31 +49,31 @@ describe("Utils", () => {
 
   describe("formatCurrency", () => {
     it("should format currency in VND", () => {
-      const result = formatCurrency(1000000)
+      const result = formatCurrency("1000000", "vi-VN", "VND")
       expect(result).toContain("1.000.000")
       expect(result).toContain("₫")
     })
 
     it("should handle zero amount", () => {
-      const result = formatCurrency(0)
+      const result = formatCurrency("0", "vi-VN", "VND")
       expect(result).toContain("0")
       expect(result).toContain("₫")
     })
 
     it("should handle negative amount", () => {
-      const result = formatCurrency(-500000)
+      const result = formatCurrency("-500000", "vi-VN", "VND")
       expect(result).toContain("-500.000")
       expect(result).toContain("₫")
     })
 
     it("should handle decimal amounts", () => {
-      const result = formatCurrency(1234567.89)
+      const result = formatCurrency("1234567.89", "vi-VN", "VND")
       expect(result).toContain("1.234.568")
       expect(result).toContain("₫")
     })
 
     it("should handle large amounts", () => {
-      const result = formatCurrency(1000000000)
+      const result = formatCurrency("1000000000", "vi-VN", "VND")
       expect(result).toContain("1.000.000.000")
       expect(result).toContain("₫")
     })
@@ -104,7 +104,7 @@ describe("Utils", () => {
   describe("getUniqueYears", () => {
     it("should return unique years sorted descending", () => {
       const result = getUniqueYears(mockTransactions)
-      expect(result).toEqual([2024, 2023])
+      expect(result).toEqual([2025, 2024])
     })
 
     it("should return empty array for empty transactions", () => {

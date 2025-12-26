@@ -22,6 +22,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
 import { AppDataProvider } from "@/context/app-data-context"
+import type { AppCurrency } from "@/lib/currency"
 
 export default async function DashboardLayout({
   children,
@@ -81,7 +82,7 @@ async function DashboardProvider({
     goalsResult,
     recurringResult,
   ] = await Promise.all([
-    getTransactions(userId),
+    getTransactions(userId, session.user.currency as AppCurrency),
     getCustomCategories(userId),
     getBudgets(userId),
     getGoals(userId),

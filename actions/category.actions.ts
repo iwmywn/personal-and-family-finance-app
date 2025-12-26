@@ -66,7 +66,7 @@ export async function createCustomCategory(values: CategoryFormValues) {
     if (!result.acknowledged)
       return { error: t("Failed to add category! Please try again later.") }
 
-    updateTag("categories")
+    updateTag(`categories-${userId}`)
     return { success: t("Category has been added."), error: undefined }
   } catch (error) {
     console.error("Error creating custom category:", error)
@@ -147,8 +147,8 @@ export async function updateCustomCategory(
       ),
     ])
 
-    updateTag("categories")
-    updateTag("transactions")
+    updateTag(`categories-${userId}`)
+    updateTag(`transactions-${userId}`)
     return { success: t("Category has been updated."), error: undefined }
   } catch (error) {
     console.error("Error updating custom category:", error)
@@ -272,7 +272,7 @@ export async function deleteCustomCategory(categoryId: string) {
       _id: new ObjectId(categoryId),
     })
 
-    updateTag("categories")
+    updateTag(`categories-${userId}`)
     return { success: t("Category has been deleted.") }
   } catch (error) {
     console.error("Error deleting custom category:", error)
@@ -282,7 +282,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
 export async function getCustomCategories(userId: string) {
   "use cache: private"
-  cacheTag("categories")
+  cacheTag(`categories-${userId}`)
 
   const t = await getExtracted()
 

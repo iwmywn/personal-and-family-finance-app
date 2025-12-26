@@ -55,7 +55,8 @@ describe("Recurring Transactions", async () => {
       const result = await createRecurringTransaction({
         type: mockRecurringTransaction.type,
         categoryKey: mockRecurringTransaction.categoryKey,
-        amount: mockRecurringTransaction.amount,
+        amount: mockRecurringTransaction.amount.toString(),
+        currency: mockRecurringTransaction.currency,
         description: mockRecurringTransaction.description,
         frequency: mockRecurringTransaction.frequency,
         randomEveryXDays: mockRecurringTransaction.randomEveryXDays,
@@ -99,7 +100,7 @@ describe("Recurring Transactions", async () => {
 
       expect(addedRecurring?.type).toBe("income")
       expect(addedRecurring?.categoryKey).toBe("business_freelance")
-      expect(addedRecurring?.amount).toBe(2500000)
+      expect(addedRecurring?.amount.toString()).toBe("2500000")
       expect(addedRecurring?.description).toBe("Freelance project payment")
       expect(addedRecurring?.frequency).toBe("monthly")
       expect(addedRecurring?.startDate.toISOString()).toBe(
@@ -240,7 +241,8 @@ describe("Recurring Transactions", async () => {
         {
           type: "expense",
           categoryKey: "food_beverage",
-          amount: 100000,
+          amount: "100000",
+          currency: "VND",
           description: "Updated description",
           frequency: "weekly",
           randomEveryXDays: undefined,
@@ -259,7 +261,7 @@ describe("Recurring Transactions", async () => {
 
       expect(updatedRecurring?.type).toBe("expense")
       expect(updatedRecurring?.categoryKey).toBe("food_beverage")
-      expect(updatedRecurring?.amount).toBe(100000)
+      expect(updatedRecurring?.amount.toString()).toBe("100000")
       expect(updatedRecurring?.description).toBe("Updated description")
       expect(updatedRecurring?.frequency).toBe("weekly")
       expect(updatedRecurring?.startDate.toISOString()).toBe(
@@ -271,7 +273,7 @@ describe("Recurring Transactions", async () => {
       expect(updatedRecurring?.isActive).toBe(false)
       expect(unrelatedRecurring?.type).toBe("income")
       expect(unrelatedRecurring?.categoryKey).toBe("salary_bonus")
-      expect(unrelatedRecurring?.amount).toBe(5000000)
+      expect(unrelatedRecurring?.amount.toString()).toBe("5000000")
       expect(result.success).toBe("Recurring transaction has been updated.")
       expect(result.error).toBeUndefined()
     })
@@ -391,7 +393,7 @@ describe("Recurring Transactions", async () => {
       expect(result.recurringTransactions?.[0].description).toBe(
         "Monthly Salary"
       )
-      expect(result.recurringTransactions?.[0].amount).toBe(5000000)
+      expect(result.recurringTransactions?.[0].amount).toBe("5000000")
       expect(result.error).toBeUndefined()
     })
 

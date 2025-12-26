@@ -53,6 +53,7 @@ export async function GET(request: NextRequest) {
         type: rec.type,
         categoryKey: rec.categoryKey,
         amount: rec.amount,
+        currency: rec.currency,
         description: rec.description,
         date: todayUTC,
       }
@@ -89,8 +90,8 @@ export async function GET(request: NextRequest) {
       deactivated: deactivatedResult.modifiedCount,
       timestamp: new Date().toISOString(),
     })
-  } catch (err) {
-    console.error("CRON ERROR:", err)
+  } catch (error) {
+    console.error("CRON ERROR:", error)
     return new Response("Cron failed", { status: 500 })
   }
 }

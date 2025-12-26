@@ -20,7 +20,7 @@ describe("Filters", () => {
         searchTerm: "salary",
       })
 
-      expect(result).toHaveLength(1)
+      expect(result).toHaveLength(2)
       expect(result[0].description).toBe("Salary")
     })
 
@@ -29,7 +29,7 @@ describe("Filters", () => {
         filterType: "income",
       })
 
-      expect(result).toHaveLength(2)
+      expect(result).toHaveLength(3)
       expect(result.every((t) => t.type === "income")).toBe(true)
     })
 
@@ -47,9 +47,9 @@ describe("Filters", () => {
         filterMonth: "1",
       })
 
-      expect(result).toHaveLength(5)
+      expect(result).toHaveLength(6)
       expect(result.every((t) => new Date(t.date).getMonth() === 0)).toBe(true)
-      expect(result.map((t) => t._id)).toEqual(["1", "2", "3", "4", "5"])
+      expect(result.map((t) => t._id)).toEqual(["1", "2", "3", "4", "5", "9"])
     })
 
     it("should filter by year", () => {
@@ -57,7 +57,7 @@ describe("Filters", () => {
         filterYear: "2024",
       })
 
-      expect(result).toHaveLength(7)
+      expect(result).toHaveLength(8)
       expect(result.every((t) => new Date(t.date).getFullYear() === 2024)).toBe(
         true
       )
@@ -99,7 +99,7 @@ describe("Filters", () => {
     it("should return all transactions when no filters applied", () => {
       const result = filterTransactions(mockTransactions, {})
 
-      expect(result).toHaveLength(8)
+      expect(result).toHaveLength(9)
     })
 
     it("should handle empty transactions array", () => {
@@ -115,7 +115,7 @@ describe("Filters", () => {
         searchTerm: "SALARY",
       })
 
-      expect(result).toHaveLength(1)
+      expect(result).toHaveLength(2)
       expect(result[0].description).toBe("Salary")
     })
 
@@ -135,8 +135,16 @@ describe("Filters", () => {
         },
       })
 
-      expect(result).toHaveLength(6)
-      expect(result.map((t) => t._id)).toEqual(["3", "4", "5", "6", "7", "8"])
+      expect(result).toHaveLength(7)
+      expect(result.map((t) => t._id)).toEqual([
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+      ])
     })
 
     it("should handle date range with only to date", () => {
@@ -551,7 +559,7 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      expect(result.map((goal) => goal._id)).toEqual(["1", "5", "6"])
+      expect(result.map((goal) => goal._id)).toEqual(["5", "6"])
     })
 
     it("should filter by progress - red", () => {
@@ -563,8 +571,8 @@ describe("Filters", () => {
         mockTransactions
       )
 
-      expect(result).toHaveLength(1)
-      expect(result[0]._id).toBe("2")
+      expect(result).toHaveLength(2)
+      expect(result[0]._id).toBe("1")
     })
 
     it("should filter by progress - yellow", () => {
