@@ -53,13 +53,12 @@ import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
 import { useAppData } from "@/context/app-data-context"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/categories"
 import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, normalizeToUTCDate } from "@/lib/utils"
+import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
 import type { TransactionFormValues } from "@/schemas/types"
 
 interface TransactionDialogProps {
@@ -75,7 +74,6 @@ export function TransactionDialog({
 }: TransactionDialogProps) {
   const [type, setType] = useState<CategoryType>(transaction?.type || "income")
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
-  const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createTransactionSchema } = useSchemas()
   const { user } = useAppData()
@@ -109,11 +107,13 @@ export function TransactionDialog({
       return
     }
 
+    const data = {
+      ...values,
+      date: localDateToUTCMidnight(values.date),
+    }
+
     if (transaction) {
-      const { success, error } = await updateTransaction(transaction._id, {
-        ...values,
-        date: normalizeToUTCDate(values.date),
-      })
+      const { success, error } = await updateTransaction(transaction._id, data)
 
       if (error || !success) {
         toast.error(error)
@@ -122,10 +122,7 @@ export function TransactionDialog({
         setOpen(false)
       }
     } else {
-      const { success, error } = await createTransaction({
-        ...values,
-        date: normalizeToUTCDate(values.date),
-      })
+      const { success, error } = await createTransaction(data)
 
       if (error || !success) {
         toast.error(error)
@@ -151,7 +148,7 @@ export function TransactionDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {transaction ? t("Edit Transaction") : t("Add Transaction")}
@@ -180,7 +177,6 @@ export function TransactionDialog({
                 <CategoryFormSelect
                   control={form.control}
                   type="income"
-                  calculatedWidth={calculatedWidth}
                   showDescription
                 />
               </TabsContent>
@@ -189,7 +185,6 @@ export function TransactionDialog({
                 <CategoryFormSelect
                   control={form.control}
                   type="expense"
-                  calculatedWidth={calculatedWidth}
                   showDescription
                 />
               </TabsContent>

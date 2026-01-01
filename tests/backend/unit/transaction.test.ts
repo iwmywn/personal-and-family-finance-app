@@ -21,7 +21,7 @@ import {
   updateTransaction,
 } from "@/actions/transaction.actions"
 import { getTransactionsCollection } from "@/lib/collections"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 
 describe("Transactions", async () => {
   describe("createTransaction", () => {
@@ -157,7 +157,7 @@ describe("Transactions", async () => {
         amount: "100000",
         currency: "VND",
         description: "Updated description",
-        date: normalizeToUTCDate(new Date("2024-02-04")),
+        date: localDateToUTCMidnight(new Date("2024-02-04")),
       })
       const transactionsCollection = await getTransactionsCollection()
       const updatedTransaction = await transactionsCollection.findOne({
@@ -295,17 +295,17 @@ describe("Transactions", async () => {
       const transaction1 = {
         ...mockTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8106"),
-        date: normalizeToUTCDate(new Date("2024-01-15")),
+        date: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const transaction2 = {
         ...mockTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8107"),
-        date: normalizeToUTCDate(new Date("2024-01-15")),
+        date: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const transaction3 = {
         ...mockTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8108"),
-        date: normalizeToUTCDate(new Date("2024-02-15")),
+        date: localDateToUTCMidnight(new Date("2024-02-15")),
       }
 
       await Promise.all([

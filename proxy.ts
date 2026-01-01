@@ -18,10 +18,7 @@ function redirectIfProtectedRoute(request: NextRequest) {
     return redirectTo(routes.signInRoute, nextUrl)
   }
 
-  if (
-    !routes.authRoutes.some((route) => pathname.startsWith(route)) &&
-    !routes.ignoredRoutes.some((route) => pathname.startsWith(route))
-  ) {
+  if (!routes.authRoutes.some((route) => pathname.startsWith(route))) {
     const redirectUrl = new URL(routes.signInRoute, nextUrl)
 
     if (routes.protectedRoutes.some((route) => pathname.startsWith(route))) {
@@ -60,6 +57,6 @@ export default async function proxy(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!api|_next/static|_next/image|images|opengraph-image.png|icon.png|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 }

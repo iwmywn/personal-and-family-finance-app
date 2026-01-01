@@ -11,7 +11,7 @@ import {
   getTransactionsCollection,
 } from "@/lib/collections"
 import type { DBRecurringTransaction, DBTransaction } from "@/lib/definitions"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 import { GET } from "@/app/api/(cronjobs)/recurring-transactions/route"
 import { shouldGenerateToday } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
@@ -25,9 +25,9 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-09"))
+        const today = localDateToUTCMidnight(new Date("2024-01-09"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -36,10 +36,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           lastGenerated: undefined,
         }
-        const today = normalizeToUTCDate(new Date("2024-01-10"))
+        const today = localDateToUTCMidnight(new Date("2024-01-10"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -48,10 +48,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-16"))
+        const today = localDateToUTCMidnight(new Date("2024-01-16"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -60,10 +60,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-15"))
+        const today = localDateToUTCMidnight(new Date("2024-01-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -72,10 +72,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          endDate: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          endDate: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-16"))
+        const today = localDateToUTCMidnight(new Date("2024-01-16"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -86,10 +86,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "weekly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-08")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-08")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-15"))
+        const today = localDateToUTCMidnight(new Date("2024-01-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -98,10 +98,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "weekly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-08")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-08")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-15"))
+        const today = localDateToUTCMidnight(new Date("2024-01-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -110,10 +110,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "weekly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-16"))
+        const today = localDateToUTCMidnight(new Date("2024-01-16"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -122,10 +122,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "weekly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-15"))
+        const today = localDateToUTCMidnight(new Date("2024-01-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -136,10 +136,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "bi-weekly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-05")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-05")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-19"))
+        const today = localDateToUTCMidnight(new Date("2024-01-19"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -148,10 +148,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "bi-weekly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-05")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-05")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-12"))
+        const today = localDateToUTCMidnight(new Date("2024-01-12"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -160,10 +160,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "bi-weekly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-01")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-15"))
+        const today = localDateToUTCMidnight(new Date("2024-01-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -174,10 +174,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-02-15"))
+        const today = localDateToUTCMidnight(new Date("2024-02-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -186,10 +186,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-15")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-02-15"))
+        const today = localDateToUTCMidnight(new Date("2024-02-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -198,10 +198,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-02-14"))
+        const today = localDateToUTCMidnight(new Date("2024-02-14"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -210,10 +210,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-31")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-31")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-31")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-31")),
         }
-        const today = normalizeToUTCDate(new Date("2024-02-29")) // February has 29 days in 2024
+        const today = localDateToUTCMidnight(new Date("2024-02-29")) // February has 29 days in 2024
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -222,10 +222,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-31")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-31")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-31")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-31")),
         }
-        const today = normalizeToUTCDate(new Date("2024-02-29")) // February has 29 days in 2024 (leap year)
+        const today = localDateToUTCMidnight(new Date("2024-02-29")) // February has 29 days in 2024 (leap year)
 
         // Should generate on Feb 29 (last day) when lastGenerated was Jan 31
         expect(shouldGenerateToday(rec, today)).toBe(true)
@@ -237,10 +237,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "quarterly",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-04-15"))
+        const today = localDateToUTCMidnight(new Date("2024-04-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -249,10 +249,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "quarterly",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-02-15"))
+        const today = localDateToUTCMidnight(new Date("2024-02-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -263,11 +263,11 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "yearly",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
           endDate: undefined,
         }
-        const today = normalizeToUTCDate(new Date("2025-01-15"))
+        const today = localDateToUTCMidnight(new Date("2025-01-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -276,10 +276,10 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "yearly",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-07-15"))
+        const today = localDateToUTCMidnight(new Date("2024-07-15"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -288,11 +288,11 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "yearly",
-          startDate: normalizeToUTCDate(new Date("2024-02-29")), // Leap year
-          lastGenerated: normalizeToUTCDate(new Date("2024-02-29")),
+          startDate: localDateToUTCMidnight(new Date("2024-02-29")), // Leap year
+          lastGenerated: localDateToUTCMidnight(new Date("2024-02-29")),
           endDate: undefined,
         }
-        const today = normalizeToUTCDate(new Date("2025-02-28")) // Non-leap year, should normalize to 28
+        const today = localDateToUTCMidnight(new Date("2025-02-28")) // Non-leap year, should normalize to 28
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -304,10 +304,10 @@ describe("Recurring Transactions", () => {
           ...mockRecurringTransaction,
           frequency: "random",
           randomEveryXDays: 5,
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-20"))
+        const today = localDateToUTCMidnight(new Date("2024-01-20"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -317,10 +317,10 @@ describe("Recurring Transactions", () => {
           ...mockRecurringTransaction,
           frequency: "random",
           randomEveryXDays: 5,
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-19"))
+        const today = localDateToUTCMidnight(new Date("2024-01-19"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -331,11 +331,11 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          endDate: normalizeToUTCDate(new Date("2024-01-15")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-14")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          endDate: localDateToUTCMidnight(new Date("2024-01-15")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-14")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-15"))
+        const today = localDateToUTCMidnight(new Date("2024-01-15"))
 
         // Should generate on end date if it's the next date
         expect(shouldGenerateToday(rec, today)).toBe(true)
@@ -345,11 +345,11 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
-          endDate: normalizeToUTCDate(new Date("2024-01-15")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          endDate: localDateToUTCMidnight(new Date("2024-01-15")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")),
         }
-        const today = normalizeToUTCDate(new Date("2024-01-16"))
+        const today = localDateToUTCMidnight(new Date("2024-01-16"))
 
         expect(shouldGenerateToday(rec, today)).toBe(false)
       })
@@ -358,11 +358,11 @@ describe("Recurring Transactions", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "daily",
-          startDate: normalizeToUTCDate(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           endDate: undefined,
-          lastGenerated: normalizeToUTCDate(new Date("2024-12-30")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-12-30")),
         }
-        const today = normalizeToUTCDate(new Date("2024-12-31"))
+        const today = localDateToUTCMidnight(new Date("2024-12-31"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -412,13 +412,13 @@ describe("Recurring Transactions", () => {
 
     describe("Successful execution", () => {
       it("should create transaction when recurring transaction should generate today", async () => {
-        const todayUTC = normalizeToUTCDate(new Date("2024-02-01"))
-        const lastMonthUTC = normalizeToUTCDate(new Date("2024-01-01"))
+        const todayUTC = localDateToUTCMidnight(new Date("2024-02-01"))
+        const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
 
         const recurringTransaction: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGenerated: lastMonthUTC,
         }
 
@@ -468,12 +468,12 @@ describe("Recurring Transactions", () => {
       })
 
       it("should skip transaction when shouldGenerateToday returns false", async () => {
-        const yesterdayUTC = normalizeToUTCDate(new Date("2024-02-01"))
+        const yesterdayUTC = localDateToUTCMidnight(new Date("2024-02-01"))
 
         const recurringTransaction: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGenerated: yesterdayUTC,
         }
 
@@ -513,13 +513,13 @@ describe("Recurring Transactions", () => {
       })
 
       it("should skip transaction when duplicate already exists", async () => {
-        const todayUTC = normalizeToUTCDate(new Date("2024-02-01"))
-        const lastMonthUTC = normalizeToUTCDate(new Date("2024-01-01"))
+        const todayUTC = localDateToUTCMidnight(new Date("2024-02-01"))
+        const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
 
         const recurringTransaction: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGenerated: lastMonthUTC,
         }
 
@@ -582,13 +582,13 @@ describe("Recurring Transactions", () => {
       })
 
       it("should handle multiple recurring transactions correctly", async () => {
-        const lastMonthUTC = normalizeToUTCDate(new Date("2024-01-01"))
-        const yesterdayUTC = normalizeToUTCDate(new Date("2024-01-31"))
+        const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
+        const yesterdayUTC = localDateToUTCMidnight(new Date("2024-01-31"))
 
         const recurringTransaction1: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGenerated: lastMonthUTC, // Will generate on 2024-02-01
         }
 
@@ -597,7 +597,7 @@ describe("Recurring Transactions", () => {
           _id: new ObjectId("691d58b68a6aa5c9e69aad22"),
           frequency: "daily",
           categoryKey: "business_freelance", // Different category to avoid duplicate check
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGenerated: yesterdayUTC, // Will generate on 2024-02-01
         }
 
@@ -605,8 +605,8 @@ describe("Recurring Transactions", () => {
           ...mockRecurringTransaction,
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-15")),
-          lastGenerated: normalizeToUTCDate(new Date("2024-01-15")), // Will generate on 2024-02-15, not today
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
+          lastGenerated: localDateToUTCMidnight(new Date("2024-01-15")), // Will generate on 2024-02-15, not today
         }
 
         await insertTestRecurringTransaction(recurringTransaction1)
@@ -646,12 +646,12 @@ describe("Recurring Transactions", () => {
       })
 
       it("should only process active recurring transactions", async () => {
-        const lastMonthUTC = normalizeToUTCDate(new Date("2024-01-01"))
+        const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
 
         const activeRecurringTransaction: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGenerated: lastMonthUTC, // Will generate on 2024-02-01
         }
 
@@ -659,7 +659,7 @@ describe("Recurring Transactions", () => {
           ...mockRecurringTransaction,
           _id: new ObjectId(),
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGenerated: lastMonthUTC,
           isActive: false,
         }
@@ -719,13 +719,13 @@ describe("Recurring Transactions", () => {
       })
 
       it("should deactivate expired recurring transactions", async () => {
-        const yesterdayUTC = normalizeToUTCDate(new Date("2024-01-31"))
+        const yesterdayUTC = localDateToUTCMidnight(new Date("2024-01-31"))
 
         const expiredRecurringTransaction: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           _id: new ObjectId("691d58b68a6aa5c9e69aad22"),
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           endDate: yesterdayUTC, // Expired yesterday
           isActive: true,
         }
@@ -734,8 +734,8 @@ describe("Recurring Transactions", () => {
           ...mockRecurringTransaction,
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
-          endDate: normalizeToUTCDate(new Date("2024-12-31")), // Still active
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          endDate: localDateToUTCMidnight(new Date("2024-12-31")), // Still active
           isActive: true,
         }
 
@@ -777,7 +777,7 @@ describe("Recurring Transactions", () => {
           ...mockRecurringTransaction,
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
-          startDate: normalizeToUTCDate(new Date("2024-01-01")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           endDate: undefined, // No end date
           isActive: true,
         }

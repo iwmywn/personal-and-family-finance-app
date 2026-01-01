@@ -17,7 +17,7 @@ import {
   updateGoal,
 } from "@/actions/goal.actions"
 import { getGoalsCollection } from "@/lib/collections"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 
 describe("Goals", async () => {
   describe("createGoal", () => {
@@ -41,8 +41,8 @@ describe("Goals", async () => {
         currency: mockGoal.currency,
         name: "Valid",
         targetAmount: "2000000",
-        startDate: normalizeToUTCDate(mockGoal.startDate),
-        endDate: normalizeToUTCDate(mockGoal.endDate),
+        startDate: localDateToUTCMidnight(mockGoal.startDate),
+        endDate: localDateToUTCMidnight(mockGoal.endDate),
       })
 
       expect(result.success).toBeUndefined()
@@ -146,8 +146,8 @@ describe("Goals", async () => {
         name: "Mua nhà",
         targetAmount: "2000000000",
         currency: "VND",
-        startDate: normalizeToUTCDate(new Date("2024-01-01")),
-        endDate: normalizeToUTCDate(new Date("2025-12-31")),
+        startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+        endDate: localDateToUTCMidnight(new Date("2025-12-31")),
       })
       const goalsCollection = await getGoalsCollection()
       const updatedGoal = await goalsCollection.findOne({
@@ -286,17 +286,17 @@ describe("Goals", async () => {
       const goal1 = {
         ...mockGoal,
         _id: new ObjectId("68f896e5cda4897217a05a2d"),
-        startDate: normalizeToUTCDate(new Date("2024-01-01")),
+        startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const goal2 = {
         ...mockGoal,
         _id: new ObjectId("68f896e5cda4897217a05a2e"),
-        startDate: normalizeToUTCDate(new Date("2024-01-01")),
+        startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const goal3 = {
         ...mockGoal,
         _id: new ObjectId("68f896e5cda4897217a05a2f"),
-        startDate: normalizeToUTCDate(new Date("2024-02-01")),
+        startDate: localDateToUTCMidnight(new Date("2024-02-01")),
       }
 
       await Promise.all([

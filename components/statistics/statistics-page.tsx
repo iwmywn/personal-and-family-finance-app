@@ -12,7 +12,7 @@ export default function StatisticsPage() {
 
   return (
     <>
-      <div className="h-auto max-h-none space-y-4">
+      <div className="page-content md:h-auto lg:h-[calc(100vh-4.375rem)]">
         <div className="header">
           <div>
             <div className="title">{t("Statistics")}</div>

@@ -4,10 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -182,7 +182,9 @@
     @apply border-gray-600/60! bg-gray-600/10! text-gray-600!;
   }
 
-  #page-content {
+  .page-content {
+    @apply flex h-auto flex-col gap-4 md:h-[calc(100vh-4.375rem)];
+
     .header {
       @apply bg-primary-foreground sticky top-11 z-50 flex items-center justify-between gap-2;
 
@@ -196,7 +198,11 @@
     }
   }
 
-  #quick-stats-content {
+  .table-wrapper {
+    @apply h-full max-h-90 overflow-auto border md:max-h-none [&>div]:overflow-x-visible!;
+  }
+
+  .quick-stats-content {
     .row {
       @apply grid grid-cols-2 items-center text-sm;
 

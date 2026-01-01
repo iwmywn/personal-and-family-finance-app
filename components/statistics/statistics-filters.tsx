@@ -106,7 +106,7 @@ export function StatisticsFilters() {
   })
 
   return (
-    <div className="space-y-4">
+    <>
       <Card>
         <CardContent>
           <div
@@ -263,6 +263,6 @@ export function StatisticsFilters() {
       <StatisticsSummary filteredTransactions={filteredTransactions} />
 
       <StatisticsTable filteredTransactions={filteredTransactions} />
-    </div>
+    </>
   )
 }

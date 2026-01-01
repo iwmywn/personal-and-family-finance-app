@@ -3,7 +3,7 @@ import { NextRequest } from "next/server"
 import { insertTestExchangeRate } from "@/tests/backend/helpers/database"
 import { mockExchangeRates } from "@/tests/shared/data"
 import { getExchangeRatesCollection } from "@/lib/collections"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { normalizeToUTCMidnight } from "@/lib/utils"
 import { GET } from "@/app/api/(cronjobs)/exchange-rates/route"
 
 const cronSecret = "test-cron-secret"
@@ -105,7 +105,9 @@ describe("Exchange Rates Cron Job", () => {
     })
 
     it("should fetch and save exchange rates when last rate exists and needs update", async () => {
-      const twoDaysAgo = normalizeToUTCDate(new Date("2024-12-22T23:59:59Z"))
+      const twoDaysAgo = normalizeToUTCMidnight(
+        new Date("2024-12-22T23:59:59Z")
+      )
 
       await insertTestExchangeRate({
         ...mockExchangeRates[0],
@@ -137,7 +139,7 @@ describe("Exchange Rates Cron Job", () => {
 
       const exchangeRatesCollection = await getExchangeRatesCollection()
       const savedRate = await exchangeRatesCollection.findOne({
-        date: normalizeToUTCDate(new Date("2024-12-23T23:59:59Z")),
+        date: normalizeToUTCMidnight(new Date("2024-12-23T23:59:59Z")),
       })
 
       expect(savedRate).toBeDefined()
@@ -150,7 +152,9 @@ describe("Exchange Rates Cron Job", () => {
     })
 
     it("should fetch multiple days when there are gaps", async () => {
-      const threeDaysAgo = normalizeToUTCDate(new Date("2024-12-21T23:59:59Z"))
+      const threeDaysAgo = normalizeToUTCMidnight(
+        new Date("2024-12-21T23:59:59Z")
+      )
 
       await insertTestExchangeRate({
         ...mockExchangeRates[0],
@@ -200,7 +204,7 @@ describe("Exchange Rates Cron Job", () => {
     })
 
     it("should return 'No new rates to fetch' when already up to date", async () => {
-      const yesterday = normalizeToUTCDate(new Date("2024-12-23T23:59:59Z"))
+      const yesterday = normalizeToUTCMidnight(new Date("2024-12-23T23:59:59Z"))
 
       await insertTestExchangeRate({
         ...mockExchangeRates[0],
@@ -228,7 +232,9 @@ describe("Exchange Rates Cron Job", () => {
     })
 
     it("should handle API errors gracefully", async () => {
-      const twoDaysAgo = normalizeToUTCDate(new Date("2024-12-22T23:59:59Z"))
+      const twoDaysAgo = normalizeToUTCMidnight(
+        new Date("2024-12-22T23:59:59Z")
+      )
 
       await insertTestExchangeRate({
         ...mockExchangeRates[0],
@@ -263,7 +269,9 @@ describe("Exchange Rates Cron Job", () => {
     })
 
     it("should handle network errors gracefully", async () => {
-      const twoDaysAgo = normalizeToUTCDate(new Date("2024-12-22T23:59:59Z"))
+      const twoDaysAgo = normalizeToUTCMidnight(
+        new Date("2024-12-22T23:59:59Z")
+      )
 
       await insertTestExchangeRate({
         ...mockExchangeRates[0],
@@ -297,7 +305,9 @@ describe("Exchange Rates Cron Job", () => {
     })
 
     it("should handle partial success (some days succeed, some fail)", async () => {
-      const threeDaysAgo = normalizeToUTCDate(new Date("2024-12-21T23:59:59Z"))
+      const threeDaysAgo = normalizeToUTCMidnight(
+        new Date("2024-12-21T23:59:59Z")
+      )
 
       await insertTestExchangeRate({
         ...mockExchangeRates[0],
@@ -370,7 +380,9 @@ describe("Exchange Rates Cron Job", () => {
     })
 
     it("should verify API URL is constructed correctly", async () => {
-      const twoDaysAgo = normalizeToUTCDate(new Date("2024-12-22T23:59:59Z"))
+      const twoDaysAgo = normalizeToUTCMidnight(
+        new Date("2024-12-22T23:59:59Z")
+      )
 
       await insertTestExchangeRate({
         ...mockExchangeRates[0],

@@ -40,22 +40,16 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Budget } from "@/lib/definitions"
 import { calculateBudgetsStats } from "@/lib/statistics"
 import { toDecimal } from "@/lib/utils"
 
 interface BudgetsTableProps {
   filteredBudgets: Budget[]
-  offsetHeight: number
 }
 
-export function BudgetsTable({
-  filteredBudgets,
-  offsetHeight,
-}: BudgetsTableProps) {
+export function BudgetsTable({ filteredBudgets }: BudgetsTableProps) {
   const { budgets, transactions } = useAppData()
-  const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
@@ -68,17 +62,10 @@ export function BudgetsTable({
 
   return (
     <>
-      <Card>
-        <CardContent>
+      <Card className="flex-1 overflow-auto">
+        <CardContent className="h-full">
           {filteredBudgets.length === 0 ? (
-            <Empty
-              className="border"
-              style={{
-                minHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <PiggyBankIcon />
@@ -94,16 +81,9 @@ export function BudgetsTable({
               </EmptyHeader>
             </Empty>
           ) : (
-            <div
-              className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
-              style={{
-                maxHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <div className="table-wrapper">
               <Table>
-                <TableHeader className="bg-muted sticky top-0">
+                <TableHeader className="bg-muted sticky top-0 z-1">
                   <TableRow className="[&>th]:text-center">
                     <TableHead>{t("Start Date")}</TableHead>
                     <TableHead>{t("End Date")}</TableHead>

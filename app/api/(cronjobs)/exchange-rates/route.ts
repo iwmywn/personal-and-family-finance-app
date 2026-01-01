@@ -5,7 +5,7 @@ import { type NextRequest } from "next/server"
 import { toDecimal128 } from "@/actions/utils"
 import { env } from "@/env/server.mjs"
 import { getExchangeRatesCollection } from "@/lib/collections"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { normalizeToUTCMidnight } from "@/lib/utils"
 
 type CurrencyAPIResponse = {
   meta: {
@@ -58,15 +58,10 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    const todayUTC = normalizeToUTCDate(new Date())
+    const todayUTC = normalizeToUTCMidnight(new Date())
     const lastDate = new Date(lastExchangeRate[0].date)
     lastDate.setUTCDate(lastDate.getUTCDate() + 1)
-    const startDateUTC = normalizeToUTCDate(new Date(lastDate))
-
-    // calculate how many days we need to fetch
-    const yesterday = new Date(todayUTC)
-    yesterday.setUTCDate(yesterday.getUTCDate() - 1)
-    const yesterdayUTC = normalizeToUTCDate(new Date(yesterday))
+    const startDateUTC = normalizeToUTCMidnight(new Date(lastDate))
 
     if (startDateUTC >= todayUTC) {
       return Response.json({
@@ -77,24 +72,15 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // if startDate is > yesterday, we can't fetch yet (API only has data up to yesterday)
-    if (startDateUTC > yesterdayUTC) {
-      return Response.json({
-        success: true,
-        message: "Waiting for API to update.",
-        lastDate: lastExchangeRate[0].date,
-        nextFetchDate: startDateUTC,
-        timestamp: new Date().toISOString(),
-      })
-    }
-
     const insertedDates: string[] = []
     const errors: { date: string; error: string }[] = []
 
-    // fetch rates for each missing day
-    const currentDate = new Date(startDateUTC)
-    while (currentDate <= yesterdayUTC) {
-      const dateStr = currentDate.toISOString().split("T")[0] // YYYY-MM-DD
+    const yesterday = new Date(todayUTC)
+    yesterday.setUTCDate(yesterday.getUTCDate() - 1)
+    const yesterdayUTC = normalizeToUTCMidnight(new Date(yesterday))
+
+    while (startDateUTC <= yesterdayUTC) {
+      const dateStr = startDateUTC.toISOString().split("T")[0] // YYYY-MM-DD
 
       try {
         const apiUrl = `https://api.currencyapi.com/v3/historical?apikey=${env.CURRENCY_API_SECRET}&currencies=CNY%2CVND%2CJPY%2CKRW&date=${dateStr}`
@@ -106,14 +92,14 @@ export async function GET(request: NextRequest) {
             date: dateStr,
             error: `API returned ${response.status}!`,
           })
-          currentDate.setUTCDate(currentDate.getUTCDate() + 1)
+          startDateUTC.setUTCDate(startDateUTC.getUTCDate() + 1)
           continue
         }
 
         const data = (await response.json()) as CurrencyAPIResponse
 
         await exchangeRatesCollection.insertOne({
-          date: normalizeToUTCDate(new Date(data.meta.last_updated_at)),
+          date: normalizeToUTCMidnight(new Date(data.meta.last_updated_at)),
           rates: {
             CNY: toDecimal128(data.data.CNY.value.toString()),
             JPY: toDecimal128(data.data.JPY.value.toString()),
@@ -130,7 +116,7 @@ export async function GET(request: NextRequest) {
         })
       }
 
-      currentDate.setUTCDate(currentDate.getUTCDate() + 1)
+      startDateUTC.setUTCDate(startDateUTC.getUTCDate() + 1)
     }
 
     return Response.json({

@@ -21,7 +21,7 @@ import {
   updateBudget,
 } from "@/actions/budget.actions"
 import { getBudgetsCollection } from "@/lib/collections"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 
 describe("Budgets", async () => {
   describe("createBudget", () => {
@@ -44,8 +44,8 @@ describe("Budgets", async () => {
         categoryKey: mockBudget.categoryKey,
         currency: mockBudget.currency,
         allocatedAmount: "2000000",
-        startDate: normalizeToUTCDate(mockBudget.startDate),
-        endDate: normalizeToUTCDate(mockBudget.endDate),
+        startDate: localDateToUTCMidnight(mockBudget.startDate),
+        endDate: localDateToUTCMidnight(mockBudget.endDate),
       })
 
       expect(result.success).toBeUndefined()
@@ -149,8 +149,8 @@ describe("Budgets", async () => {
         categoryKey: "transportation",
         allocatedAmount: "2000000",
         currency: "VND",
-        startDate: normalizeToUTCDate(new Date("2024-02-01")),
-        endDate: normalizeToUTCDate(new Date("2024-02-29")),
+        startDate: localDateToUTCMidnight(new Date("2024-02-01")),
+        endDate: localDateToUTCMidnight(new Date("2024-02-29")),
       })
       const budgetsCollection = await getBudgetsCollection()
       const updatedBudget = await budgetsCollection.findOne({
@@ -293,17 +293,17 @@ describe("Budgets", async () => {
       const budget1 = {
         ...mockBudget,
         _id: new ObjectId("68f795d4bdcc3c9a30717988"),
-        startDate: normalizeToUTCDate(new Date("2024-01-01")),
+        startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const budget2 = {
         ...mockBudget,
         _id: new ObjectId("68f795d4bdcc3c9a30717989"),
-        startDate: normalizeToUTCDate(new Date("2024-01-01")),
+        startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const budget3 = {
         ...mockBudget,
         _id: new ObjectId("68f795d4bdcc3c9a30717990"),
-        startDate: normalizeToUTCDate(new Date("2024-02-01")),
+        startDate: localDateToUTCMidnight(new Date("2024-02-01")),
       }
 
       await Promise.all([

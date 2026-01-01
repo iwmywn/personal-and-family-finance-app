@@ -16,7 +16,7 @@ import type {
   RecurringTransaction,
   Transaction,
 } from "@/lib/definitions"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight, normalizeToUTCMidnight } from "@/lib/utils"
 
 export const mockUser: DBUser = {
   _id: new ObjectId("68f712e4cda4897217a05a1c"),
@@ -41,7 +41,7 @@ export const mockTransaction: DBTransaction = {
   amount: toDecimal128("50000"),
   currency: "VND",
   description: "hamburger",
-  date: normalizeToUTCDate(new Date("2024-01-15")),
+  date: localDateToUTCMidnight(new Date("2024-01-15")),
 }
 
 export const mockCustomCategory: DBCategory = {
@@ -59,8 +59,8 @@ export const mockBudget: DBBudget = {
   categoryKey: "food_beverage",
   allocatedAmount: toDecimal128("1000000"),
   currency: "VND",
-  startDate: normalizeToUTCDate(new Date("2024-01-01")),
-  endDate: normalizeToUTCDate(new Date("2024-01-31")),
+  startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+  endDate: localDateToUTCMidnight(new Date("2024-01-31")),
 }
 
 export const mockGoal: DBGoal = {
@@ -70,8 +70,8 @@ export const mockGoal: DBGoal = {
   name: "buy a motorbike",
   targetAmount: toDecimal128("50000000"),
   currency: "VND",
-  startDate: normalizeToUTCDate(new Date("2024-01-01")),
-  endDate: normalizeToUTCDate(new Date("2024-12-31")),
+  startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+  endDate: localDateToUTCMidnight(new Date("2024-12-31")),
 }
 
 export const mockRecurringTransaction: DBRecurringTransaction = {
@@ -84,8 +84,8 @@ export const mockRecurringTransaction: DBRecurringTransaction = {
   description: "Monthly Salary",
   frequency: "monthly",
   randomEveryXDays: undefined,
-  startDate: normalizeToUTCDate(new Date("2024-01-01")),
-  endDate: normalizeToUTCDate(new Date("2024-12-31")),
+  startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+  endDate: localDateToUTCMidnight(new Date("2024-12-31")),
   lastGenerated: undefined,
   isActive: true,
 }
@@ -93,7 +93,7 @@ export const mockRecurringTransaction: DBRecurringTransaction = {
 export const mockExchangeRates: DBExchangeRate[] = [
   {
     _id: new ObjectId("68f800001234567890abcde1"),
-    date: normalizeToUTCDate(new Date("2024-01-15T23:59:59Z")),
+    date: normalizeToUTCMidnight(new Date("2024-01-15T23:59:59Z")),
     rates: {
       CNY: toDecimal128("7.0"),
       JPY: toDecimal128("150.0"),
@@ -103,7 +103,7 @@ export const mockExchangeRates: DBExchangeRate[] = [
   },
   {
     _id: new ObjectId("68f800001234567890abcde2"),
-    date: normalizeToUTCDate(new Date("2024-01-25T23:59:59Z")),
+    date: normalizeToUTCMidnight(new Date("2024-01-25T23:59:59Z")),
     rates: {
       CNY: toDecimal128("7.1"),
       JPY: toDecimal128("151.0"),
@@ -113,7 +113,7 @@ export const mockExchangeRates: DBExchangeRate[] = [
   },
   {
     _id: new ObjectId("68f800001234567890abcde3"),
-    date: normalizeToUTCDate(new Date("2024-02-20T23:59:59Z")),
+    date: normalizeToUTCMidnight(new Date("2024-02-20T23:59:59Z")),
     rates: {
       CNY: toDecimal128("7.2"),
       JPY: toDecimal128("152.0"),
@@ -129,7 +129,7 @@ export const mockValidTransactionValues = {
   currency: "VND" as AppCurrency,
   amount: "2500000",
   description: "freelance project payment",
-  date: normalizeToUTCDate(new Date("2024-02-05")),
+  date: localDateToUTCMidnight(new Date("2024-02-05")),
 }
 
 export const mockValidCategoryValues = {
@@ -143,8 +143,8 @@ export const mockValidBudgetValues = {
   categoryKey: "food_beverage",
   currency: "VND" as AppCurrency,
   allocatedAmount: "1000000",
-  startDate: normalizeToUTCDate(new Date("2024-01-01")),
-  endDate: normalizeToUTCDate(new Date("2024-01-31")),
+  startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+  endDate: localDateToUTCMidnight(new Date("2024-01-31")),
 }
 
 export const mockValidGoalValues = {
@@ -152,8 +152,8 @@ export const mockValidGoalValues = {
   currency: "VND" as AppCurrency,
   name: "buy a motorbike",
   targetAmount: "50000000",
-  startDate: normalizeToUTCDate(new Date("2024-01-01")),
-  endDate: normalizeToUTCDate(new Date("2024-12-31")),
+  startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+  endDate: localDateToUTCMidnight(new Date("2024-12-31")),
 }
 
 export const mockValidRecurringTransactionValues = {
@@ -164,8 +164,8 @@ export const mockValidRecurringTransactionValues = {
   description: "Freelance project payment",
   frequency: "monthly" as const,
   randomEveryXDays: undefined,
-  startDate: normalizeToUTCDate(new Date("2024-02-01")),
-  endDate: normalizeToUTCDate(new Date("2024-12-31")),
+  startDate: localDateToUTCMidnight(new Date("2024-02-01")),
+  endDate: localDateToUTCMidnight(new Date("2024-12-31")),
   lastGenerated: undefined,
   isActive: true,
 }

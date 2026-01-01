@@ -40,18 +40,15 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Goal } from "@/lib/definitions"
 import { calculateGoalsStats } from "@/lib/statistics"
 
 interface GoalsTableProps {
   filteredGoals: Goal[]
-  offsetHeight: number
 }
 
-export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
+export function GoalsTable({ filteredGoals }: GoalsTableProps) {
   const { goals, transactions } = useAppData()
-  const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
@@ -64,17 +61,10 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
 
   return (
     <>
-      <Card>
-        <CardContent>
+      <Card className="flex-1 overflow-auto">
+        <CardContent className="h-full">
           {filteredGoals.length === 0 ? (
-            <Empty
-              className="border"
-              style={{
-                minHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <TargetIcon />
@@ -88,16 +78,9 @@ export function GoalsTable({ filteredGoals, offsetHeight }: GoalsTableProps) {
               </EmptyHeader>
             </Empty>
           ) : (
-            <div
-              className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
-              style={{
-                maxHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <div className="table-wrapper">
               <Table>
-                <TableHeader className="bg-muted sticky top-0">
+                <TableHeader className="bg-muted sticky top-0 z-1">
                   <TableRow className="[&>th]:text-center">
                     <TableHead>{t("Start Date")}</TableHead>
                     <TableHead>{t("End Date")}</TableHead>

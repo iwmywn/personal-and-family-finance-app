@@ -30,7 +30,11 @@ export function formatDate(date: Date, locale: AppLocale) {
   }).format(date)
 }
 
-export function normalizeToUTCDate(date: Date) {
+export function localDateToUTCMidnight(date: Date) {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+}
+
+export function normalizeToUTCMidnight(date: Date) {
   return new Date(
     Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
   )

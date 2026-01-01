@@ -18,7 +18,7 @@ export default function TransactionsPage() {
 
   return (
     <>
-      <div className="h-auto max-h-none space-y-4 lg:h-full lg:max-h-[calc(100vh-4.375rem)]">
+      <div className="page-content">
         <div className="header">
           <div>
             <div className="title">{t("Transactions")}</div>

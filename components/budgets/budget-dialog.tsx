@@ -43,12 +43,11 @@ import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
 import { useAppData } from "@/context/app-data-context"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
 import type { Budget } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, normalizeToUTCDate } from "@/lib/utils"
+import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
 import type { BudgetFormValues } from "@/schemas/types"
 
 interface BudgetDialogProps {
@@ -60,7 +59,6 @@ interface BudgetDialogProps {
 export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
-  const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createBudgetSchema } = useSchemas()
   const { user } = useAppData()
@@ -98,12 +96,14 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       return
     }
 
+    const data = {
+      ...values,
+      startDate: localDateToUTCMidnight(values.startDate),
+      endDate: localDateToUTCMidnight(values.endDate),
+    }
+
     if (budget) {
-      const { success, error } = await updateBudget(budget._id, {
-        ...values,
-        startDate: normalizeToUTCDate(values.startDate),
-        endDate: normalizeToUTCDate(values.endDate),
-      })
+      const { success, error } = await updateBudget(budget._id, data)
 
       if (error || !success) {
         toast.error(error)
@@ -112,11 +112,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         setOpen(false)
       }
     } else {
-      const { success, error } = await createBudget({
-        ...values,
-        startDate: normalizeToUTCDate(values.startDate),
-        endDate: normalizeToUTCDate(values.endDate),
-      })
+      const { success, error } = await createBudget(data)
 
       if (error || !success) {
         toast.error(error)
@@ -135,7 +131,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {budget ? t("Edit Budget") : t("Add Budget")}
@@ -149,11 +145,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CategoryFormSelect
-              control={form.control}
-              type="expense"
-              calculatedWidth={calculatedWidth}
-            />
+            <CategoryFormSelect control={form.control} type="expense" />
 
             <FormField
               control={form.control}

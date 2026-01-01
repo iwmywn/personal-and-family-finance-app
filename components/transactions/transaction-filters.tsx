@@ -31,7 +31,6 @@ import {
 import { TransactionsTable } from "@/components/transactions/transactions-table"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
 import type { Transaction } from "@/lib/definitions"
@@ -64,7 +63,6 @@ export function TransactionFilters({
     "all"
   )
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
-  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const formatDate = useFormatDate()
   const { getCategoriesByType } = useCategory()
 
@@ -142,7 +140,7 @@ export function TransactionFilters({
 
   return (
     <>
-      <Card ref={registerRef}>
+      <Card>
         <CardContent>
           <div
             className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-4 lg:grid-cols-[1fr_1fr_1fr] lg:grid-rows-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr] 2xl:grid-rows-2 ${
@@ -368,10 +366,7 @@ export function TransactionFilters({
         </CardContent>
       </Card>
 
-      <TransactionsTable
-        filteredTransactions={filteredTransactions}
-        offsetHeight={calculatedHeight}
-      />
+      <TransactionsTable filteredTransactions={filteredTransactions} />
     </>
   )
 }

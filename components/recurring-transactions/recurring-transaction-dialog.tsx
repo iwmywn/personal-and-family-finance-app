@@ -54,13 +54,12 @@ import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
 import { useAppData } from "@/context/app-data-context"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/categories"
 import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, normalizeToUTCDate } from "@/lib/utils"
+import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 interface RecurringDialogProps {
@@ -77,7 +76,6 @@ export function RecurringTransactionDialog({
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const [type, setType] = useState<CategoryType>(recurring?.type || "income")
-  const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createRecurringTransactionSchema } = useSchemas()
   const { user } = useAppData()
@@ -130,16 +128,18 @@ export function RecurringTransactionDialog({
       return
     }
 
+    const data = {
+      ...values,
+      startDate: localDateToUTCMidnight(values.startDate),
+      endDate: values.endDate
+        ? localDateToUTCMidnight(values.endDate)
+        : undefined,
+    }
+
     if (recurring) {
       const { success, error } = await updateRecurringTransaction(
         recurring._id,
-        {
-          ...values,
-          startDate: normalizeToUTCDate(values.startDate),
-          endDate: values.endDate
-            ? normalizeToUTCDate(values.endDate)
-            : undefined,
-        }
+        data
       )
 
       if (error || !success) {
@@ -149,13 +149,7 @@ export function RecurringTransactionDialog({
         setOpen(false)
       }
     } else {
-      const { success, error } = await createRecurringTransaction({
-        ...values,
-        startDate: normalizeToUTCDate(values.startDate),
-        endDate: values.endDate
-          ? normalizeToUTCDate(values.endDate)
-          : undefined,
-      })
+      const { success, error } = await createRecurringTransaction(data)
 
       if (error || !success) {
         toast.error(error)
@@ -185,7 +179,7 @@ export function RecurringTransactionDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {recurring
@@ -214,7 +208,6 @@ export function RecurringTransactionDialog({
                 <CategoryFormSelect
                   control={form.control}
                   type="income"
-                  calculatedWidth={calculatedWidth}
                   showDescription
                 />
               </TabsContent>
@@ -223,7 +216,6 @@ export function RecurringTransactionDialog({
                 <CategoryFormSelect
                   control={form.control}
                   type="expense"
-                  calculatedWidth={calculatedWidth}
                   showDescription
                 />
               </TabsContent>

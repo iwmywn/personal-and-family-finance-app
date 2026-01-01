@@ -27,7 +27,6 @@ interface CategoryFormSelectProps<
 > {
   control: Control<TFieldValues>
   type: CategoryType
-  calculatedWidth: number
   showDescription?: boolean
 }
 
@@ -36,7 +35,6 @@ export function CategoryFormSelect<
 >({
   control,
   type,
-  calculatedWidth,
   showDescription = false,
 }: CategoryFormSelectProps<TFieldValues>) {
   const t = useExtracted()
@@ -57,9 +55,7 @@ export function CategoryFormSelect<
                 </SelectValue>
               </SelectTrigger>
             </FormControl>
-            <SelectContent
-              style={{ maxWidth: `calc(${calculatedWidth}px - 3.125rem)` }}
-            >
+            <SelectContent className="w-(--radix-select-trigger-width)">
               {getCategoriesByType(type).map((c) => (
                 <SelectItem key={c.key} value={c.key}>
                   <div className="flex flex-col">

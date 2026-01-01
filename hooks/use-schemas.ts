@@ -5,7 +5,7 @@ import { z } from "zod"
 
 import { CATEGORY_TYPES } from "@/lib/categories"
 import { CURRENCIES } from "@/lib/currency"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 
 export function useSchemas() {
   const t = useExtracted()
@@ -260,11 +260,11 @@ export function useSchemas() {
           })
         }
 
-        const today = normalizeToUTCDate(new Date())
         if (
           data.isActive &&
           data.endDate &&
-          normalizeToUTCDate(data.endDate) < today
+          localDateToUTCMidnight(data.endDate) <
+            localDateToUTCMidnight(new Date())
         ) {
           ctx.addIssue({
             path: ["isActive"],

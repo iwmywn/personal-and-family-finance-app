@@ -2,7 +2,7 @@ import Decimal from "decimal.js"
 
 import type { CategoryKeyType } from "@/lib/categories"
 import type { Budget, Goal, Transaction } from "@/lib/definitions"
-import { normalizeToUTCDate, progressColorClass } from "@/lib/utils"
+import { localDateToUTCMidnight, progressColorClass } from "@/lib/utils"
 
 export function getCurrentMonthTransactions(
   transactions: Transaction[]
@@ -188,14 +188,14 @@ function calculateStatsBase<TBase extends Budget | Goal>(
   transactions: Transaction[],
   config: StatBaseConfig<TBase, Transaction>
 ) {
-  const startDateOnly = normalizeToUTCDate(new Date(base.startDate))
-  const endDateOnly = normalizeToUTCDate(new Date(base.endDate))
-  const nowDateOnly = normalizeToUTCDate(new Date())
+  const startDateOnly = localDateToUTCMidnight(new Date(base.startDate))
+  const endDateOnly = localDateToUTCMidnight(new Date(base.endDate))
+  const nowDateOnly = localDateToUTCMidnight(new Date())
 
   const filtered = transactions.filter((t) => {
     if (t.type !== config.type) return false
 
-    const transactionDateOnly = normalizeToUTCDate(new Date(t.date))
+    const transactionDateOnly = localDateToUTCMidnight(new Date(t.date))
 
     return (
       transactionDateOnly.getTime() >= startDateOnly.getTime() &&

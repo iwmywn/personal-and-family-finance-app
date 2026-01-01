@@ -8,7 +8,7 @@ import type {
   Transaction,
 } from "@/lib/definitions"
 import { calculateBudgetsStats, calculateGoalsStats } from "@/lib/statistics"
-import { normalizeToUTCDate, progressColorClass } from "@/lib/utils"
+import { localDateToUTCMidnight, progressColorClass } from "@/lib/utils"
 
 interface Filters {
   searchTerm?: string
@@ -77,20 +77,22 @@ export function filterTransactions(
   return transactions.filter((transaction) => {
     const matchesSearch = matchingIds ? matchingIds.has(transaction._id) : true
 
-    const transactionDateOnly = normalizeToUTCDate(new Date(transaction.date))
+    const transactionDateOnly = localDateToUTCMidnight(
+      new Date(transaction.date)
+    )
 
     const matchesSelectedDate = selectedDate
       ? transactionDateOnly.getTime() ===
-        normalizeToUTCDate(selectedDate).getTime()
+        localDateToUTCMidnight(selectedDate).getTime()
       : true
 
     const matchesDateRange =
       (!dateRange.from ||
         transactionDateOnly.getTime() >=
-          normalizeToUTCDate(dateRange.from).getTime()) &&
+          localDateToUTCMidnight(dateRange.from).getTime()) &&
       (!dateRange.to ||
         transactionDateOnly.getTime() <=
-          normalizeToUTCDate(dateRange.to).getTime())
+          localDateToUTCMidnight(dateRange.to).getTime())
 
     const matchesMonth =
       !parsedMonth || transactionDateOnly.getMonth() + 1 === parsedMonth
@@ -152,8 +154,10 @@ export function filterBudgets(
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
   let filteredBudgets = budgets.filter((budget) => {
-    const budgetStartDateOnly = normalizeToUTCDate(new Date(budget.startDate))
-    const budgetEndDateOnly = normalizeToUTCDate(new Date(budget.endDate))
+    const budgetStartDateOnly = localDateToUTCMidnight(
+      new Date(budget.startDate)
+    )
+    const budgetEndDateOnly = localDateToUTCMidnight(new Date(budget.endDate))
 
     const matchesMonth = !parsedMonth
       ? true
@@ -233,8 +237,8 @@ export function filterGoals(
     : null
 
   let filteredGoals = goals.filter((goal) => {
-    const goalStartDateOnly = normalizeToUTCDate(new Date(goal.startDate))
-    const goalEndDateOnly = normalizeToUTCDate(new Date(goal.endDate))
+    const goalStartDateOnly = localDateToUTCMidnight(new Date(goal.startDate))
+    const goalEndDateOnly = localDateToUTCMidnight(new Date(goal.endDate))
 
     const matchesSearch = matchingIds ? matchingIds.has(goal._id) : true
 
@@ -309,9 +313,9 @@ export function filterRecurringTransactions(
   return recurringTransactions.filter((recurring) => {
     const matchesSearch = matchingIds ? matchingIds.has(recurring._id) : true
 
-    const startDateOnly = normalizeToUTCDate(new Date(recurring.startDate))
+    const startDateOnly = localDateToUTCMidnight(new Date(recurring.startDate))
     const endDateOnly = recurring.endDate
-      ? normalizeToUTCDate(new Date(recurring.endDate))
+      ? localDateToUTCMidnight(new Date(recurring.endDate))
       : null
 
     const matchesMonth = !parsedMonth

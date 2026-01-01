@@ -8,8 +8,8 @@ const eslintConfig = [
   ...nextTypescript,
   {
     plugins: {
-      "unused-imports": unusedImports,
       "@typescript-eslint": tsEslintPlugin,
+      "unused-imports": unusedImports,
     },
     rules: {
       "@typescript-eslint/consistent-type-imports": [

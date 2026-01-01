@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
 import { useAppData } from "@/context/app-data-context"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { filterCustomCategories } from "@/lib/filters"
 
 export function CategoryFilters() {
@@ -31,7 +30,6 @@ export function CategoryFilters() {
   const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
     "all"
   )
-  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useExtracted()
 
   const filteredCategories = filterCustomCategories(customCategories, {
@@ -48,7 +46,7 @@ export function CategoryFilters() {
 
   return (
     <>
-      <Card ref={registerRef}>
+      <Card>
         <CardContent>
           <div
             className={`grid grid-cols-1 ${
@@ -109,10 +107,7 @@ export function CategoryFilters() {
         </CardContent>
       </Card>
 
-      <CategoriesTable
-        filteredCategories={filteredCategories}
-        offsetHeight={calculatedHeight}
-      />
+      <CategoriesTable filteredCategories={filteredCategories} />
     </>
   )
 }

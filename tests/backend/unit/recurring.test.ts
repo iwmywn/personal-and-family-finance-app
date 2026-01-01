@@ -21,7 +21,7 @@ import {
   updateRecurringTransaction,
 } from "@/actions/recurring.actions"
 import { getRecurringTransactionsCollection } from "@/lib/collections"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 
 describe("Recurring Transactions", async () => {
   beforeEach(() => {
@@ -246,8 +246,8 @@ describe("Recurring Transactions", async () => {
           description: "Updated description",
           frequency: "weekly",
           randomEveryXDays: undefined,
-          startDate: normalizeToUTCDate(new Date("2024-02-04")),
-          endDate: normalizeToUTCDate(new Date("2024-12-31")),
+          startDate: localDateToUTCMidnight(new Date("2024-02-04")),
+          endDate: localDateToUTCMidnight(new Date("2024-12-31")),
           isActive: false,
         }
       )
@@ -401,17 +401,17 @@ describe("Recurring Transactions", async () => {
       const recurring1 = {
         ...mockRecurringTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8106"),
-        startDate: normalizeToUTCDate(new Date("2024-01-15")),
+        startDate: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const recurring2 = {
         ...mockRecurringTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8107"),
-        startDate: normalizeToUTCDate(new Date("2024-01-15")),
+        startDate: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const recurring3 = {
         ...mockRecurringTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8108"),
-        startDate: normalizeToUTCDate(new Date("2024-02-15")),
+        startDate: localDateToUTCMidnight(new Date("2024-02-15")),
       }
 
       await Promise.all([

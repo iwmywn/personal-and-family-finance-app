@@ -16,39 +16,23 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMediaQuery } from "@/hooks/use-media-query"
 
-interface RecentTransactionsProps {
-  offsetHeight: number
-}
-
-export function RecentTransactions({ offsetHeight }: RecentTransactionsProps) {
-  const isMediumScreens = useMediaQuery("(max-width: 767px)")
+export function RecentTransactions() {
   const { transactions } = useAppData()
   const recentTransactions = transactions.slice(0, 10)
-  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useExtracted()
   const { getCategoryLabel } = useCategory()
   const formatDate = useFormatDate()
   const formatCurrency = useFormatCurrency()
 
   return (
-    <Card className="relative overflow-hidden py-0 pb-6">
-      <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
+    <Card className="overflow-hidden py-0 pb-6">
+      <CardHeader className="bg-card sticky top-0 pt-6">
         <CardTitle>{t("Recent Transactions")}</CardTitle>
       </CardHeader>
-      <CardContent
-        className="overflow-y-auto"
-        style={{
-          height: isMediumScreens
-            ? "auto"
-            : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
-          maxHeight: isMediumScreens ? "300px" : "none",
-        }}
-      >
+      <CardContent className="h-full max-h-90 overflow-y-auto md:max-h-none">
         <div className="h-full space-y-4">
           {recentTransactions.length === 0 ? (
             <Empty className="h-full border">

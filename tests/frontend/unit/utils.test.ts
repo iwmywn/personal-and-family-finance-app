@@ -4,7 +4,8 @@ import {
   formatCurrency,
   formatDate,
   getUniqueYears,
-  normalizeToUTCDate,
+  localDateToUTCMidnight,
+  normalizeToUTCMidnight,
 } from "@/lib/utils"
 
 describe("Utils", () => {
@@ -18,10 +19,10 @@ describe("Utils", () => {
     process.env.TZ = originalTZ
   })
 
-  describe("normalizeToUTCDate", () => {
+  describe("localDateToUTCMidnight", () => {
     it("should normalize date to UTC", () => {
       const date = new Date("2024-01-15T10:30:00Z")
-      const result = normalizeToUTCDate(date)
+      const result = localDateToUTCMidnight(date)
       expect(result.getUTCHours()).toBe(0)
       expect(result.getUTCMinutes()).toBe(0)
       expect(result.getUTCSeconds()).toBe(0)
@@ -30,7 +31,7 @@ describe("Utils", () => {
 
     it("should preserve year, month, and day", () => {
       const date = new Date("2024-01-15T10:30:00Z")
-      const result = normalizeToUTCDate(date)
+      const result = localDateToUTCMidnight(date)
       expect(result.getUTCFullYear()).toBe(2024)
       expect(result.getUTCMonth()).toBe(0) // January is 0
       expect(result.getUTCDate()).toBe(15)
@@ -38,12 +39,33 @@ describe("Utils", () => {
 
     it("should handle different timezones", () => {
       const date = new Date("2024-01-16T06:35:00+07:00")
-      const result = normalizeToUTCDate(date)
+      const result = localDateToUTCMidnight(date)
       expect(result.getUTCFullYear()).toBe(2024)
       expect(result.getUTCMonth()).toBe(0)
       // The date might be different due to timezone conversion, so we check it's reasonable
       expect(result.getUTCDate()).toBeGreaterThanOrEqual(15)
       expect(result.getUTCDate()).toBeLessThanOrEqual(16)
+    })
+  })
+
+  describe("normalizeToUTCMidnight", () => {
+    it("should strip time from UTC date", () => {
+      const date = new Date("2024-01-15T23:45:12Z")
+      const result = normalizeToUTCMidnight(date)
+      expect(result.toISOString()).toBe("2024-01-15T00:00:00.000Z")
+    })
+
+    it("should handle UTC boundary correctly", () => {
+      const date = new Date("2024-01-16T00:00:00Z")
+      const result = normalizeToUTCMidnight(date)
+      expect(result.toISOString()).toBe("2024-01-16T00:00:00.000Z")
+    })
+
+    it("should work correctly with dates having local timezone offset", () => {
+      // 2024-01-16T01:00:00+07:00 is 2024-01-15T18:00:00Z
+      const date = new Date("2024-01-16T01:00:00+07:00")
+      const result = normalizeToUTCMidnight(date)
+      expect(result.toISOString()).toBe("2024-01-15T00:00:00.000Z")
     })
   })
 

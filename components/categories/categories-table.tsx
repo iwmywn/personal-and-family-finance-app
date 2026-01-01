@@ -35,13 +35,9 @@ import type { Category } from "@/lib/definitions"
 
 interface CategoriesTableProps {
   filteredCategories: Category[]
-  offsetHeight: number
 }
 
-export function CategoriesTable({
-  filteredCategories,
-  offsetHeight,
-}: CategoriesTableProps) {
+export function CategoriesTable({ filteredCategories }: CategoriesTableProps) {
   const { customCategories } = useAppData()
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
@@ -52,14 +48,10 @@ export function CategoriesTable({
 
   return (
     <>
-      <Card>
-        <CardContent>
+      <Card className="flex-1 overflow-auto">
+        <CardContent className="h-full">
           {filteredCategories.length === 0 ? (
-            <Empty
-              style={{
-                minHeight: `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <TagIcon />
@@ -73,14 +65,9 @@ export function CategoriesTable({
               </EmptyHeader>
             </Empty>
           ) : (
-            <div
-              className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
-              style={{
-                maxHeight: `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <div className="table-wrapper">
               <Table>
-                <TableHeader className="bg-muted sticky top-0">
+                <TableHeader className="bg-muted sticky top-0 z-1">
                   <TableRow className="[&>th]:text-center">
                     <TableHead>{t("Category Name")}</TableHead>
                     <TableHead>{t("Description")}</TableHead>

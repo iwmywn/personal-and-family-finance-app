@@ -20,12 +20,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   const t = await getExtracted()
 
+  const { name } = siteConfig
+  const description = t("Personal & Family Finance App")
+
   return {
     title: {
-      template: `%s | ${siteConfig.name}`,
-      default: siteConfig.name,
+      template: `%s | ${name}`,
+      default: name,
     },
-    description: t("Personal & Family Finance App"),
+    description,
     authors: [
       {
         name: "iwmywn",
@@ -35,16 +38,16 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: "iwmywn",
     openGraph: {
       type: "website",
-      locale: locale,
+      locale,
       url: env.NEXT_PUBLIC_URL,
-      title: siteConfig.name,
-      description: t("Personal & Family Finance App"),
-      siteName: siteConfig.name,
+      title: name,
+      description,
+      siteName: name,
     },
     twitter: {
       card: "summary_large_image",
-      title: siteConfig.name,
-      description: t("Personal & Family Finance App"),
+      title: name,
+      description,
       creator: "@ctcuasaunay",
     },
   }

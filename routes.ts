@@ -12,4 +12,3 @@ export const protectedRoutes = [
   "/recurring",
   "/settings",
 ]
-export const ignoredRoutes = ["/images", "/opengraph-image.png", "/icon.png"]

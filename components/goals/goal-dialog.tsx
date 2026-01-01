@@ -44,12 +44,11 @@ import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
 import { useAppData } from "@/context/app-data-context"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
 import type { Goal } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, normalizeToUTCDate } from "@/lib/utils"
+import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
 import type { GoalFormValues } from "@/schemas/types"
 
 interface GoalDialogProps {
@@ -61,7 +60,6 @@ interface GoalDialogProps {
 export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
-  const { registerRef, calculatedWidth } = useDynamicSizeAuto()
   const t = useExtracted()
   const { createGoalSchema } = useSchemas()
   const { user } = useAppData()
@@ -100,12 +98,14 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
       return
     }
 
+    const data = {
+      ...values,
+      startDate: localDateToUTCMidnight(values.startDate),
+      endDate: localDateToUTCMidnight(values.endDate),
+    }
+
     if (goal) {
-      const { success, error } = await updateGoal(goal._id, {
-        ...values,
-        startDate: normalizeToUTCDate(values.startDate),
-        endDate: normalizeToUTCDate(values.endDate),
-      })
+      const { success, error } = await updateGoal(goal._id, data)
 
       if (error || !success) {
         toast.error(error)
@@ -114,11 +114,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
         setOpen(false)
       }
     } else {
-      const { success, error } = await createGoal({
-        ...values,
-        startDate: normalizeToUTCDate(values.startDate),
-        endDate: normalizeToUTCDate(values.endDate),
-      })
+      const { success, error } = await createGoal(data)
 
       if (error || !success) {
         toast.error(error)
@@ -138,7 +134,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent ref={registerRef} className="max-h-[85vh] overflow-y-auto">
+      <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{goal ? t("Edit Goal") : t("Add Goal")}</DialogTitle>
           <DialogDescription>
@@ -150,11 +146,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CategoryFormSelect
-              control={form.control}
-              type="income"
-              calculatedWidth={calculatedWidth}
-            />
+            <CategoryFormSelect control={form.control} type="income" />
 
             <FormField
               control={form.control}

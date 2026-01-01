@@ -7,7 +7,7 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 import { shouldGenerateToday } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
 // Vercel Cron Jobs only trigger HTTP GET requests.
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
       getRecurringTransactionsCollection(),
     ])
 
-    const todayUTC = normalizeToUTCDate(new Date())
+    const todayUTC = localDateToUTCMidnight(new Date())
 
     const deactivatedResult = await recurringCollection.updateMany(
       {

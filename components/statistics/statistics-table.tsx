@@ -46,10 +46,10 @@ export function StatisticsTable({
   const categoryStats = calculateCategoriesStats(filteredTransactions)
 
   return (
-    <Card>
-      <CardContent>
+    <Card className="flex-1 overflow-auto">
+      <CardContent className="h-full">
         {filteredTransactions.length === 0 ? (
-          <Empty className="border" style={{ minHeight: "300px" }}>
+          <Empty className="h-full border">
             <EmptyHeader>
               <EmptyMedia variant="icon">
                 <WalletIcon />
@@ -63,9 +63,9 @@ export function StatisticsTable({
             </EmptyHeader>
           </Empty>
         ) : (
-          <div className="overflow-auto rounded-md border">
+          <div className="table-wrapper md:max-h-90 lg:max-h-none">
             <Table>
-              <TableHeader className="bg-muted sticky top-0">
+              <TableHeader className="bg-muted sticky top-0 z-1">
                 <TableRow className="[&>th]:text-center">
                   <TableHead>{t("Category")}</TableHead>
                   <TableHead>{t("Type")}</TableHead>

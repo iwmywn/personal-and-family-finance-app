@@ -25,7 +25,6 @@ import {
 import { RecurringTransactionsTable } from "@/components/recurring-transactions/recurring-transactions-table"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useMonths } from "@/hooks/use-months"
 import { filterRecurringTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
@@ -40,7 +39,6 @@ export function RecurringTransactionsFilters() {
     "all" | "active" | "inactive"
   >("all")
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
-  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
   const t = useExtracted()
   const { getCategoriesByType } = useCategory()
 
@@ -75,7 +73,7 @@ export function RecurringTransactionsFilters() {
 
   return (
     <>
-      <Card ref={registerRef}>
+      <Card>
         <CardContent>
           <div
             className={`grid md:grid-cols-[1fr_1fr] md:grid-rows-3 lg:grid-cols-[1fr_1fr_1fr_1fr_1fr] lg:grid-rows-2 2xl:grid-cols-[1fr_1fr_1fr_1fr_1fr] 2xl:grid-rows-2 ${
@@ -224,10 +222,7 @@ export function RecurringTransactionsFilters() {
         </CardContent>
       </Card>
 
-      <RecurringTransactionsTable
-        filteredRecurring={filteredRecurring}
-        offsetHeight={calculatedHeight}
-      />
+      <RecurringTransactionsTable filteredRecurring={filteredRecurring} />
     </>
   )
 }

@@ -11,18 +11,10 @@ import {
 } from "@/components/ui/tooltip"
 import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
-import { useDynamicSizeAuto } from "@/hooks/use-dynamic-size-auto"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import { calculateQuickStats } from "@/lib/statistics"
 
-interface QuickStatsProps {
-  offsetHeight: number
-}
-
-export function QuickStats({ offsetHeight }: QuickStatsProps) {
-  const isMediumScreens = useMediaQuery("(max-width: 767px)")
-  const { registerRef, calculatedHeight } = useDynamicSizeAuto()
+export function QuickStats() {
   const { transactions } = useAppData()
   const t = useExtracted()
   const { getCategoryLabel } = useCategory()
@@ -38,19 +30,12 @@ export function QuickStats({ offsetHeight }: QuickStatsProps) {
   } = calculateQuickStats(transactions)
 
   return (
-    <Card className="relative overflow-hidden py-0 pb-6">
-      <CardHeader ref={registerRef} className="bg-card sticky top-0 pt-6">
+    <Card className="overflow-hidden py-0 pb-6">
+      <CardHeader className="bg-card sticky top-0 pt-6">
         <CardTitle>{t("Quick Stats")}</CardTitle>
       </CardHeader>
-      <CardContent
-        className="h-full overflow-y-auto"
-        style={{
-          maxHeight: isMediumScreens
-            ? "fit-content"
-            : `calc(100vh - 9.5rem - ${offsetHeight}px - ${calculatedHeight}px)`,
-        }}
-      >
-        <div id="quick-stats-content" className="space-y-4">
+      <CardContent className="overflow-y-auto">
+        <div className="quick-stats-content space-y-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">

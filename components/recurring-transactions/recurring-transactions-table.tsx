@@ -39,22 +39,18 @@ import { useAppData } from "@/context/app-data-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { normalizeToUTCDate } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 import { getNextDate } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
 interface RecurringTableProps {
   filteredRecurring: RecurringTransaction[]
-  offsetHeight: number
 }
 
 export function RecurringTransactionsTable({
   filteredRecurring,
-  offsetHeight,
 }: RecurringTableProps) {
   const { recurringTransactions } = useAppData()
-  const isLargeScreens = useMediaQuery("(max-width: 1023px)")
   const [selectedRecurring, setSelectedRecurring] =
     useState<RecurringTransaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
@@ -87,17 +83,10 @@ export function RecurringTransactionsTable({
 
   return (
     <>
-      <Card>
-        <CardContent>
+      <Card className="flex-1 overflow-auto">
+        <CardContent className="h-full">
           {filteredRecurring.length === 0 ? (
-            <Empty
-              className="border"
-              style={{
-                minHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <Empty className="h-full border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <RepeatIcon />
@@ -113,16 +102,9 @@ export function RecurringTransactionsTable({
               </EmptyHeader>
             </Empty>
           ) : (
-            <div
-              className="overflow-auto rounded-md border [&>div]:overflow-x-visible!"
-              style={{
-                maxHeight: isLargeScreens
-                  ? "300px"
-                  : `calc(100vh - ${offsetHeight}px - 12.5rem)`,
-              }}
-            >
+            <div className="table-wrapper">
               <Table>
-                <TableHeader className="bg-muted sticky top-0">
+                <TableHeader className="bg-muted sticky top-0 z-1">
                   <TableRow className="[&>th]:text-center">
                     <TableHead>{t("Start Date")}</TableHead>
                     <TableHead>{t("End Date")}</TableHead>
@@ -190,7 +172,7 @@ export function RecurringTransactionsTable({
                                 date: formatDate(
                                   getNextDate(
                                     recurring,
-                                    normalizeToUTCDate(new Date())
+                                    localDateToUTCMidnight(new Date())
                                   )
                                 ),
                               })}
