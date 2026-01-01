@@ -1,3 +1,16 @@
+## [26.1.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.51.0...v26.1.0)
+
+### Features
+
+- support more currencies, add Japanese and Korean ([8993976](https://github.com/iwmywn/personal-and-family-finance-app/commit/8993976701364edb945b3021a34c76ac200aafe3))
+- add simplified Chinese ([3d4ff41](https://github.com/iwmywn/personal-and-family-finance-app/commit/3d4ff415d5e29b10a760903365145f77745d21f0))
+
+### Nerd stuff
+
+These changes will not be visible to users, but are included for completeness and to credit contributors.
+
+- **refactor:** cleanup ([9ac2b78](https://github.com/iwmywn/personal-and-family-finance-app/commit/9ac2b781ff7254ff78e638caf9fe467ea1d5897a))
+
 ## [25.51.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v25.50.0...v25.51.0)
 
 ### Bug Fixes
