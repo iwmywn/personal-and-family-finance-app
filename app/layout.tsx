@@ -1,19 +1,17 @@
+import "./globals.css"
+
 import type React from "react"
+import { Suspense } from "react"
 import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getExtracted, getLocale } from "next-intl/server"
-
-import { nunito } from "@/app/fonts"
-
-import "./globals.css"
-
-import { Suspense } from "react"
 
 import { Toaster } from "@/components/ui/sonner"
 import { Logo } from "@/components/logo"
 import { ProgressProvider } from "@/components/progress-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { env } from "@/env/client.mjs"
+import { nunito } from "@/app/fonts"
 import { siteConfig } from "@/app/pffa.config"
 
 export async function generateMetadata(): Promise<Metadata> {
