@@ -3,12 +3,12 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb"
 import { nextCookies } from "better-auth/next-js"
 import { captcha, twoFactor, username } from "better-auth/plugins"
 
+import { siteConfig } from "@/app/pffa.config"
 import { env as clientEnv } from "@/env/client.mjs"
 import { env as serverEnv } from "@/env/server.mjs"
 import { DEFAULT_LOCALE } from "@/i18n/config"
 import { DEFAULT_CURRENCY } from "@/lib/currency"
 import { connect } from "@/lib/db"
-import { siteConfig } from "@/app/pffa.config"
 
 export const auth = betterAuth({
   appName: siteConfig.name,

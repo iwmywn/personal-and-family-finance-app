@@ -1,7 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { nunito } from "@/app/fonts"
+import { Button } from "@/components/ui/button"
 
 export default function GlobalError({
   error,

@@ -2,13 +2,13 @@
 
 import { type NextRequest } from "next/server"
 
+import { shouldGenerateToday } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 import { env } from "@/env/server.mjs"
 import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
 import { localDateToUTCMidnight } from "@/lib/utils"
-import { shouldGenerateToday } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
 // Vercel Cron Jobs only trigger HTTP GET requests.
 // [See official docs](https://vercel.com/docs/cron-jobs#how-cron-jobs-work)
