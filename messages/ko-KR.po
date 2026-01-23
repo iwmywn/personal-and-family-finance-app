@@ -388,7 +388,7 @@ msgstr "거래"
 msgid "/WMCDd"
 msgstr "문제가 발생했습니다!"
 
-#: app\layout.tsx:24
+#: app\layout.tsx:22
 #: components\layout\app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "개인 및 가족 재정 앱"

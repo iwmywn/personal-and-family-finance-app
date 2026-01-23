@@ -388,7 +388,7 @@ msgstr "交易"
 msgid "/WMCDd"
 msgstr "出了点问题！"
 
-#: app\layout.tsx:24
+#: app\layout.tsx:22
 #: components\layout\app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "个人和家庭财务应用"
