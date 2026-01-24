@@ -488,7 +488,7 @@ msgid "55hdQy"
 msgstr "通貨"
 
 #: components\budgets\budget-dialog.tsx:186
-#: components\budgets\budgets-table.tsx:91
+#: components\budgets\budgets-table.tsx:89
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:260
 #: components\recurring-transactions\recurring-transactions-table.tsx:114
 #: components\transactions\export-button.tsx:35
@@ -498,7 +498,7 @@ msgid "/0TOL5"
 msgstr "金額"
 
 #: components\budgets\budget-dialog.tsx:204
-#: components\budgets\budgets-table.tsx:88
+#: components\budgets\budgets-table.tsx:86
 #: components\goals\goal-dialog.tsx:222
 #: components\goals\goals-table.tsx:85
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:369
@@ -518,7 +518,7 @@ msgid "ftg7GK"
 msgstr "日付を選択"
 
 #: components\budgets\budget-dialog.tsx:257
-#: components\budgets\budgets-table.tsx:89
+#: components\budgets\budgets-table.tsx:87
 #: components\goals\goal-dialog.tsx:275
 #: components\goals\goals-table.tsx:86
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:422
@@ -598,7 +598,7 @@ msgid "5JGC4V"
 msgstr "すべての年"
 
 #: components\budgets\budget-filters.tsx:123
-#: components\budgets\budgets-table.tsx:90
+#: components\budgets\budgets-table.tsx:88
 #: components\category-form-select.tsx:49
 #: components\goals\goal-filters.tsx:157
 #: components\goals\goals-table.tsx:88
@@ -619,7 +619,7 @@ msgid "1X6HtI"
 msgstr "すべてのカテゴリ"
 
 #: components\budgets\budget-filters.tsx:145
-#: components\budgets\budgets-table.tsx:95
+#: components\budgets\budgets-table.tsx:93
 #: components\goals\goal-filters.tsx:179
 #: components\goals\goals-table.tsx:92
 msgid "sIMS7i"
@@ -648,7 +648,7 @@ msgid "DSmOlH"
 msgstr "超過（≥ 100%）"
 
 #: components\budgets\budget-filters.tsx:170
-#: components\budgets\budgets-table.tsx:94
+#: components\budgets\budgets-table.tsx:92
 #: components\goals\goal-filters.tsx:202
 #: components\goals\goals-table.tsx:91
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:480
@@ -664,14 +664,14 @@ msgid "tADQQm"
 msgstr "すべてのステータス"
 
 #: components\budgets\budget-filters.tsx:176
-#: components\budgets\budgets-table.tsx:138
+#: components\budgets\budgets-table.tsx:136
 #: components\goals\goal-filters.tsx:208
 #: components\goals\goals-table.tsx:127
 msgid "RahCRH"
 msgstr "期限切れ"
 
 #: components\budgets\budget-filters.tsx:177
-#: components\budgets\budgets-table.tsx:140
+#: components\budgets\budgets-table.tsx:138
 #: components\goals\goal-filters.tsx:209
 #: components\goals\goals-table.tsx:129
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:491
@@ -681,7 +681,7 @@ msgid "3a5wL8"
 msgstr "アクティブ"
 
 #: components\budgets\budget-filters.tsx:178
-#: components\budgets\budgets-table.tsx:141
+#: components\budgets\budgets-table.tsx:139
 #: components\goals\goal-filters.tsx:210
 #: components\goals\goals-table.tsx:130
 msgid "6/aEFZ"
@@ -701,27 +701,27 @@ msgid "UxaXqH"
 msgstr "支出カテゴリの予算を設定して管理します。"
 
 #: components\budgets\budgets-table.tsx:73
-msgid "6HxSkI"
-msgstr "予算はまだありません"
+msgid "CgOoDa"
+msgstr "予算が見つかりません"
 
 #: components\budgets\budgets-table.tsx:76
-msgid "XYhPPe"
-msgstr "まだ予算を作成していません。最初の予算を追加してください！"
+msgid "PTvqaL"
+msgstr "まだ予算を作成していません。"
 
-#: components\budgets\budgets-table.tsx:79
+#: components\budgets\budgets-table.tsx:77
 msgid "PZ97Zd"
 msgstr "フィルターに一致する予算が見つかりませんでした。"
 
-#: components\budgets\budgets-table.tsx:92
+#: components\budgets\budgets-table.tsx:90
 msgid "111qQK"
 msgstr "支出額"
 
-#: components\budgets\budgets-table.tsx:93
+#: components\budgets\budgets-table.tsx:91
 #: components\statistics\statistics-summary.tsx:70
 msgid "H5+NAX"
 msgstr "残高"
 
-#: components\budgets\budgets-table.tsx:166
+#: components\budgets\budgets-table.tsx:164
 #: components\categories\categories-table.tsx:109
 #: components\goals\goals-table.tsx:155
 #: components\recurring-transactions\recurring-transactions-table.tsx:201
@@ -729,7 +729,7 @@ msgstr "残高"
 msgid "bdcMGy"
 msgstr "メニューを開く"
 
-#: components\budgets\budgets-table.tsx:177
+#: components\budgets\budgets-table.tsx:175
 #: components\categories\categories-table.tsx:120
 #: components\goals\goals-table.tsx:166
 #: components\recurring-transactions\recurring-transactions-table.tsx:212
@@ -737,7 +737,7 @@ msgstr "メニューを開く"
 msgid "wEQDC6"
 msgstr "編集"
 
-#: components\budgets\budgets-table.tsx:187
+#: components\budgets\budgets-table.tsx:185
 #: components\budgets\delete-budget-dialog.tsx:63
 #: components\categories\categories-table.tsx:130
 #: components\categories\delete-category-dialog.tsx:63
@@ -950,8 +950,8 @@ msgid "uuJSCu"
 msgstr "目標が見つかりません"
 
 #: components\goals\goals-table.tsx:75
-msgid "iB1AMy"
-msgstr "財務目標の設定を開始してください。"
+msgid "Y2QNeU"
+msgstr "まだ目標を作成していません。"
 
 #: components\goals\goals-table.tsx:76
 msgid "RB30ZK"
@@ -1044,8 +1044,8 @@ msgstr "取引が見つかりません"
 #: components\home\recent-transactions.tsx:45
 #: components\statistics\statistics-table.tsx:60
 #: components\transactions\transactions-table.tsx:74
-msgid "JWV3aB"
-msgstr "取引の追加を開始してください。"
+msgid "GMBC7V"
+msgstr "まだ取引を作成していません。"
 
 #: components\home\transaction-summary.tsx:35
 msgid "XUYy4C"
@@ -1217,8 +1217,8 @@ msgid "xRs5e/"
 msgstr "定期取引が見つかりません"
 
 #: components\recurring-transactions\recurring-transactions-table.tsx:97
-msgid "bhzq2y"
-msgstr "定期取引の追加を開始してください。"
+msgid "ll7wSI"
+msgstr "定期取引はまだ作成されていません。"
 
 #: components\recurring-transactions\recurring-transactions-table.tsx:98
 msgid "hZPPxy"

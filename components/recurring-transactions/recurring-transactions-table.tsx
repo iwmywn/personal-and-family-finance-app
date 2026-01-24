@@ -94,7 +94,7 @@ export function RecurringTransactionsTable({
                 <EmptyTitle>{t("No recurring transactions found")}</EmptyTitle>
                 <EmptyDescription>
                   {recurringTransactions.length === 0
-                    ? t("Start adding your recurring transactions.")
+                    ? t("You haven't created any recurring transactions yet.")
                     : t(
                         "No recurring transactions found matching your filters."
                       )}

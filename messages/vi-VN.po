@@ -488,7 +488,7 @@ msgid "55hdQy"
 msgstr "Tiền tệ"
 
 #: components\budgets\budget-dialog.tsx:186
-#: components\budgets\budgets-table.tsx:91
+#: components\budgets\budgets-table.tsx:89
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:260
 #: components\recurring-transactions\recurring-transactions-table.tsx:114
 #: components\transactions\export-button.tsx:35
@@ -498,7 +498,7 @@ msgid "/0TOL5"
 msgstr "Số tiền"
 
 #: components\budgets\budget-dialog.tsx:204
-#: components\budgets\budgets-table.tsx:88
+#: components\budgets\budgets-table.tsx:86
 #: components\goals\goal-dialog.tsx:222
 #: components\goals\goals-table.tsx:85
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:369
@@ -518,7 +518,7 @@ msgid "ftg7GK"
 msgstr "Chọn ngày"
 
 #: components\budgets\budget-dialog.tsx:257
-#: components\budgets\budgets-table.tsx:89
+#: components\budgets\budgets-table.tsx:87
 #: components\goals\goal-dialog.tsx:275
 #: components\goals\goals-table.tsx:86
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:422
@@ -598,7 +598,7 @@ msgid "5JGC4V"
 msgstr "Tất cả các năm"
 
 #: components\budgets\budget-filters.tsx:123
-#: components\budgets\budgets-table.tsx:90
+#: components\budgets\budgets-table.tsx:88
 #: components\category-form-select.tsx:49
 #: components\goals\goal-filters.tsx:157
 #: components\goals\goals-table.tsx:88
@@ -619,7 +619,7 @@ msgid "1X6HtI"
 msgstr "Tất cả danh mục"
 
 #: components\budgets\budget-filters.tsx:145
-#: components\budgets\budgets-table.tsx:95
+#: components\budgets\budgets-table.tsx:93
 #: components\goals\goal-filters.tsx:179
 #: components\goals\goals-table.tsx:92
 msgid "sIMS7i"
@@ -648,7 +648,7 @@ msgid "DSmOlH"
 msgstr "Vượt quá (≥ 100%)"
 
 #: components\budgets\budget-filters.tsx:170
-#: components\budgets\budgets-table.tsx:94
+#: components\budgets\budgets-table.tsx:92
 #: components\goals\goal-filters.tsx:202
 #: components\goals\goals-table.tsx:91
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:480
@@ -664,14 +664,14 @@ msgid "tADQQm"
 msgstr "Tất cả trạng thái"
 
 #: components\budgets\budget-filters.tsx:176
-#: components\budgets\budgets-table.tsx:138
+#: components\budgets\budgets-table.tsx:136
 #: components\goals\goal-filters.tsx:208
 #: components\goals\goals-table.tsx:127
 msgid "RahCRH"
 msgstr "Đã hết hạn"
 
 #: components\budgets\budget-filters.tsx:177
-#: components\budgets\budgets-table.tsx:140
+#: components\budgets\budgets-table.tsx:138
 #: components\goals\goal-filters.tsx:209
 #: components\goals\goals-table.tsx:129
 #: components\recurring-transactions\recurring-transaction-dialog.tsx:491
@@ -681,7 +681,7 @@ msgid "3a5wL8"
 msgstr "Đang hoạt động"
 
 #: components\budgets\budget-filters.tsx:178
-#: components\budgets\budgets-table.tsx:141
+#: components\budgets\budgets-table.tsx:139
 #: components\goals\goal-filters.tsx:210
 #: components\goals\goals-table.tsx:130
 msgid "6/aEFZ"
@@ -701,27 +701,27 @@ msgid "UxaXqH"
 msgstr "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn."
 
 #: components\budgets\budgets-table.tsx:73
-msgid "6HxSkI"
-msgstr "Chưa có ngân sách"
+msgid "CgOoDa"
+msgstr "Không tìm thấy ngân sách"
 
 #: components\budgets\budgets-table.tsx:76
-msgid "XYhPPe"
-msgstr "Bạn chưa tạo ngân sách nào. Hãy thêm ngân sách đầu tiên của bạn!"
+msgid "PTvqaL"
+msgstr "Bạn chưa tạo ngân sách nào."
 
-#: components\budgets\budgets-table.tsx:79
+#: components\budgets\budgets-table.tsx:77
 msgid "PZ97Zd"
 msgstr "Không tìm thấy ngân sách phù hợp với bộ lọc của bạn."
 
-#: components\budgets\budgets-table.tsx:92
+#: components\budgets\budgets-table.tsx:90
 msgid "111qQK"
 msgstr "Đã chi"
 
-#: components\budgets\budgets-table.tsx:93
+#: components\budgets\budgets-table.tsx:91
 #: components\statistics\statistics-summary.tsx:70
 msgid "H5+NAX"
 msgstr "Số dư"
 
-#: components\budgets\budgets-table.tsx:166
+#: components\budgets\budgets-table.tsx:164
 #: components\categories\categories-table.tsx:109
 #: components\goals\goals-table.tsx:155
 #: components\recurring-transactions\recurring-transactions-table.tsx:201
@@ -729,7 +729,7 @@ msgstr "Số dư"
 msgid "bdcMGy"
 msgstr "Mở menu"
 
-#: components\budgets\budgets-table.tsx:177
+#: components\budgets\budgets-table.tsx:175
 #: components\categories\categories-table.tsx:120
 #: components\goals\goals-table.tsx:166
 #: components\recurring-transactions\recurring-transactions-table.tsx:212
@@ -737,7 +737,7 @@ msgstr "Mở menu"
 msgid "wEQDC6"
 msgstr "Chỉnh sửa"
 
-#: components\budgets\budgets-table.tsx:187
+#: components\budgets\budgets-table.tsx:185
 #: components\budgets\delete-budget-dialog.tsx:63
 #: components\categories\categories-table.tsx:130
 #: components\categories\delete-category-dialog.tsx:63
@@ -950,8 +950,8 @@ msgid "uuJSCu"
 msgstr "Không tìm thấy mục tiêu"
 
 #: components\goals\goals-table.tsx:75
-msgid "iB1AMy"
-msgstr "Bắt đầu thiết lập các mục tiêu tài chính của bạn."
+msgid "Y2QNeU"
+msgstr "Bạn chưa tạo mục tiêu nào."
 
 #: components\goals\goals-table.tsx:76
 msgid "RB30ZK"
@@ -1044,8 +1044,8 @@ msgstr "Không tìm thấy giao dịch"
 #: components\home\recent-transactions.tsx:45
 #: components\statistics\statistics-table.tsx:60
 #: components\transactions\transactions-table.tsx:74
-msgid "JWV3aB"
-msgstr "Bắt đầu thêm các giao dịch của bạn."
+msgid "GMBC7V"
+msgstr "Bạn chưa tạo giao dịch nào."
 
 #: components\home\transaction-summary.tsx:35
 msgid "XUYy4C"
@@ -1217,8 +1217,8 @@ msgid "xRs5e/"
 msgstr "Không tìm thấy giao dịch định kỳ"
 
 #: components\recurring-transactions\recurring-transactions-table.tsx:97
-msgid "bhzq2y"
-msgstr "Bắt đầu thêm các giao dịch định kỳ của bạn."
+msgid "ll7wSI"
+msgstr "Bạn chưa tạo giao dịch định kỳ nào."
 
 #: components\recurring-transactions\recurring-transactions-table.tsx:98
 msgid "hZPPxy"
