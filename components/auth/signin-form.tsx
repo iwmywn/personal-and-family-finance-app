@@ -125,10 +125,10 @@ export function SignInForm() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="username">{t("Username")}</FormLabel>
+                <FormLabel htmlFor="form-username">{t("Username")}</FormLabel>
                 <FormControl>
                   <Input
-                    id="username"
+                    id="form-username"
                     placeholder="admin"
                     type="text"
                     autoComplete="off"
@@ -145,10 +145,10 @@ export function SignInForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="password">{t("Password")}</FormLabel>
+                <FormLabel htmlFor="form-password">{t("Password")}</FormLabel>
                 <FormControl>
                   <PasswordInput
-                    id="password"
+                    id="form-password"
                     placeholder="********"
                     autoComplete="off"
                     {...field}

@@ -195,7 +195,7 @@ export function TransactionDialog({
               name="currency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Currency")}</FormLabel>
+                  <FormLabel htmlFor="form-currency">{t("Currency")}</FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value)
@@ -204,7 +204,7 @@ export function TransactionDialog({
                     value={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger id="form-currency" className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
@@ -226,9 +226,10 @@ export function TransactionDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Amount")}</FormLabel>
+                  <FormLabel htmlFor="form-amount">{t("Amount")}</FormLabel>
                   <FormControl>
                     <CurrencyInput
+                      id="form-amount"
                       value={field.value}
                       onChange={field.onChange}
                       currency={form.getValues("currency")}
@@ -244,10 +245,13 @@ export function TransactionDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Description")}</FormLabel>
+                  <FormLabel htmlFor="form-description">
+                    {t("Description")}
+                  </FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
+                        id="form-description"
                         placeholder={t(
                           "Enter a description for the transaction..."
                         )}
@@ -271,10 +275,10 @@ export function TransactionDialog({
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Date")}</FormLabel>
+                  <FormLabel htmlFor="form-date">{t("Date")}</FormLabel>
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <FormControl>
+                      <PopoverTrigger id="form-date" asChild>
                         <Button
                           variant="outline"
                           className={cn(
@@ -289,8 +293,8 @@ export function TransactionDialog({
                           )}
                           <CalendarIcon />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                      </PopoverTrigger>
+                    </FormControl>
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"
