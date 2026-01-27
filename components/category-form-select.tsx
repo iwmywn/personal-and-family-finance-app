@@ -46,10 +46,10 @@ export function CategoryFormSelect<
       name={"categoryKey" as Path<TFieldValues>}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{t("Category")}</FormLabel>
+          <FormLabel htmlFor="form-category">{t("Category")}</FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
-              <SelectTrigger className="w-full">
+              <SelectTrigger id="form-category" className="w-full">
                 <SelectValue placeholder={t("Select Category")}>
                   {field.value ? getCategoryLabel(field.value) : null}
                 </SelectValue>
