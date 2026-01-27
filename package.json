@@ -51,7 +51,7 @@
     "@next/eslint-plugin-next": "16.1.5",
     "@tailwindcss/postcss": "4.1.18",
     "@types/node": "25.0.10",
-    "@types/react": "19.2.9",
+    "@types/react": "19.2.10",
     "@types/react-dom": "19.2.3",
     "@types/react-google-recaptcha": "2.1.9",
     "@typescript-eslint/eslint-plugin": "8.54.0",

@@ -415,8 +415,8 @@ msgstr "验证码验证"
 #: components\settings\change-password-dialog.tsx:53
 #: components\settings\change-username-dialog.tsx:54
 #: components\settings\two-factor-manager-dialog.tsx:122
-#: components\settings\two-factor-manager-dialog.tsx:197
-#: components\settings\two-factor-manager-dialog.tsx:268
+#: components\settings\two-factor-manager-dialog.tsx:198
+#: components\settings\two-factor-manager-dialog.tsx:272
 #: components\transactions\transaction-dialog.tsx:106
 msgid "5GmpFA"
 msgstr "无效数据！"
@@ -436,7 +436,7 @@ msgstr "用户名"
 
 #: components\auth\signin-form.tsx:148
 #: components\settings\two-factor-manager-dialog.tsx:152
-#: components\settings\two-factor-manager-dialog.tsx:296
+#: components\settings\two-factor-manager-dialog.tsx:300
 msgid "5sg7KC"
 msgstr "密码"
 
@@ -444,21 +444,21 @@ msgstr "密码"
 msgid "mXmfR7"
 msgstr "验证码无效！请稍后再试。"
 
-#: components\auth\two-factor-form.tsx:78
-#: components\settings\two-factor-manager-dialog.tsx:226
+#: components\auth\two-factor-form.tsx:79
+#: components\settings\two-factor-manager-dialog.tsx:228
 msgid "Tjv3UC"
 msgstr "验证码"
 
-#: components\auth\two-factor-form.tsx:104
+#: components\auth\two-factor-form.tsx:109
 msgid "hyw/Cv"
 msgstr "信任此设备"
 
-#: components\auth\two-factor-form.tsx:106
+#: components\auth\two-factor-form.tsx:112
 msgid "ZcMAT1"
 msgstr "30 天内不再在此设备上询问 2FA 代码。"
 
-#: components\auth\two-factor-form.tsx:114
-#: components\settings\two-factor-manager-dialog.tsx:241
+#: components\auth\two-factor-form.tsx:120
+#: components\settings\two-factor-manager-dialog.tsx:245
 msgid "q5Xl0M"
 msgstr "验证"
 
@@ -497,73 +497,73 @@ msgstr "货币"
 msgid "/0TOL5"
 msgstr "金额"
 
-#: components\budgets\budget-dialog.tsx:204
+#: components\budgets\budget-dialog.tsx:206
 #: components\budgets\budgets-table.tsx:86
-#: components\goals\goal-dialog.tsx:222
+#: components\goals\goal-dialog.tsx:229
 #: components\goals\goals-table.tsx:85
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:369
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:379
 #: components\recurring-transactions\recurring-transactions-table.tsx:109
 msgid "QirE3M"
 msgstr "开始日期"
 
-#: components\budgets\budget-dialog.tsx:221
-#: components\budgets\budget-dialog.tsx:274
-#: components\goals\goal-dialog.tsx:239
-#: components\goals\goal-dialog.tsx:292
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:386
+#: components\budgets\budget-dialog.tsx:224
+#: components\budgets\budget-dialog.tsx:277
+#: components\goals\goal-dialog.tsx:247
+#: components\goals\goal-dialog.tsx:300
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:397
 #: components\statistics\statistics-filters.tsx:125
-#: components\transactions\transaction-dialog.tsx:288
+#: components\transactions\transaction-dialog.tsx:292
 #: components\transactions\transaction-filters.tsx:180
 msgid "ftg7GK"
 msgstr "选择日期"
 
-#: components\budgets\budget-dialog.tsx:257
+#: components\budgets\budget-dialog.tsx:260
 #: components\budgets\budgets-table.tsx:87
-#: components\goals\goal-dialog.tsx:275
+#: components\goals\goal-dialog.tsx:283
 #: components\goals\goals-table.tsx:86
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:422
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:433
 #: components\recurring-transactions\recurring-transactions-table.tsx:110
 msgid "T4GOiX"
 msgstr "结束日期"
 
-#: components\budgets\budget-dialog.tsx:307
+#: components\budgets\budget-dialog.tsx:310
 #: components\budgets\delete-budget-dialog.tsx:61
-#: components\categories\category-dialog.tsx:181
+#: components\categories\category-dialog.tsx:187
 #: components\categories\delete-category-dialog.tsx:61
 #: components\goals\delete-goal-dialog.tsx:61
-#: components\goals\goal-dialog.tsx:325
+#: components\goals\goal-dialog.tsx:333
 #: components\layout\secondary-nav.tsx:85
 #: components\recurring-transactions\delete-recurring-transaction-dialog.tsx:63
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:502
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:513
 #: components\settings\change-name-dialog.tsx:110
-#: components\settings\change-password-dialog.tsx:171
+#: components\settings\change-password-dialog.tsx:174
 #: components\settings\change-username-dialog.tsx:122
 #: components\transactions\delete-transaction-dialog.tsx:61
-#: components\transactions\transaction-dialog.tsx:320
+#: components\transactions\transaction-dialog.tsx:324
 msgid "47FYwb"
 msgstr "取消"
 
-#: components\budgets\budget-dialog.tsx:311
-#: components\categories\category-dialog.tsx:185
-#: components\goals\goal-dialog.tsx:329
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:507
-#: components\transactions\transaction-dialog.tsx:324
-msgid "BWpuKl"
-msgstr "更新"
-
-#: components\budgets\budget-dialog.tsx:311
+#: components\budgets\budget-dialog.tsx:314
 #: components\budgets\budgets-page.tsx:24
 #: components\categories\categories-page.tsx:24
-#: components\categories\category-dialog.tsx:185
-#: components\goals\goal-dialog.tsx:329
+#: components\categories\category-dialog.tsx:191
+#: components\goals\goal-dialog.tsx:337
 #: components\goals\goals-page.tsx:24
 #: components\home\homepage.tsx:30
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:507
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:518
 #: components\recurring-transactions\recurring-transactions-page.tsx:24
-#: components\transactions\transaction-dialog.tsx:324
+#: components\transactions\transaction-dialog.tsx:328
 #: components\transactions\transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "添加"
+
+#: components\budgets\budget-dialog.tsx:314
+#: components\categories\category-dialog.tsx:191
+#: components\goals\goal-dialog.tsx:337
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:518
+#: components\transactions\transaction-dialog.tsx:328
+msgid "BWpuKl"
+msgstr "更新"
 
 #: components\budgets\budget-filters.tsx:82
 #: components\goals\goal-filters.tsx:116
@@ -651,7 +651,7 @@ msgstr "超出 (≥ 100%)"
 #: components\budgets\budgets-table.tsx:92
 #: components\goals\goal-filters.tsx:202
 #: components\goals\goals-table.tsx:91
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:480
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:491
 #: components\recurring-transactions\recurring-transactions-filters.tsx:200
 #: components\recurring-transactions\recurring-transactions-table.tsx:116
 msgid "tzMNF3"
@@ -674,7 +674,7 @@ msgstr "已过期"
 #: components\budgets\budgets-table.tsx:138
 #: components\goals\goal-filters.tsx:209
 #: components\goals\goals-table.tsx:129
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:491
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:502
 #: components\recurring-transactions\recurring-transactions-filters.tsx:206
 #: components\recurring-transactions\recurring-transactions-table.tsx:189
 msgid "3a5wL8"
@@ -775,16 +775,16 @@ msgid "Dojtt1"
 msgstr "未找到符合筛选条件的分类。"
 
 #: components\categories\categories-table.tsx:72
-#: components\categories\category-dialog.tsx:142
+#: components\categories\category-dialog.tsx:143
 msgid "vEYtiq"
 msgstr "分类名称"
 
 #: components\categories\categories-table.tsx:73
-#: components\categories\category-dialog.tsx:159
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:278
+#: components\categories\category-dialog.tsx:163
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:280
 #: components\recurring-transactions\recurring-transactions-table.tsx:111
 #: components\transactions\export-button.tsx:36
-#: components\transactions\transaction-dialog.tsx:247
+#: components\transactions\transaction-dialog.tsx:249
 #: components\transactions\transactions-table.tsx:85
 msgid "Q8Qw5B"
 msgstr "描述"
@@ -848,12 +848,12 @@ msgstr "更新自定义分类信息。"
 msgid "0jMR1h"
 msgstr "为您的交易创建自定义分类。"
 
-#: components\categories\category-dialog.tsx:145
+#: components\categories\category-dialog.tsx:148
 msgid "TxCpcX"
 msgstr "例如：工资、杂货"
 
-#: components\categories\category-dialog.tsx:163
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:282
+#: components\categories\category-dialog.tsx:169
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:286
 msgid "s0F42g"
 msgstr "输入描述..."
 
@@ -911,16 +911,16 @@ msgstr "更新目标信息。"
 msgid "dzmlX3"
 msgstr "创建一个新的财务目标。"
 
-#: components\goals\goal-dialog.tsx:187
+#: components\goals\goal-dialog.tsx:188
 #: components\goals\goals-table.tsx:87
 msgid "gQxxlw"
 msgstr "目标名称"
 
-#: components\goals\goal-dialog.tsx:190
+#: components\goals\goal-dialog.tsx:193
 msgid "rH4tSt"
 msgstr "例如：为假期存钱"
 
-#: components\goals\goal-dialog.tsx:204
+#: components\goals\goal-dialog.tsx:208
 #: components\goals\goals-table.tsx:89
 msgid "MPOzul"
 msgstr "目标金额"
@@ -1137,63 +1137,63 @@ msgstr "更新定期交易信息。"
 msgid "adePxB"
 msgstr "创建定期交易。"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:303
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:308
 #: components\recurring-transactions\recurring-transactions-table.tsx:115
 msgid "vAW30j"
 msgstr "频率"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:319
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:325
 #: components\recurring-transactions\recurring-transactions-table.tsx:66
 msgid "zxvhnE"
 msgstr "每天"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:320
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:326
 #: components\recurring-transactions\recurring-transactions-table.tsx:68
 msgid "/clOBU"
 msgstr "每周"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:322
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:328
 #: components\recurring-transactions\recurring-transactions-table.tsx:70
 msgid "03X4YH"
 msgstr "每两周"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:324
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:330
 #: components\recurring-transactions\recurring-transactions-table.tsx:72
 msgid "wYsv4Z"
 msgstr "每月"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:326
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:332
 #: components\recurring-transactions\recurring-transactions-table.tsx:74
 msgid "b1Ou36"
 msgstr "每季度"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:328
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:334
 #: components\recurring-transactions\recurring-transactions-table.tsx:76
 msgid "dqD39h"
 msgstr "每年"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:329
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:335
 #: components\recurring-transactions\recurring-transactions-table.tsx:78
 msgid "D9n+q2"
 msgstr "随机"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:343
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:350
 msgid "CpM7W/"
 msgstr "每 X 天"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:347
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:356
 msgid "FP2XQQ"
 msgstr "例如：15"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:422
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:433
 msgid "InWqys"
 msgstr "可选"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:445
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:456
 msgid "mpcI7I"
 msgstr "无结束日期"
 
-#: components\recurring-transactions\recurring-transaction-dialog.tsx:492
+#: components\recurring-transactions\recurring-transaction-dialog.tsx:503
 #: components\recurring-transactions\recurring-transactions-filters.tsx:207
 #: components\recurring-transactions\recurring-transactions-table.tsx:189
 msgid "6Tps09"
@@ -1310,7 +1310,7 @@ msgid "g4FbZ5"
 msgstr "输入您的姓名..."
 
 #: components\settings\change-name-dialog.tsx:114
-#: components\settings\change-password-dialog.tsx:175
+#: components\settings\change-password-dialog.tsx:178
 #: components\settings\change-username-dialog.tsx:126
 msgid "jvo0vs"
 msgstr "保存"
@@ -1350,7 +1350,7 @@ msgstr "新密码"
 msgid "vfG+nh"
 msgstr "确认密码"
 
-#: components\settings\change-password-dialog.tsx:164
+#: components\settings\change-password-dialog.tsx:166
 msgid "zFD28X"
 msgstr "从所有其他设备退出。"
 
@@ -1443,12 +1443,12 @@ msgid "EQpyb8"
 msgstr "切换主题"
 
 #: components\settings\two-factor-manager-dialog.tsx:52
-#: components\settings\two-factor-manager-dialog.tsx:310
+#: components\settings\two-factor-manager-dialog.tsx:315
 msgid "e7Db3T"
 msgstr "禁用 2FA"
 
 #: components\settings\two-factor-manager-dialog.tsx:52
-#: components\settings\two-factor-manager-dialog.tsx:166
+#: components\settings\two-factor-manager-dialog.tsx:167
 msgid "ZhrNZz"
 msgstr "启用 2FA"
 
@@ -1480,19 +1480,19 @@ msgstr "密码无效。"
 msgid "Lq08V/"
 msgstr "启用 2FA 失败！请稍后再试。"
 
-#: components\settings\two-factor-manager-dialog.tsx:205
+#: components\settings\two-factor-manager-dialog.tsx:206
 msgid "02Huvd"
 msgstr "验证 2FA 代码失败！请稍后再试。"
 
-#: components\settings\two-factor-manager-dialog.tsx:209
+#: components\settings\two-factor-manager-dialog.tsx:210
 msgid "FSRmm9"
 msgstr "双重身份验证现已启用。"
 
-#: components\settings\two-factor-manager-dialog.tsx:276
+#: components\settings\two-factor-manager-dialog.tsx:280
 msgid "Y1o/zZ"
 msgstr "禁用 2FA 失败！请稍后再试。"
 
-#: components\settings\two-factor-manager-dialog.tsx:280
+#: components\settings\two-factor-manager-dialog.tsx:284
 msgid "BBb4xb"
 msgstr "双重身份验证现已禁用。"
 
@@ -1551,7 +1551,7 @@ msgid "cj6kmp"
 msgstr "您确定要删除此交易吗？此操作无法撤销。"
 
 #: components\transactions\export-button.tsx:32
-#: components\transactions\transaction-dialog.tsx:274
+#: components\transactions\transaction-dialog.tsx:278
 #: components\transactions\transactions-table.tsx:84
 msgid "P7PLVj"
 msgstr "日期"
@@ -1588,7 +1588,7 @@ msgstr "更新交易信息。"
 msgid "m3AQtz"
 msgstr "添加您的收入或支出以跟踪您的个人财务状况。"
 
-#: components\transactions\transaction-dialog.tsx:251
+#: components\transactions\transaction-dialog.tsx:255
 msgid "9WG2aE"
 msgstr "输入交易描述..."
 
