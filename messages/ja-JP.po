@@ -544,6 +544,14 @@ msgid "47FYwb"
 msgstr "キャンセル"
 
 #: components/budgets/budget-dialog.tsx:314
+#: components/categories/category-dialog.tsx:191
+#: components/goals/goal-dialog.tsx:337
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
+#: components/transactions/transaction-dialog.tsx:328
+msgid "BWpuKl"
+msgstr "更新"
+
+#: components/budgets/budget-dialog.tsx:314
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
 #: components/categories/category-dialog.tsx:191
@@ -556,14 +564,6 @@ msgstr "キャンセル"
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "追加"
-
-#: components/budgets/budget-dialog.tsx:314
-#: components/categories/category-dialog.tsx:191
-#: components/goals/goal-dialog.tsx:337
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
-#: components/transactions/transaction-dialog.tsx:328
-msgid "BWpuKl"
-msgstr "更新"
 
 #: components/budgets/budget-filters.tsx:82
 #: components/goals/goal-filters.tsx:116

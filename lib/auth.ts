@@ -68,4 +68,5 @@ export const auth = betterAuth({
   },
   secret: serverEnv.BETTER_AUTH_SECRET,
   trustedOrigins: [clientEnv.NEXT_PUBLIC_URL],
+  baseURL: clientEnv.NEXT_PUBLIC_URL,
 })
