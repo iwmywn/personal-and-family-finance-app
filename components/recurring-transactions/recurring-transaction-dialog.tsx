@@ -226,7 +226,7 @@ export function RecurringTransactionDialog({
               name="currency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Currency")}</FormLabel>
+                  <FormLabel htmlFor="form-currency">{t("Currency")}</FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value)
@@ -235,7 +235,7 @@ export function RecurringTransactionDialog({
                     value={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger id="form-currency" className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
@@ -257,9 +257,10 @@ export function RecurringTransactionDialog({
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Amount")}</FormLabel>
+                  <FormLabel htmlFor="form-amount">{t("Amount")}</FormLabel>
                   <FormControl>
                     <CurrencyInput
+                      id="form-amount"
                       currency={form.getValues("currency")}
                       value={field.value}
                       onChange={field.onChange}
@@ -275,10 +276,13 @@ export function RecurringTransactionDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Description")}</FormLabel>
+                  <FormLabel htmlFor="form-description">
+                    {t("Description")}
+                  </FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
+                        id="form-description"
                         placeholder={t("Enter a description...")}
                         maxLength={200}
                         {...field}
@@ -300,7 +304,9 @@ export function RecurringTransactionDialog({
               name="frequency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Frequency")}</FormLabel>
+                  <FormLabel htmlFor="form-frequency">
+                    {t("Frequency")}
+                  </FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value)
@@ -311,7 +317,7 @@ export function RecurringTransactionDialog({
                     value={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger id="form-frequency" className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
@@ -340,9 +346,12 @@ export function RecurringTransactionDialog({
                 name="randomEveryXDays"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t("Every X Days")}</FormLabel>
+                    <FormLabel htmlFor="form-every-x-days">
+                      {t("Every X Days")}
+                    </FormLabel>
                     <FormControl>
                       <Input
+                        id="form-every-x-days"
                         inputMode="numeric"
                         placeholder={t("e.g. 15")}
                         value={
@@ -366,13 +375,15 @@ export function RecurringTransactionDialog({
               name="startDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Start Date")}</FormLabel>
+                  <FormLabel htmlFor="form-start-date">
+                    {t("Start Date")}
+                  </FormLabel>
                   <Popover
                     open={startCalendarOpen}
                     onOpenChange={setStartCalendarOpen}
                   >
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <FormControl>
+                      <PopoverTrigger id="form-start-date" asChild>
                         <Button
                           variant="outline"
                           className={cn(
@@ -387,8 +398,8 @@ export function RecurringTransactionDialog({
                           )}
                           <CalendarIcon />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                      </PopoverTrigger>
+                    </FormControl>
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"
@@ -418,15 +429,15 @@ export function RecurringTransactionDialog({
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
+                  <FormLabel htmlFor="form-end-date">
                     {t("End Date")} ({t("Optional")})
                   </FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}
                   >
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <FormControl>
+                      <PopoverTrigger id="form-end-date" asChild>
                         <Button
                           variant="outline"
                           className={cn(
@@ -446,8 +457,8 @@ export function RecurringTransactionDialog({
                           )}
                           <CalendarIcon />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                      </PopoverTrigger>
+                    </FormControl>
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"
@@ -477,13 +488,13 @@ export function RecurringTransactionDialog({
               name="isActive"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Status")}</FormLabel>
+                  <FormLabel htmlFor="form-status">{t("Status")}</FormLabel>
                   <Select
                     onValueChange={(value) => field.onChange(value === "true")}
                     value={field.value ? "true" : "false"}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger id="form-status" className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>

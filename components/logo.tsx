@@ -1,7 +1,7 @@
 import Image from "next/image"
 
-import { cn } from "@/lib/utils"
 import { siteConfig } from "@/app/pffa.config"
+import { cn } from "@/lib/utils"
 
 interface LogoProps {
   width?: number

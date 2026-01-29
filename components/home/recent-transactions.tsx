@@ -42,7 +42,7 @@ export function RecentTransactions() {
                 </EmptyMedia>
                 <EmptyTitle>{t("No transactions found")}</EmptyTitle>
                 <EmptyDescription>
-                  {t("Start adding your transactions.")}
+                  {t("You haven't created any transactions yet.")}
                 </EmptyDescription>
               </EmptyHeader>
             </Empty>

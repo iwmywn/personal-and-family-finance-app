@@ -149,9 +149,10 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Password")}</FormLabel>
+              <FormLabel htmlFor="form-password">{t("Password")}</FormLabel>
               <FormControl>
                 <PasswordInput
+                  id="form-password"
                   placeholder="********"
                   autoComplete="off"
                   {...field}
@@ -223,9 +224,12 @@ function VerifyTwoFactorForm({
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Verification Code")}</FormLabel>
+              <FormLabel htmlFor="form-verification-code">
+                {t("Verification Code")}
+              </FormLabel>
               <FormControl>
                 <Input
+                  id="form-verification-code"
                   inputMode="numeric"
                   autoComplete="one-time-code"
                   placeholder="123456"
@@ -293,9 +297,10 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Password")}</FormLabel>
+              <FormLabel htmlFor="form-password">{t("Password")}</FormLabel>
               <FormControl>
                 <PasswordInput
+                  id="form-password"
                   placeholder="********"
                   autoComplete="off"
                   {...field}

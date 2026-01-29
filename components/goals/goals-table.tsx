@@ -72,7 +72,7 @@ export function GoalsTable({ filteredGoals }: GoalsTableProps) {
                 <EmptyTitle>{t("No goals found")}</EmptyTitle>
                 <EmptyDescription>
                   {goals.length === 0
-                    ? t("Start setting your financial goals.")
+                    ? t("You haven't created any goals yet.")
                     : t("No goals found matching your filters.")}
                 </EmptyDescription>
               </EmptyHeader>

@@ -75,9 +75,12 @@ export function TwoFactorVerificationForm() {
           name="code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("Verification Code")}</FormLabel>
+              <FormLabel htmlFor="form-verification-code">
+                {t("Verification Code")}
+              </FormLabel>
               <FormControl>
                 <Input
+                  id="form-verification-code"
                   inputMode="numeric"
                   autoComplete="one-time-code"
                   placeholder="123456"
@@ -96,12 +99,15 @@ export function TwoFactorVerificationForm() {
             <FormItem className="flex flex-row space-y-0 space-x-3 border p-3">
               <FormControl>
                 <Checkbox
+                  id="form-trust-this-device"
                   checked={field.value}
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel className="">{t("Trust this device")}</FormLabel>
+                <FormLabel htmlFor="form-trust-this-device">
+                  {t("Trust this device")}
+                </FormLabel>
                 <FormDescription>
                   {t("Don't ask for 2FA code on this device for 30 days.")}
                 </FormDescription>

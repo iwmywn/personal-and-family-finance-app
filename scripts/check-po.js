@@ -52,7 +52,7 @@ files.forEach((file) => {
 
             if (msgstrContent === "") {
               console.error(
-                `File: ${path.relative(process.cwd(), file)}, Line: ${currentMsgidLine} - msgid missing msgstr (empty)`
+                `File: ${path.relative(process.cwd(), file)}, Line: ${currentMsgidLine} - msgid missing msgstr`
               )
               hasError = true
             }

@@ -57,7 +57,7 @@ export function StatisticsTable({
               <EmptyTitle>{t("No transactions found")}</EmptyTitle>
               <EmptyDescription>
                 {transactions.length === 0
-                  ? t("Start adding your transactions.")
+                  ? t("You haven't created any transactions yet.")
                   : t("No transactions found matching your filters.")}
               </EmptyDescription>
             </EmptyHeader>

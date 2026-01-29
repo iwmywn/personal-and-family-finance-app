@@ -91,10 +91,10 @@ export function ChangeNameDialog() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="name">{t("Name")}</FormLabel>
+                  <FormLabel htmlFor="form-name">{t("Name")}</FormLabel>
                   <FormControl>
                     <Input
-                      id="name"
+                      id="form-name"
                       placeholder={t("Enter your name...")}
                       autoComplete="name"
                       {...field}

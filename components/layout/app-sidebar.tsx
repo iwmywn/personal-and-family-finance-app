@@ -2,6 +2,7 @@
 
 import { useExtracted } from "next-intl"
 
+import { siteConfig } from "@/app/pffa.config"
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +13,6 @@ import {
 import { MainNav } from "@/components/layout/main-nav"
 import { SecondaryNav } from "@/components/layout/secondary-nav"
 import { Logo } from "@/components/logo"
-import { siteConfig } from "@/app/pffa.config"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const t = useExtracted()

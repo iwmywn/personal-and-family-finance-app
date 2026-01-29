@@ -92,12 +92,12 @@ export function ChangePasswordDialog() {
               name="currentPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="currentPassword">
+                  <FormLabel htmlFor="form-current-password">
                     {t("Current Password")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
-                      id="currentPassword"
+                      id="form-current-password"
                       placeholder="********"
                       autoComplete="off"
                       {...field}
@@ -113,12 +113,12 @@ export function ChangePasswordDialog() {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="newPassword">
+                  <FormLabel htmlFor="form-new-password">
                     {t("New Password")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
-                      id="newPassword"
+                      id="form-new-password"
                       placeholder="********"
                       autoComplete="new-password"
                       {...field}
@@ -134,12 +134,12 @@ export function ChangePasswordDialog() {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="confirmPassword">
+                  <FormLabel htmlFor="form-confirm-password">
                     {t("Confirm Password")}
                   </FormLabel>
                   <FormControl>
                     <PasswordInput
-                      id="confirmPassword"
+                      id="form-confirm-password"
                       placeholder="********"
                       autoComplete="new-password"
                       {...field}
@@ -157,11 +157,14 @@ export function ChangePasswordDialog() {
                 <FormItem className="flex">
                   <FormControl>
                     <Checkbox
+                      id="form-sign-out-all"
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
-                  <FormLabel>{t("Sign out from all other devices.")}</FormLabel>
+                  <FormLabel id="form-sign-out-all">
+                    {t("Sign out from all other devices.")}
+                  </FormLabel>
                 </FormItem>
               )}
             />

@@ -16,7 +16,7 @@ type CurrencyInputProps = Omit<
 }
 
 const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
-  ({ className, value, onChange, currency, ...props }, ref) => {
+  ({ className, value, onChange, currency, id, ...props }, ref) => {
     const [isFocused, setIsFocused] = React.useState(false)
 
     const isZeroDecimal = isZeroDecimalCurrency(currency)
@@ -36,6 +36,7 @@ const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
     return (
       <Input
         ref={ref}
+        id={id}
         type="text"
         placeholder="0"
         className={cn(className)}

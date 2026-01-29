@@ -9,7 +9,7 @@ export const env = createEnv({
   },
   runtimeEnv: {
     NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
-    NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_RECAPTCHA,
+    NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
     NEXT_PUBLIC_RECAPTCHA: process.env.NEXT_PUBLIC_RECAPTCHA,
   },
 })
