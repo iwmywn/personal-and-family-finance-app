@@ -4,6 +4,7 @@ import { useState } from "react"
 import { MoreVerticalIcon, RepeatIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 
+import { getNextDate } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -41,7 +42,6 @@ import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
 import type { RecurringTransaction } from "@/lib/definitions"
 import { localDateToUTCMidnight } from "@/lib/utils"
-import { getNextDate } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 
 interface RecurringTableProps {
   filteredRecurring: RecurringTransaction[]
@@ -94,7 +94,7 @@ export function RecurringTransactionsTable({
                 <EmptyTitle>{t("No recurring transactions found")}</EmptyTitle>
                 <EmptyDescription>
                   {recurringTransactions.length === 0
-                    ? t("Start adding your recurring transactions.")
+                    ? t("You haven't created any recurring transactions yet.")
                     : t(
                         "No recurring transactions found matching your filters."
                       )}

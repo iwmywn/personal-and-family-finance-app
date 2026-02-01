@@ -2,9 +2,9 @@ import { NextRequest } from "next/server"
 
 import { insertTestExchangeRate } from "@/tests/backend/helpers/database"
 import { mockExchangeRates } from "@/tests/shared/data"
+import { GET } from "@/app/api/(cronjobs)/exchange-rates/route"
 import { getExchangeRatesCollection } from "@/lib/collections"
 import { normalizeToUTCMidnight } from "@/lib/utils"
-import { GET } from "@/app/api/(cronjobs)/exchange-rates/route"
 
 const cronSecret = "test-cron-secret"
 const cronEndpoint = "http://localhost/api/exchange-rates"

@@ -9,6 +9,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("Home") }
 }
 
-export default function home() {
+export default function page() {
   return <HomePage />
 }

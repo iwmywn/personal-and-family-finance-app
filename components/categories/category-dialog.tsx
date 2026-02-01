@@ -139,9 +139,12 @@ export function CategoryDialog({
               name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Category Name")}</FormLabel>
+                  <FormLabel htmlFor="form-category-name">
+                    {t("Category Name")}
+                  </FormLabel>
                   <FormControl>
                     <Input
+                      id="form-category-name"
                       placeholder={t("e.g. Salary, Groceries")}
                       {...field}
                     />
@@ -156,10 +159,13 @@ export function CategoryDialog({
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Description")}</FormLabel>
+                  <FormLabel htmlFor="form-description">
+                    {t("Description")}
+                  </FormLabel>
                   <FormControl>
                     <InputGroup>
                       <InputGroupTextarea
+                        id="form-description"
                         placeholder={t("Enter a description...")}
                         maxLength={200}
                         {...field}

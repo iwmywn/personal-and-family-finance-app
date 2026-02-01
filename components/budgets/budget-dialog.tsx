@@ -152,7 +152,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="currency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Currency")}</FormLabel>
+                  <FormLabel htmlFor="form-currency">{t("Currency")}</FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value)
@@ -161,7 +161,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                     value={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger id="form-currency" className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
@@ -183,9 +183,10 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="allocatedAmount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Amount")}</FormLabel>
+                  <FormLabel htmlFor="form-amount">{t("Amount")}</FormLabel>
                   <FormControl>
                     <CurrencyInput
+                      id="form-amount"
                       currency={form.getValues("currency")}
                       value={field.value}
                       onChange={field.onChange}
@@ -201,13 +202,15 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="startDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Start Date")}</FormLabel>
+                  <FormLabel htmlFor="form-start-date">
+                    {t("Start Date")}
+                  </FormLabel>
                   <Popover
                     open={startCalendarOpen}
                     onOpenChange={setStartCalendarOpen}
                   >
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <FormControl>
+                      <PopoverTrigger id="form-start-date" asChild>
                         <Button
                           variant="outline"
                           className={cn(
@@ -222,8 +225,8 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           )}
                           <CalendarIcon />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                      </PopoverTrigger>
+                    </FormControl>
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"
@@ -254,13 +257,13 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("End Date")}</FormLabel>
+                  <FormLabel htmlFor="form-end-date">{t("End Date")}</FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}
                   >
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <FormControl>
+                      <PopoverTrigger id="form-end-date" asChild>
                         <Button
                           variant="outline"
                           className={cn(
@@ -275,8 +278,8 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           )}
                           <CalendarIcon />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                      </PopoverTrigger>
+                    </FormControl>
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"

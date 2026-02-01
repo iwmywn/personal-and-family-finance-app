@@ -103,10 +103,10 @@ export function ChangeUsernameDialog() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="username">{t("Username")}</FormLabel>
+                  <FormLabel htmlFor="form-username">{t("Username")}</FormLabel>
                   <FormControl>
                     <Input
-                      id="username"
+                      id="form-username"
                       placeholder={t("Enter your username...")}
                       autoComplete="username"
                       {...field}

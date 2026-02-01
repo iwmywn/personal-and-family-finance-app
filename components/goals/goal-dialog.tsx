@@ -153,7 +153,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="currency"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Currency")}</FormLabel>
+                  <FormLabel htmlFor="form-currency">{t("Currency")}</FormLabel>
                   <Select
                     onValueChange={(value) => {
                       field.onChange(value)
@@ -162,7 +162,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                     value={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger id="form-currency" className="w-full">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
@@ -184,9 +184,12 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Goal Name")}</FormLabel>
+                  <FormLabel htmlFor="form-goal-name">
+                    {t("Goal Name")}
+                  </FormLabel>
                   <FormControl>
                     <Input
+                      id="form-goal-name"
                       placeholder={t("e.g. Save for vacation")}
                       {...field}
                     />
@@ -201,9 +204,12 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="targetAmount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Target Amount")}</FormLabel>
+                  <FormLabel htmlFor="form-target-amount">
+                    {t("Target Amount")}
+                  </FormLabel>
                   <FormControl>
                     <CurrencyInput
+                      id="form-target-amount"
                       currency={form.getValues("currency")}
                       value={field.value}
                       onChange={field.onChange}
@@ -219,13 +225,15 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="startDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("Start Date")}</FormLabel>
+                  <FormLabel htmlFor="form-start-date">
+                    {t("Start Date")}
+                  </FormLabel>
                   <Popover
                     open={startCalendarOpen}
                     onOpenChange={setStartCalendarOpen}
                   >
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <FormControl>
+                      <PopoverTrigger id="form-start-date" asChild>
                         <Button
                           variant="outline"
                           className={cn(
@@ -240,8 +248,8 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                           )}
                           <CalendarIcon />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                      </PopoverTrigger>
+                    </FormControl>
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"
@@ -272,13 +280,13 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               name="endDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("End Date")}</FormLabel>
+                  <FormLabel htmlFor="form-end-date">{t("End Date")}</FormLabel>
                   <Popover
                     open={endCalendarOpen}
                     onOpenChange={setEndCalendarOpen}
                   >
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <FormControl>
+                      <PopoverTrigger id="form-end-date" asChild>
                         <Button
                           variant="outline"
                           className={cn(
@@ -293,8 +301,8 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                           )}
                           <CalendarIcon />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                      </PopoverTrigger>
+                    </FormControl>
                     <PopoverContent
                       className="w-auto overflow-hidden p-0"
                       align="start"

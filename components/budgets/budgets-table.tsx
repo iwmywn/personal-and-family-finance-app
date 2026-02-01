@@ -70,12 +70,10 @@ export function BudgetsTable({ filteredBudgets }: BudgetsTableProps) {
                 <EmptyMedia variant="icon">
                   <PiggyBankIcon />
                 </EmptyMedia>
-                <EmptyTitle>{t("No budgets yet")}</EmptyTitle>
+                <EmptyTitle>{t("No budgets found")}</EmptyTitle>
                 <EmptyDescription>
                   {budgets.length === 0
-                    ? t(
-                        "You haven't created any budgets yet. Add your first budget!"
-                      )
+                    ? t("You haven't created any budgets yet.")
                     : t("No budgets found matching your filters.")}
                 </EmptyDescription>
               </EmptyHeader>
