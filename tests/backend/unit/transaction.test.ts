@@ -6,6 +6,7 @@ import {
   setupTransactionCollectionMock,
 } from "@/tests/backend/mocks/collections.mock"
 import {
+  mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
@@ -141,6 +142,30 @@ describe("Transactions", async () => {
       )
     })
 
+    it("should return error when another user tries to update", async () => {
+      await insertTestTransaction(mockTransaction)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await updateTransaction(mockTransaction._id.toString(), {
+        type: "expense",
+        categoryKey: "personal_care",
+        amount: "100000",
+        currency: "VND",
+        description: "Hacked description",
+        date: localDateToUTCMidnight(new Date("2024-02-04")),
+      })
+      const transactionsCollection = await getTransactionsCollection()
+      const unchangedTransaction = await transactionsCollection.findOne({
+        _id: mockTransaction._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Transaction not found or you don't have permission to edit!"
+      )
+      expect(unchangedTransaction?.description).toBe("hamburger")
+    })
+
     it("should successfully update transaction", async () => {
       await Promise.all([
         insertTestTransaction(mockTransaction),
@@ -228,6 +253,23 @@ describe("Transactions", async () => {
       expect(result.error).toBe(
         "Transaction not found or you don't have permission to delete!"
       )
+    })
+
+    it("should return error when another user tries to delete", async () => {
+      await insertTestTransaction(mockTransaction)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await deleteTransaction(mockTransaction._id.toString())
+      const transactionsCollection = await getTransactionsCollection()
+      const unchangedTransaction = await transactionsCollection.findOne({
+        _id: mockTransaction._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Transaction not found or you don't have permission to delete!"
+      )
+      expect(unchangedTransaction).not.toBe(null)
     })
 
     it("should successfully delete transaction", async () => {

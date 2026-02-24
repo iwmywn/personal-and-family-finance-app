@@ -1,4 +1,4 @@
-import { mockUser } from "@/tests/shared/data"
+import { mockAnotherUser, mockUser } from "@/tests/shared/data"
 
 const mockGetCurrentSession = vi.fn()
 
@@ -21,6 +21,26 @@ export const mockAuthenticatedUser = () => {
       currency: mockUser.currency,
       twoFactorEnabled: mockUser.twoFactorEnabled,
       id: mockUser._id.toString(),
+    },
+    session: {},
+  })
+}
+
+export const mockAuthenticatedAsAnotherUser = () => {
+  mockGetCurrentSession.mockResolvedValue({
+    user: {
+      name: mockAnotherUser.name,
+      email: mockAnotherUser.email,
+      emailVerified: mockAnotherUser.emailVerified,
+      image: mockAnotherUser.image,
+      createdAt: mockAnotherUser.createdAt,
+      updatedAt: mockAnotherUser.updatedAt,
+      username: mockAnotherUser.username,
+      displayUsername: mockAnotherUser.displayUsername,
+      locale: mockAnotherUser.locale,
+      currency: mockAnotherUser.currency,
+      twoFactorEnabled: mockAnotherUser.twoFactorEnabled,
+      id: mockAnotherUser._id.toString(),
     },
     session: {},
   })

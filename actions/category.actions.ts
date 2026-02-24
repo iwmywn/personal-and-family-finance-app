@@ -30,7 +30,6 @@ export async function createCustomCategory(values: CategoryFormValues) {
     }
 
     const userId = session.user.id
-
     const categoriesCollection = await getCategoriesCollection()
 
     const existingCategory = await categoriesCollection.findOne({
@@ -89,14 +88,13 @@ export async function updateCustomCategory(
       }
     }
 
-    const userId = session.user.id
-
     if (!ObjectId.isValid(categoryId)) {
       return {
         error: t("Invalid category ID!"),
       }
     }
 
+    const userId = session.user.id
     const [categoriesCollection, transactionsCollection] = await Promise.all([
       getCategoriesCollection(),
       getTransactionsCollection(),
@@ -104,6 +102,7 @@ export async function updateCustomCategory(
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingCategory) {
@@ -125,7 +124,7 @@ export async function updateCustomCategory(
 
     await Promise.all([
       categoriesCollection.updateOne(
-        { _id: new ObjectId(categoryId) },
+        { _id: new ObjectId(categoryId), userId: new ObjectId(userId) },
         {
           $set: {
             type: values.type,
@@ -168,14 +167,13 @@ export async function deleteCustomCategory(categoryId: string) {
       }
     }
 
-    const userId = session.user.id
-
     if (!ObjectId.isValid(categoryId)) {
       return {
         error: t("Invalid category ID!"),
       }
     }
 
+    const userId = session.user.id
     const [
       categoriesCollection,
       transactionsCollection,
@@ -192,6 +190,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingCategory) {
@@ -270,6 +269,7 @@ export async function deleteCustomCategory(categoryId: string) {
 
     await categoriesCollection.deleteOne({
       _id: new ObjectId(categoryId),
+      userId: new ObjectId(userId),
     })
 
     updateTag(`categories-${userId}`)

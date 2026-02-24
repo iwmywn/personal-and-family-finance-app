@@ -8,13 +8,13 @@ export async function getLocationFromIP(ipAddress: string | null | undefined) {
   cacheLife({ expire: 120 })
 
   if (!ipAddress) return null
-  if (ipAddress === "127.0.0.1" || ipAddress === "::1") {
+  if (ipAddress === "0000:0000:0000:0000:0000:0000:0000:0000") {
     return "Local"
   }
 
   try {
     const response = await fetch(
-      `http://ip-api.com/json/${ipAddress}?fields=status,message,regionName,country`
+      `http://ip-api.com/json/${ipAddress}?fields=status,regionName,country`
     )
     const data = await response.json()
 

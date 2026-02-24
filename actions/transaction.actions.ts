@@ -26,7 +26,6 @@ export async function createTransaction(values: TransactionFormValues) {
     }
 
     const userId = session.user.id
-
     const transactionsCollection = await getTransactionsCollection()
 
     const data = {
@@ -79,10 +78,12 @@ export async function updateTransaction(
       }
     }
 
+    const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingTransaction) {
@@ -92,7 +93,10 @@ export async function updateTransaction(
     }
 
     await transactionsCollection.updateOne(
-      { _id: new ObjectId(transactionId) },
+      {
+        _id: new ObjectId(transactionId),
+        userId: new ObjectId(userId),
+      },
       {
         $set: {
           type: values.type,
@@ -105,7 +109,7 @@ export async function updateTransaction(
       }
     )
 
-    updateTag(`transactions-${session.user.id}`)
+    updateTag(`transactions-${userId}`)
     return {
       success: t("Transaction has been updated."),
       error: undefined,
@@ -134,10 +138,12 @@ export async function deleteTransaction(transactionId: string) {
       }
     }
 
+    const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
 
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingTransaction) {
@@ -150,9 +156,10 @@ export async function deleteTransaction(transactionId: string) {
 
     await transactionsCollection.deleteOne({
       _id: new ObjectId(transactionId),
+      userId: new ObjectId(userId),
     })
 
-    updateTag(`transactions-${session.user.id}`)
+    updateTag(`transactions-${userId}`)
     return { success: t("Transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting transaction:", error)

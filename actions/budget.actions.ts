@@ -24,7 +24,6 @@ export async function createBudget(values: BudgetFormValues) {
     }
 
     const userId = session.user.id
-
     const budgetsCollection = await getBudgetsCollection()
 
     const existingBudget = await budgetsCollection.findOne({
@@ -77,10 +76,12 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
       }
     }
 
+    const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
 
     const existingBudget = await budgetsCollection.findOne({
       _id: new ObjectId(budgetId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingBudget) {
@@ -90,7 +91,7 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
     }
 
     await budgetsCollection.updateOne(
-      { _id: new ObjectId(budgetId) },
+      { _id: new ObjectId(budgetId), userId: new ObjectId(userId) },
       {
         $set: {
           categoryKey: values.categoryKey,
@@ -102,7 +103,7 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
       }
     )
 
-    updateTag(`budgets-${session.user.id}`)
+    updateTag(`budgets-${userId}`)
     return { success: t("Budget has been updated."), error: undefined }
   } catch (error) {
     console.error("Error updating budget:", error)
@@ -128,10 +129,12 @@ export async function deleteBudget(budgetId: string) {
       }
     }
 
+    const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
 
     const existingBudget = await budgetsCollection.findOne({
       _id: new ObjectId(budgetId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingBudget) {
@@ -142,9 +145,10 @@ export async function deleteBudget(budgetId: string) {
 
     await budgetsCollection.deleteOne({
       _id: new ObjectId(budgetId),
+      userId: new ObjectId(userId),
     })
 
-    updateTag(`budgets-${session.user.id}`)
+    updateTag(`budgets-${userId}`)
     return { success: t("Budget has been deleted.") }
   } catch (error) {
     console.error("Error deleting budget:", error)

@@ -33,6 +33,21 @@ export const mockUser: DBUser = {
   twoFactorEnabled: false,
 }
 
+export const mockAnotherUser: DBUser = {
+  _id: new ObjectId("690d2cdc200d6a719f9a438e"),
+  name: "Another User",
+  email: "anotheruser@gmail.com",
+  emailVerified: true,
+  image: undefined,
+  createdAt: new Date("2025-10-01T08:00:00.000Z"),
+  updatedAt: new Date("2025-10-01T08:00:00.000Z"),
+  username: "anotheruser",
+  displayUsername: "anotheruser",
+  locale: "en-US",
+  currency: "USD",
+  twoFactorEnabled: false,
+}
+
 export const mockTransaction: DBTransaction = {
   _id: new ObjectId("68f73357357d93dcbaae8106"),
   userId: mockUser._id,
