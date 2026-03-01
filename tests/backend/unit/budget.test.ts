@@ -6,6 +6,7 @@ import {
   setupBudgetCollectionMock,
 } from "@/tests/backend/mocks/collections.mock"
 import {
+  mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
@@ -135,6 +136,29 @@ describe("Budgets", async () => {
       )
     })
 
+    it("should return error when another user tries to update", async () => {
+      await insertTestBudget(mockBudget)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await updateBudget(mockBudget._id.toString(), {
+        categoryKey: "transportation",
+        allocatedAmount: "9999999",
+        currency: "VND",
+        startDate: localDateToUTCMidnight(new Date("2024-02-01")),
+        endDate: localDateToUTCMidnight(new Date("2024-02-29")),
+      })
+      const budgetsCollection = await getBudgetsCollection()
+      const unchangedBudget = await budgetsCollection.findOne({
+        _id: mockBudget._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Budget not found or you don't have permission to edit!"
+      )
+      expect(unchangedBudget?.allocatedAmount.toString()).toBe("1000000")
+    })
+
     it("should successfully update budget", async () => {
       await Promise.all([
         insertTestBudget(mockBudget),
@@ -226,6 +250,23 @@ describe("Budgets", async () => {
       expect(result.error).toBe(
         "Budget not found or you don't have permission to delete!"
       )
+    })
+
+    it("should return error when another user tries to delete", async () => {
+      await insertTestBudget(mockBudget)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await deleteBudget(mockBudget._id.toString())
+      const budgetsCollection = await getBudgetsCollection()
+      const unchangedBudget = await budgetsCollection.findOne({
+        _id: mockBudget._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Budget not found or you don't have permission to delete!"
+      )
+      expect(unchangedBudget).not.toBe(null)
     })
 
     it("should successfully delete budget", async () => {

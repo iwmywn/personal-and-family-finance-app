@@ -30,7 +30,6 @@ export async function createRecurringTransaction(
     }
 
     const userId = session.user.id
-
     const recurringCollection = await getRecurringTransactionsCollection()
 
     const query: Filter<DBRecurringTransaction> = {
@@ -110,10 +109,12 @@ export async function updateRecurringTransaction(
       }
     }
 
+    const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
 
     const existingRecurring = await recurringCollection.findOne({
       _id: new ObjectId(recurringId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingRecurring) {
@@ -125,7 +126,7 @@ export async function updateRecurringTransaction(
     }
 
     await recurringCollection.updateOne(
-      { _id: new ObjectId(recurringId) },
+      { _id: new ObjectId(recurringId), userId: new ObjectId(userId) },
       {
         $set: {
           type: values.type,
@@ -142,7 +143,7 @@ export async function updateRecurringTransaction(
       }
     )
 
-    updateTag(`recurringTransactions-${session.user.id}`)
+    updateTag(`recurringTransactions-${userId}`)
     return {
       success: t("Recurring transaction has been updated."),
       error: undefined,
@@ -175,10 +176,12 @@ export async function deleteRecurringTransaction(recurringId: string) {
       }
     }
 
+    const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
 
     const existingRecurring = await recurringCollection.findOne({
       _id: new ObjectId(recurringId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingRecurring) {
@@ -191,9 +194,10 @@ export async function deleteRecurringTransaction(recurringId: string) {
 
     await recurringCollection.deleteOne({
       _id: new ObjectId(recurringId),
+      userId: new ObjectId(userId),
     })
 
-    updateTag(`recurringTransactions-${session.user.id}`)
+    updateTag(`recurringTransactions-${userId}`)
     return { success: t("Recurring transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting recurring transaction:", error)

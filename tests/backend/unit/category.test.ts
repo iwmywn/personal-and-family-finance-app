@@ -13,6 +13,7 @@ import {
   setupCategoryCollectionMock,
 } from "@/tests/backend/mocks/collections.mock"
 import {
+  mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
@@ -192,6 +193,30 @@ describe("Categories", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("This category already exists!")
+    })
+
+    it("should return error when another user tries to update", async () => {
+      await insertTestCategory(mockCustomCategory)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await updateCustomCategory(
+        mockCustomCategory._id.toString(),
+        {
+          type: "income",
+          label: "Hacked Label",
+          description: "Hacked description",
+        }
+      )
+      const categoriesCollection = await getCategoriesCollection()
+      const unchangedCategory = await categoriesCollection.findOne({
+        _id: mockCustomCategory._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Category not found or you don't have permission to edit!"
+      )
+      expect(unchangedCategory?.label).toBe("Entertainment")
     })
 
     it("should successfully update custom category", async () => {
@@ -404,6 +429,25 @@ describe("Categories", async () => {
       expect(result4.error).toBe(
         "Cannot delete category. There are 1 recurring transactions using this category. Please delete those recurring transactions first."
       )
+    })
+
+    it("should return error when another user tries to delete", async () => {
+      await insertTestCategory(mockCustomCategory)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await deleteCustomCategory(
+        mockCustomCategory._id.toString()
+      )
+      const categoriesCollection = await getCategoriesCollection()
+      const unchangedCategory = await categoriesCollection.findOne({
+        _id: mockCustomCategory._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Category not found or you don't have permission to delete!"
+      )
+      expect(unchangedCategory).not.toBe(null)
     })
 
     it("should successfully delete custom category", async () => {

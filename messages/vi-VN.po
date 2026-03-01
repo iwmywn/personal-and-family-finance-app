@@ -7,126 +7,126 @@ msgstr ""
 "X-Crowdin-SourceKey: msgstr\n"
 
 #: actions/budget.actions.ts:22
-#: actions/budget.actions.ts:70
-#: actions/budget.actions.ts:121
-#: actions/budget.actions.ts:164
+#: actions/budget.actions.ts:69
+#: actions/budget.actions.ts:122
+#: actions/budget.actions.ts:168
 #: actions/category.actions.ts:28
-#: actions/category.actions.ts:88
-#: actions/category.actions.ts:167
+#: actions/category.actions.ts:87
+#: actions/category.actions.ts:166
 #: actions/category.actions.ts:292
 #: actions/goal.actions.ts:22
-#: actions/goal.actions.ts:71
-#: actions/goal.actions.ts:123
-#: actions/goal.actions.ts:166
+#: actions/goal.actions.ts:70
+#: actions/goal.actions.ts:124
+#: actions/goal.actions.ts:170
 #: actions/recurring.actions.ts:28
-#: actions/recurring.actions.ts:103
-#: actions/recurring.actions.ts:168
-#: actions/recurring.actions.ts:217
+#: actions/recurring.actions.ts:102
+#: actions/recurring.actions.ts:169
+#: actions/recurring.actions.ts:221
 #: actions/transaction.actions.ts:24
-#: actions/transaction.actions.ts:72
-#: actions/transaction.actions.ts:127
-#: actions/transaction.actions.ts:175
+#: actions/transaction.actions.ts:71
+#: actions/transaction.actions.ts:131
+#: actions/transaction.actions.ts:182
 msgid "QWvB5t"
 msgstr "Truy cập bị từ chối! Vui lòng tải lại trang và thử lại."
 
-#: actions/budget.actions.ts:39
+#: actions/budget.actions.ts:38
 msgid "kwvIdb"
 msgstr "Ngân sách này đã tồn tại!"
 
-#: actions/budget.actions.ts:52
-#: actions/budget.actions.ts:58
+#: actions/budget.actions.ts:51
+#: actions/budget.actions.ts:57
 msgid "ge/1ga"
 msgstr "Thêm ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/budget.actions.ts:55
+#: actions/budget.actions.ts:54
 msgid "hcutYI"
 msgstr "Ngân sách đã được thêm."
 
-#: actions/budget.actions.ts:76
-#: actions/budget.actions.ts:127
+#: actions/budget.actions.ts:75
+#: actions/budget.actions.ts:128
 msgid "3pMkv5"
 msgstr "ID ngân sách không hợp lệ!"
 
-#: actions/budget.actions.ts:88
+#: actions/budget.actions.ts:89
 msgid "5BmD1W"
 msgstr "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/budget.actions.ts:106
+#: actions/budget.actions.ts:107
 msgid "Ipw0W1"
 msgstr "Ngân sách đã được cập nhật."
 
-#: actions/budget.actions.ts:109
+#: actions/budget.actions.ts:110
 msgid "ZUfwUz"
 msgstr "Cập nhật ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/budget.actions.ts:139
+#: actions/budget.actions.ts:142
 msgid "fDrjqQ"
 msgstr "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!"
 
-#: actions/budget.actions.ts:148
+#: actions/budget.actions.ts:152
 msgid "GeSZei"
 msgstr "Ngân sách đã được xóa."
 
-#: actions/budget.actions.ts:151
+#: actions/budget.actions.ts:155
 msgid "niO8qC"
 msgstr "Xóa ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/budget.actions.ts:186
+#: actions/budget.actions.ts:190
 msgid "xFeLWs"
 msgstr "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:43
-#: actions/category.actions.ts:123
+#: actions/category.actions.ts:42
+#: actions/category.actions.ts:122
 msgid "LzesyV"
 msgstr "Danh mục này đã tồn tại!"
 
-#: actions/category.actions.ts:54
+#: actions/category.actions.ts:53
 msgid "G0Twr1"
 msgstr "Lỗi khi tạo khóa danh mục! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:67
-#: actions/category.actions.ts:73
+#: actions/category.actions.ts:66
+#: actions/category.actions.ts:72
 msgid "OQ79b6"
 msgstr "Thêm danh mục thất bại! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:70
+#: actions/category.actions.ts:69
 msgid "Jfen4M"
 msgstr "Danh mục đã được thêm."
 
-#: actions/category.actions.ts:96
-#: actions/category.actions.ts:175
+#: actions/category.actions.ts:93
+#: actions/category.actions.ts:172
 msgid "TgxdcM"
 msgstr "ID danh mục không hợp lệ!"
 
-#: actions/category.actions.ts:111
+#: actions/category.actions.ts:110
 msgid "Jau5xo"
 msgstr "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/category.actions.ts:152
+#: actions/category.actions.ts:151
 msgid "RMEY96"
 msgstr "Danh mục đã được cập nhật."
 
-#: actions/category.actions.ts:155
+#: actions/category.actions.ts:154
 msgid "PoUgbk"
 msgstr "Cập nhật danh mục thất bại! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:199
+#: actions/category.actions.ts:198
 msgid "IzwrSe"
 msgstr "Không tìm thấy danh mục hoặc bạn không có quyền xóa!"
 
-#: actions/category.actions.ts:229
+#: actions/category.actions.ts:228
 msgid "SyYZuO"
 msgstr "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước."
 
-#: actions/category.actions.ts:240
+#: actions/category.actions.ts:239
 msgid "iNZspt"
 msgstr "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước."
 
-#: actions/category.actions.ts:251
+#: actions/category.actions.ts:250
 msgid "C7NEmI"
 msgstr "Không thể xóa danh mục. Có {count} mục tiêu đang sử dụng danh mục này. Vui lòng xóa các mục tiêu đó trước."
 
-#: actions/category.actions.ts:262
+#: actions/category.actions.ts:261
 msgid "Q/Y/ED"
 msgstr "Không thể xóa danh mục. Có {count} giao dịch định kỳ đang sử dụng danh mục này. Vui lòng xóa các giao dịch định kỳ đó trước."
 
@@ -142,147 +142,147 @@ msgstr "Xóa danh mục thất bại! Vui lòng thử lại sau."
 msgid "gzfdvr"
 msgstr "Tải danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:39
+#: actions/goal.actions.ts:38
 msgid "3SCa/T"
 msgstr "Mục tiêu này đã tồn tại!"
 
-#: actions/goal.actions.ts:53
-#: actions/goal.actions.ts:59
+#: actions/goal.actions.ts:52
+#: actions/goal.actions.ts:58
 msgid "9Buhj/"
 msgstr "Thêm mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:56
+#: actions/goal.actions.ts:55
 msgid "J+nrjG"
 msgstr "Mục tiêu đã được thêm."
 
-#: actions/goal.actions.ts:77
-#: actions/goal.actions.ts:129
+#: actions/goal.actions.ts:76
+#: actions/goal.actions.ts:130
 msgid "7UB8uM"
 msgstr "ID mục tiêu không hợp lệ!"
 
-#: actions/goal.actions.ts:89
+#: actions/goal.actions.ts:90
 msgid "iQpYZg"
 msgstr "Không tìm thấy mục tiêu hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/goal.actions.ts:108
+#: actions/goal.actions.ts:109
 msgid "SpmGQk"
 msgstr "Mục tiêu đã được cập nhật."
 
-#: actions/goal.actions.ts:111
+#: actions/goal.actions.ts:112
 msgid "Lmu8yS"
 msgstr "Cập nhật mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:141
+#: actions/goal.actions.ts:144
 msgid "Av4WTA"
 msgstr "Không tìm thấy mục tiêu hoặc bạn không có quyền xóa!"
 
-#: actions/goal.actions.ts:150
+#: actions/goal.actions.ts:154
 msgid "MT417I"
 msgstr "Mục tiêu đã được xóa."
 
-#: actions/goal.actions.ts:153
+#: actions/goal.actions.ts:157
 msgid "uwewg6"
 msgstr "Xóa mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:188
+#: actions/goal.actions.ts:192
 msgid "xwvGbl"
 msgstr "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:54
+#: actions/recurring.actions.ts:53
 msgid "+HBMWc"
 msgstr "Giao dịch định kỳ này đã tồn tại!"
 
-#: actions/recurring.actions.ts:74
-#: actions/recurring.actions.ts:87
+#: actions/recurring.actions.ts:73
+#: actions/recurring.actions.ts:86
 msgid "FLPmpu"
 msgstr "Thêm giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:81
+#: actions/recurring.actions.ts:80
 msgid "5Mtoe5"
 msgstr "Giao dịch định kỳ đã được thêm."
 
-#: actions/recurring.actions.ts:109
-#: actions/recurring.actions.ts:174
+#: actions/recurring.actions.ts:108
+#: actions/recurring.actions.ts:175
 msgid "Yamhgo"
 msgstr "ID giao dịch định kỳ không hợp lệ!"
 
-#: actions/recurring.actions.ts:121
+#: actions/recurring.actions.ts:122
 msgid "oyoqPq"
 msgstr "Không tìm thấy giao dịch định kỳ hoặc bạn không có quyền chỉnh sửa."
 
-#: actions/recurring.actions.ts:147
+#: actions/recurring.actions.ts:148
 msgid "FgrcGc"
 msgstr "Giao dịch định kỳ đã được cập nhật."
 
-#: actions/recurring.actions.ts:153
+#: actions/recurring.actions.ts:154
 msgid "qlYMTi"
 msgstr "Cập nhật giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:186
+#: actions/recurring.actions.ts:189
 msgid "TJXAsr"
 msgstr "Không tìm thấy giao dịch định kỳ hoặc bạn không có quyền xóa!"
 
-#: actions/recurring.actions.ts:197
+#: actions/recurring.actions.ts:201
 msgid "0L6Kzl"
 msgstr "Giao dịch định kỳ đã được xóa."
 
-#: actions/recurring.actions.ts:201
+#: actions/recurring.actions.ts:205
 msgid "9p5fYg"
 msgstr "Xóa giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:239
+#: actions/recurring.actions.ts:243
 msgid "D92YlY"
 msgstr "Tải danh sách giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:45
+#: actions/transaction.actions.ts:44
 msgid "v+aP8j"
 msgstr "Giao dịch này đã được tạo hôm nay!"
 
-#: actions/transaction.actions.ts:51
-#: actions/transaction.actions.ts:57
+#: actions/transaction.actions.ts:50
+#: actions/transaction.actions.ts:56
 msgid "zb35o3"
 msgstr "Thêm giao dịch thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:54
+#: actions/transaction.actions.ts:53
 msgid "pU1r4y"
 msgstr "Giao dịch đã được thêm."
 
-#: actions/transaction.actions.ts:78
-#: actions/transaction.actions.ts:133
+#: actions/transaction.actions.ts:77
+#: actions/transaction.actions.ts:137
 msgid "w/J6M7"
 msgstr "ID giao dịch không hợp lệ!"
 
-#: actions/transaction.actions.ts:90
+#: actions/transaction.actions.ts:91
 msgid "qyC85x"
 msgstr "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/transaction.actions.ts:110
+#: actions/transaction.actions.ts:114
 msgid "VHOeqA"
 msgstr "Giao dịch đã được cập nhật."
 
-#: actions/transaction.actions.ts:115
+#: actions/transaction.actions.ts:119
 msgid "A9rBEo"
 msgstr "Cập nhật giao dịch thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:145
+#: actions/transaction.actions.ts:151
 msgid "Fxn2/P"
 msgstr "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!"
 
-#: actions/transaction.actions.ts:156
+#: actions/transaction.actions.ts:163
 msgid "tz6kfd"
 msgstr "Giao dịch đã được xóa."
 
-#: actions/transaction.actions.ts:159
+#: actions/transaction.actions.ts:166
 msgid "DcqDur"
 msgstr "Xóa giao dịch thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:203
+#: actions/transaction.actions.ts:210
 msgid "+VVz7r"
 msgstr "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:164
+#: components/auth/signin-form.tsx:157
 msgid "Ub+AGc"
 msgstr "Đăng nhập"
 
@@ -429,12 +429,12 @@ msgstr "Tên đăng nhập hoặc mật khẩu không hợp lệ!"
 msgid "b8+mgZ"
 msgstr "Đăng nhập thất bại! Vui lòng thử lại sau."
 
-#: components/auth/signin-form.tsx:128
+#: components/auth/signin-form.tsx:121
 #: components/settings/change-username-dialog.tsx:106
 msgid "JCIgkj"
 msgstr "Tên đăng nhập"
 
-#: components/auth/signin-form.tsx:148
+#: components/auth/signin-form.tsx:141
 #: components/settings/two-factor-manager-dialog.tsx:152
 #: components/settings/two-factor-manager-dialog.tsx:300
 msgid "5sg7KC"

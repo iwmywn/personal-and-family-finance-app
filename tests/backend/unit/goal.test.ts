@@ -6,6 +6,7 @@ import {
   setupGoalCollectionMock,
 } from "@/tests/backend/mocks/collections.mock"
 import {
+  mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
@@ -131,6 +132,30 @@ describe("Goals", async () => {
       )
     })
 
+    it("should return error when another user tries to update", async () => {
+      await insertTestGoal(mockGoal)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await updateGoal(mockGoal._id.toString(), {
+        categoryKey: "housing",
+        name: "Hacked goal",
+        targetAmount: "9999999",
+        currency: "VND",
+        startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+        endDate: localDateToUTCMidnight(new Date("2025-12-31")),
+      })
+      const goalsCollection = await getGoalsCollection()
+      const unchangedGoal = await goalsCollection.findOne({
+        _id: mockGoal._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Goal not found or you don't have permission to edit!"
+      )
+      expect(unchangedGoal?.name).toBe("buy a motorbike")
+    })
+
     it("should successfully update goal", async () => {
       await Promise.all([
         insertTestGoal(mockGoal),
@@ -218,6 +243,23 @@ describe("Goals", async () => {
       expect(result.error).toBe(
         "Goal not found or you don't have permission to delete!"
       )
+    })
+
+    it("should return error when another user tries to delete", async () => {
+      await insertTestGoal(mockGoal)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await deleteGoal(mockGoal._id.toString())
+      const goalsCollection = await getGoalsCollection()
+      const unchangedGoal = await goalsCollection.findOne({
+        _id: mockGoal._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Goal not found or you don't have permission to delete!"
+      )
+      expect(unchangedGoal).not.toBe(null)
     })
 
     it("should successfully delete goal", async () => {

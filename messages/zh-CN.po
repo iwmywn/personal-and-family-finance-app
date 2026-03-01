@@ -7,126 +7,126 @@ msgstr ""
 "X-Crowdin-SourceKey: msgstr\n"
 
 #: actions/budget.actions.ts:22
-#: actions/budget.actions.ts:70
-#: actions/budget.actions.ts:121
-#: actions/budget.actions.ts:164
+#: actions/budget.actions.ts:69
+#: actions/budget.actions.ts:122
+#: actions/budget.actions.ts:168
 #: actions/category.actions.ts:28
-#: actions/category.actions.ts:88
-#: actions/category.actions.ts:167
+#: actions/category.actions.ts:87
+#: actions/category.actions.ts:166
 #: actions/category.actions.ts:292
 #: actions/goal.actions.ts:22
-#: actions/goal.actions.ts:71
-#: actions/goal.actions.ts:123
-#: actions/goal.actions.ts:166
+#: actions/goal.actions.ts:70
+#: actions/goal.actions.ts:124
+#: actions/goal.actions.ts:170
 #: actions/recurring.actions.ts:28
-#: actions/recurring.actions.ts:103
-#: actions/recurring.actions.ts:168
-#: actions/recurring.actions.ts:217
+#: actions/recurring.actions.ts:102
+#: actions/recurring.actions.ts:169
+#: actions/recurring.actions.ts:221
 #: actions/transaction.actions.ts:24
-#: actions/transaction.actions.ts:72
-#: actions/transaction.actions.ts:127
-#: actions/transaction.actions.ts:175
+#: actions/transaction.actions.ts:71
+#: actions/transaction.actions.ts:131
+#: actions/transaction.actions.ts:182
 msgid "QWvB5t"
 msgstr "访问被拒绝！请刷新页面并重试。"
 
-#: actions/budget.actions.ts:39
+#: actions/budget.actions.ts:38
 msgid "kwvIdb"
 msgstr "此预算已存在！"
 
-#: actions/budget.actions.ts:52
-#: actions/budget.actions.ts:58
+#: actions/budget.actions.ts:51
+#: actions/budget.actions.ts:57
 msgid "ge/1ga"
 msgstr "添加预算失败！请稍后再试。"
 
-#: actions/budget.actions.ts:55
+#: actions/budget.actions.ts:54
 msgid "hcutYI"
 msgstr "预算已添加。"
 
-#: actions/budget.actions.ts:76
-#: actions/budget.actions.ts:127
+#: actions/budget.actions.ts:75
+#: actions/budget.actions.ts:128
 msgid "3pMkv5"
 msgstr "无效的预算 ID！"
 
-#: actions/budget.actions.ts:88
+#: actions/budget.actions.ts:89
 msgid "5BmD1W"
 msgstr "未找到预算或您没有权限编辑！"
 
-#: actions/budget.actions.ts:106
+#: actions/budget.actions.ts:107
 msgid "Ipw0W1"
 msgstr "预算已更新。"
 
-#: actions/budget.actions.ts:109
+#: actions/budget.actions.ts:110
 msgid "ZUfwUz"
 msgstr "更新预算失败！请稍后再试。"
 
-#: actions/budget.actions.ts:139
+#: actions/budget.actions.ts:142
 msgid "fDrjqQ"
 msgstr "未找到预算或您没有权限删除！"
 
-#: actions/budget.actions.ts:148
+#: actions/budget.actions.ts:152
 msgid "GeSZei"
 msgstr "预算已删除。"
 
-#: actions/budget.actions.ts:151
+#: actions/budget.actions.ts:155
 msgid "niO8qC"
 msgstr "删除预算失败！请稍后再试。"
 
-#: actions/budget.actions.ts:186
+#: actions/budget.actions.ts:190
 msgid "xFeLWs"
 msgstr "加载预算失败！请稍后再试。"
 
-#: actions/category.actions.ts:43
-#: actions/category.actions.ts:123
+#: actions/category.actions.ts:42
+#: actions/category.actions.ts:122
 msgid "LzesyV"
 msgstr "此分类已存在！"
 
-#: actions/category.actions.ts:54
+#: actions/category.actions.ts:53
 msgid "G0Twr1"
 msgstr "创建分类键时出错！请稍后再试。"
 
-#: actions/category.actions.ts:67
-#: actions/category.actions.ts:73
+#: actions/category.actions.ts:66
+#: actions/category.actions.ts:72
 msgid "OQ79b6"
 msgstr "添加分类失败！请稍后再试。"
 
-#: actions/category.actions.ts:70
+#: actions/category.actions.ts:69
 msgid "Jfen4M"
 msgstr "分类已添加。"
 
-#: actions/category.actions.ts:96
-#: actions/category.actions.ts:175
+#: actions/category.actions.ts:93
+#: actions/category.actions.ts:172
 msgid "TgxdcM"
 msgstr "无效的分类 ID！"
 
-#: actions/category.actions.ts:111
+#: actions/category.actions.ts:110
 msgid "Jau5xo"
 msgstr "未找到分类或您没有权限编辑！"
 
-#: actions/category.actions.ts:152
+#: actions/category.actions.ts:151
 msgid "RMEY96"
 msgstr "分类已更新。"
 
-#: actions/category.actions.ts:155
+#: actions/category.actions.ts:154
 msgid "PoUgbk"
 msgstr "更新分类失败！请稍后再试。"
 
-#: actions/category.actions.ts:199
+#: actions/category.actions.ts:198
 msgid "IzwrSe"
 msgstr "未找到分类或您没有权限删除！"
 
-#: actions/category.actions.ts:229
+#: actions/category.actions.ts:228
 msgid "SyYZuO"
 msgstr "无法删除分类。有 {count} 个交易正在使用此分类。请先删除这些交易。"
 
-#: actions/category.actions.ts:240
+#: actions/category.actions.ts:239
 msgid "iNZspt"
 msgstr "无法删除分类。有 {count} 个预算正在使用此分类。请先删除这些预算。"
 
-#: actions/category.actions.ts:251
+#: actions/category.actions.ts:250
 msgid "C7NEmI"
 msgstr "无法删除分类。有 {count} 个目标正在使用此分类。请先删除这些目标。"
 
-#: actions/category.actions.ts:262
+#: actions/category.actions.ts:261
 msgid "Q/Y/ED"
 msgstr "无法删除分类。有 {count} 个定期交易正在使用此分类。请先删除这些定期交易。"
 
@@ -142,147 +142,147 @@ msgstr "删除分类失败！请稍后再试。"
 msgid "gzfdvr"
 msgstr "加载自定义分类失败！请稍后再试。"
 
-#: actions/goal.actions.ts:39
+#: actions/goal.actions.ts:38
 msgid "3SCa/T"
 msgstr "此目标已存在！"
 
-#: actions/goal.actions.ts:53
-#: actions/goal.actions.ts:59
+#: actions/goal.actions.ts:52
+#: actions/goal.actions.ts:58
 msgid "9Buhj/"
 msgstr "添加目标失败！请稍后再试。"
 
-#: actions/goal.actions.ts:56
+#: actions/goal.actions.ts:55
 msgid "J+nrjG"
 msgstr "目标已添加。"
 
-#: actions/goal.actions.ts:77
-#: actions/goal.actions.ts:129
+#: actions/goal.actions.ts:76
+#: actions/goal.actions.ts:130
 msgid "7UB8uM"
 msgstr "无效的目标 ID！"
 
-#: actions/goal.actions.ts:89
+#: actions/goal.actions.ts:90
 msgid "iQpYZg"
 msgstr "未找到目标或您没有权限编辑！"
 
-#: actions/goal.actions.ts:108
+#: actions/goal.actions.ts:109
 msgid "SpmGQk"
 msgstr "目标已更新。"
 
-#: actions/goal.actions.ts:111
+#: actions/goal.actions.ts:112
 msgid "Lmu8yS"
 msgstr "更新目标失败！请稍后再试。"
 
-#: actions/goal.actions.ts:141
+#: actions/goal.actions.ts:144
 msgid "Av4WTA"
 msgstr "未找到目标或您没有权限删除！"
 
-#: actions/goal.actions.ts:150
+#: actions/goal.actions.ts:154
 msgid "MT417I"
 msgstr "目标已删除。"
 
-#: actions/goal.actions.ts:153
+#: actions/goal.actions.ts:157
 msgid "uwewg6"
 msgstr "删除目标失败！请稍后再试。"
 
-#: actions/goal.actions.ts:188
+#: actions/goal.actions.ts:192
 msgid "xwvGbl"
 msgstr "加载目标失败！请稍后再试。"
 
-#: actions/recurring.actions.ts:54
+#: actions/recurring.actions.ts:53
 msgid "+HBMWc"
 msgstr "此定期交易已存在！"
 
-#: actions/recurring.actions.ts:74
-#: actions/recurring.actions.ts:87
+#: actions/recurring.actions.ts:73
+#: actions/recurring.actions.ts:86
 msgid "FLPmpu"
 msgstr "添加定期交易失败！请稍后再试。"
 
-#: actions/recurring.actions.ts:81
+#: actions/recurring.actions.ts:80
 msgid "5Mtoe5"
 msgstr "定期交易已添加。"
 
-#: actions/recurring.actions.ts:109
-#: actions/recurring.actions.ts:174
+#: actions/recurring.actions.ts:108
+#: actions/recurring.actions.ts:175
 msgid "Yamhgo"
 msgstr "无效的定期交易 ID！"
 
-#: actions/recurring.actions.ts:121
+#: actions/recurring.actions.ts:122
 msgid "oyoqPq"
 msgstr "未找到定期交易或您没有权限编辑。"
 
-#: actions/recurring.actions.ts:147
+#: actions/recurring.actions.ts:148
 msgid "FgrcGc"
 msgstr "定期交易已更新。"
 
-#: actions/recurring.actions.ts:153
+#: actions/recurring.actions.ts:154
 msgid "qlYMTi"
 msgstr "更新定期交易失败！请稍后再试。"
 
-#: actions/recurring.actions.ts:186
+#: actions/recurring.actions.ts:189
 msgid "TJXAsr"
 msgstr "未找到定期交易或您没有权限删除！"
 
-#: actions/recurring.actions.ts:197
+#: actions/recurring.actions.ts:201
 msgid "0L6Kzl"
 msgstr "定期交易已删除。"
 
-#: actions/recurring.actions.ts:201
+#: actions/recurring.actions.ts:205
 msgid "9p5fYg"
 msgstr "删除定期交易失败！请稍后再试。"
 
-#: actions/recurring.actions.ts:239
+#: actions/recurring.actions.ts:243
 msgid "D92YlY"
 msgstr "加载定期交易失败！请稍后再试。"
 
-#: actions/transaction.actions.ts:45
+#: actions/transaction.actions.ts:44
 msgid "v+aP8j"
 msgstr "今天已创建此交易！"
 
-#: actions/transaction.actions.ts:51
-#: actions/transaction.actions.ts:57
+#: actions/transaction.actions.ts:50
+#: actions/transaction.actions.ts:56
 msgid "zb35o3"
 msgstr "添加交易失败！请稍后再试。"
 
-#: actions/transaction.actions.ts:54
+#: actions/transaction.actions.ts:53
 msgid "pU1r4y"
 msgstr "交易已添加。"
 
-#: actions/transaction.actions.ts:78
-#: actions/transaction.actions.ts:133
+#: actions/transaction.actions.ts:77
+#: actions/transaction.actions.ts:137
 msgid "w/J6M7"
 msgstr "无效的交易 ID！"
 
-#: actions/transaction.actions.ts:90
+#: actions/transaction.actions.ts:91
 msgid "qyC85x"
 msgstr "未找到交易或您没有权限编辑！"
 
-#: actions/transaction.actions.ts:110
+#: actions/transaction.actions.ts:114
 msgid "VHOeqA"
 msgstr "交易已更新。"
 
-#: actions/transaction.actions.ts:115
+#: actions/transaction.actions.ts:119
 msgid "A9rBEo"
 msgstr "更新交易失败！请稍后再试。"
 
-#: actions/transaction.actions.ts:145
+#: actions/transaction.actions.ts:151
 msgid "Fxn2/P"
 msgstr "未找到交易或您没有权限删除！"
 
-#: actions/transaction.actions.ts:156
+#: actions/transaction.actions.ts:163
 msgid "tz6kfd"
 msgstr "交易已删除。"
 
-#: actions/transaction.actions.ts:159
+#: actions/transaction.actions.ts:166
 msgid "DcqDur"
 msgstr "删除交易失败！请稍后再试。"
 
-#: actions/transaction.actions.ts:203
+#: actions/transaction.actions.ts:210
 msgid "+VVz7r"
 msgstr "加载交易失败！请稍后再试。"
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:164
+#: components/auth/signin-form.tsx:157
 msgid "Ub+AGc"
 msgstr "登录"
 
@@ -429,12 +429,12 @@ msgstr "用户名或密码无效！"
 msgid "b8+mgZ"
 msgstr "登录失败！请稍后再试。"
 
-#: components/auth/signin-form.tsx:128
+#: components/auth/signin-form.tsx:121
 #: components/settings/change-username-dialog.tsx:106
 msgid "JCIgkj"
 msgstr "用户名"
 
-#: components/auth/signin-form.tsx:148
+#: components/auth/signin-form.tsx:141
 #: components/settings/two-factor-manager-dialog.tsx:152
 #: components/settings/two-factor-manager-dialog.tsx:300
 msgid "5sg7KC"

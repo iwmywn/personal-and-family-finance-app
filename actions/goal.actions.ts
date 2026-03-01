@@ -24,7 +24,6 @@ export async function createGoal(values: GoalFormValues) {
     }
 
     const userId = session.user.id
-
     const goalsCollection = await getGoalsCollection()
 
     const existingGoal = await goalsCollection.findOne({
@@ -78,10 +77,12 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
       }
     }
 
+    const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
 
     const existingGoal = await goalsCollection.findOne({
       _id: new ObjectId(goalId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingGoal) {
@@ -91,7 +92,7 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
     }
 
     await goalsCollection.updateOne(
-      { _id: new ObjectId(goalId) },
+      { _id: new ObjectId(goalId), userId: new ObjectId(userId) },
       {
         $set: {
           categoryKey: values.categoryKey,
@@ -104,7 +105,7 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
       }
     )
 
-    updateTag(`goals-${session.user.id}`)
+    updateTag(`goals-${userId}`)
     return { success: t("Goal has been updated."), error: undefined }
   } catch (error) {
     console.error("Error updating goal:", error)
@@ -130,10 +131,12 @@ export async function deleteGoal(goalId: string) {
       }
     }
 
+    const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
 
     const existingGoal = await goalsCollection.findOne({
       _id: new ObjectId(goalId),
+      userId: new ObjectId(userId),
     })
 
     if (!existingGoal) {
@@ -144,9 +147,10 @@ export async function deleteGoal(goalId: string) {
 
     await goalsCollection.deleteOne({
       _id: new ObjectId(goalId),
+      userId: new ObjectId(userId),
     })
 
-    updateTag(`goals-${session.user.id}`)
+    updateTag(`goals-${userId}`)
     return { success: t("Goal has been deleted.") }
   } catch (error) {
     console.error("Error deleting goal:", error)

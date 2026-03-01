@@ -7,126 +7,126 @@ msgstr ""
 "X-Crowdin-SourceKey: msgstr\n"
 
 #: actions/budget.actions.ts:22
-#: actions/budget.actions.ts:70
-#: actions/budget.actions.ts:121
-#: actions/budget.actions.ts:164
+#: actions/budget.actions.ts:69
+#: actions/budget.actions.ts:122
+#: actions/budget.actions.ts:168
 #: actions/category.actions.ts:28
-#: actions/category.actions.ts:88
-#: actions/category.actions.ts:167
+#: actions/category.actions.ts:87
+#: actions/category.actions.ts:166
 #: actions/category.actions.ts:292
 #: actions/goal.actions.ts:22
-#: actions/goal.actions.ts:71
-#: actions/goal.actions.ts:123
-#: actions/goal.actions.ts:166
+#: actions/goal.actions.ts:70
+#: actions/goal.actions.ts:124
+#: actions/goal.actions.ts:170
 #: actions/recurring.actions.ts:28
-#: actions/recurring.actions.ts:103
-#: actions/recurring.actions.ts:168
-#: actions/recurring.actions.ts:217
+#: actions/recurring.actions.ts:102
+#: actions/recurring.actions.ts:169
+#: actions/recurring.actions.ts:221
 #: actions/transaction.actions.ts:24
-#: actions/transaction.actions.ts:72
-#: actions/transaction.actions.ts:127
-#: actions/transaction.actions.ts:175
+#: actions/transaction.actions.ts:71
+#: actions/transaction.actions.ts:131
+#: actions/transaction.actions.ts:182
 msgid "QWvB5t"
 msgstr "Access denied! Please refresh the page and try again."
 
-#: actions/budget.actions.ts:39
+#: actions/budget.actions.ts:38
 msgid "kwvIdb"
 msgstr "This budget already exists!"
 
-#: actions/budget.actions.ts:52
-#: actions/budget.actions.ts:58
+#: actions/budget.actions.ts:51
+#: actions/budget.actions.ts:57
 msgid "ge/1ga"
 msgstr "Failed to add budget! Please try again later."
 
-#: actions/budget.actions.ts:55
+#: actions/budget.actions.ts:54
 msgid "hcutYI"
 msgstr "Budget has been added."
 
-#: actions/budget.actions.ts:76
-#: actions/budget.actions.ts:127
+#: actions/budget.actions.ts:75
+#: actions/budget.actions.ts:128
 msgid "3pMkv5"
 msgstr "Invalid budget ID!"
 
-#: actions/budget.actions.ts:88
+#: actions/budget.actions.ts:89
 msgid "5BmD1W"
 msgstr "Budget not found or you don't have permission to edit!"
 
-#: actions/budget.actions.ts:106
+#: actions/budget.actions.ts:107
 msgid "Ipw0W1"
 msgstr "Budget has been updated."
 
-#: actions/budget.actions.ts:109
+#: actions/budget.actions.ts:110
 msgid "ZUfwUz"
 msgstr "Failed to update budget! Please try again later."
 
-#: actions/budget.actions.ts:139
+#: actions/budget.actions.ts:142
 msgid "fDrjqQ"
 msgstr "Budget not found or you don't have permission to delete!"
 
-#: actions/budget.actions.ts:148
+#: actions/budget.actions.ts:152
 msgid "GeSZei"
 msgstr "Budget has been deleted."
 
-#: actions/budget.actions.ts:151
+#: actions/budget.actions.ts:155
 msgid "niO8qC"
 msgstr "Failed to delete budget! Please try again later."
 
-#: actions/budget.actions.ts:186
+#: actions/budget.actions.ts:190
 msgid "xFeLWs"
 msgstr "Failed to load budgets! Please try again later."
 
-#: actions/category.actions.ts:43
-#: actions/category.actions.ts:123
+#: actions/category.actions.ts:42
+#: actions/category.actions.ts:122
 msgid "LzesyV"
 msgstr "This category already exists!"
 
-#: actions/category.actions.ts:54
+#: actions/category.actions.ts:53
 msgid "G0Twr1"
 msgstr "Error creating category key! Please try again later."
 
-#: actions/category.actions.ts:67
-#: actions/category.actions.ts:73
+#: actions/category.actions.ts:66
+#: actions/category.actions.ts:72
 msgid "OQ79b6"
 msgstr "Failed to add category! Please try again later."
 
-#: actions/category.actions.ts:70
+#: actions/category.actions.ts:69
 msgid "Jfen4M"
 msgstr "Category has been added."
 
-#: actions/category.actions.ts:96
-#: actions/category.actions.ts:175
+#: actions/category.actions.ts:93
+#: actions/category.actions.ts:172
 msgid "TgxdcM"
 msgstr "Invalid category ID!"
 
-#: actions/category.actions.ts:111
+#: actions/category.actions.ts:110
 msgid "Jau5xo"
 msgstr "Category not found or you don't have permission to edit!"
 
-#: actions/category.actions.ts:152
+#: actions/category.actions.ts:151
 msgid "RMEY96"
 msgstr "Category has been updated."
 
-#: actions/category.actions.ts:155
+#: actions/category.actions.ts:154
 msgid "PoUgbk"
 msgstr "Failed to update category! Please try again later."
 
-#: actions/category.actions.ts:199
+#: actions/category.actions.ts:198
 msgid "IzwrSe"
 msgstr "Category not found or you don't have permission to delete!"
 
-#: actions/category.actions.ts:229
+#: actions/category.actions.ts:228
 msgid "SyYZuO"
 msgstr "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first."
 
-#: actions/category.actions.ts:240
+#: actions/category.actions.ts:239
 msgid "iNZspt"
 msgstr "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first."
 
-#: actions/category.actions.ts:251
+#: actions/category.actions.ts:250
 msgid "C7NEmI"
 msgstr "Cannot delete category. There are {count} goals using this category. Please delete those goals first."
 
-#: actions/category.actions.ts:262
+#: actions/category.actions.ts:261
 msgid "Q/Y/ED"
 msgstr "Cannot delete category. There are {count} recurring transactions using this category. Please delete those recurring transactions first."
 
@@ -142,147 +142,147 @@ msgstr "Failed to delete category! Please try again later."
 msgid "gzfdvr"
 msgstr "Failed to load custom categories! Please try again later."
 
-#: actions/goal.actions.ts:39
+#: actions/goal.actions.ts:38
 msgid "3SCa/T"
 msgstr "This goal already exists!"
 
-#: actions/goal.actions.ts:53
-#: actions/goal.actions.ts:59
+#: actions/goal.actions.ts:52
+#: actions/goal.actions.ts:58
 msgid "9Buhj/"
 msgstr "Failed to add goal! Please try again later."
 
-#: actions/goal.actions.ts:56
+#: actions/goal.actions.ts:55
 msgid "J+nrjG"
 msgstr "Goal has been added."
 
-#: actions/goal.actions.ts:77
-#: actions/goal.actions.ts:129
+#: actions/goal.actions.ts:76
+#: actions/goal.actions.ts:130
 msgid "7UB8uM"
 msgstr "Invalid goal ID!"
 
-#: actions/goal.actions.ts:89
+#: actions/goal.actions.ts:90
 msgid "iQpYZg"
 msgstr "Goal not found or you don't have permission to edit!"
 
-#: actions/goal.actions.ts:108
+#: actions/goal.actions.ts:109
 msgid "SpmGQk"
 msgstr "Goal has been updated."
 
-#: actions/goal.actions.ts:111
+#: actions/goal.actions.ts:112
 msgid "Lmu8yS"
 msgstr "Failed to update goal! Please try again later."
 
-#: actions/goal.actions.ts:141
+#: actions/goal.actions.ts:144
 msgid "Av4WTA"
 msgstr "Goal not found or you don't have permission to delete!"
 
-#: actions/goal.actions.ts:150
+#: actions/goal.actions.ts:154
 msgid "MT417I"
 msgstr "Goal has been deleted."
 
-#: actions/goal.actions.ts:153
+#: actions/goal.actions.ts:157
 msgid "uwewg6"
 msgstr "Failed to delete goal! Please try again later."
 
-#: actions/goal.actions.ts:188
+#: actions/goal.actions.ts:192
 msgid "xwvGbl"
 msgstr "Failed to load goals! Please try again later."
 
-#: actions/recurring.actions.ts:54
+#: actions/recurring.actions.ts:53
 msgid "+HBMWc"
 msgstr "This recurring transaction already exists!"
 
-#: actions/recurring.actions.ts:74
-#: actions/recurring.actions.ts:87
+#: actions/recurring.actions.ts:73
+#: actions/recurring.actions.ts:86
 msgid "FLPmpu"
 msgstr "Failed to add recurring transaction! Please try again later."
 
-#: actions/recurring.actions.ts:81
+#: actions/recurring.actions.ts:80
 msgid "5Mtoe5"
 msgstr "Recurring transaction has been added."
 
-#: actions/recurring.actions.ts:109
-#: actions/recurring.actions.ts:174
+#: actions/recurring.actions.ts:108
+#: actions/recurring.actions.ts:175
 msgid "Yamhgo"
 msgstr "Invalid recurring transaction ID!"
 
-#: actions/recurring.actions.ts:121
+#: actions/recurring.actions.ts:122
 msgid "oyoqPq"
 msgstr "Recurring transaction not found or you don't have permission to edit."
 
-#: actions/recurring.actions.ts:147
+#: actions/recurring.actions.ts:148
 msgid "FgrcGc"
 msgstr "Recurring transaction has been updated."
 
-#: actions/recurring.actions.ts:153
+#: actions/recurring.actions.ts:154
 msgid "qlYMTi"
 msgstr "Failed to update recurring transaction! Please try again later."
 
-#: actions/recurring.actions.ts:186
+#: actions/recurring.actions.ts:189
 msgid "TJXAsr"
 msgstr "Recurring transaction not found or you don't have permission to delete!"
 
-#: actions/recurring.actions.ts:197
+#: actions/recurring.actions.ts:201
 msgid "0L6Kzl"
 msgstr "Recurring transaction has been deleted."
 
-#: actions/recurring.actions.ts:201
+#: actions/recurring.actions.ts:205
 msgid "9p5fYg"
 msgstr "Failed to delete recurring transaction! Please try again later."
 
-#: actions/recurring.actions.ts:239
+#: actions/recurring.actions.ts:243
 msgid "D92YlY"
 msgstr "Failed to load recurring transactions! Please try again later."
 
-#: actions/transaction.actions.ts:45
+#: actions/transaction.actions.ts:44
 msgid "v+aP8j"
 msgstr "This transaction has already been created today!"
 
-#: actions/transaction.actions.ts:51
-#: actions/transaction.actions.ts:57
+#: actions/transaction.actions.ts:50
+#: actions/transaction.actions.ts:56
 msgid "zb35o3"
 msgstr "Failed to add transaction! Please try again later."
 
-#: actions/transaction.actions.ts:54
+#: actions/transaction.actions.ts:53
 msgid "pU1r4y"
 msgstr "Transaction has been added."
 
-#: actions/transaction.actions.ts:78
-#: actions/transaction.actions.ts:133
+#: actions/transaction.actions.ts:77
+#: actions/transaction.actions.ts:137
 msgid "w/J6M7"
 msgstr "Invalid transaction ID!"
 
-#: actions/transaction.actions.ts:90
+#: actions/transaction.actions.ts:91
 msgid "qyC85x"
 msgstr "Transaction not found or you don't have permission to edit!"
 
-#: actions/transaction.actions.ts:110
+#: actions/transaction.actions.ts:114
 msgid "VHOeqA"
 msgstr "Transaction has been updated."
 
-#: actions/transaction.actions.ts:115
+#: actions/transaction.actions.ts:119
 msgid "A9rBEo"
 msgstr "Failed to update transaction! Please try again later."
 
-#: actions/transaction.actions.ts:145
+#: actions/transaction.actions.ts:151
 msgid "Fxn2/P"
 msgstr "Transaction not found or you don't have permission to delete!"
 
-#: actions/transaction.actions.ts:156
+#: actions/transaction.actions.ts:163
 msgid "tz6kfd"
 msgstr "Transaction has been deleted."
 
-#: actions/transaction.actions.ts:159
+#: actions/transaction.actions.ts:166
 msgid "DcqDur"
 msgstr "Failed to delete transaction! Please try again later."
 
-#: actions/transaction.actions.ts:203
+#: actions/transaction.actions.ts:210
 msgid "+VVz7r"
 msgstr "Failed to load transactions! Please try again later."
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:164
+#: components/auth/signin-form.tsx:157
 msgid "Ub+AGc"
 msgstr "Sign In"
 
@@ -429,12 +429,12 @@ msgstr "Invalid username or password!"
 msgid "b8+mgZ"
 msgstr "Failed to sign in! Please try again later."
 
-#: components/auth/signin-form.tsx:128
+#: components/auth/signin-form.tsx:121
 #: components/settings/change-username-dialog.tsx:106
 msgid "JCIgkj"
 msgstr "Username"
 
-#: components/auth/signin-form.tsx:148
+#: components/auth/signin-form.tsx:141
 #: components/settings/two-factor-manager-dialog.tsx:152
 #: components/settings/two-factor-manager-dialog.tsx:300
 msgid "5sg7KC"

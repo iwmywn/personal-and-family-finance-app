@@ -68,16 +68,9 @@ export function SignInForm() {
               else toast.error(t("Failed to sign in! Please try again later."))
             },
             onSuccess: async (ctx) => {
+              if (ctx.data.twoFactorRedirect) return
+
               const callbackUrl = searchParams.get("next") || "/home"
-
-              if (ctx.data.twoFactorRedirect) {
-                const target = new URL("/two-factor", window.location.origin)
-                target.searchParams.set("next", callbackUrl)
-                router.push(`${target.pathname}${target.search}`)
-                form.reset()
-                return
-              }
-
               router.push(callbackUrl)
               form.reset()
 

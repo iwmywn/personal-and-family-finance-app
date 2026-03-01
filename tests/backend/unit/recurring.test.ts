@@ -6,6 +6,7 @@ import {
   setupRecurringTransactionCollectionMock,
 } from "@/tests/backend/mocks/collections.mock"
 import {
+  mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
@@ -226,6 +227,37 @@ describe("Recurring Transactions", async () => {
       )
     })
 
+    it("should return error when another user tries to update", async () => {
+      await insertTestRecurringTransaction(mockRecurringTransaction)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await updateRecurringTransaction(
+        mockRecurringTransaction._id.toString(),
+        {
+          type: "expense",
+          categoryKey: "food_beverage",
+          amount: "9999999",
+          currency: "VND",
+          description: "Hacked description",
+          frequency: "weekly",
+          randomEveryXDays: undefined,
+          startDate: localDateToUTCMidnight(new Date("2024-02-04")),
+          endDate: localDateToUTCMidnight(new Date("2024-12-31")),
+          isActive: false,
+        }
+      )
+      const recurringCollection = await getRecurringTransactionsCollection()
+      const unchangedRecurring = await recurringCollection.findOne({
+        _id: mockRecurringTransaction._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Recurring transaction not found or you don't have permission to edit."
+      )
+      expect(unchangedRecurring?.description).toBe("Monthly Salary")
+    })
+
     it("should successfully update recurring transaction", async () => {
       await Promise.all([
         insertTestRecurringTransaction(mockRecurringTransaction),
@@ -328,6 +360,25 @@ describe("Recurring Transactions", async () => {
       expect(result.error).toBe(
         "Recurring transaction not found or you don't have permission to delete!"
       )
+    })
+
+    it("should return error when another user tries to delete", async () => {
+      await insertTestRecurringTransaction(mockRecurringTransaction)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await deleteRecurringTransaction(
+        mockRecurringTransaction._id.toString()
+      )
+      const recurringCollection = await getRecurringTransactionsCollection()
+      const unchangedRecurring = await recurringCollection.findOne({
+        _id: mockRecurringTransaction._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Recurring transaction not found or you don't have permission to delete!"
+      )
+      expect(unchangedRecurring).not.toBe(null)
     })
 
     it("should successfully delete recurring transaction", async () => {

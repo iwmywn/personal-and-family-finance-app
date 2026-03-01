@@ -162,7 +162,7 @@ export function ChangePasswordDialog() {
                       onCheckedChange={field.onChange}
                     />
                   </FormControl>
-                  <FormLabel id="form-sign-out-all">
+                  <FormLabel htmlFor="form-sign-out-all">
                     {t("Sign out from all other devices.")}
                   </FormLabel>
                 </FormItem>
