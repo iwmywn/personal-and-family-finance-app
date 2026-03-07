@@ -15,12 +15,15 @@ type BaseTransaction<T, K> = {
   userId: T
   type: CategoryType
   categoryKey: CategoryKeyType
+  // DB: the original amount and currency entered by the user.
+  // Client: the amount converted to the user's global display currency setting.
   amount: K
   currency: AppCurrency
   description: string
   date: Date
   // the following fields are appended on the client for currency conversion
   // and are NOT stored in the database.
+  // They allow budgets/goals to convert amounts to their specific currencies using historical daily rates.
   originalAmount?: K
   originalCurrency?: AppCurrency
   rates?: Record<AppCurrency, string>
