@@ -387,17 +387,17 @@ msgstr "CAPTCHA認証"
 
 #: components/auth/signin-form.tsx:51
 #: components/auth/two-factor-form.tsx:44
-#: components/budgets/budget-dialog.tsx:97
+#: components/budgets/budget-dialog.tsx:95
 #: components/categories/category-dialog.tsx:73
-#: components/goals/goal-dialog.tsx:99
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:129
-#: components/settings/change-name-dialog.tsx:56
+#: components/goals/goal-dialog.tsx:97
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:127
+#: components/settings/change-name-dialog.tsx:54
 #: components/settings/change-password-dialog.tsx:53
-#: components/settings/change-username-dialog.tsx:56
-#: components/settings/two-factor-manager-dialog.tsx:124
-#: components/settings/two-factor-manager-dialog.tsx:201
-#: components/settings/two-factor-manager-dialog.tsx:276
-#: components/transactions/transaction-dialog.tsx:108
+#: components/settings/change-username-dialog.tsx:54
+#: components/settings/two-factor-manager-dialog.tsx:122
+#: components/settings/two-factor-manager-dialog.tsx:199
+#: components/settings/two-factor-manager-dialog.tsx:274
+#: components/transactions/transaction-dialog.tsx:106
 msgid "5GmpFA"
 msgstr "無効なデータです！"
 
@@ -410,13 +410,13 @@ msgid "b8+mgZ"
 msgstr "サインインに失敗しました！後でもう一度お試しください。"
 
 #: components/auth/signin-form.tsx:128
-#: components/settings/change-username-dialog.tsx:108
+#: components/settings/change-username-dialog.tsx:106
 msgid "JCIgkj"
 msgstr "ユーザー名"
 
 #: components/auth/signin-form.tsx:148
-#: components/settings/two-factor-manager-dialog.tsx:154
-#: components/settings/two-factor-manager-dialog.tsx:304
+#: components/settings/two-factor-manager-dialog.tsx:152
+#: components/settings/two-factor-manager-dialog.tsx:302
 msgid "5sg7KC"
 msgstr "パスワード"
 
@@ -425,7 +425,7 @@ msgid "mXmfR7"
 msgstr "認証コードが無効です！後でもう一度お試しください。"
 
 #: components/auth/two-factor-form.tsx:79
-#: components/settings/two-factor-manager-dialog.tsx:231
+#: components/settings/two-factor-manager-dialog.tsx:229
 msgid "Tjv3UC"
 msgstr "確認コード"
 
@@ -438,142 +438,142 @@ msgid "ZcMAT1"
 msgstr "このデバイスでは30日間2FAコードを要求しない。"
 
 #: components/auth/two-factor-form.tsx:123
-#: components/settings/two-factor-manager-dialog.tsx:251
+#: components/settings/two-factor-manager-dialog.tsx:249
 msgid "q5Xl0M"
 msgstr "確認"
 
-#: components/budgets/budget-dialog.tsx:139
+#: components/budgets/budget-dialog.tsx:137
 msgid "2g82CP"
 msgstr "予算を編集"
 
-#: components/budgets/budget-dialog.tsx:139
+#: components/budgets/budget-dialog.tsx:137
 msgid "zMoeFN"
 msgstr "予算を追加"
 
-#: components/budgets/budget-dialog.tsx:143
+#: components/budgets/budget-dialog.tsx:141
 msgid "zSiCkT"
 msgstr "予算情報を更新します。"
 
-#: components/budgets/budget-dialog.tsx:144
+#: components/budgets/budget-dialog.tsx:142
 msgid "PVSBse"
 msgstr "支出を追跡するために、カテゴリの予算を作成します。"
 
-#: components/budgets/budget-dialog.tsx:157
-#: components/goals/goal-dialog.tsx:158
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:231
-#: components/settings/currency-selector.tsx:50
+#: components/budgets/budget-dialog.tsx:155
+#: components/goals/goal-dialog.tsx:156
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:229
+#: components/settings/currency-selector.tsx:48
 #: components/settings/settings-page.tsx:59
-#: components/transactions/transaction-dialog.tsx:200
+#: components/transactions/transaction-dialog.tsx:198
 msgid "55hdQy"
 msgstr "通貨"
 
-#: components/budgets/budget-dialog.tsx:188
+#: components/budgets/budget-dialog.tsx:186
 #: components/budgets/budgets-table.tsx:91
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:262
-#: components/recurring-transactions/recurring-transactions-table.tsx:116
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:260
+#: components/recurring-transactions/recurring-transactions-table.tsx:114
 #: components/transactions/export-button.tsx:35
-#: components/transactions/transaction-dialog.tsx:231
-#: components/transactions/transactions-table.tsx:90
+#: components/transactions/transaction-dialog.tsx:229
+#: components/transactions/transactions-table.tsx:88
 msgid "/0TOL5"
 msgstr "金額"
 
-#: components/budgets/budget-dialog.tsx:208
+#: components/budgets/budget-dialog.tsx:206
 #: components/budgets/budgets-table.tsx:88
-#: components/goals/goal-dialog.tsx:231
+#: components/goals/goal-dialog.tsx:229
 #: components/goals/goals-table.tsx:87
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:381
-#: components/recurring-transactions/recurring-transactions-table.tsx:111
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:379
+#: components/recurring-transactions/recurring-transactions-table.tsx:109
 msgid "QirE3M"
 msgstr "開始日"
 
-#: components/budgets/budget-dialog.tsx:226
-#: components/budgets/budget-dialog.tsx:279
-#: components/goals/goal-dialog.tsx:249
-#: components/goals/goal-dialog.tsx:302
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:399
-#: components/statistics/statistics-filters.tsx:127
-#: components/transactions/transaction-dialog.tsx:294
-#: components/transactions/transaction-filters.tsx:182
+#: components/budgets/budget-dialog.tsx:224
+#: components/budgets/budget-dialog.tsx:277
+#: components/goals/goal-dialog.tsx:247
+#: components/goals/goal-dialog.tsx:300
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:397
+#: components/statistics/statistics-filters.tsx:125
+#: components/transactions/transaction-dialog.tsx:292
+#: components/transactions/transaction-filters.tsx:180
 msgid "ftg7GK"
 msgstr "日付を選択"
 
-#: components/budgets/budget-dialog.tsx:262
+#: components/budgets/budget-dialog.tsx:260
 #: components/budgets/budgets-table.tsx:89
-#: components/goals/goal-dialog.tsx:285
+#: components/goals/goal-dialog.tsx:283
 #: components/goals/goals-table.tsx:88
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:435
-#: components/recurring-transactions/recurring-transactions-table.tsx:112
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:433
+#: components/recurring-transactions/recurring-transactions-table.tsx:110
 msgid "T4GOiX"
 msgstr "終了日"
 
-#: components/budgets/budget-dialog.tsx:312
+#: components/budgets/budget-dialog.tsx:310
 #: components/budgets/delete-budget-dialog.tsx:61
 #: components/categories/category-dialog.tsx:187
 #: components/categories/delete-category-dialog.tsx:61
 #: components/goals/delete-goal-dialog.tsx:61
-#: components/goals/goal-dialog.tsx:335
+#: components/goals/goal-dialog.tsx:333
 #: components/layout/secondary-nav.tsx:85
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:63
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:515
-#: components/settings/change-name-dialog.tsx:112
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:513
+#: components/settings/change-name-dialog.tsx:110
 #: components/settings/change-password-dialog.tsx:174
-#: components/settings/change-username-dialog.tsx:124
+#: components/settings/change-username-dialog.tsx:122
 #: components/transactions/delete-transaction-dialog.tsx:61
-#: components/transactions/transaction-dialog.tsx:326
+#: components/transactions/transaction-dialog.tsx:324
 msgid "47FYwb"
 msgstr "キャンセル"
 
-#: components/budgets/budget-dialog.tsx:315
+#: components/budgets/budget-dialog.tsx:313
+#: components/categories/category-dialog.tsx:190
+#: components/goals/goal-dialog.tsx:336
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
+#: components/transactions/transaction-dialog.tsx:327
+msgid "BWpuKl"
+msgstr "更新"
+
+#: components/budgets/budget-dialog.tsx:313
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
 #: components/categories/category-dialog.tsx:190
-#: components/goals/goal-dialog.tsx:338
+#: components/goals/goal-dialog.tsx:336
 #: components/goals/goals-page.tsx:24
-#: components/home/homepage.tsx:32
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:519
+#: components/home/homepage.tsx:30
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
 #: components/recurring-transactions/recurring-transactions-page.tsx:24
-#: components/transactions/transaction-dialog.tsx:329
+#: components/transactions/transaction-dialog.tsx:327
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "追加"
 
-#: components/budgets/budget-dialog.tsx:315
-#: components/categories/category-dialog.tsx:190
-#: components/goals/goal-dialog.tsx:338
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:519
-#: components/transactions/transaction-dialog.tsx:329
-msgid "BWpuKl"
-msgstr "更新"
-
 #: components/budgets/budget-filters.tsx:84
 #: components/goals/goal-filters.tsx:118
 #: components/recurring-transactions/recurring-transactions-filters.tsx:113
-#: components/statistics/statistics-filters.tsx:218
-#: components/transactions/transaction-filters.tsx:273
+#: components/statistics/statistics-filters.tsx:216
+#: components/transactions/transaction-filters.tsx:271
 msgid "TBovrx"
 msgstr "月"
 
 #: components/budgets/budget-filters.tsx:88
 #: components/goals/goal-filters.tsx:122
 #: components/recurring-transactions/recurring-transactions-filters.tsx:117
-#: components/statistics/statistics-filters.tsx:222
-#: components/transactions/transaction-filters.tsx:277
+#: components/statistics/statistics-filters.tsx:220
+#: components/transactions/transaction-filters.tsx:275
 msgid "O+ZfC8"
 msgstr "すべての月"
 
 #: components/budgets/budget-filters.tsx:103
 #: components/goals/goal-filters.tsx:137
 #: components/recurring-transactions/recurring-transactions-filters.tsx:132
-#: components/statistics/statistics-filters.tsx:237
-#: components/transactions/transaction-filters.tsx:292
+#: components/statistics/statistics-filters.tsx:235
+#: components/transactions/transaction-filters.tsx:290
 msgid "IFo1oo"
 msgstr "年"
 
 #: components/budgets/budget-filters.tsx:107
 #: components/goals/goal-filters.tsx:141
 #: components/recurring-transactions/recurring-transactions-filters.tsx:136
-#: components/statistics/statistics-filters.tsx:241
-#: components/transactions/transaction-filters.tsx:296
+#: components/statistics/statistics-filters.tsx:239
+#: components/transactions/transaction-filters.tsx:294
 msgid "5JGC4V"
 msgstr "すべての年"
 
@@ -583,18 +583,18 @@ msgstr "すべての年"
 #: components/goals/goal-filters.tsx:159
 #: components/goals/goals-table.tsx:90
 #: components/recurring-transactions/recurring-transactions-filters.tsx:170
-#: components/recurring-transactions/recurring-transactions-table.tsx:115
-#: components/statistics/statistics-table.tsx:72
+#: components/recurring-transactions/recurring-transactions-table.tsx:113
+#: components/statistics/statistics-table.tsx:70
 #: components/transactions/export-button.tsx:34
-#: components/transactions/transaction-filters.tsx:335
-#: components/transactions/transactions-table.tsx:89
+#: components/transactions/transaction-filters.tsx:333
+#: components/transactions/transactions-table.tsx:87
 msgid "ccXLVi"
 msgstr "カテゴリ"
 
 #: components/budgets/budget-filters.tsx:128
 #: components/goals/goal-filters.tsx:162
 #: components/recurring-transactions/recurring-transactions-filters.tsx:174
-#: components/transactions/transaction-filters.tsx:339
+#: components/transactions/transaction-filters.tsx:337
 msgid "1X6HtI"
 msgstr "すべてのカテゴリ"
 
@@ -631,9 +631,9 @@ msgstr ""
 #: components/budgets/budgets-table.tsx:94
 #: components/goals/goal-filters.tsx:204
 #: components/goals/goals-table.tsx:93
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:493
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:491
 #: components/recurring-transactions/recurring-transactions-filters.tsx:202
-#: components/recurring-transactions/recurring-transactions-table.tsx:118
+#: components/recurring-transactions/recurring-transactions-table.tsx:116
 msgid "tzMNF3"
 msgstr "ステータス"
 
@@ -654,9 +654,9 @@ msgstr ""
 #: components/budgets/budgets-table.tsx:140
 #: components/goals/goal-filters.tsx:211
 #: components/goals/goals-table.tsx:131
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:504
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:502
 #: components/recurring-transactions/recurring-transactions-filters.tsx:208
-#: components/recurring-transactions/recurring-transactions-table.tsx:191
+#: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "3a5wL8"
 msgstr "アクティブ"
 
@@ -668,11 +668,11 @@ msgid "6/aEFZ"
 msgstr ""
 
 #: components/budgets/budget-filters.tsx:191
-#: components/categories/category-filters.tsx:105
+#: components/categories/category-filters.tsx:103
 #: components/goals/goal-filters.tsx:223
 #: components/recurring-transactions/recurring-transactions-filters.tsx:220
-#: components/statistics/statistics-filters.tsx:258
-#: components/transactions/transaction-filters.tsx:364
+#: components/statistics/statistics-filters.tsx:256
+#: components/transactions/transaction-filters.tsx:362
 msgid "jm/spn"
 msgstr "リセット"
 
@@ -702,31 +702,31 @@ msgid "H5+NAX"
 msgstr "残高"
 
 #: components/budgets/budgets-table.tsx:166
-#: components/categories/categories-table.tsx:111
+#: components/categories/categories-table.tsx:109
 #: components/goals/goals-table.tsx:157
-#: components/recurring-transactions/recurring-transactions-table.tsx:203
-#: components/transactions/transactions-table.tsx:150
+#: components/recurring-transactions/recurring-transactions-table.tsx:201
+#: components/transactions/transactions-table.tsx:148
 msgid "bdcMGy"
 msgstr "メニューを開く"
 
 #: components/budgets/budgets-table.tsx:177
-#: components/categories/categories-table.tsx:122
+#: components/categories/categories-table.tsx:120
 #: components/goals/goals-table.tsx:168
-#: components/recurring-transactions/recurring-transactions-table.tsx:214
-#: components/transactions/transactions-table.tsx:161
+#: components/recurring-transactions/recurring-transactions-table.tsx:212
+#: components/transactions/transactions-table.tsx:159
 msgid "wEQDC6"
 msgstr "編集"
 
 #: components/budgets/budgets-table.tsx:187
 #: components/budgets/delete-budget-dialog.tsx:63
-#: components/categories/categories-table.tsx:132
+#: components/categories/categories-table.tsx:130
 #: components/categories/delete-category-dialog.tsx:63
 #: components/goals/delete-goal-dialog.tsx:63
 #: components/goals/goals-table.tsx:178
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:65
-#: components/recurring-transactions/recurring-transactions-table.tsx:224
+#: components/recurring-transactions/recurring-transactions-table.tsx:222
 #: components/transactions/delete-transaction-dialog.tsx:63
-#: components/transactions/transactions-table.tsx:171
+#: components/transactions/transactions-table.tsx:169
 msgid "K3r6DQ"
 msgstr "削除"
 
@@ -742,73 +742,73 @@ msgstr "この予算を削除してもよろしいですか？この操作は元
 msgid "5reIsh"
 msgstr "カスタムカテゴリを管理します。"
 
-#: components/categories/categories-table.tsx:61
+#: components/categories/categories-table.tsx:59
 msgid "dM86a2"
 msgstr "カテゴリが見つかりません"
 
-#: components/categories/categories-table.tsx:64
+#: components/categories/categories-table.tsx:62
 msgid "7vjOuF"
 msgstr "まだカスタムカテゴリを作成していません。"
 
-#: components/categories/categories-table.tsx:65
+#: components/categories/categories-table.tsx:63
 msgid "Dojtt1"
 msgstr "フィルターに一致するカテゴリが見つかりませんでした。"
 
-#: components/categories/categories-table.tsx:74
+#: components/categories/categories-table.tsx:72
 #: components/categories/category-dialog.tsx:143
 msgid "vEYtiq"
 msgstr "カテゴリ名"
 
-#: components/categories/categories-table.tsx:75
+#: components/categories/categories-table.tsx:73
 #: components/categories/category-dialog.tsx:163
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:282
-#: components/recurring-transactions/recurring-transactions-table.tsx:113
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:280
+#: components/recurring-transactions/recurring-transactions-table.tsx:111
 #: components/transactions/export-button.tsx:36
-#: components/transactions/transaction-dialog.tsx:251
-#: components/transactions/transactions-table.tsx:87
+#: components/transactions/transaction-dialog.tsx:249
+#: components/transactions/transactions-table.tsx:85
 msgid "Q8Qw5B"
 msgstr "説明"
 
-#: components/categories/categories-table.tsx:76
-#: components/categories/category-filters.tsx:89
+#: components/categories/categories-table.tsx:74
+#: components/categories/category-filters.tsx:87
 #: components/recurring-transactions/recurring-transactions-filters.tsx:151
-#: components/recurring-transactions/recurring-transactions-table.tsx:114
-#: components/statistics/statistics-table.tsx:73
+#: components/recurring-transactions/recurring-transactions-table.tsx:112
+#: components/statistics/statistics-table.tsx:71
 #: components/transactions/export-button.tsx:33
-#: components/transactions/transaction-filters.tsx:316
-#: components/transactions/transactions-table.tsx:88
+#: components/transactions/transaction-filters.tsx:314
+#: components/transactions/transactions-table.tsx:86
 msgid "+U6ozc"
 msgstr "タイプ"
 
-#: components/categories/categories-table.tsx:98
+#: components/categories/categories-table.tsx:96
 #: components/categories/category-dialog.tsx:132
-#: components/categories/category-filters.tsx:94
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:205
+#: components/categories/category-filters.tsx:92
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:203
 #: components/recurring-transactions/recurring-transactions-filters.tsx:157
 #: components/recurring-transactions/recurring-transactions-filters.tsx:176
-#: components/recurring-transactions/recurring-transactions-table.tsx:144
-#: components/statistics/statistics-table.tsx:102
+#: components/recurring-transactions/recurring-transactions-table.tsx:142
+#: components/statistics/statistics-table.tsx:100
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:174
-#: components/transactions/transaction-filters.tsx:322
-#: components/transactions/transaction-filters.tsx:341
-#: components/transactions/transactions-table.tsx:113
+#: components/transactions/transaction-dialog.tsx:172
+#: components/transactions/transaction-filters.tsx:320
+#: components/transactions/transaction-filters.tsx:339
+#: components/transactions/transactions-table.tsx:111
 msgid "gJkHZk"
 msgstr "収入"
 
-#: components/categories/categories-table.tsx:99
+#: components/categories/categories-table.tsx:97
 #: components/categories/category-dialog.tsx:133
-#: components/categories/category-filters.tsx:95
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:206
+#: components/categories/category-filters.tsx:93
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:204
 #: components/recurring-transactions/recurring-transactions-filters.tsx:158
 #: components/recurring-transactions/recurring-transactions-filters.tsx:183
-#: components/recurring-transactions/recurring-transactions-table.tsx:145
-#: components/statistics/statistics-table.tsx:102
+#: components/recurring-transactions/recurring-transactions-table.tsx:143
+#: components/statistics/statistics-table.tsx:100
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:175
-#: components/transactions/transaction-filters.tsx:323
-#: components/transactions/transaction-filters.tsx:348
-#: components/transactions/transactions-table.tsx:114
+#: components/transactions/transaction-dialog.tsx:173
+#: components/transactions/transaction-filters.tsx:321
+#: components/transactions/transaction-filters.tsx:346
+#: components/transactions/transactions-table.tsx:112
 msgid "URe+qA"
 msgstr "支出"
 
@@ -833,17 +833,17 @@ msgid "TxCpcX"
 msgstr "例：給与、食料品"
 
 #: components/categories/category-dialog.tsx:169
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:288
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:286
 msgid "s0F42g"
 msgstr "説明を入力..."
 
-#: components/categories/category-filters.tsx:65
+#: components/categories/category-filters.tsx:63
 msgid "T83iU7"
 msgstr "カテゴリを検索..."
 
-#: components/categories/category-filters.tsx:92
+#: components/categories/category-filters.tsx:90
 #: components/recurring-transactions/recurring-transactions-filters.tsx:155
-#: components/transactions/transaction-filters.tsx:320
+#: components/transactions/transaction-filters.tsx:318
 msgid "UjTL+F"
 msgstr "すべてのタイプ"
 
@@ -875,32 +875,32 @@ msgstr "目標を削除"
 msgid "EwRebq"
 msgstr "この目標を削除してもよろしいですか？この操作は元に戻せません。"
 
-#: components/goals/goal-dialog.tsx:141
+#: components/goals/goal-dialog.tsx:139
 msgid "sOXElg"
 msgstr "目標を編集"
 
-#: components/goals/goal-dialog.tsx:141
+#: components/goals/goal-dialog.tsx:139
 msgid "5WuADX"
 msgstr "目標を追加"
 
-#: components/goals/goal-dialog.tsx:144
+#: components/goals/goal-dialog.tsx:142
 msgid "/kQug4"
 msgstr "目標情報を更新します。"
 
-#: components/goals/goal-dialog.tsx:145
+#: components/goals/goal-dialog.tsx:143
 msgid "dzmlX3"
 msgstr "新しい財務目標を作成します。"
 
-#: components/goals/goal-dialog.tsx:190
+#: components/goals/goal-dialog.tsx:188
 #: components/goals/goals-table.tsx:89
 msgid "gQxxlw"
 msgstr "目標名"
 
-#: components/goals/goal-dialog.tsx:195
+#: components/goals/goal-dialog.tsx:193
 msgid "rH4tSt"
 msgstr "例：休暇のための貯蓄"
 
-#: components/goals/goal-dialog.tsx:210
+#: components/goals/goal-dialog.tsx:208
 #: components/goals/goals-table.tsx:91
 msgid "MPOzul"
 msgstr "目標金額"
@@ -941,128 +941,128 @@ msgstr ""
 msgid "GkiQMs"
 msgstr ""
 
-#: components/home/homepage.tsx:26
+#: components/home/homepage.tsx:24
 msgid "UKxoV8"
 msgstr "おかえりなさい"
 
-#: components/home/homepage.tsx:29
+#: components/home/homepage.tsx:27
 msgid "9A7jRV"
 msgstr "今月の財務状況をご紹介します。"
 
-#: components/home/quick-stats.tsx:37
+#: components/home/quick-stats.tsx:35
 msgid "g28wjp"
 msgstr "クイック統計"
 
-#: components/home/quick-stats.tsx:44
+#: components/home/quick-stats.tsx:42
 #: components/statistics/statistics-summary.tsx:102
 msgid "a3+VDd"
 msgstr "取引総数"
 
-#: components/home/quick-stats.tsx:49
+#: components/home/quick-stats.tsx:47
 msgid "gaBuAW"
 msgstr "行った取引の総数（収入と支出の両方）。"
 
-#: components/home/quick-stats.tsx:60
+#: components/home/quick-stats.tsx:58
 msgid "Prh2Lb"
 msgstr "最高取引"
 
-#: components/home/quick-stats.tsx:72
-#: components/home/quick-stats.tsx:100
-#: components/home/quick-stats.tsx:120
-#: components/home/quick-stats.tsx:148
-#: components/home/quick-stats.tsx:170
+#: components/home/quick-stats.tsx:70
+#: components/home/quick-stats.tsx:98
+#: components/home/quick-stats.tsx:118
+#: components/home/quick-stats.tsx:146
+#: components/home/quick-stats.tsx:168
 msgid "UG5qoS"
 msgstr "データなし"
 
-#: components/home/quick-stats.tsx:77
+#: components/home/quick-stats.tsx:75
 msgid "5+Kbgx"
 msgstr "月間で最も高い取引（収入または支出）。"
 
-#: components/home/quick-stats.tsx:88
+#: components/home/quick-stats.tsx:86
 msgid "9AS2Qs"
 msgstr "最低取引"
 
-#: components/home/quick-stats.tsx:105
+#: components/home/quick-stats.tsx:103
 msgid "gkpkvE"
 msgstr "月間で最も低い取引（収入または支出）。"
 
-#: components/home/quick-stats.tsx:116
+#: components/home/quick-stats.tsx:114
 msgid "5pB6eY"
 msgstr "平均支出"
 
-#: components/home/quick-stats.tsx:125
+#: components/home/quick-stats.tsx:123
 msgid "VP5MQP"
 msgstr "支出あたりの平均額（総支出 / 支出取引数）。"
 
-#: components/home/quick-stats.tsx:136
+#: components/home/quick-stats.tsx:134
 msgid "AUkgKt"
 msgstr "貯蓄率"
 
-#: components/home/quick-stats.tsx:153
+#: components/home/quick-stats.tsx:151
 msgid "Q0mewJ"
 msgstr "収入に対する貯蓄の割合（（収入 - 支出）/ 収入 × 100%）。"
 
-#: components/home/quick-stats.tsx:164
+#: components/home/quick-stats.tsx:162
 msgid "O8QihK"
 msgstr "人気カテゴリ"
 
-#: components/home/quick-stats.tsx:175
+#: components/home/quick-stats.tsx:173
 msgid "wEyaDt"
 msgstr "月間で総額が最も高いカテゴリ。"
 
-#: components/home/recent-transactions.tsx:35
+#: components/home/recent-transactions.tsx:33
 msgid "GMkXVd"
 msgstr "最近の取引"
 
-#: components/home/recent-transactions.tsx:45
-#: components/statistics/statistics-table.tsx:59
+#: components/home/recent-transactions.tsx:43
+#: components/statistics/statistics-table.tsx:57
 #: components/transactions/export-button.tsx:57
-#: components/transactions/transactions-table.tsx:73
+#: components/transactions/transactions-table.tsx:71
 msgid "LER0RZ"
 msgstr "取引が見つかりません"
 
-#: components/home/recent-transactions.tsx:47
-#: components/statistics/statistics-table.tsx:62
-#: components/transactions/transactions-table.tsx:76
+#: components/home/recent-transactions.tsx:45
+#: components/statistics/statistics-table.tsx:60
+#: components/transactions/transactions-table.tsx:74
 msgid "GMBC7V"
 msgstr "まだ取引を作成していません。"
 
-#: components/home/transaction-summary.tsx:37
+#: components/home/transaction-summary.tsx:35
 msgid "XUYy4C"
 msgstr "月間収入"
 
-#: components/home/transaction-summary.tsx:50
-#: components/home/transaction-summary.tsx:70
+#: components/home/transaction-summary.tsx:48
+#: components/home/transaction-summary.tsx:68
 #: components/statistics/statistics-summary.tsx:48
 #: components/statistics/statistics-summary.tsx:63
 #: components/transactions/export-button.tsx:77
 msgid "5+nDxs"
 msgstr "取引"
 
-#: components/home/transaction-summary.tsx:57
+#: components/home/transaction-summary.tsx:55
 msgid "FR0il4"
 msgstr "月間支出"
 
-#: components/home/transaction-summary.tsx:77
+#: components/home/transaction-summary.tsx:75
 msgid "ZLrViM"
 msgstr "月間残高"
 
-#: components/home/transaction-summary.tsx:98
+#: components/home/transaction-summary.tsx:96
 #: components/statistics/statistics-summary.tsx:91
 msgid "dHVUaP"
 msgstr "プラス"
 
-#: components/home/transaction-summary.tsx:100
+#: components/home/transaction-summary.tsx:98
 #: components/statistics/statistics-summary.tsx:93
 msgid "kVQ1fo"
 msgstr "マイナス"
 
-#: components/home/transaction-summary.tsx:101
+#: components/home/transaction-summary.tsx:99
 #: components/statistics/statistics-summary.tsx:94
 msgid "r0q/a1"
 msgstr "バランス"
 
-#: components/home/transaction-summary.tsx:102
+#: components/home/transaction-summary.tsx:100
 #: components/statistics/statistics-summary.tsx:95
 msgid "qTQZsz"
 msgstr "収入と比較"
@@ -1125,81 +1125,81 @@ msgstr "定期取引を削除"
 msgid "B58bFw"
 msgstr "この定期取引を削除してもよろしいですか？この操作は元に戻せません。"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:188
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:186
 msgid "5nuO2v"
 msgstr "定期取引を編集"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:189
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:187
 msgid "sYXY5N"
 msgstr "定期取引を追加"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:193
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:191
 msgid "gKA6Xf"
 msgstr "定期取引情報を更新します。"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:194
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:192
 msgid "adePxB"
 msgstr "定期取引を作成します。"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:310
-#: components/recurring-transactions/recurring-transactions-table.tsx:117
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:308
+#: components/recurring-transactions/recurring-transactions-table.tsx:115
 msgid "vAW30j"
 msgstr "頻度"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:327
-#: components/recurring-transactions/recurring-transactions-table.tsx:68
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:325
+#: components/recurring-transactions/recurring-transactions-table.tsx:66
 msgid "zxvhnE"
 msgstr "日次"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:328
-#: components/recurring-transactions/recurring-transactions-table.tsx:70
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:326
+#: components/recurring-transactions/recurring-transactions-table.tsx:68
 msgid "/clOBU"
 msgstr "週次"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:330
-#: components/recurring-transactions/recurring-transactions-table.tsx:72
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:328
+#: components/recurring-transactions/recurring-transactions-table.tsx:70
 msgid "03X4YH"
 msgstr "隔週"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:332
-#: components/recurring-transactions/recurring-transactions-table.tsx:74
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:330
+#: components/recurring-transactions/recurring-transactions-table.tsx:72
 msgid "wYsv4Z"
 msgstr "月次"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:334
-#: components/recurring-transactions/recurring-transactions-table.tsx:76
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:332
+#: components/recurring-transactions/recurring-transactions-table.tsx:74
 msgid "b1Ou36"
 msgstr "四半期"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:336
-#: components/recurring-transactions/recurring-transactions-table.tsx:78
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:334
+#: components/recurring-transactions/recurring-transactions-table.tsx:76
 msgid "dqD39h"
 msgstr "年次"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:337
-#: components/recurring-transactions/recurring-transactions-table.tsx:80
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:335
+#: components/recurring-transactions/recurring-transactions-table.tsx:78
 msgid "D9n+q2"
 msgstr "ランダム"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:352
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:350
 msgid "CpM7W/"
 msgstr "X日ごと"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:358
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:356
 msgid "FP2XQQ"
 msgstr "例：15"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:435
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:433
 msgid "InWqys"
 msgstr "オプション"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:458
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:456
 msgid "mpcI7I"
 msgstr "終了日なし"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:505
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:503
 #: components/recurring-transactions/recurring-transactions-filters.tsx:209
-#: components/recurring-transactions/recurring-transactions-table.tsx:191
+#: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "6Tps09"
 msgstr "非アクティブ"
 
@@ -1216,27 +1216,27 @@ msgstr "定期"
 msgid "w8tTYc"
 msgstr "定期取引を管理します。"
 
-#: components/recurring-transactions/recurring-transactions-table.tsx:96
+#: components/recurring-transactions/recurring-transactions-table.tsx:94
 msgid "xRs5e/"
 msgstr "定期取引が見つかりません"
 
-#: components/recurring-transactions/recurring-transactions-table.tsx:99
+#: components/recurring-transactions/recurring-transactions-table.tsx:97
 msgid "ll7wSI"
 msgstr "定期取引はまだ作成されていません。"
 
-#: components/recurring-transactions/recurring-transactions-table.tsx:100
+#: components/recurring-transactions/recurring-transactions-table.tsx:98
 msgid "hZPPxy"
 msgstr "フィルターに一致する定期取引が見つかりませんでした。"
 
-#: components/recurring-transactions/recurring-transactions-table.tsx:132
+#: components/recurring-transactions/recurring-transactions-table.tsx:130
 msgid "CrEhnK"
 msgstr "終了日なし"
 
-#: components/recurring-transactions/recurring-transactions-table.tsx:166
+#: components/recurring-transactions/recurring-transactions-table.tsx:164
 msgid "qYXK93"
 msgstr "{days}日ごと"
 
-#: components/recurring-transactions/recurring-transactions-table.tsx:173
+#: components/recurring-transactions/recurring-transactions-table.tsx:171
 msgid "b+8NFf"
 msgstr "次回：{date}"
 
@@ -1286,36 +1286,36 @@ msgstr "終了"
 msgid "DC/DQF"
 msgstr "すべて終了"
 
-#: components/settings/change-name-dialog.tsx:64
+#: components/settings/change-name-dialog.tsx:62
 msgid "pdaEmb"
 msgstr "名前の更新に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/change-name-dialog.tsx:68
+#: components/settings/change-name-dialog.tsx:66
 msgid "oALrPz"
 msgstr "名前が更新されました。"
 
-#: components/settings/change-name-dialog.tsx:79
-#: components/settings/change-name-dialog.tsx:83
+#: components/settings/change-name-dialog.tsx:77
+#: components/settings/change-name-dialog.tsx:81
 #: components/settings/settings-page.tsx:73
 msgid "r5LPv0"
 msgstr "名前を変更"
 
-#: components/settings/change-name-dialog.tsx:85
+#: components/settings/change-name-dialog.tsx:83
 #: components/settings/settings-page.tsx:74
 msgid "z7OVdl"
 msgstr "表示名を更新します。"
 
-#: components/settings/change-name-dialog.tsx:96
+#: components/settings/change-name-dialog.tsx:94
 msgid "HAlOn1"
 msgstr "名前"
 
-#: components/settings/change-name-dialog.tsx:100
+#: components/settings/change-name-dialog.tsx:98
 msgid "g4FbZ5"
 msgstr "名前を入力..."
 
-#: components/settings/change-name-dialog.tsx:115
+#: components/settings/change-name-dialog.tsx:113
 #: components/settings/change-password-dialog.tsx:177
-#: components/settings/change-username-dialog.tsx:127
+#: components/settings/change-username-dialog.tsx:125
 msgid "jvo0vs"
 msgstr "保存"
 
@@ -1358,46 +1358,46 @@ msgstr "パスワードを確認"
 msgid "zFD28X"
 msgstr "他のすべてのデバイスからサインアウトします。"
 
-#: components/settings/change-username-dialog.tsx:66
+#: components/settings/change-username-dialog.tsx:64
 msgid "K3OKU5"
 msgstr "ユーザー名の利用可能性の確認に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/change-username-dialog.tsx:69
+#: components/settings/change-username-dialog.tsx:67
 msgid "wb3MSp"
 msgstr "このユーザー名は既に使用されています。"
 
-#: components/settings/change-username-dialog.tsx:75
+#: components/settings/change-username-dialog.tsx:73
 msgid "IaZaQX"
 msgstr "ユーザー名の更新に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/change-username-dialog.tsx:79
+#: components/settings/change-username-dialog.tsx:77
 msgid "8KK2w+"
 msgstr "ユーザー名が変更されました。"
 
-#: components/settings/change-username-dialog.tsx:91
-#: components/settings/change-username-dialog.tsx:95
+#: components/settings/change-username-dialog.tsx:89
+#: components/settings/change-username-dialog.tsx:93
 #: components/settings/settings-page.tsx:83
 msgid "19mdX0"
 msgstr "ユーザー名を変更"
 
-#: components/settings/change-username-dialog.tsx:97
+#: components/settings/change-username-dialog.tsx:95
 #: components/settings/settings-page.tsx:85
 msgid "TXe4LX"
 msgstr "一意のユーザー名を更新します。"
 
-#: components/settings/change-username-dialog.tsx:112
+#: components/settings/change-username-dialog.tsx:110
 msgid "v60thv"
 msgstr "ユーザー名を入力..."
 
-#: components/settings/currency-selector.tsx:32
+#: components/settings/currency-selector.tsx:30
 msgid "d6wGcQ"
 msgstr "通貨の更新に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/language-selector.tsx:33
+#: components/settings/language-selector.tsx:31
 msgid "Ax3Nmj"
 msgstr "言語の更新に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/language-selector.tsx:52
+#: components/settings/language-selector.tsx:50
 #: components/settings/settings-page.tsx:47
 msgid "y1Z3or"
 msgstr "言語"
@@ -1446,74 +1446,74 @@ msgstr "システム"
 msgid "EQpyb8"
 msgstr "テーマを切り替え"
 
-#: components/settings/two-factor-manager-dialog.tsx:54
-#: components/settings/two-factor-manager-dialog.tsx:322
+#: components/settings/two-factor-manager-dialog.tsx:52
+#: components/settings/two-factor-manager-dialog.tsx:320
 msgid "e7Db3T"
 msgstr "2FAを無効化"
 
-#: components/settings/two-factor-manager-dialog.tsx:54
-#: components/settings/two-factor-manager-dialog.tsx:172
+#: components/settings/two-factor-manager-dialog.tsx:52
+#: components/settings/two-factor-manager-dialog.tsx:170
 msgid "ZhrNZz"
 msgstr "2FAを有効化"
 
-#: components/settings/two-factor-manager-dialog.tsx:61
+#: components/settings/two-factor-manager-dialog.tsx:59
 msgid "deAXlH"
 msgstr "二要素認証を有効化"
 
-#: components/settings/two-factor-manager-dialog.tsx:63
+#: components/settings/two-factor-manager-dialog.tsx:61
 msgid "VNORmj"
 msgstr "認証アプリでQRコードをスキャンしてください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:74
+#: components/settings/two-factor-manager-dialog.tsx:72
 msgid "JHBmG8"
 msgstr "シークレットキー"
 
-#: components/settings/two-factor-manager-dialog.tsx:94
+#: components/settings/two-factor-manager-dialog.tsx:92
 msgid "0onqf3"
 msgstr "二要素認証を無効化"
 
-#: components/settings/two-factor-manager-dialog.tsx:97
+#: components/settings/two-factor-manager-dialog.tsx:95
 msgid "fUrrOz"
 msgstr "2FAを無効化するには、パスワードを入力してください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:133
+#: components/settings/two-factor-manager-dialog.tsx:131
 msgid "6vQ8Z2"
 msgstr "パスワードが無効です。"
 
-#: components/settings/two-factor-manager-dialog.tsx:135
+#: components/settings/two-factor-manager-dialog.tsx:133
 msgid "Lq08V/"
 msgstr "2FAの有効化に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:209
+#: components/settings/two-factor-manager-dialog.tsx:207
 msgid "02Huvd"
 msgstr "2FAコードの確認に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:213
+#: components/settings/two-factor-manager-dialog.tsx:211
 msgid "FSRmm9"
 msgstr "二要素認証が有効になりました。"
 
-#: components/settings/two-factor-manager-dialog.tsx:284
+#: components/settings/two-factor-manager-dialog.tsx:282
 msgid "Y1o/zZ"
 msgstr "2FAの無効化に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:288
+#: components/settings/two-factor-manager-dialog.tsx:286
 msgid "BBb4xb"
 msgstr "二要素認証が無効になりました。"
 
-#: components/statistics/statistics-filters.tsx:166
-#: components/transactions/transaction-filters.tsx:221
+#: components/statistics/statistics-filters.tsx:164
+#: components/transactions/transaction-filters.tsx:219
 msgid "KAX9q+"
 msgstr "日付範囲を選択"
 
-#: components/statistics/statistics-filters.tsx:174
+#: components/statistics/statistics-filters.tsx:172
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:229
+#: components/transactions/transaction-filters.tsx:227
 msgid "dM+p3/"
 msgstr "から"
 
-#: components/statistics/statistics-filters.tsx:193
+#: components/statistics/statistics-filters.tsx:191
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:248
+#: components/transactions/transaction-filters.tsx:246
 msgid "9j3hXO"
 msgstr "まで"
 
@@ -1533,16 +1533,16 @@ msgstr "総支出"
 msgid "cX8/D7"
 msgstr "取引総数"
 
-#: components/statistics/statistics-table.tsx:63
-#: components/transactions/transactions-table.tsx:77
+#: components/statistics/statistics-table.tsx:61
+#: components/transactions/transactions-table.tsx:75
 msgid "Cl5VLx"
 msgstr "フィルターに一致する取引が見つかりませんでした。"
 
-#: components/statistics/statistics-table.tsx:74
+#: components/statistics/statistics-table.tsx:72
 msgid "gsAs8V"
 msgstr "取引数"
 
-#: components/statistics/statistics-table.tsx:75
+#: components/statistics/statistics-table.tsx:73
 msgid "CDTMW3"
 msgstr "総額"
 
@@ -1555,8 +1555,8 @@ msgid "cj6kmp"
 msgstr "この取引を削除してもよろしいですか？この操作は元に戻せません。"
 
 #: components/transactions/export-button.tsx:32
-#: components/transactions/transaction-dialog.tsx:280
-#: components/transactions/transactions-table.tsx:86
+#: components/transactions/transaction-dialog.tsx:278
+#: components/transactions/transactions-table.tsx:84
 msgid "P7PLVj"
 msgstr "日付"
 
@@ -1576,27 +1576,27 @@ msgstr "取引をエクスポート"
 msgid "0S1jq/"
 msgstr "現在のフィルターを適用して取引をエクスポート"
 
-#: components/transactions/transaction-dialog.tsx:156
+#: components/transactions/transaction-dialog.tsx:154
 msgid "P5C72A"
 msgstr "取引を編集"
 
-#: components/transactions/transaction-dialog.tsx:156
+#: components/transactions/transaction-dialog.tsx:154
 msgid "DJIUi0"
 msgstr "取引を追加"
 
-#: components/transactions/transaction-dialog.tsx:160
+#: components/transactions/transaction-dialog.tsx:158
 msgid "ET95oG"
 msgstr "取引情報を更新します。"
 
-#: components/transactions/transaction-dialog.tsx:161
+#: components/transactions/transaction-dialog.tsx:159
 msgid "m3AQtz"
 msgstr "個人の財務を追跡するために、収入または支出を追加します。"
 
-#: components/transactions/transaction-dialog.tsx:257
+#: components/transactions/transaction-dialog.tsx:255
 msgid "9WG2aE"
 msgstr "取引の説明を入力..."
 
-#: components/transactions/transaction-filters.tsx:160
+#: components/transactions/transaction-filters.tsx:158
 msgid "gD5509"
 msgstr "取引を検索..."
 
