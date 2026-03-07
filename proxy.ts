@@ -1,5 +1,3 @@
-"use server"
-
 import { type NextURL } from "next/dist/server/web/next-url"
 import { NextResponse, type NextRequest } from "next/server"
 import * as routes from "@/routes"
@@ -13,7 +11,9 @@ function redirectIfProtectedRoute(request: NextRequest) {
 
   if (
     pathname === routes.twoFactorRoute &&
-    !request.cookies.has(`${siteConfig.name}.two_factor`)
+    !request.cookies
+      .getAll()
+      .some((c) => c.name.endsWith(`${siteConfig.name}.two_factor`))
   ) {
     return redirectTo(routes.signInRoute, nextUrl)
   }

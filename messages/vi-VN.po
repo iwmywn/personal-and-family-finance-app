@@ -282,7 +282,7 @@ msgstr "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:157
+#: components/auth/signin-form.tsx:163
 msgid "Ub+AGc"
 msgstr "Đăng nhập"
 
@@ -415,8 +415,8 @@ msgstr "Xác minh CAPTCHA"
 #: components/settings/change-password-dialog.tsx:53
 #: components/settings/change-username-dialog.tsx:54
 #: components/settings/two-factor-manager-dialog.tsx:122
-#: components/settings/two-factor-manager-dialog.tsx:198
-#: components/settings/two-factor-manager-dialog.tsx:272
+#: components/settings/two-factor-manager-dialog.tsx:199
+#: components/settings/two-factor-manager-dialog.tsx:274
 #: components/transactions/transaction-dialog.tsx:106
 msgid "5GmpFA"
 msgstr "Dữ liệu không hợp lệ!"
@@ -429,14 +429,14 @@ msgstr "Tên đăng nhập hoặc mật khẩu không hợp lệ!"
 msgid "b8+mgZ"
 msgstr "Đăng nhập thất bại! Vui lòng thử lại sau."
 
-#: components/auth/signin-form.tsx:121
+#: components/auth/signin-form.tsx:128
 #: components/settings/change-username-dialog.tsx:106
 msgid "JCIgkj"
 msgstr "Tên đăng nhập"
 
-#: components/auth/signin-form.tsx:141
+#: components/auth/signin-form.tsx:148
 #: components/settings/two-factor-manager-dialog.tsx:152
-#: components/settings/two-factor-manager-dialog.tsx:300
+#: components/settings/two-factor-manager-dialog.tsx:302
 msgid "5sg7KC"
 msgstr "Mật khẩu"
 
@@ -445,7 +445,7 @@ msgid "mXmfR7"
 msgstr "Mã xác thực không hợp lệ! Vui lòng thử lại sau."
 
 #: components/auth/two-factor-form.tsx:79
-#: components/settings/two-factor-manager-dialog.tsx:228
+#: components/settings/two-factor-manager-dialog.tsx:229
 msgid "Tjv3UC"
 msgstr "Mã xác minh"
 
@@ -457,8 +457,8 @@ msgstr "Tin cậy thiết bị này"
 msgid "ZcMAT1"
 msgstr "Không hỏi mã 2FA trên thiết bị này trong 30 ngày."
 
-#: components/auth/two-factor-form.tsx:120
-#: components/settings/two-factor-manager-dialog.tsx:245
+#: components/auth/two-factor-form.tsx:123
+#: components/settings/two-factor-manager-dialog.tsx:249
 msgid "q5Xl0M"
 msgstr "Xác minh"
 
@@ -543,27 +543,27 @@ msgstr "Ngày kết thúc"
 msgid "47FYwb"
 msgstr "Hủy"
 
-#: components/budgets/budget-dialog.tsx:314
-#: components/categories/category-dialog.tsx:191
-#: components/goals/goal-dialog.tsx:337
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
-#: components/transactions/transaction-dialog.tsx:328
-msgid "BWpuKl"
-msgstr "Cập nhật"
-
-#: components/budgets/budget-dialog.tsx:314
+#: components/budgets/budget-dialog.tsx:313
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
-#: components/categories/category-dialog.tsx:191
-#: components/goals/goal-dialog.tsx:337
+#: components/categories/category-dialog.tsx:190
+#: components/goals/goal-dialog.tsx:336
 #: components/goals/goals-page.tsx:24
 #: components/home/homepage.tsx:30
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
 #: components/recurring-transactions/recurring-transactions-page.tsx:24
-#: components/transactions/transaction-dialog.tsx:328
+#: components/transactions/transaction-dialog.tsx:327
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "Thêm"
+
+#: components/budgets/budget-dialog.tsx:313
+#: components/categories/category-dialog.tsx:190
+#: components/goals/goal-dialog.tsx:336
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
+#: components/transactions/transaction-dialog.tsx:327
+msgid "BWpuKl"
+msgstr "Cập nhật"
 
 #: components/budgets/budget-filters.tsx:82
 #: components/goals/goal-filters.tsx:116
@@ -1309,9 +1309,9 @@ msgstr "Tên"
 msgid "g4FbZ5"
 msgstr "Nhập tên của bạn..."
 
-#: components/settings/change-name-dialog.tsx:114
-#: components/settings/change-password-dialog.tsx:178
-#: components/settings/change-username-dialog.tsx:126
+#: components/settings/change-name-dialog.tsx:113
+#: components/settings/change-password-dialog.tsx:177
+#: components/settings/change-username-dialog.tsx:125
 msgid "jvo0vs"
 msgstr "Lưu"
 
@@ -1443,12 +1443,12 @@ msgid "EQpyb8"
 msgstr "Chuyển đổi chủ đề"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:315
+#: components/settings/two-factor-manager-dialog.tsx:320
 msgid "e7Db3T"
 msgstr "Tắt 2FA"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:167
+#: components/settings/two-factor-manager-dialog.tsx:170
 msgid "ZhrNZz"
 msgstr "Bật 2FA"
 
@@ -1480,19 +1480,19 @@ msgstr "Mật khẩu không hợp lệ."
 msgid "Lq08V/"
 msgstr "Bật 2FA thất bại! Vui lòng thử lại sau."
 
-#: components/settings/two-factor-manager-dialog.tsx:206
+#: components/settings/two-factor-manager-dialog.tsx:207
 msgid "02Huvd"
 msgstr "Xác minh mã 2FA thất bại! Vui lòng thử lại sau."
 
-#: components/settings/two-factor-manager-dialog.tsx:210
+#: components/settings/two-factor-manager-dialog.tsx:211
 msgid "FSRmm9"
 msgstr "Xác thực hai yếu tố đã được bật."
 
-#: components/settings/two-factor-manager-dialog.tsx:280
+#: components/settings/two-factor-manager-dialog.tsx:282
 msgid "Y1o/zZ"
 msgstr "Tắt 2FA thất bại! Vui lòng thử lại sau."
 
-#: components/settings/two-factor-manager-dialog.tsx:284
+#: components/settings/two-factor-manager-dialog.tsx:286
 msgid "BBb4xb"
 msgstr "Xác thực hai yếu tố đã được tắt."
 

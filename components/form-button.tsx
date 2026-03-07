@@ -4,12 +4,12 @@ import { cn } from "@/lib/utils"
 
 export function FormButton({
   isSubmitting,
-  text,
+  children,
   className,
   ...props
 }: {
   isSubmitting: boolean
-  text: string
+  children: React.ReactNode
   className?: string
 } & React.ComponentProps<"button">) {
   return (
@@ -20,7 +20,7 @@ export function FormButton({
       {...props}
     >
       <span className="flex items-center gap-2">
-        {isSubmitting && <Spinner />} {text}
+        {isSubmitting && <Spinner />} {children}
       </span>
     </Button>
   )

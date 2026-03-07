@@ -282,7 +282,7 @@ msgstr "取引の読み込みに失敗しました！後でもう一度お試し
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:157
+#: components/auth/signin-form.tsx:163
 msgid "Ub+AGc"
 msgstr "サインイン"
 
@@ -415,8 +415,8 @@ msgstr "CAPTCHA認証"
 #: components/settings/change-password-dialog.tsx:53
 #: components/settings/change-username-dialog.tsx:54
 #: components/settings/two-factor-manager-dialog.tsx:122
-#: components/settings/two-factor-manager-dialog.tsx:198
-#: components/settings/two-factor-manager-dialog.tsx:272
+#: components/settings/two-factor-manager-dialog.tsx:199
+#: components/settings/two-factor-manager-dialog.tsx:274
 #: components/transactions/transaction-dialog.tsx:106
 msgid "5GmpFA"
 msgstr "無効なデータです！"
@@ -429,14 +429,14 @@ msgstr "ユーザー名またはパスワードが無効です！"
 msgid "b8+mgZ"
 msgstr "サインインに失敗しました！後でもう一度お試しください。"
 
-#: components/auth/signin-form.tsx:121
+#: components/auth/signin-form.tsx:128
 #: components/settings/change-username-dialog.tsx:106
 msgid "JCIgkj"
 msgstr "ユーザー名"
 
-#: components/auth/signin-form.tsx:141
+#: components/auth/signin-form.tsx:148
 #: components/settings/two-factor-manager-dialog.tsx:152
-#: components/settings/two-factor-manager-dialog.tsx:300
+#: components/settings/two-factor-manager-dialog.tsx:302
 msgid "5sg7KC"
 msgstr "パスワード"
 
@@ -445,7 +445,7 @@ msgid "mXmfR7"
 msgstr "認証コードが無効です！後でもう一度お試しください。"
 
 #: components/auth/two-factor-form.tsx:79
-#: components/settings/two-factor-manager-dialog.tsx:228
+#: components/settings/two-factor-manager-dialog.tsx:229
 msgid "Tjv3UC"
 msgstr "確認コード"
 
@@ -457,8 +457,8 @@ msgstr "このデバイスを信頼する"
 msgid "ZcMAT1"
 msgstr "このデバイスでは30日間2FAコードを要求しない。"
 
-#: components/auth/two-factor-form.tsx:120
-#: components/settings/two-factor-manager-dialog.tsx:245
+#: components/auth/two-factor-form.tsx:123
+#: components/settings/two-factor-manager-dialog.tsx:249
 msgid "q5Xl0M"
 msgstr "確認"
 
@@ -543,27 +543,27 @@ msgstr "終了日"
 msgid "47FYwb"
 msgstr "キャンセル"
 
-#: components/budgets/budget-dialog.tsx:314
-#: components/categories/category-dialog.tsx:191
-#: components/goals/goal-dialog.tsx:337
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
-#: components/transactions/transaction-dialog.tsx:328
-msgid "BWpuKl"
-msgstr "更新"
-
-#: components/budgets/budget-dialog.tsx:314
+#: components/budgets/budget-dialog.tsx:313
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
-#: components/categories/category-dialog.tsx:191
-#: components/goals/goal-dialog.tsx:337
+#: components/categories/category-dialog.tsx:190
+#: components/goals/goal-dialog.tsx:336
 #: components/goals/goals-page.tsx:24
 #: components/home/homepage.tsx:30
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
 #: components/recurring-transactions/recurring-transactions-page.tsx:24
-#: components/transactions/transaction-dialog.tsx:328
+#: components/transactions/transaction-dialog.tsx:327
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "追加"
+
+#: components/budgets/budget-dialog.tsx:313
+#: components/categories/category-dialog.tsx:190
+#: components/goals/goal-dialog.tsx:336
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
+#: components/transactions/transaction-dialog.tsx:327
+msgid "BWpuKl"
+msgstr "更新"
 
 #: components/budgets/budget-filters.tsx:82
 #: components/goals/goal-filters.tsx:116
@@ -1309,9 +1309,9 @@ msgstr "名前"
 msgid "g4FbZ5"
 msgstr "名前を入力..."
 
-#: components/settings/change-name-dialog.tsx:114
-#: components/settings/change-password-dialog.tsx:178
-#: components/settings/change-username-dialog.tsx:126
+#: components/settings/change-name-dialog.tsx:113
+#: components/settings/change-password-dialog.tsx:177
+#: components/settings/change-username-dialog.tsx:125
 msgid "jvo0vs"
 msgstr "保存"
 
@@ -1443,12 +1443,12 @@ msgid "EQpyb8"
 msgstr "テーマを切り替え"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:315
+#: components/settings/two-factor-manager-dialog.tsx:320
 msgid "e7Db3T"
 msgstr "2FAを無効化"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:167
+#: components/settings/two-factor-manager-dialog.tsx:170
 msgid "ZhrNZz"
 msgstr "2FAを有効化"
 
@@ -1480,19 +1480,19 @@ msgstr "パスワードが無効です。"
 msgid "Lq08V/"
 msgstr "2FAの有効化に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:206
+#: components/settings/two-factor-manager-dialog.tsx:207
 msgid "02Huvd"
 msgstr "2FAコードの確認に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:210
+#: components/settings/two-factor-manager-dialog.tsx:211
 msgid "FSRmm9"
 msgstr "二要素認証が有効になりました。"
 
-#: components/settings/two-factor-manager-dialog.tsx:280
+#: components/settings/two-factor-manager-dialog.tsx:282
 msgid "Y1o/zZ"
 msgstr "2FAの無効化に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/two-factor-manager-dialog.tsx:284
+#: components/settings/two-factor-manager-dialog.tsx:286
 msgid "BBb4xb"
 msgstr "二要素認証が無効になりました。"
 

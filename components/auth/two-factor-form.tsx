@@ -117,10 +117,11 @@ export function TwoFactorVerificationForm() {
         />
 
         <FormButton
-          text={t("Verify")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Verify")}
+        </FormButton>
       </form>
     </Form>
   )

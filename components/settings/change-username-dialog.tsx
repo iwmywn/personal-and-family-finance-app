@@ -121,10 +121,9 @@ export function ChangeUsernameDialog() {
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={t("Save")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {t("Save")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

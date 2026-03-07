@@ -332,10 +332,9 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={goal ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {goal ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

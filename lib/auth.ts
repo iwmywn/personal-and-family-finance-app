@@ -1,5 +1,5 @@
-import { betterAuth } from "better-auth"
 import { mongodbAdapter } from "better-auth/adapters/mongodb"
+import { betterAuth } from "better-auth/minimal"
 import { nextCookies } from "better-auth/next-js"
 import { captcha, twoFactor, username } from "better-auth/plugins"
 

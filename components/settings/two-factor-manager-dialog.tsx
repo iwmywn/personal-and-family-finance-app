@@ -164,10 +164,11 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
         />
 
         <FormButton
-          text={t("Enable 2FA")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Enable 2FA")}
+        </FormButton>
       </form>
     </Form>
   )
@@ -242,10 +243,11 @@ function VerifyTwoFactorForm({
         />
 
         <FormButton
-          text={t("Verify")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Verify")}
+        </FormButton>
       </form>
     </Form>
   )
@@ -312,10 +314,11 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
         />
 
         <FormButton
-          text={t("Disable 2FA")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Disable 2FA")}
+        </FormButton>
       </form>
     </Form>
   )

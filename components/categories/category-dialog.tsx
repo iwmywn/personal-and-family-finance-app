@@ -186,10 +186,9 @@ export function CategoryDialog({
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={category ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {category ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

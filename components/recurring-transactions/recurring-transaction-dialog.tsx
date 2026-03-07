@@ -513,10 +513,9 @@ export function RecurringTransactionDialog({
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
 
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={recurring ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {recurring ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

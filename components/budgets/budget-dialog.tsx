@@ -309,10 +309,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={budget ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {budget ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

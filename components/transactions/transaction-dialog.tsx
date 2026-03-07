@@ -323,10 +323,9 @@ export function TransactionDialog({
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={transaction ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {transaction ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

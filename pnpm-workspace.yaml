@@ -1,7 +1,9 @@
 onlyBuiltDependencies:
   - '@parcel/watcher'
+  - '@prisma/engines'
   - '@swc/core'
   - esbuild
   - mongodb-memory-server
+  - prisma
   - sharp
   - unrs-resolver
