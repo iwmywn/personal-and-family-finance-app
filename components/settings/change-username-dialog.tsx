@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
 import { type UsernameFormValues } from "@/schemas/types"
@@ -38,7 +38,7 @@ export function ChangeUsernameDialog() {
   const { createUsernameSchema } = useSchemas()
 
   const router = useRouter()
-  const { user } = useAppData()
+  const { user } = useUser()
   const form = useForm<UsernameFormValues>({
     resolver: zodResolver(createUsernameSchema()),
     defaultValues: {

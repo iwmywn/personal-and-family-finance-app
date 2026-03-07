@@ -29,7 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { TransactionsTable } from "@/components/transactions/transactions-table"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
@@ -44,7 +44,7 @@ interface TransactionFiltersProps {
 export function TransactionFilters({
   onFilteredTransactionsChange,
 }: TransactionFiltersProps) {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)

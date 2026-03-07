@@ -43,7 +43,7 @@ import {
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
@@ -62,7 +62,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
   const { createGoalSchema } = useSchemas()
-  const { user } = useAppData()
+  const { user } = useUser()
   const formatDate = useFormatDate()
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(createGoalSchema()),

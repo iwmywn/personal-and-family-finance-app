@@ -23,14 +23,14 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { StatisticsTable } from "@/components/statistics/statistics-table"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
 import { filterTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
 export function StatisticsFilters() {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const formatDate = useFormatDate()
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)

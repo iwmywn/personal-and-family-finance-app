@@ -52,7 +52,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/categories"
@@ -76,7 +76,7 @@ export function TransactionDialog({
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
   const { createTransactionSchema } = useSchemas()
-  const { user } = useAppData()
+  const { user } = useUser()
   const formatDate = useFormatDate()
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(createTransactionSchema()),

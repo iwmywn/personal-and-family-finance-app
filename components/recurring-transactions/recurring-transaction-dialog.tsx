@@ -53,7 +53,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/categories"
@@ -78,7 +78,7 @@ export function RecurringTransactionDialog({
   const [type, setType] = useState<CategoryType>(recurring?.type || "income")
   const t = useExtracted()
   const { createRecurringTransactionSchema } = useSchemas()
-  const { user } = useAppData()
+  const { user } = useUser()
   const formatDate = useFormatDate()
   const form = useForm<RecurringTransactionFormValues>({
     resolver: zodResolver(createRecurringTransactionSchema()),

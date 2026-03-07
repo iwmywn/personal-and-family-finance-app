@@ -9,13 +9,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { calculateQuickStats } from "@/lib/statistics"
 
 export function QuickStats() {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const { getCategoryLabel } = useCategory()
   const formatCurrency = useFormatCurrency()

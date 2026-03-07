@@ -36,7 +36,8 @@ import {
 } from "@/components/ui/tooltip"
 import { BudgetDialog } from "@/components/budgets/budget-dialog"
 import { DeleteBudgetDialog } from "@/components/budgets/delete-budget-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useBudgets } from "@/context/budgets-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
@@ -49,7 +50,8 @@ interface BudgetsTableProps {
 }
 
 export function BudgetsTable({ filteredBudgets }: BudgetsTableProps) {
-  const { budgets, transactions } = useAppData()
+  const { budgets } = useBudgets()
+  const { transactions } = useTransactions()
   const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)

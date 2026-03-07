@@ -36,7 +36,8 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteGoalDialog } from "@/components/goals/delete-goal-dialog"
 import { GoalDialog } from "@/components/goals/goal-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useGoals } from "@/context/goals-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
@@ -48,7 +49,8 @@ interface GoalsTableProps {
 }
 
 export function GoalsTable({ filteredGoals }: GoalsTableProps) {
-  const { goals, transactions } = useAppData()
+  const { goals } = useGoals()
+  const { transactions } = useTransactions()
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)

@@ -26,13 +26,13 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import { Spinner } from "@/components/ui/spinner"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { client } from "@/lib/auth-client"
 
 export function ActiveSessionsDialog() {
   const t = useExtracted()
   const router = useRouter()
-  const { activeSessions, currentSession } = useAppData()
+  const { activeSessions, currentSession } = useUser()
   const [isTerminating, setIsTerminating] = useState<string | undefined>()
   const [isRevokingAll, setIsRevokingAll] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)

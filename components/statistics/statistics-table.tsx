@@ -25,7 +25,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { type Transaction } from "@/lib/definitions"
@@ -38,7 +38,7 @@ interface TransactionBreakdownTableProps {
 export function StatisticsTable({
   filteredTransactions,
 }: TransactionBreakdownTableProps) {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatCurrency = useFormatCurrency()

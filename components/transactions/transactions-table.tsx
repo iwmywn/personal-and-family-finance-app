@@ -35,7 +35,7 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
@@ -48,7 +48,7 @@ interface TransactionsTableProps {
 export function TransactionsTable({
   filteredTransactions,
 }: TransactionsTableProps) {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()

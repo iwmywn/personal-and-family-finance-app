@@ -42,7 +42,7 @@ import {
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
@@ -61,7 +61,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
   const { createBudgetSchema } = useSchemas()
-  const { user } = useAppData()
+  const { user } = useUser()
   const formatDate = useFormatDate()
   const form = useForm<BudgetFormValues>({
     resolver: zodResolver(createBudgetSchema()),

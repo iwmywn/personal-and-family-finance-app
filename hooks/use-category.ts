@@ -2,7 +2,7 @@
 
 import { useExtracted } from "next-intl"
 
-import { useAppData } from "@/context/app-data-context"
+import { useCategories } from "@/context/categories-context"
 import {
   getCategoryType,
   type AllCategoriesKeyType,
@@ -13,7 +13,7 @@ import {
 
 export function useCategory() {
   const t = useExtracted()
-  const { customCategories } = useAppData()
+  const { customCategories } = useCategories()
 
   const CATEGORY_CONFIG_BASE: CategoryConfigBaseType = {
     // Incomes

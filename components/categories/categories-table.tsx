@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/table"
 import { CategoryDialog } from "@/components/categories/category-dialog"
 import { DeleteCategoryDialog } from "@/components/categories/delete-category-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useCategories } from "@/context/categories-context"
 import type { Category } from "@/lib/definitions"
 
 interface CategoriesTableProps {
@@ -38,7 +38,7 @@ interface CategoriesTableProps {
 }
 
 export function CategoriesTable({ filteredCategories }: CategoriesTableProps) {
-  const { customCategories } = useAppData()
+  const { customCategories } = useCategories()
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   )

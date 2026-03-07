@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getExtracted } from "next-intl/server"
 
+import { PageDataProvider } from "@/components/layout/page-data-provider"
 import TransactionsPage from "@/components/transactions/transactions-page"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -10,5 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function page() {
-  return <TransactionsPage />
+  return (
+    <PageDataProvider transactions categories>
+      <TransactionsPage />
+    </PageDataProvider>
+  )
 }

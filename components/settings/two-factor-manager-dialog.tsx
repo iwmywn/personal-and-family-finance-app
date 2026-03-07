@@ -29,7 +29,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { FormButton } from "@/components/form-button"
 import { PasswordInput } from "@/components/password-input"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
 import {
@@ -39,7 +39,7 @@ import {
 
 export function TwoFactorManagerDialog() {
   const t = useExtracted()
-  const { user } = useAppData()
+  const { user } = useUser()
   const [open, setOpen] = useState<boolean>(false)
   const [totpURI, setTotpURI] = useState<string | null>(null)
 

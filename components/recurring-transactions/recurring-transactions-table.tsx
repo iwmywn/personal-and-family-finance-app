@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteRecurringTransactionDialog } from "@/components/recurring-transactions/delete-recurring-transaction-dialog"
 import { RecurringTransactionDialog } from "@/components/recurring-transactions/recurring-transaction-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useRecurring } from "@/context/recurring-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
@@ -50,7 +50,7 @@ interface RecurringTableProps {
 export function RecurringTransactionsTable({
   filteredRecurring,
 }: RecurringTableProps) {
-  const { recurringTransactions } = useAppData()
+  const { recurringTransactions } = useRecurring()
   const [selectedRecurring, setSelectedRecurring] =
     useState<RecurringTransaction | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
