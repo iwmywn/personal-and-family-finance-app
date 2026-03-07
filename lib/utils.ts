@@ -60,3 +60,21 @@ export function toDecimal(value: string): Decimal {
 export function isZeroDecimalCurrency(currency: AppCurrency): boolean {
   return ZERO_DECIMAL_CURRENCIES.has(currency)
 }
+
+export function convertAmountWithRates(
+  amount: Decimal | string | number,
+  from: AppCurrency,
+  to: AppCurrency,
+  rates?: Record<AppCurrency, Decimal | string | number>
+): Decimal {
+  const decAmount = new Decimal(amount)
+  if (from === to || !rates) return decAmount
+
+  const rateFrom = new Decimal(rates[from])
+  const rateTo = new Decimal(rates[to])
+
+  const amountInUSD = from === "USD" ? decAmount : decAmount.dividedBy(rateFrom)
+  const result = to === "USD" ? amountInUSD : amountInUSD.mul(rateTo)
+
+  return result
+}

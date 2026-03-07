@@ -644,16 +644,16 @@ msgid "tADQQm"
 msgstr ""
 
 #: components/budgets/budget-filters.tsx:178
-#: components/budgets/budgets-table.tsx:138
+#: components/budgets/budgets-table.tsx:144
 #: components/goals/goal-filters.tsx:210
-#: components/goals/goals-table.tsx:129
+#: components/goals/goals-table.tsx:133
 msgid "RahCRH"
 msgstr ""
 
 #: components/budgets/budget-filters.tsx:179
-#: components/budgets/budgets-table.tsx:140
+#: components/budgets/budgets-table.tsx:146
 #: components/goals/goal-filters.tsx:211
-#: components/goals/goals-table.tsx:131
+#: components/goals/goals-table.tsx:135
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:502
 #: components/recurring-transactions/recurring-transactions-filters.tsx:208
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
@@ -661,9 +661,9 @@ msgid "3a5wL8"
 msgstr "활성"
 
 #: components/budgets/budget-filters.tsx:180
-#: components/budgets/budgets-table.tsx:141
+#: components/budgets/budgets-table.tsx:147
 #: components/goals/goal-filters.tsx:212
-#: components/goals/goals-table.tsx:132
+#: components/goals/goals-table.tsx:136
 msgid "6/aEFZ"
 msgstr ""
 
@@ -701,28 +701,28 @@ msgstr ""
 msgid "H5+NAX"
 msgstr "잔액"
 
-#: components/budgets/budgets-table.tsx:166
+#: components/budgets/budgets-table.tsx:172
 #: components/categories/categories-table.tsx:109
-#: components/goals/goals-table.tsx:157
+#: components/goals/goals-table.tsx:161
 #: components/recurring-transactions/recurring-transactions-table.tsx:201
 #: components/transactions/transactions-table.tsx:148
 msgid "bdcMGy"
 msgstr "메뉴 열기"
 
-#: components/budgets/budgets-table.tsx:177
+#: components/budgets/budgets-table.tsx:183
 #: components/categories/categories-table.tsx:120
-#: components/goals/goals-table.tsx:168
+#: components/goals/goals-table.tsx:172
 #: components/recurring-transactions/recurring-transactions-table.tsx:212
 #: components/transactions/transactions-table.tsx:159
 msgid "wEQDC6"
 msgstr "편집"
 
-#: components/budgets/budgets-table.tsx:187
+#: components/budgets/budgets-table.tsx:193
 #: components/budgets/delete-budget-dialog.tsx:63
 #: components/categories/categories-table.tsx:130
 #: components/categories/delete-category-dialog.tsx:63
 #: components/goals/delete-goal-dialog.tsx:63
-#: components/goals/goals-table.tsx:178
+#: components/goals/goals-table.tsx:182
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:65
 #: components/recurring-transactions/recurring-transactions-table.tsx:222
 #: components/transactions/delete-transaction-dialog.tsx:63

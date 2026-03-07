@@ -113,8 +113,12 @@ export function GoalsTable({ filteredGoals }: GoalsTableProps) {
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell>{formatCurrency(goal.targetAmount)}</TableCell>
-                      <TableCell>{formatCurrency(goal.accumulated)}</TableCell>
+                      <TableCell>
+                        {formatCurrency(goal.targetAmount, goal.currency)}
+                      </TableCell>
+                      <TableCell>
+                        {formatCurrency(goal.accumulated, goal.currency)}
+                      </TableCell>
                       <TableCell>
                         <Badge
                           className={

@@ -114,14 +114,20 @@ export function BudgetsTable({ filteredBudgets }: BudgetsTableProps) {
                         </Tooltip>
                       </TableCell>
                       <TableCell>
-                        {formatCurrency(budget.allocatedAmount)}
+                        {formatCurrency(
+                          budget.allocatedAmount,
+                          budget.currency
+                        )}
                       </TableCell>
-                      <TableCell>{formatCurrency(budget.spent)}</TableCell>
+                      <TableCell>
+                        {formatCurrency(budget.spent, budget.currency)}
+                      </TableCell>
                       <TableCell>
                         {formatCurrency(
                           toDecimal(budget.allocatedAmount)
                             .minus(toDecimal(budget.spent))
-                            .toString()
+                            .toString(),
+                          budget.currency
                         )}
                       </TableCell>
                       <TableCell>

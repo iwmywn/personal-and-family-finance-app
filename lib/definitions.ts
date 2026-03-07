@@ -19,6 +19,11 @@ type BaseTransaction<T, K> = {
   currency: AppCurrency
   description: string
   date: Date
+  // the following fields are appended on the client for currency conversion
+  // and are NOT stored in the database.
+  originalAmount?: K
+  originalCurrency?: AppCurrency
+  rates?: Record<AppCurrency, string>
 }
 
 type BaseCategory<T> = {
