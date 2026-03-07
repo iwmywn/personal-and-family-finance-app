@@ -9,9 +9,9 @@ import { getExtracted, getLocale } from "next-intl/server"
 import { nunito } from "@/app/fonts"
 import { siteConfig } from "@/app/pffa.config"
 import { Toaster } from "@/components/ui/sonner"
+import { ProgressProvider } from "@/components/layout/progress-provider"
+import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
-import { ProgressProvider } from "@/components/progress-provider"
-import { ThemeProvider } from "@/components/theme-provider"
 import { env } from "@/env/client.mjs"
 
 export async function generateMetadata(): Promise<Metadata> {
