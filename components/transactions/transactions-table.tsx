@@ -136,7 +136,7 @@ export function TransactionsTable({
                           {formatCurrency(transaction.amount)}
                         </span>
                       </TableCell>
-                      <TableCell className="space-x-2">
+                      <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button

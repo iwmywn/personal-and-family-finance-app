@@ -5,6 +5,7 @@ import { Suspense } from "react"
 import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getExtracted, getLocale } from "next-intl/server"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { nunito } from "@/app/fonts"
 import { siteConfig } from "@/app/pffa.config"
@@ -90,22 +91,24 @@ async function AppLayout({
       className={nunito.className}
     >
       <body>
-        <ThemeProvider>
-          <ProgressProvider>
-            <Suspense
-              fallback={
-                <div className="center h-screen">
-                  <Logo isLoading />
-                </div>
-              }
-            >
-              <NextIntlClientProvider>
-                <Toaster richColors closeButton />
-                {children}
-              </NextIntlClientProvider>
-            </Suspense>
-          </ProgressProvider>
-        </ThemeProvider>
+        <NuqsAdapter>
+          <ThemeProvider>
+            <ProgressProvider>
+              <Suspense
+                fallback={
+                  <div className="center h-screen">
+                    <Logo isLoading />
+                  </div>
+                }
+              >
+                <NextIntlClientProvider>
+                  <Toaster richColors closeButton />
+                  {children}
+                </NextIntlClientProvider>
+              </Suspense>
+            </ProgressProvider>
+          </ThemeProvider>
+        </NuqsAdapter>
       </body>
     </html>
   )

@@ -368,7 +368,7 @@ msgstr "Giao dịch"
 msgid "/WMCDd"
 msgstr "Đã xảy ra lỗi!"
 
-#: app/layout.tsx:22
+#: app/layout.tsx:23
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
@@ -493,7 +493,7 @@ msgstr "Ngày bắt đầu"
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:397
 #: components/statistics/statistics-filters.tsx:125
 #: components/transactions/transaction-dialog.tsx:292
-#: components/transactions/transaction-filters.tsx:180
+#: components/transactions/transaction-filters.tsx:221
 msgid "ftg7GK"
 msgstr "Chọn ngày"
 
@@ -549,7 +549,7 @@ msgstr "Thêm"
 #: components/goals/goal-filters.tsx:118
 #: components/recurring-transactions/recurring-transactions-filters.tsx:113
 #: components/statistics/statistics-filters.tsx:216
-#: components/transactions/transaction-filters.tsx:271
+#: components/transactions/transaction-filters.tsx:312
 msgid "TBovrx"
 msgstr "Tháng"
 
@@ -557,7 +557,7 @@ msgstr "Tháng"
 #: components/goals/goal-filters.tsx:122
 #: components/recurring-transactions/recurring-transactions-filters.tsx:117
 #: components/statistics/statistics-filters.tsx:220
-#: components/transactions/transaction-filters.tsx:275
+#: components/transactions/transaction-filters.tsx:316
 msgid "O+ZfC8"
 msgstr "Tất cả các tháng"
 
@@ -565,7 +565,7 @@ msgstr "Tất cả các tháng"
 #: components/goals/goal-filters.tsx:137
 #: components/recurring-transactions/recurring-transactions-filters.tsx:132
 #: components/statistics/statistics-filters.tsx:235
-#: components/transactions/transaction-filters.tsx:290
+#: components/transactions/transaction-filters.tsx:331
 msgid "IFo1oo"
 msgstr "Năm"
 
@@ -573,7 +573,7 @@ msgstr "Năm"
 #: components/goals/goal-filters.tsx:141
 #: components/recurring-transactions/recurring-transactions-filters.tsx:136
 #: components/statistics/statistics-filters.tsx:239
-#: components/transactions/transaction-filters.tsx:294
+#: components/transactions/transaction-filters.tsx:335
 msgid "5JGC4V"
 msgstr "Tất cả các năm"
 
@@ -584,9 +584,9 @@ msgstr "Tất cả các năm"
 #: components/goals/goals-table.tsx:90
 #: components/recurring-transactions/recurring-transactions-filters.tsx:170
 #: components/recurring-transactions/recurring-transactions-table.tsx:113
-#: components/statistics/statistics-table.tsx:70
+#: components/statistics/statistics-table.tsx:108
 #: components/transactions/export-button.tsx:34
-#: components/transactions/transaction-filters.tsx:333
+#: components/transactions/transaction-filters.tsx:374
 #: components/transactions/transactions-table.tsx:87
 msgid "ccXLVi"
 msgstr "Danh mục"
@@ -594,7 +594,7 @@ msgstr "Danh mục"
 #: components/budgets/budget-filters.tsx:128
 #: components/goals/goal-filters.tsx:162
 #: components/recurring-transactions/recurring-transactions-filters.tsx:174
-#: components/transactions/transaction-filters.tsx:337
+#: components/transactions/transaction-filters.tsx:378
 msgid "1X6HtI"
 msgstr "Tất cả danh mục"
 
@@ -603,29 +603,29 @@ msgstr "Tất cả danh mục"
 #: components/goals/goal-filters.tsx:181
 #: components/goals/goals-table.tsx:94
 msgid "sIMS7i"
-msgstr ""
+msgstr "Tiến độ"
 
 #: components/budgets/budget-filters.tsx:151
 #: components/goals/goal-filters.tsx:185
 msgid "W8OX/r"
-msgstr ""
+msgstr "Tất cả tiến độ"
 
 #: components/budgets/budget-filters.tsx:153
 #: components/goals/goal-filters.tsx:187
 msgid "tlzCDY"
-msgstr ""
+msgstr "Không có giao dịch"
 
 #: components/budgets/budget-filters.tsx:154
 msgid "ZLbolA"
-msgstr ""
+msgstr "Tốt (< 75%)"
 
 #: components/budgets/budget-filters.tsx:156
 msgid "1TM0t6"
-msgstr ""
+msgstr "Cảnh báo (75-100%)"
 
 #: components/budgets/budget-filters.tsx:158
 msgid "DSmOlH"
-msgstr ""
+msgstr "Vượt quá (≥ 100%)"
 
 #: components/budgets/budget-filters.tsx:172
 #: components/budgets/budgets-table.tsx:94
@@ -641,14 +641,14 @@ msgstr "Trạng thái"
 #: components/goals/goal-filters.tsx:208
 #: components/recurring-transactions/recurring-transactions-filters.tsx:206
 msgid "tADQQm"
-msgstr ""
+msgstr "Tất cả trạng thái"
 
 #: components/budgets/budget-filters.tsx:178
 #: components/budgets/budgets-table.tsx:144
 #: components/goals/goal-filters.tsx:210
 #: components/goals/goals-table.tsx:133
 msgid "RahCRH"
-msgstr ""
+msgstr "Đã hết hạn"
 
 #: components/budgets/budget-filters.tsx:179
 #: components/budgets/budgets-table.tsx:146
@@ -665,14 +665,14 @@ msgstr "Đang hoạt động"
 #: components/goals/goal-filters.tsx:212
 #: components/goals/goals-table.tsx:136
 msgid "6/aEFZ"
-msgstr ""
+msgstr "Sắp tới"
 
 #: components/budgets/budget-filters.tsx:191
 #: components/categories/category-filters.tsx:103
 #: components/goals/goal-filters.tsx:223
 #: components/recurring-transactions/recurring-transactions-filters.tsx:220
 #: components/statistics/statistics-filters.tsx:256
-#: components/transactions/transaction-filters.tsx:362
+#: components/transactions/transaction-filters.tsx:403
 msgid "jm/spn"
 msgstr "Đặt lại"
 
@@ -682,19 +682,19 @@ msgstr "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu c
 
 #: components/budgets/budgets-table.tsx:75
 msgid "CgOoDa"
-msgstr ""
+msgstr "Không tìm thấy ngân sách"
 
 #: components/budgets/budgets-table.tsx:78
 msgid "PTvqaL"
-msgstr ""
+msgstr "Bạn chưa tạo ngân sách nào."
 
 #: components/budgets/budgets-table.tsx:79
 msgid "PZ97Zd"
-msgstr ""
+msgstr "Không tìm thấy ngân sách phù hợp với bộ lọc của bạn."
 
 #: components/budgets/budgets-table.tsx:92
 msgid "111qQK"
-msgstr ""
+msgstr "Đã chi"
 
 #: components/budgets/budgets-table.tsx:93
 #: components/statistics/statistics-summary.tsx:70
@@ -705,6 +705,7 @@ msgstr "Số dư"
 #: components/categories/categories-table.tsx:109
 #: components/goals/goals-table.tsx:161
 #: components/recurring-transactions/recurring-transactions-table.tsx:201
+#: components/statistics/statistics-table.tsx:164
 #: components/transactions/transactions-table.tsx:148
 msgid "bdcMGy"
 msgstr "Mở menu"
@@ -773,9 +774,9 @@ msgstr "Mô tả"
 #: components/categories/category-filters.tsx:87
 #: components/recurring-transactions/recurring-transactions-filters.tsx:151
 #: components/recurring-transactions/recurring-transactions-table.tsx:112
-#: components/statistics/statistics-table.tsx:71
+#: components/statistics/statistics-table.tsx:109
 #: components/transactions/export-button.tsx:33
-#: components/transactions/transaction-filters.tsx:314
+#: components/transactions/transaction-filters.tsx:355
 #: components/transactions/transactions-table.tsx:86
 msgid "+U6ozc"
 msgstr "Loại"
@@ -787,11 +788,11 @@ msgstr "Loại"
 #: components/recurring-transactions/recurring-transactions-filters.tsx:157
 #: components/recurring-transactions/recurring-transactions-filters.tsx:176
 #: components/recurring-transactions/recurring-transactions-table.tsx:142
-#: components/statistics/statistics-table.tsx:100
+#: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
 #: components/transactions/transaction-dialog.tsx:172
-#: components/transactions/transaction-filters.tsx:320
-#: components/transactions/transaction-filters.tsx:339
+#: components/transactions/transaction-filters.tsx:361
+#: components/transactions/transaction-filters.tsx:380
 #: components/transactions/transactions-table.tsx:111
 msgid "gJkHZk"
 msgstr "Thu nhập"
@@ -803,11 +804,11 @@ msgstr "Thu nhập"
 #: components/recurring-transactions/recurring-transactions-filters.tsx:158
 #: components/recurring-transactions/recurring-transactions-filters.tsx:183
 #: components/recurring-transactions/recurring-transactions-table.tsx:143
-#: components/statistics/statistics-table.tsx:100
+#: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
 #: components/transactions/transaction-dialog.tsx:173
-#: components/transactions/transaction-filters.tsx:321
-#: components/transactions/transaction-filters.tsx:346
+#: components/transactions/transaction-filters.tsx:362
+#: components/transactions/transaction-filters.tsx:387
 #: components/transactions/transactions-table.tsx:112
 msgid "URe+qA"
 msgstr "Chi tiêu"
@@ -843,7 +844,7 @@ msgstr "Tìm kiếm danh mục..."
 
 #: components/categories/category-filters.tsx:90
 #: components/recurring-transactions/recurring-transactions-filters.tsx:155
-#: components/transactions/transaction-filters.tsx:318
+#: components/transactions/transaction-filters.tsx:359
 msgid "UjTL+F"
 msgstr "Tất cả các loại"
 
@@ -907,19 +908,19 @@ msgstr "Số tiền mục tiêu"
 
 #: components/goals/goal-filters.tsx:98
 msgid "+xHZ7x"
-msgstr ""
+msgstr "Tìm kiếm mục tiêu..."
 
 #: components/goals/goal-filters.tsx:188
 msgid "8MCUlP"
-msgstr ""
+msgstr "Tốt (≥ 100%)"
 
 #: components/goals/goal-filters.tsx:189
 msgid "O7nOCr"
-msgstr ""
+msgstr "Thấp (75-100%)"
 
 #: components/goals/goal-filters.tsx:190
 msgid "7IAF5Y"
-msgstr ""
+msgstr "Cảnh báo (< 75%)"
 
 #: components/goals/goals-page.tsx:21
 msgid "6rbe1E"
@@ -927,19 +928,19 @@ msgstr "Thiết lập và theo dõi các mục tiêu tài chính của bạn."
 
 #: components/goals/goals-table.tsx:74
 msgid "uuJSCu"
-msgstr ""
+msgstr "Không tìm thấy mục tiêu"
 
 #: components/goals/goals-table.tsx:77
 msgid "Y2QNeU"
-msgstr ""
+msgstr "Bạn chưa tạo mục tiêu nào."
 
 #: components/goals/goals-table.tsx:78
 msgid "RB30ZK"
-msgstr ""
+msgstr "Không tìm thấy mục tiêu phù hợp với bộ lọc của bạn."
 
 #: components/goals/goals-table.tsx:92
 msgid "GkiQMs"
-msgstr ""
+msgstr "Tích lũy"
 
 #: components/home/homepage.tsx:24
 msgid "UKxoV8"
@@ -1015,14 +1016,14 @@ msgid "GMkXVd"
 msgstr "Giao dịch gần đây"
 
 #: components/home/recent-transactions.tsx:43
-#: components/statistics/statistics-table.tsx:57
+#: components/statistics/statistics-table.tsx:95
 #: components/transactions/export-button.tsx:57
 #: components/transactions/transactions-table.tsx:71
 msgid "LER0RZ"
 msgstr "Không tìm thấy giao dịch"
 
 #: components/home/recent-transactions.tsx:45
-#: components/statistics/statistics-table.tsx:60
+#: components/statistics/statistics-table.tsx:98
 #: components/transactions/transactions-table.tsx:74
 msgid "GMBC7V"
 msgstr "Bạn chưa tạo giao dịch nào."
@@ -1069,7 +1070,7 @@ msgstr "so với thu nhập"
 
 #: components/layout/page-data-provider.tsx:72
 msgid "EjH+J3"
-msgstr ""
+msgstr "Vui lòng thử lại sau."
 
 #: components/layout/page-data-provider.tsx:80
 msgid "iKuJb1"
@@ -1205,7 +1206,7 @@ msgstr "Không hoạt động"
 
 #: components/recurring-transactions/recurring-transactions-filters.tsx:93
 msgid "jZimtU"
-msgstr ""
+msgstr "Tìm kiếm giao dịch định kỳ..."
 
 #: components/recurring-transactions/recurring-transactions-page.tsx:19
 #: hooks/use-nav.ts:58
@@ -1501,19 +1502,19 @@ msgid "BBb4xb"
 msgstr "Xác thực hai yếu tố đã được tắt."
 
 #: components/statistics/statistics-filters.tsx:164
-#: components/transactions/transaction-filters.tsx:219
+#: components/transactions/transaction-filters.tsx:260
 msgid "KAX9q+"
 msgstr "Chọn khoảng thời gian"
 
 #: components/statistics/statistics-filters.tsx:172
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:227
+#: components/transactions/transaction-filters.tsx:268
 msgid "dM+p3/"
 msgstr "Từ"
 
 #: components/statistics/statistics-filters.tsx:191
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:246
+#: components/transactions/transaction-filters.tsx:287
 msgid "9j3hXO"
 msgstr "Đến"
 
@@ -1533,18 +1534,22 @@ msgstr "Tổng chi tiêu"
 msgid "cX8/D7"
 msgstr "Tổng số giao dịch"
 
-#: components/statistics/statistics-table.tsx:61
+#: components/statistics/statistics-table.tsx:99
 #: components/transactions/transactions-table.tsx:75
 msgid "Cl5VLx"
 msgstr "Không tìm thấy giao dịch phù hợp với bộ lọc của bạn."
 
-#: components/statistics/statistics-table.tsx:72
+#: components/statistics/statistics-table.tsx:110
 msgid "gsAs8V"
 msgstr "Số lượng giao dịch"
 
-#: components/statistics/statistics-table.tsx:73
+#: components/statistics/statistics-table.tsx:111
 msgid "CDTMW3"
 msgstr "Tổng số tiền"
+
+#: components/statistics/statistics-table.tsx:173
+msgid "N4ReBT"
+msgstr "Xem chi tiết"
 
 #: components/transactions/delete-transaction-dialog.tsx:53
 msgid "nPfy7y"
@@ -1596,7 +1601,7 @@ msgstr "Thêm thu nhập hoặc chi tiêu của bạn để theo dõi tài chín
 msgid "9WG2aE"
 msgstr "Nhập mô tả cho giao dịch..."
 
-#: components/transactions/transaction-filters.tsx:158
+#: components/transactions/transaction-filters.tsx:199
 msgid "gD5509"
 msgstr "Tìm kiếm giao dịch..."
 

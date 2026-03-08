@@ -368,7 +368,7 @@ msgstr "Transactions"
 msgid "/WMCDd"
 msgstr "Something went wrong!"
 
-#: app/layout.tsx:22
+#: app/layout.tsx:23
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Personal & Family Finance App"
@@ -493,7 +493,7 @@ msgstr "Start Date"
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:397
 #: components/statistics/statistics-filters.tsx:125
 #: components/transactions/transaction-dialog.tsx:292
-#: components/transactions/transaction-filters.tsx:180
+#: components/transactions/transaction-filters.tsx:221
 msgid "ftg7GK"
 msgstr "Select Date"
 
@@ -549,7 +549,7 @@ msgstr "Add"
 #: components/goals/goal-filters.tsx:118
 #: components/recurring-transactions/recurring-transactions-filters.tsx:113
 #: components/statistics/statistics-filters.tsx:216
-#: components/transactions/transaction-filters.tsx:271
+#: components/transactions/transaction-filters.tsx:312
 msgid "TBovrx"
 msgstr "Month"
 
@@ -557,7 +557,7 @@ msgstr "Month"
 #: components/goals/goal-filters.tsx:122
 #: components/recurring-transactions/recurring-transactions-filters.tsx:117
 #: components/statistics/statistics-filters.tsx:220
-#: components/transactions/transaction-filters.tsx:275
+#: components/transactions/transaction-filters.tsx:316
 msgid "O+ZfC8"
 msgstr "All Months"
 
@@ -565,7 +565,7 @@ msgstr "All Months"
 #: components/goals/goal-filters.tsx:137
 #: components/recurring-transactions/recurring-transactions-filters.tsx:132
 #: components/statistics/statistics-filters.tsx:235
-#: components/transactions/transaction-filters.tsx:290
+#: components/transactions/transaction-filters.tsx:331
 msgid "IFo1oo"
 msgstr "Year"
 
@@ -573,7 +573,7 @@ msgstr "Year"
 #: components/goals/goal-filters.tsx:141
 #: components/recurring-transactions/recurring-transactions-filters.tsx:136
 #: components/statistics/statistics-filters.tsx:239
-#: components/transactions/transaction-filters.tsx:294
+#: components/transactions/transaction-filters.tsx:335
 msgid "5JGC4V"
 msgstr "All Years"
 
@@ -584,9 +584,9 @@ msgstr "All Years"
 #: components/goals/goals-table.tsx:90
 #: components/recurring-transactions/recurring-transactions-filters.tsx:170
 #: components/recurring-transactions/recurring-transactions-table.tsx:113
-#: components/statistics/statistics-table.tsx:70
+#: components/statistics/statistics-table.tsx:108
 #: components/transactions/export-button.tsx:34
-#: components/transactions/transaction-filters.tsx:333
+#: components/transactions/transaction-filters.tsx:374
 #: components/transactions/transactions-table.tsx:87
 msgid "ccXLVi"
 msgstr "Category"
@@ -594,7 +594,7 @@ msgstr "Category"
 #: components/budgets/budget-filters.tsx:128
 #: components/goals/goal-filters.tsx:162
 #: components/recurring-transactions/recurring-transactions-filters.tsx:174
-#: components/transactions/transaction-filters.tsx:337
+#: components/transactions/transaction-filters.tsx:378
 msgid "1X6HtI"
 msgstr "All Categories"
 
@@ -672,7 +672,7 @@ msgstr "Upcoming"
 #: components/goals/goal-filters.tsx:223
 #: components/recurring-transactions/recurring-transactions-filters.tsx:220
 #: components/statistics/statistics-filters.tsx:256
-#: components/transactions/transaction-filters.tsx:362
+#: components/transactions/transaction-filters.tsx:403
 msgid "jm/spn"
 msgstr "Reset"
 
@@ -705,6 +705,7 @@ msgstr "Balance"
 #: components/categories/categories-table.tsx:109
 #: components/goals/goals-table.tsx:161
 #: components/recurring-transactions/recurring-transactions-table.tsx:201
+#: components/statistics/statistics-table.tsx:164
 #: components/transactions/transactions-table.tsx:148
 msgid "bdcMGy"
 msgstr "Open menu"
@@ -773,9 +774,9 @@ msgstr "Description"
 #: components/categories/category-filters.tsx:87
 #: components/recurring-transactions/recurring-transactions-filters.tsx:151
 #: components/recurring-transactions/recurring-transactions-table.tsx:112
-#: components/statistics/statistics-table.tsx:71
+#: components/statistics/statistics-table.tsx:109
 #: components/transactions/export-button.tsx:33
-#: components/transactions/transaction-filters.tsx:314
+#: components/transactions/transaction-filters.tsx:355
 #: components/transactions/transactions-table.tsx:86
 msgid "+U6ozc"
 msgstr "Type"
@@ -787,11 +788,11 @@ msgstr "Type"
 #: components/recurring-transactions/recurring-transactions-filters.tsx:157
 #: components/recurring-transactions/recurring-transactions-filters.tsx:176
 #: components/recurring-transactions/recurring-transactions-table.tsx:142
-#: components/statistics/statistics-table.tsx:100
+#: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
 #: components/transactions/transaction-dialog.tsx:172
-#: components/transactions/transaction-filters.tsx:320
-#: components/transactions/transaction-filters.tsx:339
+#: components/transactions/transaction-filters.tsx:361
+#: components/transactions/transaction-filters.tsx:380
 #: components/transactions/transactions-table.tsx:111
 msgid "gJkHZk"
 msgstr "Income"
@@ -803,11 +804,11 @@ msgstr "Income"
 #: components/recurring-transactions/recurring-transactions-filters.tsx:158
 #: components/recurring-transactions/recurring-transactions-filters.tsx:183
 #: components/recurring-transactions/recurring-transactions-table.tsx:143
-#: components/statistics/statistics-table.tsx:100
+#: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
 #: components/transactions/transaction-dialog.tsx:173
-#: components/transactions/transaction-filters.tsx:321
-#: components/transactions/transaction-filters.tsx:346
+#: components/transactions/transaction-filters.tsx:362
+#: components/transactions/transaction-filters.tsx:387
 #: components/transactions/transactions-table.tsx:112
 msgid "URe+qA"
 msgstr "Expense"
@@ -843,7 +844,7 @@ msgstr "Search categories..."
 
 #: components/categories/category-filters.tsx:90
 #: components/recurring-transactions/recurring-transactions-filters.tsx:155
-#: components/transactions/transaction-filters.tsx:318
+#: components/transactions/transaction-filters.tsx:359
 msgid "UjTL+F"
 msgstr "All Types"
 
@@ -1015,14 +1016,14 @@ msgid "GMkXVd"
 msgstr "Recent Transactions"
 
 #: components/home/recent-transactions.tsx:43
-#: components/statistics/statistics-table.tsx:57
+#: components/statistics/statistics-table.tsx:95
 #: components/transactions/export-button.tsx:57
 #: components/transactions/transactions-table.tsx:71
 msgid "LER0RZ"
 msgstr "No transactions found"
 
 #: components/home/recent-transactions.tsx:45
-#: components/statistics/statistics-table.tsx:60
+#: components/statistics/statistics-table.tsx:98
 #: components/transactions/transactions-table.tsx:74
 msgid "GMBC7V"
 msgstr "You haven't created any transactions yet."
@@ -1501,19 +1502,19 @@ msgid "BBb4xb"
 msgstr "Two-factor authentication is now disabled."
 
 #: components/statistics/statistics-filters.tsx:164
-#: components/transactions/transaction-filters.tsx:219
+#: components/transactions/transaction-filters.tsx:260
 msgid "KAX9q+"
 msgstr "Select Date Range"
 
 #: components/statistics/statistics-filters.tsx:172
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:227
+#: components/transactions/transaction-filters.tsx:268
 msgid "dM+p3/"
 msgstr "From"
 
 #: components/statistics/statistics-filters.tsx:191
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:246
+#: components/transactions/transaction-filters.tsx:287
 msgid "9j3hXO"
 msgstr "To"
 
@@ -1533,18 +1534,22 @@ msgstr "Total Expense"
 msgid "cX8/D7"
 msgstr "Total number of transactions"
 
-#: components/statistics/statistics-table.tsx:61
+#: components/statistics/statistics-table.tsx:99
 #: components/transactions/transactions-table.tsx:75
 msgid "Cl5VLx"
 msgstr "No transactions found matching your filters."
 
-#: components/statistics/statistics-table.tsx:72
+#: components/statistics/statistics-table.tsx:110
 msgid "gsAs8V"
 msgstr "Transaction Count"
 
-#: components/statistics/statistics-table.tsx:73
+#: components/statistics/statistics-table.tsx:111
 msgid "CDTMW3"
 msgstr "Total Amount"
+
+#: components/statistics/statistics-table.tsx:173
+msgid "N4ReBT"
+msgstr "View Details"
 
 #: components/transactions/delete-transaction-dialog.tsx:53
 msgid "nPfy7y"
@@ -1596,7 +1601,7 @@ msgstr "Add your income or expense to track your personal finances."
 msgid "9WG2aE"
 msgstr "Enter a description for the transaction..."
 
-#: components/transactions/transaction-filters.tsx:158
+#: components/transactions/transaction-filters.tsx:199
 msgid "gD5509"
 msgstr "Search transactions..."
 

@@ -262,7 +262,15 @@ export function StatisticsFilters() {
 
       <StatisticsSummary filteredTransactions={filteredTransactions} />
 
-      <StatisticsTable filteredTransactions={filteredTransactions} />
+      <StatisticsTable
+        filteredTransactions={filteredTransactions}
+        filterStates={{
+          selectedDate,
+          dateRange,
+          filterMonth,
+          filterYear,
+        }}
+      />
     </>
   )
 }

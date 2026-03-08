@@ -1,8 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
+import { parseAsIsoDateTime, parseAsString, useQueryState } from "nuqs"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -46,23 +47,58 @@ export function TransactionFilters({
 }: TransactionFiltersProps) {
   const { transactions } = useTransactions()
   const t = useExtracted()
-  const [searchTerm, setSearchTerm] = useState<string>("")
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
-  const [dateRange, setDateRange] = useState<{
+  const [searchTerm, setSearchTerm] = useQueryState(
+    "search",
+    parseAsString.withDefault("")
+  )
+  const [selectedDateIso, setSelectedDateIso] = useQueryState(
+    "date",
+    parseAsIsoDateTime
+  )
+  const selectedDate = selectedDateIso || undefined
+
+  const [dateRangeFromIso, setDateRangeFromIso] = useQueryState(
+    "from",
+    parseAsIsoDateTime
+  )
+  const [dateRangeToIso, setDateRangeToIso] = useQueryState(
+    "to",
+    parseAsIsoDateTime
+  )
+  const dateRange = useMemo(
+    () => ({
+      from: dateRangeFromIso || undefined,
+      to: dateRangeToIso || undefined,
+    }),
+    [dateRangeFromIso, dateRangeToIso]
+  )
+  const setDateRange = (range: {
     from: Date | undefined
     to: Date | undefined
-  }>({
-    from: undefined,
-    to: undefined,
-  })
-  const [filterMonth, setFilterMonth] = useState<string>("all")
-  const [filterYear, setFilterYear] = useState<string>("all")
-  const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
-    "all"
+  }) => {
+    setDateRangeFromIso(range.from || null)
+    setDateRangeToIso(range.to || null)
+  }
+
+  const [filterMonth, setFilterMonth] = useQueryState(
+    "month",
+    parseAsString.withDefault("all")
   )
-  const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")
+  const [filterYear, setFilterYear] = useQueryState(
+    "year",
+    parseAsString.withDefault("all")
+  )
+  const [filterTypeRaw, setFilterType] = useQueryState(
+    "type",
+    parseAsString.withDefault("all")
+  )
+  const filterType = filterTypeRaw as "all" | "income" | "expense"
+  const [filterCategoryKey, setFilterCategoryKey] = useQueryState(
+    "category",
+    parseAsString.withDefault("all")
+  )
   const formatDate = useFormatDate()
   const { getCategoriesByType } = useCategory()
 
@@ -80,20 +116,22 @@ export function TransactionFilters({
     filterCategoryKey !== "all"
 
   const handleResetFilters = () => {
-    setSearchTerm("")
-    setSelectedDate(undefined)
-    setDateRange({ from: undefined, to: undefined })
-    setFilterMonth("all")
-    setFilterYear("all")
-    setFilterType("all")
-    setFilterCategoryKey("all")
+    setSearchTerm(null)
+    setSelectedDateIso(null)
+    setDateRangeFromIso(null)
+    setDateRangeToIso(null)
+    setFilterMonth(null)
+    setFilterYear(null)
+    setFilterType(null)
+    setFilterCategoryKey(null)
   }
 
   const handleDateChange = (date: Date | undefined) => {
-    setSelectedDate(date)
-    setDateRange({ from: undefined, to: undefined })
-    setFilterMonth("all")
-    setFilterYear("all")
+    setSelectedDateIso(date || null)
+    setDateRangeFromIso(null)
+    setDateRangeToIso(null)
+    setFilterMonth(null)
+    setFilterYear(null)
     setIsDatePickerOpen(false)
   }
 
@@ -101,26 +139,29 @@ export function TransactionFilters({
     from: Date | undefined
     to: Date | undefined
   }) => {
-    setDateRange(range)
-    setSelectedDate(undefined)
-    setFilterMonth("all")
-    setFilterYear("all")
+    setDateRangeFromIso(range.from || null)
+    setDateRangeToIso(range.to || null)
+    setSelectedDateIso(null)
+    setFilterMonth(null)
+    setFilterYear(null)
     setIsDateRangeOpen(false)
   }
 
   const handleMonthChange = (month: string) => {
     setFilterMonth(month)
     if (month !== "all") {
-      setSelectedDate(undefined)
-      setDateRange({ from: undefined, to: undefined })
+      setSelectedDateIso(null)
+      setDateRangeFromIso(null)
+      setDateRangeToIso(null)
     }
   }
 
   const handleYearChange = (year: string) => {
     setFilterYear(year)
     if (year !== "all") {
-      setSelectedDate(undefined)
-      setDateRange({ from: undefined, to: undefined })
+      setSelectedDateIso(null)
+      setDateRangeFromIso(null)
+      setDateRangeToIso(null)
     }
   }
 
@@ -156,14 +197,14 @@ export function TransactionFilters({
               </InputGroupAddon>
               <InputGroupInput
                 placeholder={t("Search transactions...")}
-                value={searchTerm}
+                value={searchTerm || ""}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               {searchTerm && (
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
-                    onClick={() => setSearchTerm("")}
+                    onClick={() => setSearchTerm(null)}
                   >
                     <XIcon />
                   </InputGroupButton>
@@ -232,13 +273,13 @@ export function TransactionFilters({
                       defaultMonth={dateRange.from || new Date()}
                       captionLayout="dropdown"
                       onSelect={(date) => {
-                        setDateRange((prev) => ({
+                        setDateRange({
                           from: date,
                           to:
-                            prev.to && date && date > prev.to
+                            dateRange.to && date && date > dateRange.to
                               ? undefined
-                              : prev.to,
-                        }))
+                              : dateRange.to,
+                        })
                       }}
                     />
                   </div>
