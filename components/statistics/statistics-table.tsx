@@ -170,7 +170,7 @@ export function StatisticsTable({
                               href={getTransactionsHref(stat)}
                               className="cursor-pointer"
                             >
-                              {t("View Details")}
+                              {t("View")}
                             </Link>
                           </DropdownMenuItem>
                         </DropdownMenuContent>

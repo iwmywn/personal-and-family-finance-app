@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { MoreVerticalIcon, TargetIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 
@@ -162,6 +163,14 @@ export function GoalsTable({ filteredGoals }: GoalsTableProps) {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/transactions?from=${goal.startDate.toISOString()}&to=${goal.endDate.toISOString()}&category=${goal.categoryKey}`}
+                                className="cursor-pointer"
+                              >
+                                {t("View")}
+                              </Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
                               onClick={() => {

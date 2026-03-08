@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { MoreVerticalIcon, PiggyBankIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 
@@ -173,6 +174,14 @@ export function BudgetsTable({ filteredBudgets }: BudgetsTableProps) {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/transactions?from=${budget.startDate.toISOString()}&to=${budget.endDate.toISOString()}&category=${budget.categoryKey}`}
+                                className="cursor-pointer"
+                              >
+                                {t("View")}
+                              </Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
                               onClick={() => {

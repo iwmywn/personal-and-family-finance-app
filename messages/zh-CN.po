@@ -468,7 +468,7 @@ msgid "55hdQy"
 msgstr "货币"
 
 #: components/budgets/budget-dialog.tsx:186
-#: components/budgets/budgets-table.tsx:91
+#: components/budgets/budgets-table.tsx:92
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:260
 #: components/recurring-transactions/recurring-transactions-table.tsx:114
 #: components/transactions/export-button.tsx:35
@@ -478,9 +478,9 @@ msgid "/0TOL5"
 msgstr "金额"
 
 #: components/budgets/budget-dialog.tsx:206
-#: components/budgets/budgets-table.tsx:88
+#: components/budgets/budgets-table.tsx:89
 #: components/goals/goal-dialog.tsx:229
-#: components/goals/goals-table.tsx:87
+#: components/goals/goals-table.tsx:88
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:379
 #: components/recurring-transactions/recurring-transactions-table.tsx:109
 msgid "QirE3M"
@@ -498,9 +498,9 @@ msgid "ftg7GK"
 msgstr "选择日期"
 
 #: components/budgets/budget-dialog.tsx:260
-#: components/budgets/budgets-table.tsx:89
+#: components/budgets/budgets-table.tsx:90
 #: components/goals/goal-dialog.tsx:283
-#: components/goals/goals-table.tsx:88
+#: components/goals/goals-table.tsx:89
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:433
 #: components/recurring-transactions/recurring-transactions-table.tsx:110
 msgid "T4GOiX"
@@ -578,10 +578,10 @@ msgid "5JGC4V"
 msgstr "所有年份"
 
 #: components/budgets/budget-filters.tsx:125
-#: components/budgets/budgets-table.tsx:90
+#: components/budgets/budgets-table.tsx:91
 #: components/category-form-select.tsx:49
 #: components/goals/goal-filters.tsx:159
-#: components/goals/goals-table.tsx:90
+#: components/goals/goals-table.tsx:91
 #: components/recurring-transactions/recurring-transactions-filters.tsx:170
 #: components/recurring-transactions/recurring-transactions-table.tsx:113
 #: components/statistics/statistics-table.tsx:108
@@ -599,9 +599,9 @@ msgid "1X6HtI"
 msgstr "所有分类"
 
 #: components/budgets/budget-filters.tsx:147
-#: components/budgets/budgets-table.tsx:95
+#: components/budgets/budgets-table.tsx:96
 #: components/goals/goal-filters.tsx:181
-#: components/goals/goals-table.tsx:94
+#: components/goals/goals-table.tsx:95
 msgid "sIMS7i"
 msgstr "进度"
 
@@ -628,9 +628,9 @@ msgid "DSmOlH"
 msgstr "超出 (≥ 100%)"
 
 #: components/budgets/budget-filters.tsx:172
-#: components/budgets/budgets-table.tsx:94
+#: components/budgets/budgets-table.tsx:95
 #: components/goals/goal-filters.tsx:204
-#: components/goals/goals-table.tsx:93
+#: components/goals/goals-table.tsx:94
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:491
 #: components/recurring-transactions/recurring-transactions-filters.tsx:202
 #: components/recurring-transactions/recurring-transactions-table.tsx:116
@@ -644,16 +644,16 @@ msgid "tADQQm"
 msgstr "所有状态"
 
 #: components/budgets/budget-filters.tsx:178
-#: components/budgets/budgets-table.tsx:144
+#: components/budgets/budgets-table.tsx:145
 #: components/goals/goal-filters.tsx:210
-#: components/goals/goals-table.tsx:133
+#: components/goals/goals-table.tsx:134
 msgid "RahCRH"
 msgstr "已过期"
 
 #: components/budgets/budget-filters.tsx:179
-#: components/budgets/budgets-table.tsx:146
+#: components/budgets/budgets-table.tsx:147
 #: components/goals/goal-filters.tsx:211
-#: components/goals/goals-table.tsx:135
+#: components/goals/goals-table.tsx:136
 #: components/recurring-transactions/recurring-transaction-dialog.tsx:502
 #: components/recurring-transactions/recurring-transactions-filters.tsx:208
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
@@ -661,9 +661,9 @@ msgid "3a5wL8"
 msgstr "活跃"
 
 #: components/budgets/budget-filters.tsx:180
-#: components/budgets/budgets-table.tsx:147
+#: components/budgets/budgets-table.tsx:148
 #: components/goals/goal-filters.tsx:212
-#: components/goals/goals-table.tsx:136
+#: components/goals/goals-table.tsx:137
 msgid "6/aEFZ"
 msgstr "即将到来"
 
@@ -680,50 +680,56 @@ msgstr "重置"
 msgid "UxaXqH"
 msgstr "设置和管理您的支出分类预算。"
 
-#: components/budgets/budgets-table.tsx:75
+#: components/budgets/budgets-table.tsx:76
 msgid "CgOoDa"
 msgstr "未找到预算"
 
-#: components/budgets/budgets-table.tsx:78
+#: components/budgets/budgets-table.tsx:79
 msgid "PTvqaL"
 msgstr "您尚未创建任何预算。"
 
-#: components/budgets/budgets-table.tsx:79
+#: components/budgets/budgets-table.tsx:80
 msgid "PZ97Zd"
 msgstr "未找到符合筛选条件的预算。"
 
-#: components/budgets/budgets-table.tsx:92
+#: components/budgets/budgets-table.tsx:93
 msgid "111qQK"
 msgstr "已支出"
 
-#: components/budgets/budgets-table.tsx:93
+#: components/budgets/budgets-table.tsx:94
 #: components/statistics/statistics-summary.tsx:70
 msgid "H5+NAX"
 msgstr "余额"
 
-#: components/budgets/budgets-table.tsx:172
+#: components/budgets/budgets-table.tsx:173
 #: components/categories/categories-table.tsx:109
-#: components/goals/goals-table.tsx:161
+#: components/goals/goals-table.tsx:162
 #: components/recurring-transactions/recurring-transactions-table.tsx:201
 #: components/statistics/statistics-table.tsx:164
 #: components/transactions/transactions-table.tsx:148
 msgid "bdcMGy"
 msgstr "打开菜单"
 
-#: components/budgets/budgets-table.tsx:183
+#: components/budgets/budgets-table.tsx:182
+#: components/goals/goals-table.tsx:171
+#: components/statistics/statistics-table.tsx:173
+msgid "FgydNe"
+msgstr "查看"
+
+#: components/budgets/budgets-table.tsx:192
 #: components/categories/categories-table.tsx:120
-#: components/goals/goals-table.tsx:172
+#: components/goals/goals-table.tsx:181
 #: components/recurring-transactions/recurring-transactions-table.tsx:212
 #: components/transactions/transactions-table.tsx:159
 msgid "wEQDC6"
 msgstr "编辑"
 
-#: components/budgets/budgets-table.tsx:193
+#: components/budgets/budgets-table.tsx:202
 #: components/budgets/delete-budget-dialog.tsx:63
 #: components/categories/categories-table.tsx:130
 #: components/categories/delete-category-dialog.tsx:63
 #: components/goals/delete-goal-dialog.tsx:63
-#: components/goals/goals-table.tsx:182
+#: components/goals/goals-table.tsx:191
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:65
 #: components/recurring-transactions/recurring-transactions-table.tsx:222
 #: components/transactions/delete-transaction-dialog.tsx:63
@@ -893,7 +899,7 @@ msgid "dzmlX3"
 msgstr "创建一个新的财务目标。"
 
 #: components/goals/goal-dialog.tsx:188
-#: components/goals/goals-table.tsx:89
+#: components/goals/goals-table.tsx:90
 msgid "gQxxlw"
 msgstr "目标名称"
 
@@ -902,7 +908,7 @@ msgid "rH4tSt"
 msgstr "例如：为假期存钱"
 
 #: components/goals/goal-dialog.tsx:208
-#: components/goals/goals-table.tsx:91
+#: components/goals/goals-table.tsx:92
 msgid "MPOzul"
 msgstr "目标金额"
 
@@ -926,19 +932,19 @@ msgstr "警告 (< 75%)"
 msgid "6rbe1E"
 msgstr "设置并跟踪您的财务目标。"
 
-#: components/goals/goals-table.tsx:74
+#: components/goals/goals-table.tsx:75
 msgid "uuJSCu"
 msgstr "未找到目标"
 
-#: components/goals/goals-table.tsx:77
+#: components/goals/goals-table.tsx:78
 msgid "Y2QNeU"
 msgstr "您尚未创建任何目标。"
 
-#: components/goals/goals-table.tsx:78
+#: components/goals/goals-table.tsx:79
 msgid "RB30ZK"
 msgstr "未找到符合筛选条件的目标。"
 
-#: components/goals/goals-table.tsx:92
+#: components/goals/goals-table.tsx:93
 msgid "GkiQMs"
 msgstr "已累积"
 
@@ -1546,10 +1552,6 @@ msgstr "交易计数"
 #: components/statistics/statistics-table.tsx:111
 msgid "CDTMW3"
 msgstr "总金额"
-
-#: components/statistics/statistics-table.tsx:173
-msgid "N4ReBT"
-msgstr "查看详情"
 
 #: components/transactions/delete-transaction-dialog.tsx:53
 msgid "nPfy7y"
