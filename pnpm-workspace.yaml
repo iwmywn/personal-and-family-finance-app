@@ -1,9 +1,9 @@
-onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@prisma/engines'
-  - '@swc/core'
-  - esbuild
-  - mongodb-memory-server
-  - prisma
-  - sharp
-  - unrs-resolver
+allowBuilds:
+  '@parcel/watcher': true
+  '@prisma/engines': true
+  '@swc/core': true
+  esbuild: true
+  mongodb-memory-server: true
+  prisma: true
+  sharp: true
+  unrs-resolver: true
