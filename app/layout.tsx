@@ -10,6 +10,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { nunito } from "@/app/fonts"
 import { siteConfig } from "@/app/pffa.config"
 import { Toaster } from "@/components/ui/sonner"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { ProgressProvider } from "@/components/layout/progress-provider"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
@@ -91,24 +92,26 @@ async function AppLayout({
       className={nunito.className}
     >
       <body>
-        <NuqsAdapter>
-          <ThemeProvider>
+        <ThemeProvider>
+          <NextIntlClientProvider>
             <ProgressProvider>
-              <Suspense
-                fallback={
-                  <div className="center h-screen">
-                    <Logo isLoading />
-                  </div>
-                }
-              >
-                <NextIntlClientProvider>
-                  <Toaster richColors closeButton />
-                  {children}
-                </NextIntlClientProvider>
-              </Suspense>
+              <NuqsAdapter>
+                <TooltipProvider>
+                  <Suspense
+                    fallback={
+                      <div className="center h-screen">
+                        <Logo isLoading />
+                      </div>
+                    }
+                  >
+                    <Toaster richColors closeButton />
+                    {children}
+                  </Suspense>
+                </TooltipProvider>
+              </NuqsAdapter>
             </ProgressProvider>
-          </ThemeProvider>
-        </NuqsAdapter>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

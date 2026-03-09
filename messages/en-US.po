@@ -368,7 +368,7 @@ msgstr "Transactions"
 msgid "/WMCDd"
 msgstr "Something went wrong!"
 
-#: app/layout.tsx:23
+#: app/layout.tsx:24
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Personal & Family Finance App"

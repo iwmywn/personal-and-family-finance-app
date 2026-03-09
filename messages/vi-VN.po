@@ -368,7 +368,7 @@ msgstr "Giao dịch"
 msgid "/WMCDd"
 msgstr "Đã xảy ra lỗi!"
 
-#: app/layout.tsx:23
+#: app/layout.tsx:24
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
