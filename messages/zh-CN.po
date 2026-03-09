@@ -368,7 +368,7 @@ msgstr "交易"
 msgid "/WMCDd"
 msgstr "出了点问题！"
 
-#: app/layout.tsx:24
+#: app/layout.tsx:23
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "个人和家庭财务应用"
@@ -1074,27 +1074,27 @@ msgstr "平衡"
 msgid "qTQZsz"
 msgstr "与收入相比"
 
-#: components/layout/page-data-provider.tsx:72
+#: components/layout/page-data-provider.tsx:71
 msgid "EjH+J3"
 msgstr "请稍后再试。"
 
-#: components/layout/page-data-provider.tsx:80
+#: components/layout/page-data-provider.tsx:79
 msgid "iKuJb1"
 msgstr "无法获取交易数据"
 
-#: components/layout/page-data-provider.tsx:87
+#: components/layout/page-data-provider.tsx:86
 msgid "pvUtk6"
 msgstr "无法获取分类数据"
 
-#: components/layout/page-data-provider.tsx:94
+#: components/layout/page-data-provider.tsx:93
 msgid "iriWHm"
 msgstr "无法获取预算数据"
 
-#: components/layout/page-data-provider.tsx:100
+#: components/layout/page-data-provider.tsx:99
 msgid "V9Jq49"
 msgstr "无法获取目标数据"
 
-#: components/layout/page-data-provider.tsx:105
+#: components/layout/page-data-provider.tsx:104
 msgid "3aju6V"
 msgstr "无法获取定期交易数据"
 

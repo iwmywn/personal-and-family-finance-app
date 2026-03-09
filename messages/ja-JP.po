@@ -368,7 +368,7 @@ msgstr "取引"
 msgid "/WMCDd"
 msgstr "問題が発生しました！"
 
-#: app/layout.tsx:24
+#: app/layout.tsx:23
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "個人・家族向け財務アプリ"
@@ -1074,27 +1074,27 @@ msgstr "バランス"
 msgid "qTQZsz"
 msgstr "収入と比較"
 
-#: components/layout/page-data-provider.tsx:72
+#: components/layout/page-data-provider.tsx:71
 msgid "EjH+J3"
 msgstr "後でもう一度お試しください。"
 
-#: components/layout/page-data-provider.tsx:80
+#: components/layout/page-data-provider.tsx:79
 msgid "iKuJb1"
 msgstr "取引データを取得できません"
 
-#: components/layout/page-data-provider.tsx:87
+#: components/layout/page-data-provider.tsx:86
 msgid "pvUtk6"
 msgstr "カテゴリデータを取得できません"
 
-#: components/layout/page-data-provider.tsx:94
+#: components/layout/page-data-provider.tsx:93
 msgid "iriWHm"
 msgstr "予算データを取得できません"
 
-#: components/layout/page-data-provider.tsx:100
+#: components/layout/page-data-provider.tsx:99
 msgid "V9Jq49"
 msgstr "目標データを取得できません"
 
-#: components/layout/page-data-provider.tsx:105
+#: components/layout/page-data-provider.tsx:104
 msgid "3aju6V"
 msgstr "定期取引データを取得できません"
 

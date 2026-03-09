@@ -1,6 +1,5 @@
 import "./globals.css"
 
-import type React from "react"
 import { Suspense } from "react"
 import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"

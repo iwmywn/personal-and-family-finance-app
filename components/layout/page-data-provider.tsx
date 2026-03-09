@@ -1,4 +1,3 @@
-import * as React from "react"
 import { redirect } from "next/navigation"
 import { GhostIcon } from "lucide-react"
 import { getExtracted } from "next-intl/server"

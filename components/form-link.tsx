@@ -1,4 +1,4 @@
-import { type AnchorHTMLAttributes, type ReactNode } from "react"
+import { type AnchorHTMLAttributes } from "react"
 import Link, { type LinkProps } from "next/link"
 
 import { cn } from "@/lib/utils"
@@ -8,7 +8,7 @@ type FormLinkProps = Omit<
   keyof LinkProps
 > &
   LinkProps & {
-    children: ReactNode
+    children: React.ReactNode
     className?: string
   }
 

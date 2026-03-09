@@ -368,7 +368,7 @@ msgstr "Transactions"
 msgid "/WMCDd"
 msgstr "Something went wrong!"
 
-#: app/layout.tsx:24
+#: app/layout.tsx:23
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Personal & Family Finance App"
@@ -1074,27 +1074,27 @@ msgstr "Balanced"
 msgid "qTQZsz"
 msgstr "compared to income"
 
-#: components/layout/page-data-provider.tsx:72
+#: components/layout/page-data-provider.tsx:71
 msgid "EjH+J3"
 msgstr "Please try again later."
 
-#: components/layout/page-data-provider.tsx:80
+#: components/layout/page-data-provider.tsx:79
 msgid "iKuJb1"
 msgstr "CANNOT FETCH TRANSACTIONS DATA"
 
-#: components/layout/page-data-provider.tsx:87
+#: components/layout/page-data-provider.tsx:86
 msgid "pvUtk6"
 msgstr "CANNOT FETCH CATEGORIES DATA"
 
-#: components/layout/page-data-provider.tsx:94
+#: components/layout/page-data-provider.tsx:93
 msgid "iriWHm"
 msgstr "CANNOT FETCH BUDGETS DATA"
 
-#: components/layout/page-data-provider.tsx:100
+#: components/layout/page-data-provider.tsx:99
 msgid "V9Jq49"
 msgstr "CANNOT FETCH GOALS DATA"
 
-#: components/layout/page-data-provider.tsx:105
+#: components/layout/page-data-provider.tsx:104
 msgid "3aju6V"
 msgstr "CANNOT FETCH RECURRING TRANSACTIONS DATA"
 

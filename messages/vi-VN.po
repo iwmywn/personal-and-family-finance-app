@@ -368,7 +368,7 @@ msgstr "Giao dịch"
 msgid "/WMCDd"
 msgstr "Đã xảy ra lỗi!"
 
-#: app/layout.tsx:24
+#: app/layout.tsx:23
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
@@ -1074,27 +1074,27 @@ msgstr "Cân bằng"
 msgid "qTQZsz"
 msgstr "so với thu nhập"
 
-#: components/layout/page-data-provider.tsx:72
+#: components/layout/page-data-provider.tsx:71
 msgid "EjH+J3"
 msgstr "Vui lòng thử lại sau."
 
-#: components/layout/page-data-provider.tsx:80
+#: components/layout/page-data-provider.tsx:79
 msgid "iKuJb1"
 msgstr "KHÔNG THỂ TẢI DỮ LIỆU GIAO DỊCH"
 
-#: components/layout/page-data-provider.tsx:87
+#: components/layout/page-data-provider.tsx:86
 msgid "pvUtk6"
 msgstr "KHÔNG THỂ TẢI DỮ LIỆU DANH MỤC"
 
-#: components/layout/page-data-provider.tsx:94
+#: components/layout/page-data-provider.tsx:93
 msgid "iriWHm"
 msgstr "KHÔNG THỂ TẢI DỮ LIỆU NGÂN SÁCH"
 
-#: components/layout/page-data-provider.tsx:100
+#: components/layout/page-data-provider.tsx:99
 msgid "V9Jq49"
 msgstr "KHÔNG THỂ TẢI DỮ LIỆU MỤC TIÊU"
 
-#: components/layout/page-data-provider.tsx:105
+#: components/layout/page-data-provider.tsx:104
 msgid "3aju6V"
 msgstr "KHÔNG THỂ TẢI DỮ LIỆU GIAO DỊCH ĐỊNH KỲ"
 

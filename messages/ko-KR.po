@@ -368,7 +368,7 @@ msgstr "거래"
 msgid "/WMCDd"
 msgstr "문제가 발생했습니다!"
 
-#: app/layout.tsx:24
+#: app/layout.tsx:23
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "개인 및 가족 재정 앱"
@@ -1074,27 +1074,27 @@ msgstr "균형"
 msgid "qTQZsz"
 msgstr "수입 대비"
 
-#: components/layout/page-data-provider.tsx:72
+#: components/layout/page-data-provider.tsx:71
 msgid "EjH+J3"
 msgstr "나중에 다시 시도해 주세요."
 
-#: components/layout/page-data-provider.tsx:80
+#: components/layout/page-data-provider.tsx:79
 msgid "iKuJb1"
 msgstr "거래 데이터를 가져올 수 없습니다"
 
-#: components/layout/page-data-provider.tsx:87
+#: components/layout/page-data-provider.tsx:86
 msgid "pvUtk6"
 msgstr "카테고리 데이터를 가져올 수 없습니다"
 
-#: components/layout/page-data-provider.tsx:94
+#: components/layout/page-data-provider.tsx:93
 msgid "iriWHm"
 msgstr "예산 데이터를 가져올 수 없습니다"
 
-#: components/layout/page-data-provider.tsx:100
+#: components/layout/page-data-provider.tsx:99
 msgid "V9Jq49"
 msgstr "목표 데이터를 가져올 수 없습니다"
 
-#: components/layout/page-data-provider.tsx:105
+#: components/layout/page-data-provider.tsx:104
 msgid "3aju6V"
 msgstr "반복 거래 데이터를 가져올 수 없습니다"
 
