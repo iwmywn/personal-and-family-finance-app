@@ -1628,8 +1628,8 @@ msgid "oKluKH"
 msgstr "매출, 서비스, 프리랜서, 단기 계약 등"
 
 #: hooks/use-category.ts:33
-msgid "igDrI+"
-msgstr "투자 및 수동 소득"
+msgid "KwI8cO"
+msgstr "투자 및 불로소득"
 
 #: hooks/use-category.ts:34
 msgid "dpjEgD"

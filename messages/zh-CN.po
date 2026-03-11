@@ -1628,7 +1628,7 @@ msgid "oKluKH"
 msgstr "销售收入、服务、自由职业、短期合同等。"
 
 #: hooks/use-category.ts:33
-msgid "igDrI+"
+msgid "KwI8cO"
 msgstr "投资与被动收入"
 
 #: hooks/use-category.ts:34

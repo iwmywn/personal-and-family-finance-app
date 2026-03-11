@@ -30,7 +30,7 @@ export function useCategory() {
       ),
     },
     investment_passive: {
-      label: t("Investment & Passive Income"),
+      label: t("Investment & Passive"),
       description: t(
         "Savings interest, dividends, bonds interest, rental, royalties, etc."
       ),

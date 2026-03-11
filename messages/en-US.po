@@ -1628,8 +1628,8 @@ msgid "oKluKH"
 msgstr "Sales revenue, services, freelance, short-term contracts, etc."
 
 #: hooks/use-category.ts:33
-msgid "igDrI+"
-msgstr "Investment & Passive Income"
+msgid "KwI8cO"
+msgstr "Investment & Passive"
 
 #: hooks/use-category.ts:34
 msgid "dpjEgD"

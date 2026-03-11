@@ -1628,7 +1628,7 @@ msgid "oKluKH"
 msgstr "売上、サービス、フリーランス、短期契約など。"
 
 #: hooks/use-category.ts:33
-msgid "igDrI+"
+msgid "KwI8cO"
 msgstr "投資・不労所得"
 
 #: hooks/use-category.ts:34

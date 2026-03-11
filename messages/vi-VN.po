@@ -1628,7 +1628,7 @@ msgid "oKluKH"
 msgstr "Doanh thu bán hàng, dịch vụ, làm việc tự do, hợp đồng ngắn hạn, v.v."
 
 #: hooks/use-category.ts:33
-msgid "igDrI+"
+msgid "KwI8cO"
 msgstr "Đầu tư & Thu nhập thụ động"
 
 #: hooks/use-category.ts:34
