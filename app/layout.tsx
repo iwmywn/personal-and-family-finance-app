@@ -13,7 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { ProgressProvider } from "@/components/layout/progress-provider"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
-import { env } from "@/env/client.mjs"
+import { clientEnv } from "@/env/client.mjs"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale,
-      url: env.NEXT_PUBLIC_URL,
+      url: clientEnv.NEXT_PUBLIC_URL,
       title: name,
       description,
       siteName: name,

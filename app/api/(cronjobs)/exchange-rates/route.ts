@@ -3,7 +3,7 @@
 import { type NextRequest } from "next/server"
 
 import { toDecimal128 } from "@/actions/utils"
-import { env } from "@/env/server.mjs"
+import { serverEnv } from "@/env/server.mjs"
 import { getExchangeRatesCollection } from "@/lib/collections"
 import { normalizeToUTCMidnight } from "@/lib/utils"
 
@@ -35,7 +35,7 @@ type CurrencyAPIResponse = {
 // [See official docs](https://vercel.com/docs/cron-jobs#how-cron-jobs-work)
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization")
-  if (authHeader !== `Bearer ${env.CRON_SECRET}`) {
+  if (authHeader !== `Bearer ${serverEnv.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 })
   }
 
@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
       const dateStr = startDateUTC.toISOString().split("T")[0] // YYYY-MM-DD
 
       try {
-        const apiUrl = `https://api.currencyapi.com/v3/historical?apikey=${env.CURRENCY_API_SECRET}&currencies=CNY%2CVND%2CJPY%2CKRW&date=${dateStr}`
+        const apiUrl = `https://api.currencyapi.com/v3/historical?apikey=${serverEnv.CURRENCY_API_SECRET}&currencies=CNY%2CVND%2CJPY%2CKRW&date=${dateStr}`
 
         const response = await fetch(apiUrl)
 

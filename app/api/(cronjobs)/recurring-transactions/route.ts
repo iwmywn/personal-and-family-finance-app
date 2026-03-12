@@ -3,7 +3,7 @@
 import { type NextRequest } from "next/server"
 
 import { shouldGenerateToday } from "@/app/api/(cronjobs)/recurring-transactions/utils"
-import { env } from "@/env/server.mjs"
+import { serverEnv } from "@/env/server.mjs"
 import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
@@ -14,7 +14,7 @@ import { localDateToUTCMidnight } from "@/lib/utils"
 // [See official docs](https://vercel.com/docs/cron-jobs#how-cron-jobs-work)
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization")
-  if (authHeader !== `Bearer ${env.CRON_SECRET}`) {
+  if (authHeader !== `Bearer ${serverEnv.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 })
   }
 
