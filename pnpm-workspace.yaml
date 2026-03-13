@@ -1,7 +1,6 @@
 allowBuilds:
   '@parcel/watcher': true
   '@swc/core': true
-  esbuild: true
   mongodb-memory-server: true
   sharp: true
   unrs-resolver: true
