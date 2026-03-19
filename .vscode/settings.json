@@ -8,7 +8,7 @@
   },
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
   "tailwindCSS.classAttributes": ["className", "tw", "class", "cn"],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

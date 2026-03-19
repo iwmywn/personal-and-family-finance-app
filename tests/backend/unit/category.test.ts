@@ -37,6 +37,12 @@ import {
   getTransactionsCollection,
 } from "@/lib/collections"
 
+vi.mock("crypto", () => ({
+  randomBytes: () => ({
+    toString: () => "abcdef12",
+  }),
+}))
+
 describe("Categories", async () => {
   describe("createCustomCategory", () => {
     it("should return error when not authenticated", async () => {
@@ -67,12 +73,6 @@ describe("Categories", async () => {
     it("should return error when duplicate categoryKey exists", async () => {
       await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
-
-      vi.mock("crypto", () => ({
-        randomBytes: () => ({
-          toString: () => "abcdef12",
-        }),
-      }))
 
       const result = await createCustomCategory({
         type: "expense",
