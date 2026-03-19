@@ -387,17 +387,17 @@ msgstr "CAPTCHA 인증"
 
 #: components/auth/signin-form.tsx:51
 #: components/auth/two-factor-form.tsx:44
-#: components/budgets/budget-dialog.tsx:95
+#: components/budgets/budget-dialog.tsx:96
 #: components/categories/category-dialog.tsx:73
-#: components/goals/goal-dialog.tsx:97
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:127
+#: components/goals/goal-dialog.tsx:98
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:128
 #: components/settings/change-name-dialog.tsx:54
 #: components/settings/change-password-dialog.tsx:53
 #: components/settings/change-username-dialog.tsx:54
 #: components/settings/two-factor-manager-dialog.tsx:122
 #: components/settings/two-factor-manager-dialog.tsx:199
 #: components/settings/two-factor-manager-dialog.tsx:274
-#: components/transactions/transaction-dialog.tsx:106
+#: components/transactions/transaction-dialog.tsx:107
 msgid "5GmpFA"
 msgstr "잘못된 데이터입니다!"
 
@@ -442,108 +442,108 @@ msgstr "이 기기에서 30일 동안 2FA 코드를 묻지 않기."
 msgid "q5Xl0M"
 msgstr "확인"
 
-#: components/budgets/budget-dialog.tsx:137
+#: components/budgets/budget-dialog.tsx:138
 msgid "2g82CP"
 msgstr "예산 편집"
 
-#: components/budgets/budget-dialog.tsx:137
+#: components/budgets/budget-dialog.tsx:138
 msgid "zMoeFN"
 msgstr "예산 추가"
 
-#: components/budgets/budget-dialog.tsx:141
+#: components/budgets/budget-dialog.tsx:142
 msgid "zSiCkT"
 msgstr "예산 정보를 업데이트하세요."
 
-#: components/budgets/budget-dialog.tsx:142
+#: components/budgets/budget-dialog.tsx:143
 msgid "PVSBse"
 msgstr "지출을 추적하기 위해 카테고리에 대한 예산을 만드세요."
 
-#: components/budgets/budget-dialog.tsx:155
-#: components/goals/goal-dialog.tsx:156
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:229
-#: components/settings/currency-selector.tsx:48
+#: components/budgets/budget-dialog.tsx:156
+#: components/goals/goal-dialog.tsx:157
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:230
+#: components/settings/currency-selector.tsx:49
 #: components/settings/settings-page.tsx:59
-#: components/transactions/transaction-dialog.tsx:198
+#: components/transactions/transaction-dialog.tsx:199
 msgid "55hdQy"
 msgstr "통화"
 
-#: components/budgets/budget-dialog.tsx:186
+#: components/budgets/budget-dialog.tsx:187
 #: components/budgets/budgets-table.tsx:92
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:260
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:261
 #: components/recurring-transactions/recurring-transactions-table.tsx:114
 #: components/transactions/export-button.tsx:35
-#: components/transactions/transaction-dialog.tsx:229
+#: components/transactions/transaction-dialog.tsx:230
 #: components/transactions/transactions-table.tsx:88
 msgid "/0TOL5"
 msgstr "금액"
 
-#: components/budgets/budget-dialog.tsx:206
+#: components/budgets/budget-dialog.tsx:207
 #: components/budgets/budgets-table.tsx:89
-#: components/goals/goal-dialog.tsx:229
+#: components/goals/goal-dialog.tsx:230
 #: components/goals/goals-table.tsx:88
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:379
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:380
 #: components/recurring-transactions/recurring-transactions-table.tsx:109
 msgid "QirE3M"
 msgstr "시작일"
 
-#: components/budgets/budget-dialog.tsx:224
-#: components/budgets/budget-dialog.tsx:277
-#: components/goals/goal-dialog.tsx:247
-#: components/goals/goal-dialog.tsx:300
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:397
+#: components/budgets/budget-dialog.tsx:225
+#: components/budgets/budget-dialog.tsx:278
+#: components/goals/goal-dialog.tsx:248
+#: components/goals/goal-dialog.tsx:301
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:398
 #: components/statistics/statistics-filters.tsx:125
-#: components/transactions/transaction-dialog.tsx:292
+#: components/transactions/transaction-dialog.tsx:293
 #: components/transactions/transaction-filters.tsx:221
 msgid "ftg7GK"
 msgstr "날짜 선택"
 
-#: components/budgets/budget-dialog.tsx:260
+#: components/budgets/budget-dialog.tsx:261
 #: components/budgets/budgets-table.tsx:90
-#: components/goals/goal-dialog.tsx:283
+#: components/goals/goal-dialog.tsx:284
 #: components/goals/goals-table.tsx:89
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:433
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:434
 #: components/recurring-transactions/recurring-transactions-table.tsx:110
 msgid "T4GOiX"
 msgstr "종료일"
 
-#: components/budgets/budget-dialog.tsx:310
+#: components/budgets/budget-dialog.tsx:311
 #: components/budgets/delete-budget-dialog.tsx:61
 #: components/categories/category-dialog.tsx:187
 #: components/categories/delete-category-dialog.tsx:61
 #: components/goals/delete-goal-dialog.tsx:61
-#: components/goals/goal-dialog.tsx:333
+#: components/goals/goal-dialog.tsx:334
 #: components/layout/secondary-nav.tsx:85
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:63
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:513
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:514
 #: components/settings/change-name-dialog.tsx:110
 #: components/settings/change-password-dialog.tsx:174
 #: components/settings/change-username-dialog.tsx:122
 #: components/transactions/delete-transaction-dialog.tsx:61
-#: components/transactions/transaction-dialog.tsx:324
+#: components/transactions/transaction-dialog.tsx:325
 msgid "47FYwb"
 msgstr "취소"
 
-#: components/budgets/budget-dialog.tsx:313
-#: components/categories/category-dialog.tsx:190
-#: components/goals/goal-dialog.tsx:336
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
-#: components/transactions/transaction-dialog.tsx:327
-msgid "BWpuKl"
-msgstr "업데이트"
-
-#: components/budgets/budget-dialog.tsx:313
+#: components/budgets/budget-dialog.tsx:314
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
 #: components/categories/category-dialog.tsx:190
-#: components/goals/goal-dialog.tsx:336
+#: components/goals/goal-dialog.tsx:337
 #: components/goals/goals-page.tsx:24
 #: components/home/homepage.tsx:30
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:517
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
 #: components/recurring-transactions/recurring-transactions-page.tsx:24
-#: components/transactions/transaction-dialog.tsx:327
+#: components/transactions/transaction-dialog.tsx:328
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "추가"
+
+#: components/budgets/budget-dialog.tsx:314
+#: components/categories/category-dialog.tsx:190
+#: components/goals/goal-dialog.tsx:337
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
+#: components/transactions/transaction-dialog.tsx:328
+msgid "BWpuKl"
+msgstr "업데이트"
 
 #: components/budgets/budget-filters.tsx:84
 #: components/goals/goal-filters.tsx:118
@@ -631,7 +631,7 @@ msgstr "초과 (≥ 100%)"
 #: components/budgets/budgets-table.tsx:95
 #: components/goals/goal-filters.tsx:204
 #: components/goals/goals-table.tsx:94
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:491
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:492
 #: components/recurring-transactions/recurring-transactions-filters.tsx:202
 #: components/recurring-transactions/recurring-transactions-table.tsx:116
 msgid "tzMNF3"
@@ -654,7 +654,7 @@ msgstr "만료됨"
 #: components/budgets/budgets-table.tsx:147
 #: components/goals/goal-filters.tsx:211
 #: components/goals/goals-table.tsx:136
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:502
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:503
 #: components/recurring-transactions/recurring-transactions-filters.tsx:208
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "3a5wL8"
@@ -768,10 +768,10 @@ msgstr "카테고리 이름"
 
 #: components/categories/categories-table.tsx:73
 #: components/categories/category-dialog.tsx:163
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:280
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:281
 #: components/recurring-transactions/recurring-transactions-table.tsx:111
 #: components/transactions/export-button.tsx:36
-#: components/transactions/transaction-dialog.tsx:249
+#: components/transactions/transaction-dialog.tsx:250
 #: components/transactions/transactions-table.tsx:85
 msgid "Q8Qw5B"
 msgstr "설명"
@@ -790,13 +790,13 @@ msgstr "유형"
 #: components/categories/categories-table.tsx:96
 #: components/categories/category-dialog.tsx:132
 #: components/categories/category-filters.tsx:92
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:203
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:204
 #: components/recurring-transactions/recurring-transactions-filters.tsx:157
 #: components/recurring-transactions/recurring-transactions-filters.tsx:176
 #: components/recurring-transactions/recurring-transactions-table.tsx:142
 #: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:172
+#: components/transactions/transaction-dialog.tsx:173
 #: components/transactions/transaction-filters.tsx:361
 #: components/transactions/transaction-filters.tsx:380
 #: components/transactions/transactions-table.tsx:111
@@ -806,13 +806,13 @@ msgstr "수입"
 #: components/categories/categories-table.tsx:97
 #: components/categories/category-dialog.tsx:133
 #: components/categories/category-filters.tsx:93
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:204
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:205
 #: components/recurring-transactions/recurring-transactions-filters.tsx:158
 #: components/recurring-transactions/recurring-transactions-filters.tsx:183
 #: components/recurring-transactions/recurring-transactions-table.tsx:143
 #: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:173
+#: components/transactions/transaction-dialog.tsx:174
 #: components/transactions/transaction-filters.tsx:362
 #: components/transactions/transaction-filters.tsx:387
 #: components/transactions/transactions-table.tsx:112
@@ -840,7 +840,7 @@ msgid "TxCpcX"
 msgstr "예: 급여, 식료품"
 
 #: components/categories/category-dialog.tsx:169
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:286
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:287
 msgid "s0F42g"
 msgstr "설명을 입력하세요..."
 
@@ -882,32 +882,32 @@ msgstr "목표 삭제"
 msgid "EwRebq"
 msgstr "이 목표를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
-#: components/goals/goal-dialog.tsx:139
+#: components/goals/goal-dialog.tsx:140
 msgid "sOXElg"
 msgstr "목표 편집"
 
-#: components/goals/goal-dialog.tsx:139
+#: components/goals/goal-dialog.tsx:140
 msgid "5WuADX"
 msgstr "목표 추가"
 
-#: components/goals/goal-dialog.tsx:142
+#: components/goals/goal-dialog.tsx:143
 msgid "/kQug4"
 msgstr "목표 정보를 업데이트하세요."
 
-#: components/goals/goal-dialog.tsx:143
+#: components/goals/goal-dialog.tsx:144
 msgid "dzmlX3"
 msgstr "새로운 재정 목표를 만드세요."
 
-#: components/goals/goal-dialog.tsx:188
+#: components/goals/goal-dialog.tsx:189
 #: components/goals/goals-table.tsx:90
 msgid "gQxxlw"
 msgstr "목표 이름"
 
-#: components/goals/goal-dialog.tsx:193
+#: components/goals/goal-dialog.tsx:194
 msgid "rH4tSt"
 msgstr "예: 휴가 저축"
 
-#: components/goals/goal-dialog.tsx:208
+#: components/goals/goal-dialog.tsx:209
 #: components/goals/goals-table.tsx:92
 msgid "MPOzul"
 msgstr "목표 금액"
@@ -1132,79 +1132,79 @@ msgstr "반복 거래 삭제"
 msgid "B58bFw"
 msgstr "이 반복 거래를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:186
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:187
 msgid "5nuO2v"
 msgstr "반복 거래 편집"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:187
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:188
 msgid "sYXY5N"
 msgstr "반복 거래 추가"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:191
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:192
 msgid "gKA6Xf"
 msgstr "반복 거래 정보를 업데이트하세요."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:192
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:193
 msgid "adePxB"
 msgstr "반복 거래를 만드세요."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:308
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:309
 #: components/recurring-transactions/recurring-transactions-table.tsx:115
 msgid "vAW30j"
 msgstr "빈도"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:325
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:326
 #: components/recurring-transactions/recurring-transactions-table.tsx:66
 msgid "zxvhnE"
 msgstr "일간"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:326
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:327
 #: components/recurring-transactions/recurring-transactions-table.tsx:68
 msgid "/clOBU"
 msgstr "주간"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:328
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:329
 #: components/recurring-transactions/recurring-transactions-table.tsx:70
 msgid "03X4YH"
 msgstr "격주"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:330
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:331
 #: components/recurring-transactions/recurring-transactions-table.tsx:72
 msgid "wYsv4Z"
 msgstr "월간"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:332
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:333
 #: components/recurring-transactions/recurring-transactions-table.tsx:74
 msgid "b1Ou36"
 msgstr "분기별"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:334
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:335
 #: components/recurring-transactions/recurring-transactions-table.tsx:76
 msgid "dqD39h"
 msgstr "연간"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:335
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:336
 #: components/recurring-transactions/recurring-transactions-table.tsx:78
 msgid "D9n+q2"
 msgstr "무작위"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:350
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:351
 msgid "CpM7W/"
 msgstr "X일마다"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:356
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:357
 msgid "FP2XQQ"
 msgstr "예: 15"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:433
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:434
 msgid "InWqys"
 msgstr "선택사항"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:456
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:457
 msgid "mpcI7I"
 msgstr "종료일 없음"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:503
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:504
 #: components/recurring-transactions/recurring-transactions-filters.tsx:209
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "6Tps09"
@@ -1396,15 +1396,15 @@ msgstr "고유한 사용자 이름을 업데이트하세요."
 msgid "v60thv"
 msgstr "사용자 이름을 입력하세요..."
 
-#: components/settings/currency-selector.tsx:30
+#: components/settings/currency-selector.tsx:31
 msgid "d6wGcQ"
 msgstr "통화 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
-#: components/settings/language-selector.tsx:31
+#: components/settings/language-selector.tsx:32
 msgid "Ax3Nmj"
 msgstr "언어 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
-#: components/settings/language-selector.tsx:50
+#: components/settings/language-selector.tsx:51
 #: components/settings/settings-page.tsx:47
 msgid "y1Z3or"
 msgstr "언어"
@@ -1562,7 +1562,7 @@ msgid "cj6kmp"
 msgstr "이 거래를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
 #: components/transactions/export-button.tsx:32
-#: components/transactions/transaction-dialog.tsx:278
+#: components/transactions/transaction-dialog.tsx:279
 #: components/transactions/transactions-table.tsx:84
 msgid "P7PLVj"
 msgstr "날짜"
@@ -1583,23 +1583,23 @@ msgstr "거래 내보내기"
 msgid "0S1jq/"
 msgstr "현재 필터가 적용된 거래 내보내기"
 
-#: components/transactions/transaction-dialog.tsx:154
+#: components/transactions/transaction-dialog.tsx:155
 msgid "P5C72A"
 msgstr "거래 편집"
 
-#: components/transactions/transaction-dialog.tsx:154
+#: components/transactions/transaction-dialog.tsx:155
 msgid "DJIUi0"
 msgstr "거래 추가"
 
-#: components/transactions/transaction-dialog.tsx:158
+#: components/transactions/transaction-dialog.tsx:159
 msgid "ET95oG"
 msgstr "거래 정보를 업데이트하세요."
 
-#: components/transactions/transaction-dialog.tsx:159
+#: components/transactions/transaction-dialog.tsx:160
 msgid "m3AQtz"
 msgstr "개인 재정을 추적하기 위해 수입 또는 지출을 추가하세요."
 
-#: components/transactions/transaction-dialog.tsx:255
+#: components/transactions/transaction-dialog.tsx:256
 msgid "9WG2aE"
 msgstr "거래에 대한 설명을 입력하세요..."
 

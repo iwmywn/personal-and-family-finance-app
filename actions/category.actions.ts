@@ -12,7 +12,7 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
-import { type Category } from "@/lib/definitions"
+import type { Category } from "@/lib/definitions"
 import type { CategoryFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"

@@ -1,8 +1,8 @@
-import { type Decimal128, type ObjectId } from "mongodb"
+import type { Decimal128, ObjectId } from "mongodb"
 
 import type { ExchangeRates, RawRates } from "@/actions/exchange-rates.actions"
 import type { auth } from "@/lib/auth"
-import { type CategoryKeyType, type CategoryType } from "@/lib/categories"
+import type { CategoryKeyType, CategoryType } from "@/lib/categories"
 import type { AppCurrency } from "@/lib/currency"
 
 export type User = typeof auth.$Infer.Session.user

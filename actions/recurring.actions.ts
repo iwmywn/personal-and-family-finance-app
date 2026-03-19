@@ -6,9 +6,9 @@ import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getRecurringTransactionsCollection } from "@/lib/collections"
-import {
-  type DBRecurringTransaction,
-  type RecurringTransaction,
+import type {
+  DBRecurringTransaction,
+  RecurringTransaction,
 } from "@/lib/definitions"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 

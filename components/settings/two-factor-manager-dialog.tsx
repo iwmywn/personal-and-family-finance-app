@@ -32,9 +32,9 @@ import { PasswordInput } from "@/components/password-input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
-import {
-  type TwoFactorCodeFormValues,
-  type TwoFactorPasswordFormValues,
+import type {
+  TwoFactorCodeFormValues,
+  TwoFactorPasswordFormValues,
 } from "@/schemas/types"
 
 export function TwoFactorManagerDialog() {

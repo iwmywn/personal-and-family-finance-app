@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/select"
 import { useUser } from "@/context/user-context"
 import { client } from "@/lib/auth-client"
-import { CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import { CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 
 export function CurrencySelector() {
   const t = useExtracted()

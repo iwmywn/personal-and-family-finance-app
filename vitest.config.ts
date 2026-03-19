@@ -1,5 +1,6 @@
 import { resolve } from "node:path"
-import { defineConfig, type UserWorkspaceConfig } from "vitest/config"
+import { defineConfig } from "vitest/config"
+import type { UserWorkspaceConfig } from "vitest/config"
 
 const baseTestConfig = {
   globals: true,

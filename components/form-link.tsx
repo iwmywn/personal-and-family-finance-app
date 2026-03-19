@@ -1,5 +1,6 @@
-import { type AnchorHTMLAttributes } from "react"
-import Link, { type LinkProps } from "next/link"
+import type { AnchorHTMLAttributes } from "react"
+import Link from "next/link"
+import type { LinkProps } from "next/link"
 
 import { cn } from "@/lib/utils"
 

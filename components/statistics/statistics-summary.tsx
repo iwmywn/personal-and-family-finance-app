@@ -11,7 +11,7 @@ import { useExtracted } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
-import { type Transaction } from "@/lib/definitions"
+import type { Transaction } from "@/lib/definitions"
 import { calculateSummaryStats } from "@/lib/statistics"
 import { toDecimal } from "@/lib/utils"
 

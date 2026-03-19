@@ -4,7 +4,7 @@ import Decimal from "decimal.js"
 import type { Decimal128 } from "mongodb"
 
 import { getExchangeRatesCollection } from "@/lib/collections"
-import { type AppCurrency } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import type { ExchangeRate, Transaction } from "@/lib/definitions"
 import { convertAmountWithRates } from "@/lib/utils"
 

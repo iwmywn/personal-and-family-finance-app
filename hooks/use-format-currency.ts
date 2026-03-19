@@ -1,7 +1,8 @@
 "use client"
 
 import { useUser } from "@/context/user-context"
-import { CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import { CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import { formatCurrency } from "@/lib/utils"
 
 export function useFormatCurrency() {

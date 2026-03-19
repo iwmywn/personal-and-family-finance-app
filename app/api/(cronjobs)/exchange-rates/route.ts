@@ -1,6 +1,6 @@
 "use server"
 
-import { type NextRequest } from "next/server"
+import type { NextRequest } from "next/server"
 
 import { toDecimal128 } from "@/actions/utils"
 import { serverEnv } from "@/env/server.mjs"

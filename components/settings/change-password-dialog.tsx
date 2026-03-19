@@ -30,7 +30,7 @@ import { FormButton } from "@/components/form-button"
 import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
-import { type PasswordFormValues } from "@/schemas/types"
+import type { PasswordFormValues } from "@/schemas/types"
 
 export function ChangePasswordDialog() {
   const t = useExtracted()

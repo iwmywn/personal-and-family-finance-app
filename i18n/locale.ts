@@ -3,7 +3,8 @@
 import { cache } from "react"
 import { cookies, headers } from "next/headers"
 
-import { DEFAULT_LOCALE, type AppLocale } from "@/i18n/config"
+import { DEFAULT_LOCALE } from "@/i18n/config"
+import type { AppLocale } from "@/i18n/config"
 import { auth } from "@/lib/auth"
 
 const COOKIE_NAME = "locale"

@@ -1,10 +1,5 @@
-import {
-  MongoClient,
-  type Collection,
-  type Db,
-  type MongoClientOptions,
-  type OptionalId,
-} from "mongodb"
+import { MongoClient } from "mongodb"
+import type { Collection, Db, MongoClientOptions, OptionalId } from "mongodb"
 
 import { serverEnv } from "@/env/server.mjs"
 

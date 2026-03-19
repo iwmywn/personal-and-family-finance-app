@@ -1,5 +1,6 @@
-import { type NextURL } from "next/dist/server/web/next-url"
-import { NextResponse, type NextRequest } from "next/server"
+import type { NextURL } from "next/dist/server/web/next-url"
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 import * as routes from "@/routes"
 
 import { getCurrentSession } from "@/actions/session.actions"

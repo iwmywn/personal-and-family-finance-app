@@ -7,7 +7,7 @@ import { getExtracted } from "next-intl/server"
 import { convertTransactionsToCurrency } from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
 import type { AppCurrency } from "@/lib/currency"
-import { type Transaction } from "@/lib/definitions"
+import type { Transaction } from "@/lib/definitions"
 import type { TransactionFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"

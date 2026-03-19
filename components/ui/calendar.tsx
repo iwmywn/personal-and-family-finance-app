@@ -7,11 +7,8 @@ import {
   ChevronRightIcon,
 } from "lucide-react"
 import { useLocale } from "next-intl"
-import {
-  DayPicker,
-  getDefaultClassNames,
-  type DayButton,
-} from "react-day-picker"
+import { DayPicker, getDefaultClassNames } from "react-day-picker"
+import type { DayButton } from "react-day-picker"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { LOCALE_CONFIG } from "@/i18n/config"

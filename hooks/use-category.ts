@@ -3,12 +3,12 @@
 import { useExtracted } from "next-intl"
 
 import { useCategories } from "@/context/categories-context"
-import {
-  getCategoryType,
-  type AllCategoriesKeyType,
-  type CategoryConfigBaseType,
-  type CategoryKeyType,
-  type CategoryType,
+import { getCategoryType } from "@/lib/categories"
+import type {
+  AllCategoriesKeyType,
+  CategoryConfigBaseType,
+  CategoryKeyType,
+  CategoryType,
 } from "@/lib/categories"
 
 export function useCategory() {

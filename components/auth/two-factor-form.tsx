@@ -22,7 +22,7 @@ import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
-import { type TwoFactorCodeFormValues } from "@/schemas/types"
+import type { TwoFactorCodeFormValues } from "@/schemas/types"
 
 export function TwoFactorVerificationForm() {
   const t = useExtracted()

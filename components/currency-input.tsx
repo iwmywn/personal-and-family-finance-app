@@ -3,7 +3,8 @@
 import * as React from "react"
 
 import { Input } from "@/components/ui/input"
-import { CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import { CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import { cn, isZeroDecimalCurrency } from "@/lib/utils"
 
 type CurrencyInputProps = Omit<

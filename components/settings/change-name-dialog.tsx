@@ -31,7 +31,7 @@ import { FormButton } from "@/components/form-button"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
-import { type NameFormValues } from "@/schemas/types"
+import type { NameFormValues } from "@/schemas/types"
 
 export function ChangeNameDialog() {
   const t = useExtracted()

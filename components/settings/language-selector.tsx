@@ -12,7 +12,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useUser } from "@/context/user-context"
-import { LOCALE_CONFIG, type AppLocale } from "@/i18n/config"
+import { LOCALE_CONFIG } from "@/i18n/config"
+import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
 

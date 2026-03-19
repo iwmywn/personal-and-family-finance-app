@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getGoalsCollection } from "@/lib/collections"
-import { type Goal } from "@/lib/definitions"
+import type { Goal } from "@/lib/definitions"
 import type { GoalFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"

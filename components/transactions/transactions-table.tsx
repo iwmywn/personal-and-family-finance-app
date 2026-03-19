@@ -39,7 +39,7 @@ import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { type Transaction } from "@/lib/definitions"
+import type { Transaction } from "@/lib/definitions"
 
 interface TransactionsTableProps {
   filteredTransactions: Transaction[]

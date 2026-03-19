@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getBudgetsCollection } from "@/lib/collections"
-import { type Budget } from "@/lib/definitions"
+import type { Budget } from "@/lib/definitions"
 import type { BudgetFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"

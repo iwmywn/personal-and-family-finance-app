@@ -9,8 +9,8 @@ import {
   TagIcon,
   TargetIcon,
   WalletIcon,
-  type LucideIcon,
 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 
 type NavType = {

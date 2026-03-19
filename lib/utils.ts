@@ -1,9 +1,11 @@
-import { clsx, type ClassValue } from "clsx"
+import { clsx } from "clsx"
+import type { ClassValue } from "clsx"
 import Decimal from "decimal.js"
 import { twMerge } from "tailwind-merge"
 
-import { type AppLocale } from "@/i18n/config"
-import { ZERO_DECIMAL_CURRENCIES, type AppCurrency } from "@/lib/currency"
+import type { AppLocale } from "@/i18n/config"
+import { ZERO_DECIMAL_CURRENCIES } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
 
 export function cn(...inputs: ClassValue[]) {
