@@ -23,7 +23,8 @@ type BaseTransaction<T, K> = {
   date: Date
   // the following fields are appended on the client for currency conversion
   // and are NOT stored in the database.
-  // They allow budgets/goals to convert amounts to their specific currencies using historical daily rates.
+  // They allow budgets/goals to convert amounts to their specific currencies
+  // using historical daily rates.
   originalAmount?: K
   originalCurrency?: AppCurrency
   rates?: Record<AppCurrency, string>
