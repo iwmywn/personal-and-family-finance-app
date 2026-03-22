@@ -20,11 +20,11 @@
     "test:be": "vitest --project backend"
   },
   "dependencies": {
-    "@better-auth/mongo-adapter": "1.5.5",
+    "@better-auth/mongo-adapter": "1.5.6",
     "@bprogress/next": "3.2.12",
     "@hookform/resolvers": "5.2.2",
     "@t3-oss/env-nextjs": "0.13.10",
-    "better-auth": "1.5.5",
+    "better-auth": "1.5.6",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "decimal.js": "10.6.0",
