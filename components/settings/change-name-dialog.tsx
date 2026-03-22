@@ -48,13 +48,6 @@ export function ChangeNameDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: NameFormValues) {
-    const parsedValues = createNameSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.updateUser({
       name: values.name,
       fetchOptions: {

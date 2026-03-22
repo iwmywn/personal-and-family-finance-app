@@ -116,13 +116,6 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    const parsedValues = createTwoFactorPasswordSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.enable({
       password: values.password,
       fetchOptions: {
@@ -193,13 +186,6 @@ function VerifyTwoFactorForm({
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    const parsedValues = createTwoFactorCodeSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.verifyTotp({
       code: values.code,
       fetchOptions: {
@@ -268,13 +254,6 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    const parsedValues = createTwoFactorPasswordSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.disable({
       password: values.password,
       fetchOptions: {

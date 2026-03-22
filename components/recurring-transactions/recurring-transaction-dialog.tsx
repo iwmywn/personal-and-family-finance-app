@@ -122,13 +122,6 @@ export function RecurringTransactionDialog({
   })
 
   async function onSubmit(values: RecurringTransactionFormValues) {
-    const parsedValues = createRecurringTransactionSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const data = {
       ...values,
       startDate: localDateToUTCMidnight(values.startDate),

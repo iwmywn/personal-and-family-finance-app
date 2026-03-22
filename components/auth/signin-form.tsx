@@ -45,13 +45,6 @@ export function SignInForm() {
     async (values: SignInFormValues, token: string) => {
       if (isSubmitting) return
 
-      const parsedValues = createSignInSchema().safeParse(values)
-
-      if (!parsedValues.success) {
-        toast.error(t("Invalid data!"))
-        return
-      }
-
       setIsSubmitting(true)
 
       try {
@@ -96,7 +89,7 @@ export function SignInForm() {
         setRecaptchaToken(null)
       }
     },
-    [createSignInSchema, isSubmitting, t, searchParams, form, router]
+    [isSubmitting, t, searchParams, form, router]
   )
 
   function onSubmit(values: SignInFormValues) {

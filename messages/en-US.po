@@ -6,283 +6,296 @@ msgstr ""
 "X-Generator: next-intl\n"
 "X-Crowdin-SourceKey: msgstr\n"
 
-#: actions/budget.actions.ts:22
-#: actions/budget.actions.ts:69
-#: actions/budget.actions.ts:122
-#: actions/budget.actions.ts:168
-#: actions/category.actions.ts:28
-#: actions/category.actions.ts:87
-#: actions/category.actions.ts:166
-#: actions/category.actions.ts:292
-#: actions/goal.actions.ts:22
-#: actions/goal.actions.ts:70
-#: actions/goal.actions.ts:124
-#: actions/goal.actions.ts:170
-#: actions/recurring.actions.ts:28
-#: actions/recurring.actions.ts:102
-#: actions/recurring.actions.ts:169
-#: actions/recurring.actions.ts:221
-#: actions/transaction.actions.ts:24
-#: actions/transaction.actions.ts:71
-#: actions/transaction.actions.ts:131
-#: actions/transaction.actions.ts:182
+#: actions/budget.actions.ts:23
+#: actions/budget.actions.ts:77
+#: actions/category.actions.ts:29
+#: actions/category.actions.ts:95
+#: actions/goal.actions.ts:23
+#: actions/goal.actions.ts:78
+#: actions/recurring.actions.ts:29
+#: actions/recurring.actions.ts:110
+#: actions/transaction.actions.ts:25
+#: actions/transaction.actions.ts:79
+msgid "5GmpFA"
+msgstr "Invalid data!"
+
+#: actions/budget.actions.ts:30
+#: actions/budget.actions.ts:84
+#: actions/budget.actions.ts:137
+#: actions/budget.actions.ts:183
+#: actions/category.actions.ts:36
+#: actions/category.actions.ts:102
+#: actions/category.actions.ts:181
+#: actions/category.actions.ts:307
+#: actions/goal.actions.ts:30
+#: actions/goal.actions.ts:85
+#: actions/goal.actions.ts:139
+#: actions/goal.actions.ts:185
+#: actions/recurring.actions.ts:36
+#: actions/recurring.actions.ts:117
+#: actions/recurring.actions.ts:184
+#: actions/recurring.actions.ts:236
+#: actions/transaction.actions.ts:32
+#: actions/transaction.actions.ts:86
+#: actions/transaction.actions.ts:146
+#: actions/transaction.actions.ts:197
 msgid "QWvB5t"
 msgstr "Access denied! Please refresh the page and try again."
 
-#: actions/budget.actions.ts:38
+#: actions/budget.actions.ts:46
 msgid "kwvIdb"
 msgstr "This budget already exists!"
 
-#: actions/budget.actions.ts:51
-#: actions/budget.actions.ts:57
+#: actions/budget.actions.ts:59
+#: actions/budget.actions.ts:65
 msgid "ge/1ga"
 msgstr "Failed to add budget! Please try again later."
 
-#: actions/budget.actions.ts:54
+#: actions/budget.actions.ts:62
 msgid "hcutYI"
 msgstr "Budget has been added."
 
-#: actions/budget.actions.ts:75
-#: actions/budget.actions.ts:128
+#: actions/budget.actions.ts:90
+#: actions/budget.actions.ts:143
 msgid "3pMkv5"
 msgstr "Invalid budget ID!"
 
-#: actions/budget.actions.ts:89
+#: actions/budget.actions.ts:104
 msgid "5BmD1W"
 msgstr "Budget not found or you don't have permission to edit!"
 
-#: actions/budget.actions.ts:107
+#: actions/budget.actions.ts:122
 msgid "Ipw0W1"
 msgstr "Budget has been updated."
 
-#: actions/budget.actions.ts:110
+#: actions/budget.actions.ts:125
 msgid "ZUfwUz"
 msgstr "Failed to update budget! Please try again later."
 
-#: actions/budget.actions.ts:142
+#: actions/budget.actions.ts:157
 msgid "fDrjqQ"
 msgstr "Budget not found or you don't have permission to delete!"
 
-#: actions/budget.actions.ts:152
+#: actions/budget.actions.ts:167
 msgid "GeSZei"
 msgstr "Budget has been deleted."
 
-#: actions/budget.actions.ts:155
+#: actions/budget.actions.ts:170
 msgid "niO8qC"
 msgstr "Failed to delete budget! Please try again later."
 
-#: actions/budget.actions.ts:190
+#: actions/budget.actions.ts:205
 msgid "xFeLWs"
 msgstr "Failed to load budgets! Please try again later."
 
-#: actions/category.actions.ts:42
-#: actions/category.actions.ts:122
+#: actions/category.actions.ts:50
+#: actions/category.actions.ts:137
 msgid "LzesyV"
 msgstr "This category already exists!"
 
-#: actions/category.actions.ts:53
+#: actions/category.actions.ts:61
 msgid "G0Twr1"
 msgstr "Error creating category key! Please try again later."
 
-#: actions/category.actions.ts:66
-#: actions/category.actions.ts:72
+#: actions/category.actions.ts:74
+#: actions/category.actions.ts:80
 msgid "OQ79b6"
 msgstr "Failed to add category! Please try again later."
 
-#: actions/category.actions.ts:69
+#: actions/category.actions.ts:77
 msgid "Jfen4M"
 msgstr "Category has been added."
 
-#: actions/category.actions.ts:93
-#: actions/category.actions.ts:172
+#: actions/category.actions.ts:108
+#: actions/category.actions.ts:187
 msgid "TgxdcM"
 msgstr "Invalid category ID!"
 
-#: actions/category.actions.ts:110
+#: actions/category.actions.ts:125
 msgid "Jau5xo"
 msgstr "Category not found or you don't have permission to edit!"
 
-#: actions/category.actions.ts:151
+#: actions/category.actions.ts:166
 msgid "RMEY96"
 msgstr "Category has been updated."
 
-#: actions/category.actions.ts:154
+#: actions/category.actions.ts:169
 msgid "PoUgbk"
 msgstr "Failed to update category! Please try again later."
 
-#: actions/category.actions.ts:198
+#: actions/category.actions.ts:213
 msgid "IzwrSe"
 msgstr "Category not found or you don't have permission to delete!"
 
-#: actions/category.actions.ts:228
+#: actions/category.actions.ts:243
 msgid "SyYZuO"
 msgstr "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first."
 
-#: actions/category.actions.ts:239
+#: actions/category.actions.ts:254
 msgid "iNZspt"
 msgstr "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first."
 
-#: actions/category.actions.ts:250
+#: actions/category.actions.ts:265
 msgid "C7NEmI"
 msgstr "Cannot delete category. There are {count} goals using this category. Please delete those goals first."
 
-#: actions/category.actions.ts:261
+#: actions/category.actions.ts:276
 msgid "Q/Y/ED"
 msgstr "Cannot delete category. There are {count} recurring transactions using this category. Please delete those recurring transactions first."
 
-#: actions/category.actions.ts:276
+#: actions/category.actions.ts:291
 msgid "7Al4tw"
 msgstr "Category has been deleted."
 
-#: actions/category.actions.ts:279
+#: actions/category.actions.ts:294
 msgid "XWfgXI"
 msgstr "Failed to delete category! Please try again later."
 
-#: actions/category.actions.ts:313
+#: actions/category.actions.ts:328
 msgid "gzfdvr"
 msgstr "Failed to load custom categories! Please try again later."
 
-#: actions/goal.actions.ts:38
+#: actions/goal.actions.ts:46
 msgid "3SCa/T"
 msgstr "This goal already exists!"
 
-#: actions/goal.actions.ts:52
-#: actions/goal.actions.ts:58
+#: actions/goal.actions.ts:60
+#: actions/goal.actions.ts:66
 msgid "9Buhj/"
 msgstr "Failed to add goal! Please try again later."
 
-#: actions/goal.actions.ts:55
+#: actions/goal.actions.ts:63
 msgid "J+nrjG"
 msgstr "Goal has been added."
 
-#: actions/goal.actions.ts:76
-#: actions/goal.actions.ts:130
+#: actions/goal.actions.ts:91
+#: actions/goal.actions.ts:145
 msgid "7UB8uM"
 msgstr "Invalid goal ID!"
 
-#: actions/goal.actions.ts:90
+#: actions/goal.actions.ts:105
 msgid "iQpYZg"
 msgstr "Goal not found or you don't have permission to edit!"
 
-#: actions/goal.actions.ts:109
+#: actions/goal.actions.ts:124
 msgid "SpmGQk"
 msgstr "Goal has been updated."
 
-#: actions/goal.actions.ts:112
+#: actions/goal.actions.ts:127
 msgid "Lmu8yS"
 msgstr "Failed to update goal! Please try again later."
 
-#: actions/goal.actions.ts:144
+#: actions/goal.actions.ts:159
 msgid "Av4WTA"
 msgstr "Goal not found or you don't have permission to delete!"
 
-#: actions/goal.actions.ts:154
+#: actions/goal.actions.ts:169
 msgid "MT417I"
 msgstr "Goal has been deleted."
 
-#: actions/goal.actions.ts:157
+#: actions/goal.actions.ts:172
 msgid "uwewg6"
 msgstr "Failed to delete goal! Please try again later."
 
-#: actions/goal.actions.ts:192
+#: actions/goal.actions.ts:207
 msgid "xwvGbl"
 msgstr "Failed to load goals! Please try again later."
 
-#: actions/recurring.actions.ts:53
+#: actions/recurring.actions.ts:61
 msgid "+HBMWc"
 msgstr "This recurring transaction already exists!"
 
-#: actions/recurring.actions.ts:73
-#: actions/recurring.actions.ts:86
+#: actions/recurring.actions.ts:81
+#: actions/recurring.actions.ts:94
 msgid "FLPmpu"
 msgstr "Failed to add recurring transaction! Please try again later."
 
-#: actions/recurring.actions.ts:80
+#: actions/recurring.actions.ts:88
 msgid "5Mtoe5"
 msgstr "Recurring transaction has been added."
 
-#: actions/recurring.actions.ts:108
-#: actions/recurring.actions.ts:175
+#: actions/recurring.actions.ts:123
+#: actions/recurring.actions.ts:190
 msgid "Yamhgo"
 msgstr "Invalid recurring transaction ID!"
 
-#: actions/recurring.actions.ts:122
+#: actions/recurring.actions.ts:137
 msgid "oyoqPq"
 msgstr "Recurring transaction not found or you don't have permission to edit."
 
-#: actions/recurring.actions.ts:148
+#: actions/recurring.actions.ts:163
 msgid "FgrcGc"
 msgstr "Recurring transaction has been updated."
 
-#: actions/recurring.actions.ts:154
+#: actions/recurring.actions.ts:169
 msgid "qlYMTi"
 msgstr "Failed to update recurring transaction! Please try again later."
 
-#: actions/recurring.actions.ts:189
+#: actions/recurring.actions.ts:204
 msgid "TJXAsr"
 msgstr "Recurring transaction not found or you don't have permission to delete!"
 
-#: actions/recurring.actions.ts:201
+#: actions/recurring.actions.ts:216
 msgid "0L6Kzl"
 msgstr "Recurring transaction has been deleted."
 
-#: actions/recurring.actions.ts:205
+#: actions/recurring.actions.ts:220
 msgid "9p5fYg"
 msgstr "Failed to delete recurring transaction! Please try again later."
 
-#: actions/recurring.actions.ts:243
+#: actions/recurring.actions.ts:258
 msgid "D92YlY"
 msgstr "Failed to load recurring transactions! Please try again later."
 
-#: actions/transaction.actions.ts:44
+#: actions/transaction.actions.ts:52
 msgid "v+aP8j"
 msgstr "This transaction has already been created today!"
 
-#: actions/transaction.actions.ts:50
-#: actions/transaction.actions.ts:56
+#: actions/transaction.actions.ts:58
+#: actions/transaction.actions.ts:64
 msgid "zb35o3"
 msgstr "Failed to add transaction! Please try again later."
 
-#: actions/transaction.actions.ts:53
+#: actions/transaction.actions.ts:61
 msgid "pU1r4y"
 msgstr "Transaction has been added."
 
-#: actions/transaction.actions.ts:77
-#: actions/transaction.actions.ts:137
+#: actions/transaction.actions.ts:92
+#: actions/transaction.actions.ts:152
 msgid "w/J6M7"
 msgstr "Invalid transaction ID!"
 
-#: actions/transaction.actions.ts:91
+#: actions/transaction.actions.ts:106
 msgid "qyC85x"
 msgstr "Transaction not found or you don't have permission to edit!"
 
-#: actions/transaction.actions.ts:114
+#: actions/transaction.actions.ts:129
 msgid "VHOeqA"
 msgstr "Transaction has been updated."
 
-#: actions/transaction.actions.ts:119
+#: actions/transaction.actions.ts:134
 msgid "A9rBEo"
 msgstr "Failed to update transaction! Please try again later."
 
-#: actions/transaction.actions.ts:151
+#: actions/transaction.actions.ts:166
 msgid "Fxn2/P"
 msgstr "Transaction not found or you don't have permission to delete!"
 
-#: actions/transaction.actions.ts:163
+#: actions/transaction.actions.ts:178
 msgid "tz6kfd"
 msgstr "Transaction has been deleted."
 
-#: actions/transaction.actions.ts:166
+#: actions/transaction.actions.ts:181
 msgid "DcqDur"
 msgstr "Failed to delete transaction! Please try again later."
 
-#: actions/transaction.actions.ts:210
+#: actions/transaction.actions.ts:225
 msgid "+VVz7r"
 msgstr "Failed to load transactions! Please try again later."
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:163
+#: components/auth/signin-form.tsx:156
 msgid "Ub+AGc"
 msgstr "Sign In"
 
@@ -368,7 +381,7 @@ msgstr "Transactions"
 msgid "/WMCDd"
 msgstr "Something went wrong!"
 
-#: app/layout.tsx:23
+#: app/layout.tsx:25
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Personal & Family Finance App"
@@ -385,165 +398,149 @@ msgstr "Please complete CAPTCHA verification!"
 msgid "ItmvCq"
 msgstr "CAPTCHA Verification"
 
-#: components/auth/signin-form.tsx:51
-#: components/auth/two-factor-form.tsx:44
-#: components/budgets/budget-dialog.tsx:96
-#: components/categories/category-dialog.tsx:73
-#: components/goals/goal-dialog.tsx:98
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:128
-#: components/settings/change-name-dialog.tsx:54
-#: components/settings/change-password-dialog.tsx:53
-#: components/settings/change-username-dialog.tsx:54
-#: components/settings/two-factor-manager-dialog.tsx:122
-#: components/settings/two-factor-manager-dialog.tsx:199
-#: components/settings/two-factor-manager-dialog.tsx:274
-#: components/transactions/transaction-dialog.tsx:107
-msgid "5GmpFA"
-msgstr "Invalid data!"
-
-#: components/auth/signin-form.tsx:67
+#: components/auth/signin-form.tsx:60
 msgid "pxIiYc"
 msgstr "Invalid username or password!"
 
-#: components/auth/signin-form.tsx:68
+#: components/auth/signin-form.tsx:61
 msgid "b8+mgZ"
 msgstr "Failed to sign in! Please try again later."
 
-#: components/auth/signin-form.tsx:128
-#: components/settings/change-username-dialog.tsx:106
+#: components/auth/signin-form.tsx:121
+#: components/settings/change-username-dialog.tsx:99
 msgid "JCIgkj"
 msgstr "Username"
 
-#: components/auth/signin-form.tsx:148
-#: components/settings/two-factor-manager-dialog.tsx:152
-#: components/settings/two-factor-manager-dialog.tsx:302
+#: components/auth/signin-form.tsx:141
+#: components/settings/two-factor-manager-dialog.tsx:145
+#: components/settings/two-factor-manager-dialog.tsx:281
 msgid "5sg7KC"
 msgstr "Password"
 
-#: components/auth/two-factor-form.tsx:53
+#: components/auth/two-factor-form.tsx:46
 msgid "mXmfR7"
 msgstr "Invalid authentication code! Please try again later."
 
-#: components/auth/two-factor-form.tsx:79
-#: components/settings/two-factor-manager-dialog.tsx:229
+#: components/auth/two-factor-form.tsx:72
+#: components/settings/two-factor-manager-dialog.tsx:215
 msgid "Tjv3UC"
 msgstr "Verification Code"
 
-#: components/auth/two-factor-form.tsx:109
+#: components/auth/two-factor-form.tsx:102
 msgid "hyw/Cv"
 msgstr "Trust this device"
 
-#: components/auth/two-factor-form.tsx:112
+#: components/auth/two-factor-form.tsx:105
 msgid "ZcMAT1"
 msgstr "Don't ask for 2FA code on this device for 30 days."
 
-#: components/auth/two-factor-form.tsx:123
-#: components/settings/two-factor-manager-dialog.tsx:249
+#: components/auth/two-factor-form.tsx:116
+#: components/settings/two-factor-manager-dialog.tsx:235
 msgid "q5Xl0M"
 msgstr "Verify"
 
-#: components/budgets/budget-dialog.tsx:138
+#: components/budgets/budget-dialog.tsx:131
 msgid "2g82CP"
 msgstr "Edit Budget"
 
-#: components/budgets/budget-dialog.tsx:138
+#: components/budgets/budget-dialog.tsx:131
 msgid "zMoeFN"
 msgstr "Add Budget"
 
-#: components/budgets/budget-dialog.tsx:142
+#: components/budgets/budget-dialog.tsx:135
 msgid "zSiCkT"
 msgstr "Update budget information."
 
-#: components/budgets/budget-dialog.tsx:143
+#: components/budgets/budget-dialog.tsx:136
 msgid "PVSBse"
 msgstr "Create a budget for a category to track your spending."
 
-#: components/budgets/budget-dialog.tsx:156
-#: components/goals/goal-dialog.tsx:157
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:230
+#: components/budgets/budget-dialog.tsx:149
+#: components/goals/goal-dialog.tsx:150
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:223
 #: components/settings/currency-selector.tsx:49
 #: components/settings/settings-page.tsx:59
-#: components/transactions/transaction-dialog.tsx:199
+#: components/transactions/transaction-dialog.tsx:192
 msgid "55hdQy"
 msgstr "Currency"
 
-#: components/budgets/budget-dialog.tsx:187
+#: components/budgets/budget-dialog.tsx:180
 #: components/budgets/budgets-table.tsx:92
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:261
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:254
 #: components/recurring-transactions/recurring-transactions-table.tsx:114
 #: components/transactions/export-button.tsx:35
-#: components/transactions/transaction-dialog.tsx:230
+#: components/transactions/transaction-dialog.tsx:223
 #: components/transactions/transactions-table.tsx:88
 msgid "/0TOL5"
 msgstr "Amount"
 
-#: components/budgets/budget-dialog.tsx:207
+#: components/budgets/budget-dialog.tsx:200
 #: components/budgets/budgets-table.tsx:89
-#: components/goals/goal-dialog.tsx:230
+#: components/goals/goal-dialog.tsx:223
 #: components/goals/goals-table.tsx:88
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:380
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:373
 #: components/recurring-transactions/recurring-transactions-table.tsx:109
 msgid "QirE3M"
 msgstr "Start Date"
 
-#: components/budgets/budget-dialog.tsx:225
-#: components/budgets/budget-dialog.tsx:278
-#: components/goals/goal-dialog.tsx:248
-#: components/goals/goal-dialog.tsx:301
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:398
+#: components/budgets/budget-dialog.tsx:218
+#: components/budgets/budget-dialog.tsx:271
+#: components/goals/goal-dialog.tsx:241
+#: components/goals/goal-dialog.tsx:294
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:391
 #: components/statistics/statistics-filters.tsx:125
-#: components/transactions/transaction-dialog.tsx:293
+#: components/transactions/transaction-dialog.tsx:286
 #: components/transactions/transaction-filters.tsx:221
 msgid "ftg7GK"
 msgstr "Select Date"
 
-#: components/budgets/budget-dialog.tsx:261
+#: components/budgets/budget-dialog.tsx:254
 #: components/budgets/budgets-table.tsx:90
-#: components/goals/goal-dialog.tsx:284
+#: components/goals/goal-dialog.tsx:277
 #: components/goals/goals-table.tsx:89
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:434
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:427
 #: components/recurring-transactions/recurring-transactions-table.tsx:110
 msgid "T4GOiX"
 msgstr "End Date"
 
-#: components/budgets/budget-dialog.tsx:311
+#: components/budgets/budget-dialog.tsx:304
 #: components/budgets/delete-budget-dialog.tsx:61
-#: components/categories/category-dialog.tsx:187
+#: components/categories/category-dialog.tsx:180
 #: components/categories/delete-category-dialog.tsx:61
 #: components/goals/delete-goal-dialog.tsx:61
-#: components/goals/goal-dialog.tsx:334
+#: components/goals/goal-dialog.tsx:327
 #: components/layout/secondary-nav.tsx:85
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:63
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:514
-#: components/settings/change-name-dialog.tsx:110
-#: components/settings/change-password-dialog.tsx:174
-#: components/settings/change-username-dialog.tsx:122
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:507
+#: components/settings/change-name-dialog.tsx:103
+#: components/settings/change-password-dialog.tsx:167
+#: components/settings/change-username-dialog.tsx:115
 #: components/transactions/delete-transaction-dialog.tsx:61
-#: components/transactions/transaction-dialog.tsx:325
+#: components/transactions/transaction-dialog.tsx:318
 msgid "47FYwb"
 msgstr "Cancel"
 
-#: components/budgets/budget-dialog.tsx:314
-#: components/categories/category-dialog.tsx:190
-#: components/goals/goal-dialog.tsx:337
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
-#: components/transactions/transaction-dialog.tsx:328
-msgid "BWpuKl"
-msgstr "Update"
-
-#: components/budgets/budget-dialog.tsx:314
+#: components/budgets/budget-dialog.tsx:307
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
-#: components/categories/category-dialog.tsx:190
-#: components/goals/goal-dialog.tsx:337
+#: components/categories/category-dialog.tsx:183
+#: components/goals/goal-dialog.tsx:330
 #: components/goals/goals-page.tsx:24
 #: components/home/homepage.tsx:30
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:511
 #: components/recurring-transactions/recurring-transactions-page.tsx:24
-#: components/transactions/transaction-dialog.tsx:328
+#: components/transactions/transaction-dialog.tsx:321
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "Add"
+
+#: components/budgets/budget-dialog.tsx:307
+#: components/categories/category-dialog.tsx:183
+#: components/goals/goal-dialog.tsx:330
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:511
+#: components/transactions/transaction-dialog.tsx:321
+msgid "BWpuKl"
+msgstr "Update"
 
 #: components/budgets/budget-filters.tsx:84
 #: components/goals/goal-filters.tsx:118
@@ -631,7 +628,7 @@ msgstr "Exceeded (≥ 100%)"
 #: components/budgets/budgets-table.tsx:95
 #: components/goals/goal-filters.tsx:204
 #: components/goals/goals-table.tsx:94
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:492
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:485
 #: components/recurring-transactions/recurring-transactions-filters.tsx:202
 #: components/recurring-transactions/recurring-transactions-table.tsx:116
 msgid "tzMNF3"
@@ -654,7 +651,7 @@ msgstr "Expired"
 #: components/budgets/budgets-table.tsx:147
 #: components/goals/goal-filters.tsx:211
 #: components/goals/goals-table.tsx:136
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:503
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:496
 #: components/recurring-transactions/recurring-transactions-filters.tsx:208
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "3a5wL8"
@@ -762,16 +759,16 @@ msgid "Dojtt1"
 msgstr "No categories found matching your filters."
 
 #: components/categories/categories-table.tsx:72
-#: components/categories/category-dialog.tsx:143
+#: components/categories/category-dialog.tsx:136
 msgid "vEYtiq"
 msgstr "Category Name"
 
 #: components/categories/categories-table.tsx:73
-#: components/categories/category-dialog.tsx:163
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:281
+#: components/categories/category-dialog.tsx:156
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:274
 #: components/recurring-transactions/recurring-transactions-table.tsx:111
 #: components/transactions/export-button.tsx:36
-#: components/transactions/transaction-dialog.tsx:250
+#: components/transactions/transaction-dialog.tsx:243
 #: components/transactions/transactions-table.tsx:85
 msgid "Q8Qw5B"
 msgstr "Description"
@@ -788,15 +785,15 @@ msgid "+U6ozc"
 msgstr "Type"
 
 #: components/categories/categories-table.tsx:96
-#: components/categories/category-dialog.tsx:132
+#: components/categories/category-dialog.tsx:125
 #: components/categories/category-filters.tsx:92
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:204
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:197
 #: components/recurring-transactions/recurring-transactions-filters.tsx:157
 #: components/recurring-transactions/recurring-transactions-filters.tsx:176
 #: components/recurring-transactions/recurring-transactions-table.tsx:142
 #: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:173
+#: components/transactions/transaction-dialog.tsx:166
 #: components/transactions/transaction-filters.tsx:361
 #: components/transactions/transaction-filters.tsx:380
 #: components/transactions/transactions-table.tsx:111
@@ -804,43 +801,43 @@ msgid "gJkHZk"
 msgstr "Income"
 
 #: components/categories/categories-table.tsx:97
-#: components/categories/category-dialog.tsx:133
+#: components/categories/category-dialog.tsx:126
 #: components/categories/category-filters.tsx:93
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:205
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:198
 #: components/recurring-transactions/recurring-transactions-filters.tsx:158
 #: components/recurring-transactions/recurring-transactions-filters.tsx:183
 #: components/recurring-transactions/recurring-transactions-table.tsx:143
 #: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:174
+#: components/transactions/transaction-dialog.tsx:167
 #: components/transactions/transaction-filters.tsx:362
 #: components/transactions/transaction-filters.tsx:387
 #: components/transactions/transactions-table.tsx:112
 msgid "URe+qA"
 msgstr "Expense"
 
-#: components/categories/category-dialog.tsx:116
+#: components/categories/category-dialog.tsx:109
 msgid "THThZY"
 msgstr "Edit Category"
 
-#: components/categories/category-dialog.tsx:116
+#: components/categories/category-dialog.tsx:109
 msgid "5Fs4aA"
 msgstr "Add Category"
 
-#: components/categories/category-dialog.tsx:120
+#: components/categories/category-dialog.tsx:113
 msgid "1VRDDQ"
 msgstr "Update custom category information."
 
-#: components/categories/category-dialog.tsx:121
+#: components/categories/category-dialog.tsx:114
 msgid "0jMR1h"
 msgstr "Create a custom category for your transactions."
 
-#: components/categories/category-dialog.tsx:148
+#: components/categories/category-dialog.tsx:141
 msgid "TxCpcX"
 msgstr "e.g. Salary, Groceries"
 
-#: components/categories/category-dialog.tsx:169
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:287
+#: components/categories/category-dialog.tsx:162
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:280
 msgid "s0F42g"
 msgstr "Enter a description..."
 
@@ -882,32 +879,32 @@ msgstr "Delete Goal"
 msgid "EwRebq"
 msgstr "Are you sure you want to delete this goal? This action cannot be undone."
 
-#: components/goals/goal-dialog.tsx:140
+#: components/goals/goal-dialog.tsx:133
 msgid "sOXElg"
 msgstr "Edit Goal"
 
-#: components/goals/goal-dialog.tsx:140
+#: components/goals/goal-dialog.tsx:133
 msgid "5WuADX"
 msgstr "Add Goal"
 
-#: components/goals/goal-dialog.tsx:143
+#: components/goals/goal-dialog.tsx:136
 msgid "/kQug4"
 msgstr "Update goal information."
 
-#: components/goals/goal-dialog.tsx:144
+#: components/goals/goal-dialog.tsx:137
 msgid "dzmlX3"
 msgstr "Create a new financial goal."
 
-#: components/goals/goal-dialog.tsx:189
+#: components/goals/goal-dialog.tsx:182
 #: components/goals/goals-table.tsx:90
 msgid "gQxxlw"
 msgstr "Goal Name"
 
-#: components/goals/goal-dialog.tsx:194
+#: components/goals/goal-dialog.tsx:187
 msgid "rH4tSt"
 msgstr "e.g. Save for vacation"
 
-#: components/goals/goal-dialog.tsx:209
+#: components/goals/goal-dialog.tsx:202
 #: components/goals/goals-table.tsx:92
 msgid "MPOzul"
 msgstr "Target Amount"
@@ -1132,79 +1129,79 @@ msgstr "Delete Recurring Transaction"
 msgid "B58bFw"
 msgstr "Are you sure you want to delete this recurring transaction? This action cannot be undone."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:187
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:180
 msgid "5nuO2v"
 msgstr "Edit Recurring Transaction"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:188
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:181
 msgid "sYXY5N"
 msgstr "Add Recurring Transaction"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:192
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:185
 msgid "gKA6Xf"
 msgstr "Update recurring transaction information."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:193
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:186
 msgid "adePxB"
 msgstr "Create a recurring transaction."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:309
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:302
 #: components/recurring-transactions/recurring-transactions-table.tsx:115
 msgid "vAW30j"
 msgstr "Frequency"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:326
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:319
 #: components/recurring-transactions/recurring-transactions-table.tsx:66
 msgid "zxvhnE"
 msgstr "Daily"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:327
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:320
 #: components/recurring-transactions/recurring-transactions-table.tsx:68
 msgid "/clOBU"
 msgstr "Weekly"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:329
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:322
 #: components/recurring-transactions/recurring-transactions-table.tsx:70
 msgid "03X4YH"
 msgstr "Bi-Weekly"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:331
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:324
 #: components/recurring-transactions/recurring-transactions-table.tsx:72
 msgid "wYsv4Z"
 msgstr "Monthly"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:333
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:326
 #: components/recurring-transactions/recurring-transactions-table.tsx:74
 msgid "b1Ou36"
 msgstr "Quarterly"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:335
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:328
 #: components/recurring-transactions/recurring-transactions-table.tsx:76
 msgid "dqD39h"
 msgstr "Yearly"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:336
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:329
 #: components/recurring-transactions/recurring-transactions-table.tsx:78
 msgid "D9n+q2"
 msgstr "Random"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:351
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:344
 msgid "CpM7W/"
 msgstr "Every X Days"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:357
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:350
 msgid "FP2XQQ"
 msgstr "e.g. 15"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:434
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:427
 msgid "InWqys"
 msgstr "Optional"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:457
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:450
 msgid "mpcI7I"
 msgstr "No End Date"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:504
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:497
 #: components/recurring-transactions/recurring-transactions-filters.tsx:209
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "6Tps09"
@@ -1293,106 +1290,106 @@ msgstr "Terminate"
 msgid "DC/DQF"
 msgstr "Terminate All"
 
-#: components/settings/change-name-dialog.tsx:62
+#: components/settings/change-name-dialog.tsx:55
 msgid "pdaEmb"
 msgstr "Failed to update name! Please try again later."
 
-#: components/settings/change-name-dialog.tsx:66
+#: components/settings/change-name-dialog.tsx:59
 msgid "oALrPz"
 msgstr "Your name has been updated."
 
-#: components/settings/change-name-dialog.tsx:77
-#: components/settings/change-name-dialog.tsx:81
+#: components/settings/change-name-dialog.tsx:70
+#: components/settings/change-name-dialog.tsx:74
 #: components/settings/settings-page.tsx:73
 msgid "r5LPv0"
 msgstr "Change Name"
 
-#: components/settings/change-name-dialog.tsx:83
+#: components/settings/change-name-dialog.tsx:76
 #: components/settings/settings-page.tsx:74
 msgid "z7OVdl"
 msgstr "Update your display name."
 
-#: components/settings/change-name-dialog.tsx:94
+#: components/settings/change-name-dialog.tsx:87
 msgid "HAlOn1"
 msgstr "Name"
 
-#: components/settings/change-name-dialog.tsx:98
+#: components/settings/change-name-dialog.tsx:91
 msgid "g4FbZ5"
 msgstr "Enter your name..."
 
-#: components/settings/change-name-dialog.tsx:113
-#: components/settings/change-password-dialog.tsx:177
-#: components/settings/change-username-dialog.tsx:125
+#: components/settings/change-name-dialog.tsx:106
+#: components/settings/change-password-dialog.tsx:170
+#: components/settings/change-username-dialog.tsx:118
 msgid "jvo0vs"
 msgstr "Save"
 
-#: components/settings/change-password-dialog.tsx:64
+#: components/settings/change-password-dialog.tsx:57
 msgid "UR3aU3"
 msgstr "Current password is incorrect!"
 
-#: components/settings/change-password-dialog.tsx:66
+#: components/settings/change-password-dialog.tsx:59
 msgid "I+C2uX"
 msgstr "Failed to update password! Please try again later."
 
-#: components/settings/change-password-dialog.tsx:69
+#: components/settings/change-password-dialog.tsx:62
 msgid "kgHPAz"
 msgstr "Your password has been changed."
 
-#: components/settings/change-password-dialog.tsx:80
-#: components/settings/change-password-dialog.tsx:84
+#: components/settings/change-password-dialog.tsx:73
+#: components/settings/change-password-dialog.tsx:77
 #: components/settings/settings-page.tsx:95
 msgid "QiKKFz"
 msgstr "Change Password"
 
-#: components/settings/change-password-dialog.tsx:85
+#: components/settings/change-password-dialog.tsx:78
 #: components/settings/settings-page.tsx:96
 msgid "luD+rc"
 msgstr "Update your password."
 
-#: components/settings/change-password-dialog.tsx:96
+#: components/settings/change-password-dialog.tsx:89
 msgid "GretYf"
 msgstr "Current Password"
 
-#: components/settings/change-password-dialog.tsx:117
+#: components/settings/change-password-dialog.tsx:110
 msgid "Ev6SEF"
 msgstr "New Password"
 
-#: components/settings/change-password-dialog.tsx:138
+#: components/settings/change-password-dialog.tsx:131
 msgid "vfG+nh"
 msgstr "Confirm Password"
 
-#: components/settings/change-password-dialog.tsx:166
+#: components/settings/change-password-dialog.tsx:159
 msgid "zFD28X"
 msgstr "Sign out from all other devices."
 
-#: components/settings/change-username-dialog.tsx:64
+#: components/settings/change-username-dialog.tsx:57
 msgid "K3OKU5"
 msgstr "Failed to check username availability! Please try again later."
 
-#: components/settings/change-username-dialog.tsx:67
+#: components/settings/change-username-dialog.tsx:60
 msgid "wb3MSp"
 msgstr "This username is already taken."
 
-#: components/settings/change-username-dialog.tsx:73
+#: components/settings/change-username-dialog.tsx:66
 msgid "IaZaQX"
 msgstr "Failed to update username! Please try again later."
 
-#: components/settings/change-username-dialog.tsx:77
+#: components/settings/change-username-dialog.tsx:70
 msgid "8KK2w+"
 msgstr "Your username has been changed."
 
-#: components/settings/change-username-dialog.tsx:89
-#: components/settings/change-username-dialog.tsx:93
+#: components/settings/change-username-dialog.tsx:82
+#: components/settings/change-username-dialog.tsx:86
 #: components/settings/settings-page.tsx:83
 msgid "19mdX0"
 msgstr "Change Username"
 
-#: components/settings/change-username-dialog.tsx:95
+#: components/settings/change-username-dialog.tsx:88
 #: components/settings/settings-page.tsx:85
 msgid "TXe4LX"
 msgstr "Update your unique username."
 
-#: components/settings/change-username-dialog.tsx:110
+#: components/settings/change-username-dialog.tsx:103
 msgid "v60thv"
 msgstr "Enter your username..."
 
@@ -1454,12 +1451,12 @@ msgid "EQpyb8"
 msgstr "Toggle theme"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:320
+#: components/settings/two-factor-manager-dialog.tsx:299
 msgid "e7Db3T"
 msgstr "Disable 2FA"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:170
+#: components/settings/two-factor-manager-dialog.tsx:163
 msgid "ZhrNZz"
 msgstr "Enable 2FA"
 
@@ -1483,27 +1480,27 @@ msgstr "Disable Two-Factor Authentication"
 msgid "fUrrOz"
 msgstr "Enter your password to disable 2FA."
 
-#: components/settings/two-factor-manager-dialog.tsx:131
+#: components/settings/two-factor-manager-dialog.tsx:124
 msgid "6vQ8Z2"
 msgstr "Invalid password."
 
-#: components/settings/two-factor-manager-dialog.tsx:133
+#: components/settings/two-factor-manager-dialog.tsx:126
 msgid "Lq08V/"
 msgstr "Failed to enable 2FA! Please try again later."
 
-#: components/settings/two-factor-manager-dialog.tsx:207
+#: components/settings/two-factor-manager-dialog.tsx:193
 msgid "02Huvd"
 msgstr "Failed to verify 2FA code! Please try again later."
 
-#: components/settings/two-factor-manager-dialog.tsx:211
+#: components/settings/two-factor-manager-dialog.tsx:197
 msgid "FSRmm9"
 msgstr "Two-factor authentication is now enabled."
 
-#: components/settings/two-factor-manager-dialog.tsx:282
+#: components/settings/two-factor-manager-dialog.tsx:261
 msgid "Y1o/zZ"
 msgstr "Failed to disable 2FA! Please try again later."
 
-#: components/settings/two-factor-manager-dialog.tsx:286
+#: components/settings/two-factor-manager-dialog.tsx:265
 msgid "BBb4xb"
 msgstr "Two-factor authentication is now disabled."
 
@@ -1562,7 +1559,7 @@ msgid "cj6kmp"
 msgstr "Are you sure you want to delete this transaction? This action cannot be undone."
 
 #: components/transactions/export-button.tsx:32
-#: components/transactions/transaction-dialog.tsx:279
+#: components/transactions/transaction-dialog.tsx:272
 #: components/transactions/transactions-table.tsx:84
 msgid "P7PLVj"
 msgstr "Date"
@@ -1583,23 +1580,23 @@ msgstr "Export Transactions"
 msgid "0S1jq/"
 msgstr "Export transactions with current filters applied"
 
-#: components/transactions/transaction-dialog.tsx:155
+#: components/transactions/transaction-dialog.tsx:148
 msgid "P5C72A"
 msgstr "Edit Transaction"
 
-#: components/transactions/transaction-dialog.tsx:155
+#: components/transactions/transaction-dialog.tsx:148
 msgid "DJIUi0"
 msgstr "Add Transaction"
 
-#: components/transactions/transaction-dialog.tsx:159
+#: components/transactions/transaction-dialog.tsx:152
 msgid "ET95oG"
 msgstr "Update transaction information."
 
-#: components/transactions/transaction-dialog.tsx:160
+#: components/transactions/transaction-dialog.tsx:153
 msgid "m3AQtz"
 msgstr "Add your income or expense to track your personal finances."
 
-#: components/transactions/transaction-dialog.tsx:256
+#: components/transactions/transaction-dialog.tsx:249
 msgid "9WG2aE"
 msgstr "Enter a description for the transaction..."
 
@@ -1803,158 +1800,142 @@ msgstr "November"
 msgid "SsiZK7"
 msgstr "December"
 
-#: hooks/use-schemas.ts:17
+#: schemas/messages.ts:9
 msgid "MsWwGp"
 msgstr "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
 
-#: hooks/use-schemas.ts:25
+#: schemas/messages.ts:12
 msgid "/1byDa"
 msgstr "Amount is required."
 
-#: hooks/use-schemas.ts:27
+#: schemas/messages.ts:13
 msgid "HCzfe9"
 msgstr "Amount must be a valid number."
 
-#: hooks/use-schemas.ts:31
+#: schemas/messages.ts:14
 msgid "ICgNGL"
 msgstr "Amount must be greater than 0."
 
-#: hooks/use-schemas.ts:34
+#: schemas/messages.ts:15
 msgid "9I9BOz"
 msgstr "Maximum amount is 100 billion."
 
-#: hooks/use-schemas.ts:40
+#: schemas/messages.ts:16
 msgid "aAADUG"
 msgstr "Username is required."
 
-#: hooks/use-schemas.ts:49
+#: schemas/messages.ts:17
 msgid "gpW0lx"
 msgstr "Current password is required."
 
-#: hooks/use-schemas.ts:53
+#: schemas/messages.ts:18
 msgid "136ad6"
 msgstr "Please confirm your new password."
 
-#: hooks/use-schemas.ts:60
+#: schemas/messages.ts:19
 msgid "H5adYw"
 msgstr "Passwords do not match."
 
-#: hooks/use-schemas.ts:76
+#: schemas/messages.ts:20
 msgid "RKK2dE"
 msgstr "Enter the 6-digit code from your authenticator app."
 
-#: hooks/use-schemas.ts:78
+#: schemas/messages.ts:23
 msgid "eX6daX"
 msgstr "Code must be at most 10 digits."
 
-#: hooks/use-schemas.ts:80
+#: schemas/messages.ts:24
 msgid "O4PhlQ"
 msgstr "Code can only contain digits."
 
-#: hooks/use-schemas.ts:89
+#: schemas/messages.ts:25
 msgid "/4pQDl"
 msgstr "Name is required."
 
-#: hooks/use-schemas.ts:90
+#: schemas/messages.ts:26
 msgid "YeRtBx"
 msgstr "Name must be at most 100 characters."
 
-#: hooks/use-schemas.ts:97
+#: schemas/messages.ts:27
 msgid "c+1x/V"
 msgstr "Username must have at least 3 characters."
 
-#: hooks/use-schemas.ts:98
+#: schemas/messages.ts:28
 msgid "MSqoQ2"
 msgstr "Username must be at most 30 characters."
 
-#: hooks/use-schemas.ts:100
+#: schemas/messages.ts:29
 msgid "8Y5qyI"
 msgstr "Username can only contain letters, numbers, underscores, and dots."
 
-#: hooks/use-schemas.ts:109
+#: schemas/messages.ts:32
 msgid "GNwfGD"
 msgstr "Please select a transaction type."
 
-#: hooks/use-schemas.ts:111
-#: hooks/use-schemas.ts:152
-#: hooks/use-schemas.ts:183
-#: hooks/use-schemas.ts:211
+#: schemas/messages.ts:33
 msgid "uDAfoc"
 msgstr "Category is required."
 
-#: hooks/use-schemas.ts:113
-#: hooks/use-schemas.ts:154
-#: hooks/use-schemas.ts:185
-#: hooks/use-schemas.ts:213
+#: schemas/messages.ts:34
 msgid "2saJxm"
 msgstr "Please select a currency."
 
-#: hooks/use-schemas.ts:119
-#: hooks/use-schemas.ts:143
-#: hooks/use-schemas.ts:219
+#: schemas/messages.ts:35
 msgid "be3kp3"
 msgstr "Description is required."
 
-#: hooks/use-schemas.ts:122
-#: hooks/use-schemas.ts:145
-#: hooks/use-schemas.ts:222
+#: schemas/messages.ts:36
 msgid "Y1VHB3"
 msgstr "Description must be at most 200 characters."
 
-#: hooks/use-schemas.ts:125
+#: schemas/messages.ts:37
 msgid "MhMNy6"
 msgstr "Please select a date."
 
-#: hooks/use-schemas.ts:133
-#: hooks/use-schemas.ts:209
+#: schemas/messages.ts:38
 msgid "EtmyBh"
 msgstr "Please select a type."
 
-#: hooks/use-schemas.ts:137
+#: schemas/messages.ts:39
 msgid "5huJG4"
 msgstr "Category name is required."
 
-#: hooks/use-schemas.ts:139
+#: schemas/messages.ts:40
 msgid "LmVuiu"
 msgstr "Category name must be at most 50 characters."
 
-#: hooks/use-schemas.ts:158
-#: hooks/use-schemas.ts:189
-#: hooks/use-schemas.ts:248
+#: schemas/messages.ts:41
 msgid "HxXJtm"
 msgstr "Please select a start date."
 
-#: hooks/use-schemas.ts:161
-#: hooks/use-schemas.ts:192
+#: schemas/messages.ts:42
 msgid "O3egh+"
 msgstr "Please select an end date."
 
-#: hooks/use-schemas.ts:168
-#: hooks/use-schemas.ts:199
-#: hooks/use-schemas.ts:258
+#: schemas/messages.ts:43
 msgid "hjtyTg"
 msgstr "End date must be after start date."
 
-#: hooks/use-schemas.ts:179
+#: schemas/messages.ts:44
 msgid "eEFyJl"
 msgstr "Goal name is required."
 
-#: hooks/use-schemas.ts:181
+#: schemas/messages.ts:45
 msgid "qVUStI"
 msgstr "Goal name must be at most 100 characters."
 
-#: hooks/use-schemas.ts:235
+#: schemas/messages.ts:46
 msgid "tb8z8V"
 msgstr "Please select a frequency."
 
-#: hooks/use-schemas.ts:241
+#: schemas/messages.ts:47
 msgid "BErLOD"
 msgstr "Please enter the number of days."
 
-#: hooks/use-schemas.ts:244
+#: schemas/messages.ts:48
 msgid "N4OgtE"
 msgstr "The number of days must not exceed 365."
 
-#: hooks/use-schemas.ts:271
+#: schemas/messages.ts:49
 msgid "F8BDEm"
 msgstr "Cannot activate a recurring transaction that has already expired."

@@ -67,13 +67,6 @@ export function CategoryDialog({
   })
 
   async function onSubmit(values: CategoryFormValues) {
-    const parsedValues = createCategorySchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     if (category) {
       const { success, error } = await updateCustomCategory(
         category._id,

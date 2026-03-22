@@ -6,6 +6,7 @@ import { getExtracted } from "next-intl/server"
 
 import { getBudgetsCollection } from "@/lib/collections"
 import type { Budget } from "@/lib/definitions"
+import { getSchemas } from "@/schemas/server"
 import type { BudgetFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
@@ -15,6 +16,13 @@ export async function createBudget(values: BudgetFormValues) {
   const t = await getExtracted()
 
   try {
+    const { createBudgetSchema } = await getSchemas()
+    const parsedValues = createBudgetSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -28,10 +36,10 @@ export async function createBudget(values: BudgetFormValues) {
 
     const existingBudget = await budgetsCollection.findOne({
       userId: new ObjectId(userId),
-      categoryKey: values.categoryKey,
-      currency: values.currency,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      categoryKey: parsedValues.data.categoryKey,
+      currency: parsedValues.data.currency,
+      startDate: parsedValues.data.startDate,
+      endDate: parsedValues.data.endDate,
     })
 
     if (existingBudget) {
@@ -40,11 +48,11 @@ export async function createBudget(values: BudgetFormValues) {
 
     const result = await budgetsCollection.insertOne({
       userId: new ObjectId(userId),
-      categoryKey: values.categoryKey,
-      currency: values.currency,
-      allocatedAmount: toDecimal128(values.allocatedAmount),
-      startDate: values.startDate,
-      endDate: values.endDate,
+      categoryKey: parsedValues.data.categoryKey,
+      currency: parsedValues.data.currency,
+      allocatedAmount: toDecimal128(parsedValues.data.allocatedAmount),
+      startDate: parsedValues.data.startDate,
+      endDate: parsedValues.data.endDate,
     })
 
     if (!result.acknowledged)
@@ -62,6 +70,13 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
   const t = await getExtracted()
 
   try {
+    const { createBudgetSchema } = await getSchemas()
+    const parsedValues = createBudgetSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -94,11 +109,11 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
       { _id: new ObjectId(budgetId), userId: new ObjectId(userId) },
       {
         $set: {
-          categoryKey: values.categoryKey,
-          currency: values.currency,
-          allocatedAmount: toDecimal128(values.allocatedAmount),
-          startDate: values.startDate,
-          endDate: values.endDate,
+          categoryKey: parsedValues.data.categoryKey,
+          currency: parsedValues.data.currency,
+          allocatedAmount: toDecimal128(parsedValues.data.allocatedAmount),
+          startDate: parsedValues.data.startDate,
+          endDate: parsedValues.data.endDate,
         },
       }
     )

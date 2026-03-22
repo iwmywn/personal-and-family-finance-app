@@ -38,13 +38,6 @@ export function TwoFactorVerificationForm() {
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    const parsedValues = createTwoFactorCodeSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.verifyTotp({
       code: values.code,
       trustDevice: values.trustDevice,

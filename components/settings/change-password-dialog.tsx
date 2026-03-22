@@ -47,13 +47,6 @@ export function ChangePasswordDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: PasswordFormValues) {
-    const parsedValues = createPasswordSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.changePassword({
       newPassword: values.newPassword,
       currentPassword: values.currentPassword,

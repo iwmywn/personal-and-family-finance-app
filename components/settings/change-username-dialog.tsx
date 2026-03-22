@@ -48,13 +48,6 @@ export function ChangeUsernameDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: UsernameFormValues) {
-    const parsedValues = createUsernameSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const { data: response, error } = await client.isUsernameAvailable({
       username: values.username,
     })

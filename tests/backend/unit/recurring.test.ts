@@ -36,6 +36,14 @@ describe("Recurring Transactions", async () => {
   })
 
   describe("createRecurringTransaction", () => {
+    it("should return error when data is invalid", async () => {
+      // @ts-expect-error - Testing invalid data
+      const result = await createRecurringTransaction({})
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
@@ -187,6 +195,17 @@ describe("Recurring Transactions", async () => {
   })
 
   describe("updateRecurringTransaction", () => {
+    it("should return error when data is invalid", async () => {
+      const result = await updateRecurringTransaction(
+        mockRecurringTransaction._id.toString(),
+        // @ts-expect-error - Testing invalid data
+        {}
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 

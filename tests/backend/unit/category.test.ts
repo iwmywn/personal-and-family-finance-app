@@ -45,6 +45,14 @@ vi.mock("crypto", () => ({
 
 describe("Categories", async () => {
   describe("createCustomCategory", () => {
+    it("should return error when data is invalid", async () => {
+      // @ts-expect-error - Testing invalid data
+      const result = await createCustomCategory({})
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
@@ -132,6 +140,17 @@ describe("Categories", async () => {
   })
 
   describe("updateCustomCategory", () => {
+    it("should return error when data is invalid", async () => {
+      const result = await updateCustomCategory(
+        mockCustomCategory._id.toString(),
+        // @ts-expect-error - Testing invalid data
+        {}
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 

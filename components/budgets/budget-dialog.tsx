@@ -90,13 +90,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   })
 
   async function onSubmit(values: BudgetFormValues) {
-    const parsedValues = createBudgetSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const data = {
       ...values,
       startDate: localDateToUTCMidnight(values.startDate),

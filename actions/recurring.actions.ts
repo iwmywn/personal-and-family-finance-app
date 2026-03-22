@@ -10,6 +10,7 @@ import type {
   DBRecurringTransaction,
   RecurringTransaction,
 } from "@/lib/definitions"
+import { getSchemas } from "@/schemas/server"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
@@ -21,6 +22,13 @@ export async function createRecurringTransaction(
   const t = await getExtracted()
 
   try {
+    const { createRecurringTransactionSchema } = await getSchemas()
+    const parsedValues = createRecurringTransactionSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -34,17 +42,17 @@ export async function createRecurringTransaction(
 
     const query: Filter<DBRecurringTransaction> = {
       userId: new ObjectId(userId),
-      type: values.type,
-      categoryKey: values.categoryKey,
-      amount: toDecimal128(values.amount),
-      currency: values.currency,
-      description: values.description,
-      frequency: values.frequency,
-      startDate: values.startDate,
+      type: parsedValues.data.type,
+      categoryKey: parsedValues.data.categoryKey,
+      amount: toDecimal128(parsedValues.data.amount),
+      currency: parsedValues.data.currency,
+      description: parsedValues.data.description,
+      frequency: parsedValues.data.frequency,
+      startDate: parsedValues.data.startDate,
     }
 
-    if (values.frequency === "random") {
-      query.randomEveryXDays = values.randomEveryXDays
+    if (parsedValues.data.frequency === "random") {
+      query.randomEveryXDays = parsedValues.data.randomEveryXDays
     }
 
     const existingRecurring = await recurringCollection.findOne(query)
@@ -55,17 +63,17 @@ export async function createRecurringTransaction(
 
     const result = await recurringCollection.insertOne({
       userId: new ObjectId(userId),
-      type: values.type,
-      categoryKey: values.categoryKey,
-      amount: toDecimal128(values.amount),
-      currency: values.currency,
-      description: values.description,
-      frequency: values.frequency,
-      randomEveryXDays: values.randomEveryXDays,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      type: parsedValues.data.type,
+      categoryKey: parsedValues.data.categoryKey,
+      amount: toDecimal128(parsedValues.data.amount),
+      currency: parsedValues.data.currency,
+      description: parsedValues.data.description,
+      frequency: parsedValues.data.frequency,
+      randomEveryXDays: parsedValues.data.randomEveryXDays,
+      startDate: parsedValues.data.startDate,
+      endDate: parsedValues.data.endDate,
       lastGenerated: undefined,
-      isActive: values.isActive,
+      isActive: parsedValues.data.isActive,
     })
 
     if (!result.acknowledged)
@@ -95,6 +103,13 @@ export async function updateRecurringTransaction(
   const t = await getExtracted()
 
   try {
+    const { createRecurringTransactionSchema } = await getSchemas()
+    const parsedValues = createRecurringTransactionSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -129,16 +144,16 @@ export async function updateRecurringTransaction(
       { _id: new ObjectId(recurringId), userId: new ObjectId(userId) },
       {
         $set: {
-          type: values.type,
-          categoryKey: values.categoryKey,
-          amount: toDecimal128(values.amount),
-          currency: values.currency,
-          description: values.description,
-          frequency: values.frequency,
-          randomEveryXDays: values.randomEveryXDays,
-          startDate: values.startDate,
-          endDate: values.endDate,
-          isActive: values.isActive,
+          type: parsedValues.data.type,
+          categoryKey: parsedValues.data.categoryKey,
+          amount: toDecimal128(parsedValues.data.amount),
+          currency: parsedValues.data.currency,
+          description: parsedValues.data.description,
+          frequency: parsedValues.data.frequency,
+          randomEveryXDays: parsedValues.data.randomEveryXDays,
+          startDate: parsedValues.data.startDate,
+          endDate: parsedValues.data.endDate,
+          isActive: parsedValues.data.isActive,
         },
       }
     )

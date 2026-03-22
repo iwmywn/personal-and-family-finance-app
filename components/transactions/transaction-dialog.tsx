@@ -101,13 +101,6 @@ export function TransactionDialog({
   })
 
   async function onSubmit(values: TransactionFormValues) {
-    const parsedValues = createTransactionSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const data = {
       ...values,
       date: localDateToUTCMidnight(values.date),

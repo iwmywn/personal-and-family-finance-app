@@ -6,6 +6,7 @@ import { getExtracted } from "next-intl/server"
 
 import { getGoalsCollection } from "@/lib/collections"
 import type { Goal } from "@/lib/definitions"
+import { getSchemas } from "@/schemas/server"
 import type { GoalFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
@@ -15,6 +16,13 @@ export async function createGoal(values: GoalFormValues) {
   const t = await getExtracted()
 
   try {
+    const { createGoalSchema } = await getSchemas()
+    const parsedValues = createGoalSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -28,10 +36,10 @@ export async function createGoal(values: GoalFormValues) {
 
     const existingGoal = await goalsCollection.findOne({
       userId: new ObjectId(userId),
-      categoryKey: values.categoryKey,
-      currency: values.currency,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      categoryKey: parsedValues.data.categoryKey,
+      currency: parsedValues.data.currency,
+      startDate: parsedValues.data.startDate,
+      endDate: parsedValues.data.endDate,
     })
 
     if (existingGoal) {
@@ -40,12 +48,12 @@ export async function createGoal(values: GoalFormValues) {
 
     const result = await goalsCollection.insertOne({
       userId: new ObjectId(userId),
-      categoryKey: values.categoryKey,
-      name: values.name,
-      targetAmount: toDecimal128(values.targetAmount),
-      currency: values.currency,
-      startDate: values.startDate,
-      endDate: values.endDate,
+      categoryKey: parsedValues.data.categoryKey,
+      name: parsedValues.data.name,
+      targetAmount: toDecimal128(parsedValues.data.targetAmount),
+      currency: parsedValues.data.currency,
+      startDate: parsedValues.data.startDate,
+      endDate: parsedValues.data.endDate,
     })
 
     if (!result.acknowledged)
@@ -63,6 +71,13 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
   const t = await getExtracted()
 
   try {
+    const { createGoalSchema } = await getSchemas()
+    const parsedValues = createGoalSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -95,12 +110,12 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
       { _id: new ObjectId(goalId), userId: new ObjectId(userId) },
       {
         $set: {
-          categoryKey: values.categoryKey,
-          name: values.name,
-          targetAmount: toDecimal128(values.targetAmount),
-          currency: values.currency,
-          startDate: values.startDate,
-          endDate: values.endDate,
+          categoryKey: parsedValues.data.categoryKey,
+          name: parsedValues.data.name,
+          targetAmount: toDecimal128(parsedValues.data.targetAmount),
+          currency: parsedValues.data.currency,
+          startDate: parsedValues.data.startDate,
+          endDate: parsedValues.data.endDate,
         },
       }
     )

@@ -5,7 +5,14 @@ import "./env/server.mjs"
 
 const withNextIntl = createNextIntlPlugin({
   experimental: {
-    srcPath: ["./actions", "./app", "./components", "./hooks"],
+    srcPath: [
+      "./actions",
+      "./app",
+      "./components",
+      "./hooks",
+      "./lib",
+      "./schemas",
+    ],
     extract: {
       sourceLocale: "en-US",
     },

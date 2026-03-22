@@ -92,13 +92,6 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   })
 
   async function onSubmit(values: GoalFormValues) {
-    const parsedValues = createGoalSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const data = {
       ...values,
       startDate: localDateToUTCMidnight(values.startDate),

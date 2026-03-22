@@ -13,7 +13,9 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { ProgressProvider } from "@/components/layout/progress-provider"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
+import { SchemaMessagesProvider } from "@/context/schema-messages-context"
 import { clientEnv } from "@/env/client.mjs"
+import { getSchemaMessages } from "@/schemas/messages"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -81,7 +83,10 @@ async function AppLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const locale = await getLocale()
+  const [locale, schemaMessages] = await Promise.all([
+    getLocale(),
+    getSchemaMessages(),
+  ])
 
   return (
     <html
@@ -94,20 +99,22 @@ async function AppLayout({
         <ThemeProvider>
           <NextIntlClientProvider>
             <ProgressProvider>
-              <NuqsAdapter>
-                <TooltipProvider>
-                  <Suspense
-                    fallback={
-                      <div className="center h-screen">
-                        <Logo isLoading />
-                      </div>
-                    }
-                  >
-                    <Toaster richColors closeButton />
-                    {children}
-                  </Suspense>
-                </TooltipProvider>
-              </NuqsAdapter>
+              <SchemaMessagesProvider messages={schemaMessages}>
+                <NuqsAdapter>
+                  <TooltipProvider>
+                    <Suspense
+                      fallback={
+                        <div className="center h-screen">
+                          <Logo isLoading />
+                        </div>
+                      }
+                    >
+                      <Toaster richColors closeButton />
+                      {children}
+                    </Suspense>
+                  </TooltipProvider>
+                </NuqsAdapter>
+              </SchemaMessagesProvider>
             </ProgressProvider>
           </NextIntlClientProvider>
         </ThemeProvider>

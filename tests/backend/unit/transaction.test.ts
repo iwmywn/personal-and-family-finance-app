@@ -26,6 +26,14 @@ import { localDateToUTCMidnight } from "@/lib/utils"
 
 describe("Transactions", async () => {
   describe("createTransaction", () => {
+    it("should return error when data is invalid", async () => {
+      // @ts-expect-error - Testing invalid data
+      const result = await createTransaction({})
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
@@ -102,6 +110,14 @@ describe("Transactions", async () => {
   })
 
   describe("updateTransaction", () => {
+    it("should return error when data is invalid", async () => {
+      // @ts-expect-error - Testing invalid data
+      const result = await updateTransaction(mockTransaction._id.toString(), {})
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
