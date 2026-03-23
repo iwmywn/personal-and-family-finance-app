@@ -1857,85 +1857,89 @@ msgid "YeRtBx"
 msgstr "名前は最大100文字です。"
 
 #: schemas/messages.ts:27
+msgid "J0CJqe"
+msgstr "名前には文字のみ使用できます。"
+
+#: schemas/messages.ts:28
 msgid "c+1x/V"
 msgstr "ユーザー名は少なくとも3文字である必要があります。"
 
-#: schemas/messages.ts:28
+#: schemas/messages.ts:29
 msgid "MSqoQ2"
 msgstr "ユーザー名は最大30文字です。"
 
-#: schemas/messages.ts:29
+#: schemas/messages.ts:30
 msgid "8Y5qyI"
 msgstr "ユーザー名には、文字、数字、アンダースコア、ドットのみ使用できます。"
 
-#: schemas/messages.ts:32
+#: schemas/messages.ts:33
 msgid "GNwfGD"
 msgstr "取引タイプを選択してください。"
 
-#: schemas/messages.ts:33
+#: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "カテゴリは必須です。"
 
-#: schemas/messages.ts:34
+#: schemas/messages.ts:35
 msgid "2saJxm"
 msgstr "通貨を選択してください。"
 
-#: schemas/messages.ts:35
+#: schemas/messages.ts:36
 msgid "be3kp3"
 msgstr "説明は必須です。"
 
-#: schemas/messages.ts:36
+#: schemas/messages.ts:37
 msgid "Y1VHB3"
 msgstr "説明は最大200文字です。"
 
-#: schemas/messages.ts:37
+#: schemas/messages.ts:38
 msgid "MhMNy6"
 msgstr "日付を選択してください。"
 
-#: schemas/messages.ts:38
+#: schemas/messages.ts:39
 msgid "EtmyBh"
 msgstr "タイプを選択してください。"
 
-#: schemas/messages.ts:39
+#: schemas/messages.ts:40
 msgid "5huJG4"
 msgstr "カテゴリ名は必須です。"
 
-#: schemas/messages.ts:40
+#: schemas/messages.ts:41
 msgid "LmVuiu"
 msgstr "カテゴリ名は最大50文字です。"
 
-#: schemas/messages.ts:41
+#: schemas/messages.ts:42
 msgid "HxXJtm"
 msgstr "開始日を選択してください。"
 
-#: schemas/messages.ts:42
+#: schemas/messages.ts:43
 msgid "O3egh+"
 msgstr "終了日を選択してください。"
 
-#: schemas/messages.ts:43
+#: schemas/messages.ts:44
 msgid "hjtyTg"
 msgstr "終了日は開始日より後である必要があります。"
 
-#: schemas/messages.ts:44
+#: schemas/messages.ts:45
 msgid "eEFyJl"
 msgstr "目標名は必須です。"
 
-#: schemas/messages.ts:45
+#: schemas/messages.ts:46
 msgid "qVUStI"
 msgstr "目標名は最大100文字です。"
 
-#: schemas/messages.ts:46
+#: schemas/messages.ts:47
 msgid "tb8z8V"
 msgstr "頻度を選択してください。"
 
-#: schemas/messages.ts:47
+#: schemas/messages.ts:48
 msgid "BErLOD"
 msgstr "日数を入力してください。"
 
-#: schemas/messages.ts:48
+#: schemas/messages.ts:49
 msgid "N4OgtE"
 msgstr "日数は365を超えてはいけません。"
 
-#: schemas/messages.ts:49
+#: schemas/messages.ts:50
 msgid "F8BDEm"
 msgstr "既に期限切れの定期取引を有効化することはできません。"

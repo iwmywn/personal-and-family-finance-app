@@ -2,12 +2,13 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb"
 import { betterAuth } from "better-auth/minimal"
 import { nextCookies } from "better-auth/next-js"
 import { captcha, twoFactor, username } from "better-auth/plugins"
+import * as z from "zod"
 
 import { siteConfig } from "@/app/pffa.config"
 import { clientEnv } from "@/env/client"
 import { serverEnv } from "@/env/server"
-import { DEFAULT_LOCALE } from "@/i18n/config"
-import { DEFAULT_CURRENCY } from "@/lib/currency"
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n/config"
+import { CURRENCIES, DEFAULT_CURRENCY } from "@/lib/currency"
 import { connect } from "@/lib/db"
 
 export const auth = betterAuth({
@@ -33,11 +34,17 @@ export const auth = betterAuth({
         type: "string",
         required: true,
         defaultValue: DEFAULT_LOCALE,
+        validator: {
+          input: z.enum(LOCALES),
+        },
       },
       currency: {
         type: "string",
         required: true,
         defaultValue: DEFAULT_CURRENCY,
+        validator: {
+          input: z.enum(CURRENCIES),
+        },
       },
     },
   },

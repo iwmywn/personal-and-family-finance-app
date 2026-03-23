@@ -1857,85 +1857,89 @@ msgid "YeRtBx"
 msgstr "이름은 최대 100자입니다."
 
 #: schemas/messages.ts:27
+msgid "J0CJqe"
+msgstr "이름은 문자만 포함할 수 있습니다."
+
+#: schemas/messages.ts:28
 msgid "c+1x/V"
 msgstr "사용자 이름은 최소 3자 이상이어야 합니다."
 
-#: schemas/messages.ts:28
+#: schemas/messages.ts:29
 msgid "MSqoQ2"
 msgstr "사용자 이름은 최대 30자입니다."
 
-#: schemas/messages.ts:29
+#: schemas/messages.ts:30
 msgid "8Y5qyI"
 msgstr "사용자 이름은 문자, 숫자, 밑줄 및 점만 포함할 수 있습니다."
 
-#: schemas/messages.ts:32
+#: schemas/messages.ts:33
 msgid "GNwfGD"
 msgstr "거래 유형을 선택해주세요."
 
-#: schemas/messages.ts:33
+#: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "카테고리는 필수입니다."
 
-#: schemas/messages.ts:34
+#: schemas/messages.ts:35
 msgid "2saJxm"
 msgstr "통화를 선택해주세요."
 
-#: schemas/messages.ts:35
+#: schemas/messages.ts:36
 msgid "be3kp3"
 msgstr "설명은 필수입니다."
 
-#: schemas/messages.ts:36
+#: schemas/messages.ts:37
 msgid "Y1VHB3"
 msgstr "설명은 최대 200자입니다."
 
-#: schemas/messages.ts:37
+#: schemas/messages.ts:38
 msgid "MhMNy6"
 msgstr "날짜를 선택해주세요."
 
-#: schemas/messages.ts:38
+#: schemas/messages.ts:39
 msgid "EtmyBh"
 msgstr "유형을 선택해주세요."
 
-#: schemas/messages.ts:39
+#: schemas/messages.ts:40
 msgid "5huJG4"
 msgstr "카테고리 이름은 필수입니다."
 
-#: schemas/messages.ts:40
+#: schemas/messages.ts:41
 msgid "LmVuiu"
 msgstr "카테고리 이름은 최대 50자입니다."
 
-#: schemas/messages.ts:41
+#: schemas/messages.ts:42
 msgid "HxXJtm"
 msgstr "시작일을 선택해주세요."
 
-#: schemas/messages.ts:42
+#: schemas/messages.ts:43
 msgid "O3egh+"
 msgstr "종료일을 선택해주세요."
 
-#: schemas/messages.ts:43
+#: schemas/messages.ts:44
 msgid "hjtyTg"
 msgstr "종료일은 시작일 이후여야 합니다."
 
-#: schemas/messages.ts:44
+#: schemas/messages.ts:45
 msgid "eEFyJl"
 msgstr "목표 이름은 필수입니다."
 
-#: schemas/messages.ts:45
+#: schemas/messages.ts:46
 msgid "qVUStI"
 msgstr "목표 이름은 최대 100자입니다."
 
-#: schemas/messages.ts:46
+#: schemas/messages.ts:47
 msgid "tb8z8V"
 msgstr "빈도를 선택해주세요."
 
-#: schemas/messages.ts:47
+#: schemas/messages.ts:48
 msgid "BErLOD"
 msgstr "일수를 입력해주세요."
 
-#: schemas/messages.ts:48
+#: schemas/messages.ts:49
 msgid "N4OgtE"
 msgstr "일수는 365를 초과할 수 없습니다."
 
-#: schemas/messages.ts:49
+#: schemas/messages.ts:50
 msgid "F8BDEm"
 msgstr "이미 만료된 반복 거래는 활성화할 수 없습니다."

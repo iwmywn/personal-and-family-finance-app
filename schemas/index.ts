@@ -81,7 +81,10 @@ export function buildSchemas(messages: SchemaMessages) {
       name: z
         .string()
         .min(1, { message: messages.nameRequired })
-        .max(100, { message: messages.nameMaxLength }),
+        .max(100, { message: messages.nameMaxLength })
+        .regex(/^[\p{L}\s]+$/u, {
+          message: messages.nameLettersOnly,
+        }),
     })
 
   const createUsernameSchema = () =>

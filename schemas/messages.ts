@@ -24,6 +24,7 @@ export async function getSchemaMessages() {
     codeDigitsOnly: t("Code can only contain digits."),
     nameRequired: t("Name is required."),
     nameMaxLength: t("Name must be at most 100 characters."),
+    nameLettersOnly: t("Name can only contain letters."),
     usernameMinLength: t("Username must have at least 3 characters."),
     usernameMaxLength: t("Username must be at most 30 characters."),
     usernameFormat: t(

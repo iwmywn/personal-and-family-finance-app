@@ -1857,85 +1857,89 @@ msgid "YeRtBx"
 msgstr "Tên phải có tối đa 100 ký tự."
 
 #: schemas/messages.ts:27
+msgid "J0CJqe"
+msgstr "Tên chỉ có thể chứa chữ cái."
+
+#: schemas/messages.ts:28
 msgid "c+1x/V"
 msgstr "Tên đăng nhập phải có ít nhất 3 ký tự."
 
-#: schemas/messages.ts:28
+#: schemas/messages.ts:29
 msgid "MSqoQ2"
 msgstr "Tên đăng nhập phải có tối đa 30 ký tự."
 
-#: schemas/messages.ts:29
+#: schemas/messages.ts:30
 msgid "8Y5qyI"
 msgstr "Tên đăng nhập chỉ có thể chứa chữ cái, số, dấu gạch dưới và dấu chấm."
 
-#: schemas/messages.ts:32
+#: schemas/messages.ts:33
 msgid "GNwfGD"
 msgstr "Vui lòng chọn loại giao dịch."
 
-#: schemas/messages.ts:33
+#: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "Danh mục là bắt buộc."
 
-#: schemas/messages.ts:34
+#: schemas/messages.ts:35
 msgid "2saJxm"
 msgstr "Vui lòng chọn một loại tiền tệ."
 
-#: schemas/messages.ts:35
+#: schemas/messages.ts:36
 msgid "be3kp3"
 msgstr "Mô tả là bắt buộc."
 
-#: schemas/messages.ts:36
+#: schemas/messages.ts:37
 msgid "Y1VHB3"
 msgstr "Mô tả phải có tối đa 200 ký tự."
 
-#: schemas/messages.ts:37
+#: schemas/messages.ts:38
 msgid "MhMNy6"
 msgstr "Vui lòng chọn ngày."
 
-#: schemas/messages.ts:38
+#: schemas/messages.ts:39
 msgid "EtmyBh"
 msgstr "Vui lòng chọn một loại."
 
-#: schemas/messages.ts:39
+#: schemas/messages.ts:40
 msgid "5huJG4"
 msgstr "Tên danh mục là bắt buộc."
 
-#: schemas/messages.ts:40
+#: schemas/messages.ts:41
 msgid "LmVuiu"
 msgstr "Tên danh mục phải có tối đa 50 ký tự."
 
-#: schemas/messages.ts:41
+#: schemas/messages.ts:42
 msgid "HxXJtm"
 msgstr "Vui lòng chọn ngày bắt đầu."
 
-#: schemas/messages.ts:42
+#: schemas/messages.ts:43
 msgid "O3egh+"
 msgstr "Vui lòng chọn ngày kết thúc."
 
-#: schemas/messages.ts:43
+#: schemas/messages.ts:44
 msgid "hjtyTg"
 msgstr "Ngày kết thúc phải sau ngày bắt đầu."
 
-#: schemas/messages.ts:44
+#: schemas/messages.ts:45
 msgid "eEFyJl"
 msgstr "Tên mục tiêu là bắt buộc."
 
-#: schemas/messages.ts:45
+#: schemas/messages.ts:46
 msgid "qVUStI"
 msgstr "Tên mục tiêu phải có tối đa 100 ký tự."
 
-#: schemas/messages.ts:46
+#: schemas/messages.ts:47
 msgid "tb8z8V"
 msgstr "Vui lòng chọn tần suất."
 
-#: schemas/messages.ts:47
+#: schemas/messages.ts:48
 msgid "BErLOD"
 msgstr "Vui lòng nhập số ngày."
 
-#: schemas/messages.ts:48
+#: schemas/messages.ts:49
 msgid "N4OgtE"
 msgstr "Số ngày không được vượt quá 365."
 
-#: schemas/messages.ts:49
+#: schemas/messages.ts:50
 msgid "F8BDEm"
 msgstr "Không thể kích hoạt giao dịch định kỳ đã hết hạn."

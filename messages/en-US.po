@@ -1857,85 +1857,89 @@ msgid "YeRtBx"
 msgstr "Name must be at most 100 characters."
 
 #: schemas/messages.ts:27
+msgid "J0CJqe"
+msgstr "Name can only contain letters."
+
+#: schemas/messages.ts:28
 msgid "c+1x/V"
 msgstr "Username must have at least 3 characters."
 
-#: schemas/messages.ts:28
+#: schemas/messages.ts:29
 msgid "MSqoQ2"
 msgstr "Username must be at most 30 characters."
 
-#: schemas/messages.ts:29
+#: schemas/messages.ts:30
 msgid "8Y5qyI"
 msgstr "Username can only contain letters, numbers, underscores, and dots."
 
-#: schemas/messages.ts:32
+#: schemas/messages.ts:33
 msgid "GNwfGD"
 msgstr "Please select a transaction type."
 
-#: schemas/messages.ts:33
+#: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "Category is required."
 
-#: schemas/messages.ts:34
+#: schemas/messages.ts:35
 msgid "2saJxm"
 msgstr "Please select a currency."
 
-#: schemas/messages.ts:35
+#: schemas/messages.ts:36
 msgid "be3kp3"
 msgstr "Description is required."
 
-#: schemas/messages.ts:36
+#: schemas/messages.ts:37
 msgid "Y1VHB3"
 msgstr "Description must be at most 200 characters."
 
-#: schemas/messages.ts:37
+#: schemas/messages.ts:38
 msgid "MhMNy6"
 msgstr "Please select a date."
 
-#: schemas/messages.ts:38
+#: schemas/messages.ts:39
 msgid "EtmyBh"
 msgstr "Please select a type."
 
-#: schemas/messages.ts:39
+#: schemas/messages.ts:40
 msgid "5huJG4"
 msgstr "Category name is required."
 
-#: schemas/messages.ts:40
+#: schemas/messages.ts:41
 msgid "LmVuiu"
 msgstr "Category name must be at most 50 characters."
 
-#: schemas/messages.ts:41
+#: schemas/messages.ts:42
 msgid "HxXJtm"
 msgstr "Please select a start date."
 
-#: schemas/messages.ts:42
+#: schemas/messages.ts:43
 msgid "O3egh+"
 msgstr "Please select an end date."
 
-#: schemas/messages.ts:43
+#: schemas/messages.ts:44
 msgid "hjtyTg"
 msgstr "End date must be after start date."
 
-#: schemas/messages.ts:44
+#: schemas/messages.ts:45
 msgid "eEFyJl"
 msgstr "Goal name is required."
 
-#: schemas/messages.ts:45
+#: schemas/messages.ts:46
 msgid "qVUStI"
 msgstr "Goal name must be at most 100 characters."
 
-#: schemas/messages.ts:46
+#: schemas/messages.ts:47
 msgid "tb8z8V"
 msgstr "Please select a frequency."
 
-#: schemas/messages.ts:47
+#: schemas/messages.ts:48
 msgid "BErLOD"
 msgstr "Please enter the number of days."
 
-#: schemas/messages.ts:48
+#: schemas/messages.ts:49
 msgid "N4OgtE"
 msgstr "The number of days must not exceed 365."
 
-#: schemas/messages.ts:49
+#: schemas/messages.ts:50
 msgid "F8BDEm"
 msgstr "Cannot activate a recurring transaction that has already expired."

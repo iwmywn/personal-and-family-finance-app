@@ -1857,85 +1857,89 @@ msgid "YeRtBx"
 msgstr "姓名最多为 100 个字符。"
 
 #: schemas/messages.ts:27
+msgid "J0CJqe"
+msgstr "姓名只能包含字母。"
+
+#: schemas/messages.ts:28
 msgid "c+1x/V"
 msgstr "用户名必须至少包含 3 个字符。"
 
-#: schemas/messages.ts:28
+#: schemas/messages.ts:29
 msgid "MSqoQ2"
 msgstr "用户名最多为 30 个字符。"
 
-#: schemas/messages.ts:29
+#: schemas/messages.ts:30
 msgid "8Y5qyI"
 msgstr "用户名只能包含字母、数字、下划线和点。"
 
-#: schemas/messages.ts:32
+#: schemas/messages.ts:33
 msgid "GNwfGD"
 msgstr "请选择交易类型。"
 
-#: schemas/messages.ts:33
+#: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "必须填写分类。"
 
-#: schemas/messages.ts:34
+#: schemas/messages.ts:35
 msgid "2saJxm"
 msgstr "请选择货币。"
 
-#: schemas/messages.ts:35
+#: schemas/messages.ts:36
 msgid "be3kp3"
 msgstr "必须填写说明。"
 
-#: schemas/messages.ts:36
+#: schemas/messages.ts:37
 msgid "Y1VHB3"
 msgstr "描述最多为 200 个字符。"
 
-#: schemas/messages.ts:37
+#: schemas/messages.ts:38
 msgid "MhMNy6"
 msgstr "请选择日期。"
 
-#: schemas/messages.ts:38
+#: schemas/messages.ts:39
 msgid "EtmyBh"
 msgstr "请选择类型。"
 
-#: schemas/messages.ts:39
+#: schemas/messages.ts:40
 msgid "5huJG4"
 msgstr "必须填写分类名称。"
 
-#: schemas/messages.ts:40
+#: schemas/messages.ts:41
 msgid "LmVuiu"
 msgstr "分类名称最多为 50 个字符。"
 
-#: schemas/messages.ts:41
+#: schemas/messages.ts:42
 msgid "HxXJtm"
 msgstr "请选择开始日期。"
 
-#: schemas/messages.ts:42
+#: schemas/messages.ts:43
 msgid "O3egh+"
 msgstr "请选择结束日期。"
 
-#: schemas/messages.ts:43
+#: schemas/messages.ts:44
 msgid "hjtyTg"
 msgstr "结束日期必须在开始日期之后。"
 
-#: schemas/messages.ts:44
+#: schemas/messages.ts:45
 msgid "eEFyJl"
 msgstr "必须填写目标名称。"
 
-#: schemas/messages.ts:45
+#: schemas/messages.ts:46
 msgid "qVUStI"
 msgstr "目标名称最多为 100 个字符。"
 
-#: schemas/messages.ts:46
+#: schemas/messages.ts:47
 msgid "tb8z8V"
 msgstr "请选择频率。"
 
-#: schemas/messages.ts:47
+#: schemas/messages.ts:48
 msgid "BErLOD"
 msgstr "请输入天数。"
 
-#: schemas/messages.ts:48
+#: schemas/messages.ts:49
 msgid "N4OgtE"
 msgstr "天数不能超过 365。"
 
-#: schemas/messages.ts:49
+#: schemas/messages.ts:50
 msgid "F8BDEm"
 msgstr "无法激活已过期的定期交易。"
