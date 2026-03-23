@@ -1,7 +1,8 @@
-import createNextIntlPlugin from "next-intl/plugin"
+import "./env/client"
+import "./env/server"
 
-import "./env/client.mjs"
-import "./env/server.mjs"
+import type { NextConfig } from "next"
+import createNextIntlPlugin from "next-intl/plugin"
 
 const withNextIntl = createNextIntlPlugin({
   experimental: {
@@ -24,8 +25,7 @@ const withNextIntl = createNextIntlPlugin({
   },
 })
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   devIndicators: {
     position: "bottom-right",
   },

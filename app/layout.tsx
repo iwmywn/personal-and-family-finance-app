@@ -14,7 +14,7 @@ import { ProgressProvider } from "@/components/layout/progress-provider"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
 import { SchemaMessagesProvider } from "@/context/schema-messages-context"
-import { clientEnv } from "@/env/client.mjs"
+import { clientEnv } from "@/env/client"
 import { getSchemaMessages } from "@/schemas/messages"
 
 export async function generateMetadata(): Promise<Metadata> {

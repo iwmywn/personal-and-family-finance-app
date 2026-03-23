@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha"
 import { toast } from "sonner"
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { clientEnv } from "@/env/client.mjs"
+import { clientEnv } from "@/env/client"
 
 interface ReCaptchaPopupProps {
   open: boolean

@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb"
 import type { Collection, Db, MongoClientOptions, OptionalId } from "mongodb"
 
-import { serverEnv } from "@/env/server.mjs"
+import { serverEnv } from "@/env/server"
 
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined
