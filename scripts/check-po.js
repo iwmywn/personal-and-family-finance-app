@@ -30,6 +30,7 @@ files.forEach((file) => {
     const lines = content.split(/\r?\n/)
 
     let currentMsgidLine = 0
+    let currentMsgid = ""
     let inMsgid = false
 
     for (let i = 0; i < lines.length; i++) {
@@ -43,6 +44,7 @@ files.forEach((file) => {
       if (line.startsWith('msgid "')) {
         inMsgid = true
         currentMsgidLine = i + 1
+        currentMsgid = line.match(/^msgid "(.*)"$/)?.[1] || ""
       } else if (line.startsWith('msgstr "')) {
         if (inMsgid) {
           const match = line.match(/^msgstr "(.*)"$/)
@@ -52,7 +54,7 @@ files.forEach((file) => {
 
             if (msgstrContent === "") {
               console.error(
-                `File: ${path.relative(process.cwd(), file)}, Line: ${currentMsgidLine} - msgid missing msgstr`
+                `File: ${path.relative(process.cwd(), file)}, line ${currentMsgidLine} with msgid "${currentMsgid}" is missing msgstr`
               )
               hasError = true
             }

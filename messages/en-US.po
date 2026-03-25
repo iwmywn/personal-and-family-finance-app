@@ -1829,8 +1829,8 @@ msgid "gpW0lx"
 msgstr "Current password is required."
 
 #: schemas/messages.ts:18
-msgid "136ad6"
-msgstr "Please confirm your new password."
+msgid "xfcapk"
+msgstr "New password confirmation is required."
 
 #: schemas/messages.ts:19
 msgid "H5adYw"
@@ -1873,16 +1873,16 @@ msgid "8Y5qyI"
 msgstr "Username can only contain letters, numbers, underscores, and dots."
 
 #: schemas/messages.ts:33
-msgid "GNwfGD"
-msgstr "Please select a transaction type."
+msgid "l9jjIW"
+msgstr "Transaction type is required."
 
 #: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "Category is required."
 
 #: schemas/messages.ts:35
-msgid "2saJxm"
-msgstr "Please select a currency."
+msgid "A5N1tw"
+msgstr "Currency is required."
 
 #: schemas/messages.ts:36
 msgid "be3kp3"
@@ -1893,12 +1893,12 @@ msgid "Y1VHB3"
 msgstr "Description must be at most 200 characters."
 
 #: schemas/messages.ts:38
-msgid "MhMNy6"
-msgstr "Please select a date."
+msgid "fgoR4w"
+msgstr "Date is required."
 
 #: schemas/messages.ts:39
-msgid "EtmyBh"
-msgstr "Please select a type."
+msgid "goeMxG"
+msgstr "Type is required."
 
 #: schemas/messages.ts:40
 msgid "5huJG4"
@@ -1909,12 +1909,12 @@ msgid "LmVuiu"
 msgstr "Category name must be at most 50 characters."
 
 #: schemas/messages.ts:42
-msgid "HxXJtm"
-msgstr "Please select a start date."
+msgid "C3kWKK"
+msgstr "Start date is required."
 
 #: schemas/messages.ts:43
-msgid "O3egh+"
-msgstr "Please select an end date."
+msgid "1uO2me"
+msgstr "End date is required."
 
 #: schemas/messages.ts:44
 msgid "hjtyTg"
@@ -1929,12 +1929,12 @@ msgid "qVUStI"
 msgstr "Goal name must be at most 100 characters."
 
 #: schemas/messages.ts:47
-msgid "tb8z8V"
-msgstr "Please select a frequency."
+msgid "pmDGs3"
+msgstr "Frequency is required."
 
 #: schemas/messages.ts:48
-msgid "BErLOD"
-msgstr "Please enter the number of days."
+msgid "rHlS+D"
+msgstr "Number of days is required."
 
 #: schemas/messages.ts:49
 msgid "N4OgtE"

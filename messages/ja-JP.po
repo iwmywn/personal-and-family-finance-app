@@ -1829,8 +1829,8 @@ msgid "gpW0lx"
 msgstr "現在のパスワードは必須です。"
 
 #: schemas/messages.ts:18
-msgid "136ad6"
-msgstr "新しいパスワードを確認してください。"
+msgid "xfcapk"
+msgstr "新しいパスワードの確認は必須です。"
 
 #: schemas/messages.ts:19
 msgid "H5adYw"
@@ -1873,16 +1873,16 @@ msgid "8Y5qyI"
 msgstr "ユーザー名には、文字、数字、アンダースコア、ドットのみ使用できます。"
 
 #: schemas/messages.ts:33
-msgid "GNwfGD"
-msgstr "取引タイプを選択してください。"
+msgid "l9jjIW"
+msgstr "取引タイプは必須です。"
 
 #: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "カテゴリは必須です。"
 
 #: schemas/messages.ts:35
-msgid "2saJxm"
-msgstr "通貨を選択してください。"
+msgid "A5N1tw"
+msgstr "通貨は必須です。"
 
 #: schemas/messages.ts:36
 msgid "be3kp3"
@@ -1893,12 +1893,12 @@ msgid "Y1VHB3"
 msgstr "説明は最大200文字です。"
 
 #: schemas/messages.ts:38
-msgid "MhMNy6"
-msgstr "日付を選択してください。"
+msgid "fgoR4w"
+msgstr "日付は必須です。"
 
 #: schemas/messages.ts:39
-msgid "EtmyBh"
-msgstr "タイプを選択してください。"
+msgid "goeMxG"
+msgstr "タイプは必須です。"
 
 #: schemas/messages.ts:40
 msgid "5huJG4"
@@ -1909,12 +1909,12 @@ msgid "LmVuiu"
 msgstr "カテゴリ名は最大50文字です。"
 
 #: schemas/messages.ts:42
-msgid "HxXJtm"
-msgstr "開始日を選択してください。"
+msgid "C3kWKK"
+msgstr "開始日は必須です。"
 
 #: schemas/messages.ts:43
-msgid "O3egh+"
-msgstr "終了日を選択してください。"
+msgid "1uO2me"
+msgstr "終了日は必須です。"
 
 #: schemas/messages.ts:44
 msgid "hjtyTg"
@@ -1929,12 +1929,12 @@ msgid "qVUStI"
 msgstr "目標名は最大100文字です。"
 
 #: schemas/messages.ts:47
-msgid "tb8z8V"
-msgstr "頻度を選択してください。"
+msgid "pmDGs3"
+msgstr "頻度は必須です。"
 
 #: schemas/messages.ts:48
-msgid "BErLOD"
-msgstr "日数を入力してください。"
+msgid "rHlS+D"
+msgstr "日数は必須です。"
 
 #: schemas/messages.ts:49
 msgid "N4OgtE"

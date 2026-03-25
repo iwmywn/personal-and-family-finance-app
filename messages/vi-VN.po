@@ -1829,8 +1829,8 @@ msgid "gpW0lx"
 msgstr "Mật khẩu hiện tại là bắt buộc."
 
 #: schemas/messages.ts:18
-msgid "136ad6"
-msgstr "Vui lòng xác nhận mật khẩu mới của bạn."
+msgid "xfcapk"
+msgstr "Xác nhận mật khẩu mới là bắt buộc."
 
 #: schemas/messages.ts:19
 msgid "H5adYw"
@@ -1873,16 +1873,16 @@ msgid "8Y5qyI"
 msgstr "Tên đăng nhập chỉ có thể chứa chữ cái, số, dấu gạch dưới và dấu chấm."
 
 #: schemas/messages.ts:33
-msgid "GNwfGD"
-msgstr "Vui lòng chọn loại giao dịch."
+msgid "l9jjIW"
+msgstr "Loại giao dịch là bắt buộc."
 
 #: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "Danh mục là bắt buộc."
 
 #: schemas/messages.ts:35
-msgid "2saJxm"
-msgstr "Vui lòng chọn một loại tiền tệ."
+msgid "A5N1tw"
+msgstr "Tiền tệ là bắt buộc."
 
 #: schemas/messages.ts:36
 msgid "be3kp3"
@@ -1893,12 +1893,12 @@ msgid "Y1VHB3"
 msgstr "Mô tả phải có tối đa 200 ký tự."
 
 #: schemas/messages.ts:38
-msgid "MhMNy6"
-msgstr "Vui lòng chọn ngày."
+msgid "fgoR4w"
+msgstr "Ngày là bắt buộc."
 
 #: schemas/messages.ts:39
-msgid "EtmyBh"
-msgstr "Vui lòng chọn một loại."
+msgid "goeMxG"
+msgstr "Loại là bắt buộc."
 
 #: schemas/messages.ts:40
 msgid "5huJG4"
@@ -1909,12 +1909,12 @@ msgid "LmVuiu"
 msgstr "Tên danh mục phải có tối đa 50 ký tự."
 
 #: schemas/messages.ts:42
-msgid "HxXJtm"
-msgstr "Vui lòng chọn ngày bắt đầu."
+msgid "C3kWKK"
+msgstr "Ngày bắt đầu là bắt buộc."
 
 #: schemas/messages.ts:43
-msgid "O3egh+"
-msgstr "Vui lòng chọn ngày kết thúc."
+msgid "1uO2me"
+msgstr "Ngày kết thúc là bắt buộc."
 
 #: schemas/messages.ts:44
 msgid "hjtyTg"
@@ -1929,12 +1929,12 @@ msgid "qVUStI"
 msgstr "Tên mục tiêu phải có tối đa 100 ký tự."
 
 #: schemas/messages.ts:47
-msgid "tb8z8V"
-msgstr "Vui lòng chọn tần suất."
+msgid "pmDGs3"
+msgstr "Tần suất là bắt buộc."
 
 #: schemas/messages.ts:48
-msgid "BErLOD"
-msgstr "Vui lòng nhập số ngày."
+msgid "rHlS+D"
+msgstr "Số ngày là bắt buộc."
 
 #: schemas/messages.ts:49
 msgid "N4OgtE"

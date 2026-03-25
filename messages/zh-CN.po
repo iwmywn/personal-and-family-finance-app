@@ -1829,8 +1829,8 @@ msgid "gpW0lx"
 msgstr "必须填写当前密码。"
 
 #: schemas/messages.ts:18
-msgid "136ad6"
-msgstr "请确认您的新密码。"
+msgid "xfcapk"
+msgstr "要求确认新密码。"
 
 #: schemas/messages.ts:19
 msgid "H5adYw"
@@ -1873,16 +1873,16 @@ msgid "8Y5qyI"
 msgstr "用户名只能包含字母、数字、下划线和点。"
 
 #: schemas/messages.ts:33
-msgid "GNwfGD"
-msgstr "请选择交易类型。"
+msgid "l9jjIW"
+msgstr "交易类型是必填项。"
 
 #: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "必须填写分类。"
 
 #: schemas/messages.ts:35
-msgid "2saJxm"
-msgstr "请选择货币。"
+msgid "A5N1tw"
+msgstr "货币是必填项。"
 
 #: schemas/messages.ts:36
 msgid "be3kp3"
@@ -1893,12 +1893,12 @@ msgid "Y1VHB3"
 msgstr "描述最多为 200 个字符。"
 
 #: schemas/messages.ts:38
-msgid "MhMNy6"
-msgstr "请选择日期。"
+msgid "fgoR4w"
+msgstr "日期是必填项。"
 
 #: schemas/messages.ts:39
-msgid "EtmyBh"
-msgstr "请选择类型。"
+msgid "goeMxG"
+msgstr "类型是必填项。"
 
 #: schemas/messages.ts:40
 msgid "5huJG4"
@@ -1909,12 +1909,12 @@ msgid "LmVuiu"
 msgstr "分类名称最多为 50 个字符。"
 
 #: schemas/messages.ts:42
-msgid "HxXJtm"
-msgstr "请选择开始日期。"
+msgid "C3kWKK"
+msgstr "开始日期是必填项。"
 
 #: schemas/messages.ts:43
-msgid "O3egh+"
-msgstr "请选择结束日期。"
+msgid "1uO2me"
+msgstr "结束日期是必填项。"
 
 #: schemas/messages.ts:44
 msgid "hjtyTg"
@@ -1929,12 +1929,12 @@ msgid "qVUStI"
 msgstr "目标名称最多为 100 个字符。"
 
 #: schemas/messages.ts:47
-msgid "tb8z8V"
-msgstr "请选择频率。"
+msgid "pmDGs3"
+msgstr "频率是必填项。"
 
 #: schemas/messages.ts:48
-msgid "BErLOD"
-msgstr "请输入天数。"
+msgid "rHlS+D"
+msgstr "天数是必填项。"
 
 #: schemas/messages.ts:49
 msgid "N4OgtE"

@@ -44,7 +44,7 @@ export function buildSchemas(messages: SchemaMessages) {
         newPassword: basePasswordSchema(),
         confirmPassword: z
           .string()
-          .min(1, { message: messages.confirmNewPassword }),
+          .min(1, { message: messages.newPasswordRequired }),
         revokeOtherSessions: z.boolean(),
       })
       .superRefine((data, ctx) => {

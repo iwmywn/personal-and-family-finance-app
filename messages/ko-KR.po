@@ -1829,8 +1829,8 @@ msgid "gpW0lx"
 msgstr "현재 비밀번호는 필수입니다."
 
 #: schemas/messages.ts:18
-msgid "136ad6"
-msgstr "새 비밀번호를 확인해주세요."
+msgid "xfcapk"
+msgstr "새 비밀번호 확인은 필수입니다."
 
 #: schemas/messages.ts:19
 msgid "H5adYw"
@@ -1873,16 +1873,16 @@ msgid "8Y5qyI"
 msgstr "사용자 이름은 문자, 숫자, 밑줄 및 점만 포함할 수 있습니다."
 
 #: schemas/messages.ts:33
-msgid "GNwfGD"
-msgstr "거래 유형을 선택해주세요."
+msgid "l9jjIW"
+msgstr "거래 유형은 필수입니다."
 
 #: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "카테고리는 필수입니다."
 
 #: schemas/messages.ts:35
-msgid "2saJxm"
-msgstr "통화를 선택해주세요."
+msgid "A5N1tw"
+msgstr "통화는 필수입니다."
 
 #: schemas/messages.ts:36
 msgid "be3kp3"
@@ -1893,12 +1893,12 @@ msgid "Y1VHB3"
 msgstr "설명은 최대 200자입니다."
 
 #: schemas/messages.ts:38
-msgid "MhMNy6"
-msgstr "날짜를 선택해주세요."
+msgid "fgoR4w"
+msgstr "날짜는 필수입니다."
 
 #: schemas/messages.ts:39
-msgid "EtmyBh"
-msgstr "유형을 선택해주세요."
+msgid "goeMxG"
+msgstr "유형은 필수입니다."
 
 #: schemas/messages.ts:40
 msgid "5huJG4"
@@ -1909,12 +1909,12 @@ msgid "LmVuiu"
 msgstr "카테고리 이름은 최대 50자입니다."
 
 #: schemas/messages.ts:42
-msgid "HxXJtm"
-msgstr "시작일을 선택해주세요."
+msgid "C3kWKK"
+msgstr "시작일은 필수입니다."
 
 #: schemas/messages.ts:43
-msgid "O3egh+"
-msgstr "종료일을 선택해주세요."
+msgid "1uO2me"
+msgstr "종료일은 필수입니다."
 
 #: schemas/messages.ts:44
 msgid "hjtyTg"
@@ -1929,12 +1929,12 @@ msgid "qVUStI"
 msgstr "목표 이름은 최대 100자입니다."
 
 #: schemas/messages.ts:47
-msgid "tb8z8V"
-msgstr "빈도를 선택해주세요."
+msgid "pmDGs3"
+msgstr "빈도는 필수입니다."
 
 #: schemas/messages.ts:48
-msgid "BErLOD"
-msgstr "일수를 입력해주세요."
+msgid "rHlS+D"
+msgstr "일수는 필수입니다."
 
 #: schemas/messages.ts:49
 msgid "N4OgtE"
