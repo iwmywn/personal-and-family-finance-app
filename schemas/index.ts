@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { CATEGORIES } from "@/lib/categories"
+import { CATEGORIES } from "@/lib/category"
 import { CURRENCIES } from "@/lib/currency"
 import { localDateToUTCMidnight } from "@/lib/utils"
 import type { SchemaMessages } from "@/schemas/messages"

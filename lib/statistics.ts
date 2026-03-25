@@ -1,6 +1,6 @@
 import Decimal from "decimal.js"
 
-import type { CategoryKeyType } from "@/lib/categories"
+import type { CategoryKeyType } from "@/lib/category"
 import type { AppCurrency } from "@/lib/currency"
 import type { Budget, Goal, Transaction } from "@/lib/definitions"
 import {

@@ -38,7 +38,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormButton } from "@/components/form-button"
 import { useSchemas } from "@/hooks/use-schemas"
-import type { CategoryType } from "@/lib/categories"
+import type { CategoryType } from "@/lib/category"
 import type { Category } from "@/lib/definitions"
 import type { CategoryFormValues } from "@/schemas/types"
 
