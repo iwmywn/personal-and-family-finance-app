@@ -521,6 +521,14 @@ msgid "47FYwb"
 msgstr "취소"
 
 #: components/budgets/budget-dialog.tsx:307
+#: components/categories/category-dialog.tsx:183
+#: components/goals/goal-dialog.tsx:330
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:511
+#: components/transactions/transaction-dialog.tsx:321
+msgid "BWpuKl"
+msgstr "업데이트"
+
+#: components/budgets/budget-dialog.tsx:307
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
 #: components/categories/category-dialog.tsx:183
@@ -533,14 +541,6 @@ msgstr "취소"
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "추가"
-
-#: components/budgets/budget-dialog.tsx:307
-#: components/categories/category-dialog.tsx:183
-#: components/goals/goal-dialog.tsx:330
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:511
-#: components/transactions/transaction-dialog.tsx:321
-msgid "BWpuKl"
-msgstr "업데이트"
 
 #: components/budgets/budget-filters.tsx:84
 #: components/goals/goal-filters.tsx:118
