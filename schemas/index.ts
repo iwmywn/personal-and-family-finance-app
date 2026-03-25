@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { CATEGORY_TYPES } from "@/lib/categories"
+import { CATEGORIES } from "@/lib/categories"
 import { CURRENCIES } from "@/lib/currency"
 import { localDateToUTCMidnight } from "@/lib/utils"
 import type { SchemaMessages } from "@/schemas/messages"
@@ -100,7 +100,7 @@ export function buildSchemas(messages: SchemaMessages) {
 
   const createTransactionSchema = () =>
     z.object({
-      type: z.enum(CATEGORY_TYPES, {
+      type: z.enum(CATEGORIES, {
         message: messages.transactionTypeRequired,
       }),
       categoryKey: z.string().min(1, { message: messages.categoryRequired }),
@@ -124,7 +124,7 @@ export function buildSchemas(messages: SchemaMessages) {
   const createCategorySchema = () =>
     z.object({
       categoryKey: z.string().optional(),
-      type: z.enum(CATEGORY_TYPES, {
+      type: z.enum(CATEGORIES, {
         message: messages.typeRequired,
       }),
       label: z
@@ -200,7 +200,7 @@ export function buildSchemas(messages: SchemaMessages) {
   const createRecurringTransactionSchema = () =>
     z
       .object({
-        type: z.enum(CATEGORY_TYPES, {
+        type: z.enum(CATEGORIES, {
           message: messages.typeRequired,
         }),
         categoryKey: z.string().min(1, { message: messages.categoryRequired }),
