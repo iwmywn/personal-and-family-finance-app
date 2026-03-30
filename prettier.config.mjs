@@ -1,5 +1,5 @@
 /** @type {import('prettier').Config} */
-export default {
+const prettierConfig = {
   plugins: [
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss",
@@ -27,3 +27,5 @@ export default {
     "^[./]",
   ],
 }
+
+export default prettierConfig

@@ -3,7 +3,7 @@ import nextCoreWebVitals from "eslint-config-next/core-web-vitals"
 import nextTypescript from "eslint-config-next/typescript"
 import unusedImports from "eslint-plugin-unused-imports"
 
-export default [
+const eslintConfig = [
   ...nextCoreWebVitals,
   ...nextTypescript,
   {
@@ -48,3 +48,5 @@ export default [
     ],
   },
 ]
+
+export default eslintConfig
