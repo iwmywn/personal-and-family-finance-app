@@ -1,4 +1,3 @@
-import tsEslintPlugin from "@typescript-eslint/eslint-plugin"
 import nextCoreWebVitals from "eslint-config-next/core-web-vitals"
 import nextTypescript from "eslint-config-next/typescript"
 import unusedImports from "eslint-plugin-unused-imports"
@@ -8,9 +7,9 @@ const eslintConfig = [
   ...nextTypescript,
   {
     plugins: {
-      "@typescript-eslint": tsEslintPlugin,
       "unused-imports": unusedImports,
     },
+    files: ["**/*.{ts,tsx}"],
     rules: {
       "@typescript-eslint/consistent-type-imports": [
         "error",
