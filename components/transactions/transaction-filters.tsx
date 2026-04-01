@@ -51,7 +51,7 @@ export function TransactionFilters({
   const [isDateRangeOpen, setIsDateRangeOpen] = useState<boolean>(false)
   const [searchTerm, setSearchTerm] = useQueryState(
     "search",
-    parseAsString.withDefault("")
+    parseAsString.withDefault("").withOptions({ throttleMs: 500 })
   )
   const [selectedDateIso, setSelectedDateIso] = useQueryState(
     "date",
