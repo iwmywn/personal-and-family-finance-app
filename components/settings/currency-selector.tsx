@@ -11,14 +11,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { client } from "@/lib/auth-client"
-import { CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import { CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 
 export function CurrencySelector() {
   const t = useExtracted()
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { user } = useAppData()
+  const { user } = useUser()
 
   async function handleCurrencyChange(currency: AppCurrency) {
     setIsLoading(true)

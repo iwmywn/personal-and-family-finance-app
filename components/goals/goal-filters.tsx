@@ -22,14 +22,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { GoalsTable } from "@/components/goals/goals-table"
-import { useAppData } from "@/context/app-data-context"
+import { useGoals } from "@/context/goals-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useMonths } from "@/hooks/use-months"
 import { filterGoals } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
 export function GoalFilters() {
-  const { goals, transactions } = useAppData()
+  const { goals } = useGoals()
+  const { transactions } = useTransactions()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")

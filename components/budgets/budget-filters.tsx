@@ -15,14 +15,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { BudgetsTable } from "@/components/budgets/budgets-table"
-import { useAppData } from "@/context/app-data-context"
+import { useBudgets } from "@/context/budgets-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useMonths } from "@/hooks/use-months"
 import { filterBudgets } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
 export function BudgetFilters() {
-  const { budgets, transactions } = useAppData()
+  const { budgets } = useBudgets()
+  const { transactions } = useTransactions()
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")
   const [filterCategoryKey, setFilterCategoryKey] = useState<string>("all")

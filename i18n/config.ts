@@ -1,11 +1,5 @@
-import {
-  enUS,
-  ja,
-  ko,
-  vi,
-  zhCN,
-  type DayPickerLocale,
-} from "react-day-picker/locale"
+import { enUS, ja, ko, vi, zhCN } from "react-day-picker/locale"
+import type { DayPickerLocale } from "react-day-picker/locale"
 
 export const LOCALES = ["en-US", "zh-CN", "ja-JP", "ko-KR", "vi-VN"] as const
 

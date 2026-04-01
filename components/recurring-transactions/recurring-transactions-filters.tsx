@@ -23,14 +23,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { RecurringTransactionsTable } from "@/components/recurring-transactions/recurring-transactions-table"
-import { useAppData } from "@/context/app-data-context"
+import { useRecurring } from "@/context/recurring-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useMonths } from "@/hooks/use-months"
 import { filterRecurringTransactions } from "@/lib/filters"
 import { getUniqueYears } from "@/lib/utils"
 
 export function RecurringTransactionsFilters() {
-  const { recurringTransactions, transactions } = useAppData()
+  const { recurringTransactions } = useRecurring()
+  const { transactions } = useTransactions()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterMonth, setFilterMonth] = useState<string>("all")
   const [filterYear, setFilterYear] = useState<string>("all")

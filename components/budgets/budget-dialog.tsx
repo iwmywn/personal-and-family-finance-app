@@ -42,10 +42,11 @@ import {
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
-import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import type { Budget } from "@/lib/definitions"
 import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
 import type { BudgetFormValues } from "@/schemas/types"
@@ -61,7 +62,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
   const { createBudgetSchema } = useSchemas()
-  const { user } = useAppData()
+  const { user } = useUser()
   const formatDate = useFormatDate()
   const form = useForm<BudgetFormValues>({
     resolver: zodResolver(createBudgetSchema()),
@@ -89,13 +90,6 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   })
 
   async function onSubmit(values: BudgetFormValues) {
-    const parsedValues = createBudgetSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const data = {
       ...values,
       startDate: localDateToUTCMidnight(values.startDate),
@@ -309,10 +303,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={budget ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {budget ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

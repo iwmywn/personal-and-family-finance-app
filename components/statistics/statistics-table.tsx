@@ -1,10 +1,18 @@
 "use client"
 
-import { WalletIcon } from "lucide-react"
+import Link from "next/link"
+import { MoreVerticalIcon, WalletIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import {
   Empty,
   EmptyDescription,
@@ -25,25 +33,55 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
-import { type Transaction } from "@/lib/definitions"
+import type { Transaction } from "@/lib/definitions"
 import { calculateCategoriesStats } from "@/lib/statistics"
 
 interface TransactionBreakdownTableProps {
   filteredTransactions: Transaction[]
+  filterStates?: {
+    selectedDate?: Date
+    dateRange?: { from?: Date; to?: Date }
+    filterMonth?: string
+    filterYear?: string
+  }
 }
 
 export function StatisticsTable({
   filteredTransactions,
+  filterStates,
 }: TransactionBreakdownTableProps) {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatCurrency = useFormatCurrency()
 
   const categoryStats = calculateCategoriesStats(filteredTransactions)
+
+  const getTransactionsHref = (stat: { type: string; categoryKey: string }) => {
+    const params = new URLSearchParams()
+    if (filterStates?.selectedDate) {
+      params.set("date", filterStates.selectedDate.toISOString())
+    }
+    if (filterStates?.dateRange?.from) {
+      params.set("from", filterStates.dateRange.from.toISOString())
+    }
+    if (filterStates?.dateRange?.to) {
+      params.set("to", filterStates.dateRange.to.toISOString())
+    }
+    if (filterStates?.filterMonth && filterStates.filterMonth !== "all") {
+      params.set("month", filterStates.filterMonth)
+    }
+    if (filterStates?.filterYear && filterStates.filterYear !== "all") {
+      params.set("year", filterStates.filterYear)
+    }
+    params.set("type", stat.type)
+    params.set("category", stat.categoryKey)
+
+    return `/transactions?${params.toString()}`
+  }
 
   return (
     <Card className="flex-1 overflow-auto">
@@ -71,6 +109,7 @@ export function StatisticsTable({
                   <TableHead>{t("Type")}</TableHead>
                   <TableHead>{t("Transaction Count")}</TableHead>
                   <TableHead>{t("Total Amount")}</TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -112,6 +151,30 @@ export function StatisticsTable({
                         {stat.type === "income" ? "+" : "-"}
                         {formatCurrency(stat.total)}
                       </span>
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            className="dark:hover:bg-input/50"
+                            variant="ghost"
+                            size="icon"
+                          >
+                            <MoreVerticalIcon />
+                            <span className="sr-only">{t("Open menu")}</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem asChild>
+                            <Link
+                              href={getTransactionsHref(stat)}
+                              className="cursor-pointer"
+                            >
+                              {t("View")}
+                            </Link>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </TableCell>
                   </TableRow>
                 ))}

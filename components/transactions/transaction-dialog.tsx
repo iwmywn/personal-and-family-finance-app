@@ -52,11 +52,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
-import type { CategoryType } from "@/lib/categories"
-import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import type { CategoryType } from "@/lib/category"
+import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
 import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
 import type { TransactionFormValues } from "@/schemas/types"
@@ -76,7 +77,7 @@ export function TransactionDialog({
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
   const { createTransactionSchema } = useSchemas()
-  const { user } = useAppData()
+  const { user } = useUser()
   const formatDate = useFormatDate()
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(createTransactionSchema()),
@@ -100,13 +101,6 @@ export function TransactionDialog({
   })
 
   async function onSubmit(values: TransactionFormValues) {
-    const parsedValues = createTransactionSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const data = {
       ...values,
       date: localDateToUTCMidnight(values.date),
@@ -323,10 +317,9 @@ export function TransactionDialog({
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={transaction ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {transaction ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

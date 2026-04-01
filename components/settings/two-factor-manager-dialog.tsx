@@ -29,17 +29,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { FormButton } from "@/components/form-button"
 import { PasswordInput } from "@/components/password-input"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
-import {
-  type TwoFactorCodeFormValues,
-  type TwoFactorPasswordFormValues,
+import type {
+  TwoFactorCodeFormValues,
+  TwoFactorPasswordFormValues,
 } from "@/schemas/types"
 
 export function TwoFactorManagerDialog() {
   const t = useExtracted()
-  const { user } = useAppData()
+  const { user } = useUser()
   const [open, setOpen] = useState<boolean>(false)
   const [totpURI, setTotpURI] = useState<string | null>(null)
 
@@ -116,13 +116,6 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    const parsedValues = createTwoFactorPasswordSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.enable({
       password: values.password,
       fetchOptions: {
@@ -164,10 +157,11 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
         />
 
         <FormButton
-          text={t("Enable 2FA")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Enable 2FA")}
+        </FormButton>
       </form>
     </Form>
   )
@@ -192,13 +186,6 @@ function VerifyTwoFactorForm({
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    const parsedValues = createTwoFactorCodeSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.verifyTotp({
       code: values.code,
       fetchOptions: {
@@ -242,10 +229,11 @@ function VerifyTwoFactorForm({
         />
 
         <FormButton
-          text={t("Verify")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Verify")}
+        </FormButton>
       </form>
     </Form>
   )
@@ -266,13 +254,6 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    const parsedValues = createTwoFactorPasswordSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.disable({
       password: values.password,
       fetchOptions: {
@@ -312,10 +293,11 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
         />
 
         <FormButton
-          text={t("Disable 2FA")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Disable 2FA")}
+        </FormButton>
       </form>
     </Form>
   )

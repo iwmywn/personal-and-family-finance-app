@@ -1,7 +1,6 @@
-"use server"
-
-import { type NextURL } from "next/dist/server/web/next-url"
-import { NextResponse, type NextRequest } from "next/server"
+import type { NextURL } from "next/dist/server/web/next-url"
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 import * as routes from "@/routes"
 
 import { getCurrentSession } from "@/actions/session.actions"
@@ -13,7 +12,9 @@ function redirectIfProtectedRoute(request: NextRequest) {
 
   if (
     pathname === routes.twoFactorRoute &&
-    !request.cookies.has(`${siteConfig.name}.two_factor`)
+    !request.cookies
+      .getAll()
+      .some((c) => c.name.endsWith(`${siteConfig.name}.two_factor`))
   ) {
     return redirectTo(routes.signInRoute, nextUrl)
   }
@@ -31,18 +32,18 @@ function redirectIfProtectedRoute(request: NextRequest) {
   return NextResponse.next()
 }
 
-function redirectTo(path: string, nextUrl: NextURL) {
-  return NextResponse.redirect(new URL(path, nextUrl))
+function redirectTo(pathname: string, nextUrl: NextURL) {
+  return NextResponse.redirect(new URL(pathname, nextUrl))
 }
 
-export default async function proxy(req: NextRequest) {
-  const { nextUrl } = req
+export default async function proxy(request: NextRequest) {
+  const { nextUrl } = request
   const { pathname } = nextUrl
 
   const session = await getCurrentSession()
 
   if (!session) {
-    return redirectIfProtectedRoute(req)
+    return redirectIfProtectedRoute(request)
   }
 
   if (

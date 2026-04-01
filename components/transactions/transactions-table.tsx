@@ -35,11 +35,11 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
-import { type Transaction } from "@/lib/definitions"
+import type { Transaction } from "@/lib/definitions"
 
 interface TransactionsTableProps {
   filteredTransactions: Transaction[]
@@ -48,7 +48,7 @@ interface TransactionsTableProps {
 export function TransactionsTable({
   filteredTransactions,
 }: TransactionsTableProps) {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
@@ -136,7 +136,7 @@ export function TransactionsTable({
                           {formatCurrency(transaction.amount)}
                         </span>
                       </TableCell>
-                      <TableCell className="space-x-2">
+                      <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button

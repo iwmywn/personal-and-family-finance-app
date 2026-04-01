@@ -4,26 +4,12 @@ import Decimal from "decimal.js"
 import type { Decimal128 } from "mongodb"
 
 import { getExchangeRatesCollection } from "@/lib/collections"
-import { type AppCurrency } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import type { ExchangeRate, Transaction } from "@/lib/definitions"
+import { convertAmountWithRates } from "@/lib/utils"
 
 export type RawRates = Record<Exclude<AppCurrency, "USD">, Decimal128>
 export type ExchangeRates = Record<AppCurrency, Decimal>
-
-function convertAmountWithRates(
-  amount: Decimal,
-  from: AppCurrency,
-  to: AppCurrency,
-  rates: ExchangeRates
-): Decimal {
-  if (from === to) return amount
-
-  const amountInUSD = from === "USD" ? amount : amount.dividedBy(rates[from])
-
-  const result = to === "USD" ? amountInUSD : amountInUSD.mul(rates[to])
-
-  return result
-}
 
 export async function convertTransactionsToCurrency(
   transactions: Transaction[],
@@ -88,10 +74,21 @@ export async function convertTransactionsToCurrency(
       currentRates
     )
 
+    const stringifiedRates: Record<AppCurrency, string> = {
+      USD: currentRates.USD.toString(),
+      CNY: currentRates.CNY.toString(),
+      JPY: currentRates.JPY.toString(),
+      KRW: currentRates.KRW.toString(),
+      VND: currentRates.VND.toString(),
+    }
+
     result[index] = {
       ...t,
       amount: convertedAmount.toString(),
       currency: targetCurrency,
+      originalAmount: t.amount,
+      originalCurrency: t.currency,
+      rates: stringifiedRates,
     }
   }
 

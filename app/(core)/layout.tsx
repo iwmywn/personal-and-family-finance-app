@@ -1,28 +1,13 @@
 import { Suspense } from "react"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { GhostIcon } from "lucide-react"
-import { getExtracted } from "next-intl/server"
 
-import { getBudgets } from "@/actions/budget.actions"
-import { getCustomCategories } from "@/actions/category.actions"
-import { getGoals } from "@/actions/goal.actions"
-import { getRecurringTransactions } from "@/actions/recurring.actions"
 import { getActiveSessions, getCurrentSession } from "@/actions/session.actions"
-import { getTransactions } from "@/actions/transaction.actions"
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty"
+import Loading from "@/app/(core)/loading"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { Spinner } from "@/components/ui/spinner"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
-import { AppDataProvider } from "@/context/app-data-context"
-import type { AppCurrency } from "@/lib/currency"
+import { UserProvider } from "@/context/user-context"
 
 export default async function DashboardLayout({
   children,
@@ -39,13 +24,7 @@ export default async function DashboardLayout({
         <div className="bg-primary-foreground border-border h-full max-h-[calc(100vh-1rem)] overflow-y-auto border p-2 pt-0 shadow-sm">
           <Header />
           <section>
-            <Suspense
-              fallback={
-                <div className="center h-[calc(100vh-4.375rem)]">
-                  <Spinner className="size-8" />
-                </div>
-              }
-            >
+            <Suspense fallback={<Loading />}>
               <DashboardProvider>{children}</DashboardProvider>
             </Suspense>
           </section>
@@ -69,73 +48,13 @@ async function DashboardProvider({
     redirect("/signin")
   }
 
-  const t = await getExtracted()
-  const userId = session.user.id
-
-  const [
-    transactionsResult,
-    categoriesResult,
-    budgetsResult,
-    goalsResult,
-    recurringResult,
-  ] = await Promise.all([
-    getTransactions(userId, session.user.currency as AppCurrency),
-    getCustomCategories(userId),
-    getBudgets(userId),
-    getGoals(userId),
-    getRecurringTransactions(userId),
-  ])
-
-  const renderEmptyState = (title: string, description: string) => (
-    <Empty className="h-full border">
-      <EmptyHeader>
-        <EmptyMedia variant="icon">
-          <GhostIcon />
-        </EmptyMedia>
-        <EmptyTitle>{title}</EmptyTitle>
-        <EmptyDescription>{description}</EmptyDescription>
-      </EmptyHeader>
-    </Empty>
-  )
-
-  const transactions = transactionsResult.transactions
-  const customCategories = categoriesResult.customCategories
-  const budgets = budgetsResult.budgets
-  const goals = goalsResult.goals
-  const recurringTransactions = recurringResult.recurringTransactions
-
-  if (!transactions)
-    return renderEmptyState(
-      t("CANNOT FETCH TRANSACTIONS DATA"),
-      transactionsResult.error
-    )
-  if (!customCategories)
-    return renderEmptyState(
-      t("CANNOT FETCH CATEGORIES DATA"),
-      categoriesResult.error
-    )
-  if (!budgets)
-    return renderEmptyState(t("CANNOT FETCH BUDGETS DATA"), budgetsResult.error)
-  if (!goals)
-    return renderEmptyState(t("CANNOT FETCH GOALS DATA"), goalsResult.error)
-  if (!recurringTransactions)
-    return renderEmptyState(
-      t("CANNOT FETCH RECURRING TRANSACTIONS DATA"),
-      recurringResult.error
-    )
-
   return (
-    <AppDataProvider
+    <UserProvider
       user={session.user}
-      transactions={transactions}
-      customCategories={customCategories}
-      budgets={budgets}
-      goals={goals}
-      recurringTransactions={recurringTransactions}
       currentSession={session.session}
       activeSessions={activeSessions}
     >
       {children}
-    </AppDataProvider>
+    </UserProvider>
   )
 }

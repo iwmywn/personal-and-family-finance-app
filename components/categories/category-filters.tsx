@@ -21,11 +21,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
-import { useAppData } from "@/context/app-data-context"
+import { useCategories } from "@/context/categories-context"
 import { filterCustomCategories } from "@/lib/filters"
 
 export function CategoryFilters() {
-  const { customCategories } = useAppData()
+  const { customCategories } = useCategories()
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
     "all"

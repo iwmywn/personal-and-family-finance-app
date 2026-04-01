@@ -8,10 +8,10 @@ import { QuickStats } from "@/components/home/quick-stats"
 import { RecentTransactions } from "@/components/home/recent-transactions"
 import { TransactionSummary } from "@/components/home/transaction-summary"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 
 export default function HomePage() {
-  const { user } = useAppData()
+  const { user } = useUser()
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const t = useExtracted()
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { getExtracted } from "next-intl/server"
 
+import { PageDataProvider } from "@/components/layout/page-data-provider"
 import RecurringTransactionsPage from "@/components/recurring-transactions/recurring-transactions-page"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -10,5 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function page() {
-  return <RecurringTransactionsPage />
+  return (
+    <PageDataProvider recurring transactions categories>
+      <RecurringTransactionsPage />
+    </PageDataProvider>
+  )
 }

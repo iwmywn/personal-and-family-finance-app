@@ -38,7 +38,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FormButton } from "@/components/form-button"
 import { useSchemas } from "@/hooks/use-schemas"
-import type { CategoryType } from "@/lib/categories"
+import type { CategoryType } from "@/lib/category"
 import type { Category } from "@/lib/definitions"
 import type { CategoryFormValues } from "@/schemas/types"
 
@@ -67,13 +67,6 @@ export function CategoryDialog({
   })
 
   async function onSubmit(values: CategoryFormValues) {
-    const parsedValues = createCategorySchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     if (category) {
       const { success, error } = await updateCustomCategory(
         category._id,
@@ -186,10 +179,9 @@ export function CategoryDialog({
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={category ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {category ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

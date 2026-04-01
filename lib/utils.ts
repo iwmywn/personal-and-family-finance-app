@@ -1,9 +1,11 @@
-import { clsx, type ClassValue } from "clsx"
+import { clsx } from "clsx"
+import type { ClassValue } from "clsx"
 import Decimal from "decimal.js"
 import { twMerge } from "tailwind-merge"
 
-import { type AppLocale } from "@/i18n/config"
-import { ZERO_DECIMAL_CURRENCIES, type AppCurrency } from "@/lib/currency"
+import type { AppLocale } from "@/i18n/config"
+import { ZERO_DECIMAL_CURRENCIES } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
 
 export function cn(...inputs: ClassValue[]) {
@@ -59,4 +61,22 @@ export function toDecimal(value: string): Decimal {
 
 export function isZeroDecimalCurrency(currency: AppCurrency): boolean {
   return ZERO_DECIMAL_CURRENCIES.has(currency)
+}
+
+export function convertAmountWithRates(
+  amount: Decimal | string | number,
+  from: AppCurrency,
+  to: AppCurrency,
+  rates?: Record<AppCurrency, Decimal | string | number>
+): Decimal {
+  const decAmount = new Decimal(amount)
+  if (from === to || !rates) return decAmount
+
+  const rateFrom = new Decimal(rates[from])
+  const rateTo = new Decimal(rates[to])
+
+  const amountInUSD = from === "USD" ? decAmount : decAmount.dividedBy(rateFrom)
+  const result = to === "USD" ? amountInUSD : amountInUSD.mul(rateTo)
+
+  return result
 }

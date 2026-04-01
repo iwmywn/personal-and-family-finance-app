@@ -6,13 +6,13 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
-import {
-  type DBBudget,
-  type DBCategory,
-  type DBExchangeRate,
-  type DBGoal,
-  type DBRecurringTransaction,
-  type DBTransaction,
+import type {
+  DBBudget,
+  DBCategory,
+  DBExchangeRate,
+  DBGoal,
+  DBRecurringTransaction,
+  DBTransaction,
 } from "@/lib/definitions"
 
 export const insertTestTransaction = async (transaction: DBTransaction) => {

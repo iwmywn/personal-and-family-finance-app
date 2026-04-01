@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { getExtracted } from "next-intl/server"
 
 import GoalsPage from "@/components/goals/goals-page"
+import { PageDataProvider } from "@/components/layout/page-data-provider"
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getExtracted()
@@ -10,5 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function page() {
-  return <GoalsPage />
+  return (
+    <PageDataProvider goals transactions categories>
+      <GoalsPage />
+    </PageDataProvider>
+  )
 }

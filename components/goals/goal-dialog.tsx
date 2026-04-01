@@ -43,10 +43,11 @@ import {
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
-import { CURRENCIES, CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import type { Goal } from "@/lib/definitions"
 import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
 import type { GoalFormValues } from "@/schemas/types"
@@ -62,7 +63,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
   const { createGoalSchema } = useSchemas()
-  const { user } = useAppData()
+  const { user } = useUser()
   const formatDate = useFormatDate()
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(createGoalSchema()),
@@ -91,13 +92,6 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   })
 
   async function onSubmit(values: GoalFormValues) {
-    const parsedValues = createGoalSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     const data = {
       ...values,
       startDate: localDateToUTCMidnight(values.startDate),
@@ -332,10 +326,9 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={goal ? t("Update") : t("Add")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {goal ? t("Update") : t("Add")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

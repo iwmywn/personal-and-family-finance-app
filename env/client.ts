@@ -1,7 +1,7 @@
 import { createEnv } from "@t3-oss/env-nextjs"
-import { z } from "zod"
+import * as z from "zod"
 
-export const env = createEnv({
+export const clientEnv = createEnv({
   client: {
     NEXT_PUBLIC_URL: z.string().min(1),
     NEXT_PUBLIC_NODE_ENV: z.string().min(1),

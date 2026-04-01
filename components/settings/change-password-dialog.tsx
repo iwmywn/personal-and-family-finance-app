@@ -30,7 +30,7 @@ import { FormButton } from "@/components/form-button"
 import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
-import { type PasswordFormValues } from "@/schemas/types"
+import type { PasswordFormValues } from "@/schemas/types"
 
 export function ChangePasswordDialog() {
   const t = useExtracted()
@@ -47,13 +47,6 @@ export function ChangePasswordDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: PasswordFormValues) {
-    const parsedValues = createPasswordSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.changePassword({
       newPassword: values.newPassword,
       currentPassword: values.currentPassword,
@@ -173,10 +166,9 @@ export function ChangePasswordDialog() {
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={t("Save")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {t("Save")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

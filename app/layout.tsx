@@ -1,18 +1,21 @@
 import "./globals.css"
 
-import type React from "react"
 import { Suspense } from "react"
 import type { Metadata } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getExtracted, getLocale } from "next-intl/server"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { nunito } from "@/app/fonts"
 import { siteConfig } from "@/app/pffa.config"
 import { Toaster } from "@/components/ui/sonner"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { ProgressProvider } from "@/components/layout/progress-provider"
+import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
-import { ProgressProvider } from "@/components/progress-provider"
-import { ThemeProvider } from "@/components/theme-provider"
-import { env } from "@/env/client.mjs"
+import { SchemaMessagesProvider } from "@/context/schema-messages-context"
+import { clientEnv } from "@/env/client"
+import { getSchemaMessages } from "@/schemas/messages"
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -37,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale,
-      url: env.NEXT_PUBLIC_URL,
+      url: clientEnv.NEXT_PUBLIC_URL,
       title: name,
       description,
       siteName: name,
@@ -80,7 +83,10 @@ async function AppLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const locale = await getLocale()
+  const [locale, schemaMessages] = await Promise.all([
+    getLocale(),
+    getSchemaMessages(),
+  ])
 
   return (
     <html
@@ -91,20 +97,26 @@ async function AppLayout({
     >
       <body>
         <ThemeProvider>
-          <ProgressProvider>
-            <Suspense
-              fallback={
-                <div className="center h-screen">
-                  <Logo isLoading />
-                </div>
-              }
-            >
-              <NextIntlClientProvider>
-                <Toaster richColors closeButton />
-                {children}
-              </NextIntlClientProvider>
-            </Suspense>
-          </ProgressProvider>
+          <NextIntlClientProvider>
+            <ProgressProvider>
+              <SchemaMessagesProvider messages={schemaMessages}>
+                <NuqsAdapter>
+                  <TooltipProvider>
+                    <Suspense
+                      fallback={
+                        <div className="center h-screen">
+                          <Logo isLoading />
+                        </div>
+                      }
+                    >
+                      <Toaster richColors closeButton />
+                      {children}
+                    </Suspense>
+                  </TooltipProvider>
+                </NuqsAdapter>
+              </SchemaMessagesProvider>
+            </ProgressProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

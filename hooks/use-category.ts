@@ -2,18 +2,18 @@
 
 import { useExtracted } from "next-intl"
 
-import { useAppData } from "@/context/app-data-context"
-import {
-  getCategoryType,
-  type AllCategoriesKeyType,
-  type CategoryConfigBaseType,
-  type CategoryKeyType,
-  type CategoryType,
-} from "@/lib/categories"
+import { useCategories } from "@/context/categories-context"
+import { getCategoryType } from "@/lib/category"
+import type {
+  AllCategoriesKeyType,
+  CategoryConfigBaseType,
+  CategoryKeyType,
+  CategoryType,
+} from "@/lib/category"
 
 export function useCategory() {
   const t = useExtracted()
-  const { customCategories } = useAppData()
+  const { customCategories } = useCategories()
 
   const CATEGORY_CONFIG_BASE: CategoryConfigBaseType = {
     // Incomes
@@ -30,7 +30,7 @@ export function useCategory() {
       ),
     },
     investment_passive: {
-      label: t("Investment & Passive Income"),
+      label: t("Investment & Passive"),
       description: t(
         "Savings interest, dividends, bonds interest, rental, royalties, etc."
       ),

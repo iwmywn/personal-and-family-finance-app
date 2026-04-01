@@ -1,8 +1,13 @@
 import Decimal from "decimal.js"
 
-import type { CategoryKeyType } from "@/lib/categories"
+import type { CategoryKeyType } from "@/lib/category"
+import type { AppCurrency } from "@/lib/currency"
 import type { Budget, Goal, Transaction } from "@/lib/definitions"
-import { localDateToUTCMidnight, progressColorClass } from "@/lib/utils"
+import {
+  convertAmountWithRates,
+  localDateToUTCMidnight,
+  progressColorClass,
+} from "@/lib/utils"
 
 export function getCurrentMonthTransactions(
   transactions: Transaction[]
@@ -177,9 +182,15 @@ export function calculateCategoriesStats(
 
 interface StatBaseConfig<TBase, Transaction> {
   type: "income" | "expense"
-  getTarget: (item: TBase) => string
-  getCategoryKey: (item: TBase) => string
-  getAmount: (t: Transaction) => string
+  getBaseTargetAmount: (item: TBase) => string
+  getBaseCurrency: (item: TBase) => AppCurrency
+  getBaseCategoryKey: (item: TBase) => string
+  getTransactionAmount: (t: Transaction) => string
+  getTransactionOriginalAmount: (t: Transaction) => string | undefined
+  getTransactionOriginalCurrency: (t: Transaction) => AppCurrency | undefined
+  getTransactionRates: (
+    t: Transaction
+  ) => Record<AppCurrency, string> | undefined
   pickColor: (percentage: number, hasItems: boolean) => string
 }
 
@@ -200,16 +211,31 @@ function calculateStatsBase<TBase extends Budget | Goal>(
     return (
       transactionDateOnly.getTime() >= startDateOnly.getTime() &&
       transactionDateOnly.getTime() <= endDateOnly.getTime() &&
-      t.categoryKey === config.getCategoryKey(base)
+      t.categoryKey === config.getBaseCategoryKey(base)
     )
   })
 
-  const total = filtered.reduce(
-    (sum, t) => sum.plus(new Decimal(config.getAmount(t))),
-    new Decimal(0)
-  )
+  const targetCurrency = config.getBaseCurrency(base)
 
-  const target = new Decimal(config.getTarget(base))
+  const total = filtered.reduce((sum, t) => {
+    const originalAmount = config.getTransactionOriginalAmount(t)
+    const originalCurrency = config.getTransactionOriginalCurrency(t)
+    const ratesStr = config.getTransactionRates(t)
+
+    if (originalAmount && originalCurrency && ratesStr) {
+      const converted = convertAmountWithRates(
+        originalAmount,
+        originalCurrency,
+        targetCurrency,
+        ratesStr
+      )
+      return sum.plus(converted)
+    }
+
+    return sum.plus(new Decimal(config.getTransactionAmount(t)))
+  }, new Decimal(0))
+
+  const target = new Decimal(config.getBaseTargetAmount(base))
   const percentage = target.equals(0)
     ? 0
     : total.div(target).mul(100).toNumber()
@@ -245,9 +271,13 @@ export function calculateBudgetsStats(
   return budgets.map((budget) => {
     const stats = calculateStatsBase(budget, transactions, {
       type: "expense",
-      getTarget: (b) => b.allocatedAmount,
-      getCategoryKey: (b) => b.categoryKey,
-      getAmount: (t) => t.amount,
+      getBaseTargetAmount: (b) => b.allocatedAmount,
+      getBaseCurrency: (b) => b.currency,
+      getBaseCategoryKey: (b) => b.categoryKey,
+      getTransactionAmount: (t) => t.amount,
+      getTransactionOriginalAmount: (t) => t.originalAmount,
+      getTransactionOriginalCurrency: (t) => t.originalCurrency,
+      getTransactionRates: (t) => t.rates,
       pickColor: (percentage, has) => {
         if (!has) return progressColorClass.gray
         if (percentage < 75) return progressColorClass.green
@@ -280,9 +310,13 @@ export function calculateGoalsStats(
   return goals.map((goal) => {
     const stats = calculateStatsBase(goal, transactions, {
       type: "income",
-      getTarget: (g) => g.targetAmount,
-      getCategoryKey: (g) => g.categoryKey,
-      getAmount: (t) => t.amount,
+      getBaseTargetAmount: (g) => g.targetAmount,
+      getBaseCurrency: (g) => g.currency,
+      getBaseCategoryKey: (g) => g.categoryKey,
+      getTransactionAmount: (t) => t.amount,
+      getTransactionOriginalAmount: (t) => t.originalAmount,
+      getTransactionOriginalCurrency: (t) => t.originalCurrency,
+      getTransactionRates: (t) => t.rates,
       pickColor: (percentage, has) => {
         if (!has) return progressColorClass.gray
         if (percentage >= 100) return progressColorClass.green

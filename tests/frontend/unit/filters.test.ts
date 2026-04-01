@@ -11,9 +11,77 @@ import {
   filterGoals,
   filterRecurringTransactions,
   filterTransactions,
+  isDateRangeOverlapping,
 } from "@/lib/filters"
 
 describe("Filters", () => {
+  describe("isDateRangeOverlapping", () => {
+    it("should return true when filter is empty", () => {
+      expect(
+        isDateRangeOverlapping(
+          new Date("2024-01-01"),
+          new Date("2024-12-31"),
+          null,
+          null
+        )
+      ).toBe(true)
+    })
+
+    it("should properly overlap cross-year ranges (e.g. Nov 2023 to Mar 2024)", () => {
+      const start = new Date("2023-11-01T00:00:00Z")
+      const end = new Date("2024-03-31T00:00:00Z")
+
+      // Jan 2024 -> Overlaps
+      expect(isDateRangeOverlapping(start, end, 1, 2024)).toBe(true)
+
+      // Dec 2023 -> Overlaps
+      expect(isDateRangeOverlapping(start, end, 12, 2023)).toBe(true)
+
+      // Apr 2024 -> NOT overlap
+      expect(isDateRangeOverlapping(start, end, 4, 2024)).toBe(false)
+
+      // Oct 2023 -> NOT overlap
+      expect(isDateRangeOverlapping(start, end, 10, 2023)).toBe(false)
+    })
+
+    it("should correctly handle filtering by ONLY month for cross-year", () => {
+      const start = new Date("2023-11-01T00:00:00Z")
+      const end = new Date("2024-03-31T00:00:00Z")
+
+      // Month = 1 (Jan) spans
+      expect(isDateRangeOverlapping(start, end, 1, null)).toBe(true)
+
+      // Month = 12 (Dec) spans
+      expect(isDateRangeOverlapping(start, end, 12, null)).toBe(true)
+
+      // Month = 2 (Feb) spans
+      expect(isDateRangeOverlapping(start, end, 2, null)).toBe(true)
+
+      // Month = 4 (Apr) does NOT span
+      expect(isDateRangeOverlapping(start, end, 4, null)).toBe(false)
+
+      // Month = 11 (Nov) spans
+      expect(isDateRangeOverlapping(start, end, 11, null)).toBe(true)
+    })
+
+    it("should correctly handle infinite end dates", () => {
+      const start = new Date("2024-04-01T00:00:00Z")
+      const end = null
+
+      // Month = 1 (Jan), Year = null -> infinite, eventually hits Jan
+      expect(isDateRangeOverlapping(start, end, 1, null)).toBe(true)
+
+      // Month = 1, Year = 2024 -> Only active after Apr 2024. Jan 2024 is FALSE!
+      expect(isDateRangeOverlapping(start, end, 1, 2024)).toBe(false)
+
+      // Month = 5, Year = 2024 -> Active
+      expect(isDateRangeOverlapping(start, end, 5, 2024)).toBe(true)
+
+      // Month = 1, Year = 2025 -> Active!
+      expect(isDateRangeOverlapping(start, end, 1, 2025)).toBe(true)
+    })
+  })
+
   describe("filterTransactions", () => {
     it("should filter by search term", () => {
       const result = filterTransactions(mockTransactions, {
@@ -676,9 +744,9 @@ describe("Filters", () => {
         filterStatus: "active",
       })
 
-      expect(result).toHaveLength(5)
+      expect(result).toHaveLength(6)
       expect(result.every((r) => r.isActive === true)).toBe(true)
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6", "7"])
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6", "7", "8"])
     })
 
     it("should filter by status - inactive", () => {
@@ -696,7 +764,7 @@ describe("Filters", () => {
         filterMonth: "1",
       })
 
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "6"])
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6", "7", "8"])
     })
 
     it("should filter by year", () => {
@@ -704,7 +772,15 @@ describe("Filters", () => {
         filterYear: "2024",
       })
 
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "4", "6", "7"])
+      expect(result.map((r) => r._id)).toEqual([
+        "1",
+        "2",
+        "3",
+        "4",
+        "6",
+        "7",
+        "8",
+      ])
     })
 
     it("should combine multiple filters", () => {
@@ -722,7 +798,7 @@ describe("Filters", () => {
     it("should return all recurring transactions when no filters applied", () => {
       const result = filterRecurringTransactions(mockRecurringTransactions, {})
 
-      expect(result).toHaveLength(mockRecurringTransactions.length)
+      expect(result).toHaveLength(8)
     })
 
     it("should handle empty recurring transactions array", () => {
@@ -756,7 +832,7 @@ describe("Filters", () => {
         filterMonth: "2", // February
       })
 
-      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6"])
+      expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6", "7", "8"])
     })
 
     it("should filter by year when recurring spans multiple years", () => {
@@ -764,7 +840,7 @@ describe("Filters", () => {
         filterYear: "2023",
       })
 
-      expect(result.map((r) => r._id)).toEqual(["5"])
+      expect(result.map((r) => r._id)).toEqual(["5", "8"])
     })
 
     it("should return empty array when no matches found", () => {
@@ -780,7 +856,7 @@ describe("Filters", () => {
         filterStatus: "all",
       })
 
-      expect(result).toHaveLength(mockRecurringTransactions.length)
+      expect(result).toHaveLength(8)
     })
 
     it("should handle filterType 'all'", () => {
@@ -788,7 +864,7 @@ describe("Filters", () => {
         filterType: "all",
       })
 
-      expect(result).toHaveLength(mockRecurringTransactions.length)
+      expect(result).toHaveLength(8)
     })
 
     it("should handle filterCategoryKey 'all'", () => {
@@ -796,7 +872,7 @@ describe("Filters", () => {
         filterCategoryKey: "all",
       })
 
-      expect(result).toHaveLength(mockRecurringTransactions.length)
+      expect(result).toHaveLength(8)
     })
   })
 })

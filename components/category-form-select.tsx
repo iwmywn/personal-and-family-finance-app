@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select"
 import { FormLink } from "@/components/form-link"
 import { useCategory } from "@/hooks/use-category"
-import type { CategoryType } from "@/lib/categories"
+import type { CategoryType } from "@/lib/category"
 
 interface CategoryFormSelectProps<
   TFieldValues extends FieldValues = FieldValues,

@@ -1,12 +1,7 @@
-import {
-  MongoClient,
-  type Collection,
-  type Db,
-  type MongoClientOptions,
-  type OptionalId,
-} from "mongodb"
+import { MongoClient } from "mongodb"
+import type { Collection, Db, MongoClientOptions, OptionalId } from "mongodb"
 
-import { env } from "@/env/server.mjs"
+import { serverEnv } from "@/env/server"
 
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined
@@ -19,7 +14,7 @@ function getClientPromise(): Promise<MongoClient> {
   if (!globalThis._mongoClientPromise) {
     const options: MongoClientOptions = {}
     globalThis._mongoClientPromise = new MongoClient(
-      env.DB_URI,
+      serverEnv.DB_URI,
       options
     ).connect()
   }
@@ -32,7 +27,7 @@ export async function connect() {
   }
 
   const client = await getClientPromise()
-  db = client.db(env.DB_NAME)
+  db = client.db(serverEnv.DB_NAME)
   globalThis._mongoClient = client
 
   return db

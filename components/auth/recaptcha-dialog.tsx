@@ -1,13 +1,13 @@
 "use client"
 
-import { type Dispatch, type SetStateAction } from "react"
+import type { Dispatch, SetStateAction } from "react"
 import { useExtracted, useLocale } from "next-intl"
 import { VisuallyHidden } from "radix-ui"
 import ReCAPTCHA from "react-google-recaptcha"
 import { toast } from "sonner"
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
-import { env } from "@/env/client.mjs"
+import { clientEnv } from "@/env/client"
 
 interface ReCaptchaPopupProps {
   open: boolean
@@ -45,7 +45,7 @@ export function ReCaptchaDialog({
           <DialogTitle>{t("CAPTCHA Verification")}</DialogTitle>
         </VisuallyHidden.Root>
         <ReCAPTCHA
-          sitekey={env.NEXT_PUBLIC_RECAPTCHA}
+          sitekey={clientEnv.NEXT_PUBLIC_RECAPTCHA}
           onChange={handleRecaptchaChange}
           hl={locale}
           className="m-3"

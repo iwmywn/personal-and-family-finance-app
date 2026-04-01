@@ -7,7 +7,8 @@ import { getExtracted } from "next-intl/server"
 import { convertTransactionsToCurrency } from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
 import type { AppCurrency } from "@/lib/currency"
-import { type Transaction } from "@/lib/definitions"
+import type { Transaction } from "@/lib/definitions"
+import { getSchemas } from "@/schemas/server"
 import type { TransactionFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
@@ -17,6 +18,13 @@ export async function createTransaction(values: TransactionFormValues) {
   const t = await getExtracted()
 
   try {
+    const { createTransactionSchema } = await getSchemas()
+    const parsedValues = createTransactionSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -30,12 +38,12 @@ export async function createTransaction(values: TransactionFormValues) {
 
     const data = {
       userId: new ObjectId(userId),
-      type: values.type,
-      categoryKey: values.categoryKey,
-      amount: toDecimal128(values.amount),
-      currency: values.currency,
-      description: values.description,
-      date: values.date,
+      type: parsedValues.data.type,
+      categoryKey: parsedValues.data.categoryKey,
+      amount: toDecimal128(parsedValues.data.amount),
+      currency: parsedValues.data.currency,
+      description: parsedValues.data.description,
+      date: parsedValues.data.date,
     }
 
     const existingTransaction = await transactionsCollection.findOne(data)
@@ -64,6 +72,13 @@ export async function updateTransaction(
   const t = await getExtracted()
 
   try {
+    const { createTransactionSchema } = await getSchemas()
+    const parsedValues = createTransactionSchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -99,12 +114,12 @@ export async function updateTransaction(
       },
       {
         $set: {
-          type: values.type,
-          categoryKey: values.categoryKey,
-          amount: toDecimal128(values.amount),
-          currency: values.currency,
-          description: values.description,
-          date: values.date,
+          type: parsedValues.data.type,
+          categoryKey: parsedValues.data.categoryKey,
+          amount: toDecimal128(parsedValues.data.amount),
+          currency: parsedValues.data.currency,
+          description: parsedValues.data.description,
+          date: parsedValues.data.date,
         },
       }
     )

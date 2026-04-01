@@ -22,7 +22,7 @@ import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
-import { type TwoFactorCodeFormValues } from "@/schemas/types"
+import type { TwoFactorCodeFormValues } from "@/schemas/types"
 
 export function TwoFactorVerificationForm() {
   const t = useExtracted()
@@ -38,13 +38,6 @@ export function TwoFactorVerificationForm() {
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    const parsedValues = createTwoFactorCodeSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.twoFactor.verifyTotp({
       code: values.code,
       trustDevice: values.trustDevice,
@@ -117,10 +110,11 @@ export function TwoFactorVerificationForm() {
         />
 
         <FormButton
-          text={t("Verify")}
           isSubmitting={form.formState.isSubmitting}
           className="w-full"
-        />
+        >
+          {t("Verify")}
+        </FormButton>
       </form>
     </Form>
   )

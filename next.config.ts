@@ -1,11 +1,19 @@
-import createNextIntlPlugin from "next-intl/plugin"
+import "./env/client"
+import "./env/server"
 
-import "./env/client.mjs"
-import "./env/server.mjs"
+import type { NextConfig } from "next"
+import createNextIntlPlugin from "next-intl/plugin"
 
 const withNextIntl = createNextIntlPlugin({
   experimental: {
-    srcPath: ["./actions", "./app", "./components", "./hooks"],
+    srcPath: [
+      "./actions",
+      "./app",
+      "./components",
+      "./hooks",
+      "./lib",
+      "./schemas",
+    ],
     extract: {
       sourceLocale: "en-US",
     },
@@ -17,8 +25,7 @@ const withNextIntl = createNextIntlPlugin({
   },
 })
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   devIndicators: {
     position: "bottom-right",
   },
@@ -26,6 +33,10 @@ const nextConfig = {
     scrollRestoration: true,
     cpus: 1,
     inlineCss: true,
+    staleTimes: {
+      dynamic: 300,
+      static: 180,
+    },
   },
   cacheComponents: true,
   reactCompiler: true,

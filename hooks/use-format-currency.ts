@@ -1,16 +1,19 @@
 "use client"
 
-import { useAppData } from "@/context/app-data-context"
-import { CURRENCY_CONFIG, type AppCurrency } from "@/lib/currency"
+import { useUser } from "@/context/user-context"
+import { CURRENCY_CONFIG } from "@/lib/currency"
+import type { AppCurrency } from "@/lib/currency"
 import { formatCurrency } from "@/lib/utils"
 
 export function useFormatCurrency() {
-  const { user } = useAppData()
+  const { user } = useUser()
 
   const userCurrency = user.currency as AppCurrency
-  const currencyLocale = CURRENCY_CONFIG[userCurrency].locale
 
-  return (amount: string) => {
-    return formatCurrency(amount, currencyLocale, userCurrency)
+  return (amount: string, overrideCurrency?: AppCurrency) => {
+    const currency = overrideCurrency || userCurrency
+    const currencyLocale = CURRENCY_CONFIG[currency].locale
+
+    return formatCurrency(amount, currencyLocale, currency)
   }
 }

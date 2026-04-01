@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { MoreVerticalIcon, TargetIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 
@@ -36,7 +37,8 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteGoalDialog } from "@/components/goals/delete-goal-dialog"
 import { GoalDialog } from "@/components/goals/goal-dialog"
-import { useAppData } from "@/context/app-data-context"
+import { useGoals } from "@/context/goals-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
@@ -48,7 +50,8 @@ interface GoalsTableProps {
 }
 
 export function GoalsTable({ filteredGoals }: GoalsTableProps) {
-  const { goals, transactions } = useAppData()
+  const { goals } = useGoals()
+  const { transactions } = useTransactions()
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
@@ -111,8 +114,12 @@ export function GoalsTable({ filteredGoals }: GoalsTableProps) {
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>
-                      <TableCell>{formatCurrency(goal.targetAmount)}</TableCell>
-                      <TableCell>{formatCurrency(goal.accumulated)}</TableCell>
+                      <TableCell>
+                        {formatCurrency(goal.targetAmount, goal.currency)}
+                      </TableCell>
+                      <TableCell>
+                        {formatCurrency(goal.accumulated, goal.currency)}
+                      </TableCell>
                       <TableCell>
                         <Badge
                           className={
@@ -156,6 +163,14 @@ export function GoalsTable({ filteredGoals }: GoalsTableProps) {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent>
+                            <DropdownMenuItem asChild>
+                              <Link
+                                href={`/transactions?from=${goal.startDate.toISOString()}&to=${goal.endDate.toISOString()}&category=${goal.categoryKey}`}
+                                className="cursor-pointer"
+                              >
+                                {t("View")}
+                              </Link>
+                            </DropdownMenuItem>
                             <DropdownMenuItem
                               className="cursor-pointer"
                               onClick={() => {

@@ -23,7 +23,7 @@ import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { client } from "@/lib/auth-client"
-import { type SignInFormValues } from "@/schemas/types"
+import type { SignInFormValues } from "@/schemas/types"
 
 export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
@@ -45,13 +45,6 @@ export function SignInForm() {
     async (values: SignInFormValues, token: string) => {
       if (isSubmitting) return
 
-      const parsedValues = createSignInSchema().safeParse(values)
-
-      if (!parsedValues.success) {
-        toast.error(t("Invalid data!"))
-        return
-      }
-
       setIsSubmitting(true)
 
       try {
@@ -68,9 +61,16 @@ export function SignInForm() {
               else toast.error(t("Failed to sign in! Please try again later."))
             },
             onSuccess: async (ctx) => {
-              if (ctx.data.twoFactorRedirect) return
-
               const callbackUrl = searchParams.get("next") || "/home"
+
+              if (ctx.data.twoFactorRedirect) {
+                const target = new URL("/two-factor", window.location.origin)
+                target.searchParams.set("next", callbackUrl)
+                router.push(`${target.pathname}${target.search}`)
+                form.reset()
+                return
+              }
+
               router.push(callbackUrl)
               form.reset()
 
@@ -89,7 +89,7 @@ export function SignInForm() {
         setRecaptchaToken(null)
       }
     },
-    [createSignInSchema, isSubmitting, t, searchParams, form, router]
+    [isSubmitting, t, searchParams, form, router]
   )
 
   function onSubmit(values: SignInFormValues) {
@@ -152,11 +152,9 @@ export function SignInForm() {
             )}
           />
 
-          <FormButton
-            isSubmitting={isSubmitting}
-            text={t("Sign In")}
-            className="w-full"
-          />
+          <FormButton isSubmitting={isSubmitting} className="w-full">
+            {t("Sign In")}
+          </FormButton>
         </form>
       </Form>
 

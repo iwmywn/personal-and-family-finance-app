@@ -15,11 +15,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { env } from "@/env/client.mjs"
+import { clientEnv } from "@/env/client"
 import { useNav } from "@/hooks/use-nav"
 
 const ColorDialog =
-  env.NEXT_PUBLIC_NODE_ENV === "development"
+  clientEnv.NEXT_PUBLIC_NODE_ENV === "development"
     ? dynamic(
         () =>
           import("@/components/layout/color-dialog").then(

@@ -22,6 +22,14 @@ import { localDateToUTCMidnight } from "@/lib/utils"
 
 describe("Goals", async () => {
   describe("createGoal", () => {
+    it("should return error when data is invalid", async () => {
+      // @ts-expect-error - Testing invalid data
+      const result = await createGoal({})
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
@@ -95,6 +103,14 @@ describe("Goals", async () => {
   })
 
   describe("updateGoal", () => {
+    it("should return error when data is invalid", async () => {
+      // @ts-expect-error - Testing invalid data
+      const result = await updateGoal(mockGoal._id.toString(), {})
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid data!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 

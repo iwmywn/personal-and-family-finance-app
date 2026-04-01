@@ -9,7 +9,7 @@ import {
 import { useExtracted } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import {
   calculateSummaryStats,
@@ -18,7 +18,7 @@ import {
 import { toDecimal } from "@/lib/utils"
 
 export function TransactionSummary() {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const t = useExtracted()
   const formatCurrency = useFormatCurrency()
 

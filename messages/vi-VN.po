@@ -6,283 +6,296 @@ msgstr ""
 "X-Generator: next-intl\n"
 "X-Crowdin-SourceKey: msgstr\n"
 
-#: actions/budget.actions.ts:22
-#: actions/budget.actions.ts:69
-#: actions/budget.actions.ts:122
-#: actions/budget.actions.ts:168
-#: actions/category.actions.ts:28
-#: actions/category.actions.ts:87
-#: actions/category.actions.ts:166
-#: actions/category.actions.ts:292
-#: actions/goal.actions.ts:22
-#: actions/goal.actions.ts:70
-#: actions/goal.actions.ts:124
-#: actions/goal.actions.ts:170
-#: actions/recurring.actions.ts:28
-#: actions/recurring.actions.ts:102
-#: actions/recurring.actions.ts:169
-#: actions/recurring.actions.ts:221
-#: actions/transaction.actions.ts:24
-#: actions/transaction.actions.ts:71
-#: actions/transaction.actions.ts:131
-#: actions/transaction.actions.ts:182
+#: actions/budget.actions.ts:23
+#: actions/budget.actions.ts:77
+#: actions/category.actions.ts:29
+#: actions/category.actions.ts:95
+#: actions/goal.actions.ts:23
+#: actions/goal.actions.ts:78
+#: actions/recurring.actions.ts:29
+#: actions/recurring.actions.ts:110
+#: actions/transaction.actions.ts:25
+#: actions/transaction.actions.ts:79
+msgid "5GmpFA"
+msgstr "Dữ liệu không hợp lệ!"
+
+#: actions/budget.actions.ts:30
+#: actions/budget.actions.ts:84
+#: actions/budget.actions.ts:137
+#: actions/budget.actions.ts:183
+#: actions/category.actions.ts:36
+#: actions/category.actions.ts:102
+#: actions/category.actions.ts:181
+#: actions/category.actions.ts:307
+#: actions/goal.actions.ts:30
+#: actions/goal.actions.ts:85
+#: actions/goal.actions.ts:139
+#: actions/goal.actions.ts:185
+#: actions/recurring.actions.ts:36
+#: actions/recurring.actions.ts:117
+#: actions/recurring.actions.ts:184
+#: actions/recurring.actions.ts:236
+#: actions/transaction.actions.ts:32
+#: actions/transaction.actions.ts:86
+#: actions/transaction.actions.ts:146
+#: actions/transaction.actions.ts:197
 msgid "QWvB5t"
 msgstr "Truy cập bị từ chối! Vui lòng tải lại trang và thử lại."
 
-#: actions/budget.actions.ts:38
+#: actions/budget.actions.ts:46
 msgid "kwvIdb"
 msgstr "Ngân sách này đã tồn tại!"
 
-#: actions/budget.actions.ts:51
-#: actions/budget.actions.ts:57
+#: actions/budget.actions.ts:59
+#: actions/budget.actions.ts:65
 msgid "ge/1ga"
 msgstr "Thêm ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/budget.actions.ts:54
+#: actions/budget.actions.ts:62
 msgid "hcutYI"
 msgstr "Ngân sách đã được thêm."
 
-#: actions/budget.actions.ts:75
-#: actions/budget.actions.ts:128
+#: actions/budget.actions.ts:90
+#: actions/budget.actions.ts:143
 msgid "3pMkv5"
 msgstr "ID ngân sách không hợp lệ!"
 
-#: actions/budget.actions.ts:89
+#: actions/budget.actions.ts:104
 msgid "5BmD1W"
 msgstr "Không tìm thấy ngân sách hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/budget.actions.ts:107
+#: actions/budget.actions.ts:122
 msgid "Ipw0W1"
 msgstr "Ngân sách đã được cập nhật."
 
-#: actions/budget.actions.ts:110
+#: actions/budget.actions.ts:125
 msgid "ZUfwUz"
 msgstr "Cập nhật ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/budget.actions.ts:142
+#: actions/budget.actions.ts:157
 msgid "fDrjqQ"
 msgstr "Không tìm thấy ngân sách hoặc bạn không có quyền xóa!"
 
-#: actions/budget.actions.ts:152
+#: actions/budget.actions.ts:167
 msgid "GeSZei"
 msgstr "Ngân sách đã được xóa."
 
-#: actions/budget.actions.ts:155
+#: actions/budget.actions.ts:170
 msgid "niO8qC"
 msgstr "Xóa ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/budget.actions.ts:190
+#: actions/budget.actions.ts:205
 msgid "xFeLWs"
 msgstr "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:42
-#: actions/category.actions.ts:122
+#: actions/category.actions.ts:50
+#: actions/category.actions.ts:137
 msgid "LzesyV"
 msgstr "Danh mục này đã tồn tại!"
 
-#: actions/category.actions.ts:53
+#: actions/category.actions.ts:61
 msgid "G0Twr1"
 msgstr "Lỗi khi tạo khóa danh mục! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:66
-#: actions/category.actions.ts:72
+#: actions/category.actions.ts:74
+#: actions/category.actions.ts:80
 msgid "OQ79b6"
 msgstr "Thêm danh mục thất bại! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:69
+#: actions/category.actions.ts:77
 msgid "Jfen4M"
 msgstr "Danh mục đã được thêm."
 
-#: actions/category.actions.ts:93
-#: actions/category.actions.ts:172
+#: actions/category.actions.ts:108
+#: actions/category.actions.ts:187
 msgid "TgxdcM"
 msgstr "ID danh mục không hợp lệ!"
 
-#: actions/category.actions.ts:110
+#: actions/category.actions.ts:125
 msgid "Jau5xo"
 msgstr "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/category.actions.ts:151
+#: actions/category.actions.ts:166
 msgid "RMEY96"
 msgstr "Danh mục đã được cập nhật."
 
-#: actions/category.actions.ts:154
+#: actions/category.actions.ts:169
 msgid "PoUgbk"
 msgstr "Cập nhật danh mục thất bại! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:198
+#: actions/category.actions.ts:213
 msgid "IzwrSe"
 msgstr "Không tìm thấy danh mục hoặc bạn không có quyền xóa!"
 
-#: actions/category.actions.ts:228
+#: actions/category.actions.ts:243
 msgid "SyYZuO"
 msgstr "Không thể xóa danh mục. Có {count} giao dịch đang sử dụng danh mục này. Vui lòng xóa các giao dịch đó trước."
 
-#: actions/category.actions.ts:239
+#: actions/category.actions.ts:254
 msgid "iNZspt"
 msgstr "Không thể xóa danh mục. Có {count} ngân sách đang sử dụng danh mục này. Vui lòng xóa các ngân sách đó trước."
 
-#: actions/category.actions.ts:250
+#: actions/category.actions.ts:265
 msgid "C7NEmI"
 msgstr "Không thể xóa danh mục. Có {count} mục tiêu đang sử dụng danh mục này. Vui lòng xóa các mục tiêu đó trước."
 
-#: actions/category.actions.ts:261
+#: actions/category.actions.ts:276
 msgid "Q/Y/ED"
 msgstr "Không thể xóa danh mục. Có {count} giao dịch định kỳ đang sử dụng danh mục này. Vui lòng xóa các giao dịch định kỳ đó trước."
 
-#: actions/category.actions.ts:276
+#: actions/category.actions.ts:291
 msgid "7Al4tw"
 msgstr "Danh mục đã được xóa."
 
-#: actions/category.actions.ts:279
+#: actions/category.actions.ts:294
 msgid "XWfgXI"
 msgstr "Xóa danh mục thất bại! Vui lòng thử lại sau."
 
-#: actions/category.actions.ts:313
+#: actions/category.actions.ts:328
 msgid "gzfdvr"
 msgstr "Tải danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:38
+#: actions/goal.actions.ts:46
 msgid "3SCa/T"
 msgstr "Mục tiêu này đã tồn tại!"
 
-#: actions/goal.actions.ts:52
-#: actions/goal.actions.ts:58
+#: actions/goal.actions.ts:60
+#: actions/goal.actions.ts:66
 msgid "9Buhj/"
 msgstr "Thêm mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:55
+#: actions/goal.actions.ts:63
 msgid "J+nrjG"
 msgstr "Mục tiêu đã được thêm."
 
-#: actions/goal.actions.ts:76
-#: actions/goal.actions.ts:130
+#: actions/goal.actions.ts:91
+#: actions/goal.actions.ts:145
 msgid "7UB8uM"
 msgstr "ID mục tiêu không hợp lệ!"
 
-#: actions/goal.actions.ts:90
+#: actions/goal.actions.ts:105
 msgid "iQpYZg"
 msgstr "Không tìm thấy mục tiêu hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/goal.actions.ts:109
+#: actions/goal.actions.ts:124
 msgid "SpmGQk"
 msgstr "Mục tiêu đã được cập nhật."
 
-#: actions/goal.actions.ts:112
+#: actions/goal.actions.ts:127
 msgid "Lmu8yS"
 msgstr "Cập nhật mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:144
+#: actions/goal.actions.ts:159
 msgid "Av4WTA"
 msgstr "Không tìm thấy mục tiêu hoặc bạn không có quyền xóa!"
 
-#: actions/goal.actions.ts:154
+#: actions/goal.actions.ts:169
 msgid "MT417I"
 msgstr "Mục tiêu đã được xóa."
 
-#: actions/goal.actions.ts:157
+#: actions/goal.actions.ts:172
 msgid "uwewg6"
 msgstr "Xóa mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/goal.actions.ts:192
+#: actions/goal.actions.ts:207
 msgid "xwvGbl"
 msgstr "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:53
+#: actions/recurring.actions.ts:61
 msgid "+HBMWc"
 msgstr "Giao dịch định kỳ này đã tồn tại!"
 
-#: actions/recurring.actions.ts:73
-#: actions/recurring.actions.ts:86
+#: actions/recurring.actions.ts:81
+#: actions/recurring.actions.ts:94
 msgid "FLPmpu"
 msgstr "Thêm giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:80
+#: actions/recurring.actions.ts:88
 msgid "5Mtoe5"
 msgstr "Giao dịch định kỳ đã được thêm."
 
-#: actions/recurring.actions.ts:108
-#: actions/recurring.actions.ts:175
+#: actions/recurring.actions.ts:123
+#: actions/recurring.actions.ts:190
 msgid "Yamhgo"
 msgstr "ID giao dịch định kỳ không hợp lệ!"
 
-#: actions/recurring.actions.ts:122
+#: actions/recurring.actions.ts:137
 msgid "oyoqPq"
 msgstr "Không tìm thấy giao dịch định kỳ hoặc bạn không có quyền chỉnh sửa."
 
-#: actions/recurring.actions.ts:148
+#: actions/recurring.actions.ts:163
 msgid "FgrcGc"
 msgstr "Giao dịch định kỳ đã được cập nhật."
 
-#: actions/recurring.actions.ts:154
+#: actions/recurring.actions.ts:169
 msgid "qlYMTi"
 msgstr "Cập nhật giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:189
+#: actions/recurring.actions.ts:204
 msgid "TJXAsr"
 msgstr "Không tìm thấy giao dịch định kỳ hoặc bạn không có quyền xóa!"
 
-#: actions/recurring.actions.ts:201
+#: actions/recurring.actions.ts:216
 msgid "0L6Kzl"
 msgstr "Giao dịch định kỳ đã được xóa."
 
-#: actions/recurring.actions.ts:205
+#: actions/recurring.actions.ts:220
 msgid "9p5fYg"
 msgstr "Xóa giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/recurring.actions.ts:243
+#: actions/recurring.actions.ts:258
 msgid "D92YlY"
 msgstr "Tải danh sách giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:44
+#: actions/transaction.actions.ts:52
 msgid "v+aP8j"
 msgstr "Giao dịch này đã được tạo hôm nay!"
 
-#: actions/transaction.actions.ts:50
-#: actions/transaction.actions.ts:56
+#: actions/transaction.actions.ts:58
+#: actions/transaction.actions.ts:64
 msgid "zb35o3"
 msgstr "Thêm giao dịch thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:53
+#: actions/transaction.actions.ts:61
 msgid "pU1r4y"
 msgstr "Giao dịch đã được thêm."
 
-#: actions/transaction.actions.ts:77
-#: actions/transaction.actions.ts:137
+#: actions/transaction.actions.ts:92
+#: actions/transaction.actions.ts:152
 msgid "w/J6M7"
 msgstr "ID giao dịch không hợp lệ!"
 
-#: actions/transaction.actions.ts:91
+#: actions/transaction.actions.ts:106
 msgid "qyC85x"
 msgstr "Không tìm thấy giao dịch hoặc bạn không có quyền chỉnh sửa!"
 
-#: actions/transaction.actions.ts:114
+#: actions/transaction.actions.ts:129
 msgid "VHOeqA"
 msgstr "Giao dịch đã được cập nhật."
 
-#: actions/transaction.actions.ts:119
+#: actions/transaction.actions.ts:134
 msgid "A9rBEo"
 msgstr "Cập nhật giao dịch thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:151
+#: actions/transaction.actions.ts:166
 msgid "Fxn2/P"
 msgstr "Không tìm thấy giao dịch hoặc bạn không có quyền xóa!"
 
-#: actions/transaction.actions.ts:163
+#: actions/transaction.actions.ts:178
 msgid "tz6kfd"
 msgstr "Giao dịch đã được xóa."
 
-#: actions/transaction.actions.ts:166
+#: actions/transaction.actions.ts:181
 msgid "DcqDur"
 msgstr "Xóa giao dịch thất bại! Vui lòng thử lại sau."
 
-#: actions/transaction.actions.ts:210
+#: actions/transaction.actions.ts:225
 msgid "+VVz7r"
 msgstr "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:157
+#: components/auth/signin-form.tsx:156
 msgid "Ub+AGc"
 msgstr "Đăng nhập"
 
@@ -318,52 +331,32 @@ msgstr "Trang bạn đang tìm kiếm không tồn tại."
 msgid "kfoc7z"
 msgstr "Về trang chủ"
 
-#: app/(core)/budgets/page.tsx:9
+#: app/(core)/budgets/page.tsx:10
 #: components/budgets/budgets-page.tsx:19
 #: hooks/use-nav.ts:48
 msgid "mJeXSX"
 msgstr "Ngân sách"
 
-#: app/(core)/categories/page.tsx:9
+#: app/(core)/categories/page.tsx:10
 #: components/categories/categories-page.tsx:19
 #: hooks/use-nav.ts:43
 msgid "VKb1MS"
 msgstr "Danh mục"
 
-#: app/(core)/goals/page.tsx:9
+#: app/(core)/goals/page.tsx:10
 #: components/goals/goals-page.tsx:19
 #: hooks/use-nav.ts:53
 msgid "XHLYdJ"
 msgstr "Mục tiêu"
 
-#: app/(core)/home/page.tsx:9
+#: app/(core)/home/page.tsx:10
 #: components/layout/header.tsx:48
 #: components/layout/header.tsx:51
 #: hooks/use-nav.ts:28
 msgid "ejEGdx"
 msgstr "Trang chủ"
 
-#: app/(core)/layout.tsx:109
-msgid "iKuJb1"
-msgstr "KHÔNG THỂ TẢI DỮ LIỆU GIAO DỊCH"
-
-#: app/(core)/layout.tsx:114
-msgid "pvUtk6"
-msgstr "KHÔNG THỂ TẢI DỮ LIỆU DANH MỤC"
-
-#: app/(core)/layout.tsx:118
-msgid "iriWHm"
-msgstr "KHÔNG THỂ TẢI DỮ LIỆU NGÂN SÁCH"
-
-#: app/(core)/layout.tsx:120
-msgid "V9Jq49"
-msgstr "KHÔNG THỂ TẢI DỮ LIỆU MỤC TIÊU"
-
-#: app/(core)/layout.tsx:123
-msgid "3aju6V"
-msgstr "KHÔNG THỂ TẢI DỮ LIỆU GIAO DỊCH ĐỊNH KỲ"
-
-#: app/(core)/recurring/page.tsx:9
+#: app/(core)/recurring/page.tsx:10
 msgid "VgzOzy"
 msgstr "Giao dịch định kỳ"
 
@@ -372,13 +365,13 @@ msgstr "Giao dịch định kỳ"
 msgid "D3idYv"
 msgstr "Cài đặt"
 
-#: app/(core)/statistics/page.tsx:9
+#: app/(core)/statistics/page.tsx:10
 #: components/statistics/statistics-page.tsx:18
 #: hooks/use-nav.ts:33
 msgid "H3eDAS"
 msgstr "Thống kê"
 
-#: app/(core)/transactions/page.tsx:9
+#: app/(core)/transactions/page.tsx:10
 #: components/transactions/transactions-page.tsx:24
 #: hooks/use-nav.ts:38
 msgid "/jJLYy"
@@ -388,7 +381,7 @@ msgstr "Giao dịch"
 msgid "/WMCDd"
 msgstr "Đã xảy ra lỗi!"
 
-#: app/layout.tsx:22
+#: app/layout.tsx:25
 #: components/layout/app-sidebar.tsx:30
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
@@ -405,294 +398,278 @@ msgstr "Vui lòng hoàn thành xác minh CAPTCHA!"
 msgid "ItmvCq"
 msgstr "Xác minh CAPTCHA"
 
-#: components/auth/signin-form.tsx:51
-#: components/auth/two-factor-form.tsx:44
-#: components/budgets/budget-dialog.tsx:95
-#: components/categories/category-dialog.tsx:73
-#: components/goals/goal-dialog.tsx:97
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:127
-#: components/settings/change-name-dialog.tsx:54
-#: components/settings/change-password-dialog.tsx:53
-#: components/settings/change-username-dialog.tsx:54
-#: components/settings/two-factor-manager-dialog.tsx:122
-#: components/settings/two-factor-manager-dialog.tsx:198
-#: components/settings/two-factor-manager-dialog.tsx:272
-#: components/transactions/transaction-dialog.tsx:106
-msgid "5GmpFA"
-msgstr "Dữ liệu không hợp lệ!"
-
-#: components/auth/signin-form.tsx:67
+#: components/auth/signin-form.tsx:60
 msgid "pxIiYc"
 msgstr "Tên đăng nhập hoặc mật khẩu không hợp lệ!"
 
-#: components/auth/signin-form.tsx:68
+#: components/auth/signin-form.tsx:61
 msgid "b8+mgZ"
 msgstr "Đăng nhập thất bại! Vui lòng thử lại sau."
 
 #: components/auth/signin-form.tsx:121
-#: components/settings/change-username-dialog.tsx:106
+#: components/settings/change-username-dialog.tsx:99
 msgid "JCIgkj"
 msgstr "Tên đăng nhập"
 
 #: components/auth/signin-form.tsx:141
-#: components/settings/two-factor-manager-dialog.tsx:152
-#: components/settings/two-factor-manager-dialog.tsx:300
+#: components/settings/two-factor-manager-dialog.tsx:145
+#: components/settings/two-factor-manager-dialog.tsx:281
 msgid "5sg7KC"
 msgstr "Mật khẩu"
 
-#: components/auth/two-factor-form.tsx:53
+#: components/auth/two-factor-form.tsx:46
 msgid "mXmfR7"
 msgstr "Mã xác thực không hợp lệ! Vui lòng thử lại sau."
 
-#: components/auth/two-factor-form.tsx:79
-#: components/settings/two-factor-manager-dialog.tsx:228
+#: components/auth/two-factor-form.tsx:72
+#: components/settings/two-factor-manager-dialog.tsx:215
 msgid "Tjv3UC"
 msgstr "Mã xác minh"
 
-#: components/auth/two-factor-form.tsx:109
+#: components/auth/two-factor-form.tsx:102
 msgid "hyw/Cv"
 msgstr "Tin cậy thiết bị này"
 
-#: components/auth/two-factor-form.tsx:112
+#: components/auth/two-factor-form.tsx:105
 msgid "ZcMAT1"
 msgstr "Không hỏi mã 2FA trên thiết bị này trong 30 ngày."
 
-#: components/auth/two-factor-form.tsx:120
-#: components/settings/two-factor-manager-dialog.tsx:245
+#: components/auth/two-factor-form.tsx:116
+#: components/settings/two-factor-manager-dialog.tsx:235
 msgid "q5Xl0M"
 msgstr "Xác minh"
 
-#: components/budgets/budget-dialog.tsx:137
+#: components/budgets/budget-dialog.tsx:131
 msgid "2g82CP"
 msgstr "Chỉnh sửa ngân sách"
 
-#: components/budgets/budget-dialog.tsx:137
+#: components/budgets/budget-dialog.tsx:131
 msgid "zMoeFN"
 msgstr "Thêm ngân sách"
 
-#: components/budgets/budget-dialog.tsx:141
+#: components/budgets/budget-dialog.tsx:135
 msgid "zSiCkT"
 msgstr "Cập nhật thông tin ngân sách."
 
-#: components/budgets/budget-dialog.tsx:142
+#: components/budgets/budget-dialog.tsx:136
 msgid "PVSBse"
 msgstr "Tạo ngân sách cho một danh mục để theo dõi chi tiêu của bạn."
 
-#: components/budgets/budget-dialog.tsx:155
-#: components/goals/goal-dialog.tsx:156
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:229
-#: components/settings/currency-selector.tsx:48
+#: components/budgets/budget-dialog.tsx:149
+#: components/goals/goal-dialog.tsx:150
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:223
+#: components/settings/currency-selector.tsx:49
 #: components/settings/settings-page.tsx:59
-#: components/transactions/transaction-dialog.tsx:198
+#: components/transactions/transaction-dialog.tsx:192
 msgid "55hdQy"
 msgstr "Tiền tệ"
 
-#: components/budgets/budget-dialog.tsx:186
-#: components/budgets/budgets-table.tsx:89
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:260
+#: components/budgets/budget-dialog.tsx:180
+#: components/budgets/budgets-table.tsx:92
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:254
 #: components/recurring-transactions/recurring-transactions-table.tsx:114
 #: components/transactions/export-button.tsx:35
-#: components/transactions/transaction-dialog.tsx:229
+#: components/transactions/transaction-dialog.tsx:223
 #: components/transactions/transactions-table.tsx:88
 msgid "/0TOL5"
 msgstr "Số tiền"
 
-#: components/budgets/budget-dialog.tsx:206
-#: components/budgets/budgets-table.tsx:86
-#: components/goals/goal-dialog.tsx:229
-#: components/goals/goals-table.tsx:85
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:379
+#: components/budgets/budget-dialog.tsx:200
+#: components/budgets/budgets-table.tsx:89
+#: components/goals/goal-dialog.tsx:223
+#: components/goals/goals-table.tsx:88
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:373
 #: components/recurring-transactions/recurring-transactions-table.tsx:109
 msgid "QirE3M"
 msgstr "Ngày bắt đầu"
 
-#: components/budgets/budget-dialog.tsx:224
-#: components/budgets/budget-dialog.tsx:277
-#: components/goals/goal-dialog.tsx:247
-#: components/goals/goal-dialog.tsx:300
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:397
+#: components/budgets/budget-dialog.tsx:218
+#: components/budgets/budget-dialog.tsx:271
+#: components/goals/goal-dialog.tsx:241
+#: components/goals/goal-dialog.tsx:294
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:391
 #: components/statistics/statistics-filters.tsx:125
-#: components/transactions/transaction-dialog.tsx:292
-#: components/transactions/transaction-filters.tsx:180
+#: components/transactions/transaction-dialog.tsx:286
+#: components/transactions/transaction-filters.tsx:221
 msgid "ftg7GK"
 msgstr "Chọn ngày"
 
-#: components/budgets/budget-dialog.tsx:260
-#: components/budgets/budgets-table.tsx:87
-#: components/goals/goal-dialog.tsx:283
-#: components/goals/goals-table.tsx:86
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:433
+#: components/budgets/budget-dialog.tsx:254
+#: components/budgets/budgets-table.tsx:90
+#: components/goals/goal-dialog.tsx:277
+#: components/goals/goals-table.tsx:89
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:427
 #: components/recurring-transactions/recurring-transactions-table.tsx:110
 msgid "T4GOiX"
 msgstr "Ngày kết thúc"
 
-#: components/budgets/budget-dialog.tsx:310
+#: components/budgets/budget-dialog.tsx:304
 #: components/budgets/delete-budget-dialog.tsx:61
-#: components/categories/category-dialog.tsx:187
+#: components/categories/category-dialog.tsx:180
 #: components/categories/delete-category-dialog.tsx:61
 #: components/goals/delete-goal-dialog.tsx:61
-#: components/goals/goal-dialog.tsx:333
+#: components/goals/goal-dialog.tsx:327
 #: components/layout/secondary-nav.tsx:85
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:63
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:513
-#: components/settings/change-name-dialog.tsx:110
-#: components/settings/change-password-dialog.tsx:174
-#: components/settings/change-username-dialog.tsx:122
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:507
+#: components/settings/change-name-dialog.tsx:103
+#: components/settings/change-password-dialog.tsx:167
+#: components/settings/change-username-dialog.tsx:115
 #: components/transactions/delete-transaction-dialog.tsx:61
-#: components/transactions/transaction-dialog.tsx:324
+#: components/transactions/transaction-dialog.tsx:318
 msgid "47FYwb"
 msgstr "Hủy"
 
-#: components/budgets/budget-dialog.tsx:314
-#: components/categories/category-dialog.tsx:191
-#: components/goals/goal-dialog.tsx:337
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
-#: components/transactions/transaction-dialog.tsx:328
+#: components/budgets/budget-dialog.tsx:307
+#: components/categories/category-dialog.tsx:183
+#: components/goals/goal-dialog.tsx:330
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:511
+#: components/transactions/transaction-dialog.tsx:321
 msgid "BWpuKl"
 msgstr "Cập nhật"
 
-#: components/budgets/budget-dialog.tsx:314
+#: components/budgets/budget-dialog.tsx:307
 #: components/budgets/budgets-page.tsx:24
 #: components/categories/categories-page.tsx:24
-#: components/categories/category-dialog.tsx:191
-#: components/goals/goal-dialog.tsx:337
+#: components/categories/category-dialog.tsx:183
+#: components/goals/goal-dialog.tsx:330
 #: components/goals/goals-page.tsx:24
 #: components/home/homepage.tsx:30
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:518
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:511
 #: components/recurring-transactions/recurring-transactions-page.tsx:24
-#: components/transactions/transaction-dialog.tsx:328
+#: components/transactions/transaction-dialog.tsx:321
 #: components/transactions/transactions-page.tsx:31
 msgid "2/2yg+"
 msgstr "Thêm"
 
-#: components/budgets/budget-filters.tsx:82
-#: components/goals/goal-filters.tsx:116
-#: components/recurring-transactions/recurring-transactions-filters.tsx:111
+#: components/budgets/budget-filters.tsx:84
+#: components/goals/goal-filters.tsx:118
+#: components/recurring-transactions/recurring-transactions-filters.tsx:113
 #: components/statistics/statistics-filters.tsx:216
-#: components/transactions/transaction-filters.tsx:271
+#: components/transactions/transaction-filters.tsx:312
 msgid "TBovrx"
 msgstr "Tháng"
 
-#: components/budgets/budget-filters.tsx:86
-#: components/goals/goal-filters.tsx:120
-#: components/recurring-transactions/recurring-transactions-filters.tsx:115
+#: components/budgets/budget-filters.tsx:88
+#: components/goals/goal-filters.tsx:122
+#: components/recurring-transactions/recurring-transactions-filters.tsx:117
 #: components/statistics/statistics-filters.tsx:220
-#: components/transactions/transaction-filters.tsx:275
+#: components/transactions/transaction-filters.tsx:316
 msgid "O+ZfC8"
 msgstr "Tất cả các tháng"
 
-#: components/budgets/budget-filters.tsx:101
-#: components/goals/goal-filters.tsx:135
-#: components/recurring-transactions/recurring-transactions-filters.tsx:130
+#: components/budgets/budget-filters.tsx:103
+#: components/goals/goal-filters.tsx:137
+#: components/recurring-transactions/recurring-transactions-filters.tsx:132
 #: components/statistics/statistics-filters.tsx:235
-#: components/transactions/transaction-filters.tsx:290
+#: components/transactions/transaction-filters.tsx:331
 msgid "IFo1oo"
 msgstr "Năm"
 
-#: components/budgets/budget-filters.tsx:105
-#: components/goals/goal-filters.tsx:139
-#: components/recurring-transactions/recurring-transactions-filters.tsx:134
+#: components/budgets/budget-filters.tsx:107
+#: components/goals/goal-filters.tsx:141
+#: components/recurring-transactions/recurring-transactions-filters.tsx:136
 #: components/statistics/statistics-filters.tsx:239
-#: components/transactions/transaction-filters.tsx:294
+#: components/transactions/transaction-filters.tsx:335
 msgid "5JGC4V"
 msgstr "Tất cả các năm"
 
-#: components/budgets/budget-filters.tsx:123
-#: components/budgets/budgets-table.tsx:88
+#: components/budgets/budget-filters.tsx:125
+#: components/budgets/budgets-table.tsx:91
 #: components/category-form-select.tsx:49
-#: components/goals/goal-filters.tsx:157
-#: components/goals/goals-table.tsx:88
-#: components/recurring-transactions/recurring-transactions-filters.tsx:168
+#: components/goals/goal-filters.tsx:159
+#: components/goals/goals-table.tsx:91
+#: components/recurring-transactions/recurring-transactions-filters.tsx:170
 #: components/recurring-transactions/recurring-transactions-table.tsx:113
-#: components/statistics/statistics-table.tsx:70
+#: components/statistics/statistics-table.tsx:108
 #: components/transactions/export-button.tsx:34
-#: components/transactions/transaction-filters.tsx:333
+#: components/transactions/transaction-filters.tsx:374
 #: components/transactions/transactions-table.tsx:87
 msgid "ccXLVi"
 msgstr "Danh mục"
 
-#: components/budgets/budget-filters.tsx:126
-#: components/goals/goal-filters.tsx:160
-#: components/recurring-transactions/recurring-transactions-filters.tsx:172
-#: components/transactions/transaction-filters.tsx:337
+#: components/budgets/budget-filters.tsx:128
+#: components/goals/goal-filters.tsx:162
+#: components/recurring-transactions/recurring-transactions-filters.tsx:174
+#: components/transactions/transaction-filters.tsx:378
 msgid "1X6HtI"
 msgstr "Tất cả danh mục"
 
-#: components/budgets/budget-filters.tsx:145
-#: components/budgets/budgets-table.tsx:93
-#: components/goals/goal-filters.tsx:179
-#: components/goals/goals-table.tsx:92
+#: components/budgets/budget-filters.tsx:147
+#: components/budgets/budgets-table.tsx:96
+#: components/goals/goal-filters.tsx:181
+#: components/goals/goals-table.tsx:95
 msgid "sIMS7i"
 msgstr "Tiến độ"
 
-#: components/budgets/budget-filters.tsx:149
-#: components/goals/goal-filters.tsx:183
+#: components/budgets/budget-filters.tsx:151
+#: components/goals/goal-filters.tsx:185
 msgid "W8OX/r"
 msgstr "Tất cả tiến độ"
 
-#: components/budgets/budget-filters.tsx:151
-#: components/goals/goal-filters.tsx:185
+#: components/budgets/budget-filters.tsx:153
+#: components/goals/goal-filters.tsx:187
 msgid "tlzCDY"
 msgstr "Không có giao dịch"
 
-#: components/budgets/budget-filters.tsx:152
+#: components/budgets/budget-filters.tsx:154
 msgid "ZLbolA"
 msgstr "Tốt (< 75%)"
 
-#: components/budgets/budget-filters.tsx:154
+#: components/budgets/budget-filters.tsx:156
 msgid "1TM0t6"
 msgstr "Cảnh báo (75-100%)"
 
-#: components/budgets/budget-filters.tsx:156
+#: components/budgets/budget-filters.tsx:158
 msgid "DSmOlH"
 msgstr "Vượt quá (≥ 100%)"
 
-#: components/budgets/budget-filters.tsx:170
-#: components/budgets/budgets-table.tsx:92
-#: components/goals/goal-filters.tsx:202
-#: components/goals/goals-table.tsx:91
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:491
-#: components/recurring-transactions/recurring-transactions-filters.tsx:200
+#: components/budgets/budget-filters.tsx:172
+#: components/budgets/budgets-table.tsx:95
+#: components/goals/goal-filters.tsx:204
+#: components/goals/goals-table.tsx:94
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:485
+#: components/recurring-transactions/recurring-transactions-filters.tsx:202
 #: components/recurring-transactions/recurring-transactions-table.tsx:116
 msgid "tzMNF3"
 msgstr "Trạng thái"
 
-#: components/budgets/budget-filters.tsx:174
-#: components/goals/goal-filters.tsx:206
-#: components/recurring-transactions/recurring-transactions-filters.tsx:204
+#: components/budgets/budget-filters.tsx:176
+#: components/goals/goal-filters.tsx:208
+#: components/recurring-transactions/recurring-transactions-filters.tsx:206
 msgid "tADQQm"
 msgstr "Tất cả trạng thái"
 
-#: components/budgets/budget-filters.tsx:176
-#: components/budgets/budgets-table.tsx:136
-#: components/goals/goal-filters.tsx:208
-#: components/goals/goals-table.tsx:127
+#: components/budgets/budget-filters.tsx:178
+#: components/budgets/budgets-table.tsx:145
+#: components/goals/goal-filters.tsx:210
+#: components/goals/goals-table.tsx:134
 msgid "RahCRH"
 msgstr "Đã hết hạn"
 
-#: components/budgets/budget-filters.tsx:177
-#: components/budgets/budgets-table.tsx:138
-#: components/goals/goal-filters.tsx:209
-#: components/goals/goals-table.tsx:129
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:502
-#: components/recurring-transactions/recurring-transactions-filters.tsx:206
+#: components/budgets/budget-filters.tsx:179
+#: components/budgets/budgets-table.tsx:147
+#: components/goals/goal-filters.tsx:211
+#: components/goals/goals-table.tsx:136
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:496
+#: components/recurring-transactions/recurring-transactions-filters.tsx:208
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "3a5wL8"
 msgstr "Đang hoạt động"
 
-#: components/budgets/budget-filters.tsx:178
-#: components/budgets/budgets-table.tsx:139
-#: components/goals/goal-filters.tsx:210
-#: components/goals/goals-table.tsx:130
+#: components/budgets/budget-filters.tsx:180
+#: components/budgets/budgets-table.tsx:148
+#: components/goals/goal-filters.tsx:212
+#: components/goals/goals-table.tsx:137
 msgid "6/aEFZ"
 msgstr "Sắp tới"
 
-#: components/budgets/budget-filters.tsx:189
+#: components/budgets/budget-filters.tsx:191
 #: components/categories/category-filters.tsx:103
-#: components/goals/goal-filters.tsx:221
-#: components/recurring-transactions/recurring-transactions-filters.tsx:218
+#: components/goals/goal-filters.tsx:223
+#: components/recurring-transactions/recurring-transactions-filters.tsx:220
 #: components/statistics/statistics-filters.tsx:256
-#: components/transactions/transaction-filters.tsx:362
+#: components/transactions/transaction-filters.tsx:403
 msgid "jm/spn"
 msgstr "Đặt lại"
 
@@ -700,49 +677,56 @@ msgstr "Đặt lại"
 msgid "UxaXqH"
 msgstr "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn."
 
-#: components/budgets/budgets-table.tsx:73
+#: components/budgets/budgets-table.tsx:76
 msgid "CgOoDa"
 msgstr "Không tìm thấy ngân sách"
 
-#: components/budgets/budgets-table.tsx:76
+#: components/budgets/budgets-table.tsx:79
 msgid "PTvqaL"
 msgstr "Bạn chưa tạo ngân sách nào."
 
-#: components/budgets/budgets-table.tsx:77
+#: components/budgets/budgets-table.tsx:80
 msgid "PZ97Zd"
 msgstr "Không tìm thấy ngân sách phù hợp với bộ lọc của bạn."
 
-#: components/budgets/budgets-table.tsx:90
+#: components/budgets/budgets-table.tsx:93
 msgid "111qQK"
 msgstr "Đã chi"
 
-#: components/budgets/budgets-table.tsx:91
+#: components/budgets/budgets-table.tsx:94
 #: components/statistics/statistics-summary.tsx:70
 msgid "H5+NAX"
 msgstr "Số dư"
 
-#: components/budgets/budgets-table.tsx:164
+#: components/budgets/budgets-table.tsx:173
 #: components/categories/categories-table.tsx:109
-#: components/goals/goals-table.tsx:155
+#: components/goals/goals-table.tsx:162
 #: components/recurring-transactions/recurring-transactions-table.tsx:201
+#: components/statistics/statistics-table.tsx:164
 #: components/transactions/transactions-table.tsx:148
 msgid "bdcMGy"
 msgstr "Mở menu"
 
-#: components/budgets/budgets-table.tsx:175
+#: components/budgets/budgets-table.tsx:182
+#: components/goals/goals-table.tsx:171
+#: components/statistics/statistics-table.tsx:173
+msgid "FgydNe"
+msgstr "Xem"
+
+#: components/budgets/budgets-table.tsx:192
 #: components/categories/categories-table.tsx:120
-#: components/goals/goals-table.tsx:166
+#: components/goals/goals-table.tsx:181
 #: components/recurring-transactions/recurring-transactions-table.tsx:212
 #: components/transactions/transactions-table.tsx:159
 msgid "wEQDC6"
 msgstr "Chỉnh sửa"
 
-#: components/budgets/budgets-table.tsx:185
+#: components/budgets/budgets-table.tsx:202
 #: components/budgets/delete-budget-dialog.tsx:63
 #: components/categories/categories-table.tsx:130
 #: components/categories/delete-category-dialog.tsx:63
 #: components/goals/delete-goal-dialog.tsx:63
-#: components/goals/goals-table.tsx:176
+#: components/goals/goals-table.tsx:191
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:65
 #: components/recurring-transactions/recurring-transactions-table.tsx:222
 #: components/transactions/delete-transaction-dialog.tsx:63
@@ -775,85 +759,85 @@ msgid "Dojtt1"
 msgstr "Không tìm thấy danh mục phù hợp với bộ lọc của bạn."
 
 #: components/categories/categories-table.tsx:72
-#: components/categories/category-dialog.tsx:143
+#: components/categories/category-dialog.tsx:136
 msgid "vEYtiq"
 msgstr "Tên danh mục"
 
 #: components/categories/categories-table.tsx:73
-#: components/categories/category-dialog.tsx:163
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:280
+#: components/categories/category-dialog.tsx:156
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:274
 #: components/recurring-transactions/recurring-transactions-table.tsx:111
 #: components/transactions/export-button.tsx:36
-#: components/transactions/transaction-dialog.tsx:249
+#: components/transactions/transaction-dialog.tsx:243
 #: components/transactions/transactions-table.tsx:85
 msgid "Q8Qw5B"
 msgstr "Mô tả"
 
 #: components/categories/categories-table.tsx:74
 #: components/categories/category-filters.tsx:87
-#: components/recurring-transactions/recurring-transactions-filters.tsx:149
+#: components/recurring-transactions/recurring-transactions-filters.tsx:151
 #: components/recurring-transactions/recurring-transactions-table.tsx:112
-#: components/statistics/statistics-table.tsx:71
+#: components/statistics/statistics-table.tsx:109
 #: components/transactions/export-button.tsx:33
-#: components/transactions/transaction-filters.tsx:314
+#: components/transactions/transaction-filters.tsx:355
 #: components/transactions/transactions-table.tsx:86
 msgid "+U6ozc"
 msgstr "Loại"
 
 #: components/categories/categories-table.tsx:96
-#: components/categories/category-dialog.tsx:132
+#: components/categories/category-dialog.tsx:125
 #: components/categories/category-filters.tsx:92
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:203
-#: components/recurring-transactions/recurring-transactions-filters.tsx:155
-#: components/recurring-transactions/recurring-transactions-filters.tsx:174
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:197
+#: components/recurring-transactions/recurring-transactions-filters.tsx:157
+#: components/recurring-transactions/recurring-transactions-filters.tsx:176
 #: components/recurring-transactions/recurring-transactions-table.tsx:142
-#: components/statistics/statistics-table.tsx:100
+#: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:172
-#: components/transactions/transaction-filters.tsx:320
-#: components/transactions/transaction-filters.tsx:339
+#: components/transactions/transaction-dialog.tsx:166
+#: components/transactions/transaction-filters.tsx:361
+#: components/transactions/transaction-filters.tsx:380
 #: components/transactions/transactions-table.tsx:111
 msgid "gJkHZk"
 msgstr "Thu nhập"
 
 #: components/categories/categories-table.tsx:97
-#: components/categories/category-dialog.tsx:133
+#: components/categories/category-dialog.tsx:126
 #: components/categories/category-filters.tsx:93
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:204
-#: components/recurring-transactions/recurring-transactions-filters.tsx:156
-#: components/recurring-transactions/recurring-transactions-filters.tsx:181
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:198
+#: components/recurring-transactions/recurring-transactions-filters.tsx:158
+#: components/recurring-transactions/recurring-transactions-filters.tsx:183
 #: components/recurring-transactions/recurring-transactions-table.tsx:143
-#: components/statistics/statistics-table.tsx:100
+#: components/statistics/statistics-table.tsx:139
 #: components/transactions/export-button.tsx:40
-#: components/transactions/transaction-dialog.tsx:173
-#: components/transactions/transaction-filters.tsx:321
-#: components/transactions/transaction-filters.tsx:346
+#: components/transactions/transaction-dialog.tsx:167
+#: components/transactions/transaction-filters.tsx:362
+#: components/transactions/transaction-filters.tsx:387
 #: components/transactions/transactions-table.tsx:112
 msgid "URe+qA"
 msgstr "Chi tiêu"
 
-#: components/categories/category-dialog.tsx:116
+#: components/categories/category-dialog.tsx:109
 msgid "THThZY"
 msgstr "Chỉnh sửa danh mục"
 
-#: components/categories/category-dialog.tsx:116
+#: components/categories/category-dialog.tsx:109
 msgid "5Fs4aA"
 msgstr "Thêm danh mục"
 
-#: components/categories/category-dialog.tsx:120
+#: components/categories/category-dialog.tsx:113
 msgid "1VRDDQ"
 msgstr "Cập nhật thông tin danh mục tùy chỉnh."
 
-#: components/categories/category-dialog.tsx:121
+#: components/categories/category-dialog.tsx:114
 msgid "0jMR1h"
 msgstr "Tạo danh mục tùy chỉnh cho các giao dịch của bạn."
 
-#: components/categories/category-dialog.tsx:148
+#: components/categories/category-dialog.tsx:141
 msgid "TxCpcX"
 msgstr "ví dụ: Lương, Mua sắm"
 
-#: components/categories/category-dialog.tsx:169
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:286
+#: components/categories/category-dialog.tsx:162
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:280
 msgid "s0F42g"
 msgstr "Nhập mô tả..."
 
@@ -862,8 +846,8 @@ msgid "T83iU7"
 msgstr "Tìm kiếm danh mục..."
 
 #: components/categories/category-filters.tsx:90
-#: components/recurring-transactions/recurring-transactions-filters.tsx:153
-#: components/transactions/transaction-filters.tsx:318
+#: components/recurring-transactions/recurring-transactions-filters.tsx:155
+#: components/transactions/transaction-filters.tsx:359
 msgid "UjTL+F"
 msgstr "Tất cả các loại"
 
@@ -895,49 +879,49 @@ msgstr "Xóa mục tiêu"
 msgid "EwRebq"
 msgstr "Bạn có chắc chắn muốn xóa mục tiêu này không? Hành động này không thể hoàn tác."
 
-#: components/goals/goal-dialog.tsx:139
+#: components/goals/goal-dialog.tsx:133
 msgid "sOXElg"
 msgstr "Chỉnh sửa mục tiêu"
 
-#: components/goals/goal-dialog.tsx:139
+#: components/goals/goal-dialog.tsx:133
 msgid "5WuADX"
 msgstr "Thêm mục tiêu"
 
-#: components/goals/goal-dialog.tsx:142
+#: components/goals/goal-dialog.tsx:136
 msgid "/kQug4"
 msgstr "Cập nhật thông tin mục tiêu."
 
-#: components/goals/goal-dialog.tsx:143
+#: components/goals/goal-dialog.tsx:137
 msgid "dzmlX3"
 msgstr "Tạo mục tiêu tài chính mới."
 
-#: components/goals/goal-dialog.tsx:188
-#: components/goals/goals-table.tsx:87
+#: components/goals/goal-dialog.tsx:182
+#: components/goals/goals-table.tsx:90
 msgid "gQxxlw"
 msgstr "Tên mục tiêu"
 
-#: components/goals/goal-dialog.tsx:193
+#: components/goals/goal-dialog.tsx:187
 msgid "rH4tSt"
 msgstr "ví dụ: Tiết kiệm cho kỳ nghỉ"
 
-#: components/goals/goal-dialog.tsx:208
-#: components/goals/goals-table.tsx:89
+#: components/goals/goal-dialog.tsx:202
+#: components/goals/goals-table.tsx:92
 msgid "MPOzul"
 msgstr "Số tiền mục tiêu"
 
-#: components/goals/goal-filters.tsx:96
+#: components/goals/goal-filters.tsx:98
 msgid "+xHZ7x"
 msgstr "Tìm kiếm mục tiêu..."
 
-#: components/goals/goal-filters.tsx:186
+#: components/goals/goal-filters.tsx:188
 msgid "8MCUlP"
 msgstr "Tốt (≥ 100%)"
 
-#: components/goals/goal-filters.tsx:187
+#: components/goals/goal-filters.tsx:189
 msgid "O7nOCr"
 msgstr "Thấp (75-100%)"
 
-#: components/goals/goal-filters.tsx:188
+#: components/goals/goal-filters.tsx:190
 msgid "7IAF5Y"
 msgstr "Cảnh báo (< 75%)"
 
@@ -945,19 +929,19 @@ msgstr "Cảnh báo (< 75%)"
 msgid "6rbe1E"
 msgstr "Thiết lập và theo dõi các mục tiêu tài chính của bạn."
 
-#: components/goals/goals-table.tsx:72
+#: components/goals/goals-table.tsx:75
 msgid "uuJSCu"
 msgstr "Không tìm thấy mục tiêu"
 
-#: components/goals/goals-table.tsx:75
+#: components/goals/goals-table.tsx:78
 msgid "Y2QNeU"
 msgstr "Bạn chưa tạo mục tiêu nào."
 
-#: components/goals/goals-table.tsx:76
+#: components/goals/goals-table.tsx:79
 msgid "RB30ZK"
 msgstr "Không tìm thấy mục tiêu phù hợp với bộ lọc của bạn."
 
-#: components/goals/goals-table.tsx:90
+#: components/goals/goals-table.tsx:93
 msgid "GkiQMs"
 msgstr "Tích lũy"
 
@@ -1035,14 +1019,14 @@ msgid "GMkXVd"
 msgstr "Giao dịch gần đây"
 
 #: components/home/recent-transactions.tsx:43
-#: components/statistics/statistics-table.tsx:57
+#: components/statistics/statistics-table.tsx:95
 #: components/transactions/export-button.tsx:57
 #: components/transactions/transactions-table.tsx:71
 msgid "LER0RZ"
 msgstr "Không tìm thấy giao dịch"
 
 #: components/home/recent-transactions.tsx:45
-#: components/statistics/statistics-table.tsx:60
+#: components/statistics/statistics-table.tsx:98
 #: components/transactions/transactions-table.tsx:74
 msgid "GMBC7V"
 msgstr "Bạn chưa tạo giao dịch nào."
@@ -1087,6 +1071,30 @@ msgstr "Cân bằng"
 msgid "qTQZsz"
 msgstr "so với thu nhập"
 
+#: components/layout/page-data-provider.tsx:71
+msgid "EjH+J3"
+msgstr "Vui lòng thử lại sau."
+
+#: components/layout/page-data-provider.tsx:79
+msgid "iKuJb1"
+msgstr "KHÔNG THỂ TẢI DỮ LIỆU GIAO DỊCH"
+
+#: components/layout/page-data-provider.tsx:86
+msgid "pvUtk6"
+msgstr "KHÔNG THỂ TẢI DỮ LIỆU DANH MỤC"
+
+#: components/layout/page-data-provider.tsx:93
+msgid "iriWHm"
+msgstr "KHÔNG THỂ TẢI DỮ LIỆU NGÂN SÁCH"
+
+#: components/layout/page-data-provider.tsx:99
+msgid "V9Jq49"
+msgstr "KHÔNG THỂ TẢI DỮ LIỆU MỤC TIÊU"
+
+#: components/layout/page-data-provider.tsx:104
+msgid "3aju6V"
+msgstr "KHÔNG THỂ TẢI DỮ LIỆU GIAO DỊCH ĐỊNH KỲ"
+
 #: components/layout/secondary-nav.tsx:38
 msgid "oj0aXj"
 msgstr "Đang đăng xuất..."
@@ -1121,85 +1129,85 @@ msgstr "Xóa giao dịch định kỳ"
 msgid "B58bFw"
 msgstr "Bạn có chắc chắn muốn xóa giao dịch định kỳ này không? Hành động này không thể hoàn tác."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:186
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:180
 msgid "5nuO2v"
 msgstr "Chỉnh sửa giao dịch định kỳ"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:187
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:181
 msgid "sYXY5N"
 msgstr "Thêm giao dịch định kỳ"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:191
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:185
 msgid "gKA6Xf"
 msgstr "Cập nhật thông tin giao dịch định kỳ."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:192
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:186
 msgid "adePxB"
 msgstr "Tạo một giao dịch định kỳ."
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:308
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:302
 #: components/recurring-transactions/recurring-transactions-table.tsx:115
 msgid "vAW30j"
 msgstr "Tần suất"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:325
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:319
 #: components/recurring-transactions/recurring-transactions-table.tsx:66
 msgid "zxvhnE"
 msgstr "Hàng ngày"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:326
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:320
 #: components/recurring-transactions/recurring-transactions-table.tsx:68
 msgid "/clOBU"
 msgstr "Hàng tuần"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:328
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:322
 #: components/recurring-transactions/recurring-transactions-table.tsx:70
 msgid "03X4YH"
 msgstr "Hai tuần một lần"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:330
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:324
 #: components/recurring-transactions/recurring-transactions-table.tsx:72
 msgid "wYsv4Z"
 msgstr "Hàng tháng"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:332
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:326
 #: components/recurring-transactions/recurring-transactions-table.tsx:74
 msgid "b1Ou36"
 msgstr "Hàng quý"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:334
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:328
 #: components/recurring-transactions/recurring-transactions-table.tsx:76
 msgid "dqD39h"
 msgstr "Hàng năm"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:335
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:329
 #: components/recurring-transactions/recurring-transactions-table.tsx:78
 msgid "D9n+q2"
 msgstr "Ngẫu nhiên"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:350
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:344
 msgid "CpM7W/"
 msgstr "Mỗi X ngày"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:356
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:350
 msgid "FP2XQQ"
 msgstr "ví dụ: 15"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:433
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:427
 msgid "InWqys"
 msgstr "Không bắt buộc"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:456
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:450
 msgid "mpcI7I"
 msgstr "Không có ngày kết thúc"
 
-#: components/recurring-transactions/recurring-transaction-dialog.tsx:503
-#: components/recurring-transactions/recurring-transactions-filters.tsx:207
+#: components/recurring-transactions/recurring-transaction-dialog.tsx:497
+#: components/recurring-transactions/recurring-transactions-filters.tsx:209
 #: components/recurring-transactions/recurring-transactions-table.tsx:189
 msgid "6Tps09"
 msgstr "Không hoạt động"
 
-#: components/recurring-transactions/recurring-transactions-filters.tsx:91
+#: components/recurring-transactions/recurring-transactions-filters.tsx:93
 msgid "jZimtU"
 msgstr "Tìm kiếm giao dịch định kỳ..."
 
@@ -1282,118 +1290,118 @@ msgstr "Chấm dứt"
 msgid "DC/DQF"
 msgstr "Chấm dứt tất cả"
 
-#: components/settings/change-name-dialog.tsx:62
+#: components/settings/change-name-dialog.tsx:55
 msgid "pdaEmb"
 msgstr "Cập nhật tên thất bại! Vui lòng thử lại sau."
 
-#: components/settings/change-name-dialog.tsx:66
+#: components/settings/change-name-dialog.tsx:59
 msgid "oALrPz"
 msgstr "Tên của bạn đã được cập nhật."
 
-#: components/settings/change-name-dialog.tsx:77
-#: components/settings/change-name-dialog.tsx:81
+#: components/settings/change-name-dialog.tsx:70
+#: components/settings/change-name-dialog.tsx:74
 #: components/settings/settings-page.tsx:73
 msgid "r5LPv0"
 msgstr "Đổi tên"
 
-#: components/settings/change-name-dialog.tsx:83
+#: components/settings/change-name-dialog.tsx:76
 #: components/settings/settings-page.tsx:74
 msgid "z7OVdl"
 msgstr "Cập nhật tên hiển thị của bạn."
 
-#: components/settings/change-name-dialog.tsx:94
+#: components/settings/change-name-dialog.tsx:87
 msgid "HAlOn1"
 msgstr "Tên"
 
-#: components/settings/change-name-dialog.tsx:98
+#: components/settings/change-name-dialog.tsx:91
 msgid "g4FbZ5"
 msgstr "Nhập tên của bạn..."
 
-#: components/settings/change-name-dialog.tsx:114
-#: components/settings/change-password-dialog.tsx:178
-#: components/settings/change-username-dialog.tsx:126
+#: components/settings/change-name-dialog.tsx:106
+#: components/settings/change-password-dialog.tsx:170
+#: components/settings/change-username-dialog.tsx:118
 msgid "jvo0vs"
 msgstr "Lưu"
 
-#: components/settings/change-password-dialog.tsx:64
+#: components/settings/change-password-dialog.tsx:57
 msgid "UR3aU3"
 msgstr "Mật khẩu hiện tại không chính xác!"
 
-#: components/settings/change-password-dialog.tsx:66
+#: components/settings/change-password-dialog.tsx:59
 msgid "I+C2uX"
 msgstr "Cập nhật mật khẩu thất bại! Vui lòng thử lại sau."
 
-#: components/settings/change-password-dialog.tsx:69
+#: components/settings/change-password-dialog.tsx:62
 msgid "kgHPAz"
 msgstr "Mật khẩu của bạn đã được thay đổi."
 
-#: components/settings/change-password-dialog.tsx:80
-#: components/settings/change-password-dialog.tsx:84
+#: components/settings/change-password-dialog.tsx:73
+#: components/settings/change-password-dialog.tsx:77
 #: components/settings/settings-page.tsx:95
 msgid "QiKKFz"
 msgstr "Đổi mật khẩu"
 
-#: components/settings/change-password-dialog.tsx:85
+#: components/settings/change-password-dialog.tsx:78
 #: components/settings/settings-page.tsx:96
 msgid "luD+rc"
 msgstr "Cập nhật mật khẩu của bạn."
 
-#: components/settings/change-password-dialog.tsx:96
+#: components/settings/change-password-dialog.tsx:89
 msgid "GretYf"
 msgstr "Mật khẩu hiện tại"
 
-#: components/settings/change-password-dialog.tsx:117
+#: components/settings/change-password-dialog.tsx:110
 msgid "Ev6SEF"
 msgstr "Mật khẩu mới"
 
-#: components/settings/change-password-dialog.tsx:138
+#: components/settings/change-password-dialog.tsx:131
 msgid "vfG+nh"
 msgstr "Xác nhận mật khẩu"
 
-#: components/settings/change-password-dialog.tsx:166
+#: components/settings/change-password-dialog.tsx:159
 msgid "zFD28X"
 msgstr "Đăng xuất khỏi tất cả các thiết bị khác."
 
-#: components/settings/change-username-dialog.tsx:64
+#: components/settings/change-username-dialog.tsx:57
 msgid "K3OKU5"
 msgstr "Kiểm tra tính khả dụng của tên đăng nhập thất bại! Vui lòng thử lại sau."
 
-#: components/settings/change-username-dialog.tsx:67
+#: components/settings/change-username-dialog.tsx:60
 msgid "wb3MSp"
 msgstr "Tên đăng nhập này đã được sử dụng."
 
-#: components/settings/change-username-dialog.tsx:73
+#: components/settings/change-username-dialog.tsx:66
 msgid "IaZaQX"
 msgstr "Cập nhật tên đăng nhập thất bại! Vui lòng thử lại sau."
 
-#: components/settings/change-username-dialog.tsx:77
+#: components/settings/change-username-dialog.tsx:70
 msgid "8KK2w+"
 msgstr "Tên đăng nhập của bạn đã được thay đổi."
 
-#: components/settings/change-username-dialog.tsx:89
-#: components/settings/change-username-dialog.tsx:93
+#: components/settings/change-username-dialog.tsx:82
+#: components/settings/change-username-dialog.tsx:86
 #: components/settings/settings-page.tsx:83
 msgid "19mdX0"
 msgstr "Đổi tên đăng nhập"
 
-#: components/settings/change-username-dialog.tsx:95
+#: components/settings/change-username-dialog.tsx:88
 #: components/settings/settings-page.tsx:85
 msgid "TXe4LX"
 msgstr "Cập nhật tên đăng nhập duy nhất của bạn."
 
-#: components/settings/change-username-dialog.tsx:110
+#: components/settings/change-username-dialog.tsx:103
 msgid "v60thv"
 msgstr "Nhập tên đăng nhập của bạn..."
 
-#: components/settings/currency-selector.tsx:30
+#: components/settings/currency-selector.tsx:31
 msgid "d6wGcQ"
 msgstr "Cập nhật tiền tệ thất bại! Vui lòng thử lại sau."
 
-#: components/settings/language-selector.tsx:31
+#: components/settings/language-selector.tsx:32
 msgid "Ax3Nmj"
 msgstr "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau."
 
-#: components/settings/language-selector.tsx:50
+#: components/settings/language-selector.tsx:51
 #: components/settings/settings-page.tsx:47
 msgid "y1Z3or"
 msgstr "Ngôn ngữ"
@@ -1443,12 +1451,12 @@ msgid "EQpyb8"
 msgstr "Chuyển đổi chủ đề"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:315
+#: components/settings/two-factor-manager-dialog.tsx:299
 msgid "e7Db3T"
 msgstr "Tắt 2FA"
 
 #: components/settings/two-factor-manager-dialog.tsx:52
-#: components/settings/two-factor-manager-dialog.tsx:167
+#: components/settings/two-factor-manager-dialog.tsx:163
 msgid "ZhrNZz"
 msgstr "Bật 2FA"
 
@@ -1472,44 +1480,44 @@ msgstr "Tắt xác thực hai yếu tố"
 msgid "fUrrOz"
 msgstr "Nhập mật khẩu của bạn để tắt 2FA."
 
-#: components/settings/two-factor-manager-dialog.tsx:131
+#: components/settings/two-factor-manager-dialog.tsx:124
 msgid "6vQ8Z2"
 msgstr "Mật khẩu không hợp lệ."
 
-#: components/settings/two-factor-manager-dialog.tsx:133
+#: components/settings/two-factor-manager-dialog.tsx:126
 msgid "Lq08V/"
 msgstr "Bật 2FA thất bại! Vui lòng thử lại sau."
 
-#: components/settings/two-factor-manager-dialog.tsx:206
+#: components/settings/two-factor-manager-dialog.tsx:193
 msgid "02Huvd"
 msgstr "Xác minh mã 2FA thất bại! Vui lòng thử lại sau."
 
-#: components/settings/two-factor-manager-dialog.tsx:210
+#: components/settings/two-factor-manager-dialog.tsx:197
 msgid "FSRmm9"
 msgstr "Xác thực hai yếu tố đã được bật."
 
-#: components/settings/two-factor-manager-dialog.tsx:280
+#: components/settings/two-factor-manager-dialog.tsx:261
 msgid "Y1o/zZ"
 msgstr "Tắt 2FA thất bại! Vui lòng thử lại sau."
 
-#: components/settings/two-factor-manager-dialog.tsx:284
+#: components/settings/two-factor-manager-dialog.tsx:265
 msgid "BBb4xb"
 msgstr "Xác thực hai yếu tố đã được tắt."
 
 #: components/statistics/statistics-filters.tsx:164
-#: components/transactions/transaction-filters.tsx:219
+#: components/transactions/transaction-filters.tsx:260
 msgid "KAX9q+"
 msgstr "Chọn khoảng thời gian"
 
 #: components/statistics/statistics-filters.tsx:172
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:227
+#: components/transactions/transaction-filters.tsx:268
 msgid "dM+p3/"
 msgstr "Từ"
 
 #: components/statistics/statistics-filters.tsx:191
 #: components/transactions/export-button.tsx:74
-#: components/transactions/transaction-filters.tsx:246
+#: components/transactions/transaction-filters.tsx:287
 msgid "9j3hXO"
 msgstr "Đến"
 
@@ -1529,16 +1537,16 @@ msgstr "Tổng chi tiêu"
 msgid "cX8/D7"
 msgstr "Tổng số giao dịch"
 
-#: components/statistics/statistics-table.tsx:61
+#: components/statistics/statistics-table.tsx:99
 #: components/transactions/transactions-table.tsx:75
 msgid "Cl5VLx"
 msgstr "Không tìm thấy giao dịch phù hợp với bộ lọc của bạn."
 
-#: components/statistics/statistics-table.tsx:72
+#: components/statistics/statistics-table.tsx:110
 msgid "gsAs8V"
 msgstr "Số lượng giao dịch"
 
-#: components/statistics/statistics-table.tsx:73
+#: components/statistics/statistics-table.tsx:111
 msgid "CDTMW3"
 msgstr "Tổng số tiền"
 
@@ -1551,7 +1559,7 @@ msgid "cj6kmp"
 msgstr "Bạn có chắc chắn muốn xóa giao dịch này không? Hành động này không thể hoàn tác."
 
 #: components/transactions/export-button.tsx:32
-#: components/transactions/transaction-dialog.tsx:278
+#: components/transactions/transaction-dialog.tsx:272
 #: components/transactions/transactions-table.tsx:84
 msgid "P7PLVj"
 msgstr "Ngày"
@@ -1572,27 +1580,27 @@ msgstr "Xuất giao dịch"
 msgid "0S1jq/"
 msgstr "Xuất các giao dịch với các bộ lọc hiện tại được áp dụng"
 
-#: components/transactions/transaction-dialog.tsx:154
+#: components/transactions/transaction-dialog.tsx:148
 msgid "P5C72A"
 msgstr "Chỉnh sửa giao dịch"
 
-#: components/transactions/transaction-dialog.tsx:154
+#: components/transactions/transaction-dialog.tsx:148
 msgid "DJIUi0"
 msgstr "Thêm giao dịch"
 
-#: components/transactions/transaction-dialog.tsx:158
+#: components/transactions/transaction-dialog.tsx:152
 msgid "ET95oG"
 msgstr "Cập nhật thông tin giao dịch."
 
-#: components/transactions/transaction-dialog.tsx:159
+#: components/transactions/transaction-dialog.tsx:153
 msgid "m3AQtz"
 msgstr "Thêm thu nhập hoặc chi tiêu của bạn để theo dõi tài chính cá nhân."
 
-#: components/transactions/transaction-dialog.tsx:255
+#: components/transactions/transaction-dialog.tsx:249
 msgid "9WG2aE"
 msgstr "Nhập mô tả cho giao dịch..."
 
-#: components/transactions/transaction-filters.tsx:158
+#: components/transactions/transaction-filters.tsx:199
 msgid "gD5509"
 msgstr "Tìm kiếm giao dịch..."
 
@@ -1617,7 +1625,7 @@ msgid "oKluKH"
 msgstr "Doanh thu bán hàng, dịch vụ, làm việc tự do, hợp đồng ngắn hạn, v.v."
 
 #: hooks/use-category.ts:33
-msgid "igDrI+"
+msgid "KwI8cO"
 msgstr "Đầu tư & Thu nhập thụ động"
 
 #: hooks/use-category.ts:34
@@ -1792,158 +1800,146 @@ msgstr "Tháng 11"
 msgid "SsiZK7"
 msgstr "Tháng 12"
 
-#: hooks/use-schemas.ts:17
+#: schemas/messages.ts:9
 msgid "MsWwGp"
 msgstr "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt."
 
-#: hooks/use-schemas.ts:25
+#: schemas/messages.ts:12
 msgid "/1byDa"
 msgstr "Số tiền là bắt buộc."
 
-#: hooks/use-schemas.ts:27
+#: schemas/messages.ts:13
 msgid "HCzfe9"
 msgstr "Số tiền phải là một số hợp lệ."
 
-#: hooks/use-schemas.ts:31
+#: schemas/messages.ts:14
 msgid "ICgNGL"
 msgstr "Số tiền phải lớn hơn 0."
 
-#: hooks/use-schemas.ts:34
+#: schemas/messages.ts:15
 msgid "9I9BOz"
 msgstr "Số tiền tối đa là 100 tỷ."
 
-#: hooks/use-schemas.ts:40
+#: schemas/messages.ts:16
 msgid "aAADUG"
 msgstr "Tên đăng nhập là bắt buộc."
 
-#: hooks/use-schemas.ts:49
+#: schemas/messages.ts:17
 msgid "gpW0lx"
 msgstr "Mật khẩu hiện tại là bắt buộc."
 
-#: hooks/use-schemas.ts:53
-msgid "136ad6"
-msgstr "Vui lòng xác nhận mật khẩu mới của bạn."
+#: schemas/messages.ts:18
+msgid "xfcapk"
+msgstr "Xác nhận mật khẩu mới là bắt buộc."
 
-#: hooks/use-schemas.ts:60
+#: schemas/messages.ts:19
 msgid "H5adYw"
 msgstr "Mật khẩu không khớp."
 
-#: hooks/use-schemas.ts:76
+#: schemas/messages.ts:20
 msgid "RKK2dE"
 msgstr "Nhập mã 6 chữ số từ ứng dụng xác thực của bạn."
 
-#: hooks/use-schemas.ts:78
+#: schemas/messages.ts:23
 msgid "eX6daX"
 msgstr "Mã phải có tối đa 10 chữ số."
 
-#: hooks/use-schemas.ts:80
+#: schemas/messages.ts:24
 msgid "O4PhlQ"
 msgstr "Mã chỉ có thể chứa các chữ số."
 
-#: hooks/use-schemas.ts:89
+#: schemas/messages.ts:25
 msgid "/4pQDl"
 msgstr "Tên là bắt buộc."
 
-#: hooks/use-schemas.ts:90
+#: schemas/messages.ts:26
 msgid "YeRtBx"
 msgstr "Tên phải có tối đa 100 ký tự."
 
-#: hooks/use-schemas.ts:97
+#: schemas/messages.ts:27
+msgid "J0CJqe"
+msgstr "Tên chỉ có thể chứa chữ cái."
+
+#: schemas/messages.ts:28
 msgid "c+1x/V"
 msgstr "Tên đăng nhập phải có ít nhất 3 ký tự."
 
-#: hooks/use-schemas.ts:98
+#: schemas/messages.ts:29
 msgid "MSqoQ2"
 msgstr "Tên đăng nhập phải có tối đa 30 ký tự."
 
-#: hooks/use-schemas.ts:100
+#: schemas/messages.ts:30
 msgid "8Y5qyI"
 msgstr "Tên đăng nhập chỉ có thể chứa chữ cái, số, dấu gạch dưới và dấu chấm."
 
-#: hooks/use-schemas.ts:109
-msgid "GNwfGD"
-msgstr "Vui lòng chọn loại giao dịch."
+#: schemas/messages.ts:33
+msgid "l9jjIW"
+msgstr "Loại giao dịch là bắt buộc."
 
-#: hooks/use-schemas.ts:111
-#: hooks/use-schemas.ts:152
-#: hooks/use-schemas.ts:183
-#: hooks/use-schemas.ts:211
+#: schemas/messages.ts:34
 msgid "uDAfoc"
 msgstr "Danh mục là bắt buộc."
 
-#: hooks/use-schemas.ts:113
-#: hooks/use-schemas.ts:154
-#: hooks/use-schemas.ts:185
-#: hooks/use-schemas.ts:213
-msgid "2saJxm"
-msgstr "Vui lòng chọn một loại tiền tệ."
+#: schemas/messages.ts:35
+msgid "A5N1tw"
+msgstr "Tiền tệ là bắt buộc."
 
-#: hooks/use-schemas.ts:119
-#: hooks/use-schemas.ts:143
-#: hooks/use-schemas.ts:219
+#: schemas/messages.ts:36
 msgid "be3kp3"
 msgstr "Mô tả là bắt buộc."
 
-#: hooks/use-schemas.ts:122
-#: hooks/use-schemas.ts:145
-#: hooks/use-schemas.ts:222
+#: schemas/messages.ts:37
 msgid "Y1VHB3"
 msgstr "Mô tả phải có tối đa 200 ký tự."
 
-#: hooks/use-schemas.ts:125
-msgid "MhMNy6"
-msgstr "Vui lòng chọn ngày."
+#: schemas/messages.ts:38
+msgid "fgoR4w"
+msgstr "Ngày là bắt buộc."
 
-#: hooks/use-schemas.ts:133
-#: hooks/use-schemas.ts:209
-msgid "EtmyBh"
-msgstr "Vui lòng chọn một loại."
+#: schemas/messages.ts:39
+msgid "goeMxG"
+msgstr "Loại là bắt buộc."
 
-#: hooks/use-schemas.ts:137
+#: schemas/messages.ts:40
 msgid "5huJG4"
 msgstr "Tên danh mục là bắt buộc."
 
-#: hooks/use-schemas.ts:139
+#: schemas/messages.ts:41
 msgid "LmVuiu"
 msgstr "Tên danh mục phải có tối đa 50 ký tự."
 
-#: hooks/use-schemas.ts:158
-#: hooks/use-schemas.ts:189
-#: hooks/use-schemas.ts:248
-msgid "HxXJtm"
-msgstr "Vui lòng chọn ngày bắt đầu."
+#: schemas/messages.ts:42
+msgid "C3kWKK"
+msgstr "Ngày bắt đầu là bắt buộc."
 
-#: hooks/use-schemas.ts:161
-#: hooks/use-schemas.ts:192
-msgid "O3egh+"
-msgstr "Vui lòng chọn ngày kết thúc."
+#: schemas/messages.ts:43
+msgid "1uO2me"
+msgstr "Ngày kết thúc là bắt buộc."
 
-#: hooks/use-schemas.ts:168
-#: hooks/use-schemas.ts:199
-#: hooks/use-schemas.ts:258
+#: schemas/messages.ts:44
 msgid "hjtyTg"
 msgstr "Ngày kết thúc phải sau ngày bắt đầu."
 
-#: hooks/use-schemas.ts:179
+#: schemas/messages.ts:45
 msgid "eEFyJl"
 msgstr "Tên mục tiêu là bắt buộc."
 
-#: hooks/use-schemas.ts:181
+#: schemas/messages.ts:46
 msgid "qVUStI"
 msgstr "Tên mục tiêu phải có tối đa 100 ký tự."
 
-#: hooks/use-schemas.ts:235
-msgid "tb8z8V"
-msgstr "Vui lòng chọn tần suất."
+#: schemas/messages.ts:47
+msgid "pmDGs3"
+msgstr "Tần suất là bắt buộc."
 
-#: hooks/use-schemas.ts:241
-msgid "BErLOD"
-msgstr "Vui lòng nhập số ngày."
+#: schemas/messages.ts:48
+msgid "rHlS+D"
+msgstr "Số ngày là bắt buộc."
 
-#: hooks/use-schemas.ts:244
+#: schemas/messages.ts:49
 msgid "N4OgtE"
 msgstr "Số ngày không được vượt quá 365."
 
-#: hooks/use-schemas.ts:271
+#: schemas/messages.ts:50
 msgid "F8BDEm"
 msgstr "Không thể kích hoạt giao dịch định kỳ đã hết hạn."

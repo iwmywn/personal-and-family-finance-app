@@ -1,6 +1,6 @@
 vi.mock("@/env/server", () => {
   return {
-    env: {
+    serverEnv: {
       get RECAPTCHA_SECRET() {
         return "test-recaptcha-secret"
       },

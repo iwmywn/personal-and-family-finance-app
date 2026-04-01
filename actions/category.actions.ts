@@ -12,7 +12,8 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
-import { type Category } from "@/lib/definitions"
+import type { Category } from "@/lib/definitions"
+import { getSchemas } from "@/schemas/server"
 import type { CategoryFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
@@ -21,6 +22,13 @@ export async function createCustomCategory(values: CategoryFormValues) {
   const t = await getExtracted()
 
   try {
+    const { createCategorySchema } = await getSchemas()
+    const parsedValues = createCategorySchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -34,8 +42,8 @@ export async function createCustomCategory(values: CategoryFormValues) {
 
     const existingCategory = await categoriesCollection.findOne({
       userId: new ObjectId(userId),
-      label: values.label,
-      type: values.type,
+      label: parsedValues.data.label,
+      type: parsedValues.data.type,
     })
 
     if (existingCategory) {
@@ -57,9 +65,9 @@ export async function createCustomCategory(values: CategoryFormValues) {
     const result = await categoriesCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey,
-      type: values.type,
-      label: values.label,
-      description: values.description,
+      type: parsedValues.data.type,
+      label: parsedValues.data.label,
+      description: parsedValues.data.description,
     })
 
     if (!result.acknowledged)
@@ -80,6 +88,13 @@ export async function updateCustomCategory(
   const t = await getExtracted()
 
   try {
+    const { createCategorySchema } = await getSchemas()
+    const parsedValues = createCategorySchema().safeParse(values)
+
+    if (!parsedValues.success) {
+      return { error: t("Invalid data!") }
+    }
+
     const session = await getCurrentSession()
 
     if (!session) {
@@ -113,8 +128,8 @@ export async function updateCustomCategory(
 
     const duplicateCategory = await categoriesCollection.findOne({
       userId: new ObjectId(userId),
-      label: values.label,
-      type: values.type,
+      label: parsedValues.data.label,
+      type: parsedValues.data.type,
       _id: { $ne: new ObjectId(categoryId) },
     })
 
@@ -127,9 +142,9 @@ export async function updateCustomCategory(
         { _id: new ObjectId(categoryId), userId: new ObjectId(userId) },
         {
           $set: {
-            type: values.type,
-            label: values.label,
-            description: values.description,
+            type: parsedValues.data.type,
+            label: parsedValues.data.label,
+            description: parsedValues.data.description,
           },
         }
       ),
@@ -140,7 +155,7 @@ export async function updateCustomCategory(
         },
         {
           $set: {
-            type: values.type,
+            type: parsedValues.data.type,
           },
         }
       ),

@@ -14,13 +14,13 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 import { Separator } from "@/components/ui/separator"
-import { useAppData } from "@/context/app-data-context"
+import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
 
 export function RecentTransactions() {
-  const { transactions } = useAppData()
+  const { transactions } = useTransactions()
   const recentTransactions = transactions.slice(0, 10)
   const t = useExtracted()
   const { getCategoryLabel } = useCategory()

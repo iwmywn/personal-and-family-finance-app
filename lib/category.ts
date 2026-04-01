@@ -1,5 +1,5 @@
-export const CATEGORY_TYPES = ["income", "expense"] as const
-export type CategoryType = (typeof CATEGORY_TYPES)[number]
+export const CATEGORIES = ["income", "expense"] as const
+export type CategoryType = (typeof CATEGORIES)[number]
 
 const INCOME_CATEGORIES_KEY = [
   "salary_bonus",

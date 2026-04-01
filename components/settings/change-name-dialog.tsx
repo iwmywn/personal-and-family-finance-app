@@ -28,17 +28,17 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { FormButton } from "@/components/form-button"
-import { useAppData } from "@/context/app-data-context"
+import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"
-import { type NameFormValues } from "@/schemas/types"
+import type { NameFormValues } from "@/schemas/types"
 
 export function ChangeNameDialog() {
   const t = useExtracted()
   const { createNameSchema } = useSchemas()
 
   const router = useRouter()
-  const { user } = useAppData()
+  const { user } = useUser()
   const form = useForm<NameFormValues>({
     resolver: zodResolver(createNameSchema()),
     defaultValues: {
@@ -48,13 +48,6 @@ export function ChangeNameDialog() {
   const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: NameFormValues) {
-    const parsedValues = createNameSchema().safeParse(values)
-
-    if (!parsedValues.success) {
-      toast.error(t("Invalid data!"))
-      return
-    }
-
     await client.updateUser({
       name: values.name,
       fetchOptions: {
@@ -109,10 +102,9 @@ export function ChangeNameDialog() {
               <DialogClose asChild>
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
-              <FormButton
-                isSubmitting={form.formState.isSubmitting}
-                text={t("Save")}
-              />
+              <FormButton isSubmitting={form.formState.isSubmitting}>
+                {t("Save")}
+              </FormButton>
             </DialogFooter>
           </form>
         </Form>

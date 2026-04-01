@@ -1,8 +1,8 @@
-import { type Decimal128, type ObjectId } from "mongodb"
+import type { Decimal128, ObjectId } from "mongodb"
 
 import type { ExchangeRates, RawRates } from "@/actions/exchange-rates.actions"
 import type { auth } from "@/lib/auth"
-import { type CategoryKeyType, type CategoryType } from "@/lib/categories"
+import type { CategoryKeyType, CategoryType } from "@/lib/category"
 import type { AppCurrency } from "@/lib/currency"
 
 export type User = typeof auth.$Infer.Session.user
@@ -15,10 +15,19 @@ type BaseTransaction<T, K> = {
   userId: T
   type: CategoryType
   categoryKey: CategoryKeyType
+  // DB: the original amount and currency entered by the user.
+  // Client: the amount converted to the user's global display currency setting.
   amount: K
   currency: AppCurrency
   description: string
   date: Date
+  // the following fields are appended on the client for currency conversion
+  // and are NOT stored in the database.
+  // They allow budgets/goals to convert amounts to their specific currencies
+  // using historical daily rates.
+  originalAmount?: K
+  originalCurrency?: AppCurrency
+  rates?: Record<AppCurrency, string>
 }
 
 type BaseCategory<T> = {
