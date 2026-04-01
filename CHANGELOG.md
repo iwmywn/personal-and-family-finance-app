@@ -1,3 +1,9 @@
+## [26.14.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v26.10.0...v26.14.0)
+
+### Bug Fixes
+
+- update stuff (@iwmywn) ([#16](https://github.com/iwmywn/personal-and-family-finance-app/pull/16)) ([8af68c7](https://github.com/iwmywn/personal-and-family-finance-app/commit/8af68c7b293416db6142ab34da9b9715c67e4b15))
+
 ## [26.10.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v26.6.0...v26.10.0)
 
 ### Nerd stuff
