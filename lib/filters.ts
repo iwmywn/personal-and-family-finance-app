@@ -53,6 +53,55 @@ function searchWithMiniSearch<T extends Record<string, unknown>>(
   return new Set(results.map((result) => String(result[idField])))
 }
 
+export function isDateRangeOverlapping(
+  start: Date,
+  end: Date | null | undefined,
+  filterMonth: number | null,
+  filterYear: number | null
+): boolean {
+  if (!filterMonth && !filterYear) return true
+
+  if (filterYear && filterMonth) {
+    const filterStart = new Date(Date.UTC(filterYear, filterMonth - 1, 1))
+    const filterEnd = new Date(Date.UTC(filterYear, filterMonth, 1) - 1)
+
+    return (
+      start.getTime() <= filterEnd.getTime() &&
+      (!end || end.getTime() >= filterStart.getTime())
+    )
+  }
+
+  if (filterYear) {
+    const filterStart = new Date(Date.UTC(filterYear, 0, 1))
+    const filterEnd = new Date(Date.UTC(filterYear + 1, 0, 1) - 1)
+
+    return (
+      start.getTime() <= filterEnd.getTime() &&
+      (!end || end.getTime() >= filterStart.getTime())
+    )
+  }
+
+  if (filterMonth) {
+    if (!end) return true
+
+    const durationMonths =
+      (end.getFullYear() - start.getFullYear()) * 12 +
+      (end.getMonth() - start.getMonth())
+    if (durationMonths >= 11) return true
+
+    const startM = start.getMonth() + 1
+    const endM = end.getMonth() + 1
+
+    if (startM <= endM) {
+      return filterMonth >= startM && filterMonth <= endM
+    } else {
+      return filterMonth >= startM || filterMonth <= endM
+    }
+  }
+
+  return true
+}
+
 export function filterTransactions(
   transactions: Transaction[],
   filters: Filters
@@ -159,24 +208,17 @@ export function filterBudgets(
     )
     const budgetEndDateOnly = localDateToUTCMidnight(new Date(budget.endDate))
 
-    const matchesMonth = !parsedMonth
-      ? true
-      : budgetStartDateOnly.getMonth() + 1 === parsedMonth ||
-        budgetEndDateOnly.getMonth() + 1 === parsedMonth ||
-        (budgetStartDateOnly.getMonth() + 1 < parsedMonth &&
-          budgetEndDateOnly.getMonth() + 1 > parsedMonth)
-
-    const matchesYear = !parsedYear
-      ? true
-      : budgetStartDateOnly.getFullYear() === parsedYear ||
-        budgetEndDateOnly.getFullYear() === parsedYear ||
-        (budgetStartDateOnly.getFullYear() < parsedYear &&
-          budgetEndDateOnly.getFullYear() > parsedYear)
+    const overlaps = isDateRangeOverlapping(
+      budgetStartDateOnly,
+      budgetEndDateOnly,
+      parsedMonth,
+      parsedYear
+    )
 
     const matchesCategory =
       filterCategoryKey === "all" || budget.categoryKey === filterCategoryKey
 
-    return matchesMonth && matchesYear && matchesCategory
+    return overlaps && matchesCategory
   })
 
   if (filterStatus !== "all" || filterProgress !== "all") {
@@ -242,24 +284,17 @@ export function filterGoals(
 
     const matchesSearch = matchingIds ? matchingIds.has(goal._id) : true
 
-    const matchesMonth = !parsedMonth
-      ? true
-      : goalStartDateOnly.getMonth() + 1 === parsedMonth ||
-        goalEndDateOnly.getMonth() + 1 === parsedMonth ||
-        (goalStartDateOnly.getMonth() + 1 < parsedMonth &&
-          goalEndDateOnly.getMonth() + 1 > parsedMonth)
-
-    const matchesYear = !parsedYear
-      ? true
-      : goalStartDateOnly.getFullYear() === parsedYear ||
-        goalEndDateOnly.getFullYear() === parsedYear ||
-        (goalStartDateOnly.getFullYear() < parsedYear &&
-          goalEndDateOnly.getFullYear() > parsedYear)
+    const overlaps = isDateRangeOverlapping(
+      goalStartDateOnly,
+      goalEndDateOnly,
+      parsedMonth,
+      parsedYear
+    )
 
     const matchesCategory =
       filterCategoryKey === "all" || goal.categoryKey === filterCategoryKey
 
-    return matchesSearch && matchesMonth && matchesYear && matchesCategory
+    return matchesSearch && overlaps && matchesCategory
   })
 
   if (filterStatus !== "all" || filterProgress !== "all") {
@@ -318,21 +353,12 @@ export function filterRecurringTransactions(
       ? localDateToUTCMidnight(new Date(recurring.endDate))
       : null
 
-    const matchesMonth = !parsedMonth
-      ? true
-      : startDateOnly.getMonth() + 1 === parsedMonth ||
-        (endDateOnly && endDateOnly.getMonth() + 1 === parsedMonth) ||
-        (endDateOnly &&
-          startDateOnly.getMonth() + 1 < parsedMonth &&
-          endDateOnly.getMonth() + 1 > parsedMonth)
-
-    const matchesYear = !parsedYear
-      ? true
-      : startDateOnly.getFullYear() === parsedYear ||
-        (endDateOnly && endDateOnly.getFullYear() === parsedYear) ||
-        (endDateOnly &&
-          startDateOnly.getFullYear() < parsedYear &&
-          endDateOnly.getFullYear() > parsedYear)
+    const overlaps = isDateRangeOverlapping(
+      startDateOnly,
+      endDateOnly,
+      parsedMonth,
+      parsedYear
+    )
 
     const matchesType = filterType === "all" || recurring.type === filterType
 
@@ -346,8 +372,7 @@ export function filterRecurringTransactions(
 
     return (
       matchesSearch &&
-      matchesMonth &&
-      matchesYear &&
+      overlaps &&
       matchesType &&
       matchesCategory &&
       matchesStatus
