@@ -12,13 +12,13 @@ import { clientEnv } from "@/env/client"
 interface ReCaptchaPopupProps {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  setRecaptchaToken: (token: string | null) => void
+  onVerify: (token: string) => void
 }
 
 export function ReCaptchaDialog({
   open,
   setOpen,
-  setRecaptchaToken,
+  onVerify,
 }: ReCaptchaPopupProps) {
   const locale = useLocale()
   const t = useExtracted()
@@ -29,7 +29,7 @@ export function ReCaptchaDialog({
       return
     }
 
-    setRecaptchaToken(token)
+    onVerify(token)
     setOpen(false)
   }
 

@@ -295,7 +295,7 @@ msgstr "Failed to load transactions! Please try again later."
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:156
+#: components/auth/signin-form.tsx:149
 msgid "Ub+AGc"
 msgstr "Sign In"
 
@@ -398,20 +398,20 @@ msgstr "Please complete CAPTCHA verification!"
 msgid "ItmvCq"
 msgstr "CAPTCHA Verification"
 
-#: components/auth/signin-form.tsx:60
+#: components/auth/signin-form.tsx:59
 msgid "pxIiYc"
 msgstr "Invalid username or password!"
 
-#: components/auth/signin-form.tsx:61
+#: components/auth/signin-form.tsx:60
 msgid "b8+mgZ"
 msgstr "Failed to sign in! Please try again later."
 
-#: components/auth/signin-form.tsx:121
+#: components/auth/signin-form.tsx:114
 #: components/settings/change-username-dialog.tsx:99
 msgid "JCIgkj"
 msgstr "Username"
 
-#: components/auth/signin-form.tsx:141
+#: components/auth/signin-form.tsx:134
 #: components/settings/two-factor-manager-dialog.tsx:145
 #: components/settings/two-factor-manager-dialog.tsx:281
 msgid "5sg7KC"
@@ -1120,6 +1120,14 @@ msgstr "Are you sure you want to sign out?"
 #: components/layout/secondary-nav.tsx:79
 msgid "naYgGy"
 msgstr "You will need to sign in again to access your account."
+
+#: components/password-input.tsx:42
+msgid "K3fWTv"
+msgstr "Hide password"
+
+#: components/password-input.tsx:42
+msgid "JHTwdB"
+msgstr "Show password"
 
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:54
 msgid "mwZmom"

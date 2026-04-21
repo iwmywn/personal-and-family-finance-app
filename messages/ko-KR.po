@@ -295,7 +295,7 @@ msgstr "거래를 불러오는데 실패했습니다! 나중에 다시 시도해
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:156
+#: components/auth/signin-form.tsx:149
 msgid "Ub+AGc"
 msgstr "로그인"
 
@@ -398,20 +398,20 @@ msgstr "CAPTCHA 인증을 완료해주세요!"
 msgid "ItmvCq"
 msgstr "CAPTCHA 인증"
 
-#: components/auth/signin-form.tsx:60
+#: components/auth/signin-form.tsx:59
 msgid "pxIiYc"
 msgstr "잘못된 사용자 이름 또는 비밀번호입니다!"
 
-#: components/auth/signin-form.tsx:61
+#: components/auth/signin-form.tsx:60
 msgid "b8+mgZ"
 msgstr "로그인에 실패했습니다! 나중에 다시 시도해주세요."
 
-#: components/auth/signin-form.tsx:121
+#: components/auth/signin-form.tsx:114
 #: components/settings/change-username-dialog.tsx:99
 msgid "JCIgkj"
 msgstr "사용자 이름"
 
-#: components/auth/signin-form.tsx:141
+#: components/auth/signin-form.tsx:134
 #: components/settings/two-factor-manager-dialog.tsx:145
 #: components/settings/two-factor-manager-dialog.tsx:281
 msgid "5sg7KC"
@@ -1120,6 +1120,14 @@ msgstr "로그아웃하시겠습니까?"
 #: components/layout/secondary-nav.tsx:79
 msgid "naYgGy"
 msgstr "계정에 다시 액세스하려면 다시 로그인해야 합니다."
+
+#: components/password-input.tsx:42
+msgid "K3fWTv"
+msgstr "비밀번호 숨기기"
+
+#: components/password-input.tsx:42
+msgid "JHTwdB"
+msgstr "비밀번호 표시"
 
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:54
 msgid "mwZmom"
