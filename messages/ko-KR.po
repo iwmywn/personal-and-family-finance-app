@@ -386,15 +386,15 @@ msgstr "문제가 발생했습니다!"
 msgid "hyu/OZ"
 msgstr "개인 및 가족 재정 앱"
 
-#: components/auth/recaptcha-dialog.tsx:28
+#: components/auth/recaptcha-dialog.tsx:27
 msgid "ExP2LI"
 msgstr "CAPTCHA 인증에 실패했습니다! 나중에 다시 시도해주세요."
 
-#: components/auth/recaptcha-dialog.tsx:37
+#: components/auth/recaptcha-dialog.tsx:36
 msgid "E4J/N3"
 msgstr "CAPTCHA 인증을 완료해주세요!"
 
-#: components/auth/recaptcha-dialog.tsx:45
+#: components/auth/recaptcha-dialog.tsx:44
 msgid "ItmvCq"
 msgstr "CAPTCHA 인증"
 

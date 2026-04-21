@@ -386,15 +386,15 @@ msgstr "出了点问题！"
 msgid "hyu/OZ"
 msgstr "个人和家庭财务应用"
 
-#: components/auth/recaptcha-dialog.tsx:28
+#: components/auth/recaptcha-dialog.tsx:27
 msgid "ExP2LI"
 msgstr "验证码验证失败！请稍后再试。"
 
-#: components/auth/recaptcha-dialog.tsx:37
+#: components/auth/recaptcha-dialog.tsx:36
 msgid "E4J/N3"
 msgstr "请完成验证码验证！"
 
-#: components/auth/recaptcha-dialog.tsx:45
+#: components/auth/recaptcha-dialog.tsx:44
 msgid "ItmvCq"
 msgstr "验证码验证"
 

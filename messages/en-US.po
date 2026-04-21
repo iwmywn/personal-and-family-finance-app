@@ -386,15 +386,15 @@ msgstr "Something went wrong!"
 msgid "hyu/OZ"
 msgstr "Personal & Family Finance App"
 
-#: components/auth/recaptcha-dialog.tsx:28
+#: components/auth/recaptcha-dialog.tsx:27
 msgid "ExP2LI"
 msgstr "CAPTCHA verification failed! Please try again later."
 
-#: components/auth/recaptcha-dialog.tsx:37
+#: components/auth/recaptcha-dialog.tsx:36
 msgid "E4J/N3"
 msgstr "Please complete CAPTCHA verification!"
 
-#: components/auth/recaptcha-dialog.tsx:45
+#: components/auth/recaptcha-dialog.tsx:44
 msgid "ItmvCq"
 msgstr "CAPTCHA Verification"
 

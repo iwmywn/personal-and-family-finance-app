@@ -386,15 +386,15 @@ msgstr "Đã xảy ra lỗi!"
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
 
-#: components/auth/recaptcha-dialog.tsx:28
+#: components/auth/recaptcha-dialog.tsx:27
 msgid "ExP2LI"
 msgstr "Xác minh CAPTCHA thất bại! Vui lòng thử lại sau."
 
-#: components/auth/recaptcha-dialog.tsx:37
+#: components/auth/recaptcha-dialog.tsx:36
 msgid "E4J/N3"
 msgstr "Vui lòng hoàn thành xác minh CAPTCHA!"
 
-#: components/auth/recaptcha-dialog.tsx:45
+#: components/auth/recaptcha-dialog.tsx:44
 msgid "ItmvCq"
 msgstr "Xác minh CAPTCHA"
 

@@ -2,7 +2,6 @@
 
 import type { Dispatch, SetStateAction } from "react"
 import { useExtracted, useLocale } from "next-intl"
-import { VisuallyHidden } from "radix-ui"
 import ReCAPTCHA from "react-google-recaptcha"
 import { toast } from "sonner"
 
@@ -41,9 +40,9 @@ export function ReCaptchaDialog({
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="w-fit">
-        <VisuallyHidden.Root>
-          <DialogTitle>{t("CAPTCHA Verification")}</DialogTitle>
-        </VisuallyHidden.Root>
+        <DialogTitle className="sr-only">
+          {t("CAPTCHA Verification")}
+        </DialogTitle>
         <ReCAPTCHA
           sitekey={clientEnv.NEXT_PUBLIC_RECAPTCHA}
           onChange={handleRecaptchaChange}
