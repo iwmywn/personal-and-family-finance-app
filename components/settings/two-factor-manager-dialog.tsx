@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
-import { QRCode } from "react-qr-code"
+import QRCode from "react-qr-code"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
