@@ -295,7 +295,7 @@ msgstr "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:156
+#: components/auth/signin-form.tsx:149
 msgid "Ub+AGc"
 msgstr "Đăng nhập"
 
@@ -386,32 +386,32 @@ msgstr "Đã xảy ra lỗi!"
 msgid "hyu/OZ"
 msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
 
-#: components/auth/recaptcha-dialog.tsx:28
+#: components/auth/recaptcha-dialog.tsx:27
 msgid "ExP2LI"
 msgstr "Xác minh CAPTCHA thất bại! Vui lòng thử lại sau."
 
-#: components/auth/recaptcha-dialog.tsx:37
+#: components/auth/recaptcha-dialog.tsx:36
 msgid "E4J/N3"
 msgstr "Vui lòng hoàn thành xác minh CAPTCHA!"
 
-#: components/auth/recaptcha-dialog.tsx:45
+#: components/auth/recaptcha-dialog.tsx:44
 msgid "ItmvCq"
 msgstr "Xác minh CAPTCHA"
 
-#: components/auth/signin-form.tsx:60
+#: components/auth/signin-form.tsx:59
 msgid "pxIiYc"
 msgstr "Tên đăng nhập hoặc mật khẩu không hợp lệ!"
 
-#: components/auth/signin-form.tsx:61
+#: components/auth/signin-form.tsx:60
 msgid "b8+mgZ"
 msgstr "Đăng nhập thất bại! Vui lòng thử lại sau."
 
-#: components/auth/signin-form.tsx:121
+#: components/auth/signin-form.tsx:114
 #: components/settings/change-username-dialog.tsx:99
 msgid "JCIgkj"
 msgstr "Tên đăng nhập"
 
-#: components/auth/signin-form.tsx:141
+#: components/auth/signin-form.tsx:134
 #: components/settings/two-factor-manager-dialog.tsx:145
 #: components/settings/two-factor-manager-dialog.tsx:281
 msgid "5sg7KC"
@@ -1120,6 +1120,14 @@ msgstr "Bạn có chắc chắn muốn đăng xuất không?"
 #: components/layout/secondary-nav.tsx:79
 msgid "naYgGy"
 msgstr "Bạn sẽ cần đăng nhập lại để truy cập tài khoản của mình."
+
+#: components/password-input.tsx:42
+msgid "K3fWTv"
+msgstr "Ẩn mật khẩu"
+
+#: components/password-input.tsx:42
+msgid "JHTwdB"
+msgstr "Hiện mật khẩu"
 
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:54
 msgid "mwZmom"

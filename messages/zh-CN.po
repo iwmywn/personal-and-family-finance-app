@@ -295,7 +295,7 @@ msgstr "加载交易失败！请稍后再试。"
 
 #: app/(auth)/signin/page.tsx:16
 #: app/(auth)/signin/page.tsx:25
-#: components/auth/signin-form.tsx:156
+#: components/auth/signin-form.tsx:149
 msgid "Ub+AGc"
 msgstr "登录"
 
@@ -386,32 +386,32 @@ msgstr "出了点问题！"
 msgid "hyu/OZ"
 msgstr "个人和家庭财务应用"
 
-#: components/auth/recaptcha-dialog.tsx:28
+#: components/auth/recaptcha-dialog.tsx:27
 msgid "ExP2LI"
 msgstr "验证码验证失败！请稍后再试。"
 
-#: components/auth/recaptcha-dialog.tsx:37
+#: components/auth/recaptcha-dialog.tsx:36
 msgid "E4J/N3"
 msgstr "请完成验证码验证！"
 
-#: components/auth/recaptcha-dialog.tsx:45
+#: components/auth/recaptcha-dialog.tsx:44
 msgid "ItmvCq"
 msgstr "验证码验证"
 
-#: components/auth/signin-form.tsx:60
+#: components/auth/signin-form.tsx:59
 msgid "pxIiYc"
 msgstr "用户名或密码无效！"
 
-#: components/auth/signin-form.tsx:61
+#: components/auth/signin-form.tsx:60
 msgid "b8+mgZ"
 msgstr "登录失败！请稍后再试。"
 
-#: components/auth/signin-form.tsx:121
+#: components/auth/signin-form.tsx:114
 #: components/settings/change-username-dialog.tsx:99
 msgid "JCIgkj"
 msgstr "用户名"
 
-#: components/auth/signin-form.tsx:141
+#: components/auth/signin-form.tsx:134
 #: components/settings/two-factor-manager-dialog.tsx:145
 #: components/settings/two-factor-manager-dialog.tsx:281
 msgid "5sg7KC"
@@ -1120,6 +1120,14 @@ msgstr "您确定要退出吗？"
 #: components/layout/secondary-nav.tsx:79
 msgid "naYgGy"
 msgstr "您需要重新登录才能访问您的帐户。"
+
+#: components/password-input.tsx:42
+msgid "K3fWTv"
+msgstr "隐藏密码"
+
+#: components/password-input.tsx:42
+msgid "JHTwdB"
+msgstr "显示密码"
 
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx:54
 msgid "mwZmom"

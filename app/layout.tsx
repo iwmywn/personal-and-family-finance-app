@@ -25,6 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = t("Personal & Family Finance App")
 
   return {
+    metadataBase: new URL(clientEnv.NEXT_PUBLIC_URL),
     title: {
       template: `%s | ${name}`,
       default: name,

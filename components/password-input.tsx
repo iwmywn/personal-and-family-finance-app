@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
+import { useExtracted } from "next-intl"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,6 +15,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
     const [showPassword, setShowPassword] = React.useState(false)
     const disabled =
       props.value === "" || props.value === undefined || props.disabled
+    const t = useExtracted()
 
     return (
       <div className="relative">
@@ -37,7 +39,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
             <EyeOffIcon className="size-4" aria-hidden="true" />
           )}
           <span className="sr-only">
-            {showPassword ? "Hide password" : "Show password"}
+            {showPassword ? t("Hide password") : t("Show password")}
           </span>
         </Button>
 

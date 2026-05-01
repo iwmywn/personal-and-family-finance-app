@@ -21,6 +21,7 @@ const withNextIntl = createNextIntlPlugin({
       path: "./messages",
       format: "po",
       locales: "infer",
+      precompile: true,
     },
   },
 })

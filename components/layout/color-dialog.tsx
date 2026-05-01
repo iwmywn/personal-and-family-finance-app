@@ -1,5 +1,4 @@
 import { PaletteIcon } from "lucide-react"
-import { VisuallyHidden } from "radix-ui"
 
 import {
   Dialog,
@@ -49,9 +48,7 @@ export function ColorDialog() {
         <PaletteIcon />
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
-        <VisuallyHidden.Root>
-          <DialogTitle>Color Palette & Tokens</DialogTitle>
-        </VisuallyHidden.Root>
+        <DialogTitle className="sr-only">Color Palette & Tokens</DialogTitle>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {colors.map((color) => (
             <div key={color} className="flex items-center justify-between">

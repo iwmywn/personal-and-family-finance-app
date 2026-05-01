@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useExtracted } from "next-intl"
@@ -27,7 +27,6 @@ import type { SignInFormValues } from "@/schemas/types"
 
 export function SignInForm() {
   const [isReCaptchaOpen, setIsReCaptchaOpen] = useState<boolean>(false)
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const t = useExtracted()
   const { createSignInSchema } = useSchemas()
@@ -86,28 +85,22 @@ export function SignInForm() {
         })
       } finally {
         setIsSubmitting(false)
-        setRecaptchaToken(null)
       }
     },
     [isSubmitting, t, searchParams, form, router]
   )
 
-  function onSubmit(values: SignInFormValues) {
+  const onRecaptchaVerify = useCallback(
+    (token: string) => {
+      void processSignIn(form.getValues(), token)
+    },
+    [form, processSignIn]
+  )
+
+  function onSubmit() {
     if (isSubmitting) return
-
-    if (!recaptchaToken) {
-      setIsReCaptchaOpen(true)
-      return
-    }
-
-    void processSignIn(values, recaptchaToken)
+    setIsReCaptchaOpen(true)
   }
-
-  useEffect(() => {
-    if (recaptchaToken && !isSubmitting) {
-      void processSignIn(form.getValues(), recaptchaToken)
-    }
-  }, [recaptchaToken, isSubmitting, form, processSignIn])
 
   return (
     <>
@@ -161,7 +154,7 @@ export function SignInForm() {
       <ReCaptchaDialog
         open={isReCaptchaOpen}
         setOpen={setIsReCaptchaOpen}
-        setRecaptchaToken={setRecaptchaToken}
+        onVerify={onRecaptchaVerify}
       />
     </>
   )
