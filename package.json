@@ -4,7 +4,6 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "installCommand": "pnpm install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
