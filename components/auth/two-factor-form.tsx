@@ -9,6 +9,7 @@ import { toast } from "sonner"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
+  FormButton,
   FormControl,
   FormDescription,
   FormField,
@@ -17,7 +18,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { FormButton } from "@/components/form-button"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"

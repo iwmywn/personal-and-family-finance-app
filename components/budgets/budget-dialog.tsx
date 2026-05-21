@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
@@ -41,14 +42,13 @@ import {
 } from "@/components/ui/select"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
-import { FormButton } from "@/components/form-button"
 import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { AppCurrency } from "@/lib/currency"
 import type { Budget } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
+import { cn, localDateToUTCMidnight } from "@/lib/utils"
 import type { BudgetFormValues } from "@/schemas/types"
 
 interface BudgetDialogProps {
@@ -69,11 +69,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
     defaultValues: {
       categoryKey: budget?.categoryKey || "",
       currency: budget?.currency ?? (user.currency as AppCurrency),
-      allocatedAmount: budget?.allocatedAmount
-        ? parseFloat(budget.allocatedAmount)
-            .toFixed(isZeroDecimalCurrency(budget.currency) ? 0 : 2)
-            .toString()
-        : "",
+      allocatedAmount: budget?.allocatedAmount ?? "",
       startDate: budget?.startDate ? new Date(budget.startDate) : undefined,
       endDate: budget?.endDate ? new Date(budget.endDate) : undefined,
     },
@@ -114,6 +110,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         toast.success(success)
         form.reset({
           categoryKey: "",
+          currency: user.currency as AppCurrency,
           allocatedAmount: "",
           startDate: undefined,
           endDate: undefined,
@@ -125,7 +122,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {budget ? t("Edit Budget") : t("Add Budget")}
@@ -181,9 +178,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                   <FormControl>
                     <CurrencyInput
                       id="form-amount"
-                      currency={form.getValues("currency")}
                       value={field.value}
-                      onChange={field.onChange}
+                      onValueChange={field.onChange}
+                      currency={form.getValues("currency")}
                     />
                   </FormControl>
                   <FormMessage />

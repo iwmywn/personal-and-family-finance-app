@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
@@ -27,7 +28,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { FormButton } from "@/components/form-button"
 import { PasswordInput } from "@/components/password-input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
@@ -52,7 +52,7 @@ export function TwoFactorManagerDialog() {
           {user.twoFactorEnabled ? t("Disable 2FA") : t("Enable 2FA")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
+      <DialogContent>
         {!user.twoFactorEnabled ? (
           <>
             <DialogHeader>

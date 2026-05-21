@@ -9,6 +9,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormLink,
   FormMessage,
 } from "@/components/ui/form"
 import {
@@ -18,7 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { FormLink } from "@/components/form-link"
 import { useCategory } from "@/hooks/use-category"
 import type { CategoryType } from "@/lib/category"
 

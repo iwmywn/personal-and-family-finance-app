@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
@@ -27,7 +28,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { FormButton } from "@/components/form-button"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"

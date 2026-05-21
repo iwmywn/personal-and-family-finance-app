@@ -94,6 +94,8 @@ const commitlintConfig = {
       },
     },
   },
+  helpUrl:
+    "https://github.com/iwmywn/personal-and-family-finance-app/blob/master/commitlint.config.mjs",
 }
 
 export default commitlintConfig

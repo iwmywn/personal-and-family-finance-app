@@ -29,7 +29,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           size="lg"
           tooltip={t("Personal & Family Finance App")}
         >
-          <Logo />
+          <Logo loading="eager" />
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">{siteConfig.name}</span>
           </div>

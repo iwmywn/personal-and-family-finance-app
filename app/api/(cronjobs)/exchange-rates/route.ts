@@ -5,7 +5,8 @@ import type { NextRequest } from "next/server"
 import { toDecimal128 } from "@/actions/utils"
 import { serverEnv } from "@/env/server"
 import { getExchangeRatesCollection } from "@/lib/collections"
-import { normalizeToUTCMidnight } from "@/lib/utils"
+
+import { normalizeToUTCMidnight } from "./utils"
 
 type CurrencyAPIResponse = {
   meta: {

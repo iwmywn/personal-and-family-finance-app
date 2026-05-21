@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
@@ -36,7 +37,6 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FormButton } from "@/components/form-button"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/category"
 import type { Category } from "@/lib/definitions"
@@ -103,7 +103,7 @@ export function CategoryDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {category ? t("Edit Category") : t("Add Category")}

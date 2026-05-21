@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb"
 
 import { toDecimal128 } from "@/actions/utils"
+import { normalizeToUTCMidnight } from "@/app/api/(cronjobs)/exchange-rates/utils"
 import type { AppCurrency } from "@/lib/currency"
 import type {
   Budget,
@@ -16,7 +17,7 @@ import type {
   RecurringTransaction,
   Transaction,
 } from "@/lib/definitions"
-import { localDateToUTCMidnight, normalizeToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 
 export const mockUser: DBUser = {
   _id: new ObjectId("68f712e4cda4897217a05a1c"),

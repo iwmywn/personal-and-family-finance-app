@@ -3,8 +3,8 @@ import { NextRequest } from "next/server"
 import { insertTestExchangeRate } from "@/tests/backend/helpers/database"
 import { mockExchangeRates } from "@/tests/shared/data"
 import { GET } from "@/app/api/(cronjobs)/exchange-rates/route"
+import { normalizeToUTCMidnight } from "@/app/api/(cronjobs)/exchange-rates/utils"
 import { getExchangeRatesCollection } from "@/lib/collections"
-import { normalizeToUTCMidnight } from "@/lib/utils"
 
 const cronSecret = "test-cron-secret"
 const cronEndpoint = "http://localhost/api/exchange-rates"
@@ -59,6 +59,27 @@ const mockCurrencyAPIResponse = [
 ]
 
 describe("Exchange Rates Cron Job", () => {
+  describe("normalizeToUTCMidnight", () => {
+    it("should strip time from UTC date", () => {
+      const date = new Date("2024-01-15T23:45:12Z")
+      const result = normalizeToUTCMidnight(date)
+      expect(result.toISOString()).toBe("2024-01-15T00:00:00.000Z")
+    })
+
+    it("should handle UTC boundary correctly", () => {
+      const date = new Date("2024-01-16T00:00:00Z")
+      const result = normalizeToUTCMidnight(date)
+      expect(result.toISOString()).toBe("2024-01-16T00:00:00.000Z")
+    })
+
+    it("should work correctly with dates having local timezone offset", () => {
+      // 2024-01-16T01:00:00+07:00 is 2024-01-15T18:00:00Z
+      const date = new Date("2024-01-16T01:00:00+07:00")
+      const result = normalizeToUTCMidnight(date)
+      expect(result.toISOString()).toBe("2024-01-15T00:00:00.000Z")
+    })
+  })
+
   describe("Authorization", () => {
     it("should return 401 when authorization header is missing", async () => {
       const request = new NextRequest(cronEndpoint)

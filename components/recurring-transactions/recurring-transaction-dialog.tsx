@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
@@ -52,7 +53,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
-import { FormButton } from "@/components/form-button"
 import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
@@ -60,7 +60,7 @@ import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { AppCurrency } from "@/lib/currency"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
+import { cn, localDateToUTCMidnight } from "@/lib/utils"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 interface RecurringDialogProps {
@@ -87,11 +87,7 @@ export function RecurringTransactionDialog({
       type: recurring?.type || "income",
       categoryKey: recurring?.categoryKey || "",
       currency: recurring?.currency ?? (user.currency as AppCurrency),
-      amount: recurring?.amount
-        ? parseFloat(recurring.amount)
-            .toFixed(isZeroDecimalCurrency(recurring.currency) ? 0 : 2)
-            .toString()
-        : "",
+      amount: recurring?.amount ?? "",
       description: recurring?.description || "",
       frequency: recurring?.frequency || "monthly",
       randomEveryXDays: recurring?.randomEveryXDays || undefined,
@@ -152,6 +148,7 @@ export function RecurringTransactionDialog({
         form.reset({
           type: type,
           categoryKey: "",
+          currency: user.currency as AppCurrency,
           amount: "",
           description: "",
           frequency: "monthly",
@@ -173,7 +170,7 @@ export function RecurringTransactionDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {recurring
@@ -255,9 +252,9 @@ export function RecurringTransactionDialog({
                   <FormControl>
                     <CurrencyInput
                       id="form-amount"
-                      currency={form.getValues("currency")}
                       value={field.value}
-                      onChange={field.onChange}
+                      onValueChange={field.onChange}
+                      currency={form.getValues("currency")}
                     />
                   </FormControl>
                   <FormMessage />

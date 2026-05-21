@@ -4,7 +4,6 @@ import Decimal from "decimal.js"
 import { twMerge } from "tailwind-merge"
 
 import type { AppLocale } from "@/i18n/config"
-import { ZERO_DECIMAL_CURRENCIES } from "@/lib/currency"
 import type { AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
 
@@ -36,12 +35,6 @@ export function localDateToUTCMidnight(date: Date) {
   return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
 }
 
-export function normalizeToUTCMidnight(date: Date) {
-  return new Date(
-    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
-  )
-}
-
 export function getUniqueYears(transactions: Transaction[]): number[] {
   return Array.from(
     new Set(transactions.map((t) => new Date(t.date).getFullYear()))
@@ -57,10 +50,6 @@ export const progressColorClass = {
 
 export function toDecimal(value: string): Decimal {
   return new Decimal(value.toString())
-}
-
-export function isZeroDecimalCurrency(currency: AppCurrency): boolean {
-  return ZERO_DECIMAL_CURRENCIES.has(currency)
 }
 
 export function convertAmountWithRates(

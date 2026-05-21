@@ -56,6 +56,7 @@ export const auth = betterAuth({
       provider: "google-recaptcha",
       secretKey: serverEnv.RECAPTCHA_SECRET,
       endpoints: ["/sign-in/username"],
+      minScore: 0.5,
     }),
     twoFactor({
       schema: {
@@ -71,6 +72,15 @@ export const auth = betterAuth({
     cookiePrefix: siteConfig.name,
     database: {
       generateId: false,
+    },
+  },
+  rateLimit: {
+    storage: "database",
+    customRules: {
+      "/sign-in/username": {
+        window: 60,
+        max: 5,
+      },
     },
   },
   secret: serverEnv.BETTER_AUTH_SECRET,
