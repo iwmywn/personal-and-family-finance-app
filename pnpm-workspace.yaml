@@ -6,3 +6,4 @@ allowBuilds:
   unrs-resolver: true
 minimumReleaseAgeExclude:
   - ua-parser-js@2.0.10
+  - '@hookform/resolvers@5.4.0'
