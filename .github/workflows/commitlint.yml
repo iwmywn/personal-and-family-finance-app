@@ -45,7 +45,7 @@ jobs:
             didn't match the configured pattern. Please ensure that the title
             contains your name so that you can be credited in our changelog.
 
-      - uses: marocchino/sticky-pull-request-comment@v2
+      - uses: marocchino/sticky-pull-request-comment@v3
         if: always() && (steps.lint_pr_title.outputs.error_message != null)
         with:
           header: pr-title-lint-error
@@ -66,7 +66,7 @@ jobs:
             fix(leaderboard): show user rank correctly (@user1, @user2, @user3)
 
       - if: ${{ steps.lint_pr_title.outputs.error_message == null }}
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: pr-title-lint-error
           delete: true
