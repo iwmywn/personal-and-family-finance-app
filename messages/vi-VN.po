@@ -357,12 +357,12 @@ msgid "ExP2LI"
 msgstr "Xác minh CAPTCHA thất bại! Vui lòng thử lại sau."
 
 #: components/auth/signin-form.tsx
-msgid "zR1TB7"
-msgstr "Quá giới hạn tần suất yêu cầu! Vui lòng thử lại sau {seconds} giây."
-
-#: components/auth/signin-form.tsx
 msgid "pxIiYc"
 msgstr "Tên đăng nhập hoặc mật khẩu không hợp lệ!"
+
+#: components/auth/signin-form.tsx
+msgid "zR1TB7"
+msgstr "Quá giới hạn tần suất yêu cầu! Vui lòng thử lại sau {seconds} giây."
 
 #: components/auth/signin-form.tsx
 msgid "b8+mgZ"

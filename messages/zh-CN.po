@@ -357,12 +357,12 @@ msgid "ExP2LI"
 msgstr "验证码验证失败！请稍后再试。"
 
 #: components/auth/signin-form.tsx
-msgid "zR1TB7"
-msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
-
-#: components/auth/signin-form.tsx
 msgid "pxIiYc"
 msgstr "用户名或密码无效！"
+
+#: components/auth/signin-form.tsx
+msgid "zR1TB7"
+msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
 
 #: components/auth/signin-form.tsx
 msgid "b8+mgZ"

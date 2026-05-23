@@ -61,18 +61,18 @@ export function SignInForm() {
             "x-captcha-response": token,
           },
           onError: (ctx) => {
-            if (ctx.response.status === 429)
-              toast.error(
-                t("Rate limit exceeded! Retry after {seconds} seconds.", {
-                  seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
-                })
-              )
-            else if (ctx.error.code === "VERIFICATION_FAILED")
+            if (ctx.error.code === "VERIFICATION_FAILED")
               toast.error(
                 t("CAPTCHA verification failed! Please try again later.")
               )
             else if (ctx.error.code === "INVALID_USERNAME_OR_PASSWORD")
               toast.error(t("Invalid username or password!"))
+            else if (ctx.response.status === 429)
+              toast.error(
+                t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                  seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
+                })
+              )
             else toast.error(t("Failed to sign in! Please try again later."))
           },
           onSuccess: async (ctx) => {

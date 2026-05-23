@@ -357,12 +357,12 @@ msgid "ExP2LI"
 msgstr "CAPTCHA verification failed! Please try again later."
 
 #: components/auth/signin-form.tsx
-msgid "zR1TB7"
-msgstr "Rate limit exceeded! Retry after {seconds} seconds."
-
-#: components/auth/signin-form.tsx
 msgid "pxIiYc"
 msgstr "Invalid username or password!"
+
+#: components/auth/signin-form.tsx
+msgid "zR1TB7"
+msgstr "Rate limit exceeded! Retry after {seconds} seconds."
 
 #: components/auth/signin-form.tsx
 msgid "b8+mgZ"
