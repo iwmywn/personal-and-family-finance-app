@@ -1,5 +1,6 @@
 {
   "name": "personal-and-family-finance-app",
+  "author": "Hoang Anh Tuan <itsmethu2408@gmail.com>",
   "version": "26.18.0",
   "type": "module",
   "private": true,
