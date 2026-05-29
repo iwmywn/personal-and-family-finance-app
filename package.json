@@ -78,5 +78,12 @@
     ],
     "*.{css,json,md}": "prettier --write"
   },
-  "packageManager": "pnpm@11.4.0"
+  "packageManager": "pnpm@11.4.0",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.4.0",
+      "onFail": "download"
+    }
+  }
 }
