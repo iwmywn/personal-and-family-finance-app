@@ -27,7 +27,7 @@ msgid "kwvIdb"
 msgstr "此预算已存在！"
 
 #: actions/budget.actions.ts
-msgid "ge/1ga"
+msgid "ge_1ga"
 msgstr "添加预算失败！请稍后再试。"
 
 #: actions/budget.actions.ts
@@ -115,7 +115,7 @@ msgid "C7NEmI"
 msgstr "无法删除分类。有 {count} 个目标正在使用此分类。请先删除这些目标。"
 
 #: actions/category.actions.ts
-msgid "Q/Y/ED"
+msgid "Q_Y_ED"
 msgstr "无法删除分类。有 {count} 个定期交易正在使用此分类。请先删除这些定期交易。"
 
 #: actions/category.actions.ts
@@ -131,15 +131,15 @@ msgid "gzfdvr"
 msgstr "加载自定义分类失败！请稍后再试。"
 
 #: actions/goal.actions.ts
-msgid "3SCa/T"
+msgid "3SCa_T"
 msgstr "此目标已存在！"
 
 #: actions/goal.actions.ts
-msgid "9Buhj/"
+msgid "9Buhj_"
 msgstr "添加目标失败！请稍后再试。"
 
 #: actions/goal.actions.ts
-msgid "J+nrjG"
+msgid "J-nrjG"
 msgstr "目标已添加。"
 
 #: actions/goal.actions.ts
@@ -175,7 +175,7 @@ msgid "xwvGbl"
 msgstr "加载目标失败！请稍后再试。"
 
 #: actions/recurring.actions.ts
-msgid "+HBMWc"
+msgid "-HBMWc"
 msgstr "此定期交易已存在！"
 
 #: actions/recurring.actions.ts
@@ -219,7 +219,7 @@ msgid "D92YlY"
 msgstr "加载定期交易失败！请稍后再试。"
 
 #: actions/transaction.actions.ts
-msgid "v+aP8j"
+msgid "v-aP8j"
 msgstr "今天已创建此交易！"
 
 #: actions/transaction.actions.ts
@@ -231,7 +231,7 @@ msgid "pU1r4y"
 msgstr "交易已添加。"
 
 #: actions/transaction.actions.ts
-msgid "w/J6M7"
+msgid "w_J6M7"
 msgstr "无效的交易 ID！"
 
 #: actions/transaction.actions.ts
@@ -247,7 +247,7 @@ msgid "A9rBEo"
 msgstr "更新交易失败！请稍后再试。"
 
 #: actions/transaction.actions.ts
-msgid "Fxn2/P"
+msgid "Fxn2_P"
 msgstr "未找到交易或您没有权限删除！"
 
 #: actions/transaction.actions.ts
@@ -259,12 +259,12 @@ msgid "DcqDur"
 msgstr "删除交易失败！请稍后再试。"
 
 #: actions/transaction.actions.ts
-msgid "+VVz7r"
+msgid "-VVz7r"
 msgstr "加载交易失败！请稍后再试。"
 
 #: app/(auth)/signin/page.tsx
 #: components/auth/signin-form.tsx
-msgid "Ub+AGc"
+msgid "Ub-AGc"
 msgstr "登录"
 
 #: app/(auth)/signin/page.tsx
@@ -340,16 +340,16 @@ msgstr "统计"
 #: app/(core)/transactions/page.tsx
 #: components/transactions/transactions-page.tsx
 #: hooks/use-nav.ts
-msgid "/jJLYy"
+msgid "_jJLYy"
 msgstr "交易"
 
 #: app/error.tsx
-msgid "/WMCDd"
+msgid "_WMCDd"
 msgstr "出了点问题！"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
-msgid "hyu/OZ"
+msgid "hyu_OZ"
 msgstr "个人和家庭财务应用"
 
 #: components/auth/signin-form.tsx
@@ -365,7 +365,7 @@ msgid "zR1TB7"
 msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
 
 #: components/auth/signin-form.tsx
-msgid "b8+mgZ"
+msgid "b8-mgZ"
 msgstr "登录失败！请稍后再试。"
 
 #: components/auth/signin-form.tsx
@@ -388,7 +388,7 @@ msgid "Tjv3UC"
 msgstr "验证码"
 
 #: components/auth/two-factor-form.tsx
-msgid "hyw/Cv"
+msgid "hyw_Cv"
 msgstr "信任此设备"
 
 #: components/auth/two-factor-form.tsx
@@ -432,7 +432,7 @@ msgstr "货币"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-table.tsx
-msgid "/0TOL5"
+msgid "_0TOL5"
 msgstr "金额"
 
 #: components/budgets/budget-dialog.tsx
@@ -498,7 +498,7 @@ msgstr "更新"
 #: components/recurring-transactions/recurring-transactions-page.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-page.tsx
-msgid "2/2yg+"
+msgid "2_2yg-"
 msgstr "添加"
 
 #: components/budgets/budget-filters.tsx
@@ -514,7 +514,7 @@ msgstr "月份"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "O+ZfC8"
+msgid "O-ZfC8"
 msgstr "所有月份"
 
 #: components/budgets/budget-filters.tsx
@@ -563,7 +563,7 @@ msgstr "进度"
 
 #: components/budgets/budget-filters.tsx
 #: components/goals/goal-filters.tsx
-msgid "W8OX/r"
+msgid "W8OX_r"
 msgstr "所有进度"
 
 #: components/budgets/budget-filters.tsx
@@ -620,7 +620,7 @@ msgstr "活跃"
 #: components/budgets/budgets-table.tsx
 #: components/goals/goal-filters.tsx
 #: components/goals/goals-table.tsx
-msgid "6/aEFZ"
+msgid "6_aEFZ"
 msgstr "即将到来"
 
 #: components/budgets/budget-filters.tsx
@@ -629,7 +629,7 @@ msgstr "即将到来"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "jm/spn"
+msgid "jm_spn"
 msgstr "重置"
 
 #: components/budgets/budgets-page.tsx
@@ -654,7 +654,7 @@ msgstr "已支出"
 
 #: components/budgets/budgets-table.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "H5+NAX"
+msgid "H5-NAX"
 msgstr "余额"
 
 #: components/budgets/budgets-table.tsx
@@ -740,7 +740,7 @@ msgstr "描述"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "+U6ozc"
+msgid "-U6ozc"
 msgstr "类型"
 
 #: components/categories/categories-table.tsx
@@ -768,7 +768,7 @@ msgstr "收入"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "URe+qA"
+msgid "URe-qA"
 msgstr "支出"
 
 #: components/categories/category-dialog.tsx
@@ -803,7 +803,7 @@ msgstr "搜索分类..."
 #: components/categories/category-filters.tsx
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "UjTL+F"
+msgid "UjTL-F"
 msgstr "所有类型"
 
 #: components/categories/delete-category-dialog.tsx
@@ -827,7 +827,7 @@ msgid "PmRC5G"
 msgstr "创建自定义分类"
 
 #: components/goals/delete-goal-dialog.tsx
-msgid "F3XA9+"
+msgid "F3XA9-"
 msgstr "删除目标"
 
 #: components/goals/delete-goal-dialog.tsx
@@ -843,7 +843,7 @@ msgid "5WuADX"
 msgstr "添加目标"
 
 #: components/goals/goal-dialog.tsx
-msgid "/kQug4"
+msgid "_kQug4"
 msgstr "更新目标信息。"
 
 #: components/goals/goal-dialog.tsx
@@ -865,7 +865,7 @@ msgid "MPOzul"
 msgstr "目标金额"
 
 #: components/goals/goal-filters.tsx
-msgid "+xHZ7x"
+msgid "-xHZ7x"
 msgstr "搜索目标..."
 
 #: components/goals/goal-filters.tsx
@@ -914,7 +914,7 @@ msgstr "快速统计"
 
 #: components/home/quick-stats.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "a3+VDd"
+msgid "a3-VDd"
 msgstr "交易总数"
 
 #: components/home/quick-stats.tsx
@@ -930,7 +930,7 @@ msgid "UG5qoS"
 msgstr "无数据"
 
 #: components/home/quick-stats.tsx
-msgid "5+Kbgx"
+msgid "5-Kbgx"
 msgstr "本月金额最高的交易（可能是收入或支出）。"
 
 #: components/home/quick-stats.tsx
@@ -989,7 +989,7 @@ msgstr "月度收入"
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
 #: components/transactions/export-button.tsx
-msgid "5+nDxs"
+msgid "5-nDxs"
 msgstr "交易"
 
 #: components/home/transaction-summary.tsx
@@ -1012,7 +1012,7 @@ msgstr "负"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "r0q/a1"
+msgid "r0q_a1"
 msgstr "平衡"
 
 #: components/home/transaction-summary.tsx
@@ -1021,7 +1021,7 @@ msgid "qTQZsz"
 msgstr "与收入相比"
 
 #: components/layout/page-data-provider.tsx
-msgid "EjH+J3"
+msgid "EjH-J3"
 msgstr "请稍后再试。"
 
 #: components/layout/page-data-provider.tsx
@@ -1057,7 +1057,7 @@ msgid "XuxYAf"
 msgstr "退出失败！请稍后再试。"
 
 #: components/layout/secondary-nav.tsx
-msgid "F62y+K"
+msgid "F62y-K"
 msgstr "退出"
 
 #: components/layout/secondary-nav.tsx
@@ -1112,7 +1112,7 @@ msgstr "每天"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "/clOBU"
+msgid "_clOBU"
 msgstr "每周"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
@@ -1137,11 +1137,11 @@ msgstr "每年"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "D9n+q2"
+msgid "D9n-q2"
 msgstr "随机"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "CpM7W/"
+msgid "CpM7W_"
 msgstr "每 X 天"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
@@ -1176,7 +1176,7 @@ msgid "w8tTYc"
 msgstr "管理您的定期交易。"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "xRs5e/"
+msgid "xRs5e_"
 msgstr "未找到定期交易"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
@@ -1196,7 +1196,7 @@ msgid "qYXK93"
 msgstr "每 {days} 天"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "b+8NFf"
+msgid "b-8NFf"
 msgstr "下次：{date}"
 
 #: components/settings/active-sessions-dialog.tsx
@@ -1216,7 +1216,7 @@ msgid "i3aVwj"
 msgstr "所有会话已终止。"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "h/tqwp"
+msgid "h_tqwp"
 msgstr "查看活跃会话"
 
 #: components/settings/active-sessions-dialog.tsx
@@ -1238,11 +1238,11 @@ msgid "bLQmWN"
 msgstr "未知位置"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "oA2uW/"
+msgid "oA2uW_"
 msgstr "终止"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "DC/DQF"
+msgid "DC_DQF"
 msgstr "终止所有"
 
 #: components/settings/change-name-dialog.tsx
@@ -1282,7 +1282,7 @@ msgid "UR3aU3"
 msgstr "当前密码不正确！"
 
 #: components/settings/change-password-dialog.tsx
-msgid "I+C2uX"
+msgid "I-C2uX"
 msgstr "更新密码失败！请稍后再试。"
 
 #: components/settings/change-password-dialog.tsx
@@ -1296,7 +1296,7 @@ msgstr "更改密码"
 
 #: components/settings/change-password-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "luD+rc"
+msgid "luD-rc"
 msgstr "更新您的密码。"
 
 #: components/settings/change-password-dialog.tsx
@@ -1308,7 +1308,7 @@ msgid "Ev6SEF"
 msgstr "新密码"
 
 #: components/settings/change-password-dialog.tsx
-msgid "vfG+nh"
+msgid "vfG-nh"
 msgstr "确认密码"
 
 #: components/settings/change-password-dialog.tsx
@@ -1328,7 +1328,7 @@ msgid "IaZaQX"
 msgstr "更新用户名失败！请稍后再试。"
 
 #: components/settings/change-username-dialog.tsx
-msgid "8KK2w+"
+msgid "8KK2w-"
 msgstr "您的用户名已更改。"
 
 #: components/settings/change-username-dialog.tsx
@@ -1375,7 +1375,7 @@ msgid "NAnTXq"
 msgstr "选择应用程序的显示主题。"
 
 #: components/settings/settings-page.tsx
-msgid "9ar+T+"
+msgid "9ar-T-"
 msgstr "选择您的首选语言。"
 
 #: components/settings/settings-page.tsx
@@ -1395,7 +1395,7 @@ msgid "tOdNiY"
 msgstr "深色"
 
 #: components/settings/theme-selector.tsx
-msgid "+CwN9C"
+msgid "-CwN9C"
 msgstr "系统"
 
 #: components/settings/theme-selector.tsx
@@ -1435,7 +1435,7 @@ msgid "6vQ8Z2"
 msgstr "密码无效。"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "Lq08V/"
+msgid "Lq08V_"
 msgstr "启用 2FA 失败！请稍后再试。"
 
 #: components/settings/two-factor-manager-dialog.tsx
@@ -1447,7 +1447,7 @@ msgid "FSRmm9"
 msgstr "双重身份验证现已启用。"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "Y1o/zZ"
+msgid "Y1o_zZ"
 msgstr "禁用 2FA 失败！请稍后再试。"
 
 #: components/settings/two-factor-manager-dialog.tsx
@@ -1456,13 +1456,13 @@ msgstr "双重身份验证现已禁用。"
 
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "KAX9q+"
+msgid "KAX9q-"
 msgstr "选择日期范围"
 
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "dM+p3/"
+msgid "dM-p3_"
 msgstr "自"
 
 #: components/statistics/statistics-filters.tsx
@@ -1480,11 +1480,11 @@ msgid "q2bcKc"
 msgstr "总收入"
 
 #: components/statistics/statistics-summary.tsx
-msgid "F3K//T"
+msgid "F3K__T"
 msgstr "总支出"
 
 #: components/statistics/statistics-summary.tsx
-msgid "cX8/D7"
+msgid "cX8_D7"
 msgstr "交易总数"
 
 #: components/statistics/statistics-table.tsx
@@ -1523,11 +1523,11 @@ msgid "6L1Gl2"
 msgstr "导出数据失败！请稍后再试。"
 
 #: components/transactions/export-button.tsx
-msgid "hTOF+7"
+msgid "hTOF-7"
 msgstr "导出交易"
 
 #: components/transactions/export-button.tsx
-msgid "0S1jq/"
+msgid "0S1jq_"
 msgstr "导出应用当前筛选条件的交易"
 
 #: components/transactions/transaction-dialog.tsx
@@ -1559,11 +1559,11 @@ msgid "PRC7nC"
 msgstr "管理收入和支出以跟踪您的个人财务状况。"
 
 #: hooks/use-category.ts
-msgid "7MY/4L"
+msgid "7MY_4L"
 msgstr "工资与奖金"
 
 #: hooks/use-category.ts
-msgid "BNse/p"
+msgid "BNse_p"
 msgstr "基本工资、绩效奖金、节日奖金、津贴等。"
 
 #: hooks/use-category.ts
@@ -1595,7 +1595,7 @@ msgid "3M2DQp"
 msgstr "其他收入"
 
 #: hooks/use-category.ts
-msgid "+vWFfX"
+msgid "-vWFfX"
 msgstr "退款、出售二手物品、奖金、意外款项等。"
 
 #: hooks/use-category.ts
@@ -1607,11 +1607,11 @@ msgid "4Vdjbv"
 msgstr "杂货、市场、餐馆、咖啡馆、早/午/晚餐等。"
 
 #: hooks/use-category.ts
-msgid "/x7aOj"
+msgid "_x7aOj"
 msgstr "交通"
 
 #: hooks/use-category.ts
-msgid "X/LFZv"
+msgid "X_LFZv"
 msgstr "燃料、公交/网约车、车辆维护、停车费等。"
 
 #: hooks/use-category.ts
@@ -1643,11 +1643,11 @@ msgid "VCWKjW"
 msgstr "住房与水电"
 
 #: hooks/use-category.ts
-msgid "0zQ/kK"
+msgid "0zQ_kK"
 msgstr "房租、水电费、燃气费、网络、电话、管理费等。"
 
 #: hooks/use-category.ts
-msgid "AvfH/3"
+msgid "AvfH_3"
 msgstr "医疗与保险"
 
 #: hooks/use-category.ts
@@ -1663,7 +1663,7 @@ msgid "U5tQLZ"
 msgstr "学费、书籍、线上/线下课程、证书、研讨会等。"
 
 #: hooks/use-category.ts
-msgid "rLxG+6"
+msgid "rLxG-6"
 msgstr "娱乐与休闲"
 
 #: hooks/use-category.ts
@@ -1671,7 +1671,7 @@ msgid "ASzmVA"
 msgstr "旅行、电影、音乐、游戏、健身房、爱好等。"
 
 #: hooks/use-category.ts
-msgid "Mhg8/5"
+msgid "Mhg8_5"
 msgstr "社交与礼物"
 
 #: hooks/use-category.ts
@@ -1679,7 +1679,7 @@ msgid "mhXJmF"
 msgstr "婚礼、葬礼、生日、朋友礼物、聚会等。"
 
 #: hooks/use-category.ts
-msgid "+PDYFb"
+msgid "-PDYFb"
 msgstr "储蓄与投资"
 
 #: hooks/use-category.ts
@@ -1735,7 +1735,7 @@ msgid "lINtN6"
 msgstr "八月"
 
 #: hooks/use-months.ts
-msgid "TFf5u+"
+msgid "TFf5u-"
 msgstr "九月"
 
 #: hooks/use-months.ts
@@ -1743,7 +1743,7 @@ msgid "EuK7yR"
 msgstr "十月"
 
 #: hooks/use-months.ts
-msgid "pn+jQD"
+msgid "pn-jQD"
 msgstr "十一月"
 
 #: hooks/use-months.ts
@@ -1755,7 +1755,7 @@ msgid "MsWwGp"
 msgstr "密码必须至少包含 8 个字符，包括大写字母、小写字母、数字和特殊字符。"
 
 #: schemas/messages.ts
-msgid "/1byDa"
+msgid "_1byDa"
 msgstr "必须填写金额。"
 
 #: schemas/messages.ts
@@ -1799,7 +1799,7 @@ msgid "O4PhlQ"
 msgstr "代码只能包含数字。"
 
 #: schemas/messages.ts
-msgid "/4pQDl"
+msgid "_4pQDl"
 msgstr "必须填写姓名。"
 
 #: schemas/messages.ts
@@ -1811,7 +1811,7 @@ msgid "J0CJqe"
 msgstr "姓名只能包含字母。"
 
 #: schemas/messages.ts
-msgid "c+1x/V"
+msgid "c-1x_V"
 msgstr "用户名必须至少包含 3 个字符。"
 
 #: schemas/messages.ts
@@ -1883,7 +1883,7 @@ msgid "pmDGs3"
 msgstr "频率是必填项。"
 
 #: schemas/messages.ts
-msgid "rHlS+D"
+msgid "rHlS-D"
 msgstr "天数是必填项。"
 
 #: schemas/messages.ts

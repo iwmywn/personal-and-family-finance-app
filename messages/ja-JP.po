@@ -27,7 +27,7 @@ msgid "kwvIdb"
 msgstr "この予算は既に存在します！"
 
 #: actions/budget.actions.ts
-msgid "ge/1ga"
+msgid "ge_1ga"
 msgstr "予算の追加に失敗しました！後でもう一度お試しください。"
 
 #: actions/budget.actions.ts
@@ -115,7 +115,7 @@ msgid "C7NEmI"
 msgstr "カテゴリを削除できません。このカテゴリを使用している目標が{count}個あります。まずそれらの目標を削除してください。"
 
 #: actions/category.actions.ts
-msgid "Q/Y/ED"
+msgid "Q_Y_ED"
 msgstr "カテゴリを削除できません。このカテゴリを使用している定期取引が{count}個あります。まずそれらの定期取引を削除してください。"
 
 #: actions/category.actions.ts
@@ -131,15 +131,15 @@ msgid "gzfdvr"
 msgstr "カスタムカテゴリの読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/goal.actions.ts
-msgid "3SCa/T"
+msgid "3SCa_T"
 msgstr "この目標は既に存在します！"
 
 #: actions/goal.actions.ts
-msgid "9Buhj/"
+msgid "9Buhj_"
 msgstr "目標の追加に失敗しました！後でもう一度お試しください。"
 
 #: actions/goal.actions.ts
-msgid "J+nrjG"
+msgid "J-nrjG"
 msgstr "目標が追加されました。"
 
 #: actions/goal.actions.ts
@@ -175,7 +175,7 @@ msgid "xwvGbl"
 msgstr "目標の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/recurring.actions.ts
-msgid "+HBMWc"
+msgid "-HBMWc"
 msgstr "この定期取引は既に存在します！"
 
 #: actions/recurring.actions.ts
@@ -219,7 +219,7 @@ msgid "D92YlY"
 msgstr "定期取引の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
-msgid "v+aP8j"
+msgid "v-aP8j"
 msgstr "この取引は既に今日作成されています！"
 
 #: actions/transaction.actions.ts
@@ -231,7 +231,7 @@ msgid "pU1r4y"
 msgstr "取引が追加されました。"
 
 #: actions/transaction.actions.ts
-msgid "w/J6M7"
+msgid "w_J6M7"
 msgstr "取引IDが無効です！"
 
 #: actions/transaction.actions.ts
@@ -247,7 +247,7 @@ msgid "A9rBEo"
 msgstr "取引の更新に失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
-msgid "Fxn2/P"
+msgid "Fxn2_P"
 msgstr "取引が見つからないか、削除権限がありません！"
 
 #: actions/transaction.actions.ts
@@ -259,12 +259,12 @@ msgid "DcqDur"
 msgstr "取引の削除に失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
-msgid "+VVz7r"
+msgid "-VVz7r"
 msgstr "取引の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: app/(auth)/signin/page.tsx
 #: components/auth/signin-form.tsx
-msgid "Ub+AGc"
+msgid "Ub-AGc"
 msgstr "サインイン"
 
 #: app/(auth)/signin/page.tsx
@@ -340,16 +340,16 @@ msgstr "統計"
 #: app/(core)/transactions/page.tsx
 #: components/transactions/transactions-page.tsx
 #: hooks/use-nav.ts
-msgid "/jJLYy"
+msgid "_jJLYy"
 msgstr "取引"
 
 #: app/error.tsx
-msgid "/WMCDd"
+msgid "_WMCDd"
 msgstr "問題が発生しました！"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
-msgid "hyu/OZ"
+msgid "hyu_OZ"
 msgstr "個人・家族向け財務アプリ"
 
 #: components/auth/signin-form.tsx
@@ -365,7 +365,7 @@ msgid "zR1TB7"
 msgstr "レート制限を超えました！{seconds}秒後に再試行してください。"
 
 #: components/auth/signin-form.tsx
-msgid "b8+mgZ"
+msgid "b8-mgZ"
 msgstr "サインインに失敗しました！後でもう一度お試しください。"
 
 #: components/auth/signin-form.tsx
@@ -388,7 +388,7 @@ msgid "Tjv3UC"
 msgstr "確認コード"
 
 #: components/auth/two-factor-form.tsx
-msgid "hyw/Cv"
+msgid "hyw_Cv"
 msgstr "このデバイスを信頼する"
 
 #: components/auth/two-factor-form.tsx
@@ -432,7 +432,7 @@ msgstr "通貨"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-table.tsx
-msgid "/0TOL5"
+msgid "_0TOL5"
 msgstr "金額"
 
 #: components/budgets/budget-dialog.tsx
@@ -498,7 +498,7 @@ msgstr "更新"
 #: components/recurring-transactions/recurring-transactions-page.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-page.tsx
-msgid "2/2yg+"
+msgid "2_2yg-"
 msgstr "追加"
 
 #: components/budgets/budget-filters.tsx
@@ -514,7 +514,7 @@ msgstr "月"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "O+ZfC8"
+msgid "O-ZfC8"
 msgstr "すべての月"
 
 #: components/budgets/budget-filters.tsx
@@ -563,7 +563,7 @@ msgstr "進捗"
 
 #: components/budgets/budget-filters.tsx
 #: components/goals/goal-filters.tsx
-msgid "W8OX/r"
+msgid "W8OX_r"
 msgstr "すべての進捗"
 
 #: components/budgets/budget-filters.tsx
@@ -620,7 +620,7 @@ msgstr "アクティブ"
 #: components/budgets/budgets-table.tsx
 #: components/goals/goal-filters.tsx
 #: components/goals/goals-table.tsx
-msgid "6/aEFZ"
+msgid "6_aEFZ"
 msgstr "予定"
 
 #: components/budgets/budget-filters.tsx
@@ -629,7 +629,7 @@ msgstr "予定"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "jm/spn"
+msgid "jm_spn"
 msgstr "リセット"
 
 #: components/budgets/budgets-page.tsx
@@ -654,7 +654,7 @@ msgstr "支出額"
 
 #: components/budgets/budgets-table.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "H5+NAX"
+msgid "H5-NAX"
 msgstr "残高"
 
 #: components/budgets/budgets-table.tsx
@@ -740,7 +740,7 @@ msgstr "説明"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "+U6ozc"
+msgid "-U6ozc"
 msgstr "タイプ"
 
 #: components/categories/categories-table.tsx
@@ -768,7 +768,7 @@ msgstr "収入"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "URe+qA"
+msgid "URe-qA"
 msgstr "支出"
 
 #: components/categories/category-dialog.tsx
@@ -803,7 +803,7 @@ msgstr "カテゴリを検索..."
 #: components/categories/category-filters.tsx
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "UjTL+F"
+msgid "UjTL-F"
 msgstr "すべてのタイプ"
 
 #: components/categories/delete-category-dialog.tsx
@@ -827,7 +827,7 @@ msgid "PmRC5G"
 msgstr "カスタムカテゴリを作成"
 
 #: components/goals/delete-goal-dialog.tsx
-msgid "F3XA9+"
+msgid "F3XA9-"
 msgstr "目標を削除"
 
 #: components/goals/delete-goal-dialog.tsx
@@ -843,7 +843,7 @@ msgid "5WuADX"
 msgstr "目標を追加"
 
 #: components/goals/goal-dialog.tsx
-msgid "/kQug4"
+msgid "_kQug4"
 msgstr "目標情報を更新します。"
 
 #: components/goals/goal-dialog.tsx
@@ -865,7 +865,7 @@ msgid "MPOzul"
 msgstr "目標金額"
 
 #: components/goals/goal-filters.tsx
-msgid "+xHZ7x"
+msgid "-xHZ7x"
 msgstr "目標を検索..."
 
 #: components/goals/goal-filters.tsx
@@ -914,7 +914,7 @@ msgstr "クイック統計"
 
 #: components/home/quick-stats.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "a3+VDd"
+msgid "a3-VDd"
 msgstr "取引総数"
 
 #: components/home/quick-stats.tsx
@@ -930,7 +930,7 @@ msgid "UG5qoS"
 msgstr "データなし"
 
 #: components/home/quick-stats.tsx
-msgid "5+Kbgx"
+msgid "5-Kbgx"
 msgstr "月間で最も高い取引（収入または支出）。"
 
 #: components/home/quick-stats.tsx
@@ -989,7 +989,7 @@ msgstr "月間収入"
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
 #: components/transactions/export-button.tsx
-msgid "5+nDxs"
+msgid "5-nDxs"
 msgstr "取引"
 
 #: components/home/transaction-summary.tsx
@@ -1012,7 +1012,7 @@ msgstr "マイナス"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "r0q/a1"
+msgid "r0q_a1"
 msgstr "バランス"
 
 #: components/home/transaction-summary.tsx
@@ -1021,7 +1021,7 @@ msgid "qTQZsz"
 msgstr "収入と比較"
 
 #: components/layout/page-data-provider.tsx
-msgid "EjH+J3"
+msgid "EjH-J3"
 msgstr "後でもう一度お試しください。"
 
 #: components/layout/page-data-provider.tsx
@@ -1057,7 +1057,7 @@ msgid "XuxYAf"
 msgstr "サインアウトに失敗しました！後でもう一度お試しください。"
 
 #: components/layout/secondary-nav.tsx
-msgid "F62y+K"
+msgid "F62y-K"
 msgstr "サインアウト"
 
 #: components/layout/secondary-nav.tsx
@@ -1112,7 +1112,7 @@ msgstr "日次"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "/clOBU"
+msgid "_clOBU"
 msgstr "週次"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
@@ -1137,11 +1137,11 @@ msgstr "年次"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "D9n+q2"
+msgid "D9n-q2"
 msgstr "ランダム"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "CpM7W/"
+msgid "CpM7W_"
 msgstr "X日ごと"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
@@ -1176,7 +1176,7 @@ msgid "w8tTYc"
 msgstr "定期取引を管理します。"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "xRs5e/"
+msgid "xRs5e_"
 msgstr "定期取引が見つかりません"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
@@ -1196,7 +1196,7 @@ msgid "qYXK93"
 msgstr "{days}日ごと"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "b+8NFf"
+msgid "b-8NFf"
 msgstr "次回：{date}"
 
 #: components/settings/active-sessions-dialog.tsx
@@ -1216,7 +1216,7 @@ msgid "i3aVwj"
 msgstr "すべてのセッションが終了しました。"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "h/tqwp"
+msgid "h_tqwp"
 msgstr "アクティブセッションを表示"
 
 #: components/settings/active-sessions-dialog.tsx
@@ -1238,11 +1238,11 @@ msgid "bLQmWN"
 msgstr "不明な場所"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "oA2uW/"
+msgid "oA2uW_"
 msgstr "終了"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "DC/DQF"
+msgid "DC_DQF"
 msgstr "すべて終了"
 
 #: components/settings/change-name-dialog.tsx
@@ -1282,7 +1282,7 @@ msgid "UR3aU3"
 msgstr "現在のパスワードが正しくありません！"
 
 #: components/settings/change-password-dialog.tsx
-msgid "I+C2uX"
+msgid "I-C2uX"
 msgstr "パスワードの更新に失敗しました！後でもう一度お試しください。"
 
 #: components/settings/change-password-dialog.tsx
@@ -1296,7 +1296,7 @@ msgstr "パスワードを変更"
 
 #: components/settings/change-password-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "luD+rc"
+msgid "luD-rc"
 msgstr "パスワードを更新します。"
 
 #: components/settings/change-password-dialog.tsx
@@ -1308,7 +1308,7 @@ msgid "Ev6SEF"
 msgstr "新しいパスワード"
 
 #: components/settings/change-password-dialog.tsx
-msgid "vfG+nh"
+msgid "vfG-nh"
 msgstr "パスワードを確認"
 
 #: components/settings/change-password-dialog.tsx
@@ -1328,7 +1328,7 @@ msgid "IaZaQX"
 msgstr "ユーザー名の更新に失敗しました！後でもう一度お試しください。"
 
 #: components/settings/change-username-dialog.tsx
-msgid "8KK2w+"
+msgid "8KK2w-"
 msgstr "ユーザー名が変更されました。"
 
 #: components/settings/change-username-dialog.tsx
@@ -1375,7 +1375,7 @@ msgid "NAnTXq"
 msgstr "アプリケーションの表示テーマを選択してください。"
 
 #: components/settings/settings-page.tsx
-msgid "9ar+T+"
+msgid "9ar-T-"
 msgstr "希望する言語を選択してください。"
 
 #: components/settings/settings-page.tsx
@@ -1395,7 +1395,7 @@ msgid "tOdNiY"
 msgstr "ダーク"
 
 #: components/settings/theme-selector.tsx
-msgid "+CwN9C"
+msgid "-CwN9C"
 msgstr "システム"
 
 #: components/settings/theme-selector.tsx
@@ -1435,7 +1435,7 @@ msgid "6vQ8Z2"
 msgstr "パスワードが無効です。"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "Lq08V/"
+msgid "Lq08V_"
 msgstr "2FAの有効化に失敗しました！後でもう一度お試しください。"
 
 #: components/settings/two-factor-manager-dialog.tsx
@@ -1447,7 +1447,7 @@ msgid "FSRmm9"
 msgstr "二要素認証が有効になりました。"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "Y1o/zZ"
+msgid "Y1o_zZ"
 msgstr "2FAの無効化に失敗しました！後でもう一度お試しください。"
 
 #: components/settings/two-factor-manager-dialog.tsx
@@ -1456,13 +1456,13 @@ msgstr "二要素認証が無効になりました。"
 
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "KAX9q+"
+msgid "KAX9q-"
 msgstr "日付範囲を選択"
 
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "dM+p3/"
+msgid "dM-p3_"
 msgstr "から"
 
 #: components/statistics/statistics-filters.tsx
@@ -1480,11 +1480,11 @@ msgid "q2bcKc"
 msgstr "総収入"
 
 #: components/statistics/statistics-summary.tsx
-msgid "F3K//T"
+msgid "F3K__T"
 msgstr "総支出"
 
 #: components/statistics/statistics-summary.tsx
-msgid "cX8/D7"
+msgid "cX8_D7"
 msgstr "取引総数"
 
 #: components/statistics/statistics-table.tsx
@@ -1523,11 +1523,11 @@ msgid "6L1Gl2"
 msgstr "データのエクスポートに失敗しました！後でもう一度お試しください。"
 
 #: components/transactions/export-button.tsx
-msgid "hTOF+7"
+msgid "hTOF-7"
 msgstr "取引をエクスポート"
 
 #: components/transactions/export-button.tsx
-msgid "0S1jq/"
+msgid "0S1jq_"
 msgstr "現在のフィルターを適用して取引をエクスポート"
 
 #: components/transactions/transaction-dialog.tsx
@@ -1559,11 +1559,11 @@ msgid "PRC7nC"
 msgstr "個人の財務を追跡するために、収入と支出を管理します。"
 
 #: hooks/use-category.ts
-msgid "7MY/4L"
+msgid "7MY_4L"
 msgstr "給与・ボーナス"
 
 #: hooks/use-category.ts
-msgid "BNse/p"
+msgid "BNse_p"
 msgstr "基本給、業績ボーナス、休暇ボーナス、手当など。"
 
 #: hooks/use-category.ts
@@ -1595,7 +1595,7 @@ msgid "3M2DQp"
 msgstr "その他の収入"
 
 #: hooks/use-category.ts
-msgid "+vWFfX"
+msgid "-vWFfX"
 msgstr "返金、中古品販売、賞金、予期しない金額など。"
 
 #: hooks/use-category.ts
@@ -1607,11 +1607,11 @@ msgid "4Vdjbv"
 msgstr "食料品、市場、レストラン、カフェ、朝食/昼食/夕食など。"
 
 #: hooks/use-category.ts
-msgid "/x7aOj"
+msgid "_x7aOj"
 msgstr "交通"
 
 #: hooks/use-category.ts
-msgid "X/LFZv"
+msgid "X_LFZv"
 msgstr "燃料、バス/グラブ、車両メンテナンス、駐車料金など。"
 
 #: hooks/use-category.ts
@@ -1643,11 +1643,11 @@ msgid "VCWKjW"
 msgstr "住宅・公共料金"
 
 #: hooks/use-category.ts
-msgid "0zQ/kK"
+msgid "0zQ_kK"
 msgstr "家賃、電気、水道、ガス、インターネット、電話、管理費など。"
 
 #: hooks/use-category.ts
-msgid "AvfH/3"
+msgid "AvfH_3"
 msgstr "医療・保険"
 
 #: hooks/use-category.ts
@@ -1663,7 +1663,7 @@ msgid "U5tQLZ"
 msgstr "授業料、書籍、オンライン/オフラインコース、証明書、セミナーなど。"
 
 #: hooks/use-category.ts
-msgid "rLxG+6"
+msgid "rLxG-6"
 msgstr "娯楽・レジャー"
 
 #: hooks/use-category.ts
@@ -1671,7 +1671,7 @@ msgid "ASzmVA"
 msgstr "旅行、映画、音楽、ゲーム、ジム、趣味など。"
 
 #: hooks/use-category.ts
-msgid "Mhg8/5"
+msgid "Mhg8_5"
 msgstr "社交・贈り物"
 
 #: hooks/use-category.ts
@@ -1679,7 +1679,7 @@ msgid "mhXJmF"
 msgstr "結婚式、葬式、誕生日、友人への贈り物、集まりなど。"
 
 #: hooks/use-category.ts
-msgid "+PDYFb"
+msgid "-PDYFb"
 msgstr "貯蓄・投資"
 
 #: hooks/use-category.ts
@@ -1735,7 +1735,7 @@ msgid "lINtN6"
 msgstr "8月"
 
 #: hooks/use-months.ts
-msgid "TFf5u+"
+msgid "TFf5u-"
 msgstr "9月"
 
 #: hooks/use-months.ts
@@ -1743,7 +1743,7 @@ msgid "EuK7yR"
 msgstr "10月"
 
 #: hooks/use-months.ts
-msgid "pn+jQD"
+msgid "pn-jQD"
 msgstr "11月"
 
 #: hooks/use-months.ts
@@ -1755,7 +1755,7 @@ msgid "MsWwGp"
 msgstr "パスワードは、大文字、小文字、数字、特殊文字を含む少なくとも8文字である必要があります。"
 
 #: schemas/messages.ts
-msgid "/1byDa"
+msgid "_1byDa"
 msgstr "金額は必須です。"
 
 #: schemas/messages.ts
@@ -1799,7 +1799,7 @@ msgid "O4PhlQ"
 msgstr "コードには数字のみ使用できます。"
 
 #: schemas/messages.ts
-msgid "/4pQDl"
+msgid "_4pQDl"
 msgstr "名前は必須です。"
 
 #: schemas/messages.ts
@@ -1811,7 +1811,7 @@ msgid "J0CJqe"
 msgstr "名前には文字のみ使用できます。"
 
 #: schemas/messages.ts
-msgid "c+1x/V"
+msgid "c-1x_V"
 msgstr "ユーザー名は少なくとも3文字である必要があります。"
 
 #: schemas/messages.ts
@@ -1883,7 +1883,7 @@ msgid "pmDGs3"
 msgstr "頻度は必須です。"
 
 #: schemas/messages.ts
-msgid "rHlS+D"
+msgid "rHlS-D"
 msgstr "日数は必須です。"
 
 #: schemas/messages.ts
