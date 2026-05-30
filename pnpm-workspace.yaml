@@ -20,3 +20,4 @@ minimumReleaseAgeExclude:
   - '@better-auth/prisma-adapter@1.6.12'
   - '@better-auth/telemetry@1.6.12'
   - better-auth@1.6.12
+  - lint-staged@17.0.6
