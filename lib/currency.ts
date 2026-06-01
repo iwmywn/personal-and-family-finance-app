@@ -2,12 +2,6 @@ import type { AppLocale } from "@/i18n/config"
 
 export const CURRENCIES = ["USD", "CNY", "JPY", "KRW", "VND"] as const
 
-export const ZERO_DECIMAL_CURRENCIES = new Set<AppCurrency>([
-  "JPY",
-  "KRW",
-  "VND",
-])
-
 export type AppCurrency = (typeof CURRENCIES)[number]
 
 export const DEFAULT_CURRENCY: AppCurrency = "VND"

@@ -5,7 +5,6 @@ import {
   formatDate,
   getUniqueYears,
   localDateToUTCMidnight,
-  normalizeToUTCMidnight,
 } from "@/lib/utils"
 
 describe("Utils", () => {
@@ -45,27 +44,6 @@ describe("Utils", () => {
       // The date might be different due to timezone conversion, so we check it's reasonable
       expect(result.getUTCDate()).toBeGreaterThanOrEqual(15)
       expect(result.getUTCDate()).toBeLessThanOrEqual(16)
-    })
-  })
-
-  describe("normalizeToUTCMidnight", () => {
-    it("should strip time from UTC date", () => {
-      const date = new Date("2024-01-15T23:45:12Z")
-      const result = normalizeToUTCMidnight(date)
-      expect(result.toISOString()).toBe("2024-01-15T00:00:00.000Z")
-    })
-
-    it("should handle UTC boundary correctly", () => {
-      const date = new Date("2024-01-16T00:00:00Z")
-      const result = normalizeToUTCMidnight(date)
-      expect(result.toISOString()).toBe("2024-01-16T00:00:00.000Z")
-    })
-
-    it("should work correctly with dates having local timezone offset", () => {
-      // 2024-01-16T01:00:00+07:00 is 2024-01-15T18:00:00Z
-      const date = new Date("2024-01-16T01:00:00+07:00")
-      const result = normalizeToUTCMidnight(date)
-      expect(result.toISOString()).toBe("2024-01-15T00:00:00.000Z")
     })
   })
 

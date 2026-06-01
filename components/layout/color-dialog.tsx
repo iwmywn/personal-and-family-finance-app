@@ -47,8 +47,8 @@ export function ColorDialog() {
       <DialogTrigger asChild>
         <PaletteIcon />
       </DialogTrigger>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
-        <DialogTitle className="sr-only">Color Palette & Tokens</DialogTitle>
+      <DialogContent>
+        <DialogTitle>Color Palette & Tokens</DialogTitle>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {colors.map((color) => (
             <div key={color} className="flex items-center justify-between">

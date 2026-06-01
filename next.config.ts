@@ -14,13 +14,12 @@ const withNextIntl = createNextIntlPlugin({
       "./lib",
       "./schemas",
     ],
-    extract: {
-      sourceLocale: "en-US",
-    },
+    extract: true,
     messages: {
-      path: "./messages",
       format: "po",
+      path: "./messages",
       locales: "infer",
+      sourceLocale: "en-US",
       precompile: true,
     },
   },

@@ -18,7 +18,7 @@ import { localDateToUTCMidnight } from "@/lib/utils"
 const cronSecret = "test-cron-secret"
 const cronEndpoint = "http://localhost/api/recurring-transactions"
 
-describe("Recurring Transactions", () => {
+describe("Recurring Transactions Cron Job", () => {
   describe("shouldGenerateToday", () => {
     describe("daily frequency", () => {
       it("should return false when today is before start date", () => {

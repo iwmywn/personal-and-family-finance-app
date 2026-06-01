@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
@@ -42,14 +43,13 @@ import {
 } from "@/components/ui/select"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
-import { FormButton } from "@/components/form-button"
 import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { AppCurrency } from "@/lib/currency"
 import type { Goal } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
+import { cn, localDateToUTCMidnight } from "@/lib/utils"
 import type { GoalFormValues } from "@/schemas/types"
 
 interface GoalDialogProps {
@@ -71,11 +71,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
       categoryKey: goal?.categoryKey || "",
       name: goal?.name || "",
       currency: goal?.currency ?? (user.currency as AppCurrency),
-      targetAmount: goal?.targetAmount
-        ? parseFloat(goal.targetAmount)
-            .toFixed(isZeroDecimalCurrency(goal.currency) ? 0 : 2)
-            .toString()
-        : "",
+      targetAmount: goal?.targetAmount ?? "",
       startDate: goal?.startDate ? new Date(goal.startDate) : undefined,
       endDate: goal?.endDate ? new Date(goal.endDate) : undefined,
     },
@@ -115,8 +111,9 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
       } else {
         toast.success(success)
         form.reset({
-          name: "",
           categoryKey: "",
+          name: "",
+          currency: user.currency as AppCurrency,
           targetAmount: "",
           startDate: undefined,
           endDate: undefined,
@@ -204,9 +201,9 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                   <FormControl>
                     <CurrencyInput
                       id="form-target-amount"
-                      currency={form.getValues("currency")}
                       value={field.value}
-                      onChange={field.onChange}
+                      onValueChange={field.onChange}
+                      currency={form.getValues("currency")}
                     />
                   </FormControl>
                   <FormMessage />

@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
@@ -51,7 +52,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
-import { FormButton } from "@/components/form-button"
 import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
@@ -59,7 +59,7 @@ import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { AppCurrency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
-import { cn, isZeroDecimalCurrency, localDateToUTCMidnight } from "@/lib/utils"
+import { cn, localDateToUTCMidnight } from "@/lib/utils"
 import type { TransactionFormValues } from "@/schemas/types"
 
 interface TransactionDialogProps {
@@ -84,11 +84,7 @@ export function TransactionDialog({
     defaultValues: {
       type: transaction?.type || "income",
       currency: transaction?.currency ?? (user.currency as AppCurrency),
-      amount: transaction?.amount
-        ? parseFloat(transaction.amount)
-            .toFixed(isZeroDecimalCurrency(transaction.currency) ? 0 : 2)
-            .toString()
-        : "",
+      amount: transaction?.amount ?? "",
       description: transaction?.description || "",
       categoryKey: transaction?.categoryKey || "",
       date: transaction?.date ? new Date(transaction.date) : undefined,
@@ -124,6 +120,7 @@ export function TransactionDialog({
         toast.success(success)
         form.reset({
           type: type,
+          currency: user.currency as AppCurrency,
           amount: "",
           description: "",
           categoryKey: "",
@@ -142,7 +139,7 @@ export function TransactionDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {transaction ? t("Edit Transaction") : t("Add Transaction")}
@@ -225,7 +222,7 @@ export function TransactionDialog({
                     <CurrencyInput
                       id="form-amount"
                       value={field.value}
-                      onChange={field.onChange}
+                      onValueChange={field.onChange}
                       currency={form.getValues("currency")}
                     />
                   </FormControl>

@@ -20,13 +20,13 @@ import {
 } from "@/components/ui/dialog"
 import {
   Form,
+  FormButton,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { FormButton } from "@/components/form-button"
 import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
 import { client } from "@/lib/auth-client"

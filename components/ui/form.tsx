@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import type { Label as LabelPrimitive } from "radix-ui"
 import { Slot } from "radix-ui"
 import {
@@ -11,7 +12,9 @@ import {
 } from "react-hook-form"
 import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form"
 
+import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { Spinner } from "@/components/ui/spinner"
 import { cn } from "@/lib/utils"
 
 const Form = FormProvider
@@ -153,6 +156,46 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
+function FormLink({
+  children,
+  className,
+  ...props
+}: React.ComponentProps<typeof Link>) {
+  return (
+    <Link
+      className={cn(
+        "relative inline-flex w-fit shrink-0 items-center justify-center gap-1 text-sm whitespace-nowrap after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:origin-center after:scale-x-0 after:bg-black after:transition-all after:duration-500 hover:after:scale-x-100 dark:after:bg-white [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </Link>
+  )
+}
+
+function FormButton({
+  isSubmitting,
+  children,
+  className,
+  ...props
+}: {
+  isSubmitting: boolean
+} & React.ComponentProps<typeof Button>) {
+  return (
+    <Button
+      className={cn(className)}
+      disabled={isSubmitting}
+      type="submit"
+      {...props}
+    >
+      <span className="flex items-center gap-2">
+        {isSubmitting && <Spinner />} {children}
+      </span>
+    </Button>
+  )
+}
+
 export {
   useFormField,
   Form,
@@ -162,4 +205,6 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  FormLink,
+  FormButton,
 }
