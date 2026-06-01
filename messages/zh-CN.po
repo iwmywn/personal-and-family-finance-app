@@ -361,6 +361,10 @@ msgid "pxIiYc"
 msgstr "用户名或密码无效！"
 
 #: components/auth/signin-form.tsx
+msgid "Z5Lu7G"
+msgstr "邮箱未验证！"
+
+#: components/auth/signin-form.tsx
 msgid "zR1TB7"
 msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
 

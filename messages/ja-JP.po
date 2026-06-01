@@ -361,6 +361,10 @@ msgid "pxIiYc"
 msgstr "ユーザー名またはパスワードが無効です！"
 
 #: components/auth/signin-form.tsx
+msgid "Z5Lu7G"
+msgstr "メールアドレスが未確認です！"
+
+#: components/auth/signin-form.tsx
 msgid "zR1TB7"
 msgstr "レート制限を超えました！{seconds}秒後に再試行してください。"
 

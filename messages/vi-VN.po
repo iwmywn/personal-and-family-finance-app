@@ -361,6 +361,10 @@ msgid "pxIiYc"
 msgstr "Tên đăng nhập hoặc mật khẩu không hợp lệ!"
 
 #: components/auth/signin-form.tsx
+msgid "Z5Lu7G"
+msgstr "Email chưa được xác minh!"
+
+#: components/auth/signin-form.tsx
 msgid "zR1TB7"
 msgstr "Quá giới hạn tần suất yêu cầu! Vui lòng thử lại sau {seconds} giây."
 

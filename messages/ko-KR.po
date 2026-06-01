@@ -361,6 +361,10 @@ msgid "pxIiYc"
 msgstr "잘못된 사용자 이름 또는 비밀번호입니다!"
 
 #: components/auth/signin-form.tsx
+msgid "Z5Lu7G"
+msgstr "이메일이 인증되지 않았습니다!"
+
+#: components/auth/signin-form.tsx
 msgid "zR1TB7"
 msgstr "요청 제한을 초과했습니다! {seconds}초 후에 다시 시도해주세요."
 

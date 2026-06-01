@@ -361,6 +361,10 @@ msgid "pxIiYc"
 msgstr "Invalid username or password!"
 
 #: components/auth/signin-form.tsx
+msgid "Z5Lu7G"
+msgstr "Email not verified!"
+
+#: components/auth/signin-form.tsx
 msgid "zR1TB7"
 msgstr "Rate limit exceeded! Retry after {seconds} seconds."
 

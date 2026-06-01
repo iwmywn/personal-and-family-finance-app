@@ -67,6 +67,8 @@ export function SignInForm() {
               )
             else if (ctx.error.code === "INVALID_USERNAME_OR_PASSWORD")
               toast.error(t("Invalid username or password!"))
+            else if (ctx.error.code === "EMAIL_NOT_VERIFIED")
+              toast.error(t("Email not verified!"))
             else if (ctx.response.status === 429)
               toast.error(
                 t("Rate limit exceeded! Retry after {seconds} seconds.", {
