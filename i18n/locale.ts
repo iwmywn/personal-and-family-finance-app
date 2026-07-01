@@ -3,7 +3,7 @@
 import { cache } from "react"
 import { cookies, headers } from "next/headers"
 
-import { DEFAULT_LOCALE } from "@/i18n/config"
+import { DEFAULT_LOCALE, LOCALES } from "@/i18n/config"
 import type { AppLocale } from "@/i18n/config"
 import { auth } from "@/lib/auth"
 
@@ -16,7 +16,8 @@ export const getUserLocale = cache(async (): Promise<AppLocale> => {
   if (session?.user.locale) return session.user.locale as AppLocale
 
   const cookieLocale = (await cookies()).get(COOKIE_NAME)?.value
-  if (cookieLocale) return cookieLocale as AppLocale
+  if (cookieLocale && LOCALES.includes(cookieLocale as AppLocale))
+    return cookieLocale as AppLocale
 
   return DEFAULT_LOCALE
 })
