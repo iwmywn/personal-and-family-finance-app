@@ -257,8 +257,12 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
     await client.twoFactor.disable({
       password: values.password,
       fetchOptions: {
-        onError: () => {
-          toast.error(t("Failed to disable 2FA! Please try again later."))
+        onError: (ctx) => {
+          if (ctx.error.code === "INVALID_PASSWORD") {
+            toast.error(t("Invalid password."))
+          } else {
+            toast.error(t("Failed to disable 2FA! Please try again later."))
+          }
         },
         onSuccess: () => {
           router.refresh()
