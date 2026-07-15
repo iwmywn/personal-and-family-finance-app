@@ -37,7 +37,7 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
     ]
     const rows = filteredTransactions.map((ft) => {
       const date = `"${formatDate(ft.date)}"`
-      const type = ft.type === "income" ? t("Income") : t("Expense")
+      const type = ft.type === "inflow" ? t("Inflow") : t("Outflow")
       const amount = ft.amount.toString()
       const description = ft.description.replace(/"/g, '""')
       return [

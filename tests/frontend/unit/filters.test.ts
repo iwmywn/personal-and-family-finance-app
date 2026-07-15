@@ -94,11 +94,11 @@ describe("Filters", () => {
 
     it("should filter by transaction type", () => {
       const result = filterTransactions(mockTransactions, {
-        filterType: "income",
+        filterType: "inflow",
       })
 
       expect(result).toHaveLength(3)
-      expect(result.every((t) => t.type === "income")).toBe(true)
+      expect(result.every((t) => t.type === "inflow")).toBe(true)
     })
 
     it("should filter by category key", () => {
@@ -156,7 +156,7 @@ describe("Filters", () => {
     it("should combine multiple filters", () => {
       const result = filterTransactions(mockTransactions, {
         searchTerm: "freelance",
-        filterType: "income",
+        filterType: "inflow",
         filterYear: "2024",
       })
 
@@ -239,17 +239,17 @@ describe("Filters", () => {
 
     it("should filter by type", () => {
       const result = filterCustomCategories(mockCustomCategories, {
-        filterType: "expense",
+        filterType: "outflow",
       })
 
       expect(result).toHaveLength(2)
-      expect(result.every((c) => c.type === "expense")).toBe(true)
+      expect(result.every((c) => c.type === "outflow")).toBe(true)
     })
 
     it("should combine search and type filters", () => {
       const result = filterCustomCategories(mockCustomCategories, {
         searchTerm: "restaurant",
-        filterType: "expense",
+        filterType: "outflow",
       })
 
       expect(result).toHaveLength(1)
@@ -721,11 +721,11 @@ describe("Filters", () => {
 
     it("should filter by transaction type", () => {
       const result = filterRecurringTransactions(mockRecurringTransactions, {
-        filterType: "income",
+        filterType: "inflow",
       })
 
       expect(result).toHaveLength(2)
-      expect(result.every((r) => r.type === "income")).toBe(true)
+      expect(result.every((r) => r.type === "inflow")).toBe(true)
       expect(result.map((r) => r._id)).toEqual(["1", "5"])
     })
 
@@ -786,7 +786,7 @@ describe("Filters", () => {
     it("should combine multiple filters", () => {
       const result = filterRecurringTransactions(mockRecurringTransactions, {
         searchTerm: "monthly",
-        filterType: "income",
+        filterType: "inflow",
         filterStatus: "active",
       })
 

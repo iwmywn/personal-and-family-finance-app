@@ -24,7 +24,7 @@ export function TransactionSummary() {
 
   const currentMonthTransactions = getCurrentMonthTransactions(transactions)
 
-  const { totalIncome, totalExpense, balance } = calculateSummaryStats(
+  const { totalInflow, totalOutflow, balance } = calculateSummaryStats(
     currentMonthTransactions
   )
 
@@ -32,17 +32,17 @@ export function TransactionSummary() {
     <div className="grid gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("Monthly Income")}</CardTitle>
+          <CardTitle>{t("Monthly Inflow")}</CardTitle>
           <ArrowUpIcon className="size-4 text-green-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl wrap-anywhere text-green-600">
-            {formatCurrency(totalIncome)}
+            {formatCurrency(totalInflow)}
           </div>
           <div className="text-muted-foreground text-sm">
             {
               currentMonthTransactions.filter(
-                (tHomeFE) => tHomeFE.type === "income"
+                (tHomeFE) => tHomeFE.type === "inflow"
               ).length
             }{" "}
             {t("transactions")}
@@ -52,17 +52,17 @@ export function TransactionSummary() {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("Monthly Expense")}</CardTitle>
+          <CardTitle>{t("Monthly Outflow")}</CardTitle>
           <ArrowDownIcon className="size-4 text-red-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl wrap-anywhere text-red-600">
-            {formatCurrency(totalExpense)}
+            {formatCurrency(totalOutflow)}
           </div>
           <div className="text-muted-foreground text-sm">
             {
               currentMonthTransactions.filter(
-                (tHomeFE) => tHomeFE.type === "expense"
+                (tHomeFE) => tHomeFE.type === "outflow"
               ).length
             }{" "}
             {t("transactions")}
@@ -97,7 +97,7 @@ export function TransactionSummary() {
               : toDecimal(balance).lessThan(0)
                 ? t("Negative")
                 : t("Balanced")}{" "}
-            {t("compared to income")}
+            {t("compared to inflow")}
           </div>
         </CardContent>
       </Card>

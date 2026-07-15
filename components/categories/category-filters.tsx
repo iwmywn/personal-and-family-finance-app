@@ -27,7 +27,7 @@ import { filterCustomCategories } from "@/lib/filters"
 export function CategoryFilters() {
   const { customCategories } = useCategories()
   const [searchTerm, setSearchTerm] = useState<string>("")
-  const [filterType, setFilterType] = useState<"all" | "income" | "expense">(
+  const [filterType, setFilterType] = useState<"all" | "inflow" | "outflow">(
     "all"
   )
   const t = useExtracted()
@@ -77,7 +77,7 @@ export function CategoryFilters() {
             </InputGroup>
             <Select
               value={filterType}
-              onValueChange={(value: "all" | "income" | "expense") =>
+              onValueChange={(value: "all" | "inflow" | "outflow") =>
                 setFilterType(value)
               }
             >
@@ -89,8 +89,8 @@ export function CategoryFilters() {
               <SelectContent>
                 <SelectItem value="all">{t("All Types")}</SelectItem>
                 <SelectSeparator />
-                <SelectItem value="income">{t("Income")}</SelectItem>
-                <SelectItem value="expense">{t("Expense")}</SelectItem>
+                <SelectItem value="inflow">{t("Inflow")}</SelectItem>
+                <SelectItem value="outflow">{t("Outflow")}</SelectItem>
               </SelectContent>
             </Select>
             {hasActiveFilters && (

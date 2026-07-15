@@ -28,7 +28,7 @@ interface QuickStats {
   currentMonthCount: number
   highestTransaction: Transaction | null
   lowestTransaction: Transaction | null
-  avgExpense: string | null
+  avgOutflow: string | null
   savingsRate: string | null
   popularCategory: CategoryKeyType[]
 }
@@ -43,7 +43,7 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
       currentMonthCount: 0,
       highestTransaction: null,
       lowestTransaction: null,
-      avgExpense: null,
+      avgOutflow: null,
       savingsRate: null,
       popularCategory: [],
     }
@@ -51,9 +51,9 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
 
   let highestTransaction = currentMonthTransactions[0]
   let lowestTransaction = currentMonthTransactions[0]
-  let totalIncome = new Decimal(0)
-  let totalExpense = new Decimal(0)
-  let expenseCount = 0
+  let totalInflow = new Decimal(0)
+  let totalOutflow = new Decimal(0)
+  let outflowCount = 0
   const categorySums: Record<string, Decimal> = {}
 
   for (const t of currentMonthTransactions) {
@@ -66,11 +66,11 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
       lowestTransaction = t
     }
 
-    if (t.type === "income") {
-      totalIncome = totalIncome.plus(amount)
-    } else if (t.type === "expense") {
-      totalExpense = totalExpense.plus(amount)
-      expenseCount++
+    if (t.type === "inflow") {
+      totalInflow = totalInflow.plus(amount)
+    } else if (t.type === "outflow") {
+      totalOutflow = totalOutflow.plus(amount)
+      outflowCount++
     }
 
     categorySums[t.categoryKey] = (
@@ -78,13 +78,13 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
     ).plus(amount)
   }
 
-  const avgExpense =
-    expenseCount > 0 ? totalExpense.dividedBy(expenseCount).toString() : null
+  const avgOutflow =
+    outflowCount > 0 ? totalOutflow.dividedBy(outflowCount).toString() : null
 
-  const savingsRate = totalIncome.greaterThan(0)
-    ? totalIncome
-        .minus(totalExpense)
-        .dividedBy(totalIncome)
+  const savingsRate = totalInflow.greaterThan(0)
+    ? totalInflow
+        .minus(totalOutflow)
+        .dividedBy(totalInflow)
         .mul(100)
         .toDecimalPlaces(1)
         .toFixed(0)
@@ -103,47 +103,47 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
     currentMonthCount,
     highestTransaction,
     lowestTransaction,
-    avgExpense,
+    avgOutflow,
     savingsRate,
     popularCategory,
   }
 }
 
 interface SummaryStats {
-  totalIncome: string
-  totalExpense: string
+  totalInflow: string
+  totalOutflow: string
   balance: string
   transactionCount: number
-  incomeCount: number
-  expenseCount: number
+  inflowCount: number
+  outflowCount: number
 }
 
 export function calculateSummaryStats(
   transactions: Transaction[]
 ): SummaryStats {
-  const incomeTransactions = transactions.filter((t) => t.type === "income")
-  const expenseTransactions = transactions.filter((t) => t.type === "expense")
+  const inflowTransactions = transactions.filter((t) => t.type === "inflow")
+  const outflowTransactions = transactions.filter((t) => t.type === "outflow")
 
-  const totalIncome = incomeTransactions.reduce(
+  const totalInflow = inflowTransactions.reduce(
     (sum, t) => sum.plus(new Decimal(t.amount)),
     new Decimal(0)
   )
-  const totalExpense = expenseTransactions.reduce(
+  const totalOutflow = outflowTransactions.reduce(
     (sum, t) => sum.plus(new Decimal(t.amount)),
     new Decimal(0)
   )
-  const balance = totalIncome.minus(totalExpense)
+  const balance = totalInflow.minus(totalOutflow)
   const transactionCount = transactions.length
-  const incomeCount = incomeTransactions.length
-  const expenseCount = expenseTransactions.length
+  const inflowCount = inflowTransactions.length
+  const outflowCount = outflowTransactions.length
 
   return {
-    totalIncome: totalIncome.toString(),
-    totalExpense: totalExpense.toString(),
+    totalInflow: totalInflow.toString(),
+    totalOutflow: totalOutflow.toString(),
     balance: balance.toString(),
     transactionCount,
-    incomeCount,
-    expenseCount,
+    inflowCount,
+    outflowCount,
   }
 }
 
@@ -151,7 +151,7 @@ interface CategoryStats {
   categoryKey: string
   count: number
   total: string
-  type: "income" | "expense"
+  type: "inflow" | "outflow"
 }
 
 export function calculateCategoriesStats(
@@ -181,7 +181,7 @@ export function calculateCategoriesStats(
 }
 
 interface StatBaseConfig<TBase, Transaction> {
-  type: "income" | "expense"
+  type: "inflow" | "outflow"
   getBaseTargetAmount: (item: TBase) => string
   getBaseCurrency: (item: TBase) => AppCurrency
   getBaseCategoryKey: (item: TBase) => string
@@ -270,7 +270,7 @@ export function calculateBudgetsStats(
 ): BudgetWithStats[] {
   return budgets.map((budget) => {
     const stats = calculateStatsBase(budget, transactions, {
-      type: "expense",
+      type: "outflow",
       getBaseTargetAmount: (b) => b.allocatedAmount,
       getBaseCurrency: (b) => b.currency,
       getBaseCategoryKey: (b) => b.categoryKey,
@@ -309,7 +309,7 @@ export function calculateGoalsStats(
 ): GoalWithStats[] {
   return goals.map((goal) => {
     const stats = calculateStatsBase(goal, transactions, {
-      type: "income",
+      type: "inflow",
       getBaseTargetAmount: (g) => g.targetAmount,
       getBaseCurrency: (g) => g.currency,
       getBaseCategoryKey: (g) => g.categoryKey,

@@ -83,7 +83,7 @@ describe("Categories", async () => {
       mockAuthenticatedUser()
 
       const result = await createCustomCategory({
-        type: "expense",
+        type: "outflow",
         label: "Dupe Key",
         description: "desc",
       })
@@ -119,9 +119,9 @@ describe("Categories", async () => {
         userId: mockUser._id,
       })
 
-      expect(addedCategory?.type).toBe("income")
+      expect(addedCategory?.type).toBe("inflow")
       expect(addedCategory?.label).toBe("Salary")
-      expect(addedCategory?.description).toBe("Monthly job income")
+      expect(addedCategory?.description).toBe("Monthly job inflow")
       expect(result.success).toBe("Category has been added.")
       expect(result.error).toBeUndefined()
     })
@@ -221,7 +221,7 @@ describe("Categories", async () => {
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         {
-          type: "income",
+          type: "inflow",
           label: "Hacked Label",
           description: "Hacked description",
         }
@@ -246,25 +246,25 @@ describe("Categories", async () => {
           _id: new ObjectId("68f795d4bdcc3c9a30717977"),
           userId: new ObjectId("690d2cdc200d6a719f9a438e"),
           categoryKey: "abcdef34",
-          type: "expense",
+          type: "outflow",
           label: "Updated Label",
         }),
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("6900f0887465621be45e8d30"),
           categoryKey: mockCustomCategory.categoryKey,
-          type: "income",
+          type: "inflow",
         }),
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("6900f0af8a1c0865ef9429c3"),
           categoryKey: mockCustomCategory.categoryKey,
-          type: "income",
+          type: "inflow",
         }),
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("6900f0b298e321c264864402"),
-          type: "income",
+          type: "inflow",
         }),
       ])
       mockAuthenticatedUser()
@@ -272,7 +272,7 @@ describe("Categories", async () => {
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         {
-          type: "expense",
+          type: "outflow",
           label: "Updated Label",
           description: "Updated description",
         }
@@ -297,12 +297,12 @@ describe("Categories", async () => {
         ])
 
       expect(updatedCategory?.categoryKey).toBe("abcdef12")
-      expect(updatedCategory?.type).toBe("expense")
+      expect(updatedCategory?.type).toBe("outflow")
       expect(updatedCategory?.label).toBe("Updated Label")
       expect(updatedCategory?.description).toBe("Updated description")
       expect(relatedTransactions).toHaveLength(2)
-      expect(relatedTransactions.every((t) => t.type === "expense")).toBe(true)
-      expect(unrelatedTransaction?.type).toBe("income")
+      expect(relatedTransactions.every((t) => t.type === "outflow")).toBe(true)
+      expect(unrelatedTransaction?.type).toBe("inflow")
       expect(result.success).toBe("Category has been updated.")
       expect(result.error).toBeUndefined()
     })

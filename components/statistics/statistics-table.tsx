@@ -133,22 +133,22 @@ export function StatisticsTable({
                     <TableCell>
                       <Badge
                         className={
-                          stat.type === "income" ? "badge-green" : "badge-red"
+                          stat.type === "inflow" ? "badge-green" : "badge-red"
                         }
                       >
-                        {stat.type === "income" ? t("Income") : t("Expense")}
+                        {stat.type === "inflow" ? t("Inflow") : t("Outflow")}
                       </Badge>
                     </TableCell>
                     <TableCell>{stat.count}</TableCell>
                     <TableCell className="font-medium">
                       <span
                         className={
-                          stat.type === "income"
+                          stat.type === "inflow"
                             ? "text-green-600"
                             : "text-red-600"
                         }
                       >
-                        {stat.type === "income" ? "+" : "-"}
+                        {stat.type === "inflow" ? "+" : "-"}
                         {formatCurrency(stat.total)}
                       </span>
                     </TableCell>

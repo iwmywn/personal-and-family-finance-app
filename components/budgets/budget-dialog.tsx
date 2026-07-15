@@ -136,7 +136,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CategoryFormSelect control={form.control} type="expense" />
+            <CategoryFormSelect control={form.control} type="outflow" />
 
             <FormField
               control={form.control}

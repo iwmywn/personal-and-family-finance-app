@@ -1,15 +1,16 @@
-export const CATEGORIES = ["income", "expense"] as const
+export const CATEGORIES = ["inflow", "outflow"] as const
 export type CategoryType = (typeof CATEGORIES)[number]
 
-const INCOME_CATEGORIES_KEY = [
+const INFLOW_CATEGORIES_KEY = [
   "salary_bonus",
   "business_freelance",
   "investment_passive",
   "gift_support",
-  "other_income",
+  "debt_collection",
+  "other_inflow",
 ] as const
 
-const EXPENSE_CATEGORIES_KEY = [
+const OUTFLOW_CATEGORIES_KEY = [
   "food_beverage",
   "transportation",
   "personal_care",
@@ -22,12 +23,12 @@ const EXPENSE_CATEGORIES_KEY = [
   "social_gifts",
   "savings_investment",
   "debt_payment",
-  "other_expense",
+  "other_outflow",
 ] as const
 
 const _ALL_CATEGORIES_KEY = [
-  ...INCOME_CATEGORIES_KEY,
-  ...EXPENSE_CATEGORIES_KEY,
+  ...INFLOW_CATEGORIES_KEY,
+  ...OUTFLOW_CATEGORIES_KEY,
 ] as const
 export type AllCategoriesKeyType = (typeof _ALL_CATEGORIES_KEY)[number]
 
@@ -41,7 +42,7 @@ export type CategoryConfigBaseType = {
 }
 
 export function getCategoryType(key: AllCategoriesKeyType) {
-  return (INCOME_CATEGORIES_KEY as readonly string[]).includes(key)
-    ? "income"
-    : "expense"
+  return (INFLOW_CATEGORIES_KEY as readonly string[]).includes(key)
+    ? "inflow"
+    : "outflow"
 }

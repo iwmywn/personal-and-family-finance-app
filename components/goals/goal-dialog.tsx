@@ -137,7 +137,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <CategoryFormSelect control={form.control} type="income" />
+            <CategoryFormSelect control={form.control} type="inflow" />
 
             <FormField
               control={form.control}

@@ -73,7 +73,7 @@ export function TransactionDialog({
   open,
   setOpen,
 }: TransactionDialogProps) {
-  const [type, setType] = useState<CategoryType>(transaction?.type || "income")
+  const [type, setType] = useState<CategoryType>(transaction?.type || "inflow")
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
   const { createTransactionSchema } = useSchemas()
@@ -82,7 +82,7 @@ export function TransactionDialog({
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(createTransactionSchema()),
     defaultValues: {
-      type: transaction?.type || "income",
+      type: transaction?.type || "inflow",
       currency: transaction?.currency ?? (user.currency as AppCurrency),
       amount: transaction?.amount ?? "",
       description: transaction?.description || "",
@@ -148,7 +148,7 @@ export function TransactionDialog({
             {transaction
               ? t("Update transaction information.")
               : t(
-                  "Add your income or expense to track your personal finances."
+                  "Add your inflow or outflow to track your personal finances."
                 )}
           </DialogDescription>
         </DialogHeader>
@@ -160,22 +160,22 @@ export function TransactionDialog({
               onValueChange={(value) => handleTypeChange(value as CategoryType)}
             >
               <TabsList className="w-full">
-                <TabsTrigger value="income">{t("Income")}</TabsTrigger>
-                <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>
+                <TabsTrigger value="inflow">{t("Inflow")}</TabsTrigger>
+                <TabsTrigger value="outflow">{t("Outflow")}</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="income" className="space-y-4">
+              <TabsContent value="inflow" className="space-y-4">
                 <CategoryFormSelect
                   control={form.control}
-                  type="income"
+                  type="inflow"
                   showDescription
                 />
               </TabsContent>
 
-              <TabsContent value="expense" className="space-y-4">
+              <TabsContent value="outflow" className="space-y-4">
                 <CategoryFormSelect
                   control={form.control}
-                  type="expense"
+                  type="outflow"
                   showDescription
                 />
               </TabsContent>

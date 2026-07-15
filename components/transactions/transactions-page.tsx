@@ -23,7 +23,9 @@ export default function TransactionsPage() {
           <div>
             <div className="title">{t("Transactions")}</div>
             <div className="description">
-              {t("Manage income and expenses to track your personal finances.")}
+              {t(
+                "Manage cash inflows and outflows to track your personal finances."
+              )}
             </div>
           </div>
           <div className="flex gap-2">

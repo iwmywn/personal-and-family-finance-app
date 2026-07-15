@@ -87,14 +87,14 @@ export function CategoriesTable({ filteredCategories }: CategoriesTableProps) {
                       <TableCell>
                         <Badge
                           className={
-                            category.type === "income"
+                            category.type === "inflow"
                               ? "badge-green"
                               : "badge-red"
                           }
                         >
-                          {category.type === "income"
-                            ? t("Income")
-                            : t("Expense")}
+                          {category.type === "inflow"
+                            ? t("Inflow")
+                            : t("Outflow")}
                         </Badge>
                       </TableCell>
                       <TableCell>

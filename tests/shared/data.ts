@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb"
 
 import { toDecimal128 } from "@/actions/utils"
 import { normalizeToUTCMidnight } from "@/app/api/(cronjobs)/exchange-rates/utils"
+import type { CategoryType } from "@/lib/category"
 import type { AppCurrency } from "@/lib/currency"
 import type {
   Budget,
@@ -52,7 +53,7 @@ export const mockAnotherUser: DBUser = {
 export const mockTransaction: DBTransaction = {
   _id: new ObjectId("68f73357357d93dcbaae8106"),
   userId: mockUser._id,
-  type: "expense" as "income" | "expense",
+  type: "outflow" as CategoryType,
   categoryKey: "food_beverage",
   amount: toDecimal128("50000"),
   currency: "VND",
@@ -64,7 +65,7 @@ export const mockCustomCategory: DBCategory = {
   _id: new ObjectId("68f732914e63e5aa249cc173"),
   userId: mockUser._id,
   categoryKey: "abcdef12",
-  type: "expense" as "income" | "expense",
+  type: "outflow" as CategoryType,
   label: "Entertainment",
   description: "Movies and games",
 }
@@ -93,7 +94,7 @@ export const mockGoal: DBGoal = {
 export const mockRecurringTransaction: DBRecurringTransaction = {
   _id: new ObjectId("68f896e5cda4897217a05a3e"),
   userId: mockUser._id,
-  type: "income" as "income" | "expense",
+  type: "inflow" as CategoryType,
   categoryKey: "salary_bonus",
   amount: toDecimal128("5000000"),
   currency: "VND",
@@ -140,7 +141,7 @@ export const mockExchangeRates: DBExchangeRate[] = [
 ]
 
 export const mockValidTransactionValues = {
-  type: "income" as "income" | "expense",
+  type: "inflow" as CategoryType,
   categoryKey: "business_freelance",
   currency: "VND" as AppCurrency,
   amount: "2500000",
@@ -150,9 +151,9 @@ export const mockValidTransactionValues = {
 
 export const mockValidCategoryValues = {
   // categoryKey: auto generated
-  type: "income" as "income" | "expense",
+  type: "inflow" as CategoryType,
   label: "Salary",
-  description: "Monthly job income",
+  description: "Monthly job inflow",
 }
 
 export const mockValidBudgetValues = {
@@ -173,7 +174,7 @@ export const mockValidGoalValues = {
 }
 
 export const mockValidRecurringTransactionValues = {
-  type: "income" as "income" | "expense",
+  type: "inflow" as CategoryType,
   categoryKey: "business_freelance",
   currency: "VND" as AppCurrency,
   amount: "2500000",
@@ -190,7 +191,7 @@ export const mockTransactions: Transaction[] = [
   {
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
-    type: "income",
+    type: "inflow",
     amount: "1000",
     currency: "VND",
     description: "Salary",
@@ -200,7 +201,7 @@ export const mockTransactions: Transaction[] = [
   {
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     amount: "200",
     currency: "VND",
     description: "Groceries",
@@ -210,7 +211,7 @@ export const mockTransactions: Transaction[] = [
   {
     _id: "3",
     userId: "68f712e4cda4897217a05a1c",
-    type: "income",
+    type: "inflow",
     amount: "500",
     currency: "VND",
     description: "Freelance",
@@ -220,7 +221,7 @@ export const mockTransactions: Transaction[] = [
   {
     _id: "4",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     amount: "100",
     currency: "VND",
     description: "Transport",
@@ -230,7 +231,7 @@ export const mockTransactions: Transaction[] = [
   {
     _id: "5",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     amount: "300",
     currency: "VND",
     description: "Rent",
@@ -240,37 +241,37 @@ export const mockTransactions: Transaction[] = [
   {
     _id: "6",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense" as const,
+    type: "outflow" as const,
     amount: "500000",
     currency: "VND",
-    description: "Food expense",
+    description: "Food outflow",
     categoryKey: "food_beverage",
     date: new Date("2024-02-15"),
   },
   {
     _id: "7",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense" as const,
+    type: "outflow" as const,
     amount: "400000",
     currency: "VND",
-    description: "Transport expense",
+    description: "Transport outflow",
     categoryKey: "transportation",
     date: new Date("2024-03-20"),
   },
   {
     _id: "8",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense" as const,
+    type: "outflow" as const,
     amount: "2100000",
     currency: "VND",
-    description: "Housing expense",
+    description: "Housing outflow",
     categoryKey: "housing",
     date: new Date("2024-04-10"),
   },
   {
     _id: "9",
     userId: "68f712e4cda4897217a05a1c",
-    type: "income" as const,
+    type: "inflow" as const,
     amount: "1000000",
     currency: "VND",
     description: "Salary",
@@ -284,7 +285,7 @@ export const mockCustomCategories: Category[] = [
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "abcdef12",
-    type: "income",
+    type: "inflow",
     label: "Freelance Work",
     description: "Custom freelance category",
   },
@@ -292,7 +293,7 @@ export const mockCustomCategories: Category[] = [
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "abcdef13",
-    type: "expense",
+    type: "outflow",
     label: "Restaurant",
     description: "Custom food category",
   },
@@ -300,7 +301,7 @@ export const mockCustomCategories: Category[] = [
     _id: "3",
     userId: "68f712e4cda4897217a05a1c",
     categoryKey: "abcdef14",
-    type: "expense",
+    type: "outflow",
     label: "Taxi",
     description: "Custom transport category",
   },
@@ -426,7 +427,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
-    type: "income",
+    type: "inflow",
     categoryKey: "salary_bonus",
     amount: "5000000",
     currency: "VND",
@@ -441,7 +442,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     categoryKey: "food_beverage",
     amount: "500000",
     currency: "VND",
@@ -456,7 +457,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "3",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     categoryKey: "transportation",
     amount: "200000",
     currency: "VND",
@@ -469,7 +470,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "4",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     categoryKey: "housing",
     amount: "3000000",
     currency: "VND",
@@ -484,7 +485,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "5",
     userId: "68f712e4cda4897217a05a1c",
-    type: "income",
+    type: "inflow",
     categoryKey: "business_freelance",
     amount: "2000000",
     currency: "VND",
@@ -499,7 +500,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "6",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     categoryKey: "food_beverage",
     amount: "100000",
     currency: "VND",
@@ -514,7 +515,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "7",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     categoryKey: "transportation",
     amount: "50000",
     currency: "VND",
@@ -529,7 +530,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
   {
     _id: "8",
     userId: "68f712e4cda4897217a05a1c",
-    type: "expense",
+    type: "outflow",
     categoryKey: "housing",
     amount: "1000000",
     currency: "VND",

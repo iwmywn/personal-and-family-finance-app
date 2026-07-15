@@ -637,8 +637,8 @@ msgid "jm_spn"
 msgstr "Reset"
 
 #: components/budgets/budgets-page.tsx
-msgid "UxaXqH"
-msgstr "Set and manage budgets for your expense categories."
+msgid "3fGt__"
+msgstr "Set and manage budgets for your outflow categories."
 
 #: components/budgets/budgets-table.tsx
 msgid "CgOoDa"
@@ -758,8 +758,8 @@ msgstr "Type"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "gJkHZk"
-msgstr "Income"
+msgid "PqYX1W"
+msgstr "Inflow"
 
 #: components/categories/categories-table.tsx
 #: components/categories/category-dialog.tsx
@@ -772,8 +772,8 @@ msgstr "Income"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "URe-qA"
-msgstr "Expense"
+msgid "KKrCi6"
+msgstr "Outflow"
 
 #: components/categories/category-dialog.tsx
 msgid "THThZY"
@@ -922,8 +922,8 @@ msgid "a3-VDd"
 msgstr "Total Transactions"
 
 #: components/home/quick-stats.tsx
-msgid "gaBuAW"
-msgstr "Total number of transactions (both income and expenses) you have made."
+msgid "bcTyuf"
+msgstr "Total number of inflow and outflow transactions."
 
 #: components/home/quick-stats.tsx
 msgid "Prh2Lb"
@@ -934,32 +934,32 @@ msgid "UG5qoS"
 msgstr "No data"
 
 #: components/home/quick-stats.tsx
-msgid "5-Kbgx"
-msgstr "Transaction with the highest value in the month (can be income or expense)."
+msgid "rDSqY8"
+msgstr "Transaction with the highest value in the month (can be inflow or outflow)."
 
 #: components/home/quick-stats.tsx
 msgid "9AS2Qs"
 msgstr "Lowest Transaction"
 
 #: components/home/quick-stats.tsx
-msgid "gkpkvE"
-msgstr "Transaction with the lowest value in the month (can be income or expense)."
+msgid "QHnvj4"
+msgstr "Transaction with the lowest value in the month (can be inflow or outflow)."
 
 #: components/home/quick-stats.tsx
-msgid "5pB6eY"
-msgstr "Average Expense"
+msgid "qfQAiL"
+msgstr "Average Outflow"
 
 #: components/home/quick-stats.tsx
-msgid "VP5MQP"
-msgstr "Average amount per expense (Total Expense / Number of expense transactions)."
+msgid "Xpsn__"
+msgstr "Average amount per outflow (Total Outflow / Number of outflow transactions)."
 
 #: components/home/quick-stats.tsx
 msgid "AUkgKt"
 msgstr "Savings Rate"
 
 #: components/home/quick-stats.tsx
-msgid "Q0mewJ"
-msgstr "The percentage of money you save compared to income ((Income - Expense) / Income × 100%)."
+msgid "nmcGD4"
+msgstr "The percentage of money you save compared to inflow ((Inflow - Outflow) / Inflow × 100%)."
 
 #: components/home/quick-stats.tsx
 msgid "O8QihK"
@@ -987,8 +987,8 @@ msgid "GMBC7V"
 msgstr "You haven't created any transactions yet."
 
 #: components/home/transaction-summary.tsx
-msgid "XUYy4C"
-msgstr "Monthly Income"
+msgid "Vk-r3s"
+msgstr "Monthly Inflow"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
@@ -997,8 +997,8 @@ msgid "5-nDxs"
 msgstr "transactions"
 
 #: components/home/transaction-summary.tsx
-msgid "FR0il4"
-msgstr "Monthly Expense"
+msgid "0PFSLN"
+msgstr "Monthly Outflow"
 
 #: components/home/transaction-summary.tsx
 msgid "ZLrViM"
@@ -1021,8 +1021,8 @@ msgstr "Balanced"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "qTQZsz"
-msgstr "compared to income"
+msgid "sfXkQG"
+msgstr "compared to inflow"
 
 #: components/layout/page-data-provider.tsx
 msgid "EjH-J3"
@@ -1480,12 +1480,12 @@ msgid "wqp6W5"
 msgstr "View your financial statistics."
 
 #: components/statistics/statistics-summary.tsx
-msgid "q2bcKc"
-msgstr "Total Income"
+msgid "2oz8FN"
+msgstr "Total Inflow"
 
 #: components/statistics/statistics-summary.tsx
-msgid "F3K__T"
-msgstr "Total Expense"
+msgid "VfJR8A"
+msgstr "Total Outflow"
 
 #: components/statistics/statistics-summary.tsx
 msgid "cX8_D7"
@@ -1547,8 +1547,8 @@ msgid "ET95oG"
 msgstr "Update transaction information."
 
 #: components/transactions/transaction-dialog.tsx
-msgid "m3AQtz"
-msgstr "Add your income or expense to track your personal finances."
+msgid "GAJmZB"
+msgstr "Add your inflow or outflow to track your personal finances."
 
 #: components/transactions/transaction-dialog.tsx
 msgid "9WG2aE"
@@ -1559,8 +1559,8 @@ msgid "gD5509"
 msgstr "Search transactions..."
 
 #: components/transactions/transactions-page.tsx
-msgid "PRC7nC"
-msgstr "Manage income and expenses to track your personal finances."
+msgid "MBywHq"
+msgstr "Manage cash inflows and outflows to track your personal finances."
 
 #: hooks/use-category.ts
 msgid "7MY_4L"
@@ -1595,8 +1595,16 @@ msgid "QRzRc0"
 msgstr "Cash gifts, family support, celebration money, etc."
 
 #: hooks/use-category.ts
-msgid "3M2DQp"
-msgstr "Other Income"
+msgid "qVpKKY"
+msgstr "Debt Collection"
+
+#: hooks/use-category.ts
+msgid "H_wany"
+msgstr "Borrowing money, collecting debt, loans received, etc."
+
+#: hooks/use-category.ts
+msgid "eYGhIv"
+msgstr "Other Inflows"
 
 #: hooks/use-category.ts
 msgid "-vWFfX"
@@ -1699,12 +1707,12 @@ msgid "yJZOmD"
 msgstr "Bank loan payments, credit cards, personal debts, etc."
 
 #: hooks/use-category.ts
-msgid "flIwoN"
-msgstr "Other Expenses"
+msgid "8z_inE"
+msgstr "Other Outflows"
 
 #: hooks/use-category.ts
-msgid "r3fFt1"
-msgstr "Unexpected repairs, fines, losses, unidentified expenses, etc."
+msgid "3A1sDf"
+msgstr "Unexpected repairs, fines, losses, unidentified outflows, etc."
 
 #: hooks/use-months.ts
 msgid "t8QlFE"

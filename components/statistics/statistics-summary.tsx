@@ -25,42 +25,42 @@ export function StatisticsSummary({
   const t = useExtracted()
   const formatCurrency = useFormatCurrency()
   const {
-    totalIncome,
-    totalExpense,
+    totalInflow,
+    totalOutflow,
     balance,
     transactionCount,
-    incomeCount,
-    expenseCount,
+    inflowCount,
+    outflowCount,
   } = calculateSummaryStats(filteredTransactions)
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("Total Income")}</CardTitle>
+          <CardTitle>{t("Total Inflow")}</CardTitle>
           <ArrowUpIcon className="size-4 text-green-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl wrap-anywhere text-green-600">
-            {formatCurrency(totalIncome)}
+            {formatCurrency(totalInflow)}
           </div>
           <div className="text-muted-foreground text-sm">
-            {incomeCount} {t("transactions")}
+            {inflowCount} {t("transactions")}
           </div>
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>{t("Total Expense")}</CardTitle>
+          <CardTitle>{t("Total Outflow")}</CardTitle>
           <ArrowDownIcon className="size-4 text-red-600" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl wrap-anywhere text-red-600">
-            {formatCurrency(totalExpense)}
+            {formatCurrency(totalOutflow)}
           </div>
           <div className="text-muted-foreground text-sm">
-            {expenseCount} {t("transactions")}
+            {outflowCount} {t("transactions")}
           </div>
         </CardContent>
       </Card>
@@ -92,7 +92,7 @@ export function StatisticsSummary({
               : toDecimal(balance).lessThan(0)
                 ? t("Negative")
                 : t("Balanced")}{" "}
-            {t("compared to income")}
+            {t("compared to inflow")}
           </div>
         </CardContent>
       </Card>

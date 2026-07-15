@@ -102,14 +102,14 @@ export function TransactionsTable({
                       <TableCell>
                         <Badge
                           className={
-                            transaction.type === "income"
+                            transaction.type === "inflow"
                               ? "badge-green"
                               : "badge-red"
                           }
                         >
-                          {transaction.type === "income"
-                            ? t("Income")
-                            : t("Expense")}
+                          {transaction.type === "inflow"
+                            ? t("Inflow")
+                            : t("Outflow")}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -127,12 +127,12 @@ export function TransactionsTable({
                       <TableCell className="min-w-38 wrap-anywhere whitespace-normal">
                         <span
                           className={`font-semibold ${
-                            transaction.type === "income"
+                            transaction.type === "inflow"
                               ? "text-green-600"
                               : "text-red-600"
                           }`}
                         >
-                          {transaction.type === "income" ? "+" : "-"}
+                          {transaction.type === "inflow" ? "+" : "-"}
                           {formatCurrency(transaction.amount)}
                         </span>
                       </TableCell>
