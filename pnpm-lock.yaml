@@ -57,8 +57,8 @@ importers:
         specifier: 19.2.7
         version: 19.2.7
       react-currency-input-field:
-        specifier: 4.0.5
-        version: 4.0.5(react@19.2.7)
+        specifier: 4.0.6
+        version: 4.0.6(react@19.2.7)
       react-day-picker:
         specifier: 9.14.0
         version: 9.14.0(react@19.2.7)
@@ -3840,8 +3840,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  react-currency-input-field@4.0.5:
-    resolution: {integrity: sha512-OnWbs0iw/vpjajDEWzFKNAOXBSuynRjTE6nBfa3mSxZP4QABqCxFiCjLn7FNDR6b4BCTp82MWN08Y+HuS9lRqg==}
+  react-currency-input-field@4.0.6:
+    resolution: {integrity: sha512-TdR5RQnefI4lC47h8Nt3kZJo5cfyoOpEm8Eqoa04TygZn3Bk6AYubJP7QPUQl4YQBeG1WQlaf8BvL1v9IpK5ig==}
     peerDependencies:
       react: ^16.9.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -8084,7 +8084,7 @@ snapshots:
       '@types/react': 19.2.17
       '@types/react-dom': 19.2.3(@types/react@19.2.17)
 
-  react-currency-input-field@4.0.5(react@19.2.7):
+  react-currency-input-field@4.0.6(react@19.2.7):
     dependencies:
       react: 19.2.7
 
