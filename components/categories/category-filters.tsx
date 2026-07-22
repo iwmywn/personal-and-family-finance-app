@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select"
 import { CategoriesTable } from "@/components/categories/categories-table"
 import { useCategories } from "@/context/categories-context"
+import type { CategoryType } from "@/lib/category"
 import { filterCustomCategories } from "@/lib/filters"
 
 export function CategoryFilters() {
@@ -77,7 +78,7 @@ export function CategoryFilters() {
             </InputGroup>
             <Select
               value={filterType}
-              onValueChange={(value: "all" | "inflow" | "outflow") =>
+              onValueChange={(value: "all" | CategoryType) =>
                 setFilterType(value)
               }
             >
