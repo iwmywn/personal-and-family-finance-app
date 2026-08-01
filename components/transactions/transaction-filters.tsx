@@ -94,7 +94,7 @@ export function TransactionFilters({
     "type",
     parseAsString.withDefault("all")
   )
-  const filterType = filterTypeRaw as "all" | "income" | "expense"
+  const filterType = filterTypeRaw as "all" | "inflow" | "outflow"
   const [filterCategoryKey, setFilterCategoryKey] = useQueryState(
     "category",
     parseAsString.withDefault("all")
@@ -345,7 +345,7 @@ export function TransactionFilters({
 
             <Select
               value={filterType}
-              onValueChange={(value: "all" | "income" | "expense") =>
+              onValueChange={(value: "all" | "inflow" | "outflow") =>
                 setFilterType(value)
               }
             >
@@ -358,8 +358,8 @@ export function TransactionFilters({
                 <SelectGroup>
                   <SelectItem value="all">{t("All Types")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="income">{t("Income")}</SelectItem>
-                  <SelectItem value="expense">{t("Expense")}</SelectItem>
+                  <SelectItem value="inflow">{t("Inflow")}</SelectItem>
+                  <SelectItem value="outflow">{t("Outflow")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -377,15 +377,15 @@ export function TransactionFilters({
                 <SelectGroup>
                   <SelectItem value="all">{t("All Categories")}</SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{t("Income")}</SelectLabel>
-                  {getCategoriesByType("income").map((category) => (
+                  <SelectLabel>{t("Inflow")}</SelectLabel>
+                  {getCategoriesByType("inflow").map((category) => (
                     <SelectItem key={category.key} value={category.key}>
                       {category.label}
                     </SelectItem>
                   ))}
                   <SelectSeparator />
-                  <SelectLabel>{t("Expense")}</SelectLabel>
-                  {getCategoriesByType("expense").map((category) => (
+                  <SelectLabel>{t("Outflow")}</SelectLabel>
+                  {getCategoriesByType("outflow").map((category) => (
                     <SelectItem key={category.key} value={category.key}>
                       {category.label}
                     </SelectItem>

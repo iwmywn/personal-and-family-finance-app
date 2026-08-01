@@ -127,7 +127,7 @@ export function BudgetFilters() {
               <SelectContent>
                 <SelectItem value="all">{t("All Categories")}</SelectItem>
                 <SelectSeparator />
-                {getCategoriesByType("expense").map((category) => (
+                {getCategoriesByType("outflow").map((category) => (
                   <SelectItem key={category.key} value={category.key}>
                     {category.label}
                   </SelectItem>

@@ -154,8 +154,8 @@ export function RecurringTransactionsFilters() {
                 <SelectGroup>
                   <SelectItem value="all">{t("All Types")}</SelectItem>
                   <SelectSeparator />
-                  <SelectItem value="income">{t("Income")}</SelectItem>
-                  <SelectItem value="expense">{t("Expense")}</SelectItem>
+                  <SelectItem value="inflow">{t("Inflow")}</SelectItem>
+                  <SelectItem value="outflow">{t("Outflow")}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -173,15 +173,15 @@ export function RecurringTransactionsFilters() {
                 <SelectGroup>
                   <SelectItem value="all">{t("All Categories")}</SelectItem>
                   <SelectSeparator />
-                  <SelectLabel>{t("Income")}</SelectLabel>
-                  {getCategoriesByType("income").map((category) => (
+                  <SelectLabel>{t("Inflow")}</SelectLabel>
+                  {getCategoriesByType("inflow").map((category) => (
                     <SelectItem key={category.key} value={category.key}>
                       {category.label}
                     </SelectItem>
                   ))}
                   <SelectSeparator />
-                  <SelectLabel>{t("Expense")}</SelectLabel>
-                  {getCategoriesByType("expense").map((category) => (
+                  <SelectLabel>{t("Outflow")}</SelectLabel>
+                  {getCategoriesByType("outflow").map((category) => (
                     <SelectItem key={category.key} value={category.key}>
                       {category.label}
                     </SelectItem>

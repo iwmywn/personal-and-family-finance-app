@@ -133,14 +133,14 @@ export function RecurringTransactionsTable({
                       <TableCell>
                         <Badge
                           className={
-                            recurring.type === "income"
+                            recurring.type === "inflow"
                               ? "badge-green"
                               : "badge-red"
                           }
                         >
-                          {recurring.type === "income"
-                            ? t("Income")
-                            : t("Expense")}
+                          {recurring.type === "inflow"
+                            ? t("Inflow")
+                            : t("Outflow")}
                         </Badge>
                       </TableCell>
                       <TableCell>

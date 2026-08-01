@@ -161,7 +161,7 @@ export function GoalFilters() {
               <SelectContent>
                 <SelectItem value="all">{t("All Categories")}</SelectItem>
                 <SelectSeparator />
-                {getCategoriesByType("income").map((category) => (
+                {getCategoriesByType("inflow").map((category) => (
                   <SelectItem key={category.key} value={category.key}>
                     {category.label}
                   </SelectItem>

@@ -637,8 +637,8 @@ msgid "jm_spn"
 msgstr "초기화"
 
 #: components/budgets/budgets-page.tsx
-msgid "UxaXqH"
-msgstr "지출 카테고리에 대한 예산을 설정하고 관리하세요."
+msgid "3fGt__"
+msgstr "유출 카테고리에 대한 예산을 설정하고 관리합니다."
 
 #: components/budgets/budgets-table.tsx
 msgid "CgOoDa"
@@ -758,8 +758,8 @@ msgstr "유형"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "gJkHZk"
-msgstr "수입"
+msgid "PqYX1W"
+msgstr "유입"
 
 #: components/categories/categories-table.tsx
 #: components/categories/category-dialog.tsx
@@ -772,8 +772,8 @@ msgstr "수입"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "URe-qA"
-msgstr "지출"
+msgid "KKrCi6"
+msgstr "유출"
 
 #: components/categories/category-dialog.tsx
 msgid "THThZY"
@@ -922,8 +922,8 @@ msgid "a3-VDd"
 msgstr "총 거래 수"
 
 #: components/home/quick-stats.tsx
-msgid "gaBuAW"
-msgstr "총 거래 수(수입 및 지출 모두)."
+msgid "bcTyuf"
+msgstr "총 유입 및 유출 거래 수입니다."
 
 #: components/home/quick-stats.tsx
 msgid "Prh2Lb"
@@ -934,32 +934,32 @@ msgid "UG5qoS"
 msgstr "데이터 없음"
 
 #: components/home/quick-stats.tsx
-msgid "5-Kbgx"
-msgstr "이번 달 가장 높은 금액의 거래(수입 또는 지출)."
+msgid "rDSqY8"
+msgstr "해당 월의 최고 금액 거래(유입 또는 유출일 수 있음)."
 
 #: components/home/quick-stats.tsx
 msgid "9AS2Qs"
 msgstr "최저 거래"
 
 #: components/home/quick-stats.tsx
-msgid "gkpkvE"
-msgstr "이번 달 가장 낮은 금액의 거래(수입 또는 지출)."
+msgid "QHnvj4"
+msgstr "해당 월의 최저 금액 거래(유입 또는 유출일 수 있음)."
 
 #: components/home/quick-stats.tsx
-msgid "5pB6eY"
-msgstr "평균 지출"
+msgid "qfQAiL"
+msgstr "평균 유출"
 
 #: components/home/quick-stats.tsx
-msgid "VP5MQP"
-msgstr "지출당 평균 금액 (총 지출 / 지출 거래 수)."
+msgid "Xpsn__"
+msgstr "유출당 평균 금액(총 유출 / 유출 거래 수)."
 
 #: components/home/quick-stats.tsx
 msgid "AUkgKt"
 msgstr "저축률"
 
 #: components/home/quick-stats.tsx
-msgid "Q0mewJ"
-msgstr "수입 대비 저축 비율 ((수입 - 지출) / 수입 × 100%)."
+msgid "nmcGD4"
+msgstr "유입 대비 저축한 금액의 비율((유입 - 유출) / 유입 × 100%)."
 
 #: components/home/quick-stats.tsx
 msgid "O8QihK"
@@ -987,8 +987,8 @@ msgid "GMBC7V"
 msgstr "아직 거래를 생성하지 않았습니다."
 
 #: components/home/transaction-summary.tsx
-msgid "XUYy4C"
-msgstr "월간 수입"
+msgid "Vk-r3s"
+msgstr "월간 유입"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
@@ -997,8 +997,8 @@ msgid "5-nDxs"
 msgstr "거래"
 
 #: components/home/transaction-summary.tsx
-msgid "FR0il4"
-msgstr "월간 지출"
+msgid "0PFSLN"
+msgstr "월간 유출"
 
 #: components/home/transaction-summary.tsx
 msgid "ZLrViM"
@@ -1021,8 +1021,8 @@ msgstr "균형"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "qTQZsz"
-msgstr "수입 대비"
+msgid "sfXkQG"
+msgstr "유입 대비"
 
 #: components/layout/page-data-provider.tsx
 msgid "EjH-J3"
@@ -1480,12 +1480,12 @@ msgid "wqp6W5"
 msgstr "재정 통계를 확인하세요."
 
 #: components/statistics/statistics-summary.tsx
-msgid "q2bcKc"
-msgstr "총 수입"
+msgid "2oz8FN"
+msgstr "총 유입"
 
 #: components/statistics/statistics-summary.tsx
-msgid "F3K__T"
-msgstr "총 지출"
+msgid "VfJR8A"
+msgstr "총 유출"
 
 #: components/statistics/statistics-summary.tsx
 msgid "cX8_D7"
@@ -1547,8 +1547,8 @@ msgid "ET95oG"
 msgstr "거래 정보를 업데이트하세요."
 
 #: components/transactions/transaction-dialog.tsx
-msgid "m3AQtz"
-msgstr "개인 재정을 추적하기 위해 수입 또는 지출을 추가하세요."
+msgid "GAJmZB"
+msgstr "개인 재정을 추적하기 위해 유입 또는 유출을 추가하세요."
 
 #: components/transactions/transaction-dialog.tsx
 msgid "9WG2aE"
@@ -1559,8 +1559,8 @@ msgid "gD5509"
 msgstr "거래 검색..."
 
 #: components/transactions/transactions-page.tsx
-msgid "PRC7nC"
-msgstr "개인 재정을 추적하기 위해 수입과 지출을 관리하세요."
+msgid "MBywHq"
+msgstr "개인 재정을 추적하기 위해 현금 유입 및 유출을 관리하세요."
 
 #: hooks/use-category.ts
 msgid "7MY_4L"
@@ -1595,8 +1595,16 @@ msgid "QRzRc0"
 msgstr "현금 선물, 가족 지원, 축하금 등"
 
 #: hooks/use-category.ts
-msgid "3M2DQp"
-msgstr "기타 수입"
+msgid "qVpKKY"
+msgstr "부채 회수"
+
+#: hooks/use-category.ts
+msgid "H_wany"
+msgstr "돈 빌리기, 빚 받기, 대출금 수령 등."
+
+#: hooks/use-category.ts
+msgid "eYGhIv"
+msgstr "기타 유입"
 
 #: hooks/use-category.ts
 msgid "-vWFfX"
@@ -1699,12 +1707,12 @@ msgid "yJZOmD"
 msgstr "은행 대출 상환, 신용카드, 개인 부채 등"
 
 #: hooks/use-category.ts
-msgid "flIwoN"
-msgstr "기타 지출"
+msgid "8z_inE"
+msgstr "기타 유출"
 
 #: hooks/use-category.ts
-msgid "r3fFt1"
-msgstr "예상치 못한 수리, 벌금, 손실, 미확인 지출 등"
+msgid "3A1sDf"
+msgstr "예상치 못한 수리, 벌금, 손실, 미확인 유출 등."
 
 #: hooks/use-months.ts
 msgid "t8QlFE"

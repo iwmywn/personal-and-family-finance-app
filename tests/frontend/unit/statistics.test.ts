@@ -45,10 +45,10 @@ describe("Statistics", () => {
         {
           _id: "6",
           userId: "68f712e4cda4897217a05a1c",
-          type: "income",
+          type: "inflow",
           amount: "200",
           currency: "VND",
-          description: "Old income",
+          description: "Old inflow",
           categoryKey: "salary_bonus",
           date: new Date("2023-01-15"),
         },
@@ -77,7 +77,7 @@ describe("Statistics", () => {
       expect(result.currentMonthCount).toBe(5)
       expect(result.highestTransaction).toEqual(mockTransactions[0])
       expect(result.lowestTransaction).toEqual(mockTransactions[3])
-      expect(result.avgExpense).toBe("200")
+      expect(result.avgOutflow).toBe("200")
       expect(result.savingsRate).toBe("60")
       expect(result.popularCategory).toEqual(["salary_bonus"])
     })
@@ -88,7 +88,7 @@ describe("Statistics", () => {
       expect(result.currentMonthCount).toBe(0)
       expect(result.highestTransaction).toBeNull()
       expect(result.lowestTransaction).toBeNull()
-      expect(result.avgExpense).toBeNull()
+      expect(result.avgOutflow).toBeNull()
       expect(result.savingsRate).toBeNull()
       expect(result.popularCategory).toEqual([])
     })
@@ -98,23 +98,23 @@ describe("Statistics", () => {
     it("should calculate summary stats correctly", () => {
       const result = calculateSummaryStats(mockTransactions)
 
-      expect(result.totalIncome).toBe("1001500")
-      expect(result.totalExpense).toBe("3000600")
+      expect(result.totalInflow).toBe("1001500")
+      expect(result.totalOutflow).toBe("3000600")
       expect(result.balance).toBe("-1999100")
       expect(result.transactionCount).toBe(9)
-      expect(result.incomeCount).toBe(3)
-      expect(result.expenseCount).toBe(6)
+      expect(result.inflowCount).toBe(3)
+      expect(result.outflowCount).toBe(6)
     })
 
     it("should handle empty transactions", () => {
       const result = calculateSummaryStats([])
 
-      expect(result.totalIncome).toBe("0")
-      expect(result.totalExpense).toBe("0")
+      expect(result.totalInflow).toBe("0")
+      expect(result.totalOutflow).toBe("0")
       expect(result.balance).toBe("0")
       expect(result.transactionCount).toBe(0)
-      expect(result.incomeCount).toBe(0)
-      expect(result.expenseCount).toBe(0)
+      expect(result.inflowCount).toBe(0)
+      expect(result.outflowCount).toBe(0)
     })
   })
 
@@ -126,7 +126,7 @@ describe("Statistics", () => {
       expect(result[0].categoryKey).toBe("housing")
       expect(result[0].count).toBe(2)
       expect(result[0].total).toBe("2100300")
-      expect(result[0].type).toBe("expense")
+      expect(result[0].type).toBe("outflow")
       expect(result[1].categoryKey).toBe("salary_bonus")
       expect(result[2].categoryKey).toBe("food_beverage")
       expect(result[3].categoryKey).toBe("transportation")
@@ -172,7 +172,7 @@ describe("Statistics", () => {
       const result = calculateBudgetsStats([budget], mockTransactions)[0]
 
       const matchingTransactions = mockTransactions.filter((t) => {
-        if (t.type !== "expense") return false
+        if (t.type !== "outflow") return false
         const transactionDate = new Date(t.date)
         const startDate = new Date(budget.startDate)
         const endDate = new Date(budget.endDate)
@@ -189,7 +189,7 @@ describe("Statistics", () => {
       expect(result.spent).toBe(expectedSpent.toString())
     })
 
-    it("should exclude income transactions", () => {
+    it("should exclude inflow transactions", () => {
       const budget = mockBudgets[0]
       const result = calculateBudgetsStats([budget], mockTransactions)[0]
 
@@ -428,7 +428,7 @@ describe("Statistics", () => {
       const result = calculateGoalsStats([goal], mockTransactions)[0]
 
       const matchingTransactions = mockTransactions.filter((t) => {
-        if (t.type !== "income") return false
+        if (t.type !== "inflow") return false
         const transactionDate = new Date(t.date)
         const startDate = new Date(goal.startDate)
         const endDate = new Date(goal.endDate)
@@ -445,11 +445,11 @@ describe("Statistics", () => {
       expect(result.accumulated).toBe(expectedAccumulated.toString())
     })
 
-    it("should exclude expense transactions", () => {
+    it("should exclude outflow transactions", () => {
       const goal = mockGoals[0]
       const result = calculateGoalsStats([goal], mockTransactions)[0]
 
-      // Accumulated should not include expense transactions
+      // Accumulated should not include outflow transactions
       expect(Number(result.accumulated)).toBeGreaterThanOrEqual(0)
     })
 

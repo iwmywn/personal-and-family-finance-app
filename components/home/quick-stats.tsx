@@ -24,7 +24,7 @@ export function QuickStats() {
     currentMonthCount,
     highestTransaction,
     lowestTransaction,
-    avgExpense,
+    avgOutflow,
     savingsRate,
     popularCategory,
   } = calculateQuickStats(transactions)
@@ -44,9 +44,7 @@ export function QuickStats() {
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              {t(
-                "Total number of transactions (both income and expenses) you have made."
-              )}
+              {t("Total number of inflow and outflow transactions.")}
             </TooltipContent>
           </Tooltip>
 
@@ -59,21 +57,21 @@ export function QuickStats() {
                 <div
                   className={`right ${
                     highestTransaction !== null
-                      ? highestTransaction.type === "income"
+                      ? highestTransaction.type === "inflow"
                         ? "text-green-600"
                         : "text-red-600"
                       : ""
                   }`}
                 >
                   {highestTransaction !== null
-                    ? `${highestTransaction.type === "income" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
+                    ? `${highestTransaction.type === "inflow" ? "+" : "-"}${formatCurrency(highestTransaction.amount)}`
                     : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
               {t(
-                "Transaction with the highest value in the month (can be income or expense)."
+                "Transaction with the highest value in the month (can be inflow or outflow)."
               )}
             </TooltipContent>
           </Tooltip>
@@ -87,21 +85,21 @@ export function QuickStats() {
                 <div
                   className={`right ${
                     lowestTransaction !== null
-                      ? lowestTransaction.type === "income"
+                      ? lowestTransaction.type === "inflow"
                         ? "text-green-600"
                         : "text-red-600"
                       : ""
                   }`}
                 >
                   {lowestTransaction !== null
-                    ? `${lowestTransaction.type === "income" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
+                    ? `${lowestTransaction.type === "inflow" ? "+" : "-"}${formatCurrency(lowestTransaction.amount)}`
                     : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
               {t(
-                "Transaction with the lowest value in the month (can be income or expense)."
+                "Transaction with the lowest value in the month (can be inflow or outflow)."
               )}
             </TooltipContent>
           </Tooltip>
@@ -111,17 +109,17 @@ export function QuickStats() {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="row">
-                <div className="left">{t("Average Expense")}:</div>
+                <div className="left">{t("Average Outflow")}:</div>
                 <div className="right">
-                  {avgExpense !== null
-                    ? formatCurrency(avgExpense)
+                  {avgOutflow !== null
+                    ? formatCurrency(avgOutflow)
                     : t("No data")}
                 </div>
               </div>
             </TooltipTrigger>
             <TooltipContent>
               {t(
-                "Average amount per expense (Total Expense / Number of expense transactions)."
+                "Average amount per outflow (Total Outflow / Number of outflow transactions)."
               )}
             </TooltipContent>
           </Tooltip>
@@ -149,7 +147,7 @@ export function QuickStats() {
             </TooltipTrigger>
             <TooltipContent>
               {t(
-                "The percentage of money you save compared to income ((Income - Expense) / Income × 100%)."
+                "The percentage of money you save compared to inflow ((Inflow - Outflow) / Inflow × 100%)."
               )}
             </TooltipContent>
           </Tooltip>

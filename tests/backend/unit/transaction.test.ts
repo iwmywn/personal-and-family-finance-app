@@ -85,7 +85,7 @@ describe("Transactions", async () => {
         userId: mockUser._id,
       })
 
-      expect(addedTransaction?.type).toBe("income")
+      expect(addedTransaction?.type).toBe("inflow")
       expect(addedTransaction?.categoryKey).toBe("business_freelance")
       expect(addedTransaction?.amount.toString()).toBe("2500000")
       expect(addedTransaction?.description).toBe("freelance project payment")
@@ -163,7 +163,7 @@ describe("Transactions", async () => {
       mockAuthenticatedAsAnotherUser()
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
-        type: "expense",
+        type: "outflow",
         categoryKey: "personal_care",
         amount: "100000",
         currency: "VND",
@@ -193,7 +193,7 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
 
       const result = await updateTransaction(mockTransaction._id.toString(), {
-        type: "expense",
+        type: "outflow",
         categoryKey: "personal_care",
         amount: "100000",
         currency: "VND",
@@ -208,14 +208,14 @@ describe("Transactions", async () => {
         _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
       })
 
-      expect(updatedTransaction?.type).toBe("expense")
+      expect(updatedTransaction?.type).toBe("outflow")
       expect(updatedTransaction?.categoryKey).toBe("personal_care")
       expect(updatedTransaction?.amount.toString()).toBe("100000")
       expect(updatedTransaction?.description).toBe("Updated description")
       expect(updatedTransaction?.date.toISOString()).toBe(
         "2024-02-04T00:00:00.000Z"
       )
-      expect(unrelatedTransaction?.type).toBe("expense")
+      expect(unrelatedTransaction?.type).toBe("outflow")
       expect(unrelatedTransaction?.categoryKey).toBe("food_beverage")
       expect(unrelatedTransaction?.amount.toString()).toBe("50000")
       expect(unrelatedTransaction?.description).toBe("hamburger")

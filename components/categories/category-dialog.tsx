@@ -53,14 +53,14 @@ export function CategoryDialog({
   open,
   setOpen,
 }: CategoryDialogProps) {
-  const [type, setType] = useState<CategoryType>(category?.type || "income")
+  const [type, setType] = useState<CategoryType>(category?.type || "inflow")
   const t = useExtracted()
   const { createCategorySchema } = useSchemas()
 
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(createCategorySchema()),
     defaultValues: {
-      type: category?.type || "income",
+      type: category?.type || "inflow",
       label: category?.label || "",
       description: category?.description || "",
     },
@@ -122,8 +122,8 @@ export function CategoryDialog({
               onValueChange={(value) => handleTypeChange(value as CategoryType)}
             >
               <TabsList className="w-full">
-                <TabsTrigger value="income">{t("Income")}</TabsTrigger>
-                <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>
+                <TabsTrigger value="inflow">{t("Inflow")}</TabsTrigger>
+                <TabsTrigger value="outflow">{t("Outflow")}</TabsTrigger>
               </TabsList>
             </Tabs>
 

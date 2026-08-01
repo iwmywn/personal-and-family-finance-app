@@ -637,8 +637,8 @@ msgid "jm_spn"
 msgstr "重置"
 
 #: components/budgets/budgets-page.tsx
-msgid "UxaXqH"
-msgstr "设置和管理您的支出分类预算。"
+msgid "3fGt__"
+msgstr "设置并管理您的资金流出类别的预算。"
 
 #: components/budgets/budgets-table.tsx
 msgid "CgOoDa"
@@ -758,8 +758,8 @@ msgstr "类型"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "gJkHZk"
-msgstr "收入"
+msgid "PqYX1W"
+msgstr "流入"
 
 #: components/categories/categories-table.tsx
 #: components/categories/category-dialog.tsx
@@ -772,8 +772,8 @@ msgstr "收入"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "URe-qA"
-msgstr "支出"
+msgid "KKrCi6"
+msgstr "流出"
 
 #: components/categories/category-dialog.tsx
 msgid "THThZY"
@@ -922,8 +922,8 @@ msgid "a3-VDd"
 msgstr "交易总数"
 
 #: components/home/quick-stats.tsx
-msgid "gaBuAW"
-msgstr "您进行的交易总数（收入和支出）。"
+msgid "bcTyuf"
+msgstr "流入和流出交易的总数。"
 
 #: components/home/quick-stats.tsx
 msgid "Prh2Lb"
@@ -934,32 +934,32 @@ msgid "UG5qoS"
 msgstr "无数据"
 
 #: components/home/quick-stats.tsx
-msgid "5-Kbgx"
-msgstr "本月金额最高的交易（可能是收入或支出）。"
+msgid "rDSqY8"
+msgstr "当月最高金额的交易（可以是流入或流出）。"
 
 #: components/home/quick-stats.tsx
 msgid "9AS2Qs"
 msgstr "最低交易"
 
 #: components/home/quick-stats.tsx
-msgid "gkpkvE"
-msgstr "本月金额最低的交易（可能是收入或支出）。"
+msgid "QHnvj4"
+msgstr "当月最低金额的交易（可以是流入或流出）。"
 
 #: components/home/quick-stats.tsx
-msgid "5pB6eY"
-msgstr "平均支出"
+msgid "qfQAiL"
+msgstr "平均流出"
 
 #: components/home/quick-stats.tsx
-msgid "VP5MQP"
-msgstr "每笔支出的平均金额（总支出 / 支出交易次数）。"
+msgid "Xpsn__"
+msgstr "每笔流出的平均金额（总流出 / 流出交易数量）。"
 
 #: components/home/quick-stats.tsx
 msgid "AUkgKt"
 msgstr "储蓄率"
 
 #: components/home/quick-stats.tsx
-msgid "Q0mewJ"
-msgstr "您储蓄的金额占收入的百分比 ((收入 - 支出) / 收入 × 100%)。"
+msgid "nmcGD4"
+msgstr "与流入相比，您节省的资金百分比（（流入 - 流出）/ 流入 × 100%）。"
 
 #: components/home/quick-stats.tsx
 msgid "O8QihK"
@@ -987,8 +987,8 @@ msgid "GMBC7V"
 msgstr "您尚未创建任何交易。"
 
 #: components/home/transaction-summary.tsx
-msgid "XUYy4C"
-msgstr "月度收入"
+msgid "Vk-r3s"
+msgstr "月度流入"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
@@ -997,8 +997,8 @@ msgid "5-nDxs"
 msgstr "交易"
 
 #: components/home/transaction-summary.tsx
-msgid "FR0il4"
-msgstr "月度支出"
+msgid "0PFSLN"
+msgstr "月度流出"
 
 #: components/home/transaction-summary.tsx
 msgid "ZLrViM"
@@ -1021,8 +1021,8 @@ msgstr "平衡"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "qTQZsz"
-msgstr "与收入相比"
+msgid "sfXkQG"
+msgstr "与流入相比"
 
 #: components/layout/page-data-provider.tsx
 msgid "EjH-J3"
@@ -1480,12 +1480,12 @@ msgid "wqp6W5"
 msgstr "查看您的财务统计数据。"
 
 #: components/statistics/statistics-summary.tsx
-msgid "q2bcKc"
-msgstr "总收入"
+msgid "2oz8FN"
+msgstr "总流入"
 
 #: components/statistics/statistics-summary.tsx
-msgid "F3K__T"
-msgstr "总支出"
+msgid "VfJR8A"
+msgstr "总流出"
 
 #: components/statistics/statistics-summary.tsx
 msgid "cX8_D7"
@@ -1547,8 +1547,8 @@ msgid "ET95oG"
 msgstr "更新交易信息。"
 
 #: components/transactions/transaction-dialog.tsx
-msgid "m3AQtz"
-msgstr "添加您的收入或支出以跟踪您的个人财务状况。"
+msgid "GAJmZB"
+msgstr "添加您的流入或流出以跟踪您的个人财务。"
 
 #: components/transactions/transaction-dialog.tsx
 msgid "9WG2aE"
@@ -1559,8 +1559,8 @@ msgid "gD5509"
 msgstr "搜索交易..."
 
 #: components/transactions/transactions-page.tsx
-msgid "PRC7nC"
-msgstr "管理收入和支出以跟踪您的个人财务状况。"
+msgid "MBywHq"
+msgstr "管理现金流入和流出以跟踪您的个人财务。"
 
 #: hooks/use-category.ts
 msgid "7MY_4L"
@@ -1595,8 +1595,16 @@ msgid "QRzRc0"
 msgstr "现金礼物、家庭支持、礼金等。"
 
 #: hooks/use-category.ts
-msgid "3M2DQp"
-msgstr "其他收入"
+msgid "qVpKKY"
+msgstr "收债"
+
+#: hooks/use-category.ts
+msgid "H_wany"
+msgstr "借钱，收债，收到贷款等。"
+
+#: hooks/use-category.ts
+msgid "eYGhIv"
+msgstr "其他流入"
 
 #: hooks/use-category.ts
 msgid "-vWFfX"
@@ -1699,12 +1707,12 @@ msgid "yJZOmD"
 msgstr "银行贷款还款、信用卡、个人债务等。"
 
 #: hooks/use-category.ts
-msgid "flIwoN"
-msgstr "其他费用"
+msgid "8z_inE"
+msgstr "其他流出"
 
 #: hooks/use-category.ts
-msgid "r3fFt1"
-msgstr "意外维修、罚款、损失、不明支出等。"
+msgid "3A1sDf"
+msgstr "意外维修，罚款，损失，未确认的流出等。"
 
 #: hooks/use-months.ts
 msgid "t8QlFE"

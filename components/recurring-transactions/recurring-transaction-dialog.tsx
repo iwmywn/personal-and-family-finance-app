@@ -76,7 +76,7 @@ export function RecurringTransactionDialog({
 }: RecurringDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
-  const [type, setType] = useState<CategoryType>(recurring?.type || "income")
+  const [type, setType] = useState<CategoryType>(recurring?.type || "inflow")
   const t = useExtracted()
   const { createRecurringTransactionSchema } = useSchemas()
   const { user } = useUser()
@@ -84,7 +84,7 @@ export function RecurringTransactionDialog({
   const form = useForm<RecurringTransactionFormValues>({
     resolver: zodResolver(createRecurringTransactionSchema()),
     defaultValues: {
-      type: recurring?.type || "income",
+      type: recurring?.type || "inflow",
       categoryKey: recurring?.categoryKey || "",
       currency: recurring?.currency ?? (user.currency as AppCurrency),
       amount: recurring?.amount ?? "",
@@ -191,22 +191,22 @@ export function RecurringTransactionDialog({
               onValueChange={(value) => handleTypeChange(value as CategoryType)}
             >
               <TabsList className="w-full">
-                <TabsTrigger value="income">{t("Income")}</TabsTrigger>
-                <TabsTrigger value="expense">{t("Expense")}</TabsTrigger>
+                <TabsTrigger value="inflow">{t("Inflow")}</TabsTrigger>
+                <TabsTrigger value="outflow">{t("Outflow")}</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="income" className="space-y-4">
+              <TabsContent value="inflow" className="space-y-4">
                 <CategoryFormSelect
                   control={form.control}
-                  type="income"
+                  type="inflow"
                   showDescription
                 />
               </TabsContent>
 
-              <TabsContent value="expense" className="space-y-4">
+              <TabsContent value="outflow" className="space-y-4">
                 <CategoryFormSelect
                   control={form.control}
-                  type="expense"
+                  type="outflow"
                   showDescription
                 />
               </TabsContent>

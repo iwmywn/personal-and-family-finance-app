@@ -27,7 +27,7 @@ export default async function DashboardLayout({
           <SidebarInset className="p-2 peer-data-[state=collapsed]:pl-0 md:peer-data-[state=collapsed]:max-w-[calc(100vw-4rem)] md:peer-data-[state=expanded]:max-w-[calc(100vw-16rem)] md:peer-data-[state=expanded]:transition-[max-width] md:peer-data-[state=expanded]:duration-500">
             <div className="bg-primary-foreground border-border h-full max-h-[calc(100vh-1rem)] overflow-y-auto border p-2 pt-0 shadow-sm">
               <Header />
-              <section>
+              <section className="md:h-full md:max-h-[calc(100vh-4.375rem)]">
                 <Suspense fallback={<Loading />}>
                   <DashboardProvider>{children}</DashboardProvider>
                 </Suspense>

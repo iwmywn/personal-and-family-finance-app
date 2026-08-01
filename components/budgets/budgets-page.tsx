@@ -18,7 +18,7 @@ export default function BudgetsPage() {
           <div>
             <div className="title">{t("Budgets")}</div>
             <div className="description">
-              {t("Set and manage budgets for your expense categories.")}
+              {t("Set and manage budgets for your outflow categories.")}
             </div>
           </div>
           <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>

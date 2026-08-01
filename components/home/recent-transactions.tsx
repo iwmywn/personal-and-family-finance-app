@@ -54,7 +54,7 @@ export function RecentTransactions() {
                     <div className="flex flex-col gap-1">
                       <Badge
                         className={
-                          transaction.type === "income"
+                          transaction.type === "inflow"
                             ? "badge-green"
                             : "badge-red"
                         }
@@ -72,12 +72,12 @@ export function RecentTransactions() {
                   <div className="max-w-2/4 text-right">
                     <div
                       className={`text-sm wrap-anywhere ${
-                        transaction.type === "income"
+                        transaction.type === "inflow"
                           ? "text-green-600"
                           : "text-red-600"
                       }`}
                     >
-                      {transaction.type === "income" ? "+" : "-"}
+                      {transaction.type === "inflow" ? "+" : "-"}
                       {formatCurrency(transaction.amount)}
                     </div>
                   </div>

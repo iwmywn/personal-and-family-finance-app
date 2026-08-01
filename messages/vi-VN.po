@@ -637,8 +637,8 @@ msgid "jm_spn"
 msgstr "Đặt lại"
 
 #: components/budgets/budgets-page.tsx
-msgid "UxaXqH"
-msgstr "Thiết lập và quản lý ngân sách cho các danh mục chi tiêu của bạn."
+msgid "3fGt__"
+msgstr "Thiết lập và quản lý ngân sách cho các danh mục dòng tiền ra."
 
 #: components/budgets/budgets-table.tsx
 msgid "CgOoDa"
@@ -758,8 +758,8 @@ msgstr "Loại"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "gJkHZk"
-msgstr "Thu nhập"
+msgid "PqYX1W"
+msgstr "Dòng tiền vào"
 
 #: components/categories/categories-table.tsx
 #: components/categories/category-dialog.tsx
@@ -772,8 +772,8 @@ msgstr "Thu nhập"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "URe-qA"
-msgstr "Chi tiêu"
+msgid "KKrCi6"
+msgstr "Dòng tiền ra"
 
 #: components/categories/category-dialog.tsx
 msgid "THThZY"
@@ -922,8 +922,8 @@ msgid "a3-VDd"
 msgstr "Tổng số giao dịch"
 
 #: components/home/quick-stats.tsx
-msgid "gaBuAW"
-msgstr "Tổng số giao dịch (cả thu nhập và chi tiêu) bạn đã thực hiện."
+msgid "bcTyuf"
+msgstr "Tổng số giao dịch dòng tiền vào và ra."
 
 #: components/home/quick-stats.tsx
 msgid "Prh2Lb"
@@ -934,32 +934,32 @@ msgid "UG5qoS"
 msgstr "Không có dữ liệu"
 
 #: components/home/quick-stats.tsx
-msgid "5-Kbgx"
-msgstr "Giao dịch có giá trị cao nhất trong tháng (có thể là thu nhập hoặc chi tiêu)."
+msgid "rDSqY8"
+msgstr "Giao dịch có giá trị cao nhất trong tháng (có thể là dòng tiền vào hoặc ra)."
 
 #: components/home/quick-stats.tsx
 msgid "9AS2Qs"
 msgstr "Giao dịch thấp nhất"
 
 #: components/home/quick-stats.tsx
-msgid "gkpkvE"
-msgstr "Giao dịch có giá trị thấp nhất trong tháng (có thể là thu nhập hoặc chi tiêu)."
+msgid "QHnvj4"
+msgstr "Giao dịch có giá trị thấp nhất trong tháng (có thể là dòng tiền vào hoặc ra)."
 
 #: components/home/quick-stats.tsx
-msgid "5pB6eY"
-msgstr "Chi tiêu trung bình"
+msgid "qfQAiL"
+msgstr "Dòng tiền ra trung bình"
 
 #: components/home/quick-stats.tsx
-msgid "VP5MQP"
-msgstr "Số tiền trung bình cho mỗi lần chi tiêu (Tổng chi tiêu / Số lượng giao dịch chi tiêu)."
+msgid "Xpsn__"
+msgstr "Số tiền trung bình cho mỗi dòng tiền ra (Tổng dòng tiền ra / Số lượng giao dịch dòng tiền ra)."
 
 #: components/home/quick-stats.tsx
 msgid "AUkgKt"
 msgstr "Tỷ lệ tiết kiệm"
 
 #: components/home/quick-stats.tsx
-msgid "Q0mewJ"
-msgstr "Tỷ lệ phần trăm tiền bạn tiết kiệm so với thu nhập ((Thu nhập - Chi tiêu) / Thu nhập × 100%)."
+msgid "nmcGD4"
+msgstr "Tỷ lệ phần trăm tiền bạn tiết kiệm được so với dòng tiền vào ((Dòng tiền vào - Dòng tiền ra) / Dòng tiền vào × 100%)."
 
 #: components/home/quick-stats.tsx
 msgid "O8QihK"
@@ -987,8 +987,8 @@ msgid "GMBC7V"
 msgstr "Bạn chưa tạo giao dịch nào."
 
 #: components/home/transaction-summary.tsx
-msgid "XUYy4C"
-msgstr "Thu nhập hàng tháng"
+msgid "Vk-r3s"
+msgstr "Dòng tiền vào hàng tháng"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
@@ -997,8 +997,8 @@ msgid "5-nDxs"
 msgstr "giao dịch"
 
 #: components/home/transaction-summary.tsx
-msgid "FR0il4"
-msgstr "Chi tiêu hàng tháng"
+msgid "0PFSLN"
+msgstr "Dòng tiền ra hàng tháng"
 
 #: components/home/transaction-summary.tsx
 msgid "ZLrViM"
@@ -1021,8 +1021,8 @@ msgstr "Cân bằng"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "qTQZsz"
-msgstr "so với thu nhập"
+msgid "sfXkQG"
+msgstr "so với dòng tiền vào"
 
 #: components/layout/page-data-provider.tsx
 msgid "EjH-J3"
@@ -1480,12 +1480,12 @@ msgid "wqp6W5"
 msgstr "Xem thống kê tài chính của bạn."
 
 #: components/statistics/statistics-summary.tsx
-msgid "q2bcKc"
-msgstr "Tổng thu nhập"
+msgid "2oz8FN"
+msgstr "Tổng dòng tiền vào"
 
 #: components/statistics/statistics-summary.tsx
-msgid "F3K__T"
-msgstr "Tổng chi tiêu"
+msgid "VfJR8A"
+msgstr "Tổng dòng tiền ra"
 
 #: components/statistics/statistics-summary.tsx
 msgid "cX8_D7"
@@ -1547,8 +1547,8 @@ msgid "ET95oG"
 msgstr "Cập nhật thông tin giao dịch."
 
 #: components/transactions/transaction-dialog.tsx
-msgid "m3AQtz"
-msgstr "Thêm thu nhập hoặc chi tiêu của bạn để theo dõi tài chính cá nhân."
+msgid "GAJmZB"
+msgstr "Thêm dòng tiền vào hoặc ra để theo dõi tài chính cá nhân của bạn."
 
 #: components/transactions/transaction-dialog.tsx
 msgid "9WG2aE"
@@ -1559,8 +1559,8 @@ msgid "gD5509"
 msgstr "Tìm kiếm giao dịch..."
 
 #: components/transactions/transactions-page.tsx
-msgid "PRC7nC"
-msgstr "Quản lý thu nhập và chi tiêu để theo dõi tài chính cá nhân."
+msgid "MBywHq"
+msgstr "Quản lý dòng tiền vào và ra để theo dõi tài chính cá nhân của bạn."
 
 #: hooks/use-category.ts
 msgid "7MY_4L"
@@ -1595,8 +1595,16 @@ msgid "QRzRc0"
 msgstr "Quà tặng tiền mặt, hỗ trợ gia đình, tiền mừng, v.v."
 
 #: hooks/use-category.ts
-msgid "3M2DQp"
-msgstr "Thu nhập khác"
+msgid "qVpKKY"
+msgstr "Thu nợ"
+
+#: hooks/use-category.ts
+msgid "H_wany"
+msgstr "Mượn tiền, thu nợ, nhận khoản vay, v.v."
+
+#: hooks/use-category.ts
+msgid "eYGhIv"
+msgstr "Dòng tiền vào khác"
 
 #: hooks/use-category.ts
 msgid "-vWFfX"
@@ -1699,12 +1707,12 @@ msgid "yJZOmD"
 msgstr "Thanh toán khoản vay ngân hàng, thẻ tín dụng, nợ cá nhân, v.v."
 
 #: hooks/use-category.ts
-msgid "flIwoN"
-msgstr "Chi tiêu khác"
+msgid "8z_inE"
+msgstr "Dòng tiền ra khác"
 
 #: hooks/use-category.ts
-msgid "r3fFt1"
-msgstr "Sửa chữa bất ngờ, tiền phạt, mất mát, chi tiêu không xác định, v.v."
+msgid "3A1sDf"
+msgstr "Sửa chữa đột xuất, tiền phạt, tổn thất, dòng tiền ra không xác định, v.v."
 
 #: hooks/use-months.ts
 msgid "t8QlFE"

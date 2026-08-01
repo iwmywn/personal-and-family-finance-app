@@ -183,7 +183,7 @@
   }
 
   .page-content {
-    @apply flex h-auto flex-col gap-4 md:h-[calc(100vh-4.375rem)];
+    @apply flex h-auto flex-col gap-4 md:h-full;
 
     .header {
       @apply bg-primary-foreground sticky top-11 z-50 flex items-center justify-between gap-2;

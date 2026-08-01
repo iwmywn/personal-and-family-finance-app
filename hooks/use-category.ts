@@ -16,7 +16,7 @@ export function useCategory() {
   const { customCategories } = useCategories()
 
   const CATEGORY_CONFIG_BASE: CategoryConfigBaseType = {
-    // Incomes
+    // Inflows
     salary_bonus: {
       label: t("Salary & Bonus"),
       description: t(
@@ -39,14 +39,18 @@ export function useCategory() {
       label: t("Gifts & Support"),
       description: t("Cash gifts, family support, celebration money, etc."),
     },
-    other_income: {
-      label: t("Other Income"),
+    debt_collection: {
+      label: t("Debt Collection"),
+      description: t("Borrowing money, collecting debt, loans received, etc."),
+    },
+    other_inflow: {
+      label: t("Other Inflows"),
       description: t(
         "Refunds, selling used items, prizes, unexpected amounts, etc."
       ),
     },
 
-    // Expenses
+    // Outflows
     food_beverage: {
       label: t("Food & Beverage"),
       description: t(
@@ -111,10 +115,10 @@ export function useCategory() {
       label: t("Debt Payment"),
       description: t("Bank loan payments, credit cards, personal debts, etc."),
     },
-    other_expense: {
-      label: t("Other Expenses"),
+    other_outflow: {
+      label: t("Other Outflows"),
       description: t(
-        "Unexpected repairs, fines, losses, unidentified expenses, etc."
+        "Unexpected repairs, fines, losses, unidentified outflows, etc."
       ),
     },
   } as const

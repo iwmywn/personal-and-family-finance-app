@@ -107,7 +107,7 @@ describe("Recurring Transactions", async () => {
         userId: mockUser._id,
       })
 
-      expect(addedRecurring?.type).toBe("income")
+      expect(addedRecurring?.type).toBe("inflow")
       expect(addedRecurring?.categoryKey).toBe("business_freelance")
       expect(addedRecurring?.amount.toString()).toBe("2500000")
       expect(addedRecurring?.description).toBe("Freelance project payment")
@@ -253,7 +253,7 @@ describe("Recurring Transactions", async () => {
       const result = await updateRecurringTransaction(
         mockRecurringTransaction._id.toString(),
         {
-          type: "expense",
+          type: "outflow",
           categoryKey: "food_beverage",
           amount: "9999999",
           currency: "VND",
@@ -290,7 +290,7 @@ describe("Recurring Transactions", async () => {
       const result = await updateRecurringTransaction(
         mockRecurringTransaction._id.toString(),
         {
-          type: "expense",
+          type: "outflow",
           categoryKey: "food_beverage",
           amount: "100000",
           currency: "VND",
@@ -310,7 +310,7 @@ describe("Recurring Transactions", async () => {
         _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
       })
 
-      expect(updatedRecurring?.type).toBe("expense")
+      expect(updatedRecurring?.type).toBe("outflow")
       expect(updatedRecurring?.categoryKey).toBe("food_beverage")
       expect(updatedRecurring?.amount.toString()).toBe("100000")
       expect(updatedRecurring?.description).toBe("Updated description")
@@ -322,7 +322,7 @@ describe("Recurring Transactions", async () => {
         "2024-12-31T00:00:00.000Z"
       )
       expect(updatedRecurring?.isActive).toBe(false)
-      expect(unrelatedRecurring?.type).toBe("income")
+      expect(unrelatedRecurring?.type).toBe("inflow")
       expect(unrelatedRecurring?.categoryKey).toBe("salary_bonus")
       expect(unrelatedRecurring?.amount.toString()).toBe("5000000")
       expect(result.success).toBe("Recurring transaction has been updated.")

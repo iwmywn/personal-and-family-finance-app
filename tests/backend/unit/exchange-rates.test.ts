@@ -240,7 +240,7 @@ describe("convertTransactionsToCurrency", () => {
       expect(result).toHaveLength(1)
       expect(result[0]._id).toBe("2")
       expect(result[0].userId).toBe("68f712e4cda4897217a05a1c")
-      expect(result[0].type).toBe("expense")
+      expect(result[0].type).toBe("outflow")
       expect(result[0].categoryKey).toBe("food_beverage")
       expect(result[0].description).toBe("Groceries")
       expect(result[0].date).toEqual(transactions[0].date)
