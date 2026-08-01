@@ -1,3 +1,11 @@
+## [26.32.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v26.27.0...v26.32.0)
+
+### Nerd stuff
+
+These changes will not be visible to users, but are included for completeness and to credit contributors.
+
+- **chore:** update deps (@iwmywn) ([#20](https://github.com/iwmywn/personal-and-family-finance-app/pull/20)) ([4aff1bb](https://github.com/iwmywn/personal-and-family-finance-app/commit/4aff1bb3a358b22bb6838a4c2bab94c8e4705369))
+
 ## [26.27.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v26.23.0...v26.27.0)
 
 ### Nerd stuff
