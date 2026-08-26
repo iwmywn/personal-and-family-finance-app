@@ -317,7 +317,7 @@ describe("Budgets", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getBudgets("")
+      const result = await getBudgets()
 
       expect(result.budgets).toBeUndefined()
       expect(result.error).toBe(
@@ -328,7 +328,7 @@ describe("Budgets", async () => {
     it("should return empty budgets list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString())
+      const result = await getBudgets()
 
       expect(result.budgets).toEqual([])
       expect(result.error).toBeUndefined()
@@ -338,7 +338,7 @@ describe("Budgets", async () => {
       await insertTestBudget(mockBudget)
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString())
+      const result = await getBudgets()
 
       expect(result.budgets).toHaveLength(1)
       expect(result.budgets?.[0].categoryKey).toBe("food_beverage")
@@ -370,7 +370,7 @@ describe("Budgets", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getBudgets(mockUser._id.toString())
+      const result = await getBudgets()
 
       expect(result.budgets).toHaveLength(3)
       // Should be sorted by startDate descending, then _id descending
@@ -386,7 +386,7 @@ describe("Budgets", async () => {
       mockAuthenticatedUser()
       mockBudgetCollectionError()
 
-      const result = await getBudgets(mockUser._id.toString())
+      const result = await getBudgets()
 
       expect(result.budgets).toBeUndefined()
       expect(result.error).toBe(

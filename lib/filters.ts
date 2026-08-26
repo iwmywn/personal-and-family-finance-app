@@ -85,12 +85,12 @@ export function isDateRangeOverlapping(
     if (!end) return true
 
     const durationMonths =
-      (end.getFullYear() - start.getFullYear()) * 12 +
-      (end.getMonth() - start.getMonth())
+      (end.getUTCFullYear() - start.getUTCFullYear()) * 12 +
+      (end.getUTCMonth() - start.getUTCMonth())
     if (durationMonths >= 11) return true
 
-    const startM = start.getMonth() + 1
-    const endM = end.getMonth() + 1
+    const startM = start.getUTCMonth() + 1
+    const endM = end.getUTCMonth() + 1
 
     if (startM <= endM) {
       return filterMonth >= startM && filterMonth <= endM
@@ -123,31 +123,30 @@ export function filterTransactions(
     ? searchWithMiniSearch(transactions, searchTerm, ["description"])
     : null
 
+  const selectedDateUTC = selectedDate
+    ? localDateToUTCMidnight(selectedDate)
+    : null
+  const fromUTC = dateRange.from ? localDateToUTCMidnight(dateRange.from) : null
+  const toUTC = dateRange.to ? localDateToUTCMidnight(dateRange.to) : null
+
   return transactions.filter((transaction) => {
     const matchesSearch = matchingIds ? matchingIds.has(transaction._id) : true
 
-    const transactionDateOnly = localDateToUTCMidnight(
-      new Date(transaction.date)
-    )
+    const transactionDateOnly = new Date(transaction.date)
 
-    const matchesSelectedDate = selectedDate
-      ? transactionDateOnly.getTime() ===
-        localDateToUTCMidnight(selectedDate).getTime()
+    const matchesSelectedDate = selectedDateUTC
+      ? transactionDateOnly.getTime() === selectedDateUTC.getTime()
       : true
 
     const matchesDateRange =
-      (!dateRange.from ||
-        transactionDateOnly.getTime() >=
-          localDateToUTCMidnight(dateRange.from).getTime()) &&
-      (!dateRange.to ||
-        transactionDateOnly.getTime() <=
-          localDateToUTCMidnight(dateRange.to).getTime())
+      (!fromUTC || transactionDateOnly.getTime() >= fromUTC.getTime()) &&
+      (!toUTC || transactionDateOnly.getTime() <= toUTC.getTime())
 
     const matchesMonth =
-      !parsedMonth || transactionDateOnly.getMonth() + 1 === parsedMonth
+      !parsedMonth || transactionDateOnly.getUTCMonth() + 1 === parsedMonth
 
     const matchesYear =
-      !parsedYear || transactionDateOnly.getFullYear() === parsedYear
+      !parsedYear || transactionDateOnly.getUTCFullYear() === parsedYear
 
     const matchesType = filterType === "all" || transaction.type === filterType
 
@@ -203,10 +202,8 @@ export function filterBudgets(
   const parsedYear = filterYear === "all" ? null : parseInt(filterYear)
 
   let filteredBudgets = budgets.filter((budget) => {
-    const budgetStartDateOnly = localDateToUTCMidnight(
-      new Date(budget.startDate)
-    )
-    const budgetEndDateOnly = localDateToUTCMidnight(new Date(budget.endDate))
+    const budgetStartDateOnly = new Date(budget.startDate)
+    const budgetEndDateOnly = new Date(budget.endDate)
 
     const overlaps = isDateRangeOverlapping(
       budgetStartDateOnly,
@@ -279,8 +276,8 @@ export function filterGoals(
     : null
 
   let filteredGoals = goals.filter((goal) => {
-    const goalStartDateOnly = localDateToUTCMidnight(new Date(goal.startDate))
-    const goalEndDateOnly = localDateToUTCMidnight(new Date(goal.endDate))
+    const goalStartDateOnly = new Date(goal.startDate)
+    const goalEndDateOnly = new Date(goal.endDate)
 
     const matchesSearch = matchingIds ? matchingIds.has(goal._id) : true
 
@@ -348,10 +345,8 @@ export function filterRecurringTransactions(
   return recurringTransactions.filter((recurring) => {
     const matchesSearch = matchingIds ? matchingIds.has(recurring._id) : true
 
-    const startDateOnly = localDateToUTCMidnight(new Date(recurring.startDate))
-    const endDateOnly = recurring.endDate
-      ? localDateToUTCMidnight(new Date(recurring.endDate))
-      : null
+    const startDateOnly = new Date(recurring.startDate)
+    const endDateOnly = recurring.endDate ? new Date(recurring.endDate) : null
 
     const overlaps = isDateRangeOverlapping(
       startDateOnly,

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
-import { parseAsIsoDateTime, parseAsString, useQueryState } from "nuqs"
+import { parseAsString, useQueryState } from "nuqs"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -36,6 +36,7 @@ import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
 import type { Transaction } from "@/lib/definitions"
 import { filterTransactions } from "@/lib/filters"
+import { parseAsLocalDate } from "@/lib/parsers"
 import { getUniqueYears } from "@/lib/utils"
 
 interface TransactionFiltersProps {
@@ -55,17 +56,17 @@ export function TransactionFilters({
   )
   const [selectedDateIso, setSelectedDateIso] = useQueryState(
     "date",
-    parseAsIsoDateTime
+    parseAsLocalDate
   )
   const selectedDate = selectedDateIso || undefined
 
   const [dateRangeFromIso, setDateRangeFromIso] = useQueryState(
     "from",
-    parseAsIsoDateTime
+    parseAsLocalDate
   )
   const [dateRangeToIso, setDateRangeToIso] = useQueryState(
     "to",
-    parseAsIsoDateTime
+    parseAsLocalDate
   )
   const dateRange = useMemo(
     () => ({

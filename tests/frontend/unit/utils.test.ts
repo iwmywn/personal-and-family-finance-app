@@ -83,7 +83,7 @@ describe("Utils", () => {
     it("should formats in Vietnamese (vi) correctly", () => {
       const date = new Date("2024-01-15T00:00:00.000Z")
       const result = formatDate(date, "vi" as AppLocale)
-      expect(result).toBe("Th 2, 15/01/2024")
+      expect(result).toBe("Thứ 2, 15/01/2024")
     })
 
     it("should formats in English (en) correctly", () => {
@@ -97,7 +97,7 @@ describe("Utils", () => {
         "Mon Jan 15 2024 00:00:00 GMT+0700 (Indochina Time)"
       )
       const result = formatDate(date, "vi" as AppLocale)
-      expect(result).toBe("Th 2, 15/01/2024")
+      expect(result).toBe("Thứ 2, 15/01/2024")
     })
   })
 

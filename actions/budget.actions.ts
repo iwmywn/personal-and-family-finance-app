@@ -171,19 +171,29 @@ export async function deleteBudget(budgetId: string) {
   }
 }
 
-export async function getBudgets(userId: string) {
+export async function getBudgets(): Promise<
+  | { budgets: Budget[]; error?: undefined }
+  | { error: string; budgets?: undefined }
+> {
+  const t = await getExtracted()
+  const session = await getCurrentSession()
+
+  if (!session) {
+    return {
+      error: t("Access denied! Please refresh the page and try again."),
+    }
+  }
+
+  return getCachedBudgets(session.user.id)
+}
+
+async function getCachedBudgets(userId: string) {
   "use cache: private"
   cacheTag(`budgets-${userId}`)
 
   const t = await getExtracted()
 
   try {
-    if (!userId) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     const budgetsCollection = await getBudgetsCollection()
 
     const budgets = await budgetsCollection

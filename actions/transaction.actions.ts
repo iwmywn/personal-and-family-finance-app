@@ -182,7 +182,26 @@ export async function deleteTransaction(transactionId: string) {
   }
 }
 
-export async function getTransactions(
+export async function getTransactions(): Promise<
+  | { transactions: Transaction[]; error?: undefined }
+  | { error: string; transactions?: undefined }
+> {
+  const t = await getExtracted()
+  const session = await getCurrentSession()
+
+  if (!session) {
+    return {
+      error: t("Access denied! Please refresh the page and try again."),
+    }
+  }
+
+  return getCachedTransactions(
+    session.user.id,
+    session.user.currency as AppCurrency
+  )
+}
+
+async function getCachedTransactions(
   userId: string,
   targetCurrency: AppCurrency
 ) {
@@ -192,12 +211,6 @@ export async function getTransactions(
   const t = await getExtracted()
 
   try {
-    if (!userId) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     const transactionsCollection = await getTransactionsCollection()
 
     const transactions = await transactionsCollection

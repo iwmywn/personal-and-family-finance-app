@@ -295,19 +295,29 @@ export async function deleteCustomCategory(categoryId: string) {
   }
 }
 
-export async function getCustomCategories(userId: string) {
+export async function getCustomCategories(): Promise<
+  | { customCategories: Category[]; error?: undefined }
+  | { error: string; customCategories?: undefined }
+> {
+  const t = await getExtracted()
+  const session = await getCurrentSession()
+
+  if (!session) {
+    return {
+      error: t("Access denied! Please refresh the page and try again."),
+    }
+  }
+
+  return getCachedCustomCategories(session.user.id)
+}
+
+async function getCachedCustomCategories(userId: string) {
   "use cache: private"
   cacheTag(`categories-${userId}`)
 
   const t = await getExtracted()
 
   try {
-    if (!userId) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     const categoriesCollection = await getCategoriesCollection()
 
     const categories = await categoriesCollection

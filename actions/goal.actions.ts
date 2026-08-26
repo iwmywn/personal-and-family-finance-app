@@ -173,19 +173,28 @@ export async function deleteGoal(goalId: string) {
   }
 }
 
-export async function getGoals(userId: string) {
+export async function getGoals(): Promise<
+  { goals: Goal[]; error?: undefined } | { error: string; goals?: undefined }
+> {
+  const t = await getExtracted()
+  const session = await getCurrentSession()
+
+  if (!session) {
+    return {
+      error: t("Access denied! Please refresh the page and try again."),
+    }
+  }
+
+  return getCachedGoals(session.user.id)
+}
+
+async function getCachedGoals(userId: string) {
   "use cache: private"
   cacheTag(`goals-${userId}`)
 
   const t = await getExtracted()
 
   try {
-    if (!userId) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     const goalsCollection = await getGoalsCollection()
 
     const goals = await goalsCollection

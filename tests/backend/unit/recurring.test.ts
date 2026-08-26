@@ -436,7 +436,7 @@ describe("Recurring Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getRecurringTransactions("")
+      const result = await getRecurringTransactions()
 
       expect(result.recurringTransactions).toBeUndefined()
       expect(result.error).toBe(
@@ -447,7 +447,7 @@ describe("Recurring Transactions", async () => {
     it("should return empty recurring transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString())
+      const result = await getRecurringTransactions()
 
       expect(result.recurringTransactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -457,7 +457,7 @@ describe("Recurring Transactions", async () => {
       await insertTestRecurringTransaction(mockRecurringTransaction)
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString())
+      const result = await getRecurringTransactions()
 
       expect(result.recurringTransactions).toHaveLength(1)
       expect(result.recurringTransactions?.[0].description).toBe(
@@ -491,7 +491,7 @@ describe("Recurring Transactions", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getRecurringTransactions(mockUser._id.toString())
+      const result = await getRecurringTransactions()
 
       expect(result.recurringTransactions).toHaveLength(3)
       // Should be sorted by startDate descendinghen _id descending
@@ -511,7 +511,7 @@ describe("Recurring Transactions", async () => {
       mockAuthenticatedUser()
       mockRecurringTransactionCollectionError()
 
-      const result = await getRecurringTransactions(mockUser._id.toString())
+      const result = await getRecurringTransactions()
 
       expect(result.recurringTransactions).toBeUndefined()
       expect(result.error).toBe(

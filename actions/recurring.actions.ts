@@ -224,19 +224,29 @@ export async function deleteRecurringTransaction(recurringId: string) {
   }
 }
 
-export async function getRecurringTransactions(userId: string) {
+export async function getRecurringTransactions(): Promise<
+  | { recurringTransactions: RecurringTransaction[]; error?: undefined }
+  | { error: string; recurringTransactions?: undefined }
+> {
+  const t = await getExtracted()
+  const session = await getCurrentSession()
+
+  if (!session) {
+    return {
+      error: t("Access denied! Please refresh the page and try again."),
+    }
+  }
+
+  return getCachedRecurringTransactions(session.user.id)
+}
+
+async function getCachedRecurringTransactions(userId: string) {
   "use cache: private"
   cacheTag(`recurringTransactions-${userId}`)
 
   const t = await getExtracted()
 
   try {
-    if (!userId) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     const recurringCollection = await getRecurringTransactionsCollection()
 
     const recurringTransactions = await recurringCollection

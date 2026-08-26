@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation"
 import { GhostIcon } from "lucide-react"
 import { getExtracted } from "next-intl/server"
 
@@ -6,7 +5,6 @@ import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
 import { getGoals } from "@/actions/goal.actions"
 import { getRecurringTransactions } from "@/actions/recurring.actions"
-import { getCurrentSession } from "@/actions/session.actions"
 import { getTransactions } from "@/actions/transaction.actions"
 import {
   Empty,
@@ -20,7 +18,6 @@ import { CategoriesProvider } from "@/context/categories-context"
 import { GoalsProvider } from "@/context/goals-context"
 import { RecurringProvider } from "@/context/recurring-context"
 import { TransactionsProvider } from "@/context/transactions-context"
-import type { AppCurrency } from "@/lib/currency"
 
 export type PageDataProviderProps = {
   children: React.ReactNode
@@ -39,12 +36,7 @@ export async function PageDataProvider({
   goals,
   recurring,
 }: PageDataProviderProps) {
-  const session = await getCurrentSession()
-  if (!session) redirect("/signin")
-
-  const userId = session.user.id
   const t = await getExtracted()
-  const currency = session.user.currency as AppCurrency
 
   const [
     transactionsResult,
@@ -53,11 +45,11 @@ export async function PageDataProvider({
     goalsResult,
     recurringResult,
   ] = await Promise.all([
-    transactions ? getTransactions(userId, currency) : Promise.resolve(null),
-    categories ? getCustomCategories(userId) : Promise.resolve(null),
-    budgets ? getBudgets(userId) : Promise.resolve(null),
-    goals ? getGoals(userId) : Promise.resolve(null),
-    recurring ? getRecurringTransactions(userId) : Promise.resolve(null),
+    transactions ? getTransactions() : Promise.resolve(null),
+    categories ? getCustomCategories() : Promise.resolve(null),
+    budgets ? getBudgets() : Promise.resolve(null),
+    goals ? getGoals() : Promise.resolve(null),
+    recurring ? getRecurringTransactions() : Promise.resolve(null),
   ])
 
   const renderEmptyState = (title: string, description?: string) => (

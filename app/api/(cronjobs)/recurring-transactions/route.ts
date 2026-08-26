@@ -7,7 +7,6 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
-import { localDateToUTCMidnight } from "@/lib/utils"
 
 import { shouldGenerateToday } from "./utils"
 
@@ -25,7 +24,10 @@ export async function GET(request: NextRequest) {
       getRecurringTransactionsCollection(),
     ])
 
-    const todayUTC = localDateToUTCMidnight(new Date())
+    const now = new Date()
+    const todayUTC = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+    )
 
     const deactivatedResult = await recurringCollection.updateMany(
       {

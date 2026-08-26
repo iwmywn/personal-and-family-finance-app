@@ -2,10 +2,9 @@ import type {
   DBRecurringTransaction,
   RecurringTransaction,
 } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 
 function getLastDayOfMonth(year: number, month: number): number {
-  return new Date(Date.UTC(year, month + 1, 0)).getDate()
+  return new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
 }
 
 function normalizeDay(year: number, month: number, day: number): number {
@@ -13,48 +12,58 @@ function normalizeDay(year: number, month: number, day: number): number {
   return Math.min(day, last)
 }
 
-function addDays(lastGeneratedUTC: Date, days: number) {
-  return localDateToUTCMidnight(
-    new Date(lastGeneratedUTC.getTime() + days * 86400000)
+function addDays(lastGeneratedUTC: Date, days: number): Date {
+  return new Date(lastGeneratedUTC.getTime() + days * 86400000)
+}
+
+function nextMonthlyDate(lastGeneratedUTC: Date, startDateUTC: Date): Date {
+  const y = lastGeneratedUTC.getUTCFullYear()
+  const m = lastGeneratedUTC.getUTCMonth() + 1
+  const targetDay = Math.max(
+    startDateUTC.getUTCDate(),
+    lastGeneratedUTC.getUTCDate()
   )
+  return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
 }
 
-function nextMonthlyDate(lastGeneratedUTC: Date): Date {
-  const y = lastGeneratedUTC.getFullYear()
-  const m = lastGeneratedUTC.getMonth() + 1
-  const d = lastGeneratedUTC.getDate()
-  return new Date(Date.UTC(y, m, normalizeDay(y, m, d)))
+function nextQuarterlyDate(lastGeneratedUTC: Date, startDateUTC: Date): Date {
+  const y = lastGeneratedUTC.getUTCFullYear()
+  const m = lastGeneratedUTC.getUTCMonth() + 3
+  const targetDay = Math.max(
+    startDateUTC.getUTCDate(),
+    lastGeneratedUTC.getUTCDate()
+  )
+  return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
 }
 
-function nextQuarterlyDate(lastGeneratedUTC: Date): Date {
-  const y = lastGeneratedUTC.getFullYear()
-  const m = lastGeneratedUTC.getMonth() + 3
-  const d = lastGeneratedUTC.getDate()
-  return new Date(Date.UTC(y, m, normalizeDay(y, m, d)))
-}
-
-function nextYearlyDate(lastGeneratedUTC: Date): Date {
-  const y = lastGeneratedUTC.getFullYear() + 1
-  const m = lastGeneratedUTC.getMonth()
-  const d = lastGeneratedUTC.getDate()
-  return new Date(Date.UTC(y, m, normalizeDay(y, m, d)))
+function nextYearlyDate(lastGeneratedUTC: Date, startDateUTC: Date): Date {
+  const y = lastGeneratedUTC.getUTCFullYear() + 1
+  const targetMonth = startDateUTC.getUTCMonth()
+  const targetDay = Math.max(
+    startDateUTC.getUTCDate(),
+    lastGeneratedUTC.getUTCDate()
+  )
+  return new Date(
+    Date.UTC(y, targetMonth, normalizeDay(y, targetMonth, targetDay))
+  )
 }
 
 export function getNextDate(
   rec: DBRecurringTransaction | RecurringTransaction,
   todayUTC: Date
 ): Date {
+  const startDate = new Date(rec.startDate)
+
   // if no last generated date, return the start date
   if (!rec.lastGenerated) {
-    const startDate = localDateToUTCMidnight(rec.startDate)
     // if we've missed the start date, return today
     if (todayUTC > startDate) {
-      return localDateToUTCMidnight(todayUTC)
+      return new Date(todayUTC.getTime())
     }
     return startDate
   }
 
-  const lastGeneratedUTC = localDateToUTCMidnight(rec.lastGenerated)
+  const lastGeneratedUTC = new Date(rec.lastGenerated)
 
   let nextDate: Date
   switch (rec.frequency) {
@@ -71,15 +80,15 @@ export function getNextDate(
       break
 
     case "monthly":
-      nextDate = nextMonthlyDate(lastGeneratedUTC)
+      nextDate = nextMonthlyDate(lastGeneratedUTC, startDate)
       break
 
     case "quarterly":
-      nextDate = nextQuarterlyDate(lastGeneratedUTC)
+      nextDate = nextQuarterlyDate(lastGeneratedUTC, startDate)
       break
 
     case "yearly":
-      nextDate = nextYearlyDate(lastGeneratedUTC)
+      nextDate = nextYearlyDate(lastGeneratedUTC, startDate)
       break
 
     case "random":
@@ -90,7 +99,7 @@ export function getNextDate(
   // if we've missed the next date, return today
   // (e.g., when recurring transaction was deactivated and then reactivated)
   if (todayUTC > nextDate) {
-    return localDateToUTCMidnight(todayUTC)
+    return new Date(todayUTC.getTime())
   }
 
   return nextDate
@@ -98,9 +107,9 @@ export function getNextDate(
 
 function isSameDate(a: Date, b: Date) {
   return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
+    a.getUTCFullYear() === b.getUTCFullYear() &&
+    a.getUTCMonth() === b.getUTCMonth() &&
+    a.getUTCDate() === b.getUTCDate()
   )
 }
 
@@ -108,8 +117,8 @@ export function shouldGenerateToday(
   rec: DBRecurringTransaction,
   todayUTC: Date
 ): boolean {
-  const startUTC = localDateToUTCMidnight(rec.startDate)
-  const endUTC = rec.endDate ? localDateToUTCMidnight(rec.endDate) : null
+  const startUTC = new Date(rec.startDate)
+  const endUTC = rec.endDate ? new Date(rec.endDate) : null
 
   if (todayUTC < startUTC || (endUTC && todayUTC > endUTC)) {
     return false

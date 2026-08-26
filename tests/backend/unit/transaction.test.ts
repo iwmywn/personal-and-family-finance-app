@@ -320,7 +320,7 @@ describe("Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getTransactions("", "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(
@@ -331,7 +331,7 @@ describe("Transactions", async () => {
     it("should return empty transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -341,7 +341,7 @@ describe("Transactions", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toHaveLength(1)
       expect(result.transactions?.[0].description).toBe("hamburger")
@@ -373,7 +373,7 @@ describe("Transactions", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toHaveLength(3)
       // Should be sorted by date descendinghen _id descending
@@ -389,7 +389,7 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(
