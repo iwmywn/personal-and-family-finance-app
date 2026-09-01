@@ -1,3 +1,9 @@
+## [26.36.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v26.32.0...v26.36.0)
+
+### Features
+
+- add admin page and fix some stuff (@iwmywn) ([#21](https://github.com/iwmywn/personal-and-family-finance-app/pull/21)) ([3cfb3ac](https://github.com/iwmywn/personal-and-family-finance-app/commit/3cfb3ac8e809238cec929c7099d66e109544080f))
+
 ## [26.32.0](https://github.com/iwmywn/personal-and-family-finance-app/compare/v26.27.0...v26.32.0)
 
 ### Nerd stuff
