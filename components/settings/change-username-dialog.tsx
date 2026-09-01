@@ -30,25 +30,24 @@ import {
 import { Input } from "@/components/ui/input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 import type { UsernameFormValues } from "@/schemas/types"
 
 export function ChangeUsernameDialog() {
   const t = useExtracted()
-  const { createUsernameSchema } = useSchemas()
-
   const router = useRouter()
   const { user } = useUser()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const { createUsernameSchema } = useSchemas()
   const form = useForm<UsernameFormValues>({
     resolver: zodResolver(createUsernameSchema()),
     defaultValues: {
       username: user.username || "",
     },
   })
-  const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: UsernameFormValues) {
-    const { data: response, error } = await client.isUsernameAvailable({
+    const { data: response, error } = await authClient.isUsernameAvailable({
       username: values.username,
     })
 
@@ -59,17 +58,17 @@ export function ChangeUsernameDialog() {
     } else if (!response.available && user.username !== values.username) {
       toast.error(t("This username is already taken."))
     } else {
-      await client.updateUser({
+      await authClient.updateUser({
         username: values.username,
         fetchOptions: {
           onError: () => {
             toast.error(t("Failed to update username! Please try again later."))
           },
           onSuccess: () => {
-            router.refresh()
+            setIsOpen(false)
             toast.success(t("Your username has been changed."))
+            router.refresh()
             form.reset({ username: values.username })
-            setOpen(false)
           },
         },
       })
@@ -77,7 +76,7 @@ export function ChangeUsernameDialog() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">{t("Change Username")}</Button>
       </DialogTrigger>

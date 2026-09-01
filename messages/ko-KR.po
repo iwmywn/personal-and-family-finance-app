@@ -4,14 +4,55 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: next-intl\n"
-"X-Crowdin-SourceKey: msgstr\n"
+"X-Message-Key: msgctxt\n"
+
+#: actions/admin.actions.ts
+msgctxt "fyjUn0"
+msgid "Access denied! Admin privileges required."
+msgstr "액세스가 거부되었습니다! 관리자 권한이 필요합니다."
+
+#: actions/admin.actions.ts
+msgctxt "gREMXx"
+msgid "Failed to fetch admin stats! Please try again later."
+msgstr "관리자 통계를 가져오지 못했습니다! 나중에 다시 시도해주세요."
+
+#: actions/admin.actions.ts
+msgctxt "fVUGHi"
+msgid "Failed to load users! Please try again later."
+msgstr "사용자 목록을 불러오지 못했습니다! 나중에 다시 시도해주세요."
+
+#: actions/admin.actions.ts
+msgctxt "GBsD3h"
+msgid "Invalid user ID!"
+msgstr "잘못된 사용자 ID입니다!"
+
+#: actions/admin.actions.ts
+msgctxt "ScDYhZ"
+msgid "You cannot delete your own account!"
+msgstr "본인 계정은 삭제할 수 없습니다!"
+
+#: actions/admin.actions.ts
+msgctxt "foC3a6"
+msgid "User not found!"
+msgstr "사용자를 찾을 수 없습니다!"
+
+#: actions/admin.actions.ts
+msgctxt "7l4h1s"
+msgid "User has been deleted."
+msgstr "사용자가 삭제되었습니다."
+
+#: actions/admin.actions.ts
+msgctxt "xkkfdF"
+msgid "Failed to delete user! Please try again later."
+msgstr "사용자 삭제에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
 #: actions/recurring.actions.ts
 #: actions/transaction.actions.ts
-msgid "5GmpFA"
+msgctxt "5GmpFA"
+msgid "Invalid data!"
 msgstr "잘못된 데이터입니다!"
 
 #: actions/budget.actions.ts
@@ -19,405 +60,1052 @@ msgstr "잘못된 데이터입니다!"
 #: actions/goal.actions.ts
 #: actions/recurring.actions.ts
 #: actions/transaction.actions.ts
-msgid "QWvB5t"
+msgctxt "QWvB5t"
+msgid "Access denied! Please refresh the page and try again."
 msgstr "접근이 거부되었습니다! 페이지를 새로고침하고 다시 시도해주세요."
 
 #: actions/budget.actions.ts
-msgid "kwvIdb"
+msgctxt "kwvIdb"
+msgid "This budget already exists!"
 msgstr "이 예산이 이미 존재합니다!"
 
 #: actions/budget.actions.ts
-msgid "ge_1ga"
-msgstr "예산 추가에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: actions/budget.actions.ts
-msgid "hcutYI"
+msgctxt "hcutYI"
+msgid "Budget has been added."
 msgstr "예산이 추가되었습니다."
 
 #: actions/budget.actions.ts
-msgid "3pMkv5"
+msgctxt "ge_1ga"
+msgid "Failed to add budget! Please try again later."
+msgstr "예산 추가에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/budget.actions.ts
+msgctxt "3pMkv5"
+msgid "Invalid budget ID!"
 msgstr "잘못된 예산 ID입니다!"
 
 #: actions/budget.actions.ts
-msgid "5BmD1W"
+msgctxt "5BmD1W"
+msgid "Budget not found or you don't have permission to edit!"
 msgstr "예산을 찾을 수 없거나 편집 권한이 없습니다!"
 
 #: actions/budget.actions.ts
-msgid "Ipw0W1"
+msgctxt "Ipw0W1"
+msgid "Budget has been updated."
 msgstr "예산이 업데이트되었습니다."
 
 #: actions/budget.actions.ts
-msgid "ZUfwUz"
+msgctxt "ZUfwUz"
+msgid "Failed to update budget! Please try again later."
 msgstr "예산 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/budget.actions.ts
-msgid "fDrjqQ"
+msgctxt "fDrjqQ"
+msgid "Budget not found or you don't have permission to delete!"
 msgstr "예산을 찾을 수 없거나 삭제 권한이 없습니다!"
 
 #: actions/budget.actions.ts
-msgid "GeSZei"
+msgctxt "GeSZei"
+msgid "Budget has been deleted."
 msgstr "예산이 삭제되었습니다."
 
 #: actions/budget.actions.ts
-msgid "niO8qC"
+msgctxt "niO8qC"
+msgid "Failed to delete budget! Please try again later."
 msgstr "예산 삭제에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/budget.actions.ts
-msgid "xFeLWs"
+msgctxt "xFeLWs"
+msgid "Failed to load budgets! Please try again later."
 msgstr "예산을 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/category.actions.ts
-msgid "LzesyV"
+msgctxt "LzesyV"
+msgid "This category already exists!"
 msgstr "이 카테고리가 이미 존재합니다!"
 
 #: actions/category.actions.ts
-msgid "G0Twr1"
+msgctxt "G0Twr1"
+msgid "Error creating category key! Please try again later."
 msgstr "카테고리 키 생성 오류! 나중에 다시 시도해주세요."
 
 #: actions/category.actions.ts
-msgid "OQ79b6"
-msgstr "카테고리 추가에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: actions/category.actions.ts
-msgid "Jfen4M"
+msgctxt "Jfen4M"
+msgid "Category has been added."
 msgstr "카테고리가 추가되었습니다."
 
 #: actions/category.actions.ts
-msgid "TgxdcM"
+msgctxt "OQ79b6"
+msgid "Failed to add category! Please try again later."
+msgstr "카테고리 추가에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/category.actions.ts
+msgctxt "TgxdcM"
+msgid "Invalid category ID!"
 msgstr "잘못된 카테고리 ID입니다!"
 
 #: actions/category.actions.ts
-msgid "Jau5xo"
+msgctxt "Jau5xo"
+msgid "Category not found or you don't have permission to edit!"
 msgstr "카테고리를 찾을 수 없거나 편집 권한이 없습니다!"
 
 #: actions/category.actions.ts
-msgid "RMEY96"
+msgctxt "RMEY96"
+msgid "Category has been updated."
 msgstr "카테고리가 업데이트되었습니다."
 
 #: actions/category.actions.ts
-msgid "PoUgbk"
+msgctxt "PoUgbk"
+msgid "Failed to update category! Please try again later."
 msgstr "카테고리 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/category.actions.ts
-msgid "IzwrSe"
+msgctxt "IzwrSe"
+msgid "Category not found or you don't have permission to delete!"
 msgstr "카테고리를 찾을 수 없거나 삭제 권한이 없습니다!"
 
 #: actions/category.actions.ts
-msgid "SyYZuO"
+msgctxt "SyYZuO"
+msgid "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first."
 msgstr "카테고리를 삭제할 수 없습니다. 이 카테고리를 사용하는 거래가 {count}개 있습니다. 먼저 해당 거래를 삭제해주세요."
 
 #: actions/category.actions.ts
-msgid "iNZspt"
+msgctxt "iNZspt"
+msgid "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first."
 msgstr "카테고리를 삭제할 수 없습니다. 이 카테고리를 사용하는 예산이 {count}개 있습니다. 먼저 해당 예산을 삭제해주세요."
 
 #: actions/category.actions.ts
-msgid "C7NEmI"
+msgctxt "C7NEmI"
+msgid "Cannot delete category. There are {count} goals using this category. Please delete those goals first."
 msgstr "카테고리를 삭제할 수 없습니다. 이 카테고리를 사용하는 목표가 {count}개 있습니다. 먼저 해당 목표를 삭제해주세요."
 
 #: actions/category.actions.ts
-msgid "Q_Y_ED"
+msgctxt "Q_Y_ED"
+msgid "Cannot delete category. There are {count} recurring transactions using this category. Please delete those recurring transactions first."
 msgstr "카테고리를 삭제할 수 없습니다. 이 카테고리를 사용하는 반복 거래가 {count}개 있습니다. 먼저 해당 반복 거래를 삭제해주세요."
 
 #: actions/category.actions.ts
-msgid "7Al4tw"
+msgctxt "7Al4tw"
+msgid "Category has been deleted."
 msgstr "카테고리가 삭제되었습니다."
 
 #: actions/category.actions.ts
-msgid "XWfgXI"
+msgctxt "XWfgXI"
+msgid "Failed to delete category! Please try again later."
 msgstr "카테고리 삭제에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/category.actions.ts
-msgid "gzfdvr"
+msgctxt "gzfdvr"
+msgid "Failed to load custom categories! Please try again later."
 msgstr "사용자 정의 카테고리를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/goal.actions.ts
-msgid "3SCa_T"
+msgctxt "3SCa_T"
+msgid "This goal already exists!"
 msgstr "이 목표가 이미 존재합니다!"
 
 #: actions/goal.actions.ts
-msgid "9Buhj_"
-msgstr "목표 추가에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: actions/goal.actions.ts
-msgid "J-nrjG"
+msgctxt "J-nrjG"
+msgid "Goal has been added."
 msgstr "목표가 추가되었습니다."
 
 #: actions/goal.actions.ts
-msgid "7UB8uM"
+msgctxt "9Buhj_"
+msgid "Failed to add goal! Please try again later."
+msgstr "목표 추가에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/goal.actions.ts
+msgctxt "7UB8uM"
+msgid "Invalid goal ID!"
 msgstr "잘못된 목표 ID입니다!"
 
 #: actions/goal.actions.ts
-msgid "iQpYZg"
+msgctxt "iQpYZg"
+msgid "Goal not found or you don't have permission to edit!"
 msgstr "목표를 찾을 수 없거나 편집 권한이 없습니다!"
 
 #: actions/goal.actions.ts
-msgid "SpmGQk"
+msgctxt "SpmGQk"
+msgid "Goal has been updated."
 msgstr "목표가 업데이트되었습니다."
 
 #: actions/goal.actions.ts
-msgid "Lmu8yS"
+msgctxt "Lmu8yS"
+msgid "Failed to update goal! Please try again later."
 msgstr "목표 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/goal.actions.ts
-msgid "Av4WTA"
+msgctxt "Av4WTA"
+msgid "Goal not found or you don't have permission to delete!"
 msgstr "목표를 찾을 수 없거나 삭제 권한이 없습니다!"
 
 #: actions/goal.actions.ts
-msgid "MT417I"
+msgctxt "MT417I"
+msgid "Goal has been deleted."
 msgstr "목표가 삭제되었습니다."
 
 #: actions/goal.actions.ts
-msgid "uwewg6"
+msgctxt "uwewg6"
+msgid "Failed to delete goal! Please try again later."
 msgstr "목표 삭제에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/goal.actions.ts
-msgid "xwvGbl"
+msgctxt "xwvGbl"
+msgid "Failed to load goals! Please try again later."
 msgstr "목표를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/recurring.actions.ts
-msgid "-HBMWc"
+msgctxt "-HBMWc"
+msgid "This recurring transaction already exists!"
 msgstr "이 반복 거래가 이미 존재합니다!"
 
 #: actions/recurring.actions.ts
-msgid "FLPmpu"
-msgstr "반복 거래 추가에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: actions/recurring.actions.ts
-msgid "5Mtoe5"
+msgctxt "5Mtoe5"
+msgid "Recurring transaction has been added."
 msgstr "반복 거래가 추가되었습니다."
 
 #: actions/recurring.actions.ts
-msgid "Yamhgo"
+msgctxt "FLPmpu"
+msgid "Failed to add recurring transaction! Please try again later."
+msgstr "반복 거래 추가에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/recurring.actions.ts
+msgctxt "Yamhgo"
+msgid "Invalid recurring transaction ID!"
 msgstr "잘못된 반복 거래 ID입니다!"
 
 #: actions/recurring.actions.ts
-msgid "oyoqPq"
+msgctxt "oyoqPq"
+msgid "Recurring transaction not found or you don't have permission to edit."
 msgstr "반복 거래를 찾을 수 없거나 편집 권한이 없습니다."
 
 #: actions/recurring.actions.ts
-msgid "FgrcGc"
+msgctxt "FgrcGc"
+msgid "Recurring transaction has been updated."
 msgstr "반복 거래가 업데이트되었습니다."
 
 #: actions/recurring.actions.ts
-msgid "qlYMTi"
+msgctxt "qlYMTi"
+msgid "Failed to update recurring transaction! Please try again later."
 msgstr "반복 거래 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/recurring.actions.ts
-msgid "TJXAsr"
+msgctxt "TJXAsr"
+msgid "Recurring transaction not found or you don't have permission to delete!"
 msgstr "반복 거래를 찾을 수 없거나 삭제 권한이 없습니다!"
 
 #: actions/recurring.actions.ts
-msgid "0L6Kzl"
+msgctxt "0L6Kzl"
+msgid "Recurring transaction has been deleted."
 msgstr "반복 거래가 삭제되었습니다."
 
 #: actions/recurring.actions.ts
-msgid "9p5fYg"
+msgctxt "9p5fYg"
+msgid "Failed to delete recurring transaction! Please try again later."
 msgstr "반복 거래 삭제에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/recurring.actions.ts
-msgid "D92YlY"
+msgctxt "D92YlY"
+msgid "Failed to load recurring transactions! Please try again later."
 msgstr "반복 거래를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/transaction.actions.ts
-msgid "v-aP8j"
+msgctxt "v-aP8j"
+msgid "This transaction has already been created today!"
 msgstr "이 거래는 오늘 이미 생성되었습니다!"
 
 #: actions/transaction.actions.ts
-msgid "zb35o3"
-msgstr "거래 추가에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: actions/transaction.actions.ts
-msgid "pU1r4y"
+msgctxt "pU1r4y"
+msgid "Transaction has been added."
 msgstr "거래가 추가되었습니다."
 
 #: actions/transaction.actions.ts
-msgid "w_J6M7"
+msgctxt "zb35o3"
+msgid "Failed to add transaction! Please try again later."
+msgstr "거래 추가에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/transaction.actions.ts
+msgctxt "w_J6M7"
+msgid "Invalid transaction ID!"
 msgstr "잘못된 거래 ID입니다!"
 
 #: actions/transaction.actions.ts
-msgid "qyC85x"
+msgctxt "qyC85x"
+msgid "Transaction not found or you don't have permission to edit!"
 msgstr "거래를 찾을 수 없거나 편집 권한이 없습니다!"
 
 #: actions/transaction.actions.ts
-msgid "VHOeqA"
+msgctxt "VHOeqA"
+msgid "Transaction has been updated."
 msgstr "거래가 업데이트되었습니다."
 
 #: actions/transaction.actions.ts
-msgid "A9rBEo"
+msgctxt "A9rBEo"
+msgid "Failed to update transaction! Please try again later."
 msgstr "거래 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/transaction.actions.ts
-msgid "Fxn2_P"
+msgctxt "Fxn2_P"
+msgid "Transaction not found or you don't have permission to delete!"
 msgstr "거래를 찾을 수 없거나 삭제 권한이 없습니다!"
 
 #: actions/transaction.actions.ts
-msgid "tz6kfd"
+msgctxt "tz6kfd"
+msgid "Transaction has been deleted."
 msgstr "거래가 삭제되었습니다."
 
 #: actions/transaction.actions.ts
-msgid "DcqDur"
+msgctxt "DcqDur"
+msgid "Failed to delete transaction! Please try again later."
 msgstr "거래 삭제에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/transaction.actions.ts
-msgid "-VVz7r"
+msgctxt "-VVz7r"
+msgid "Failed to load transactions! Please try again later."
 msgstr "거래를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: app/(auth)/signin/page.tsx
 #: components/auth/signin-form.tsx
-msgid "Ub-AGc"
+msgctxt "Ub-AGc"
+msgid "Sign In"
 msgstr "로그인"
 
 #: app/(auth)/signin/page.tsx
-msgid "gvGdmL"
+msgctxt "gvGdmL"
+msgid "Enter your username and password to sign in to your account."
 msgstr "계정에 로그인하려면 사용자 이름과 비밀번호를 입력하세요."
 
 #: app/(auth)/two-factor/page.tsx
 #: components/settings/settings-page.tsx
-msgid "AJyYQz"
+msgctxt "AJyYQz"
+msgid "Two-Factor Authentication"
 msgstr "2단계 인증"
 
 #: app/(auth)/two-factor/page.tsx
-msgid "PsYaj1"
+msgctxt "PsYaj1"
+msgid "Enter the code from your authenticator app."
 msgstr "인증 앱의 코드를 입력하세요."
 
 #: app/(core)/[...not-found]/page.tsx
 #: components/layout/header.tsx
-msgid "k1s9UW"
+msgctxt "k1s9UW"
+msgid "Not Found"
 msgstr "찾을 수 없음"
 
 #: app/(core)/[...not-found]/page.tsx
-msgid "QRccCM"
+msgctxt "QRccCM"
+msgid "Page not found"
 msgstr "페이지를 찾을 수 없습니다"
 
 #: app/(core)/[...not-found]/page.tsx
-msgid "yAbaof"
+msgctxt "yAbaof"
+msgid "The page you are looking for does not exist."
 msgstr "찾고 계신 페이지가 존재하지 않습니다."
 
 #: app/(core)/[...not-found]/page.tsx
 #: app/error.tsx
-msgid "kfoc7z"
+msgctxt "kfoc7z"
+msgid "Back to Home"
 msgstr "홈으로 돌아가기"
+
+#: app/(core)/admin/page.tsx
+#: components/admin/admin-page.tsx
+msgctxt "cH9uli"
+msgid "Admin Management"
+msgstr "관리자 관리"
+
+#: app/(core)/admin/page.tsx
+msgctxt "tt-u4j"
+msgid "CANNOT FETCH ADMIN STATS DATA"
+msgstr "관리자 통계 데이터를 가져올 수 없습니다"
+
+#: app/(core)/admin/page.tsx
+msgctxt "8O4Aqk"
+msgid "CANNOT FETCH USERS DATA"
+msgstr "사용자 데이터를 가져올 수 없습니다"
 
 #: app/(core)/budgets/page.tsx
 #: components/budgets/budgets-page.tsx
 #: hooks/use-nav.ts
-msgid "mJeXSX"
+msgctxt "mJeXSX"
+msgid "Budgets"
 msgstr "예산"
 
 #: app/(core)/categories/page.tsx
 #: components/categories/categories-page.tsx
 #: hooks/use-nav.ts
-msgid "VKb1MS"
+msgctxt "VKb1MS"
+msgid "Categories"
 msgstr "카테고리"
 
 #: app/(core)/goals/page.tsx
 #: components/goals/goals-page.tsx
 #: hooks/use-nav.ts
-msgid "XHLYdJ"
+msgctxt "XHLYdJ"
+msgid "Goals"
 msgstr "목표"
 
 #: app/(core)/home/page.tsx
 #: components/layout/header.tsx
 #: hooks/use-nav.ts
-msgid "ejEGdx"
+msgctxt "ejEGdx"
+msgid "Home"
 msgstr "홈"
 
 #: app/(core)/recurring/page.tsx
-msgid "VgzOzy"
+msgctxt "VgzOzy"
+msgid "Recurring Transactions"
 msgstr "반복 거래"
 
 #: app/(core)/settings/page.tsx
 #: hooks/use-nav.ts
-msgid "D3idYv"
+msgctxt "D3idYv"
+msgid "Settings"
 msgstr "설정"
 
 #: app/(core)/statistics/page.tsx
 #: components/statistics/statistics-page.tsx
 #: hooks/use-nav.ts
-msgid "H3eDAS"
+msgctxt "H3eDAS"
+msgid "Statistics"
 msgstr "통계"
 
 #: app/(core)/transactions/page.tsx
 #: components/transactions/transactions-page.tsx
 #: hooks/use-nav.ts
-msgid "_jJLYy"
+msgctxt "_jJLYy"
+msgid "Transactions"
 msgstr "거래"
 
 #: app/error.tsx
-msgid "_WMCDd"
+msgctxt "_WMCDd"
+msgid "Something went wrong!"
 msgstr "문제가 발생했습니다!"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
-msgid "hyu_OZ"
+msgctxt "hyu_OZ"
+msgid "Personal & Family Finance App"
 msgstr "개인 및 가족 재정 앱"
 
+#: components/admin/admin-filters.tsx
+msgctxt "OhG9l2"
+msgid "Search by name, email or username..."
+msgstr "이름, 이메일 또는 사용자 이름으로 검색..."
+
+#: components/admin/admin-filters.tsx
+#: components/admin/admin-table.tsx
+#: components/admin/change-role-dialog.tsx
+#: components/admin/create-user-dialog.tsx
+msgctxt "1ZgrhW"
+msgid "Role"
+msgstr "역할"
+
+#: components/admin/admin-filters.tsx
+msgctxt "9nrF-x"
+msgid "All Roles"
+msgstr "모든 역할"
+
+#: components/admin/admin-filters.tsx
+#: components/admin/admin-table.tsx
+msgctxt "MipOkg"
+msgid "Superadmin"
+msgstr "최고 관리자"
+
+#: components/admin/admin-filters.tsx
+#: components/admin/admin-table.tsx
+#: components/admin/change-role-dialog.tsx
+#: components/admin/create-user-dialog.tsx
+#: hooks/use-nav.ts
+msgctxt "iHN12u"
+msgid "Admin"
+msgstr "관리자"
+
+#: components/admin/admin-filters.tsx
+#: components/admin/admin-table.tsx
+#: components/admin/change-role-dialog.tsx
+#: components/admin/create-user-dialog.tsx
+msgctxt "EwRIOm"
+msgid "User"
+msgstr "사용자"
+
+#: components/admin/admin-filters.tsx
+#: components/admin/admin-table.tsx
+#: components/budgets/budget-filters.tsx
+#: components/budgets/budgets-table.tsx
+#: components/goals/goal-filters.tsx
+#: components/goals/goals-table.tsx
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
+#: components/recurring-transactions/recurring-transactions-filters.tsx
+#: components/recurring-transactions/recurring-transactions-table.tsx
+msgctxt "tzMNF3"
+msgid "Status"
+msgstr "상태"
+
+#: components/admin/admin-filters.tsx
+msgctxt "rOCnRE"
+msgid "All Status"
+msgstr "모든 상태"
+
+#: components/admin/admin-filters.tsx
+#: components/admin/admin-table.tsx
+#: components/budgets/budget-filters.tsx
+#: components/budgets/budgets-table.tsx
+#: components/goals/goal-filters.tsx
+#: components/goals/goals-table.tsx
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
+#: components/recurring-transactions/recurring-transactions-filters.tsx
+#: components/recurring-transactions/recurring-transactions-table.tsx
+msgctxt "3a5wL8"
+msgid "Active"
+msgstr "활성"
+
+#: components/admin/admin-filters.tsx
+#: components/admin/admin-table.tsx
+msgctxt "xerM7K"
+msgid "Banned"
+msgstr "차단됨"
+
+#: components/admin/admin-filters.tsx
+#: components/budgets/budget-filters.tsx
+#: components/categories/category-filters.tsx
+#: components/goals/goal-filters.tsx
+#: components/recurring-transactions/recurring-transactions-filters.tsx
+#: components/statistics/statistics-filters.tsx
+#: components/transactions/transaction-filters.tsx
+msgctxt "jm_spn"
+msgid "Reset"
+msgstr "초기화"
+
+#: components/admin/admin-page.tsx
+msgctxt "1zjJZd"
+msgid "Manage application users, system roles, bans, sessions, and security."
+msgstr "애플리케이션 사용자, 시스템 역할, 차단, 세션 및 보안을 관리합니다."
+
+#: components/admin/admin-page.tsx
+#: components/admin/create-user-dialog.tsx
+msgctxt "VzzYJk"
+msgid "Create"
+msgstr "만들기"
+
+#: components/admin/admin-summary.tsx
+msgctxt "_VwiLT"
+msgid "Total Users"
+msgstr "총 사용자"
+
+#: components/admin/admin-summary.tsx
+msgctxt "u1zcPD"
+msgid "Registered accounts"
+msgstr "등록된 계정"
+
+#: components/admin/admin-summary.tsx
+msgctxt "ef3MBS"
+msgid "Active Users"
+msgstr "활성 사용자"
+
+#: components/admin/admin-summary.tsx
+msgctxt "JF77CI"
+msgid "Unrestricted access"
+msgstr "제한 없는 액세스"
+
+#: components/admin/admin-summary.tsx
+msgctxt "wYqhC-"
+msgid "Banned Users"
+msgstr "차단된 사용자"
+
+#: components/admin/admin-summary.tsx
+msgctxt "Gbylqs"
+msgid "Suspended accounts"
+msgstr "정지된 계정"
+
+#: components/admin/admin-summary.tsx
+msgctxt "Jbk2QV"
+msgid "Administrators"
+msgstr "관리자"
+
+#: components/admin/admin-summary.tsx
+msgctxt "OiRy0L"
+msgid "Full system privileges"
+msgstr "전체 시스템 권한"
+
+#: components/admin/admin-table.tsx
+msgctxt "CmAAQL"
+msgid "This user has been banned."
+msgstr "이 사용자는 차단되었습니다."
+
+#: components/admin/admin-table.tsx
+msgctxt "P9IC11"
+msgid "Failed to impersonate user! Please try again later."
+msgstr "사용자 가장에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/admin/admin-table.tsx
+msgctxt "XPKwtM"
+msgid "Now impersonating"
+msgstr "현재 가장 중:"
+
+#: components/admin/admin-table.tsx
+msgctxt "XWcjJb"
+msgid "No users found"
+msgstr "사용자를 찾을 수 없습니다"
+
+#: components/admin/admin-table.tsx
+msgctxt "jaQOyZ"
+msgid "There are no users registered yet."
+msgstr "아직 등록된 사용자가 없습니다."
+
+#: components/admin/admin-table.tsx
+msgctxt "TbCODX"
+msgid "No users match the selected search query or filters."
+msgstr "선택한 검색어 또는 필터와 일치하는 사용자가 없습니다."
+
+#: components/admin/admin-table.tsx
+#: components/admin/create-user-dialog.tsx
+msgctxt "sy-pv5"
+msgid "Email"
+msgstr "이메일"
+
+#: components/admin/admin-table.tsx
+msgctxt "U26R1k"
+msgid "Joined Date"
+msgstr "가입일"
+
+#: components/admin/admin-table.tsx
+msgctxt "Z8971h"
+msgid "Verified"
+msgstr "인증됨"
+
+#: components/admin/admin-table.tsx
+msgctxt "IAopzB"
+msgid "Email address is verified"
+msgstr "이메일 주소가 인증되었습니다"
+
+#: components/admin/admin-table.tsx
+msgctxt "n9fdaJ"
+msgid "Unverified"
+msgstr "미인증"
+
+#: components/admin/admin-table.tsx
+msgctxt "GPpolD"
+msgid "Email address is not yet verified"
+msgstr "이메일 주소가 아직 인증되지 않았습니다"
+
+#: components/admin/admin-table.tsx
+msgctxt "yXnEV2"
+msgid "No reason"
+msgstr "사유 없음"
+
+#: components/admin/admin-table.tsx
+msgctxt "xhQMeQ"
+msgid "Expires"
+msgstr "만료"
+
+#: components/admin/admin-table.tsx
+#: components/budgets/budgets-table.tsx
+#: components/categories/categories-table.tsx
+#: components/goals/goals-table.tsx
+#: components/recurring-transactions/recurring-transactions-table.tsx
+#: components/statistics/statistics-table.tsx
+#: components/transactions/transactions-table.tsx
+msgctxt "bdcMGy"
+msgid "Open menu"
+msgstr "메뉴 열기"
+
+#: components/admin/admin-table.tsx
+msgctxt "hQZhn8"
+msgid "Impersonate"
+msgstr "가장"
+
+#: components/admin/admin-table.tsx
+msgctxt "RXkfY1"
+msgid "Change Role"
+msgstr "역할 변경"
+
+#: components/admin/admin-table.tsx
+msgctxt "xl27nc"
+msgid "Reset Password"
+msgstr "비밀번호 재설정"
+
+#: components/admin/admin-table.tsx
+#: components/admin/ban-user-dialog.tsx
+msgctxt "6U4eIn"
+msgid "Unban"
+msgstr "차단 해제"
+
+#: components/admin/admin-table.tsx
+#: components/admin/ban-user-dialog.tsx
+msgctxt "XtUrMc"
+msgid "Ban"
+msgstr "차단"
+
+#: components/admin/admin-table.tsx
+#: components/admin/delete-user-dialog.tsx
+#: components/budgets/budgets-table.tsx
+#: components/budgets/delete-budget-dialog.tsx
+#: components/categories/categories-table.tsx
+#: components/categories/delete-category-dialog.tsx
+#: components/goals/delete-goal-dialog.tsx
+#: components/goals/goals-table.tsx
+#: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
+#: components/recurring-transactions/recurring-transactions-table.tsx
+#: components/transactions/delete-transaction-dialog.tsx
+#: components/transactions/transactions-table.tsx
+msgctxt "K3r6DQ"
+msgid "Delete"
+msgstr "삭제"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "aRQh8u"
+msgid "Failed to update ban status! Please try again later."
+msgstr "차단 상태 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "tLY3l1"
+msgid "User has been unbanned."
+msgstr "사용자 차단이 해제되었습니다."
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "ViifPP"
+msgid "Failed to ban user! Please try again later."
+msgstr "사용자 차단에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "bcm8Ks"
+msgid "User has been banned."
+msgstr "사용자가 차단되었습니다."
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "aFpb8P"
+msgid "Unban User"
+msgstr "사용자 차단 해제"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "Ro3EXO"
+msgid "Ban User"
+msgstr "사용자 차단"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "bZ5A9F"
+msgid "Restore access for"
+msgstr "다음에 대한 액세스 복원:"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "fJtO6z"
+msgid "Prevent this user from signing in and revoke all active sessions."
+msgstr "이 사용자의 로그인을 방지하고 모든 활성 세션을 취소합니다."
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "4pV2cx"
+msgid "Current ban reason"
+msgstr "현재 차단 사유"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "09AU_2"
+msgid "No reason specified"
+msgstr "사유가 지정되지 않음"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "0t4WRs"
+msgid "Expires on"
+msgstr "만료일:"
+
+#: components/admin/ban-user-dialog.tsx
+#: components/admin/change-role-dialog.tsx
+#: components/admin/create-user-dialog.tsx
+#: components/admin/delete-user-dialog.tsx
+#: components/admin/set-password-dialog.tsx
+#: components/budgets/budget-dialog.tsx
+#: components/budgets/delete-budget-dialog.tsx
+#: components/categories/category-dialog.tsx
+#: components/categories/delete-category-dialog.tsx
+#: components/goals/delete-goal-dialog.tsx
+#: components/goals/goal-dialog.tsx
+#: components/layout/impersonation-indicator.tsx
+#: components/layout/secondary-nav.tsx
+#: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
+#: components/settings/change-name-dialog.tsx
+#: components/settings/change-password-dialog.tsx
+#: components/settings/change-username-dialog.tsx
+#: components/transactions/delete-transaction-dialog.tsx
+#: components/transactions/transaction-dialog.tsx
+msgctxt "47FYwb"
+msgid "Cancel"
+msgstr "취소"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "VGVk-h"
+msgid "Ban Reason"
+msgstr "차단 사유"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "8ob5gg"
+msgid "e.g. Violation of terms of service"
+msgstr "예: 서비스 이용약관 위반"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "IuFETn"
+msgid "Duration"
+msgstr "기간"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "StRQjB"
+msgid "Select ban duration"
+msgstr "차단 기간 선택"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "o2jbDD"
+msgid "Permanent"
+msgstr "영구"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "Jw7b8T"
+msgid "24 Hours"
+msgstr "24시간"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "WhQqi2"
+msgid "7 Days"
+msgstr "7일"
+
+#: components/admin/ban-user-dialog.tsx
+msgctxt "vgJsLx"
+msgid "30 Days"
+msgstr "30일"
+
+#: components/admin/change-role-dialog.tsx
+msgctxt "jNvbw7"
+msgid "Failed to update user role! Please try again later."
+msgstr "사용자 역할 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/admin/change-role-dialog.tsx
+msgctxt "ayfthF"
+msgid "User role has been updated."
+msgstr "사용자 역할이 업데이트되었습니다."
+
+#: components/admin/change-role-dialog.tsx
+msgctxt "ho_b8x"
+msgid "Change User Role"
+msgstr "사용자 역할 변경"
+
+#: components/admin/change-role-dialog.tsx
+msgctxt "EK8gb2"
+msgid "Assign a new system role to"
+msgstr "새 시스템 역할 할당:"
+
+#: components/admin/change-role-dialog.tsx
+#: components/admin/create-user-dialog.tsx
+msgctxt "iaCoRs"
+msgid "Select role"
+msgstr "역할 선택"
+
+#: components/admin/change-role-dialog.tsx
+#: components/settings/change-name-dialog.tsx
+#: components/settings/change-password-dialog.tsx
+#: components/settings/change-username-dialog.tsx
+msgctxt "jvo0vs"
+msgid "Save"
+msgstr "저장"
+
+#: components/admin/create-user-dialog.tsx
+#: components/settings/change-username-dialog.tsx
+msgctxt "K3OKU5"
+msgid "Failed to check username availability! Please try again later."
+msgstr "사용자 이름 사용 가능 여부 확인에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/admin/create-user-dialog.tsx
+#: components/settings/change-username-dialog.tsx
+msgctxt "wb3MSp"
+msgid "This username is already taken."
+msgstr "이 사용자 이름은 이미 사용 중입니다."
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "-OyBM6"
+msgid "This email is already in use."
+msgstr "이 이메일은 이미 사용 중입니다."
+
+#: components/admin/create-user-dialog.tsx
 #: components/auth/signin-form.tsx
-msgid "ExP2LI"
+msgctxt "b8-mgZ"
+msgid "Failed to sign in! Please try again later."
+msgstr "로그인에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "wUmmPh"
+msgid "User has been created."
+msgstr "사용자가 생성되었습니다."
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "xWI3D2"
+msgid "Create New User"
+msgstr "새 사용자 만들기"
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "xWyHPB"
+msgid "Add a new user account with credentials and role."
+msgstr "자격 증명 및 역할을 갖춘 새 사용자 계정을 추가합니다."
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "TemVby"
+msgid "Full Name"
+msgstr "성명"
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "zUQhAm"
+msgid "e.g. John Doe"
+msgstr "예: 홍길동"
+
+#: components/admin/create-user-dialog.tsx
+#: components/auth/signin-form.tsx
+#: components/settings/change-username-dialog.tsx
+msgctxt "JCIgkj"
+msgid "Username"
+msgstr "사용자 이름"
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "c3e6FL"
+msgid "e.g. johndoe"
+msgstr "예: johndoe"
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "8EHM66"
+msgid "e.g. john@example.com"
+msgstr "예: john@example.com"
+
+#: components/admin/create-user-dialog.tsx
+#: components/auth/signin-form.tsx
+#: components/settings/two-factor-manager-dialog.tsx
+msgctxt "5sg7KC"
+msgid "Password"
+msgstr "비밀번호"
+
+#: components/admin/delete-user-dialog.tsx
+msgctxt "6z5Ebr"
+msgid "Delete User Account"
+msgstr "사용자 계정 삭제"
+
+#: components/admin/delete-user-dialog.tsx
+msgctxt "ZzCNg8"
+msgid "Are you sure you want to permanently delete this user account?"
+msgstr "이 사용자 계정을 영구적으로 삭제하시겠습니까?"
+
+#: components/admin/delete-user-dialog.tsx
+msgctxt "uon94C"
+msgid "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
+msgstr "거래, 예산, 목표를 포함한 모든 관련 데이터가 영구적으로 삭제됩니다. 이 작업은 취소할 수 없습니다."
+
+#: components/admin/set-password-dialog.tsx
+msgctxt "VvoQv7"
+msgid "Failed to set user password! Please try again later."
+msgstr "사용자 비밀번호 설정에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/admin/set-password-dialog.tsx
+msgctxt "ygB8SA"
+msgid "Password has been updated."
+msgstr "비밀번호가 업데이트되었습니다."
+
+#: components/admin/set-password-dialog.tsx
+msgctxt "ArEJTr"
+msgid "Reset User Password"
+msgstr "사용자 비밀번호 재설정"
+
+#: components/admin/set-password-dialog.tsx
+msgctxt "SxSUYZ"
+msgid "Set a new password for"
+msgstr "다음에 대한 새 비밀번호 설정:"
+
+#: components/admin/set-password-dialog.tsx
+#: components/settings/change-password-dialog.tsx
+msgctxt "Ev6SEF"
+msgid "New Password"
+msgstr "새 비밀번호"
+
+#: components/admin/set-password-dialog.tsx
+msgctxt "ZTYUJe"
+msgid "Update Password"
+msgstr "비밀번호 업데이트"
+
+#: components/auth/signin-form.tsx
+msgctxt "ExP2LI"
+msgid "CAPTCHA verification failed! Please try again later."
 msgstr "CAPTCHA 인증에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/auth/signin-form.tsx
-msgid "pxIiYc"
+msgctxt "1kNhx7"
+msgid "CAPTCHA verification failed!"
+msgstr "CAPTCHA 인증에 실패했습니다!"
+
+#: components/auth/signin-form.tsx
+msgctxt "pxIiYc"
+msgid "Invalid username or password!"
 msgstr "잘못된 사용자 이름 또는 비밀번호입니다!"
 
 #: components/auth/signin-form.tsx
-msgid "Z5Lu7G"
+msgctxt "Z5Lu7G"
+msgid "Email not verified!"
 msgstr "이메일이 인증되지 않았습니다!"
 
 #: components/auth/signin-form.tsx
-msgid "zR1TB7"
+msgctxt "ZL_WmU"
+msgid "Your account has been banned. Please contact support if you believe this is an error."
+msgstr "계정이 차단되었습니다. 이것이 오류라고 생각되면 지원팀에 문의하세요."
+
+#: components/auth/signin-form.tsx
+msgctxt "zR1TB7"
+msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "요청 제한을 초과했습니다! {seconds}초 후에 다시 시도해주세요."
 
-#: components/auth/signin-form.tsx
-msgid "b8-mgZ"
-msgstr "로그인에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: components/auth/signin-form.tsx
-#: components/settings/change-username-dialog.tsx
-msgid "JCIgkj"
-msgstr "사용자 이름"
-
-#: components/auth/signin-form.tsx
-#: components/settings/two-factor-manager-dialog.tsx
-msgid "5sg7KC"
-msgstr "비밀번호"
-
 #: components/auth/two-factor-form.tsx
-msgid "mXmfR7"
-msgstr "잘못된 인증 코드입니다! 나중에 다시 시도해주세요."
+#: components/settings/two-factor-manager-dialog.tsx
+msgctxt "FCVHwe"
+msgid "Invalid authentication code!"
+msgstr "잘못된 인증 코드입니다!"
 
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "Tjv3UC"
+msgctxt "02Huvd"
+msgid "Failed to verify 2FA code! Please try again later."
+msgstr "2FA 코드 확인에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/auth/two-factor-form.tsx
+#: components/settings/two-factor-manager-dialog.tsx
+msgctxt "Tjv3UC"
+msgid "Verification Code"
 msgstr "인증 코드"
 
 #: components/auth/two-factor-form.tsx
-msgid "hyw_Cv"
+msgctxt "hyw_Cv"
+msgid "Trust this device"
 msgstr "이 기기 신뢰하기"
 
 #: components/auth/two-factor-form.tsx
-msgid "ZcMAT1"
+msgctxt "ZcMAT1"
+msgid "Don't ask for 2FA code on this device for 30 days."
 msgstr "이 기기에서 30일 동안 2FA 코드를 묻지 않기."
 
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "q5Xl0M"
+msgctxt "q5Xl0M"
+msgid "Verify"
 msgstr "확인"
 
 #: components/budgets/budget-dialog.tsx
-msgid "2g82CP"
+msgctxt "2g82CP"
+msgid "Edit Budget"
 msgstr "예산 편집"
 
 #: components/budgets/budget-dialog.tsx
-msgid "zMoeFN"
+msgctxt "zMoeFN"
+msgid "Add Budget"
 msgstr "예산 추가"
 
 #: components/budgets/budget-dialog.tsx
-msgid "zSiCkT"
+msgctxt "zSiCkT"
+msgid "Update budget information."
 msgstr "예산 정보를 업데이트하세요."
 
 #: components/budgets/budget-dialog.tsx
-msgid "PVSBse"
+msgctxt "PVSBse"
+msgid "Create a budget for a category to track your spending."
 msgstr "지출을 추적하기 위해 카테고리에 대한 예산을 만드세요."
 
 #: components/budgets/budget-dialog.tsx
@@ -426,7 +1114,8 @@ msgstr "지출을 추적하기 위해 카테고리에 대한 예산을 만드세
 #: components/settings/currency-selector.tsx
 #: components/settings/settings-page.tsx
 #: components/transactions/transaction-dialog.tsx
-msgid "55hdQy"
+msgctxt "55hdQy"
+msgid "Currency"
 msgstr "통화"
 
 #: components/budgets/budget-dialog.tsx
@@ -436,7 +1125,8 @@ msgstr "통화"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-table.tsx
-msgid "_0TOL5"
+msgctxt "_0TOL5"
+msgid "Amount"
 msgstr "금액"
 
 #: components/budgets/budget-dialog.tsx
@@ -445,7 +1135,8 @@ msgstr "금액"
 #: components/goals/goals-table.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "QirE3M"
+msgctxt "QirE3M"
+msgid "Start Date"
 msgstr "시작일"
 
 #: components/budgets/budget-dialog.tsx
@@ -454,7 +1145,8 @@ msgstr "시작일"
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "ftg7GK"
+msgctxt "ftg7GK"
+msgid "Select Date"
 msgstr "날짜 선택"
 
 #: components/budgets/budget-dialog.tsx
@@ -463,32 +1155,17 @@ msgstr "날짜 선택"
 #: components/goals/goals-table.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "T4GOiX"
+msgctxt "T4GOiX"
+msgid "End Date"
 msgstr "종료일"
 
 #: components/budgets/budget-dialog.tsx
-#: components/budgets/delete-budget-dialog.tsx
-#: components/categories/category-dialog.tsx
-#: components/categories/delete-category-dialog.tsx
-#: components/goals/delete-goal-dialog.tsx
-#: components/goals/goal-dialog.tsx
-#: components/layout/secondary-nav.tsx
-#: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
-#: components/recurring-transactions/recurring-transaction-dialog.tsx
-#: components/settings/change-name-dialog.tsx
-#: components/settings/change-password-dialog.tsx
-#: components/settings/change-username-dialog.tsx
-#: components/transactions/delete-transaction-dialog.tsx
-#: components/transactions/transaction-dialog.tsx
-msgid "47FYwb"
-msgstr "취소"
-
-#: components/budgets/budget-dialog.tsx
 #: components/categories/category-dialog.tsx
 #: components/goals/goal-dialog.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/transactions/transaction-dialog.tsx
-msgid "BWpuKl"
+msgctxt "BWpuKl"
+msgid "Update"
 msgstr "업데이트"
 
 #: components/budgets/budget-dialog.tsx
@@ -502,7 +1179,8 @@ msgstr "업데이트"
 #: components/recurring-transactions/recurring-transactions-page.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-page.tsx
-msgid "2_2yg-"
+msgctxt "2_2yg-"
+msgid "Add"
 msgstr "추가"
 
 #: components/budgets/budget-filters.tsx
@@ -510,7 +1188,8 @@ msgstr "추가"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "TBovrx"
+msgctxt "TBovrx"
+msgid "Month"
 msgstr "월"
 
 #: components/budgets/budget-filters.tsx
@@ -518,7 +1197,8 @@ msgstr "월"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "O-ZfC8"
+msgctxt "O-ZfC8"
+msgid "All Months"
 msgstr "모든 월"
 
 #: components/budgets/budget-filters.tsx
@@ -526,7 +1206,8 @@ msgstr "모든 월"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "IFo1oo"
+msgctxt "IFo1oo"
+msgid "Year"
 msgstr "연도"
 
 #: components/budgets/budget-filters.tsx
@@ -534,7 +1215,8 @@ msgstr "연도"
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "5JGC4V"
+msgctxt "5JGC4V"
+msgid "All Years"
 msgstr "모든 연도"
 
 #: components/budgets/budget-filters.tsx
@@ -548,132 +1230,112 @@ msgstr "모든 연도"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "ccXLVi"
+msgctxt "ccXLVi"
+msgid "Category"
 msgstr "카테고리"
 
 #: components/budgets/budget-filters.tsx
 #: components/goals/goal-filters.tsx
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "1X6HtI"
+msgctxt "1X6HtI"
+msgid "All Categories"
 msgstr "모든 카테고리"
 
 #: components/budgets/budget-filters.tsx
 #: components/budgets/budgets-table.tsx
 #: components/goals/goal-filters.tsx
 #: components/goals/goals-table.tsx
-msgid "sIMS7i"
+msgctxt "sIMS7i"
+msgid "Progress"
 msgstr "진행률"
 
 #: components/budgets/budget-filters.tsx
 #: components/goals/goal-filters.tsx
-msgid "W8OX_r"
+msgctxt "W8OX_r"
+msgid "All Progress"
 msgstr "모든 진행률"
 
 #: components/budgets/budget-filters.tsx
 #: components/goals/goal-filters.tsx
-msgid "tlzCDY"
+msgctxt "tlzCDY"
+msgid "No Transactions"
 msgstr "거래 없음"
 
 #: components/budgets/budget-filters.tsx
-msgid "ZLbolA"
+msgctxt "ZLbolA"
+msgid "Good (< 75%)"
 msgstr "양호 (< 75%)"
 
 #: components/budgets/budget-filters.tsx
-msgid "1TM0t6"
+msgctxt "1TM0t6"
+msgid "Warning (75-100%)"
 msgstr "경고 (75-100%)"
 
 #: components/budgets/budget-filters.tsx
-msgid "DSmOlH"
+msgctxt "DSmOlH"
+msgid "Exceeded (≥ 100%)"
 msgstr "초과 (≥ 100%)"
 
 #: components/budgets/budget-filters.tsx
-#: components/budgets/budgets-table.tsx
-#: components/goals/goal-filters.tsx
-#: components/goals/goals-table.tsx
-#: components/recurring-transactions/recurring-transaction-dialog.tsx
-#: components/recurring-transactions/recurring-transactions-filters.tsx
-#: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "tzMNF3"
-msgstr "상태"
-
-#: components/budgets/budget-filters.tsx
 #: components/goals/goal-filters.tsx
 #: components/recurring-transactions/recurring-transactions-filters.tsx
-msgid "tADQQm"
+msgctxt "tADQQm"
+msgid "All Statuses"
 msgstr "모든 상태"
 
 #: components/budgets/budget-filters.tsx
 #: components/budgets/budgets-table.tsx
 #: components/goals/goal-filters.tsx
 #: components/goals/goals-table.tsx
-msgid "RahCRH"
+msgctxt "RahCRH"
+msgid "Expired"
 msgstr "만료됨"
 
 #: components/budgets/budget-filters.tsx
 #: components/budgets/budgets-table.tsx
 #: components/goals/goal-filters.tsx
 #: components/goals/goals-table.tsx
-#: components/recurring-transactions/recurring-transaction-dialog.tsx
-#: components/recurring-transactions/recurring-transactions-filters.tsx
-#: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "3a5wL8"
-msgstr "활성"
-
-#: components/budgets/budget-filters.tsx
-#: components/budgets/budgets-table.tsx
-#: components/goals/goal-filters.tsx
-#: components/goals/goals-table.tsx
-msgid "6_aEFZ"
+msgctxt "6_aEFZ"
+msgid "Upcoming"
 msgstr "예정됨"
 
-#: components/budgets/budget-filters.tsx
-#: components/categories/category-filters.tsx
-#: components/goals/goal-filters.tsx
-#: components/recurring-transactions/recurring-transactions-filters.tsx
-#: components/statistics/statistics-filters.tsx
-#: components/transactions/transaction-filters.tsx
-msgid "jm_spn"
-msgstr "초기화"
-
 #: components/budgets/budgets-page.tsx
-msgid "3fGt__"
+msgctxt "3fGt__"
+msgid "Set and manage budgets for your outflow categories."
 msgstr "유출 카테고리에 대한 예산을 설정하고 관리합니다."
 
 #: components/budgets/budgets-table.tsx
-msgid "CgOoDa"
+msgctxt "CgOoDa"
+msgid "No budgets found"
 msgstr "예산을 찾을 수 없습니다"
 
 #: components/budgets/budgets-table.tsx
-msgid "PTvqaL"
+msgctxt "PTvqaL"
+msgid "You haven't created any budgets yet."
 msgstr "아직 예산을 생성하지 않았습니다."
 
 #: components/budgets/budgets-table.tsx
-msgid "PZ97Zd"
+msgctxt "PZ97Zd"
+msgid "No budgets found matching your filters."
 msgstr "필터와 일치하는 예산을 찾을 수 없습니다."
 
 #: components/budgets/budgets-table.tsx
-msgid "111qQK"
+msgctxt "111qQK"
+msgid "Spent"
 msgstr "지출"
 
 #: components/budgets/budgets-table.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "H5-NAX"
+msgctxt "H5-NAX"
+msgid "Balance"
 msgstr "잔액"
 
 #: components/budgets/budgets-table.tsx
-#: components/categories/categories-table.tsx
-#: components/goals/goals-table.tsx
-#: components/recurring-transactions/recurring-transactions-table.tsx
-#: components/statistics/statistics-table.tsx
-#: components/transactions/transactions-table.tsx
-msgid "bdcMGy"
-msgstr "메뉴 열기"
-
-#: components/budgets/budgets-table.tsx
 #: components/goals/goals-table.tsx
 #: components/statistics/statistics-table.tsx
-msgid "FgydNe"
+msgctxt "FgydNe"
+msgid "View"
 msgstr "보기"
 
 #: components/budgets/budgets-table.tsx
@@ -681,49 +1343,44 @@ msgstr "보기"
 #: components/goals/goals-table.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
 #: components/transactions/transactions-table.tsx
-msgid "wEQDC6"
+msgctxt "wEQDC6"
+msgid "Edit"
 msgstr "편집"
 
-#: components/budgets/budgets-table.tsx
 #: components/budgets/delete-budget-dialog.tsx
-#: components/categories/categories-table.tsx
-#: components/categories/delete-category-dialog.tsx
-#: components/goals/delete-goal-dialog.tsx
-#: components/goals/goals-table.tsx
-#: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
-#: components/recurring-transactions/recurring-transactions-table.tsx
-#: components/transactions/delete-transaction-dialog.tsx
-#: components/transactions/transactions-table.tsx
-msgid "K3r6DQ"
-msgstr "삭제"
-
-#: components/budgets/delete-budget-dialog.tsx
-msgid "q6vl7b"
+msgctxt "q6vl7b"
+msgid "Delete Budget"
 msgstr "예산 삭제"
 
 #: components/budgets/delete-budget-dialog.tsx
-msgid "x1Tqbe"
+msgctxt "x1Tqbe"
+msgid "Are you sure you want to delete this budget? This action cannot be undone."
 msgstr "이 예산을 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
 #: components/categories/categories-page.tsx
-msgid "5reIsh"
+msgctxt "5reIsh"
+msgid "Manage your custom categories."
 msgstr "사용자 정의 카테고리를 관리하세요."
 
 #: components/categories/categories-table.tsx
-msgid "dM86a2"
+msgctxt "dM86a2"
+msgid "No categories found"
 msgstr "카테고리를 찾을 수 없습니다"
 
 #: components/categories/categories-table.tsx
-msgid "7vjOuF"
+msgctxt "7vjOuF"
+msgid "You haven't created any custom categories yet."
 msgstr "아직 사용자 정의 카테고리를 만들지 않았습니다."
 
 #: components/categories/categories-table.tsx
-msgid "Dojtt1"
+msgctxt "Dojtt1"
+msgid "No categories found matching your filters."
 msgstr "필터와 일치하는 카테고리를 찾을 수 없습니다."
 
 #: components/categories/categories-table.tsx
 #: components/categories/category-dialog.tsx
-msgid "vEYtiq"
+msgctxt "vEYtiq"
+msgid "Category Name"
 msgstr "카테고리 이름"
 
 #: components/categories/categories-table.tsx
@@ -733,7 +1390,8 @@ msgstr "카테고리 이름"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-table.tsx
-msgid "Q8Qw5B"
+msgctxt "Q8Qw5B"
+msgid "Description"
 msgstr "설명"
 
 #: components/categories/categories-table.tsx
@@ -744,7 +1402,8 @@ msgstr "설명"
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "-U6ozc"
+msgctxt "-U6ozc"
+msgid "Type"
 msgstr "유형"
 
 #: components/categories/categories-table.tsx
@@ -758,7 +1417,8 @@ msgstr "유형"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "PqYX1W"
+msgctxt "PqYX1W"
+msgid "Inflow"
 msgstr "유입"
 
 #: components/categories/categories-table.tsx
@@ -772,1136 +1432,1444 @@ msgstr "유입"
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transaction-filters.tsx
 #: components/transactions/transactions-table.tsx
-msgid "KKrCi6"
+msgctxt "KKrCi6"
+msgid "Outflow"
 msgstr "유출"
 
 #: components/categories/category-dialog.tsx
-msgid "THThZY"
+msgctxt "THThZY"
+msgid "Edit Category"
 msgstr "카테고리 편집"
 
 #: components/categories/category-dialog.tsx
-msgid "5Fs4aA"
+msgctxt "5Fs4aA"
+msgid "Add Category"
 msgstr "카테고리 추가"
 
 #: components/categories/category-dialog.tsx
-msgid "1VRDDQ"
+msgctxt "1VRDDQ"
+msgid "Update custom category information."
 msgstr "사용자 정의 카테고리 정보를 업데이트하세요."
 
 #: components/categories/category-dialog.tsx
-msgid "0jMR1h"
+msgctxt "0jMR1h"
+msgid "Create a custom category for your transactions."
 msgstr "거래를 위한 사용자 정의 카테고리를 만드세요."
 
 #: components/categories/category-dialog.tsx
-msgid "TxCpcX"
+msgctxt "TxCpcX"
+msgid "e.g. Salary, Groceries"
 msgstr "예: 급여, 식료품"
 
 #: components/categories/category-dialog.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "s0F42g"
+msgctxt "s0F42g"
+msgid "Enter a description..."
 msgstr "설명을 입력하세요..."
 
 #: components/categories/category-filters.tsx
-msgid "T83iU7"
+msgctxt "T83iU7"
+msgid "Search categories..."
 msgstr "카테고리 검색..."
 
 #: components/categories/category-filters.tsx
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "UjTL-F"
+msgctxt "UjTL-F"
+msgid "All Types"
 msgstr "모든 유형"
 
 #: components/categories/delete-category-dialog.tsx
-msgid "JtR9Fg"
+msgctxt "JtR9Fg"
+msgid "Delete Category"
 msgstr "카테고리 삭제"
 
 #: components/categories/delete-category-dialog.tsx
-msgid "qjLKlD"
+msgctxt "qjLKlD"
+msgid "Are you sure you want to delete this category? This action cannot be undone."
 msgstr "이 카테고리를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
 #: components/category-form-select.tsx
-msgid "IkXLzZ"
+msgctxt "IkXLzZ"
+msgid "Select Category"
 msgstr "카테고리 선택"
 
 #: components/category-form-select.tsx
-msgid "J0Y6yy"
+msgctxt "J0Y6yy"
+msgid "Cannot find a suitable category?"
 msgstr "적합한 카테고리를 찾을 수 없나요?"
 
 #: components/category-form-select.tsx
-msgid "PmRC5G"
+msgctxt "PmRC5G"
+msgid "Create Custom Category"
 msgstr "사용자 정의 카테고리 만들기"
 
 #: components/goals/delete-goal-dialog.tsx
-msgid "F3XA9-"
+msgctxt "F3XA9-"
+msgid "Delete Goal"
 msgstr "목표 삭제"
 
 #: components/goals/delete-goal-dialog.tsx
-msgid "EwRebq"
+msgctxt "EwRebq"
+msgid "Are you sure you want to delete this goal? This action cannot be undone."
 msgstr "이 목표를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
 #: components/goals/goal-dialog.tsx
-msgid "sOXElg"
+msgctxt "sOXElg"
+msgid "Edit Goal"
 msgstr "목표 편집"
 
 #: components/goals/goal-dialog.tsx
-msgid "5WuADX"
+msgctxt "5WuADX"
+msgid "Add Goal"
 msgstr "목표 추가"
 
 #: components/goals/goal-dialog.tsx
-msgid "_kQug4"
+msgctxt "_kQug4"
+msgid "Update goal information."
 msgstr "목표 정보를 업데이트하세요."
 
 #: components/goals/goal-dialog.tsx
-msgid "dzmlX3"
+msgctxt "dzmlX3"
+msgid "Create a new financial goal."
 msgstr "새로운 재정 목표를 만드세요."
 
 #: components/goals/goal-dialog.tsx
 #: components/goals/goals-table.tsx
-msgid "gQxxlw"
+msgctxt "gQxxlw"
+msgid "Goal Name"
 msgstr "목표 이름"
 
 #: components/goals/goal-dialog.tsx
-msgid "rH4tSt"
+msgctxt "rH4tSt"
+msgid "e.g. Save for vacation"
 msgstr "예: 휴가 저축"
 
 #: components/goals/goal-dialog.tsx
 #: components/goals/goals-table.tsx
-msgid "MPOzul"
+msgctxt "MPOzul"
+msgid "Target Amount"
 msgstr "목표 금액"
 
 #: components/goals/goal-filters.tsx
-msgid "-xHZ7x"
+msgctxt "-xHZ7x"
+msgid "Search goals..."
 msgstr "목표 검색..."
 
 #: components/goals/goal-filters.tsx
-msgid "8MCUlP"
+msgctxt "8MCUlP"
+msgid "Good (≥ 100%)"
 msgstr "양호 (≥ 100%)"
 
 #: components/goals/goal-filters.tsx
-msgid "O7nOCr"
+msgctxt "O7nOCr"
+msgid "Low (75-100%)"
 msgstr "낮음 (75-100%)"
 
 #: components/goals/goal-filters.tsx
-msgid "7IAF5Y"
+msgctxt "7IAF5Y"
+msgid "Warning (< 75%)"
 msgstr "경고 (< 75%)"
 
 #: components/goals/goals-page.tsx
-msgid "6rbe1E"
+msgctxt "6rbe1E"
+msgid "Set and track your financial goals."
 msgstr "재정 목표를 설정하고 추적하세요."
 
 #: components/goals/goals-table.tsx
-msgid "uuJSCu"
+msgctxt "uuJSCu"
+msgid "No goals found"
 msgstr "목표를 찾을 수 없습니다"
 
 #: components/goals/goals-table.tsx
-msgid "Y2QNeU"
+msgctxt "Y2QNeU"
+msgid "You haven't created any goals yet."
 msgstr "아직 목표를 생성하지 않았습니다."
 
 #: components/goals/goals-table.tsx
-msgid "RB30ZK"
+msgctxt "RB30ZK"
+msgid "No goals found matching your filters."
 msgstr "필터와 일치하는 목표를 찾을 수 없습니다."
 
 #: components/goals/goals-table.tsx
-msgid "GkiQMs"
+msgctxt "GkiQMs"
+msgid "Accumulated"
 msgstr "누적"
 
 #: components/home/homepage.tsx
-msgid "UKxoV8"
+msgctxt "UKxoV8"
+msgid "Welcome back"
 msgstr "다시 오신 것을 환영합니다"
 
 #: components/home/homepage.tsx
-msgid "9A7jRV"
+msgctxt "9A7jRV"
+msgid "Here's what's happening with your finances this month."
 msgstr "이번 달 재정 상황을 확인하세요."
 
 #: components/home/quick-stats.tsx
-msgid "g28wjp"
+msgctxt "g28wjp"
+msgid "Quick Stats"
 msgstr "빠른 통계"
 
 #: components/home/quick-stats.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "a3-VDd"
+msgctxt "a3-VDd"
+msgid "Total Transactions"
 msgstr "총 거래 수"
 
 #: components/home/quick-stats.tsx
-msgid "bcTyuf"
+msgctxt "bcTyuf"
+msgid "Total number of inflow and outflow transactions."
 msgstr "총 유입 및 유출 거래 수입니다."
 
 #: components/home/quick-stats.tsx
-msgid "Prh2Lb"
+msgctxt "Prh2Lb"
+msgid "Highest Transaction"
 msgstr "최고 거래"
 
 #: components/home/quick-stats.tsx
-msgid "UG5qoS"
+msgctxt "UG5qoS"
+msgid "No data"
 msgstr "데이터 없음"
 
 #: components/home/quick-stats.tsx
-msgid "rDSqY8"
+msgctxt "rDSqY8"
+msgid "Transaction with the highest value in the month (can be inflow or outflow)."
 msgstr "해당 월의 최고 금액 거래(유입 또는 유출일 수 있음)."
 
 #: components/home/quick-stats.tsx
-msgid "9AS2Qs"
+msgctxt "9AS2Qs"
+msgid "Lowest Transaction"
 msgstr "최저 거래"
 
 #: components/home/quick-stats.tsx
-msgid "QHnvj4"
+msgctxt "QHnvj4"
+msgid "Transaction with the lowest value in the month (can be inflow or outflow)."
 msgstr "해당 월의 최저 금액 거래(유입 또는 유출일 수 있음)."
 
 #: components/home/quick-stats.tsx
-msgid "qfQAiL"
+msgctxt "qfQAiL"
+msgid "Average Outflow"
 msgstr "평균 유출"
 
 #: components/home/quick-stats.tsx
-msgid "Xpsn__"
+msgctxt "Xpsn__"
+msgid "Average amount per outflow (Total Outflow / Number of outflow transactions)."
 msgstr "유출당 평균 금액(총 유출 / 유출 거래 수)."
 
 #: components/home/quick-stats.tsx
-msgid "AUkgKt"
+msgctxt "AUkgKt"
+msgid "Savings Rate"
 msgstr "저축률"
 
 #: components/home/quick-stats.tsx
-msgid "nmcGD4"
+msgctxt "nmcGD4"
+msgid "The percentage of money you save compared to inflow ((Inflow - Outflow) / Inflow × 100%)."
 msgstr "유입 대비 저축한 금액의 비율((유입 - 유출) / 유입 × 100%)."
 
 #: components/home/quick-stats.tsx
-msgid "O8QihK"
+msgctxt "O8QihK"
+msgid "Popular Category"
 msgstr "인기 카테고리"
 
 #: components/home/quick-stats.tsx
-msgid "wEyaDt"
+msgctxt "wEyaDt"
+msgid "Category with the highest total amount in the month."
 msgstr "이번 달 총 금액이 가장 높은 카테고리."
 
 #: components/home/recent-transactions.tsx
-msgid "GMkXVd"
+msgctxt "GMkXVd"
+msgid "Recent Transactions"
 msgstr "최근 거래"
 
 #: components/home/recent-transactions.tsx
 #: components/statistics/statistics-table.tsx
 #: components/transactions/export-button.tsx
 #: components/transactions/transactions-table.tsx
-msgid "LER0RZ"
+msgctxt "LER0RZ"
+msgid "No transactions found"
 msgstr "거래를 찾을 수 없습니다"
 
 #: components/home/recent-transactions.tsx
 #: components/statistics/statistics-table.tsx
 #: components/transactions/transactions-table.tsx
-msgid "GMBC7V"
+msgctxt "GMBC7V"
+msgid "You haven't created any transactions yet."
 msgstr "아직 거래를 생성하지 않았습니다."
 
 #: components/home/transaction-summary.tsx
-msgid "Vk-r3s"
+msgctxt "Vk-r3s"
+msgid "Monthly Inflow"
 msgstr "월간 유입"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
 #: components/transactions/export-button.tsx
-msgid "5-nDxs"
+msgctxt "5-nDxs"
+msgid "transactions"
 msgstr "거래"
 
 #: components/home/transaction-summary.tsx
-msgid "0PFSLN"
+msgctxt "0PFSLN"
+msgid "Monthly Outflow"
 msgstr "월간 유출"
 
 #: components/home/transaction-summary.tsx
-msgid "ZLrViM"
+msgctxt "ZLrViM"
+msgid "Monthly Balance"
 msgstr "월간 잔액"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "dHVUaP"
+msgctxt "dHVUaP"
+msgid "Positive"
 msgstr "양수"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "kVQ1fo"
+msgctxt "kVQ1fo"
+msgid "Negative"
 msgstr "음수"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "r0q_a1"
+msgctxt "r0q_a1"
+msgid "Balanced"
 msgstr "균형"
 
 #: components/home/transaction-summary.tsx
 #: components/statistics/statistics-summary.tsx
-msgid "sfXkQG"
+msgctxt "sfXkQG"
+msgid "compared to inflow"
 msgstr "유입 대비"
 
-#: components/layout/page-data-provider.tsx
-msgid "EjH-J3"
+#: components/layout/error-empty-state.tsx
+msgctxt "EjH-J3"
+msgid "Please try again later."
 msgstr "나중에 다시 시도해 주세요."
 
+#: components/layout/impersonation-indicator.tsx
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "hLR6s0"
+msgid "Stopping impersonation..."
+msgstr "가장을 중지하는 중..."
+
+#: components/layout/impersonation-indicator.tsx
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "IF-3KJ"
+msgid "Stopped impersonation session."
+msgstr "가장 세션이 중지되었습니다."
+
+#: components/layout/impersonation-indicator.tsx
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "H1m7wl"
+msgid "Failed to stop impersonating! Please try again later."
+msgstr "가장 중지에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: components/layout/impersonation-indicator.tsx
+msgctxt "LKxCOb"
+msgid "Impersonating"
+msgstr "가장 중"
+
+#: components/layout/impersonation-indicator.tsx
+msgctxt "fA8c13"
+msgid "Stop impersonating this user?"
+msgstr "이 사용자 가장을 중지하시겠습니까?"
+
+#: components/layout/impersonation-indicator.tsx
+msgctxt "AB6aDn"
+msgid "You are currently impersonating"
+msgstr "현재 다음 사용자를 가장하고 있습니다:"
+
+#: components/layout/impersonation-indicator.tsx
+msgctxt "eybH_m"
+msgid "Stopping will restore your admin session and redirect you back to the admin panel."
+msgstr "중지하면 관리자 세션이 복원되고 관리자 패널로 다시 이동합니다."
+
+#: components/layout/impersonation-indicator.tsx
+msgctxt "d0A6B0"
+msgid "Stop Impersonating"
+msgstr "가장 중지"
+
 #: components/layout/page-data-provider.tsx
-msgid "iKuJb1"
+msgctxt "iKuJb1"
+msgid "CANNOT FETCH TRANSACTIONS DATA"
 msgstr "거래 데이터를 가져올 수 없습니다"
 
 #: components/layout/page-data-provider.tsx
-msgid "pvUtk6"
+msgctxt "pvUtk6"
+msgid "CANNOT FETCH CATEGORIES DATA"
 msgstr "카테고리 데이터를 가져올 수 없습니다"
 
 #: components/layout/page-data-provider.tsx
-msgid "iriWHm"
+msgctxt "iriWHm"
+msgid "CANNOT FETCH BUDGETS DATA"
 msgstr "예산 데이터를 가져올 수 없습니다"
 
 #: components/layout/page-data-provider.tsx
-msgid "V9Jq49"
+msgctxt "V9Jq49"
+msgid "CANNOT FETCH GOALS DATA"
 msgstr "목표 데이터를 가져올 수 없습니다"
 
 #: components/layout/page-data-provider.tsx
-msgid "3aju6V"
+msgctxt "3aju6V"
+msgid "CANNOT FETCH RECURRING TRANSACTIONS DATA"
 msgstr "반복 거래 데이터를 가져올 수 없습니다"
 
 #: components/layout/secondary-nav.tsx
-msgid "oj0aXj"
+msgctxt "oj0aXj"
+msgid "Signing out..."
 msgstr "로그아웃 중..."
 
 #: components/layout/secondary-nav.tsx
-msgid "hlp8qc"
+msgctxt "hlp8qc"
+msgid "Signed out."
 msgstr "로그아웃되었습니다."
 
 #: components/layout/secondary-nav.tsx
-msgid "XuxYAf"
+msgctxt "XuxYAf"
+msgid "Failed to sign out! Please try again later."
 msgstr "로그아웃에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/layout/secondary-nav.tsx
-msgid "F62y-K"
+msgctxt "F62y-K"
+msgid "Sign Out"
 msgstr "로그아웃"
 
 #: components/layout/secondary-nav.tsx
-msgid "BHBJUz"
+msgctxt "BHBJUz"
+msgid "Are you sure you want to sign out?"
 msgstr "로그아웃하시겠습니까?"
 
 #: components/layout/secondary-nav.tsx
-msgid "naYgGy"
+msgctxt "naYgGy"
+msgid "You will need to sign in again to access your account."
 msgstr "계정에 다시 액세스하려면 다시 로그인해야 합니다."
 
 #: components/password-input.tsx
-msgid "K3fWTv"
+msgctxt "K3fWTv"
+msgid "Hide password"
 msgstr "비밀번호 숨기기"
 
 #: components/password-input.tsx
-msgid "JHTwdB"
+msgctxt "JHTwdB"
+msgid "Show password"
 msgstr "비밀번호 표시"
 
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
-msgid "mwZmom"
+msgctxt "mwZmom"
+msgid "Delete Recurring Transaction"
 msgstr "반복 거래 삭제"
 
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
-msgid "B58bFw"
+msgctxt "B58bFw"
+msgid "Are you sure you want to delete this recurring transaction? This action cannot be undone."
 msgstr "이 반복 거래를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "5nuO2v"
+msgctxt "5nuO2v"
+msgid "Edit Recurring Transaction"
 msgstr "반복 거래 편집"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "sYXY5N"
+msgctxt "sYXY5N"
+msgid "Add Recurring Transaction"
 msgstr "반복 거래 추가"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "gKA6Xf"
+msgctxt "gKA6Xf"
+msgid "Update recurring transaction information."
 msgstr "반복 거래 정보를 업데이트하세요."
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "adePxB"
+msgctxt "adePxB"
+msgid "Create a recurring transaction."
 msgstr "반복 거래를 만드세요."
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "vAW30j"
+msgctxt "vAW30j"
+msgid "Frequency"
 msgstr "빈도"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "zxvhnE"
+msgctxt "zxvhnE"
+msgid "Daily"
 msgstr "일간"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "_clOBU"
+msgctxt "_clOBU"
+msgid "Weekly"
 msgstr "주간"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "03X4YH"
+msgctxt "03X4YH"
+msgid "Bi-Weekly"
 msgstr "격주"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "wYsv4Z"
+msgctxt "wYsv4Z"
+msgid "Monthly"
 msgstr "월간"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "b1Ou36"
+msgctxt "b1Ou36"
+msgid "Quarterly"
 msgstr "분기별"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "dqD39h"
+msgctxt "dqD39h"
+msgid "Yearly"
 msgstr "연간"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "D9n-q2"
+msgctxt "D9n-q2"
+msgid "Random"
 msgstr "무작위"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "CpM7W_"
+msgctxt "CpM7W_"
+msgid "Every X Days"
 msgstr "X일마다"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "FP2XQQ"
+msgctxt "FP2XQQ"
+msgid "e.g. 15"
 msgstr "예: 15"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "InWqys"
+msgctxt "InWqys"
+msgid "Optional"
 msgstr "선택사항"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
-msgid "mpcI7I"
+msgctxt "mpcI7I"
+msgid "No End Date"
 msgstr "종료일 없음"
 
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transactions-filters.tsx
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "6Tps09"
+msgctxt "6Tps09"
+msgid "Inactive"
 msgstr "비활성"
 
 #: components/recurring-transactions/recurring-transactions-filters.tsx
-msgid "jZimtU"
+msgctxt "jZimtU"
+msgid "Search recurring transactions..."
 msgstr "반복 거래 검색..."
 
 #: components/recurring-transactions/recurring-transactions-page.tsx
 #: hooks/use-nav.ts
-msgid "v84fNv"
+msgctxt "v84fNv"
+msgid "Recurring"
 msgstr "반복"
 
 #: components/recurring-transactions/recurring-transactions-page.tsx
-msgid "w8tTYc"
+msgctxt "w8tTYc"
+msgid "Manage your recurring transactions."
 msgstr "반복 거래를 관리하세요."
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "xRs5e_"
+msgctxt "xRs5e_"
+msgid "No recurring transactions found"
 msgstr "반복 거래를 찾을 수 없습니다"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "ll7wSI"
+msgctxt "ll7wSI"
+msgid "You haven't created any recurring transactions yet."
 msgstr "아직 반복 거래를 생성하지 않았습니다."
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "hZPPxy"
+msgctxt "hZPPxy"
+msgid "No recurring transactions found matching your filters."
 msgstr "필터와 일치하는 반복 거래를 찾을 수 없습니다."
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "CrEhnK"
+msgctxt "CrEhnK"
+msgid "No end date"
 msgstr "종료일 없음"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "qYXK93"
+msgctxt "qYXK93"
+msgid "Every {days} days"
 msgstr "{days}일마다"
 
 #: components/recurring-transactions/recurring-transactions-table.tsx
-msgid "b-8NFf"
+msgctxt "b-8NFf"
+msgid "Next: {date}"
 msgstr "다음: {date}"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "M3ZAZv"
+msgctxt "M3ZAZv"
+msgid "Failed to terminate session! Please try again later."
 msgstr "세션 종료에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "tNzaek"
+msgctxt "tNzaek"
+msgid "Session terminated."
 msgstr "세션이 종료되었습니다."
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "HuQudj"
+msgctxt "HuQudj"
+msgid "Failed to terminate all sessions! Please try again later."
 msgstr "모든 세션 종료에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "i3aVwj"
+msgctxt "i3aVwj"
+msgid "All sessions terminated."
 msgstr "모든 세션이 종료되었습니다."
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "h_tqwp"
+msgctxt "h_tqwp"
+msgid "View Active Sessions"
 msgstr "활성 세션 보기"
 
 #: components/settings/active-sessions-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "V3ka34"
+msgctxt "V3ka34"
+msgid "Active Sessions"
 msgstr "활성 세션"
 
 #: components/settings/active-sessions-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "xLvLBD"
+msgctxt "xLvLBD"
+msgid "Manage your active sessions."
 msgstr "활성 세션을 관리하세요."
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "fF376U"
+msgctxt "fF376U"
+msgid "Current"
 msgstr "현재"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "bLQmWN"
+msgctxt "bLQmWN"
+msgid "Unknown Location"
 msgstr "알 수 없는 위치"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "oA2uW_"
+msgctxt "oA2uW_"
+msgid "Terminate"
 msgstr "종료"
 
 #: components/settings/active-sessions-dialog.tsx
-msgid "DC_DQF"
+msgctxt "DC_DQF"
+msgid "Terminate All"
 msgstr "모두 종료"
 
 #: components/settings/change-name-dialog.tsx
-msgid "pdaEmb"
+msgctxt "pdaEmb"
+msgid "Failed to update name! Please try again later."
 msgstr "이름 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/change-name-dialog.tsx
-msgid "oALrPz"
+msgctxt "oALrPz"
+msgid "Your name has been updated."
 msgstr "이름이 업데이트되었습니다."
 
 #: components/settings/change-name-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "r5LPv0"
+msgctxt "r5LPv0"
+msgid "Change Name"
 msgstr "이름 변경"
 
 #: components/settings/change-name-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "z7OVdl"
+msgctxt "z7OVdl"
+msgid "Update your display name."
 msgstr "표시 이름을 업데이트하세요."
 
 #: components/settings/change-name-dialog.tsx
-msgid "HAlOn1"
+msgctxt "HAlOn1"
+msgid "Name"
 msgstr "이름"
 
 #: components/settings/change-name-dialog.tsx
-msgid "g4FbZ5"
+msgctxt "g4FbZ5"
+msgid "Enter your name..."
 msgstr "이름을 입력하세요..."
 
-#: components/settings/change-name-dialog.tsx
 #: components/settings/change-password-dialog.tsx
-#: components/settings/change-username-dialog.tsx
-msgid "jvo0vs"
-msgstr "저장"
-
-#: components/settings/change-password-dialog.tsx
-msgid "UR3aU3"
+msgctxt "UR3aU3"
+msgid "Current password is incorrect!"
 msgstr "현재 비밀번호가 올바르지 않습니다!"
 
 #: components/settings/change-password-dialog.tsx
-msgid "I-C2uX"
+msgctxt "I-C2uX"
+msgid "Failed to update password! Please try again later."
 msgstr "비밀번호 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/change-password-dialog.tsx
-msgid "kgHPAz"
+msgctxt "kgHPAz"
+msgid "Your password has been changed."
 msgstr "비밀번호가 변경되었습니다."
 
 #: components/settings/change-password-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "QiKKFz"
+msgctxt "QiKKFz"
+msgid "Change Password"
 msgstr "비밀번호 변경"
 
 #: components/settings/change-password-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "luD-rc"
+msgctxt "luD-rc"
+msgid "Update your password."
 msgstr "비밀번호를 업데이트하세요."
 
 #: components/settings/change-password-dialog.tsx
-msgid "GretYf"
+msgctxt "GretYf"
+msgid "Current Password"
 msgstr "현재 비밀번호"
 
 #: components/settings/change-password-dialog.tsx
-msgid "Ev6SEF"
-msgstr "새 비밀번호"
-
-#: components/settings/change-password-dialog.tsx
-msgid "vfG-nh"
+msgctxt "vfG-nh"
+msgid "Confirm Password"
 msgstr "비밀번호 확인"
 
 #: components/settings/change-password-dialog.tsx
-msgid "zFD28X"
+msgctxt "zFD28X"
+msgid "Sign out from all other devices."
 msgstr "다른 모든 기기에서 로그아웃하세요."
 
 #: components/settings/change-username-dialog.tsx
-msgid "K3OKU5"
-msgstr "사용자 이름 사용 가능 여부 확인에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: components/settings/change-username-dialog.tsx
-msgid "wb3MSp"
-msgstr "이 사용자 이름은 이미 사용 중입니다."
-
-#: components/settings/change-username-dialog.tsx
-msgid "IaZaQX"
+msgctxt "IaZaQX"
+msgid "Failed to update username! Please try again later."
 msgstr "사용자 이름 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/change-username-dialog.tsx
-msgid "8KK2w-"
+msgctxt "8KK2w-"
+msgid "Your username has been changed."
 msgstr "사용자 이름이 변경되었습니다."
 
 #: components/settings/change-username-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "19mdX0"
+msgctxt "19mdX0"
+msgid "Change Username"
 msgstr "사용자 이름 변경"
 
 #: components/settings/change-username-dialog.tsx
 #: components/settings/settings-page.tsx
-msgid "TXe4LX"
+msgctxt "TXe4LX"
+msgid "Update your unique username."
 msgstr "고유한 사용자 이름을 업데이트하세요."
 
 #: components/settings/change-username-dialog.tsx
-msgid "v60thv"
+msgctxt "v60thv"
+msgid "Enter your username..."
 msgstr "사용자 이름을 입력하세요..."
 
 #: components/settings/currency-selector.tsx
-msgid "d6wGcQ"
+msgctxt "d6wGcQ"
+msgid "Failed to update currency! Please try again later."
 msgstr "통화 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/language-selector.tsx
-msgid "Ax3Nmj"
+msgctxt "Ax3Nmj"
+msgid "Failed to update language! Please try again later."
 msgstr "언어 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/language-selector.tsx
 #: components/settings/settings-page.tsx
-msgid "y1Z3or"
+msgctxt "y1Z3or"
+msgid "Language"
 msgstr "언어"
 
 #: components/settings/settings-page.tsx
-msgid "1iEPTM"
+msgctxt "1iEPTM"
+msgid "General"
 msgstr "일반"
 
 #: components/settings/settings-page.tsx
-msgid "TwyMau"
+msgctxt "TwyMau"
+msgid "Account"
 msgstr "계정"
 
 #: components/settings/settings-page.tsx
-msgid "2GURQY"
+msgctxt "2GURQY"
+msgid "Appearance"
 msgstr "외관"
 
 #: components/settings/settings-page.tsx
-msgid "NAnTXq"
+msgctxt "NAnTXq"
+msgid "Choose the display theme for the application."
 msgstr "애플리케이션의 표시 테마를 선택하세요."
 
 #: components/settings/settings-page.tsx
-msgid "9ar-T-"
+msgctxt "9ar-T-"
+msgid "Select your preferred language."
 msgstr "선호하는 언어를 선택하세요."
 
 #: components/settings/settings-page.tsx
-msgid "mgyPZS"
+msgctxt "mgyPZS"
+msgid "Select your preferred currency for displaying amounts."
 msgstr "금액 표시를 위한 선호하는 통화를 선택하세요."
 
 #: components/settings/settings-page.tsx
-msgid "Gr0AtT"
+msgctxt "Gr0AtT"
+msgid "Add an extra layer of security to your account."
 msgstr "계정에 보안 계층을 추가하세요."
 
 #: components/settings/theme-selector.tsx
-msgid "3cc4Ct"
+msgctxt "3cc4Ct"
+msgid "Light"
 msgstr "라이트"
 
 #: components/settings/theme-selector.tsx
-msgid "tOdNiY"
+msgctxt "tOdNiY"
+msgid "Dark"
 msgstr "다크"
 
 #: components/settings/theme-selector.tsx
-msgid "-CwN9C"
+msgctxt "-CwN9C"
+msgid "System"
 msgstr "시스템"
 
 #: components/settings/theme-selector.tsx
-msgid "EQpyb8"
+msgctxt "EQpyb8"
+msgid "Toggle theme"
 msgstr "테마 전환"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "e7Db3T"
+msgctxt "e7Db3T"
+msgid "Disable 2FA"
 msgstr "2FA 비활성화"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "ZhrNZz"
+msgctxt "ZhrNZz"
+msgid "Enable 2FA"
 msgstr "2FA 활성화"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "deAXlH"
+msgctxt "deAXlH"
+msgid "Enable Two-Factor Authentication"
 msgstr "2단계 인증 활성화"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "VNORmj"
+msgctxt "VNORmj"
+msgid "Scan the QR code with your authenticator app."
 msgstr "인증 앱으로 QR 코드를 스캔하세요."
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "JHBmG8"
+msgctxt "JHBmG8"
+msgid "Secret Key"
 msgstr "비밀 키"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "0onqf3"
+msgctxt "0onqf3"
+msgid "Disable Two-Factor Authentication"
 msgstr "2단계 인증 비활성화"
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "fUrrOz"
+msgctxt "fUrrOz"
+msgid "Enter your password to disable 2FA."
 msgstr "2FA를 비활성화하려면 비밀번호를 입력하세요."
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "6vQ8Z2"
+msgctxt "6vQ8Z2"
+msgid "Invalid password."
 msgstr "잘못된 비밀번호입니다."
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "Lq08V_"
+msgctxt "Lq08V_"
+msgid "Failed to enable 2FA! Please try again later."
 msgstr "2FA 활성화에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "02Huvd"
-msgstr "2FA 코드 확인에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: components/settings/two-factor-manager-dialog.tsx
-msgid "FSRmm9"
+msgctxt "FSRmm9"
+msgid "Two-factor authentication is now enabled."
 msgstr "2단계 인증이 활성화되었습니다."
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "Y1o_zZ"
+msgctxt "Y1o_zZ"
+msgid "Failed to disable 2FA! Please try again later."
 msgstr "2FA 비활성화에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/settings/two-factor-manager-dialog.tsx
-msgid "BBb4xb"
+msgctxt "BBb4xb"
+msgid "Two-factor authentication is now disabled."
 msgstr "2단계 인증이 비활성화되었습니다."
 
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "KAX9q-"
+msgctxt "KAX9q-"
+msgid "Select Date Range"
 msgstr "날짜 범위 선택"
 
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "dM-p3_"
+msgctxt "dM-p3_"
+msgid "From"
 msgstr "부터"
 
 #: components/statistics/statistics-filters.tsx
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-filters.tsx
-msgid "9j3hXO"
+msgctxt "9j3hXO"
+msgid "To"
 msgstr "까지"
 
 #: components/statistics/statistics-page.tsx
-msgid "wqp6W5"
+msgctxt "wqp6W5"
+msgid "View your financial statistics."
 msgstr "재정 통계를 확인하세요."
 
 #: components/statistics/statistics-summary.tsx
-msgid "2oz8FN"
+msgctxt "2oz8FN"
+msgid "Total Inflow"
 msgstr "총 유입"
 
 #: components/statistics/statistics-summary.tsx
-msgid "VfJR8A"
+msgctxt "VfJR8A"
+msgid "Total Outflow"
 msgstr "총 유출"
 
 #: components/statistics/statistics-summary.tsx
-msgid "cX8_D7"
+msgctxt "cX8_D7"
+msgid "Total number of transactions"
 msgstr "총 거래 수"
 
 #: components/statistics/statistics-table.tsx
 #: components/transactions/transactions-table.tsx
-msgid "Cl5VLx"
+msgctxt "Cl5VLx"
+msgid "No transactions found matching your filters."
 msgstr "필터와 일치하는 거래를 찾을 수 없습니다."
 
 #: components/statistics/statistics-table.tsx
-msgid "gsAs8V"
+msgctxt "gsAs8V"
+msgid "Transaction Count"
 msgstr "거래 수"
 
 #: components/statistics/statistics-table.tsx
-msgid "CDTMW3"
+msgctxt "CDTMW3"
+msgid "Total Amount"
 msgstr "총 금액"
 
 #: components/transactions/delete-transaction-dialog.tsx
-msgid "nPfy7y"
+msgctxt "nPfy7y"
+msgid "Delete Transaction"
 msgstr "거래 삭제"
 
 #: components/transactions/delete-transaction-dialog.tsx
-msgid "cj6kmp"
+msgctxt "cj6kmp"
+msgid "Are you sure you want to delete this transaction? This action cannot be undone."
 msgstr "이 거래를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다."
 
 #: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 #: components/transactions/transactions-table.tsx
-msgid "P7PLVj"
+msgctxt "P7PLVj"
+msgid "Date"
 msgstr "날짜"
 
 #: components/transactions/export-button.tsx
-msgid "jRf7yh"
+msgctxt "jRf7yh"
+msgid "Export Transactions (CSV)"
 msgstr "거래 내보내기 (CSV)"
 
 #: components/transactions/export-button.tsx
-msgid "6L1Gl2"
+msgctxt "6L1Gl2"
+msgid "Failed to export data! Please try again later."
 msgstr "데이터 내보내기에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/transactions/export-button.tsx
-msgid "hTOF-7"
+msgctxt "hTOF-7"
+msgid "Export Transactions"
 msgstr "거래 내보내기"
 
 #: components/transactions/export-button.tsx
-msgid "0S1jq_"
+msgctxt "0S1jq_"
+msgid "Export transactions with current filters applied"
 msgstr "현재 필터가 적용된 거래 내보내기"
 
 #: components/transactions/transaction-dialog.tsx
-msgid "P5C72A"
+msgctxt "P5C72A"
+msgid "Edit Transaction"
 msgstr "거래 편집"
 
 #: components/transactions/transaction-dialog.tsx
-msgid "DJIUi0"
+msgctxt "DJIUi0"
+msgid "Add Transaction"
 msgstr "거래 추가"
 
 #: components/transactions/transaction-dialog.tsx
-msgid "ET95oG"
+msgctxt "ET95oG"
+msgid "Update transaction information."
 msgstr "거래 정보를 업데이트하세요."
 
 #: components/transactions/transaction-dialog.tsx
-msgid "GAJmZB"
+msgctxt "GAJmZB"
+msgid "Add your inflow or outflow to track your personal finances."
 msgstr "개인 재정을 추적하기 위해 유입 또는 유출을 추가하세요."
 
 #: components/transactions/transaction-dialog.tsx
-msgid "9WG2aE"
+msgctxt "9WG2aE"
+msgid "Enter a description for the transaction..."
 msgstr "거래에 대한 설명을 입력하세요..."
 
 #: components/transactions/transaction-filters.tsx
-msgid "gD5509"
+msgctxt "gD5509"
+msgid "Search transactions..."
 msgstr "거래 검색..."
 
 #: components/transactions/transactions-page.tsx
-msgid "MBywHq"
+msgctxt "MBywHq"
+msgid "Manage cash inflows and outflows to track your personal finances."
 msgstr "개인 재정을 추적하기 위해 현금 유입 및 유출을 관리하세요."
 
 #: hooks/use-category.ts
-msgid "7MY_4L"
+msgctxt "7MY_4L"
+msgid "Salary & Bonus"
 msgstr "급여 및 보너스"
 
 #: hooks/use-category.ts
-msgid "BNse_p"
+msgctxt "BNse_p"
+msgid "Base salary, performance bonus, holiday bonus, allowances, etc."
 msgstr "기본 급여, 성과 보너스, 휴가 보너스, 수당 등"
 
 #: hooks/use-category.ts
-msgid "B2jc7q"
+msgctxt "B2jc7q"
+msgid "Business & Freelance"
 msgstr "사업 및 프리랜서"
 
 #: hooks/use-category.ts
-msgid "oKluKH"
+msgctxt "oKluKH"
+msgid "Sales revenue, services, freelance, short-term contracts, etc."
 msgstr "매출, 서비스, 프리랜서, 단기 계약 등"
 
 #: hooks/use-category.ts
-msgid "KwI8cO"
+msgctxt "KwI8cO"
+msgid "Investment & Passive"
 msgstr "투자 및 불로소득"
 
 #: hooks/use-category.ts
-msgid "dpjEgD"
+msgctxt "dpjEgD"
+msgid "Savings interest, dividends, bonds interest, rental, royalties, etc."
 msgstr "저축 이자, 배당금, 채권 이자, 임대료, 로열티 등"
 
 #: hooks/use-category.ts
-msgid "UsRS8G"
+msgctxt "UsRS8G"
+msgid "Gifts & Support"
 msgstr "선물 및 지원"
 
 #: hooks/use-category.ts
-msgid "QRzRc0"
+msgctxt "QRzRc0"
+msgid "Cash gifts, family support, celebration money, etc."
 msgstr "현금 선물, 가족 지원, 축하금 등"
 
 #: hooks/use-category.ts
-msgid "qVpKKY"
+msgctxt "qVpKKY"
+msgid "Debt Collection"
 msgstr "부채 회수"
 
 #: hooks/use-category.ts
-msgid "H_wany"
+msgctxt "H_wany"
+msgid "Borrowing money, collecting debt, loans received, etc."
 msgstr "돈 빌리기, 빚 받기, 대출금 수령 등."
 
 #: hooks/use-category.ts
-msgid "eYGhIv"
+msgctxt "eYGhIv"
+msgid "Other Inflows"
 msgstr "기타 유입"
 
 #: hooks/use-category.ts
-msgid "-vWFfX"
+msgctxt "-vWFfX"
+msgid "Refunds, selling used items, prizes, unexpected amounts, etc."
 msgstr "환불, 중고 판매, 상금, 예상치 못한 금액 등"
 
 #: hooks/use-category.ts
-msgid "jyebiC"
+msgctxt "jyebiC"
+msgid "Food & Beverage"
 msgstr "식음료"
 
 #: hooks/use-category.ts
-msgid "4Vdjbv"
+msgctxt "4Vdjbv"
+msgid "Groceries, markets, restaurants, cafes, breakfast/lunch/dinner, etc."
 msgstr "식료품, 시장, 식당, 카페, 아침/점심/저녁 등"
 
 #: hooks/use-category.ts
-msgid "_x7aOj"
+msgctxt "_x7aOj"
+msgid "Transportation"
 msgstr "교통"
 
 #: hooks/use-category.ts
-msgid "X_LFZv"
+msgctxt "X_LFZv"
+msgid "Fuel, bus/grab, vehicle maintenance, parking fees, etc."
 msgstr "연료, 버스/그랩, 차량 유지보수, 주차비 등"
 
 #: hooks/use-category.ts
-msgid "VoH7HP"
+msgctxt "VoH7HP"
+msgid "Personal Care"
 msgstr "개인 관리"
 
 #: hooks/use-category.ts
-msgid "KjBENf"
+msgctxt "KjBENf"
+msgid "Haircut, manicure, spa, massage, hair dye, skincare, etc."
 msgstr "이발, 매니큐어, 스파, 마사지, 염색, 스킨케어 등"
 
 #: hooks/use-category.ts
-msgid "my1MLn"
+msgctxt "my1MLn"
+msgid "Shopping"
 msgstr "쇼핑"
 
 #: hooks/use-category.ts
-msgid "HowRY4"
+msgctxt "HowRY4"
+msgid "Clothes, shoes, cosmetics, accessories, electronics, household items, etc."
 msgstr "의류, 신발, 화장품, 액세서리, 전자제품, 가정용품 등"
 
 #: hooks/use-category.ts
-msgid "AURASB"
+msgctxt "AURASB"
+msgid "Family Support"
 msgstr "가족 지원"
 
 #: hooks/use-category.ts
-msgid "LCwChs"
+msgctxt "LCwChs"
+msgid "Money for parents, support for siblings, relatives, etc."
 msgstr "부모님 돈, 형제자매 지원, 친척 등"
 
 #: hooks/use-category.ts
-msgid "VCWKjW"
+msgctxt "VCWKjW"
+msgid "Housing & Utilities"
 msgstr "주거 및 유틸리티"
 
 #: hooks/use-category.ts
-msgid "0zQ_kK"
+msgctxt "0zQ_kK"
+msgid "Rent, electricity, water, gas, internet, phone, management fees, etc."
 msgstr "임대료, 전기, 수도, 가스, 인터넷, 전화, 관리비 등"
 
 #: hooks/use-category.ts
-msgid "AvfH_3"
+msgctxt "AvfH_3"
+msgid "Healthcare & Insurance"
 msgstr "의료 및 보험"
 
 #: hooks/use-category.ts
-msgid "zJU6tX"
+msgctxt "zJU6tX"
+msgid "Medical visits, medicine, health/life insurance, etc."
 msgstr "의료 방문, 약, 건강/생명 보험 등"
 
 #: hooks/use-category.ts
-msgid "n6fmhq"
+msgctxt "n6fmhq"
+msgid "Education & Development"
 msgstr "교육 및 개발"
 
 #: hooks/use-category.ts
-msgid "U5tQLZ"
+msgctxt "U5tQLZ"
+msgid "Tuition, books, online/offline courses, certificates, seminars, etc."
 msgstr "수업료, 책, 온라인/오프라인 강의, 자격증, 세미나 등"
 
 #: hooks/use-category.ts
-msgid "rLxG-6"
+msgctxt "rLxG-6"
+msgid "Entertainment & Leisure"
 msgstr "오락 및 여가"
 
 #: hooks/use-category.ts
-msgid "ASzmVA"
+msgctxt "ASzmVA"
+msgid "Travel, movies, music, games, gym, hobbies, etc."
 msgstr "여행, 영화, 음악, 게임, 체육관, 취미 등"
 
 #: hooks/use-category.ts
-msgid "Mhg8_5"
+msgctxt "Mhg8_5"
+msgid "Social & Gifts"
 msgstr "사교 및 선물"
 
 #: hooks/use-category.ts
-msgid "mhXJmF"
+msgctxt "mhXJmF"
+msgid "Weddings, funerals, birthdays, gifts for friends, gatherings, etc."
 msgstr "결혼식, 장례식, 생일, 친구 선물, 모임 등"
 
 #: hooks/use-category.ts
-msgid "-PDYFb"
+msgctxt "-PDYFb"
+msgid "Savings & Investment"
 msgstr "저축 및 투자"
 
 #: hooks/use-category.ts
-msgid "lW1Dvw"
+msgctxt "lW1Dvw"
+msgid "Savings, stocks, funds, real estate, crypto, emergency fund, etc."
 msgstr "저축, 주식, 펀드, 부동산, 암호화폐, 비상금 등"
 
 #: hooks/use-category.ts
-msgid "oXnjbh"
+msgctxt "oXnjbh"
+msgid "Debt Payment"
 msgstr "부채 상환"
 
 #: hooks/use-category.ts
-msgid "yJZOmD"
+msgctxt "yJZOmD"
+msgid "Bank loan payments, credit cards, personal debts, etc."
 msgstr "은행 대출 상환, 신용카드, 개인 부채 등"
 
 #: hooks/use-category.ts
-msgid "8z_inE"
+msgctxt "8z_inE"
+msgid "Other Outflows"
 msgstr "기타 유출"
 
 #: hooks/use-category.ts
-msgid "3A1sDf"
+msgctxt "3A1sDf"
+msgid "Unexpected repairs, fines, losses, unidentified outflows, etc."
 msgstr "예상치 못한 수리, 벌금, 손실, 미확인 유출 등."
 
 #: hooks/use-months.ts
-msgid "t8QlFE"
+msgctxt "t8QlFE"
+msgid "January"
 msgstr "1월"
 
 #: hooks/use-months.ts
-msgid "0TR0PD"
+msgctxt "0TR0PD"
+msgid "February"
 msgstr "2월"
 
 #: hooks/use-months.ts
-msgid "T5W0CV"
+msgctxt "T5W0CV"
+msgid "March"
 msgstr "3월"
 
 #: hooks/use-months.ts
-msgid "h7xti1"
+msgctxt "h7xti1"
+msgid "April"
 msgstr "4월"
 
 #: hooks/use-months.ts
-msgid "zUpHdf"
+msgctxt "zUpHdf"
+msgid "May"
 msgstr "5월"
 
 #: hooks/use-months.ts
-msgid "xBaHKe"
+msgctxt "xBaHKe"
+msgid "June"
 msgstr "6월"
 
 #: hooks/use-months.ts
-msgid "NGWumB"
+msgctxt "NGWumB"
+msgid "July"
 msgstr "7월"
 
 #: hooks/use-months.ts
-msgid "lINtN6"
+msgctxt "lINtN6"
+msgid "August"
 msgstr "8월"
 
 #: hooks/use-months.ts
-msgid "TFf5u-"
+msgctxt "TFf5u-"
+msgid "September"
 msgstr "9월"
 
 #: hooks/use-months.ts
-msgid "EuK7yR"
+msgctxt "EuK7yR"
+msgid "October"
 msgstr "10월"
 
 #: hooks/use-months.ts
-msgid "pn-jQD"
+msgctxt "pn-jQD"
+msgid "November"
 msgstr "11월"
 
 #: hooks/use-months.ts
-msgid "SsiZK7"
+msgctxt "SsiZK7"
+msgid "December"
 msgstr "12월"
 
 #: schemas/messages.ts
-msgid "MsWwGp"
+msgctxt "MsWwGp"
+msgid "Password must have at least 8 characters, including uppercase, lowercase, number and special character."
 msgstr "비밀번호는 최소 8자 이상이어야 하며 대문자, 소문자, 숫자 및 특수 문자를 포함해야 합니다."
 
 #: schemas/messages.ts
-msgid "_1byDa"
+msgctxt "_1byDa"
+msgid "Amount is required."
 msgstr "금액은 필수입니다."
 
 #: schemas/messages.ts
-msgid "HCzfe9"
+msgctxt "HCzfe9"
+msgid "Amount must be a valid number."
 msgstr "금액은 유효한 숫자여야 합니다."
 
 #: schemas/messages.ts
-msgid "ICgNGL"
+msgctxt "ICgNGL"
+msgid "Amount must be greater than 0."
 msgstr "금액은 0보다 커야 합니다."
 
 #: schemas/messages.ts
-msgid "9I9BOz"
+msgctxt "9I9BOz"
+msgid "Maximum amount is 100 billion."
 msgstr "최대 금액은 1000억입니다."
 
 #: schemas/messages.ts
-msgid "aAADUG"
+msgctxt "aAADUG"
+msgid "Username is required."
 msgstr "사용자 이름은 필수입니다."
 
 #: schemas/messages.ts
-msgid "gpW0lx"
+msgctxt "gpW0lx"
+msgid "Current password is required."
 msgstr "현재 비밀번호는 필수입니다."
 
 #: schemas/messages.ts
-msgid "xfcapk"
+msgctxt "xfcapk"
+msgid "New password confirmation is required."
 msgstr "새 비밀번호 확인은 필수입니다."
 
 #: schemas/messages.ts
-msgid "H5adYw"
+msgctxt "H5adYw"
+msgid "Passwords do not match."
 msgstr "비밀번호가 일치하지 않습니다."
 
 #: schemas/messages.ts
-msgid "RKK2dE"
+msgctxt "RKK2dE"
+msgid "Enter the 6-digit code from your authenticator app."
 msgstr "인증 앱의 6자리 코드를 입력하세요."
 
 #: schemas/messages.ts
-msgid "eX6daX"
+msgctxt "eX6daX"
+msgid "Code must be at most 10 digits."
 msgstr "코드는 최대 10자리 숫자여야 합니다."
 
 #: schemas/messages.ts
-msgid "O4PhlQ"
+msgctxt "O4PhlQ"
+msgid "Code can only contain digits."
 msgstr "코드는 숫자만 포함할 수 있습니다."
 
 #: schemas/messages.ts
-msgid "_4pQDl"
+msgctxt "_4pQDl"
+msgid "Name is required."
 msgstr "이름은 필수입니다."
 
 #: schemas/messages.ts
-msgid "YeRtBx"
+msgctxt "YeRtBx"
+msgid "Name must be at most 100 characters."
 msgstr "이름은 최대 100자입니다."
 
 #: schemas/messages.ts
-msgid "J0CJqe"
+msgctxt "J0CJqe"
+msgid "Name can only contain letters."
 msgstr "이름은 문자만 포함할 수 있습니다."
 
 #: schemas/messages.ts
-msgid "c-1x_V"
+msgctxt "c-1x_V"
+msgid "Username must have at least 3 characters."
 msgstr "사용자 이름은 최소 3자 이상이어야 합니다."
 
 #: schemas/messages.ts
-msgid "MSqoQ2"
+msgctxt "MSqoQ2"
+msgid "Username must be at most 30 characters."
 msgstr "사용자 이름은 최대 30자입니다."
 
 #: schemas/messages.ts
-msgid "8Y5qyI"
+msgctxt "8Y5qyI"
+msgid "Username can only contain letters, numbers, underscores, and dots."
 msgstr "사용자 이름은 문자, 숫자, 밑줄 및 점만 포함할 수 있습니다."
 
 #: schemas/messages.ts
-msgid "l9jjIW"
+msgctxt "l9jjIW"
+msgid "Transaction type is required."
 msgstr "거래 유형은 필수입니다."
 
 #: schemas/messages.ts
-msgid "uDAfoc"
+msgctxt "uDAfoc"
+msgid "Category is required."
 msgstr "카테고리는 필수입니다."
 
 #: schemas/messages.ts
-msgid "A5N1tw"
+msgctxt "A5N1tw"
+msgid "Currency is required."
 msgstr "통화는 필수입니다."
 
 #: schemas/messages.ts
-msgid "be3kp3"
+msgctxt "be3kp3"
+msgid "Description is required."
 msgstr "설명은 필수입니다."
 
 #: schemas/messages.ts
-msgid "Y1VHB3"
+msgctxt "Y1VHB3"
+msgid "Description must be at most 200 characters."
 msgstr "설명은 최대 200자입니다."
 
 #: schemas/messages.ts
-msgid "fgoR4w"
+msgctxt "fgoR4w"
+msgid "Date is required."
 msgstr "날짜는 필수입니다."
 
 #: schemas/messages.ts
-msgid "goeMxG"
+msgctxt "goeMxG"
+msgid "Type is required."
 msgstr "유형은 필수입니다."
 
 #: schemas/messages.ts
-msgid "5huJG4"
+msgctxt "5huJG4"
+msgid "Category name is required."
 msgstr "카테고리 이름은 필수입니다."
 
 #: schemas/messages.ts
-msgid "LmVuiu"
+msgctxt "LmVuiu"
+msgid "Category name must be at most 50 characters."
 msgstr "카테고리 이름은 최대 50자입니다."
 
 #: schemas/messages.ts
-msgid "C3kWKK"
+msgctxt "C3kWKK"
+msgid "Start date is required."
 msgstr "시작일은 필수입니다."
 
 #: schemas/messages.ts
-msgid "1uO2me"
+msgctxt "1uO2me"
+msgid "End date is required."
 msgstr "종료일은 필수입니다."
 
 #: schemas/messages.ts
-msgid "hjtyTg"
+msgctxt "hjtyTg"
+msgid "End date must be after start date."
 msgstr "종료일은 시작일 이후여야 합니다."
 
 #: schemas/messages.ts
-msgid "eEFyJl"
+msgctxt "eEFyJl"
+msgid "Goal name is required."
 msgstr "목표 이름은 필수입니다."
 
 #: schemas/messages.ts
-msgid "qVUStI"
+msgctxt "qVUStI"
+msgid "Goal name must be at most 100 characters."
 msgstr "목표 이름은 최대 100자입니다."
 
 #: schemas/messages.ts
-msgid "pmDGs3"
+msgctxt "pmDGs3"
+msgid "Frequency is required."
 msgstr "빈도는 필수입니다."
 
 #: schemas/messages.ts
-msgid "rHlS-D"
+msgctxt "rHlS-D"
+msgid "Number of days is required."
 msgstr "일수는 필수입니다."
 
 #: schemas/messages.ts
-msgid "N4OgtE"
+msgctxt "N4OgtE"
+msgid "The number of days must not exceed 365."
 msgstr "일수는 365를 초과할 수 없습니다."
 
 #: schemas/messages.ts
-msgid "F8BDEm"
+msgctxt "F8BDEm"
+msgid "Cannot activate a recurring transaction that has already expired."
 msgstr "이미 만료된 반복 거래는 활성화할 수 없습니다."
+
+#: schemas/messages.ts
+msgctxt "xs_MJu"
+msgid "Please enter a valid email address."
+msgstr "유효한 이메일 주소를 입력해 주세요."
+
+#: schemas/messages.ts
+msgctxt "XCx5G5"
+msgid "Role is required."
+msgstr "역할은 필수입니다."
+
+#: schemas/messages.ts
+msgctxt "JgUCtj"
+msgid "Ban reason must be at most 200 characters."
+msgstr "차단 사유는 최대 200자여야 합니다."
+
+#: schemas/messages.ts
+msgctxt "Jb24zO"
+msgid "Duration is required."
+msgstr "기간은 필수입니다."

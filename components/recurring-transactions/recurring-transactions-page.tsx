@@ -8,7 +8,7 @@ import { RecurringTransactionDialog } from "@/components/recurring-transactions/
 import { RecurringTransactionsFilters } from "@/components/recurring-transactions/recurring-transactions-filters"
 
 export default function RecurringTransactionsPage() {
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const t = useExtracted()
 
   return (
@@ -21,13 +21,13 @@ export default function RecurringTransactionsPage() {
               {t("Manage your recurring transactions.")}
             </div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
+          <Button onClick={() => setIsOpen(true)}>{t("Add")}</Button>
         </div>
 
         <RecurringTransactionsFilters />
       </div>
 
-      <RecurringTransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <RecurringTransactionDialog open={isOpen} setOpen={setIsOpen} />
     </>
   )
 }

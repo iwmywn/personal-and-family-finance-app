@@ -24,7 +24,7 @@ export const getUserLocale = cache(async (): Promise<AppLocale> => {
 
 const fourHundredDays = 400 * 24 * 60 * 60
 
-export async function setUserLocale(locale: AppLocale) {
+export async function setUserLocale(locale: AppLocale): Promise<void> {
   const store = await cookies()
   if (store.get(COOKIE_NAME)?.value === locale) return
 

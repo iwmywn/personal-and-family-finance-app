@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -62,9 +63,10 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
-  const { createGoalSchema } = useSchemas()
   const { user } = useUser()
   const formatDate = useFormatDate()
+  const router = useRouter()
+  const { createGoalSchema } = useSchemas()
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(createGoalSchema()),
     defaultValues: {
@@ -100,8 +102,9 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
         setOpen(false)
+        toast.success(success)
+        router.refresh()
       }
     } else {
       const { success, error } = await createGoal(data)
@@ -109,16 +112,10 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
-        form.reset({
-          categoryKey: "",
-          name: "",
-          currency: user.currency as AppCurrency,
-          targetAmount: "",
-          startDate: undefined,
-          endDate: undefined,
-        })
         setOpen(false)
+        toast.success(success)
+        router.refresh()
+        form.reset()
       }
     }
   }

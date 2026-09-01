@@ -5,7 +5,11 @@ export const LOCALES = ["en-US", "zh-CN", "ja-JP", "ko-KR", "vi-VN"] as const
 
 export type AppLocale = (typeof LOCALES)[number]
 
+// Default UI locale displayed to the user (fallback locale)
 export const DEFAULT_LOCALE: AppLocale = "vi-VN"
+
+// Source (base) locale used as reference in source code and translation dictionaries
+export const SOURCE_LOCALE: AppLocale = "en-US"
 
 type LocaleConfigType = {
   [K in AppLocale]: {

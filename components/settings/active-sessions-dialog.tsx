@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/item"
 import { Spinner } from "@/components/ui/spinner"
 import { useUser } from "@/context/user-context"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 
 export function ActiveSessionsDialog() {
   const t = useExtracted()
@@ -35,10 +35,14 @@ export function ActiveSessionsDialog() {
   const { activeSessions, currentSession } = useUser()
   const [isTerminating, setIsTerminating] = useState<string | undefined>()
   const [isRevokingAll, setIsRevokingAll] = useState<boolean>(false)
-  const [open, setOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [locations, setLocations] = useState<Record<string, string | null>>({})
 
-  const sortedSessions = activeSessions
+  const allSessions = activeSessions.some((s) => s.id === currentSession.id)
+    ? activeSessions
+    : [currentSession, ...activeSessions]
+
+  const sortedSessions = allSessions
     .filter((session) => session.userAgent)
     .sort((a, b) => {
       const aIsCurrent = a.id === currentSession.id
@@ -48,7 +52,7 @@ export function ActiveSessionsDialog() {
     })
 
   useEffect(() => {
-    if (open && sortedSessions.length > 0) {
+    if (isOpen && sortedSessions.length > 0) {
       const fetchLocations = async () => {
         const locationPromises = sortedSessions.map(async (session) => {
           const location = await getLocationFromIP(session.ipAddress)
@@ -65,20 +69,34 @@ export function ActiveSessionsDialog() {
 
       fetchLocations()
     }
-  }, [open, sortedSessions])
+  }, [isOpen, sortedSessions])
 
-  async function handleRevokeSession(sessionId: string, token: string) {
-    setIsTerminating(sessionId)
+  async function handleRevokeSession(token: string) {
+    setIsTerminating(token)
 
-    await client.revokeSession({
+    if (token === currentSession.token && currentSession.impersonatedBy) {
+      toast.promise(authClient.admin.stopImpersonating(), {
+        loading: t("Stopping impersonation..."),
+        success: () => {
+          router.push("/admin")
+          router.refresh()
+          return t("Stopped impersonation session.")
+        },
+        error: () => t("Failed to stop impersonating! Please try again later."),
+      })
+      setIsTerminating(undefined)
+      return
+    }
+
+    await authClient.revokeSession({
       token,
       fetchOptions: {
         onError: () => {
           toast.error(t("Failed to terminate session! Please try again later."))
         },
         onSuccess: () => {
-          router.refresh()
           toast.success(t("Session terminated."))
+          router.refresh()
         },
       },
     })
@@ -89,7 +107,32 @@ export function ActiveSessionsDialog() {
   async function handleRevokeAllSessions() {
     setIsRevokingAll(true)
 
-    await client.revokeSessions({
+    if (currentSession.impersonatedBy) {
+      await authClient.revokeOtherSessions({
+        fetchOptions: {
+          onError: () => {
+            toast.error(
+              t("Failed to terminate all sessions! Please try again later.")
+            )
+          },
+        },
+      })
+
+      toast.promise(authClient.admin.stopImpersonating(), {
+        loading: t("Stopping impersonation..."),
+        success: () => {
+          router.push("/admin")
+          router.refresh()
+          return t("All sessions terminated.")
+        },
+        error: () => t("Failed to stop impersonating! Please try again later."),
+      })
+
+      setIsRevokingAll(false)
+      return
+    }
+
+    await authClient.revokeSessions({
       fetchOptions: {
         onError: () => {
           toast.error(
@@ -97,8 +140,8 @@ export function ActiveSessionsDialog() {
           )
         },
         onSuccess: () => {
-          router.refresh()
           toast.success(t("All sessions terminated."))
+          router.refresh()
         },
       },
     })
@@ -106,12 +149,8 @@ export function ActiveSessionsDialog() {
     setIsRevokingAll(false)
   }
 
-  if (sortedSessions.length === 0) {
-    return null
-  }
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">{t("View Active Sessions")}</Button>
       </DialogTrigger>
@@ -165,12 +204,10 @@ export function ActiveSessionsDialog() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() =>
-                      handleRevokeSession(session.id, session.token)
-                    }
-                    disabled={isTerminating === session.id || isRevokingAll}
+                    onClick={() => handleRevokeSession(session.token)}
+                    disabled={isTerminating === session.token || isRevokingAll}
                   >
-                    {isTerminating === session.id && <Spinner />}
+                    {isTerminating === session.token && <Spinner />}
                     {t("Terminate")}
                   </Button>
                 </ItemActions>

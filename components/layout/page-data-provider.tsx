@@ -1,26 +1,16 @@
-import { redirect } from "next/navigation"
-import { GhostIcon } from "lucide-react"
 import { getExtracted } from "next-intl/server"
 
 import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
 import { getGoals } from "@/actions/goal.actions"
 import { getRecurringTransactions } from "@/actions/recurring.actions"
-import { getCurrentSession } from "@/actions/session.actions"
 import { getTransactions } from "@/actions/transaction.actions"
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-} from "@/components/ui/empty"
+import { ErrorEmptyState } from "@/components/layout/error-empty-state"
 import { BudgetsProvider } from "@/context/budgets-context"
 import { CategoriesProvider } from "@/context/categories-context"
 import { GoalsProvider } from "@/context/goals-context"
 import { RecurringProvider } from "@/context/recurring-context"
 import { TransactionsProvider } from "@/context/transactions-context"
-import type { AppCurrency } from "@/lib/currency"
 
 export type PageDataProviderProps = {
   children: React.ReactNode
@@ -39,12 +29,7 @@ export async function PageDataProvider({
   goals,
   recurring,
 }: PageDataProviderProps) {
-  const session = await getCurrentSession()
-  if (!session) redirect("/signin")
-
-  const userId = session.user.id
   const t = await getExtracted()
-  const currency = session.user.currency as AppCurrency
 
   const [
     transactionsResult,
@@ -53,56 +38,55 @@ export async function PageDataProvider({
     goalsResult,
     recurringResult,
   ] = await Promise.all([
-    transactions ? getTransactions(userId, currency) : Promise.resolve(null),
-    categories ? getCustomCategories(userId) : Promise.resolve(null),
-    budgets ? getBudgets(userId) : Promise.resolve(null),
-    goals ? getGoals(userId) : Promise.resolve(null),
-    recurring ? getRecurringTransactions(userId) : Promise.resolve(null),
+    transactions ? getTransactions() : Promise.resolve(null),
+    categories ? getCustomCategories() : Promise.resolve(null),
+    budgets ? getBudgets() : Promise.resolve(null),
+    goals ? getGoals() : Promise.resolve(null),
+    recurring ? getRecurringTransactions() : Promise.resolve(null),
   ])
 
-  const renderEmptyState = (title: string, description?: string) => (
-    <Empty className="h-full border">
-      <EmptyHeader>
-        <EmptyMedia variant="icon">
-          <GhostIcon />
-        </EmptyMedia>
-        <EmptyTitle>{title}</EmptyTitle>
-        <EmptyDescription>
-          {description ?? t("Please try again later.")}
-        </EmptyDescription>
-      </EmptyHeader>
-    </Empty>
-  )
-
   if (transactions && !transactionsResult?.transactions) {
-    return renderEmptyState(
-      t("CANNOT FETCH TRANSACTIONS DATA"),
-      transactionsResult?.error
+    return (
+      <ErrorEmptyState
+        title={t("CANNOT FETCH TRANSACTIONS DATA")}
+        description={transactionsResult?.error}
+      />
     )
   }
 
   if (categories && !categoriesResult?.customCategories) {
-    return renderEmptyState(
-      t("CANNOT FETCH CATEGORIES DATA"),
-      categoriesResult?.error
+    return (
+      <ErrorEmptyState
+        title={t("CANNOT FETCH CATEGORIES DATA")}
+        description={categoriesResult?.error}
+      />
     )
   }
 
   if (budgets && !budgetsResult?.budgets) {
-    return renderEmptyState(
-      t("CANNOT FETCH BUDGETS DATA"),
-      budgetsResult?.error
+    return (
+      <ErrorEmptyState
+        title={t("CANNOT FETCH BUDGETS DATA")}
+        description={budgetsResult?.error}
+      />
     )
   }
 
   if (goals && !goalsResult?.goals) {
-    return renderEmptyState(t("CANNOT FETCH GOALS DATA"), goalsResult?.error)
+    return (
+      <ErrorEmptyState
+        title={t("CANNOT FETCH GOALS DATA")}
+        description={goalsResult?.error}
+      />
+    )
   }
 
   if (recurring && !recurringResult?.recurringTransactions) {
-    return renderEmptyState(
-      t("CANNOT FETCH RECURRING TRANSACTIONS DATA"),
-      recurringResult?.error
+    return (
+      <ErrorEmptyState
+        title={t("CANNOT FETCH RECURRING TRANSACTIONS DATA")}
+        description={recurringResult?.error}
+      />
     )
   }
 

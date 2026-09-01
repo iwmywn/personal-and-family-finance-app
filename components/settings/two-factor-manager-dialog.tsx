@@ -31,7 +31,7 @@ import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/password-input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 import type {
   TwoFactorCodeFormValues,
   TwoFactorPasswordFormValues,
@@ -40,13 +40,12 @@ import type {
 export function TwoFactorManagerDialog() {
   const t = useExtracted()
   const { user } = useUser()
-  const [open, setOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [totpURI, setTotpURI] = useState<string | null>(null)
-
   const secret = totpURI?.match(/secret=([^&]+)/)?.[1]
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
           {user.twoFactorEnabled ? t("Disable 2FA") : t("Enable 2FA")}
@@ -80,7 +79,7 @@ export function TwoFactorManagerDialog() {
 
                 <VerifyTwoFactorForm
                   setTotpURI={setTotpURI}
-                  setOpen={setOpen}
+                  setOpen={setIsOpen}
                 />
               </div>
             )}
@@ -95,7 +94,7 @@ export function TwoFactorManagerDialog() {
                 {t("Enter your password to disable 2FA.")}
               </DialogDescription>
             </DialogHeader>
-            <DisableTwoFactorForm setOpen={setOpen} />
+            <DisableTwoFactorForm setOpen={setIsOpen} />
           </>
         )}
       </DialogContent>
@@ -116,7 +115,7 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    await client.twoFactor.enable({
+    await authClient.twoFactor.enable({
       password: values.password,
       fetchOptions: {
         onError: (ctx) => {
@@ -127,8 +126,8 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
           }
         },
         onSuccess: (ctx) => {
-          form.reset()
           setTotpURI(ctx.data.totpURI)
+          form.reset()
         },
       },
     })
@@ -177,27 +176,30 @@ function VerifyTwoFactorForm({
   setOpen,
 }: VerifyTwoFactorFormProps) {
   const t = useExtracted()
-  const { createTwoFactorCodeSchema } = useSchemas()
-
   const router = useRouter()
+  const { createTwoFactorCodeSchema } = useSchemas()
   const form = useForm<TwoFactorCodeFormValues>({
     resolver: zodResolver(createTwoFactorCodeSchema()),
     defaultValues: { code: "" },
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    await client.twoFactor.verifyTotp({
+    await authClient.twoFactor.verifyTotp({
       code: values.code,
       fetchOptions: {
-        onError: () => {
-          toast.error(t("Failed to verify 2FA code! Please try again later."))
+        onError: (ctx) => {
+          if (ctx.error.code === "INVALID_CODE") {
+            toast.error(t("Invalid authentication code!"))
+          } else {
+            toast.error(t("Failed to verify 2FA code! Please try again later."))
+          }
         },
         onSuccess: () => {
-          router.refresh()
-          toast.success(t("Two-factor authentication is now enabled."))
-          form.reset()
-          setTotpURI(null)
           setOpen(false)
+          toast.success(t("Two-factor authentication is now enabled."))
+          router.refresh()
+          setTotpURI(null)
+          form.reset()
         },
       },
     })
@@ -245,16 +247,15 @@ interface DisableTwoFactorFormProps {
 
 function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
   const t = useExtracted()
-  const { createTwoFactorPasswordSchema } = useSchemas()
-
   const router = useRouter()
+  const { createTwoFactorPasswordSchema } = useSchemas()
   const form = useForm<TwoFactorPasswordFormValues>({
     resolver: zodResolver(createTwoFactorPasswordSchema()),
     defaultValues: { password: "" },
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    await client.twoFactor.disable({
+    await authClient.twoFactor.disable({
       password: values.password,
       fetchOptions: {
         onError: (ctx) => {
@@ -265,10 +266,10 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
           }
         },
         onSuccess: () => {
-          router.refresh()
-          toast.success(t("Two-factor authentication is now disabled."))
-          form.reset()
           setOpen(false)
+          toast.success(t("Two-factor authentication is now disabled."))
+          router.refresh()
+          form.reset()
         },
       },
     })

@@ -7,7 +7,7 @@ const baseTestConfig = {
   environment: "node",
 }
 const baseResolveConfig = {
-  alias: { "@": resolve(__dirname, "./") },
+  alias: { "@": resolve(import.meta.dirname, "./") },
 }
 
 const projects: UserWorkspaceConfig[] = [

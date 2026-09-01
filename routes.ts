@@ -1,8 +1,10 @@
-export const signInRoute = "/signin"
-export const twoFactorRoute = "/two-factor"
-export const authRoutes = [signInRoute, twoFactorRoute]
-export const DEFAULT_SIGNIN_REDIRECT = "/home"
-export const protectedRoutes = [
+import type { Route } from "next"
+
+export const signInRoute: Route = "/signin"
+export const twoFactorRoute: Route = "/two-factor"
+export const authRoutes: Route[] = [signInRoute, twoFactorRoute]
+export const DEFAULT_SIGNIN_REDIRECT: Route = "/home"
+export const protectedRoutes: Route[] = [
   "/home",
   "/statistics",
   "/transactions",
@@ -11,4 +13,5 @@ export const protectedRoutes = [
   "/goals",
   "/recurring",
   "/settings",
+  "/admin",
 ]

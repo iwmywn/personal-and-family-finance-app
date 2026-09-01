@@ -18,7 +18,12 @@ import type { CategoryFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
 
-export async function createCustomCategory(values: CategoryFormValues) {
+export async function createCustomCategory(
+  values: CategoryFormValues
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -39,7 +44,6 @@ export async function createCustomCategory(values: CategoryFormValues) {
 
     const userId = session.user.id
     const categoriesCollection = await getCategoriesCollection()
-
     const existingCategory = await categoriesCollection.findOne({
       userId: new ObjectId(userId),
       label: parsedValues.data.label,
@@ -62,16 +66,13 @@ export async function createCustomCategory(values: CategoryFormValues) {
       }
     }
 
-    const result = await categoriesCollection.insertOne({
+    await categoriesCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey,
       type: parsedValues.data.type,
       label: parsedValues.data.label,
       description: parsedValues.data.description,
     })
-
-    if (!result.acknowledged)
-      return { error: t("Failed to add category! Please try again later.") }
 
     updateTag(`categories-${userId}`)
     return { success: t("Category has been added."), error: undefined }
@@ -84,7 +85,10 @@ export async function createCustomCategory(values: CategoryFormValues) {
 export async function updateCustomCategory(
   categoryId: string,
   values: CategoryFormValues
-) {
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -114,7 +118,6 @@ export async function updateCustomCategory(
       getCategoriesCollection(),
       getTransactionsCollection(),
     ])
-
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
       userId: new ObjectId(userId),
@@ -170,7 +173,10 @@ export async function updateCustomCategory(
   }
 }
 
-export async function deleteCustomCategory(categoryId: string) {
+export async function deleteCustomCategory(categoryId: string): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -202,7 +208,6 @@ export async function deleteCustomCategory(categoryId: string) {
       getGoalsCollection(),
       getRecurringTransactionsCollection(),
     ])
-
     const existingCategory = await categoriesCollection.findOne({
       _id: new ObjectId(categoryId),
       userId: new ObjectId(userId),
@@ -295,21 +300,30 @@ export async function deleteCustomCategory(categoryId: string) {
   }
 }
 
-export async function getCustomCategories(userId: string) {
+export async function getCustomCategories(): Promise<{
+  error?: string
+  customCategories?: Category[]
+}> {
+  const t = await getExtracted()
+  const session = await getCurrentSession()
+
+  if (!session) {
+    return {
+      error: t("Access denied! Please refresh the page and try again."),
+    }
+  }
+
+  return getCachedCustomCategories(session.user.id)
+}
+
+async function getCachedCustomCategories(userId: string) {
   "use cache: private"
   cacheTag(`categories-${userId}`)
 
   const t = await getExtracted()
 
   try {
-    if (!userId) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     const categoriesCollection = await getCategoriesCollection()
-
     const categories = await categoriesCollection
       .find({ userId: new ObjectId(userId) })
       .sort({ _id: -1 })

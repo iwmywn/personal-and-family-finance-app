@@ -5,6 +5,7 @@ import {
   getGoalsCollection,
   getRecurringTransactionsCollection,
   getTransactionsCollection,
+  getUsersCollection,
 } from "@/lib/collections"
 import type {
   DBBudget,
@@ -13,7 +14,13 @@ import type {
   DBGoal,
   DBRecurringTransaction,
   DBTransaction,
+  DBUser,
 } from "@/lib/definitions"
+
+export const insertTestUser = async (user: DBUser) => {
+  const collection = await getUsersCollection()
+  await collection.insertOne(user)
+}
 
 export const insertTestTransaction = async (transaction: DBTransaction) => {
   const collection = await getTransactionsCollection()

@@ -24,24 +24,35 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useUser } from "@/context/user-context"
 import { useNav } from "@/hooks/use-nav"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 
 export function SecondaryNav() {
   const router = useRouter()
   const pathname = usePathname()
   const t = useExtracted()
   const { secondaryNav } = useNav()
+  const { currentSession } = useUser()
 
   async function onSignOut() {
-    toast.promise(client.signOut(), {
-      loading: t("Signing out..."),
-      success: () => {
-        router.push("/signin")
-        return t("Signed out.")
+    toast.promise(
+      async () => {
+        if (currentSession.impersonatedBy) {
+          await authClient.admin.stopImpersonating()
+        }
+        await authClient.signOut()
       },
-      error: () => t("Failed to sign out! Please try again later."),
-    })
+      {
+        loading: t("Signing out..."),
+        success: () => {
+          router.push("/signin")
+          router.refresh()
+          return t("Signed out.")
+        },
+        error: () => t("Failed to sign out! Please try again later."),
+      }
+    )
   }
 
   return (

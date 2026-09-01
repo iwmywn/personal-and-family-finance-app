@@ -3,6 +3,7 @@ import type { AppLocale } from "@/i18n/config"
 import {
   formatCurrency,
   formatDate,
+  getSafeCallbackUrl,
   getUniqueYears,
   localDateToUTCMidnight,
 } from "@/lib/utils"
@@ -83,7 +84,7 @@ describe("Utils", () => {
     it("should formats in Vietnamese (vi) correctly", () => {
       const date = new Date("2024-01-15T00:00:00.000Z")
       const result = formatDate(date, "vi" as AppLocale)
-      expect(result).toBe("Th 2, 15/01/2024")
+      expect(result).toBe("Thứ 2, 15/01/2024")
     })
 
     it("should formats in English (en) correctly", () => {
@@ -97,7 +98,7 @@ describe("Utils", () => {
         "Mon Jan 15 2024 00:00:00 GMT+0700 (Indochina Time)"
       )
       const result = formatDate(date, "vi" as AppLocale)
-      expect(result).toBe("Th 2, 15/01/2024")
+      expect(result).toBe("Thứ 2, 15/01/2024")
     })
   })
 
@@ -116,6 +117,38 @@ describe("Utils", () => {
       const singleYear = mockTransactions.slice(1, 3)
       const result = getUniqueYears(singleYear)
       expect(result).toEqual([2024])
+    })
+  })
+
+  describe("getSafeCallbackUrl", () => {
+    it("should return valid relative route", () => {
+      expect(getSafeCallbackUrl("/transactions")).toBe("/transactions")
+      expect(getSafeCallbackUrl("/budgets?month=01")).toBe("/budgets?month=01")
+      expect(getSafeCallbackUrl("/home#section")).toBe("/home#section")
+    })
+
+    it("should fallback when url is null or undefined or empty", () => {
+      expect(getSafeCallbackUrl(null)).toBe("/home")
+      expect(getSafeCallbackUrl(undefined)).toBe("/home")
+      expect(getSafeCallbackUrl("")).toBe("/home")
+      expect(getSafeCallbackUrl(null, "/settings")).toBe("/settings")
+    })
+
+    it("should reject absolute URLs with schemes to prevent Open Redirect", () => {
+      expect(getSafeCallbackUrl("https://evil.com")).toBe("/home")
+      expect(getSafeCallbackUrl("http://evil.com")).toBe("/home")
+      expect(getSafeCallbackUrl("javascript:alert(1)")).toBe("/home")
+      expect(getSafeCallbackUrl("data:text/html,test")).toBe("/home")
+    })
+
+    it("should reject protocol-relative URLs", () => {
+      expect(getSafeCallbackUrl("//evil.com")).toBe("/home")
+      expect(getSafeCallbackUrl("//evil.com/login")).toBe("/home")
+    })
+
+    it("should reject backslash bypasses", () => {
+      expect(getSafeCallbackUrl("/\\evil.com")).toBe("/home")
+      expect(getSafeCallbackUrl("/evil.com\\test")).toBe("/home")
     })
   })
 })

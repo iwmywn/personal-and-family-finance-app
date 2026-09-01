@@ -1,5 +1,6 @@
 "use client"
 
+import type { Route } from "next"
 import Link from "next/link"
 import { MoreVerticalIcon, WalletIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -37,6 +38,7 @@ import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import type { Transaction } from "@/lib/definitions"
+import { parseAsLocalDate } from "@/lib/parsers"
 import { calculateCategoriesStats } from "@/lib/statistics"
 
 interface TransactionBreakdownTableProps {
@@ -60,16 +62,22 @@ export function StatisticsTable({
 
   const categoryStats = calculateCategoriesStats(filteredTransactions)
 
-  const getTransactionsHref = (stat: { type: string; categoryKey: string }) => {
+  const getTransactionsHref = (stat: {
+    type: string
+    categoryKey: string
+  }): Route => {
     const params = new URLSearchParams()
     if (filterStates?.selectedDate) {
-      params.set("date", filterStates.selectedDate.toISOString())
+      params.set("date", parseAsLocalDate.serialize(filterStates.selectedDate))
     }
     if (filterStates?.dateRange?.from) {
-      params.set("from", filterStates.dateRange.from.toISOString())
+      params.set(
+        "from",
+        parseAsLocalDate.serialize(filterStates.dateRange.from)
+      )
     }
     if (filterStates?.dateRange?.to) {
-      params.set("to", filterStates.dateRange.to.toISOString())
+      params.set("to", parseAsLocalDate.serialize(filterStates.dateRange.to))
     }
     if (filterStates?.filterMonth && filterStates.filterMonth !== "all") {
       params.set("month", filterStates.filterMonth)

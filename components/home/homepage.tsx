@@ -12,7 +12,7 @@ import { useUser } from "@/context/user-context"
 
 export default function HomePage() {
   const { user } = useUser()
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const t = useExtracted()
 
   return (
@@ -27,7 +27,7 @@ export default function HomePage() {
               {t("Here's what's happening with your finances this month.")}
             </div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
+          <Button onClick={() => setIsOpen(true)}>{t("Add")}</Button>
         </div>
 
         <TransactionSummary />
@@ -38,7 +38,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <TransactionDialog open={isOpen} setOpen={setIsOpen} />
     </>
   )
 }

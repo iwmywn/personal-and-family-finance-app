@@ -4,6 +4,8 @@ import "./env/server"
 import type { NextConfig } from "next"
 import createNextIntlPlugin from "next-intl/plugin"
 
+import { LOCALES, SOURCE_LOCALE } from "./i18n/config"
+
 const withNextIntl = createNextIntlPlugin({
   experimental: {
     srcPath: [
@@ -18,8 +20,8 @@ const withNextIntl = createNextIntlPlugin({
     messages: {
       format: "po",
       path: "./messages",
-      locales: "infer",
-      sourceLocale: "en-US",
+      locales: LOCALES,
+      sourceLocale: SOURCE_LOCALE,
       precompile: true,
     },
   },
@@ -30,6 +32,7 @@ const nextConfig: NextConfig = {
     position: "bottom-right",
   },
   experimental: {
+    turbopackRustReactCompiler: true,
     scrollRestoration: true,
     cpus: 1,
     inlineCss: true,
@@ -40,6 +43,7 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   reactCompiler: true,
+  typedRoutes: true,
 }
 
 export default withNextIntl(nextConfig)

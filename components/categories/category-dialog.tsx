@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -53,10 +54,10 @@ export function CategoryDialog({
   open,
   setOpen,
 }: CategoryDialogProps) {
-  const [type, setType] = useState<CategoryType>(category?.type || "inflow")
   const t = useExtracted()
+  const router = useRouter()
+  const [type, setType] = useState<CategoryType>(category?.type || "inflow")
   const { createCategorySchema } = useSchemas()
-
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(createCategorySchema()),
     defaultValues: {
@@ -76,8 +77,9 @@ export function CategoryDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
         setOpen(false)
+        toast.success(success)
+        router.refresh()
       }
     } else {
       const { success, error } = await createCustomCategory(values)
@@ -85,13 +87,13 @@ export function CategoryDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
-        form.reset({
-          type: type,
-          label: "",
-          description: "",
-        })
         setOpen(false)
+        toast.success(success)
+        router.refresh()
+        form.reset({
+          ...form.formState.defaultValues,
+          type,
+        })
       }
     }
   }

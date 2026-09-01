@@ -13,13 +13,14 @@ export function getCurrentMonthTransactions(
   transactions: Transaction[]
 ): Transaction[] {
   const now = new Date()
-  const currentMonth = now.getMonth()
-  const currentYear = now.getFullYear()
+  const currentMonth = now.getUTCMonth()
+  const currentYear = now.getUTCFullYear()
 
   return transactions.filter((t) => {
     const date = new Date(t.date)
     return (
-      date.getMonth() === currentMonth && date.getFullYear() === currentYear
+      date.getUTCMonth() === currentMonth &&
+      date.getUTCFullYear() === currentYear
     )
   })
 }

@@ -1,3 +1,5 @@
+import type { Route } from "next"
+import { DEFAULT_SIGNIN_REDIRECT } from "@/routes"
 import { clsx } from "clsx"
 import type { ClassValue } from "clsx"
 import Decimal from "decimal.js"
@@ -15,14 +17,14 @@ export function formatCurrency(
   amount: string,
   locale: AppLocale,
   currency: AppCurrency
-) {
+): string {
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
   }).format(parseFloat(amount))
 }
 
-export function formatDate(date: Date, locale: AppLocale) {
+export function formatDate(date: Date, locale: AppLocale): string {
   return new Intl.DateTimeFormat(locale, {
     weekday: "short",
     day: "2-digit",
@@ -31,7 +33,7 @@ export function formatDate(date: Date, locale: AppLocale) {
   }).format(date)
 }
 
-export function localDateToUTCMidnight(date: Date) {
+export function localDateToUTCMidnight(date: Date): Date {
   return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
 }
 
@@ -68,4 +70,22 @@ export function convertAmountWithRates(
   const result = to === "USD" ? amountInUSD : amountInUSD.mul(rateTo)
 
   return result
+}
+
+export function getSafeCallbackUrl(
+  url: string | null | undefined,
+  fallback: Route = DEFAULT_SIGNIN_REDIRECT as Route
+): Route {
+  if (!url) return fallback
+
+  if (
+    url.startsWith("/") &&
+    !url.startsWith("//") &&
+    !url.includes("\\") &&
+    !url.includes(":")
+  ) {
+    return url as Route
+  }
+
+  return fallback
 }

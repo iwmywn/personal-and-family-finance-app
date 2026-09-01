@@ -5,6 +5,7 @@ import * as routes from "@/routes"
 
 import { getCurrentSession } from "@/actions/session.actions"
 import { siteConfig } from "@/app/pffa.config"
+import { isAdminRole } from "@/lib/role"
 
 function redirectIfProtectedRoute(request: NextRequest) {
   const { nextUrl } = request
@@ -50,6 +51,10 @@ export default async function proxy(request: NextRequest) {
     routes.authRoutes.some((route) => pathname.startsWith(route)) ||
     pathname === "/"
   ) {
+    return redirectTo(routes.DEFAULT_SIGNIN_REDIRECT, nextUrl)
+  }
+
+  if (pathname === "/admin" && !isAdminRole(session.user.role)) {
     return redirectTo(routes.DEFAULT_SIGNIN_REDIRECT, nextUrl)
   }
 

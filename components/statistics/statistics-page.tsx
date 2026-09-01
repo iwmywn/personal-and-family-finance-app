@@ -7,7 +7,7 @@ import { StatisticsFilters } from "@/components/statistics/statistics-filters"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 
 export default function StatisticsPage() {
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const t = useExtracted()
 
   return (
@@ -25,7 +25,7 @@ export default function StatisticsPage() {
         <StatisticsFilters />
       </div>
 
-      <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <TransactionDialog open={isOpen} setOpen={setIsOpen} />
     </>
   )
 }

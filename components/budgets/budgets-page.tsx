@@ -8,7 +8,7 @@ import { BudgetDialog } from "@/components/budgets/budget-dialog"
 import { BudgetFilters } from "@/components/budgets/budget-filters"
 
 export default function BudgetsPage() {
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const t = useExtracted()
 
   return (
@@ -21,13 +21,13 @@ export default function BudgetsPage() {
               {t("Set and manage budgets for your outflow categories.")}
             </div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
+          <Button onClick={() => setIsOpen(true)}>{t("Add")}</Button>
         </div>
 
         <BudgetFilters />
       </div>
 
-      <BudgetDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <BudgetDialog open={isOpen} setOpen={setIsOpen} />
     </>
   )
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -29,11 +30,13 @@ import {
 } from "@/components/ui/form"
 import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 import type { PasswordFormValues } from "@/schemas/types"
 
 export function ChangePasswordDialog() {
   const t = useExtracted()
+  const router = useRouter()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const { createPasswordSchema } = useSchemas()
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(createPasswordSchema()),
@@ -44,10 +47,9 @@ export function ChangePasswordDialog() {
       revokeOtherSessions: false,
     },
   })
-  const [open, setOpen] = useState<boolean>(false)
 
   async function onSubmit(values: PasswordFormValues) {
-    await client.changePassword({
+    await authClient.changePassword({
       newPassword: values.newPassword,
       currentPassword: values.currentPassword,
       revokeOtherSessions: values.revokeOtherSessions,
@@ -59,16 +61,17 @@ export function ChangePasswordDialog() {
             toast.error(t("Failed to update password! Please try again later."))
         },
         onSuccess: () => {
+          setIsOpen(false)
           toast.success(t("Your password has been changed."))
+          router.refresh()
           form.reset()
-          setOpen(false)
         },
       },
     })
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">{t("Change Password")}</Button>
       </DialogTrigger>

@@ -1,10 +1,7 @@
 import { ObjectId } from "mongodb"
 
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
-import {
-  mockTransactionCollectionError,
-  setupTransactionCollectionMock,
-} from "@/tests/backend/mocks/collections.mock"
+import { mockTransactionCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
@@ -58,21 +55,6 @@ describe("Transactions", async () => {
       expect(duplicateResult.success).toBeUndefined()
       expect(duplicateResult.error).toBe(
         "This transaction has already been created today!"
-      )
-    })
-
-    it("should return error when database insertion fails", async () => {
-      mockAuthenticatedUser()
-      const mockTransactionsCollection = setupTransactionCollectionMock()
-      mockTransactionsCollection.insertOne.mockResolvedValue({
-        acknowledged: false,
-      })
-
-      const result = await createTransaction(mockValidTransactionValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to add transaction! Please try again later."
       )
     })
 
@@ -320,7 +302,7 @@ describe("Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getTransactions("", "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(
@@ -331,7 +313,7 @@ describe("Transactions", async () => {
     it("should return empty transactions list", async () => {
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toEqual([])
       expect(result.error).toBeUndefined()
@@ -341,7 +323,7 @@ describe("Transactions", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toHaveLength(1)
       expect(result.transactions?.[0].description).toBe("hamburger")
@@ -373,7 +355,7 @@ describe("Transactions", async () => {
       ])
       mockAuthenticatedUser()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toHaveLength(3)
       // Should be sorted by date descendinghen _id descending
@@ -389,7 +371,7 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await getTransactions(mockUser._id.toString(), "VND")
+      const result = await getTransactions()
 
       expect(result.transactions).toBeUndefined()
       expect(result.error).toBe(

@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useUser } from "@/context/user-context"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 import { CURRENCY_CONFIG } from "@/lib/currency"
 import type { AppCurrency } from "@/lib/currency"
 
@@ -24,7 +24,7 @@ export function CurrencySelector() {
   async function handleCurrencyChange(currency: AppCurrency) {
     setIsLoading(true)
 
-    await client.updateUser({
+    await authClient.updateUser({
       currency,
       fetchOptions: {
         onError: () => {

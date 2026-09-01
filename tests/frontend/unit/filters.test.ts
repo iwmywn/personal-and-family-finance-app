@@ -4,6 +4,7 @@ import {
   mockGoals,
   mockRecurringTransactions,
   mockTransactions,
+  mockUsers,
 } from "@/tests/shared/data"
 import {
   filterBudgets,
@@ -11,6 +12,7 @@ import {
   filterGoals,
   filterRecurringTransactions,
   filterTransactions,
+  filterUsers,
   isDateRangeOverlapping,
 } from "@/lib/filters"
 
@@ -873,6 +875,72 @@ describe("Filters", () => {
       })
 
       expect(result).toHaveLength(8)
+    })
+  })
+
+  describe("filterUsers", () => {
+    it("should return all users when filters are default", () => {
+      const result = filterUsers(mockUsers, {})
+      expect(result).toHaveLength(5)
+    })
+
+    it("should search users by name", () => {
+      const result = filterUsers(mockUsers, { searchTerm: "Test User" })
+      expect(result).toHaveLength(1)
+      expect(result[0].id).toBe(mockUsers[0].id)
+    })
+
+    it("should search users by email", () => {
+      const result = filterUsers(mockUsers, {
+        searchTerm: "anotheruser@gmail.com",
+      })
+      expect(result).toHaveLength(1)
+      expect(result[0].id).toBe(mockUsers[1].id)
+    })
+
+    it("should search users by username", () => {
+      const result = filterUsers(mockUsers, { searchTerm: "superadmin" })
+      expect(result).toHaveLength(1)
+      expect(result[0].id).toBe(mockUsers[3].id)
+    })
+
+    it("should filter users by role", () => {
+      const adminResult = filterUsers(mockUsers, { filterRole: "admin" })
+      expect(adminResult).toHaveLength(1)
+      expect(adminResult[0].id).toBe(mockUsers[2].id)
+
+      const superadminResult = filterUsers(mockUsers, {
+        filterRole: "superadmin",
+      })
+      expect(superadminResult).toHaveLength(1)
+      expect(superadminResult[0].id).toBe(mockUsers[3].id)
+
+      const userResult = filterUsers(mockUsers, { filterRole: "user" })
+      expect(userResult).toHaveLength(3)
+    })
+
+    it("should filter users by status", () => {
+      const activeResult = filterUsers(mockUsers, { filterStatus: "active" })
+      expect(activeResult).toHaveLength(4)
+
+      const bannedResult = filterUsers(mockUsers, { filterStatus: "banned" })
+      expect(bannedResult).toHaveLength(1)
+      expect(bannedResult[0].id).toBe(mockUsers[4].id)
+    })
+
+    it("should combine search, role, and status filters", () => {
+      const result = filterUsers(mockUsers, {
+        searchTerm: "Super",
+        filterRole: "superadmin",
+        filterStatus: "active",
+      })
+      expect(result).toHaveLength(1)
+      expect(result[0].id).toBe(mockUsers[3].id)
+    })
+
+    it("should return empty array when no matches found", () => {
+      const result = filterUsers(mockUsers, { searchTerm: "nonexistent" })
+      expect(result).toHaveLength(0)
     })
   })
 })

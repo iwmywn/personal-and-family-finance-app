@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
@@ -29,9 +30,12 @@ export function DeleteRecurringTransactionDialog({
   setOpen,
 }: DeleteRecurringDialogProps) {
   const t = useExtracted()
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  async function handleDelete() {
+  async function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault()
+
     if (isLoading) return
 
     setIsLoading(true)
@@ -41,7 +45,9 @@ export function DeleteRecurringTransactionDialog({
     if (error || !success) {
       toast.error(error)
     } else {
+      setOpen(false)
       toast.success(success)
+      router.refresh()
     }
     setIsLoading(false)
   }
