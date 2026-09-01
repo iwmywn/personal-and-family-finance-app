@@ -1,4 +1,5 @@
 allowBuilds:
+  'sharp': true
   '@parcel/watcher': true
   '@swc/core': true
   mongodb-memory-server: true
