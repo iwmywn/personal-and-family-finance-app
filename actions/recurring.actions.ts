@@ -18,7 +18,10 @@ import { toDecimal128 } from "./utils"
 
 export async function createRecurringTransaction(
   values: RecurringTransactionFormValues
-) {
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -39,7 +42,6 @@ export async function createRecurringTransaction(
 
     const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
-
     const query: Filter<DBRecurringTransaction> = {
       userId: new ObjectId(userId),
       type: parsedValues.data.type,
@@ -61,7 +63,7 @@ export async function createRecurringTransaction(
       return { error: t("This recurring transaction already exists!") }
     }
 
-    const result = await recurringCollection.insertOne({
+    await recurringCollection.insertOne({
       userId: new ObjectId(userId),
       type: parsedValues.data.type,
       categoryKey: parsedValues.data.categoryKey,
@@ -75,13 +77,6 @@ export async function createRecurringTransaction(
       lastGenerated: undefined,
       isActive: parsedValues.data.isActive,
     })
-
-    if (!result.acknowledged)
-      return {
-        error: t(
-          "Failed to add recurring transaction! Please try again later."
-        ),
-      }
 
     updateTag(`recurringTransactions-${userId}`)
     return {
@@ -99,7 +94,10 @@ export async function createRecurringTransaction(
 export async function updateRecurringTransaction(
   recurringId: string,
   values: RecurringTransactionFormValues
-) {
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -126,7 +124,6 @@ export async function updateRecurringTransaction(
 
     const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
-
     const existingRecurring = await recurringCollection.findOne({
       _id: new ObjectId(recurringId),
       userId: new ObjectId(userId),
@@ -173,7 +170,10 @@ export async function updateRecurringTransaction(
   }
 }
 
-export async function deleteRecurringTransaction(recurringId: string) {
+export async function deleteRecurringTransaction(recurringId: string): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -193,7 +193,6 @@ export async function deleteRecurringTransaction(recurringId: string) {
 
     const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
-
     const existingRecurring = await recurringCollection.findOne({
       _id: new ObjectId(recurringId),
       userId: new ObjectId(userId),
@@ -224,10 +223,10 @@ export async function deleteRecurringTransaction(recurringId: string) {
   }
 }
 
-export async function getRecurringTransactions(): Promise<
-  | { recurringTransactions: RecurringTransaction[]; error?: undefined }
-  | { error: string; recurringTransactions?: undefined }
-> {
+export async function getRecurringTransactions(): Promise<{
+  error?: string
+  recurringTransactions?: RecurringTransaction[]
+}> {
   const t = await getExtracted()
   const session = await getCurrentSession()
 
@@ -248,7 +247,6 @@ async function getCachedRecurringTransactions(userId: string) {
 
   try {
     const recurringCollection = await getRecurringTransactionsCollection()
-
     const recurringTransactions = await recurringCollection
       .find({ userId: new ObjectId(userId) })
       .sort({ startDate: -1, _id: -1 })

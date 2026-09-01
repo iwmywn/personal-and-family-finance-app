@@ -10,7 +10,6 @@ import {
 import {
   mockCategoryCollectionError,
   mockTransactionCollectionError,
-  setupCategoryCollectionMock,
 } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedAsAnotherUser,
@@ -91,22 +90,6 @@ describe("Categories", async () => {
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
         "Error creating category key! Please try again later."
-      )
-    })
-
-    it("should return error when database insertion fails", async () => {
-      mockAuthenticatedUser()
-      const mockCategoriesCollection = setupCategoryCollectionMock()
-      mockCategoriesCollection.findOne.mockResolvedValue(null)
-      mockCategoriesCollection.insertOne.mockResolvedValue({
-        acknowledged: false,
-      })
-
-      const result = await createCustomCategory(mockValidCategoryValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to add category! Please try again later."
       )
     })
 

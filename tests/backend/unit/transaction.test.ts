@@ -1,10 +1,7 @@
 import { ObjectId } from "mongodb"
 
 import { insertTestTransaction } from "@/tests/backend/helpers/database"
-import {
-  mockTransactionCollectionError,
-  setupTransactionCollectionMock,
-} from "@/tests/backend/mocks/collections.mock"
+import { mockTransactionCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
@@ -58,21 +55,6 @@ describe("Transactions", async () => {
       expect(duplicateResult.success).toBeUndefined()
       expect(duplicateResult.error).toBe(
         "This transaction has already been created today!"
-      )
-    })
-
-    it("should return error when database insertion fails", async () => {
-      mockAuthenticatedUser()
-      const mockTransactionsCollection = setupTransactionCollectionMock()
-      mockTransactionsCollection.insertOne.mockResolvedValue({
-        acknowledged: false,
-      })
-
-      const result = await createTransaction(mockValidTransactionValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to add transaction! Please try again later."
       )
     })
 

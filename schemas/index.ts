@@ -2,6 +2,7 @@ import * as z from "zod"
 
 import { CATEGORIES } from "@/lib/category"
 import { CURRENCIES } from "@/lib/currency"
+import { ASSIGNABLE_ROLES } from "@/lib/role"
 import { localDateToUTCMidnight } from "@/lib/utils"
 import type { SchemaMessages } from "@/schemas/messages"
 
@@ -11,6 +12,15 @@ export function buildSchemas(messages: SchemaMessages) {
       .string()
       .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, {
         message: messages.passwordFormat,
+      })
+
+  const baseUsernameSchema = () =>
+    z
+      .string()
+      .min(3, { message: messages.usernameMinLength })
+      .max(30, { message: messages.usernameMaxLength })
+      .regex(/^[a-zA-Z0-9_.]+$/, {
+        message: messages.usernameFormat,
       })
 
   const baseAmount = () =>
@@ -89,13 +99,7 @@ export function buildSchemas(messages: SchemaMessages) {
 
   const createUsernameSchema = () =>
     z.object({
-      username: z
-        .string()
-        .min(3, { message: messages.usernameMinLength })
-        .max(30, { message: messages.usernameMaxLength })
-        .regex(/^[a-zA-Z0-9_.]+$/, {
-          message: messages.usernameFormat,
-        }),
+      username: baseUsernameSchema(),
     })
 
   const createTransactionSchema = () =>
@@ -269,6 +273,39 @@ export function buildSchemas(messages: SchemaMessages) {
         }
       })
 
+  const createAdminUserSchema = () =>
+    z.object({
+      email: z.email({ message: messages.emailInvalid }),
+      password: basePasswordSchema(),
+      name: z
+        .string()
+        .min(1, { message: messages.nameRequired })
+        .max(100, { message: messages.nameMaxLength }),
+      username: baseUsernameSchema(),
+      role: z.enum(ASSIGNABLE_ROLES, {
+        message: messages.roleRequired,
+      }),
+    })
+
+  const createAdminRoleSchema = () =>
+    z.object({
+      role: z.enum(ASSIGNABLE_ROLES, {
+        message: messages.roleRequired,
+      }),
+    })
+
+  const createAdminPasswordSchema = createTwoFactorPasswordSchema
+
+  const createAdminBanSchema = () =>
+    z.object({
+      banReason: z
+        .string()
+        .max(200, { message: messages.banReasonMaxLength })
+        .optional()
+        .or(z.literal("")),
+      duration: z.string().min(1, { message: messages.durationRequired }),
+    })
+
   return {
     createSignInSchema,
     createPasswordSchema,
@@ -281,5 +318,9 @@ export function buildSchemas(messages: SchemaMessages) {
     createBudgetSchema,
     createGoalSchema,
     createRecurringTransactionSchema,
+    createAdminUserSchema,
+    createAdminRoleSchema,
+    createAdminPasswordSchema,
+    createAdminBanSchema,
   }
 }

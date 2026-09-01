@@ -41,7 +41,7 @@ export type CategoryConfigBaseType = {
   }
 }
 
-export function getCategoryType(key: AllCategoriesKeyType) {
+export function getCategoryType(key: AllCategoriesKeyType): CategoryType {
   return (INFLOW_CATEGORIES_KEY as readonly string[]).includes(key)
     ? "inflow"
     : "outflow"

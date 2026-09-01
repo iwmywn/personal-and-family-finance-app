@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -63,6 +64,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   const t = useExtracted()
   const { createBudgetSchema } = useSchemas()
   const { user } = useUser()
+  const router = useRouter()
   const formatDate = useFormatDate()
   const form = useForm<BudgetFormValues>({
     resolver: zodResolver(createBudgetSchema()),
@@ -98,8 +100,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
         setOpen(false)
+        toast.success(success)
+        router.refresh()
       }
     } else {
       const { success, error } = await createBudget(data)
@@ -107,15 +110,10 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
-        form.reset({
-          categoryKey: "",
-          currency: user.currency as AppCurrency,
-          allocatedAmount: "",
-          startDate: undefined,
-          endDate: undefined,
-        })
         setOpen(false)
+        toast.success(success)
+        router.refresh()
+        form.reset()
       }
     }
   }

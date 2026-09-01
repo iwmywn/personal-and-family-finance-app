@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -78,9 +79,10 @@ export function RecurringTransactionDialog({
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const [type, setType] = useState<CategoryType>(recurring?.type || "inflow")
   const t = useExtracted()
-  const { createRecurringTransactionSchema } = useSchemas()
   const { user } = useUser()
   const formatDate = useFormatDate()
+  const router = useRouter()
+  const { createRecurringTransactionSchema } = useSchemas()
   const form = useForm<RecurringTransactionFormValues>({
     resolver: zodResolver(createRecurringTransactionSchema()),
     defaultValues: {
@@ -135,8 +137,9 @@ export function RecurringTransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
         setOpen(false)
+        toast.success(success)
+        router.refresh()
       }
     } else {
       const { success, error } = await createRecurringTransaction(data)
@@ -144,20 +147,13 @@ export function RecurringTransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
-        form.reset({
-          type: type,
-          categoryKey: "",
-          currency: user.currency as AppCurrency,
-          amount: "",
-          description: "",
-          frequency: "monthly",
-          randomEveryXDays: undefined,
-          startDate: undefined,
-          endDate: undefined,
-          isActive: true,
-        })
         setOpen(false)
+        toast.success(success)
+        router.refresh()
+        form.reset({
+          ...form.formState.defaultValues,
+          type,
+        })
       }
     }
   }

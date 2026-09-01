@@ -21,34 +21,40 @@ import { Input } from "@/components/ui/input"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
+import { getSafeCallbackUrl } from "@/lib/utils"
 import type { TwoFactorCodeFormValues } from "@/schemas/types"
 
 export function TwoFactorVerificationForm() {
   const t = useExtracted()
-  const { createTwoFactorCodeSchema } = useSchemas()
-
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get("next") || "/home"
-
+  const { createTwoFactorCodeSchema } = useSchemas()
   const form = useForm<TwoFactorCodeFormValues>({
     resolver: zodResolver(createTwoFactorCodeSchema()),
     defaultValues: { code: "", trustDevice: false },
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    await client.twoFactor.verifyTotp({
+    await authClient.twoFactor.verifyTotp({
       code: values.code,
       trustDevice: values.trustDevice,
       fetchOptions: {
-        onError: () => {
-          toast.error(t("Invalid authentication code! Please try again later."))
+        onError: (ctx) => {
+          if (ctx.error.code === "INVALID_CODE") {
+            toast.error(t("Invalid authentication code!"))
+          } else {
+            toast.error(t("Failed to verify 2FA code! Please try again later."))
+          }
         },
         onSuccess: async () => {
+          const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
+
           router.replace(callbackUrl)
+          router.refresh()
           form.reset()
-          await client.getSession({
+
+          await authClient.getSession({
             fetchOptions: {
               onSuccess: async (ctx) => {
                 await setUserLocale(ctx.data.user.locale as AppLocale)

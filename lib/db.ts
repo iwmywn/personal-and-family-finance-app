@@ -10,7 +10,7 @@ declare global {
 
 let db: Db | undefined
 
-function getClientPromise(): Promise<MongoClient> {
+function getClientPromise() {
   if (!globalThis._mongoClientPromise) {
     const options: MongoClientOptions = {}
     globalThis._mongoClientPromise = new MongoClient(
@@ -21,7 +21,7 @@ function getClientPromise(): Promise<MongoClient> {
   return globalThis._mongoClientPromise
 }
 
-export async function connect() {
+export async function connect(): Promise<Db> {
   if (db) {
     return db
   }
@@ -33,7 +33,7 @@ export async function connect() {
   return db
 }
 
-export async function disconnect() {
+export async function disconnect(): Promise<void> {
   if (globalThis._mongoClient) {
     await globalThis._mongoClient.close()
     globalThis._mongoClientPromise = undefined

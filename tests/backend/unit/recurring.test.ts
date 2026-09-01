@@ -1,10 +1,7 @@
 import { ObjectId } from "mongodb"
 
 import { insertTestRecurringTransaction } from "@/tests/backend/helpers/database"
-import {
-  mockRecurringTransactionCollectionError,
-  setupRecurringTransactionCollectionMock,
-} from "@/tests/backend/mocks/collections.mock"
+import { mockRecurringTransactionCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
@@ -76,24 +73,6 @@ describe("Recurring Transactions", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("This recurring transaction already exists!")
-    })
-
-    it("should return error when database insertion fails", async () => {
-      mockAuthenticatedUser()
-      const mockRecurringCollection = setupRecurringTransactionCollectionMock()
-      mockRecurringCollection.findOne.mockResolvedValue(null)
-      mockRecurringCollection.insertOne.mockResolvedValue({
-        acknowledged: false,
-      })
-
-      const result = await createRecurringTransaction(
-        mockValidRecurringTransactionValues
-      )
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to add recurring transaction! Please try again later."
-      )
     })
 
     it("should successfully create recurring transaction with monthly frequency", async () => {

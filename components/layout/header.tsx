@@ -15,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { ImpersonationIndicator } from "@/components/layout/impersonation-indicator"
 import { clientEnv } from "@/env/client"
 import { useNav } from "@/hooks/use-nav"
 
@@ -68,6 +69,7 @@ export function Header() {
         </Breadcrumb>
       </div>
       <div className="flex items-center gap-2">
+        <ImpersonationIndicator />
         <ColorDialog />
       </div>
     </header>

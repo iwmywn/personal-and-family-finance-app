@@ -8,7 +8,7 @@ import { GoalDialog } from "@/components/goals/goal-dialog"
 import { GoalFilters } from "@/components/goals/goal-filters"
 
 export default function GoalsPage() {
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const t = useExtracted()
 
   return (
@@ -21,13 +21,13 @@ export default function GoalsPage() {
               {t("Set and track your financial goals.")}
             </div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
+          <Button onClick={() => setIsOpen(true)}>{t("Add")}</Button>
         </div>
 
         <GoalFilters />
       </div>
 
-      <GoalDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <GoalDialog open={isOpen} setOpen={setIsOpen} />
     </>
   )
 }

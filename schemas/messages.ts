@@ -50,6 +50,10 @@ export async function getSchemaMessages() {
     expiredRecurringActivation: t(
       "Cannot activate a recurring transaction that has already expired."
     ),
+    emailInvalid: t("Please enter a valid email address."),
+    roleRequired: t("Role is required."),
+    banReasonMaxLength: t("Ban reason must be at most 200 characters."),
+    durationRequired: t("Duration is required."),
   }
 }
 

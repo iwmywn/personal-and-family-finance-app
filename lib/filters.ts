@@ -6,6 +6,7 @@ import type {
   Goal,
   RecurringTransaction,
   Transaction,
+  User,
 } from "@/lib/definitions"
 import { calculateBudgetsStats, calculateGoalsStats } from "@/lib/statistics"
 import { localDateToUTCMidnight, progressColorClass } from "@/lib/utils"
@@ -23,6 +24,7 @@ interface Filters {
   filterCategoryKey?: string
   filterProgress?: string
   filterStatus?: string
+  filterRole?: string
 }
 
 function searchWithMiniSearch<T extends Record<string, unknown>>(
@@ -43,6 +45,7 @@ function searchWithMiniSearch<T extends Record<string, unknown>>(
     storeFields: [idField],
     searchOptions: {
       prefix: true,
+      combineWith: "AND",
     },
   })
 
@@ -372,5 +375,31 @@ export function filterRecurringTransactions(
       matchesCategory &&
       matchesStatus
     )
+  })
+}
+
+export function filterUsers(users: User[], filters: Filters): User[] {
+  const { searchTerm = "", filterRole = "all", filterStatus = "all" } = filters
+
+  const matchingIds = searchTerm
+    ? searchWithMiniSearch(
+        users,
+        searchTerm,
+        ["name", "email", "username"],
+        "id"
+      )
+    : null
+
+  return users.filter((user) => {
+    const matchesSearch = matchingIds ? matchingIds.has(user.id) : true
+
+    const matchesRole = filterRole === "all" || user.role === filterRole
+
+    const matchesStatus =
+      filterStatus === "all" ||
+      (filterStatus === "active" && !Boolean(user.banned)) ||
+      (filterStatus === "banned" && Boolean(user.banned))
+
+    return matchesSearch && matchesRole && matchesStatus
   })
 }

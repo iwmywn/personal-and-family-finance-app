@@ -35,3 +35,15 @@ export type GoalFormValues = z.infer<
 export type RecurringTransactionFormValues = z.infer<
   ReturnType<ReturnType<typeof useSchemas>["createRecurringTransactionSchema"]>
 >
+export type AdminUserFormValues = z.infer<
+  ReturnType<ReturnType<typeof useSchemas>["createAdminUserSchema"]>
+>
+export type AdminRoleFormValues = z.infer<
+  ReturnType<ReturnType<typeof useSchemas>["createAdminRoleSchema"]>
+>
+export type AdminPasswordFormValues = z.infer<
+  ReturnType<ReturnType<typeof useSchemas>["createAdminPasswordSchema"]>
+>
+export type AdminBanFormValues = z.infer<
+  ReturnType<ReturnType<typeof useSchemas>["createAdminBanSchema"]>
+>

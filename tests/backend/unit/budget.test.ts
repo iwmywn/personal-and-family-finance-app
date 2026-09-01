@@ -1,10 +1,7 @@
 import { ObjectId } from "mongodb"
 
 import { insertTestBudget } from "@/tests/backend/helpers/database"
-import {
-  mockBudgetCollectionError,
-  setupBudgetCollectionMock,
-} from "@/tests/backend/mocks/collections.mock"
+import { mockBudgetCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
@@ -59,19 +56,6 @@ describe("Budgets", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("This budget already exists!")
-    })
-
-    it("should return error when database insertion fails", async () => {
-      mockAuthenticatedUser()
-      const mockBudgetsCollection = setupBudgetCollectionMock()
-      mockBudgetsCollection.insertOne.mockResolvedValue({
-        acknowledged: false,
-      })
-
-      const result = await createBudget(mockValidBudgetValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Failed to add budget! Please try again later.")
     })
 
     it("should successfully create budget", async () => {

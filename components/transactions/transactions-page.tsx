@@ -10,7 +10,7 @@ import { TransactionFilters } from "@/components/transactions/transaction-filter
 import type { Transaction } from "@/lib/definitions"
 
 export default function TransactionsPage() {
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [filteredTransactions, setFilteredTransactions] = useState<
     Transaction[]
   >([])
@@ -30,7 +30,7 @@ export default function TransactionsPage() {
           </div>
           <div className="flex gap-2">
             <ExportButton filteredTransactions={filteredTransactions} />
-            <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
+            <Button onClick={() => setIsOpen(true)}>{t("Add")}</Button>
           </div>
         </div>
 
@@ -39,7 +39,7 @@ export default function TransactionsPage() {
         />
       </div>
 
-      <TransactionDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <TransactionDialog open={isOpen} setOpen={setIsOpen} />
     </>
   )
 }

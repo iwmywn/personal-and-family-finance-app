@@ -198,14 +198,14 @@ export function TransactionFilters({
               </InputGroupAddon>
               <InputGroupInput
                 placeholder={t("Search transactions...")}
-                value={searchTerm || ""}
+                value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               {searchTerm && (
                 <InputGroupAddon align="inline-end">
                   <InputGroupButton
                     size="icon-xs"
-                    onClick={() => setSearchTerm(null)}
+                    onClick={() => setSearchTerm("")}
                   >
                     <XIcon />
                   </InputGroupButton>

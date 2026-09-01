@@ -17,6 +17,7 @@ import type {
   Goal,
   RecurringTransaction,
   Transaction,
+  User,
 } from "@/lib/definitions"
 import { localDateToUTCMidnight } from "@/lib/utils"
 
@@ -33,6 +34,8 @@ export const mockUser: DBUser = {
   locale: "vi-VN",
   currency: "VND",
   twoFactorEnabled: false,
+  banned: false,
+  role: "user",
 }
 
 export const mockAnotherUser: DBUser = {
@@ -48,7 +51,84 @@ export const mockAnotherUser: DBUser = {
   locale: "en-US",
   currency: "USD",
   twoFactorEnabled: false,
+  banned: false,
+  role: "user",
 }
+
+export const mockAdminUser: DBUser = {
+  _id: new ObjectId("68f712e4cda4897217a05a99"),
+  name: "Admin User",
+  email: "admin@example.com",
+  emailVerified: true,
+  image: undefined,
+  createdAt: new Date("2025-09-19T11:27:41.038Z"),
+  updatedAt: new Date("2025-09-19T12:50:48.129Z"),
+  username: "admin",
+  displayUsername: "admin",
+  locale: "en-US",
+  currency: "USD",
+  twoFactorEnabled: false,
+  banned: false,
+  role: "admin",
+}
+
+export const mockSuperAdminUser: DBUser = {
+  _id: new ObjectId("68f712e4cda4897217a05a98"),
+  name: "Super Admin",
+  email: "superadmin@example.com",
+  emailVerified: true,
+  image: undefined,
+  createdAt: new Date("2025-09-19T11:27:41.038Z"),
+  updatedAt: new Date("2025-09-19T12:50:48.129Z"),
+  username: "superadmin",
+  displayUsername: "superadmin",
+  locale: "en-US",
+  currency: "USD",
+  twoFactorEnabled: false,
+  banned: false,
+  role: "superadmin",
+}
+
+export const mockBannedUser: DBUser = {
+  _id: new ObjectId("690d2cdc200d6a719f9a438f"),
+  name: "Banned User",
+  email: "banned@gmail.com",
+  emailVerified: false,
+  image: undefined,
+  createdAt: new Date("2025-10-01T08:00:00.000Z"),
+  updatedAt: new Date("2025-10-01T08:00:00.000Z"),
+  username: "banneduser",
+  displayUsername: "banneduser",
+  locale: "en-US",
+  currency: "USD",
+  twoFactorEnabled: false,
+  banned: true,
+  banReason: "Spam activity",
+  role: "user",
+}
+
+export const mockUsers: User[] = [
+  {
+    ...mockUser,
+    id: mockUser._id.toString(),
+  },
+  {
+    ...mockAnotherUser,
+    id: mockAnotherUser._id.toString(),
+  },
+  {
+    ...mockAdminUser,
+    id: mockAdminUser._id.toString(),
+  },
+  {
+    ...mockSuperAdminUser,
+    id: mockSuperAdminUser._id.toString(),
+  },
+  {
+    ...mockBannedUser,
+    id: mockBannedUser._id.toString(),
+  },
+]
 
 export const mockTransaction: DBTransaction = {
   _id: new ObjectId("68f73357357d93dcbaae8106"),

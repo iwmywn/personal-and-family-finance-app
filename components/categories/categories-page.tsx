@@ -8,7 +8,7 @@ import { CategoryDialog } from "@/components/categories/category-dialog"
 import { CategoryFilters } from "@/components/categories/category-filters"
 
 export default function CategoriesPage() {
-  const [isEditOpen, setIsEditOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const t = useExtracted()
 
   return (
@@ -21,13 +21,13 @@ export default function CategoriesPage() {
               {t("Manage your custom categories.")}
             </div>
           </div>
-          <Button onClick={() => setIsEditOpen(true)}>{t("Add")}</Button>
+          <Button onClick={() => setIsOpen(true)}>{t("Add")}</Button>
         </div>
 
         <CategoryFilters />
       </div>
 
-      <CategoryDialog open={isEditOpen} setOpen={setIsEditOpen} />
+      <CategoryDialog open={isOpen} setOpen={setIsOpen} />
     </>
   )
 }

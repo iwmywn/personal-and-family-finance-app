@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import type { Route } from "next"
 import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useExtracted } from "next-intl"
@@ -22,11 +22,11 @@ import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { AppLocale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
+import { getSafeCallbackUrl } from "@/lib/utils"
 import type { SignInFormValues } from "@/schemas/types"
 
 export function SignInForm() {
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const t = useExtracted()
   const { createSignInSchema } = useSchemas()
   const form = useForm<SignInFormValues>({
@@ -41,69 +41,65 @@ export function SignInForm() {
   const { executeRecaptcha } = useGoogleReCaptcha()
 
   async function onSubmit(values: SignInFormValues) {
-    if (isSubmitting) return
-
     if (!executeRecaptcha) {
       toast.error(t("CAPTCHA verification failed! Please try again later."))
       return
     }
 
-    setIsSubmitting(true)
+    const token = await executeRecaptcha("sign_in")
 
-    try {
-      const token = await executeRecaptcha("sign_in")
-
-      await client.signIn.username({
-        username: values.username,
-        password: values.password,
-        fetchOptions: {
-          headers: {
-            "x-captcha-response": token,
-          },
-          onError: (ctx) => {
-            if (ctx.error.code === "VERIFICATION_FAILED")
-              toast.error(
-                t("CAPTCHA verification failed! Please try again later.")
-              )
-            else if (ctx.error.code === "INVALID_USERNAME_OR_PASSWORD")
-              toast.error(t("Invalid username or password!"))
-            else if (ctx.error.code === "EMAIL_NOT_VERIFIED")
-              toast.error(t("Email not verified!"))
-            else if (ctx.response.status === 429)
-              toast.error(
-                t("Rate limit exceeded! Retry after {seconds} seconds.", {
-                  seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
-                })
-              )
-            else toast.error(t("Failed to sign in! Please try again later."))
-          },
-          onSuccess: async (ctx) => {
-            const callbackUrl = searchParams.get("next") || "/home"
-
-            if (ctx.data.twoFactorRedirect) {
-              const target = new URL("/two-factor", window.location.origin)
-              target.searchParams.set("next", callbackUrl)
-              router.push(`${target.pathname}${target.search}`)
-              form.reset()
-              return
-            }
-
-            router.push(callbackUrl)
-            form.reset()
-
-            await client.getSession({
-              fetchOptions: {
-                onSuccess: async (ctx) => {
-                  await setUserLocale(ctx.data.user.locale as AppLocale)
-                },
-              },
-            })
-          },
+    await authClient.signIn.username({
+      username: values.username,
+      password: values.password,
+      fetchOptions: {
+        headers: {
+          "x-captcha-response": token,
         },
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
+        onError: (ctx) => {
+          if (ctx.error.code === "VERIFICATION_FAILED")
+            toast.error(t("CAPTCHA verification failed!"))
+          else if (ctx.error.code === "INVALID_USERNAME_OR_PASSWORD")
+            toast.error(t("Invalid username or password!"))
+          else if (ctx.error.code === "EMAIL_NOT_VERIFIED")
+            toast.error(t("Email not verified!"))
+          else if (ctx.error.code === "BANNED_USER") {
+            toast.error(
+              t(
+                "Your account has been banned. Please contact support if you believe this is an error."
+              )
+            )
+          } else if (ctx.response.status === 429)
+            toast.error(
+              t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
+              })
+            )
+          else toast.error(t("Failed to sign in! Please try again later."))
+        },
+        onSuccess: async (ctx) => {
+          const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
+
+          if (ctx.data.twoFactorRedirect) {
+            const params = new URLSearchParams({ next: callbackUrl })
+            router.push(`/two-factor?${params.toString()}` as Route)
+            form.reset()
+            return
+          }
+
+          router.push(callbackUrl)
+          router.refresh()
+          form.reset()
+
+          await authClient.getSession({
+            fetchOptions: {
+              onSuccess: async (ctx) => {
+                await setUserLocale(ctx.data.user.locale as AppLocale)
+              },
+            },
+          })
+        },
+      },
+    })
   }
 
   return (
@@ -120,7 +116,7 @@ export function SignInForm() {
                   id="form-username"
                   placeholder="admin"
                   type="text"
-                  autoComplete="off"
+                  autoComplete="username"
                   {...field}
                 />
               </FormControl>
@@ -148,7 +144,10 @@ export function SignInForm() {
           )}
         />
 
-        <FormButton isSubmitting={isSubmitting} className="w-full">
+        <FormButton
+          isSubmitting={form.formState.isSubmitting}
+          className="w-full"
+        >
           {t("Sign In")}
         </FormButton>
       </form>

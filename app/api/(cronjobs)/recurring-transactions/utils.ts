@@ -105,7 +105,7 @@ export function getNextDate(
   return nextDate
 }
 
-function isSameDate(a: Date, b: Date) {
+function isSameDate(a: Date, b: Date): boolean {
   return (
     a.getUTCFullYear() === b.getUTCFullYear() &&
     a.getUTCMonth() === b.getUTCMonth() &&

@@ -1,11 +1,13 @@
 "use client"
 
+import type { Route } from "next"
 import {
   ChartColumnIncreasingIcon,
   HomeIcon,
   PiggyBankIcon,
   RepeatIcon,
   SettingsIcon,
+  ShieldCheckIcon,
   TagIcon,
   TargetIcon,
   WalletIcon,
@@ -13,13 +15,18 @@ import {
 import type { LucideIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 
+import { useUser } from "@/context/user-context"
+import { isAdminRole } from "@/lib/role"
+
 type NavType = {
-  url: string
+  url: Route
   icon: LucideIcon
   label: string
 }
 export function useNav() {
   const t = useExtracted()
+  const { user } = useUser()
+  const isAdmin = isAdminRole(user.role)
 
   const mainNav: NavType[] = [
     {
@@ -66,6 +73,14 @@ export function useNav() {
       label: t("Settings"),
     },
   ]
+
+  if (isAdmin) {
+    secondaryNav.push({
+      url: "/admin",
+      icon: ShieldCheckIcon,
+      label: t("Admin"),
+    })
+  }
 
   return { mainNav, secondaryNav }
 }

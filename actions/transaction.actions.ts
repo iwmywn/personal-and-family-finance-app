@@ -14,7 +14,12 @@ import type { TransactionFormValues } from "@/schemas/types"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
-export async function createTransaction(values: TransactionFormValues) {
+export async function createTransaction(
+  values: TransactionFormValues
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -35,7 +40,6 @@ export async function createTransaction(values: TransactionFormValues) {
 
     const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
-
     const data = {
       userId: new ObjectId(userId),
       type: parsedValues.data.type,
@@ -52,10 +56,7 @@ export async function createTransaction(values: TransactionFormValues) {
       return { error: t("This transaction has already been created today!") }
     }
 
-    const result = await transactionsCollection.insertOne(data)
-
-    if (!result.acknowledged)
-      return { error: t("Failed to add transaction! Please try again later.") }
+    await transactionsCollection.insertOne(data)
 
     updateTag(`transactions-${userId}`)
     return { success: t("Transaction has been added."), error: undefined }
@@ -68,7 +69,10 @@ export async function createTransaction(values: TransactionFormValues) {
 export async function updateTransaction(
   transactionId: string,
   values: TransactionFormValues
-) {
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -95,7 +99,6 @@ export async function updateTransaction(
 
     const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
-
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
       userId: new ObjectId(userId),
@@ -135,7 +138,10 @@ export async function updateTransaction(
   }
 }
 
-export async function deleteTransaction(transactionId: string) {
+export async function deleteTransaction(transactionId: string): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -155,7 +161,6 @@ export async function deleteTransaction(transactionId: string) {
 
     const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
-
     const existingTransaction = await transactionsCollection.findOne({
       _id: new ObjectId(transactionId),
       userId: new ObjectId(userId),
@@ -182,10 +187,10 @@ export async function deleteTransaction(transactionId: string) {
   }
 }
 
-export async function getTransactions(): Promise<
-  | { transactions: Transaction[]; error?: undefined }
-  | { error: string; transactions?: undefined }
-> {
+export async function getTransactions(): Promise<{
+  error?: string
+  transactions?: Transaction[]
+}> {
   const t = await getExtracted()
   const session = await getCurrentSession()
 
@@ -212,19 +217,16 @@ async function getCachedTransactions(
 
   try {
     const transactionsCollection = await getTransactionsCollection()
-
     const transactions = await transactionsCollection
       .find({ userId: new ObjectId(userId) })
       .sort({ date: -1, _id: -1 })
       .toArray()
-
     const mapped = transactions.map((transaction) => ({
       ...transaction,
       _id: transaction._id.toString(),
       userId: transaction.userId.toString(),
       amount: transaction.amount.toString(),
     })) as Transaction[]
-
     const converted = await convertTransactionsToCurrency(
       mapped,
       targetCurrency

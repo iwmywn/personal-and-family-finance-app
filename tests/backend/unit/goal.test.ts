@@ -1,10 +1,7 @@
 import { ObjectId } from "mongodb"
 
 import { insertTestGoal } from "@/tests/backend/helpers/database"
-import {
-  mockGoalCollectionError,
-  setupGoalCollectionMock,
-} from "@/tests/backend/mocks/collections.mock"
+import { mockGoalCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
@@ -56,19 +53,6 @@ describe("Goals", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("This goal already exists!")
-    })
-
-    it("should return error when database insertion fails", async () => {
-      mockAuthenticatedUser()
-      const mockGoalsCollection = setupGoalCollectionMock()
-      mockGoalsCollection.insertOne.mockResolvedValue({
-        acknowledged: false,
-      })
-
-      const result = await createGoal(mockValidGoalValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Failed to add goal! Please try again later.")
     })
 
     it("should successfully create goal", async () => {

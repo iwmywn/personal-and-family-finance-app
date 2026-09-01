@@ -30,13 +30,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
-import { client } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 import type { NameFormValues } from "@/schemas/types"
 
 export function ChangeNameDialog() {
   const t = useExtracted()
   const { createNameSchema } = useSchemas()
-
   const router = useRouter()
   const { user } = useUser()
   const form = useForm<NameFormValues>({
@@ -45,27 +44,27 @@ export function ChangeNameDialog() {
       name: user.name,
     },
   })
-  const [open, setOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   async function onSubmit(values: NameFormValues) {
-    await client.updateUser({
+    await authClient.updateUser({
       name: values.name,
       fetchOptions: {
         onError: () => {
           toast.error(t("Failed to update name! Please try again later."))
         },
         onSuccess: () => {
-          router.refresh()
+          setIsOpen(false)
           toast.success(t("Your name has been updated."))
+          router.refresh()
           form.reset({ name: values.name })
-          setOpen(false)
         },
       },
     })
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">{t("Change Name")}</Button>
       </DialogTrigger>

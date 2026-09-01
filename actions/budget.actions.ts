@@ -12,7 +12,10 @@ import type { BudgetFormValues } from "@/schemas/types"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
-export async function createBudget(values: BudgetFormValues) {
+export async function createBudget(values: BudgetFormValues): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -33,7 +36,6 @@ export async function createBudget(values: BudgetFormValues) {
 
     const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
-
     const existingBudget = await budgetsCollection.findOne({
       userId: new ObjectId(userId),
       categoryKey: parsedValues.data.categoryKey,
@@ -46,7 +48,7 @@ export async function createBudget(values: BudgetFormValues) {
       return { error: t("This budget already exists!") }
     }
 
-    const result = await budgetsCollection.insertOne({
+    await budgetsCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey: parsedValues.data.categoryKey,
       currency: parsedValues.data.currency,
@@ -54,9 +56,6 @@ export async function createBudget(values: BudgetFormValues) {
       startDate: parsedValues.data.startDate,
       endDate: parsedValues.data.endDate,
     })
-
-    if (!result.acknowledged)
-      return { error: t("Failed to add budget! Please try again later.") }
 
     updateTag(`budgets-${userId}`)
     return { success: t("Budget has been added."), error: undefined }
@@ -66,7 +65,13 @@ export async function createBudget(values: BudgetFormValues) {
   }
 }
 
-export async function updateBudget(budgetId: string, values: BudgetFormValues) {
+export async function updateBudget(
+  budgetId: string,
+  values: BudgetFormValues
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -93,7 +98,6 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
 
     const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
-
     const existingBudget = await budgetsCollection.findOne({
       _id: new ObjectId(budgetId),
       userId: new ObjectId(userId),
@@ -126,7 +130,10 @@ export async function updateBudget(budgetId: string, values: BudgetFormValues) {
   }
 }
 
-export async function deleteBudget(budgetId: string) {
+export async function deleteBudget(budgetId: string): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -146,7 +153,6 @@ export async function deleteBudget(budgetId: string) {
 
     const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
-
     const existingBudget = await budgetsCollection.findOne({
       _id: new ObjectId(budgetId),
       userId: new ObjectId(userId),
@@ -171,10 +177,10 @@ export async function deleteBudget(budgetId: string) {
   }
 }
 
-export async function getBudgets(): Promise<
-  | { budgets: Budget[]; error?: undefined }
-  | { error: string; budgets?: undefined }
-> {
+export async function getBudgets(): Promise<{
+  error?: string
+  budgets?: Budget[]
+}> {
   const t = await getExtracted()
   const session = await getCurrentSession()
 
@@ -195,7 +201,6 @@ async function getCachedBudgets(userId: string) {
 
   try {
     const budgetsCollection = await getBudgetsCollection()
-
     const budgets = await budgetsCollection
       .find({ userId: new ObjectId(userId) })
       .sort({ startDate: -1, _id: -1 })

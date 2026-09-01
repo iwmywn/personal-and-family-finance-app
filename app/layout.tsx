@@ -16,9 +16,7 @@ import { clientEnv } from "@/env/client"
 import { getSchemaMessages } from "@/schemas/messages"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale()
-  const t = await getExtracted()
-
+  const [locale, t] = await Promise.all([getLocale(), getExtracted()])
   const { name } = siteConfig
   const description = t("Personal & Family Finance App")
 

@@ -29,38 +29,54 @@ files.forEach((file) => {
     const content = fs.readFileSync(file, "utf8")
     const lines = content.split(/\r?\n/)
 
+    let currentMsgctxt = ""
+    let currentMsgid = null
     let currentMsgidLine = 0
-    let currentMsgid = ""
-    let inMsgid = false
+    let currentMsgstr = null
 
     for (let i = 0; i < lines.length; i++) {
-      // ignore first 2 lines (lines 0 and 1)
-      if (i < 2) continue
-
       const line = lines[i].trim()
 
-      // skip comments
-      if (line.startsWith("#")) continue
-      if (line.startsWith('msgid "')) {
-        inMsgid = true
+      if (!line || line.startsWith("#")) continue
+
+      const msgctxtMatch = line.match(/^msgctxt "(.*)"$/)
+      if (msgctxtMatch) {
+        currentMsgctxt = msgctxtMatch[1]
+        continue
+      }
+
+      const msgidMatch = line.match(/^msgid "(.*)"$/)
+      if (msgidMatch) {
+        currentMsgid = msgidMatch[1]
         currentMsgidLine = i + 1
-        currentMsgid = line.match(/^msgid "(.*)"$/)?.[1] || ""
-      } else if (line.startsWith('msgstr "')) {
-        if (inMsgid) {
-          const match = line.match(/^msgstr "(.*)"$/)
+        currentMsgstr = null
+        continue
+      }
 
-          if (match) {
-            let msgstrContent = match[1]
+      const msgstrMatch = line.match(/^msgstr "(.*)"$/)
+      if (msgstrMatch) {
+        currentMsgstr = msgstrMatch[1]
 
-            if (msgstrContent === "") {
-              console.error(
-                `File: ${path.relative(process.cwd(), file)}, line ${currentMsgidLine} with msgid "${currentMsgid}" is missing msgstr`
-              )
-              hasError = true
-            }
+        // Ignore PO file header (by standard, header always has an empty msgid "")
+        if (currentMsgid !== "" && currentMsgstr === "") {
+          // Check if the next line is a multiline string continuation ("...")
+          const nextLine = lines[i + 1]?.trim()
+          const isMultiline =
+            nextLine && nextLine.startsWith('"') && nextLine.endsWith('"')
+
+          if (!isMultiline) {
+            const identifier = currentMsgctxt
+              ? `key "${currentMsgctxt}" (msgid: "${currentMsgid}")`
+              : `msgid "${currentMsgid}"`
+            console.error(
+              `File: ${path.relative(process.cwd(), file)}, line ${currentMsgidLine} with ${identifier} is missing msgstr`
+            )
+            hasError = true
           }
-          inMsgid = false
         }
+
+        currentMsgctxt = ""
+        currentMsgid = null
       }
     }
   } catch (err) {

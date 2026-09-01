@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -76,9 +77,10 @@ export function TransactionDialog({
   const [type, setType] = useState<CategoryType>(transaction?.type || "inflow")
   const [calendarOpen, setCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
-  const { createTransactionSchema } = useSchemas()
   const { user } = useUser()
   const formatDate = useFormatDate()
+  const router = useRouter()
+  const { createTransactionSchema } = useSchemas()
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(createTransactionSchema()),
     defaultValues: {
@@ -108,8 +110,9 @@ export function TransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
         setOpen(false)
+        toast.success(success)
+        router.refresh()
       }
     } else {
       const { success, error } = await createTransaction(data)
@@ -117,16 +120,13 @@ export function TransactionDialog({
       if (error || !success) {
         toast.error(error)
       } else {
-        toast.success(success)
-        form.reset({
-          type: type,
-          currency: user.currency as AppCurrency,
-          amount: "",
-          description: "",
-          categoryKey: "",
-          date: undefined,
-        })
         setOpen(false)
+        toast.success(success)
+        router.refresh()
+        form.reset({
+          ...form.formState.defaultValues,
+          type,
+        })
       }
     }
   }

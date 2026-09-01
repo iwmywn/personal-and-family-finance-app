@@ -12,7 +12,10 @@ import type { GoalFormValues } from "@/schemas/types"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
-export async function createGoal(values: GoalFormValues) {
+export async function createGoal(values: GoalFormValues): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -33,7 +36,6 @@ export async function createGoal(values: GoalFormValues) {
 
     const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
-
     const existingGoal = await goalsCollection.findOne({
       userId: new ObjectId(userId),
       categoryKey: parsedValues.data.categoryKey,
@@ -46,7 +48,7 @@ export async function createGoal(values: GoalFormValues) {
       return { error: t("This goal already exists!") }
     }
 
-    const result = await goalsCollection.insertOne({
+    await goalsCollection.insertOne({
       userId: new ObjectId(userId),
       categoryKey: parsedValues.data.categoryKey,
       name: parsedValues.data.name,
@@ -56,9 +58,6 @@ export async function createGoal(values: GoalFormValues) {
       endDate: parsedValues.data.endDate,
     })
 
-    if (!result.acknowledged)
-      return { error: t("Failed to add goal! Please try again later.") }
-
     updateTag(`goals-${userId}`)
     return { success: t("Goal has been added."), error: undefined }
   } catch (error) {
@@ -67,7 +66,13 @@ export async function createGoal(values: GoalFormValues) {
   }
 }
 
-export async function updateGoal(goalId: string, values: GoalFormValues) {
+export async function updateGoal(
+  goalId: string,
+  values: GoalFormValues
+): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -94,7 +99,6 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
 
     const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
-
     const existingGoal = await goalsCollection.findOne({
       _id: new ObjectId(goalId),
       userId: new ObjectId(userId),
@@ -128,7 +132,10 @@ export async function updateGoal(goalId: string, values: GoalFormValues) {
   }
 }
 
-export async function deleteGoal(goalId: string) {
+export async function deleteGoal(goalId: string): Promise<{
+  error?: string
+  success?: string
+}> {
   const t = await getExtracted()
 
   try {
@@ -148,7 +155,6 @@ export async function deleteGoal(goalId: string) {
 
     const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
-
     const existingGoal = await goalsCollection.findOne({
       _id: new ObjectId(goalId),
       userId: new ObjectId(userId),
@@ -173,9 +179,10 @@ export async function deleteGoal(goalId: string) {
   }
 }
 
-export async function getGoals(): Promise<
-  { goals: Goal[]; error?: undefined } | { error: string; goals?: undefined }
-> {
+export async function getGoals(): Promise<{
+  error?: string
+  goals?: Goal[]
+}> {
   const t = await getExtracted()
   const session = await getCurrentSession()
 
@@ -196,7 +203,6 @@ async function getCachedGoals(userId: string) {
 
   try {
     const goalsCollection = await getGoalsCollection()
-
     const goals = await goalsCollection
       .find({ userId: new ObjectId(userId) })
       .sort({ startDate: -1, _id: -1 })

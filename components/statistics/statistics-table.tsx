@@ -1,5 +1,6 @@
 "use client"
 
+import type { Route } from "next"
 import Link from "next/link"
 import { MoreVerticalIcon, WalletIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -61,7 +62,10 @@ export function StatisticsTable({
 
   const categoryStats = calculateCategoriesStats(filteredTransactions)
 
-  const getTransactionsHref = (stat: { type: string; categoryKey: string }) => {
+  const getTransactionsHref = (stat: {
+    type: string
+    categoryKey: string
+  }): Route => {
     const params = new URLSearchParams()
     if (filterStates?.selectedDate) {
       params.set("date", parseAsLocalDate.serialize(filterStates.selectedDate))
