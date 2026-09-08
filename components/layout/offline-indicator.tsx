@@ -7,11 +7,11 @@ import { toast } from "sonner"
 
 export function OfflineIndicator() {
   const t = useExtracted()
-  const offline = useOffline()
+  const isOffline = useOffline()
   const toastId = useRef<string | number | undefined>(undefined)
 
   useEffect(() => {
-    if (offline) {
+    if (isOffline) {
       toastId.current = toast.error(
         t(
           "You are offline. Requests will be retried automatically when your connection is restored."
@@ -24,7 +24,7 @@ export function OfflineIndicator() {
       toast.dismiss(toastId.current)
       toastId.current = undefined
     }
-  }, [t, offline])
+  }, [t, isOffline])
 
   return null
 }
