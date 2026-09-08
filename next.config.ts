@@ -34,6 +34,7 @@ const nextConfig: NextConfig = {
   experimental: {
     turbopackRustReactCompiler: true,
     scrollRestoration: true,
+    useOffline: true,
     cpus: 1,
     staleTimes: {
       dynamic: 300,

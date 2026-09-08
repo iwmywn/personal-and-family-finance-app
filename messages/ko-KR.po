@@ -1822,6 +1822,11 @@ msgctxt "d0A6B0"
 msgid "Stop Impersonating"
 msgstr "가장 중지"
 
+#: components/layout/offline-indicator.tsx
+msgctxt "tm_VW-"
+msgid "You are offline. Requests will be retried automatically when your connection is restored."
+msgstr "오프라인 상태입니다. 연결이 복원되면 요청이 자동으로 재시도됩니다."
+
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
 msgid "CANNOT FETCH TRANSACTIONS DATA"

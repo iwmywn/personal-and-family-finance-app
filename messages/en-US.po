@@ -1822,6 +1822,11 @@ msgctxt "d0A6B0"
 msgid "Stop Impersonating"
 msgstr "Stop Impersonating"
 
+#: components/layout/offline-indicator.tsx
+msgctxt "tm_VW-"
+msgid "You are offline. Requests will be retried automatically when your connection is restored."
+msgstr "You are offline. Requests will be retried automatically when your connection is restored."
+
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
 msgid "CANNOT FETCH TRANSACTIONS DATA"

@@ -1822,6 +1822,11 @@ msgctxt "d0A6B0"
 msgid "Stop Impersonating"
 msgstr "Dừng đóng vai"
 
+#: components/layout/offline-indicator.tsx
+msgctxt "tm_VW-"
+msgid "You are offline. Requests will be retried automatically when your connection is restored."
+msgstr "Bạn đang ngoại tuyến. Các yêu cầu sẽ được tự động thử lại khi kết nối được khôi phục."
+
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
 msgid "CANNOT FETCH TRANSACTIONS DATA"
