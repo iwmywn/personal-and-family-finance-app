@@ -30,9 +30,9 @@ describe("Parsers", () => {
     })
 
     it("should correctly check equality between two Date instances", () => {
-      const date1 = new Date(2026, 7, 24)
-      const date2 = new Date(2026, 7, 24)
-      const date3 = new Date(2026, 7, 25)
+      const date1 = new Date(2026, 7, 24, 0, 0, 0)
+      const date2 = new Date(2026, 7, 24, 15, 30, 0)
+      const date3 = new Date(2026, 7, 25, 0, 0, 0)
 
       expect(parseAsLocalDate.eq(date1, date2)).toBe(true)
       expect(parseAsLocalDate.eq(date1, date3)).toBe(false)

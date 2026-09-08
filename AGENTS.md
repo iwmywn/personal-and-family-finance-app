@@ -10,6 +10,7 @@
 - **Forms & Validation**: `react-hook-form`, `@hookform/resolvers`, `zod`.
 - **i18n**: `next-intl`.
 - **Testing**: `vitest`, `mongodb-memory-server`.
+- **Code Health & Audit**: `react-doctor`.
 - **Package Manager**: `pnpm`.
 
 ## 2. Directory Structure
@@ -44,8 +45,10 @@
 - **Start Production Server**: `pnpm start`
 - **Lint**: `pnpm lint` / `pnpm lint:fix`
 - **Format Code**: `pnpm format`
+- **Audit React Code**: `pnpm react-doctor`
 - **Test**: `pnpm test` (or `test:fe`, `test:be` for specific suites)
 
 ## 5. Notes / Constraints
 
 - **Environment Variables**: Managed strictly via `@t3-oss/env-nextjs` in the `env/` folder. Do not use `process.env` directly if possible.
+- **React Doctor**: Configured in `doctor.config.mjs` to audit React code health, enforce React Compiler compatibility, prevent SSR hydration mismatches, and maintain clean component architecture.

@@ -12,36 +12,39 @@ function normalizeDay(year: number, month: number, day: number): number {
   return Math.min(day, last)
 }
 
-function addDays(lastGeneratedUTC: Date, days: number): Date {
-  return new Date(lastGeneratedUTC.getTime() + days * 86400000)
+function addDays(lastGeneratedDateUTC: Date, days: number): Date {
+  return new Date(lastGeneratedDateUTC.getTime() + days * 86400000)
 }
 
-function nextMonthlyDate(lastGeneratedUTC: Date, startDateUTC: Date): Date {
-  const y = lastGeneratedUTC.getUTCFullYear()
-  const m = lastGeneratedUTC.getUTCMonth() + 1
+function nextMonthlyDate(lastGeneratedDateUTC: Date, startDateUTC: Date): Date {
+  const y = lastGeneratedDateUTC.getUTCFullYear()
+  const m = lastGeneratedDateUTC.getUTCMonth() + 1
   const targetDay = Math.max(
     startDateUTC.getUTCDate(),
-    lastGeneratedUTC.getUTCDate()
+    lastGeneratedDateUTC.getUTCDate()
   )
   return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
 }
 
-function nextQuarterlyDate(lastGeneratedUTC: Date, startDateUTC: Date): Date {
-  const y = lastGeneratedUTC.getUTCFullYear()
-  const m = lastGeneratedUTC.getUTCMonth() + 3
+function nextQuarterlyDate(
+  lastGeneratedDateUTC: Date,
+  startDateUTC: Date
+): Date {
+  const y = lastGeneratedDateUTC.getUTCFullYear()
+  const m = lastGeneratedDateUTC.getUTCMonth() + 3
   const targetDay = Math.max(
     startDateUTC.getUTCDate(),
-    lastGeneratedUTC.getUTCDate()
+    lastGeneratedDateUTC.getUTCDate()
   )
   return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
 }
 
-function nextYearlyDate(lastGeneratedUTC: Date, startDateUTC: Date): Date {
-  const y = lastGeneratedUTC.getUTCFullYear() + 1
+function nextYearlyDate(lastGeneratedDateUTC: Date, startDateUTC: Date): Date {
+  const y = lastGeneratedDateUTC.getUTCFullYear() + 1
   const targetMonth = startDateUTC.getUTCMonth()
   const targetDay = Math.max(
     startDateUTC.getUTCDate(),
-    lastGeneratedUTC.getUTCDate()
+    lastGeneratedDateUTC.getUTCDate()
   )
   return new Date(
     Date.UTC(y, targetMonth, normalizeDay(y, targetMonth, targetDay))
@@ -55,7 +58,7 @@ export function getNextDate(
   const startDate = new Date(rec.startDate)
 
   // if no last generated date, return the start date
-  if (!rec.lastGenerated) {
+  if (!rec.lastGeneratedDate) {
     // if we've missed the start date, return today
     if (todayUTC > startDate) {
       return new Date(todayUTC.getTime())
@@ -63,36 +66,36 @@ export function getNextDate(
     return startDate
   }
 
-  const lastGeneratedUTC = new Date(rec.lastGenerated)
+  const lastGeneratedDateUTC = new Date(rec.lastGeneratedDate)
 
   let nextDate: Date
   switch (rec.frequency) {
     case "daily":
-      nextDate = addDays(lastGeneratedUTC, 1)
+      nextDate = addDays(lastGeneratedDateUTC, 1)
       break
 
     case "weekly":
-      nextDate = addDays(lastGeneratedUTC, 7)
+      nextDate = addDays(lastGeneratedDateUTC, 7)
       break
 
     case "bi-weekly":
-      nextDate = addDays(lastGeneratedUTC, 14)
+      nextDate = addDays(lastGeneratedDateUTC, 14)
       break
 
     case "monthly":
-      nextDate = nextMonthlyDate(lastGeneratedUTC, startDate)
+      nextDate = nextMonthlyDate(lastGeneratedDateUTC, startDate)
       break
 
     case "quarterly":
-      nextDate = nextQuarterlyDate(lastGeneratedUTC, startDate)
+      nextDate = nextQuarterlyDate(lastGeneratedDateUTC, startDate)
       break
 
     case "yearly":
-      nextDate = nextYearlyDate(lastGeneratedUTC, startDate)
+      nextDate = nextYearlyDate(lastGeneratedDateUTC, startDate)
       break
 
     case "random":
-      nextDate = addDays(lastGeneratedUTC, rec.randomEveryXDays!)
+      nextDate = addDays(lastGeneratedDateUTC, rec.randomEveryXDays!)
       break
   }
 

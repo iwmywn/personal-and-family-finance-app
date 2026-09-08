@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb"
 import { toDecimal128 } from "@/actions/utils"
 import { normalizeToUTCMidnight } from "@/app/api/(cronjobs)/exchange-rates/utils"
 import type { CategoryType } from "@/lib/category"
-import type { AppCurrency } from "@/lib/currency"
+import type { Currency } from "@/lib/currency"
 import type {
   Budget,
   Category,
@@ -144,7 +144,6 @@ export const mockTransaction: DBTransaction = {
 export const mockCustomCategory: DBCategory = {
   _id: new ObjectId("68f732914e63e5aa249cc173"),
   userId: mockUser._id,
-  categoryKey: "abcdef12",
   type: "outflow" as CategoryType,
   label: "Entertainment",
   description: "Movies and games",
@@ -183,7 +182,7 @@ export const mockRecurringTransaction: DBRecurringTransaction = {
   randomEveryXDays: undefined,
   startDate: localDateToUTCMidnight(new Date("2024-01-01")),
   endDate: localDateToUTCMidnight(new Date("2024-12-31")),
-  lastGenerated: undefined,
+  lastGeneratedDate: undefined,
   isActive: true,
 }
 
@@ -223,7 +222,7 @@ export const mockExchangeRates: DBExchangeRate[] = [
 export const mockValidTransactionValues = {
   type: "inflow" as CategoryType,
   categoryKey: "business_freelance",
-  currency: "VND" as AppCurrency,
+  currency: "VND" as Currency,
   amount: "2500000",
   description: "freelance project payment",
   date: localDateToUTCMidnight(new Date("2024-02-05")),
@@ -238,7 +237,7 @@ export const mockValidCategoryValues = {
 
 export const mockValidBudgetValues = {
   categoryKey: "food_beverage",
-  currency: "VND" as AppCurrency,
+  currency: "VND" as Currency,
   allocatedAmount: "1000000",
   startDate: localDateToUTCMidnight(new Date("2024-01-01")),
   endDate: localDateToUTCMidnight(new Date("2024-01-31")),
@@ -246,7 +245,7 @@ export const mockValidBudgetValues = {
 
 export const mockValidGoalValues = {
   categoryKey: "food_beverage",
-  currency: "VND" as AppCurrency,
+  currency: "VND" as Currency,
   name: "buy a motorbike",
   targetAmount: "50000000",
   startDate: localDateToUTCMidnight(new Date("2024-01-01")),
@@ -256,14 +255,14 @@ export const mockValidGoalValues = {
 export const mockValidRecurringTransactionValues = {
   type: "inflow" as CategoryType,
   categoryKey: "business_freelance",
-  currency: "VND" as AppCurrency,
+  currency: "VND" as Currency,
   amount: "2500000",
   description: "Freelance project payment",
   frequency: "monthly" as const,
   randomEveryXDays: undefined,
   startDate: localDateToUTCMidnight(new Date("2024-02-01")),
   endDate: localDateToUTCMidnight(new Date("2024-12-31")),
-  lastGenerated: undefined,
+  lastGeneratedDate: undefined,
   isActive: true,
 }
 
@@ -364,7 +363,6 @@ export const mockCustomCategories: Category[] = [
   {
     _id: "1",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "abcdef12",
     type: "inflow",
     label: "Freelance Work",
     description: "Custom freelance category",
@@ -372,7 +370,6 @@ export const mockCustomCategories: Category[] = [
   {
     _id: "2",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "abcdef13",
     type: "outflow",
     label: "Restaurant",
     description: "Custom food category",
@@ -380,7 +377,6 @@ export const mockCustomCategories: Category[] = [
   {
     _id: "3",
     userId: "68f712e4cda4897217a05a1c",
-    categoryKey: "abcdef14",
     type: "outflow",
     label: "Taxi",
     description: "Custom transport category",
@@ -516,7 +512,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     randomEveryXDays: undefined,
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-12-31"),
-    lastGenerated: undefined,
+    lastGeneratedDate: undefined,
     isActive: true,
   },
   {
@@ -531,7 +527,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     randomEveryXDays: undefined,
     startDate: new Date("2024-01-15"),
     endDate: new Date("2024-06-30"),
-    lastGenerated: undefined,
+    lastGeneratedDate: undefined,
     isActive: true,
   },
   {
@@ -559,7 +555,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     randomEveryXDays: undefined,
     startDate: new Date("2024-03-01"),
     endDate: new Date("2024-03-31"),
-    lastGenerated: undefined,
+    lastGeneratedDate: undefined,
     isActive: false,
   },
   {
@@ -574,7 +570,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     randomEveryXDays: undefined,
     startDate: new Date("2023-12-01"),
     endDate: new Date("2023-12-31"),
-    lastGenerated: undefined,
+    lastGeneratedDate: undefined,
     isActive: false,
   },
   {
@@ -589,7 +585,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     randomEveryXDays: undefined,
     startDate: new Date("2024-01-10"),
     endDate: new Date("2024-02-29"),
-    lastGenerated: undefined,
+    lastGeneratedDate: undefined,
     isActive: true,
   },
   {
@@ -604,7 +600,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     randomEveryXDays: 3,
     startDate: new Date("2024-04-01"),
     endDate: undefined,
-    lastGenerated: undefined,
+    lastGeneratedDate: undefined,
     isActive: true,
   },
   {
@@ -619,7 +615,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     randomEveryXDays: undefined,
     startDate: new Date("2023-11-01"),
     endDate: new Date("2024-03-31"),
-    lastGenerated: undefined,
+    lastGeneratedDate: undefined,
     isActive: true,
   },
 ]

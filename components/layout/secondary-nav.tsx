@@ -33,12 +33,12 @@ export function SecondaryNav() {
   const pathname = usePathname()
   const t = useExtracted()
   const { secondaryNav } = useNav()
-  const { currentSession } = useUser()
+  const { session } = useUser()
 
   async function onSignOut() {
     toast.promise(
       async () => {
-        if (currentSession.impersonatedBy) {
+        if (session.impersonatedBy) {
           await authClient.admin.stopImpersonating()
         }
         await authClient.signOut()

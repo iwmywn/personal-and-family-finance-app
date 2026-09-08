@@ -12,6 +12,7 @@ const prettierConfig = {
     "<THIRD_PARTY_MODULES>",
     "",
     "^@/tests/(.*)$",
+    "^@/[^/]+$",
     "^@/actions/(.*)$",
     "^@/app/(.*)$",
     "^@/components/ui/(.*)$",

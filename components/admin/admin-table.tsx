@@ -49,7 +49,7 @@ import { SetPasswordDialog } from "@/components/admin/set-password-dialog"
 import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { authClient } from "@/lib/auth-client"
-import type { User } from "@/lib/definitions"
+import type { AuthErrorCode, User } from "@/lib/definitions"
 import { isSuperAdminRole } from "@/lib/role"
 
 interface AdminTableProps {
@@ -79,12 +79,16 @@ export function AdminTable({
       userId: targetUser.id,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.code === "BANNED_USER")
-            toast.error(t("This user has been banned."))
-          else
-            toast.error(
-              t("Failed to impersonate user! Please try again later.")
-            )
+          switch (ctx.error.code as AuthErrorCode) {
+            case "BANNED_USER":
+              toast.error(t("This user has been banned."))
+              break
+            default:
+              toast.error(
+                t("Failed to impersonate user! Please try again later.")
+              )
+              break
+          }
         },
         onSuccess: () => {
           router.push("/home")
@@ -237,10 +241,7 @@ export function AdminTable({
                                   </p>
                                   {u.banExpires && (
                                     <p className="text-muted-foreground">
-                                      {t("Expires")}:{" "}
-                                      {new Date(
-                                        u.banExpires
-                                      ).toLocaleDateString()}
+                                      {t("Expires")}: {formatDate(u.banExpires)}
                                     </p>
                                   )}
                                 </div>

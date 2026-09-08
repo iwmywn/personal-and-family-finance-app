@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { cn } from "cn"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
@@ -47,9 +48,9 @@ import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
-import type { AppCurrency } from "@/lib/currency"
+import type { Currency } from "@/lib/currency"
 import type { Budget } from "@/lib/definitions"
-import { cn, localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 import type { BudgetFormValues } from "@/schemas/types"
 
 interface BudgetDialogProps {
@@ -70,7 +71,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
     resolver: zodResolver(createBudgetSchema()),
     defaultValues: {
       categoryKey: budget?.categoryKey || "",
-      currency: budget?.currency ?? (user.currency as AppCurrency),
+      currency: budget?.currency ?? (user.currency as Currency),
       allocatedAmount: budget?.allocatedAmount ?? "",
       startDate: budget?.startDate ? new Date(budget.startDate) : undefined,
       endDate: budget?.endDate ? new Date(budget.endDate) : undefined,
@@ -229,10 +230,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           field.onChange(date)
                           setStartCalendarOpen(false)
                         }}
-                        disabled={(date) =>
-                          (endDate && date > endDate) ||
-                          date < new Date(2025, 8, 1)
-                        }
+                        disabled={(date) => endDate && date > endDate}
                       />
                     </PopoverContent>
                   </Popover>
@@ -282,10 +280,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
                           field.onChange(date)
                           setEndCalendarOpen(false)
                         }}
-                        disabled={(date) =>
-                          (startDate && date <= startDate) ||
-                          date < new Date(2025, 8, 1)
-                        }
+                        disabled={(date) => startDate && date <= startDate}
                       />
                     </PopoverContent>
                   </Popover>

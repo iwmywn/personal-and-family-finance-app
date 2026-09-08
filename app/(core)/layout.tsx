@@ -32,7 +32,7 @@ export default async function DashboardLayout({
       <TooltipProvider>
         <UserProvider
           user={session.user}
-          currentSession={session.session}
+          session={session.session}
           activeSessions={activeSessions}
         >
           <SidebarProvider defaultOpen={defaultOpen}>

@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useTransition } from "react"
+import { Download } from "lucide-react"
 import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
@@ -20,7 +21,7 @@ interface ExportButtonProps {
 }
 
 export function ExportButton({ filteredTransactions }: ExportButtonProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isPending, startTransition] = useTransition()
   const t = useExtracted()
   const formatDate = useFormatDate()
   const { getCategoryLabel } = useCategory()
@@ -58,59 +59,66 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
       return
     }
 
-    setIsLoading(true)
-    try {
-      const csvContent = formatTransactionsToCSV(filteredTransactions)
-      let dateStr: string = ""
+    startTransition(() => {
+      try {
+        const csvContent = formatTransactionsToCSV(filteredTransactions)
+        let dateStr: string = ""
 
-      if (filteredTransactions.length === 1) {
-        dateStr = formatDate(filteredTransactions[0].date)
+        if (filteredTransactions.length === 1) {
+          dateStr = formatDate(filteredTransactions[0].date)
+        }
+        if (filteredTransactions.length > 1) {
+          const firstDate = formatDate(
+            filteredTransactions[filteredTransactions.length - 1].date
+          )
+          const lastDate = formatDate(filteredTransactions[0].date)
+          dateStr = `${t("From")}_${firstDate}_${t("To")}_${lastDate}`
+        }
+
+        const filename = `${t("transactions")}_${dateStr}.csv`
+          .replace(/[, ]+/g, "_")
+          .toLowerCase()
+
+        // Add UTF-8 BOM for proper encoding in Excel
+        const BOM = "\uFEFF"
+        const blob = new Blob([BOM + csvContent], {
+          type: "text/csv;charset=utf-8;",
+        })
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement("a")
+        link.href = url
+        link.download = filename
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+
+        toast.success(t("Export Transactions (CSV)") + " " + filename)
+      } catch (error) {
+        console.error("Error exporting CSV:", error)
+        toast.error(t("Failed to export data! Please try again later."))
       }
-      if (filteredTransactions.length > 1) {
-        const firstDate = formatDate(
-          filteredTransactions[filteredTransactions.length - 1].date
-        )
-        const lastDate = formatDate(filteredTransactions[0].date)
-        dateStr = `${t("From")}_${firstDate}_${t("To")}_${lastDate}`
-      }
-
-      const filename = `${t("transactions")}_${dateStr}.csv`
-        .replace(/[, ]+/g, "_")
-        .toLowerCase()
-
-      // Add UTF-8 BOM for proper encoding in Excel
-      const BOM = "\uFEFF"
-      const blob = new Blob([BOM + csvContent], {
-        type: "text/csv;charset=utf-8;",
-      })
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement("a")
-      link.href = url
-      link.download = filename
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
-
-      toast.success(t("Export Transactions (CSV)") + " " + filename)
-    } catch (error) {
-      console.error("Error exporting CSV:", error)
-      toast.error(t("Failed to export data! Please try again later."))
-    } finally {
-      setIsLoading(false)
-    }
+    })
   }
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="outline" onClick={handleExport} disabled={isLoading}>
-          {isLoading && <Spinner />}
-          {t("Export Transactions")}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="dark:hover:bg-input/50"
+          onClick={handleExport}
+          disabled={isPending}
+        >
+          {isPending ? <Spinner /> : <Download />}
+          <span className="sr-only">
+            {t("Export transactions with current filters applied.")}
+          </span>
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        {t("Export transactions with current filters applied")}
+        {t("Export transactions with current filters applied.")}
       </TooltipContent>
     </Tooltip>
   )

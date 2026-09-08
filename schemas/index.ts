@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { CATEGORIES } from "@/lib/category"
+import { CATEGORY_TYPES } from "@/lib/category"
 import { CURRENCIES } from "@/lib/currency"
 import { ASSIGNABLE_ROLES } from "@/lib/role"
 import { localDateToUTCMidnight } from "@/lib/utils"
@@ -104,7 +104,7 @@ export function buildSchemas(messages: SchemaMessages) {
 
   const createTransactionSchema = () =>
     z.object({
-      type: z.enum(CATEGORIES, {
+      type: z.enum(CATEGORY_TYPES, {
         message: messages.transactionTypeRequired,
       }),
       categoryKey: z.string().min(1, { message: messages.categoryRequired }),
@@ -127,8 +127,7 @@ export function buildSchemas(messages: SchemaMessages) {
 
   const createCategorySchema = () =>
     z.object({
-      categoryKey: z.string().optional(),
-      type: z.enum(CATEGORIES, {
+      type: z.enum(CATEGORY_TYPES, {
         message: messages.typeRequired,
       }),
       label: z
@@ -204,7 +203,7 @@ export function buildSchemas(messages: SchemaMessages) {
   const createRecurringTransactionSchema = () =>
     z
       .object({
-        type: z.enum(CATEGORIES, {
+        type: z.enum(CATEGORY_TYPES, {
           message: messages.typeRequired,
         }),
         categoryKey: z.string().min(1, { message: messages.categoryRequired }),
@@ -247,7 +246,7 @@ export function buildSchemas(messages: SchemaMessages) {
           message: messages.startDateRequired,
         }),
         endDate: z.date().optional(),
-        lastGenerated: z.date().optional(),
+        lastGeneratedDate: z.date().optional(),
         isActive: z.boolean(),
       })
       .superRefine((data, ctx) => {

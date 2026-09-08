@@ -1,5 +1,5 @@
-export const CATEGORIES = ["inflow", "outflow"] as const
-export type CategoryType = (typeof CATEGORIES)[number]
+export const CATEGORY_TYPES = ["inflow", "outflow"] as const
+export type CategoryType = (typeof CATEGORY_TYPES)[number]
 
 const INFLOW_CATEGORIES_KEY = [
   "salary_bonus",
@@ -30,18 +30,16 @@ const _ALL_CATEGORIES_KEY = [
   ...INFLOW_CATEGORIES_KEY,
   ...OUTFLOW_CATEGORIES_KEY,
 ] as const
-export type AllCategoriesKeyType = (typeof _ALL_CATEGORIES_KEY)[number]
+export type CategoryKey = (typeof _ALL_CATEGORIES_KEY)[number] | string
 
-export type CategoryKeyType = AllCategoriesKeyType | string
-
-export type CategoryConfigBaseType = {
-  [K in AllCategoriesKeyType]: {
+export type CategoryConfig = {
+  [K in CategoryKey]: {
     label: string
     description: string
   }
 }
 
-export function getCategoryType(key: AllCategoriesKeyType): CategoryType {
+export function getCategoryType(key: CategoryKey): CategoryType {
   return (INFLOW_CATEGORIES_KEY as readonly string[]).includes(key)
     ? "inflow"
     : "outflow"

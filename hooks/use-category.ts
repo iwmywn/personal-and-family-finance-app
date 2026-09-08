@@ -4,18 +4,13 @@ import { useExtracted } from "next-intl"
 
 import { useCategories } from "@/context/categories-context"
 import { getCategoryType } from "@/lib/category"
-import type {
-  AllCategoriesKeyType,
-  CategoryConfigBaseType,
-  CategoryKeyType,
-  CategoryType,
-} from "@/lib/category"
+import type { CategoryConfig, CategoryKey, CategoryType } from "@/lib/category"
 
 export function useCategory() {
   const t = useExtracted()
   const { customCategories } = useCategories()
 
-  const CATEGORY_CONFIG_BASE: CategoryConfigBaseType = {
+  const CATEGORY_CONFIG: CategoryConfig = {
     // Inflows
     salary_bonus: {
       label: t("Salary & Bonus"),
@@ -125,24 +120,24 @@ export function useCategory() {
 
   const categories = [
     ...(customCategories?.map((c) => ({
-      key: c.categoryKey,
+      key: c._id,
       label: c.label,
       description: c.description,
       type: c.type,
     })) ?? []),
 
-    ...Object.entries(CATEGORY_CONFIG_BASE).map(([key, value]) => ({
+    ...Object.entries(CATEGORY_CONFIG).map(([key, value]) => ({
       key,
       ...value,
-      type: getCategoryType(key as AllCategoriesKeyType),
+      type: getCategoryType(key as CategoryKey),
     })),
   ]
 
-  const getCategoryLabel = (key: CategoryKeyType): string => {
+  const getCategoryLabel = (key: CategoryKey): string => {
     return categories.find((c) => c.key === key)?.label ?? ""
   }
 
-  const getCategoryDescription = (key: CategoryKeyType): string => {
+  const getCategoryDescription = (key: CategoryKey): string => {
     return categories.find((c) => c.key === key)?.description ?? ""
   }
 

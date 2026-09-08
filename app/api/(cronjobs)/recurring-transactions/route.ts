@@ -7,11 +7,15 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
+import { isDuplicateKeyError } from "@/lib/indexes"
 
 import { shouldGenerateToday } from "./utils"
 
 // Vercel Cron Jobs only trigger HTTP GET requests.
 // [See official docs](https://vercel.com/docs/cron-jobs#how-cron-jobs-work)
+
+const BATCH_SIZE = 50
+
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization")
   if (authHeader !== `Bearer ${serverEnv.CRON_SECRET}`) {
@@ -45,43 +49,48 @@ export async function GET(request: NextRequest) {
     const createdIds: string[] = []
     const skippedReason: { id: string; reason: "notToday" | "existing" }[] = []
 
-    for (const rec of activeRecurringTransactions) {
-      if (!shouldGenerateToday(rec, todayUTC)) {
-        skippedReason.push({ id: rec._id.toString(), reason: "notToday" })
-        continue
-      }
+    for (let i = 0; i < activeRecurringTransactions.length; i += BATCH_SIZE) {
+      const batch = activeRecurringTransactions.slice(i, i + BATCH_SIZE)
 
-      const data = {
-        userId: rec.userId,
-        type: rec.type,
-        categoryKey: rec.categoryKey,
-        amount: rec.amount,
-        currency: rec.currency,
-        description: rec.description,
-        date: todayUTC,
-      }
+      await Promise.all(
+        batch.map(async (rec) => {
+          if (!shouldGenerateToday(rec, todayUTC)) {
+            skippedReason.push({ id: rec._id.toString(), reason: "notToday" })
+            return
+          }
 
-      const existing = await transactionsCollection.findOne(data)
+          try {
+            const insertResult = await transactionsCollection.insertOne({
+              userId: rec.userId,
+              type: rec.type,
+              categoryKey: rec.categoryKey,
+              amount: rec.amount,
+              currency: rec.currency,
+              description: rec.description,
+              date: todayUTC,
+            })
 
-      if (existing) {
-        // skip creating duplicate, but still update lastGenerated to avoid repeated attempts
-        await recurringCollection.updateOne(
-          { _id: rec._id },
-          { $set: { lastGenerated: todayUTC } }
-        )
-        skippedReason.push({ id: rec._id.toString(), reason: "existing" })
-        continue
-      }
+            await recurringCollection.updateOne(
+              { _id: rec._id },
+              { $set: { lastGeneratedDate: todayUTC } }
+            )
 
-      const insertResult = await transactionsCollection.insertOne(data)
-
-      await recurringCollection.updateOne(
-        { _id: rec._id },
-        { $set: { lastGenerated: todayUTC } }
+            createdCount++
+            createdIds.push(insertResult.insertedId.toString())
+          } catch (error) {
+            if (isDuplicateKeyError(error)) {
+              // skip creating duplicate, but still update lastGeneratedDate to avoid repeated attempts
+              await recurringCollection.updateOne(
+                { _id: rec._id },
+                { $set: { lastGeneratedDate: todayUTC } }
+              )
+              skippedReason.push({ id: rec._id.toString(), reason: "existing" })
+              return
+            }
+            throw error
+          }
+        })
       )
-
-      createdCount++
-      createdIds.push(insertResult.insertedId.toString())
     }
 
     return Response.json({

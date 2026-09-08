@@ -32,6 +32,7 @@ import { PasswordInput } from "@/components/password-input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
+import type { AuthErrorCode } from "@/lib/definitions"
 import type {
   TwoFactorCodeFormValues,
   TwoFactorPasswordFormValues,
@@ -119,10 +120,21 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
       password: values.password,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.code === "INVALID_PASSWORD") {
-            toast.error(t("Invalid password."))
-          } else {
-            toast.error(t("Failed to enable 2FA! Please try again later."))
+          switch (ctx.error.code as AuthErrorCode) {
+            case "INVALID_PASSWORD":
+              toast.error(t("Invalid password."))
+              break
+            default:
+              if (ctx.response.status === 429) {
+                toast.error(
+                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
+                  })
+                )
+              } else {
+                toast.error(t("Failed to enable 2FA! Please try again later."))
+              }
+              break
           }
         },
         onSuccess: (ctx) => {
@@ -188,10 +200,23 @@ function VerifyTwoFactorForm({
       code: values.code,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.code === "INVALID_CODE") {
-            toast.error(t("Invalid authentication code!"))
-          } else {
-            toast.error(t("Failed to verify 2FA code! Please try again later."))
+          switch (ctx.error.code as AuthErrorCode) {
+            case "INVALID_CODE":
+              toast.error(t("Invalid authentication code!"))
+              break
+            default:
+              if (ctx.response.status === 429) {
+                toast.error(
+                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
+                  })
+                )
+              } else {
+                toast.error(
+                  t("Failed to verify 2FA code! Please try again later.")
+                )
+              }
+              break
           }
         },
         onSuccess: () => {
@@ -259,10 +284,21 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
       password: values.password,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.code === "INVALID_PASSWORD") {
-            toast.error(t("Invalid password."))
-          } else {
-            toast.error(t("Failed to disable 2FA! Please try again later."))
+          switch (ctx.error.code as AuthErrorCode) {
+            case "INVALID_PASSWORD":
+              toast.error(t("Invalid password."))
+              break
+            default:
+              if (ctx.response.status === 429) {
+                toast.error(
+                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
+                  })
+                )
+              } else {
+                toast.error(t("Failed to disable 2FA! Please try again later."))
+                break
+              }
           }
         },
         onSuccess: () => {

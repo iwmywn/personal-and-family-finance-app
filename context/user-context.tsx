@@ -6,7 +6,7 @@ import type { Session, User } from "@/lib/definitions"
 
 type UserContextValue = {
   user: User
-  currentSession: Session
+  session: Session
   activeSessions: Session[]
 }
 
@@ -15,19 +15,19 @@ const UserContext = React.createContext<UserContextValue | null>(null)
 export function UserProvider({
   children,
   user,
-  currentSession,
+  session,
   activeSessions,
 }: {
   children: React.ReactNode
   user: User
-  currentSession: Session
+  session: Session
   activeSessions: Session[]
 }) {
   return (
     <UserContext.Provider
       value={{
         user,
-        currentSession,
+        session,
         activeSessions,
       }}
     >

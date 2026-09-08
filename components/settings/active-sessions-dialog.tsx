@@ -32,7 +32,7 @@ import { authClient } from "@/lib/auth-client"
 export function ActiveSessionsDialog() {
   const t = useExtracted()
   const router = useRouter()
-  const { activeSessions, currentSession } = useUser()
+  const { session: currentSession, activeSessions } = useUser()
   const [isTerminating, setIsTerminating] = useState<string | undefined>()
   const [isRevokingAll, setIsRevokingAll] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -52,6 +52,8 @@ export function ActiveSessionsDialog() {
     })
 
   useEffect(() => {
+    let isCancelled = false
+
     if (isOpen && sortedSessions.length > 0) {
       const fetchLocations = async () => {
         const locationPromises = sortedSessions.map(async (session) => {
@@ -60,14 +62,20 @@ export function ActiveSessionsDialog() {
         })
 
         const results = await Promise.all(locationPromises)
-        const locationMap: Record<string, string | null> = {}
-        results.forEach(({ id, location }) => {
-          locationMap[id] = location
-        })
-        setLocations(locationMap)
+        if (!isCancelled) {
+          const locationMap: Record<string, string | null> = {}
+          results.forEach(({ id, location }) => {
+            locationMap[id] = location
+          })
+          setLocations(locationMap)
+        }
       }
 
       fetchLocations()
+    }
+
+    return () => {
+      isCancelled = true
     }
   }, [isOpen, sortedSessions])
 

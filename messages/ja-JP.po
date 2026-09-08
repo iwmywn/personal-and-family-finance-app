@@ -42,6 +42,7 @@ msgid "User has been deleted."
 msgstr "ユーザーが削除されました。"
 
 #: actions/admin.actions.ts
+#: components/admin/delete-user-dialog.tsx
 msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "ユーザーの削除に失敗しました！後でもう一度お試しください。"
@@ -65,14 +66,14 @@ msgid "Access denied! Please refresh the page and try again."
 msgstr "アクセスが拒否されました！ページを更新してもう一度お試しください。"
 
 #: actions/budget.actions.ts
-msgctxt "kwvIdb"
-msgid "This budget already exists!"
-msgstr "この予算は既に存在します！"
-
-#: actions/budget.actions.ts
 msgctxt "hcutYI"
 msgid "Budget has been added."
 msgstr "予算が追加されました。"
+
+#: actions/budget.actions.ts
+msgctxt "kwvIdb"
+msgid "This budget already exists!"
+msgstr "この予算は既に存在します！"
 
 #: actions/budget.actions.ts
 msgctxt "ge_1ga"
@@ -110,6 +111,7 @@ msgid "Budget has been deleted."
 msgstr "予算が削除されました。"
 
 #: actions/budget.actions.ts
+#: components/budgets/delete-budget-dialog.tsx
 msgctxt "niO8qC"
 msgid "Failed to delete budget! Please try again later."
 msgstr "予算の削除に失敗しました！後でもう一度お試しください。"
@@ -120,19 +122,14 @@ msgid "Failed to load budgets! Please try again later."
 msgstr "予算の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/category.actions.ts
-msgctxt "LzesyV"
-msgid "This category already exists!"
-msgstr "このカテゴリは既に存在します！"
-
-#: actions/category.actions.ts
-msgctxt "G0Twr1"
-msgid "Error creating category key! Please try again later."
-msgstr "カテゴリキーの作成エラー！後でもう一度お試しください。"
-
-#: actions/category.actions.ts
 msgctxt "Jfen4M"
 msgid "Category has been added."
 msgstr "カテゴリが追加されました。"
+
+#: actions/category.actions.ts
+msgctxt "LzesyV"
+msgid "This category already exists!"
+msgstr "このカテゴリは既に存在します！"
 
 #: actions/category.actions.ts
 msgctxt "OQ79b6"
@@ -190,6 +187,7 @@ msgid "Category has been deleted."
 msgstr "カテゴリが削除されました。"
 
 #: actions/category.actions.ts
+#: components/categories/delete-category-dialog.tsx
 msgctxt "XWfgXI"
 msgid "Failed to delete category! Please try again later."
 msgstr "カテゴリの削除に失敗しました！後でもう一度お試しください。"
@@ -200,14 +198,14 @@ msgid "Failed to load custom categories! Please try again later."
 msgstr "カスタムカテゴリの読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/goal.actions.ts
-msgctxt "3SCa_T"
-msgid "This goal already exists!"
-msgstr "この目標は既に存在します！"
-
-#: actions/goal.actions.ts
 msgctxt "J-nrjG"
 msgid "Goal has been added."
 msgstr "目標が追加されました。"
+
+#: actions/goal.actions.ts
+msgctxt "3SCa_T"
+msgid "This goal already exists!"
+msgstr "この目標は既に存在します！"
 
 #: actions/goal.actions.ts
 msgctxt "9Buhj_"
@@ -245,6 +243,7 @@ msgid "Goal has been deleted."
 msgstr "目標が削除されました。"
 
 #: actions/goal.actions.ts
+#: components/goals/delete-goal-dialog.tsx
 msgctxt "uwewg6"
 msgid "Failed to delete goal! Please try again later."
 msgstr "目標の削除に失敗しました！後でもう一度お試しください。"
@@ -255,14 +254,14 @@ msgid "Failed to load goals! Please try again later."
 msgstr "目標の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/recurring.actions.ts
-msgctxt "-HBMWc"
-msgid "This recurring transaction already exists!"
-msgstr "この定期取引は既に存在します！"
-
-#: actions/recurring.actions.ts
 msgctxt "5Mtoe5"
 msgid "Recurring transaction has been added."
 msgstr "定期取引が追加されました。"
+
+#: actions/recurring.actions.ts
+msgctxt "-HBMWc"
+msgid "This recurring transaction already exists!"
+msgstr "この定期取引は既に存在します！"
 
 #: actions/recurring.actions.ts
 msgctxt "FLPmpu"
@@ -300,6 +299,7 @@ msgid "Recurring transaction has been deleted."
 msgstr "定期取引が削除されました。"
 
 #: actions/recurring.actions.ts
+#: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
 msgctxt "9p5fYg"
 msgid "Failed to delete recurring transaction! Please try again later."
 msgstr "定期取引の削除に失敗しました！後でもう一度お試しください。"
@@ -310,14 +310,14 @@ msgid "Failed to load recurring transactions! Please try again later."
 msgstr "定期取引の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
-msgctxt "v-aP8j"
-msgid "This transaction has already been created today!"
-msgstr "この取引は既に今日作成されています！"
-
-#: actions/transaction.actions.ts
 msgctxt "pU1r4y"
 msgid "Transaction has been added."
 msgstr "取引が追加されました。"
+
+#: actions/transaction.actions.ts
+msgctxt "f4KSX1"
+msgid "This transaction already exists!"
+msgstr "この取引はすでに存在します！"
 
 #: actions/transaction.actions.ts
 msgctxt "zb35o3"
@@ -355,6 +355,7 @@ msgid "Transaction has been deleted."
 msgstr "取引が削除されました。"
 
 #: actions/transaction.actions.ts
+#: components/transactions/delete-transaction-dialog.tsx
 msgctxt "DcqDur"
 msgid "Failed to delete transaction! Please try again later."
 msgstr "取引の削除に失敗しました！後でもう一度お試しください。"
@@ -1024,6 +1025,19 @@ msgctxt "ZTYUJe"
 msgid "Update Password"
 msgstr "パスワードを更新"
 
+#: components/auth/language-selector.tsx
+#: components/settings/language-selector.tsx
+msgctxt "Ax3Nmj"
+msgid "Failed to update language! Please try again later."
+msgstr "言語の更新に失敗しました！後でもう一度お試しください。"
+
+#: components/auth/language-selector.tsx
+#: components/settings/language-selector.tsx
+#: components/settings/settings-page.tsx
+msgctxt "y1Z3or"
+msgid "Language"
+msgstr "言語"
+
 #: components/auth/signin-form.tsx
 msgctxt "ExP2LI"
 msgid "CAPTCHA verification failed! Please try again later."
@@ -1050,6 +1064,8 @@ msgid "Your account has been banned. Please contact support if you believe this 
 msgstr "アカウントがBANされました。誤りと思われる場合はサポートにお問い合わせください。"
 
 #: components/auth/signin-form.tsx
+#: components/settings/change-password-dialog.tsx
+#: components/settings/two-factor-manager-dialog.tsx
 msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "レート制限を超えました！{seconds}秒後に再試行してください。"
@@ -1059,6 +1075,21 @@ msgstr "レート制限を超えました！{seconds}秒後に再試行してく
 msgctxt "FCVHwe"
 msgid "Invalid authentication code!"
 msgstr "認証コードが無効です！"
+
+#: components/auth/two-factor-form.tsx
+msgctxt "HtVpsQ"
+msgid "Too many attempts. Please sign in again."
+msgstr "試行回数が多すぎます。もう一度サインインしてください。"
+
+#: components/auth/two-factor-form.tsx
+msgctxt "j_5SEQ"
+msgid "Two-factor session has expired. Please sign in again."
+msgstr "二要素認証セッションの有効期限が切れました。もう一度サインインしてください。"
+
+#: components/auth/two-factor-form.tsx
+msgctxt "H5i_uh"
+msgid "Your account is temporarily locked due to too many failed attempts. Please try again later."
+msgstr "試行失敗回数が多すぎるため、アカウントは一時的にロックされています。後でもう一度お試しください。"
 
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
@@ -2170,17 +2201,6 @@ msgctxt "d6wGcQ"
 msgid "Failed to update currency! Please try again later."
 msgstr "通貨の更新に失敗しました！後でもう一度お試しください。"
 
-#: components/settings/language-selector.tsx
-msgctxt "Ax3Nmj"
-msgid "Failed to update language! Please try again later."
-msgstr "言語の更新に失敗しました！後でもう一度お試しください。"
-
-#: components/settings/language-selector.tsx
-#: components/settings/settings-page.tsx
-msgctxt "y1Z3or"
-msgid "Language"
-msgstr "言語"
-
 #: components/settings/settings-page.tsx
 msgctxt "1iEPTM"
 msgid "General"
@@ -2380,14 +2400,9 @@ msgid "Failed to export data! Please try again later."
 msgstr "データのエクスポートに失敗しました！後でもう一度お試しください。"
 
 #: components/transactions/export-button.tsx
-msgctxt "hTOF-7"
-msgid "Export Transactions"
-msgstr "取引をエクスポート"
-
-#: components/transactions/export-button.tsx
-msgctxt "0S1jq_"
-msgid "Export transactions with current filters applied"
-msgstr "現在のフィルターを適用して取引をエクスポート"
+msgctxt "GGrENy"
+msgid "Export transactions with current filters applied."
+msgstr "現在のフィルターを適用して取引をエクスポート。"
 
 #: components/transactions/transaction-dialog.tsx
 msgctxt "P5C72A"

@@ -171,6 +171,26 @@ describe("Recurring Transactions", async () => {
         "Failed to add recurring transaction! Please try again later."
       )
     })
+
+    it("should prevent race condition when creating duplicate recurring transactions concurrently", async () => {
+      mockAuthenticatedUser()
+
+      const [firstResult, secondResult] = await Promise.all([
+        createRecurringTransaction(mockValidRecurringTransactionValues),
+        createRecurringTransaction(mockValidRecurringTransactionValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Recurring transaction has been added."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This recurring transaction already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
+    })
   })
 
   describe("updateRecurringTransaction", () => {
@@ -262,6 +282,7 @@ describe("Recurring Transactions", async () => {
         insertTestRecurringTransaction({
           ...mockRecurringTransaction,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          currency: "USD",
         }),
       ])
       mockAuthenticatedUser()
@@ -306,6 +327,80 @@ describe("Recurring Transactions", async () => {
       expect(unrelatedRecurring?.amount.toString()).toBe("5000000")
       expect(result.success).toBe("Recurring transaction has been updated.")
       expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when updating recurring transaction causes duplicate key collision", async () => {
+      await Promise.all([
+        insertTestRecurringTransaction(mockRecurringTransaction),
+        insertTestRecurringTransaction({
+          ...mockRecurringTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          currency: "USD",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await updateRecurringTransaction(
+        "690d2e5f7d5c36bf6c82ff1f",
+        {
+          type: mockRecurringTransaction.type,
+          categoryKey: mockRecurringTransaction.categoryKey,
+          amount: mockRecurringTransaction.amount.toString(),
+          currency: "VND",
+          description: mockRecurringTransaction.description,
+          frequency: mockRecurringTransaction.frequency,
+          startDate: mockRecurringTransaction.startDate,
+          endDate: mockRecurringTransaction.endDate,
+          isActive: mockRecurringTransaction.isActive,
+        }
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("This recurring transaction already exists!")
+    })
+
+    it("should prevent race condition when updating duplicate recurring transactions concurrently", async () => {
+      await Promise.all([
+        insertTestRecurringTransaction({
+          ...mockRecurringTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1e"),
+          currency: "USD",
+        }),
+        insertTestRecurringTransaction({
+          ...mockRecurringTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          currency: "JPY",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const targetValues = {
+        type: mockRecurringTransaction.type,
+        categoryKey: mockRecurringTransaction.categoryKey,
+        amount: mockRecurringTransaction.amount.toString(),
+        currency: "VND" as const,
+        description: "Target recurring",
+        frequency: mockRecurringTransaction.frequency,
+        startDate: mockRecurringTransaction.startDate,
+        endDate: mockRecurringTransaction.endDate,
+        isActive: mockRecurringTransaction.isActive,
+      }
+
+      const [firstResult, secondResult] = await Promise.all([
+        updateRecurringTransaction("690d2e5f7d5c36bf6c82ff1e", targetValues),
+        updateRecurringTransaction("690d2e5f7d5c36bf6c82ff1f", targetValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Recurring transaction has been updated."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This recurring transaction already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
     })
 
     it("should return error when database operation throws error", async () => {
@@ -450,16 +545,19 @@ describe("Recurring Transactions", async () => {
       const recurring1 = {
         ...mockRecurringTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8106"),
+        description: "Monthly Salary 1",
         startDate: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const recurring2 = {
         ...mockRecurringTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8107"),
+        description: "Monthly Salary 2",
         startDate: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const recurring3 = {
         ...mockRecurringTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8108"),
+        description: "Monthly Salary 3",
         startDate: localDateToUTCMidnight(new Date("2024-02-15")),
       }
 

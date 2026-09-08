@@ -84,6 +84,26 @@ describe("Goals", async () => {
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Failed to add goal! Please try again later.")
     })
+
+    it("should prevent race condition when creating duplicate goals concurrently", async () => {
+      mockAuthenticatedUser()
+
+      const [firstResult, secondResult] = await Promise.all([
+        createGoal(mockValidGoalValues),
+        createGoal(mockValidGoalValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Goal has been added."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This goal already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
+    })
   })
 
   describe("updateGoal", () => {
@@ -162,6 +182,7 @@ describe("Goals", async () => {
         insertTestGoal({
           ...mockGoal,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          currency: "USD",
         }),
       ])
       mockAuthenticatedUser()
@@ -195,6 +216,71 @@ describe("Goals", async () => {
       expect(unrelatedGoal?.name).toBe("buy a motorbike")
       expect(result.success).toBe("Goal has been updated.")
       expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when updating goal causes duplicate key collision", async () => {
+      await Promise.all([
+        insertTestGoal(mockGoal),
+        insertTestGoal({
+          ...mockGoal,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          currency: "USD",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await updateGoal("690d2e5f7d5c36bf6c82ff1f", {
+        categoryKey: mockGoal.categoryKey,
+        name: mockGoal.name,
+        currency: "VND",
+        targetAmount: mockGoal.targetAmount.toString(),
+        startDate: mockGoal.startDate,
+        endDate: mockGoal.endDate,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("This goal already exists!")
+    })
+
+    it("should prevent race condition when updating duplicate goals concurrently", async () => {
+      await Promise.all([
+        insertTestGoal({
+          ...mockGoal,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1e"),
+          currency: "USD",
+        }),
+        insertTestGoal({
+          ...mockGoal,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          currency: "JPY",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const targetValues = {
+        categoryKey: mockGoal.categoryKey,
+        name: "Target Goal",
+        currency: "VND" as const,
+        targetAmount: mockGoal.targetAmount.toString(),
+        startDate: mockGoal.startDate,
+        endDate: mockGoal.endDate,
+      }
+
+      const [firstResult, secondResult] = await Promise.all([
+        updateGoal("690d2e5f7d5c36bf6c82ff1e", targetValues),
+        updateGoal("690d2e5f7d5c36bf6c82ff1f", targetValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Goal has been updated."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This goal already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
     })
 
     it("should return error when database operation throws error", async () => {
@@ -333,6 +419,7 @@ describe("Goals", async () => {
       const goal2 = {
         ...mockGoal,
         _id: new ObjectId("68f896e5cda4897217a05a2e"),
+        categoryKey: "business_freelance",
         startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const goal3 = {

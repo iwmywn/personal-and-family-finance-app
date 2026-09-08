@@ -16,6 +16,7 @@ export async function getLocationFromIP(ipAddress: string | null | undefined) {
     const response = await fetch(
       `http://ip-api.com/json/${ipAddress}?fields=status,regionName,country`
     )
+    if (!response.ok) return null
     const data = await response.json()
 
     if (data.status === "success") {

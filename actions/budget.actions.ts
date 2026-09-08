@@ -6,6 +6,7 @@ import { getExtracted } from "next-intl/server"
 
 import { getBudgetsCollection } from "@/lib/collections"
 import type { Budget } from "@/lib/definitions"
+import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { BudgetFormValues } from "@/schemas/types"
 
@@ -36,17 +37,6 @@ export async function createBudget(values: BudgetFormValues): Promise<{
 
     const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
-    const existingBudget = await budgetsCollection.findOne({
-      userId: new ObjectId(userId),
-      categoryKey: parsedValues.data.categoryKey,
-      currency: parsedValues.data.currency,
-      startDate: parsedValues.data.startDate,
-      endDate: parsedValues.data.endDate,
-    })
-
-    if (existingBudget) {
-      return { error: t("This budget already exists!") }
-    }
 
     await budgetsCollection.insertOne({
       userId: new ObjectId(userId),
@@ -60,6 +50,9 @@ export async function createBudget(values: BudgetFormValues): Promise<{
     updateTag(`budgets-${userId}`)
     return { success: t("Budget has been added."), error: undefined }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This budget already exists!") }
+    }
     console.error("Error creating budget:", error)
     return { error: t("Failed to add budget! Please try again later.") }
   }
@@ -98,18 +91,7 @@ export async function updateBudget(
 
     const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
-    const existingBudget = await budgetsCollection.findOne({
-      _id: new ObjectId(budgetId),
-      userId: new ObjectId(userId),
-    })
-
-    if (!existingBudget) {
-      return {
-        error: t("Budget not found or you don't have permission to edit!"),
-      }
-    }
-
-    await budgetsCollection.updateOne(
+    const result = await budgetsCollection.updateOne(
       { _id: new ObjectId(budgetId), userId: new ObjectId(userId) },
       {
         $set: {
@@ -122,9 +104,18 @@ export async function updateBudget(
       }
     )
 
+    if (result.matchedCount === 0) {
+      return {
+        error: t("Budget not found or you don't have permission to edit!"),
+      }
+    }
+
     updateTag(`budgets-${userId}`)
     return { success: t("Budget has been updated."), error: undefined }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This budget already exists!") }
+    }
     console.error("Error updating budget:", error)
     return { error: t("Failed to update budget! Please try again later.") }
   }
@@ -153,21 +144,16 @@ export async function deleteBudget(budgetId: string): Promise<{
 
     const userId = session.user.id
     const budgetsCollection = await getBudgetsCollection()
-    const existingBudget = await budgetsCollection.findOne({
+    const result = await budgetsCollection.deleteOne({
       _id: new ObjectId(budgetId),
       userId: new ObjectId(userId),
     })
 
-    if (!existingBudget) {
+    if (result.deletedCount === 0) {
       return {
         error: t("Budget not found or you don't have permission to delete!"),
       }
     }
-
-    await budgetsCollection.deleteOne({
-      _id: new ObjectId(budgetId),
-      userId: new ObjectId(userId),
-    })
 
     updateTag(`budgets-${userId}`)
     return { success: t("Budget has been deleted.") }

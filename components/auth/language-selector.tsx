@@ -1,7 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
-import { useExtracted } from "next-intl"
+import { useExtracted, useLocale } from "next-intl"
 import { toast } from "sonner"
 
 import {
@@ -11,34 +11,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useUser } from "@/context/user-context"
 import { LOCALE_CONFIG } from "@/i18n/config"
 import type { Locale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
-import { authClient } from "@/lib/auth-client"
 
 export function LanguageSelector() {
   const t = useExtracted()
+  const activeLocale = useLocale()
   const [isPending, startTransition] = useTransition()
-  const { user } = useUser()
 
   function handleLocaleChange(locale: Locale) {
     startTransition(async () => {
       try {
-        await authClient.updateUser({
-          locale,
-          fetchOptions: {
-            onError: () => {
-              toast.error(
-                t("Failed to update language! Please try again later.")
-              )
-            },
-            onSuccess: async () => {
-              await setUserLocale(locale)
-              window.location.reload()
-            },
-          },
-        })
+        await setUserLocale(locale)
+        window.location.reload()
       } catch {
         toast.error(t("Failed to update language! Please try again later."))
       }
@@ -47,7 +33,7 @@ export function LanguageSelector() {
 
   return (
     <Select
-      value={user.locale}
+      value={activeLocale}
       onValueChange={handleLocaleChange}
       disabled={isPending}
     >

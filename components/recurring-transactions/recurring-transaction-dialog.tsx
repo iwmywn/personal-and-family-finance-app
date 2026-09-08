@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { cn } from "cn"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
@@ -59,9 +60,9 @@ import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
-import type { AppCurrency } from "@/lib/currency"
+import type { Currency } from "@/lib/currency"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { cn, localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 interface RecurringDialogProps {
@@ -88,7 +89,7 @@ export function RecurringTransactionDialog({
     defaultValues: {
       type: recurring?.type || "inflow",
       categoryKey: recurring?.categoryKey || "",
-      currency: recurring?.currency ?? (user.currency as AppCurrency),
+      currency: recurring?.currency ?? (user.currency as Currency),
       amount: recurring?.amount ?? "",
       description: recurring?.description || "",
       frequency: recurring?.frequency || "monthly",
@@ -97,8 +98,8 @@ export function RecurringTransactionDialog({
         ? new Date(recurring.startDate)
         : undefined,
       endDate: recurring?.endDate ? new Date(recurring.endDate) : undefined,
-      lastGenerated: recurring?.lastGenerated
-        ? new Date(recurring.lastGenerated)
+      lastGeneratedDate: recurring?.lastGeneratedDate
+        ? new Date(recurring.lastGeneratedDate)
         : undefined,
       isActive: recurring?.isActive ?? true,
     },

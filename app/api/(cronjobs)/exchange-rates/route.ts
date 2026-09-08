@@ -80,45 +80,49 @@ export async function GET(request: NextRequest) {
     yesterday.setUTCDate(yesterday.getUTCDate() - 1)
     const yesterdayUTC = normalizeToUTCMidnight(new Date(yesterday))
 
-    while (startDateUTC <= yesterdayUTC) {
-      const dateStr = startDateUTC.toISOString().split("T")[0] // YYYY-MM-DD
+    const datesToFetch: string[] = []
+    const currentDate = new Date(startDateUTC)
+    while (currentDate <= yesterdayUTC) {
+      datesToFetch.push(currentDate.toISOString().split("T")[0])
+      currentDate.setUTCDate(currentDate.getUTCDate() + 1)
+    }
 
-      try {
-        const apiUrl = `https://api.currencyapi.com/v3/historical?apikey=${serverEnv.CURRENCY_API_SECRET}&currencies=CNY%2CVND%2CJPY%2CKRW&date=${dateStr}`
+    await Promise.all(
+      datesToFetch.map(async (dateStr) => {
+        try {
+          const apiUrl = `https://api.currencyapi.com/v3/historical?apikey=${serverEnv.CURRENCY_API_SECRET}&currencies=CNY%2CVND%2CJPY%2CKRW&date=${dateStr}`
 
-        const response = await fetch(apiUrl)
+          const response = await fetch(apiUrl)
 
-        if (!response.ok) {
+          if (!response.ok) {
+            errors.push({
+              date: dateStr,
+              error: `API returned ${response.status}!`,
+            })
+            return
+          }
+
+          const data = (await response.json()) as CurrencyAPIResponse
+
+          await exchangeRatesCollection.insertOne({
+            date: normalizeToUTCMidnight(new Date(data.meta.last_updated_at)),
+            rates: {
+              CNY: toDecimal128(data.data.CNY.value.toString()),
+              JPY: toDecimal128(data.data.JPY.value.toString()),
+              KRW: toDecimal128(data.data.KRW.value.toString()),
+              VND: toDecimal128(data.data.VND.value.toString()),
+            },
+          })
+
+          insertedDates.push(dateStr)
+        } catch (error) {
           errors.push({
             date: dateStr,
-            error: `API returned ${response.status}!`,
+            error: error instanceof Error ? error.message : "Unknown error!",
           })
-          startDateUTC.setUTCDate(startDateUTC.getUTCDate() + 1)
-          continue
         }
-
-        const data = (await response.json()) as CurrencyAPIResponse
-
-        await exchangeRatesCollection.insertOne({
-          date: normalizeToUTCMidnight(new Date(data.meta.last_updated_at)),
-          rates: {
-            CNY: toDecimal128(data.data.CNY.value.toString()),
-            JPY: toDecimal128(data.data.JPY.value.toString()),
-            KRW: toDecimal128(data.data.KRW.value.toString()),
-            VND: toDecimal128(data.data.VND.value.toString()),
-          },
-        })
-
-        insertedDates.push(dateStr)
-      } catch (error) {
-        errors.push({
-          date: dateStr,
-          error: error instanceof Error ? error.message : "Unknown error!",
-        })
-      }
-
-      startDateUTC.setUTCDate(startDateUTC.getUTCDate() + 1)
-    }
+      })
+    )
 
     return Response.json({
       success: true,

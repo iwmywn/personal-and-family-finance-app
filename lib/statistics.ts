@@ -1,7 +1,7 @@
 import Decimal from "decimal.js"
 
-import type { CategoryKeyType } from "@/lib/category"
-import type { AppCurrency } from "@/lib/currency"
+import type { CategoryKey } from "@/lib/category"
+import type { Currency } from "@/lib/currency"
 import type { Budget, Goal, Transaction } from "@/lib/definitions"
 import {
   convertAmountWithRates,
@@ -31,7 +31,7 @@ interface QuickStats {
   lowestTransaction: Transaction | null
   avgOutflow: string | null
   savingsRate: string | null
-  popularCategory: CategoryKeyType[]
+  popularCategory: CategoryKey[]
 }
 
 export function calculateQuickStats(transactions: Transaction[]): QuickStats {
@@ -96,9 +96,13 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
     new Decimal(0)
   )
 
-  const popularCategory = Object.entries(categorySums)
-    .filter(([, total]) => total.equals(maxTotal))
-    .map(([key]) => key as CategoryKeyType)
+  const popularCategory = Object.entries(categorySums).reduce<CategoryKey[]>(
+    (acc, [key, total]) => {
+      if (total.equals(maxTotal)) acc.push(key as CategoryKey)
+      return acc
+    },
+    []
+  )
 
   return {
     currentMonthCount,
@@ -184,14 +188,12 @@ export function calculateCategoriesStats(
 interface StatBaseConfig<TBase, Transaction> {
   type: "inflow" | "outflow"
   getBaseTargetAmount: (item: TBase) => string
-  getBaseCurrency: (item: TBase) => AppCurrency
+  getBaseCurrency: (item: TBase) => Currency
   getBaseCategoryKey: (item: TBase) => string
   getTransactionAmount: (t: Transaction) => string
   getTransactionOriginalAmount: (t: Transaction) => string | undefined
-  getTransactionOriginalCurrency: (t: Transaction) => AppCurrency | undefined
-  getTransactionRates: (
-    t: Transaction
-  ) => Record<AppCurrency, string> | undefined
+  getTransactionOriginalCurrency: (t: Transaction) => Currency | undefined
+  getTransactionRates: (t: Transaction) => Record<Currency, string> | undefined
   pickColor: (percentage: number, hasItems: boolean) => string
 }
 

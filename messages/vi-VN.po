@@ -42,6 +42,7 @@ msgid "User has been deleted."
 msgstr "Người dùng đã bị xóa."
 
 #: actions/admin.actions.ts
+#: components/admin/delete-user-dialog.tsx
 msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "Xóa người dùng thất bại! Vui lòng thử lại sau."
@@ -65,14 +66,14 @@ msgid "Access denied! Please refresh the page and try again."
 msgstr "Truy cập bị từ chối! Vui lòng tải lại trang và thử lại."
 
 #: actions/budget.actions.ts
-msgctxt "kwvIdb"
-msgid "This budget already exists!"
-msgstr "Ngân sách này đã tồn tại!"
-
-#: actions/budget.actions.ts
 msgctxt "hcutYI"
 msgid "Budget has been added."
 msgstr "Ngân sách đã được thêm."
+
+#: actions/budget.actions.ts
+msgctxt "kwvIdb"
+msgid "This budget already exists!"
+msgstr "Ngân sách này đã tồn tại!"
 
 #: actions/budget.actions.ts
 msgctxt "ge_1ga"
@@ -110,6 +111,7 @@ msgid "Budget has been deleted."
 msgstr "Ngân sách đã được xóa."
 
 #: actions/budget.actions.ts
+#: components/budgets/delete-budget-dialog.tsx
 msgctxt "niO8qC"
 msgid "Failed to delete budget! Please try again later."
 msgstr "Xóa ngân sách thất bại! Vui lòng thử lại sau."
@@ -120,19 +122,14 @@ msgid "Failed to load budgets! Please try again later."
 msgstr "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau."
 
 #: actions/category.actions.ts
-msgctxt "LzesyV"
-msgid "This category already exists!"
-msgstr "Danh mục này đã tồn tại!"
-
-#: actions/category.actions.ts
-msgctxt "G0Twr1"
-msgid "Error creating category key! Please try again later."
-msgstr "Lỗi khi tạo khóa danh mục! Vui lòng thử lại sau."
-
-#: actions/category.actions.ts
 msgctxt "Jfen4M"
 msgid "Category has been added."
 msgstr "Danh mục đã được thêm."
+
+#: actions/category.actions.ts
+msgctxt "LzesyV"
+msgid "This category already exists!"
+msgstr "Danh mục này đã tồn tại!"
 
 #: actions/category.actions.ts
 msgctxt "OQ79b6"
@@ -190,6 +187,7 @@ msgid "Category has been deleted."
 msgstr "Danh mục đã được xóa."
 
 #: actions/category.actions.ts
+#: components/categories/delete-category-dialog.tsx
 msgctxt "XWfgXI"
 msgid "Failed to delete category! Please try again later."
 msgstr "Xóa danh mục thất bại! Vui lòng thử lại sau."
@@ -200,14 +198,14 @@ msgid "Failed to load custom categories! Please try again later."
 msgstr "Tải danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
 
 #: actions/goal.actions.ts
-msgctxt "3SCa_T"
-msgid "This goal already exists!"
-msgstr "Mục tiêu này đã tồn tại!"
-
-#: actions/goal.actions.ts
 msgctxt "J-nrjG"
 msgid "Goal has been added."
 msgstr "Mục tiêu đã được thêm."
+
+#: actions/goal.actions.ts
+msgctxt "3SCa_T"
+msgid "This goal already exists!"
+msgstr "Mục tiêu này đã tồn tại!"
 
 #: actions/goal.actions.ts
 msgctxt "9Buhj_"
@@ -245,6 +243,7 @@ msgid "Goal has been deleted."
 msgstr "Mục tiêu đã được xóa."
 
 #: actions/goal.actions.ts
+#: components/goals/delete-goal-dialog.tsx
 msgctxt "uwewg6"
 msgid "Failed to delete goal! Please try again later."
 msgstr "Xóa mục tiêu thất bại! Vui lòng thử lại sau."
@@ -255,14 +254,14 @@ msgid "Failed to load goals! Please try again later."
 msgstr "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau."
 
 #: actions/recurring.actions.ts
-msgctxt "-HBMWc"
-msgid "This recurring transaction already exists!"
-msgstr "Giao dịch định kỳ này đã tồn tại!"
-
-#: actions/recurring.actions.ts
 msgctxt "5Mtoe5"
 msgid "Recurring transaction has been added."
 msgstr "Giao dịch định kỳ đã được thêm."
+
+#: actions/recurring.actions.ts
+msgctxt "-HBMWc"
+msgid "This recurring transaction already exists!"
+msgstr "Giao dịch định kỳ này đã tồn tại!"
 
 #: actions/recurring.actions.ts
 msgctxt "FLPmpu"
@@ -300,6 +299,7 @@ msgid "Recurring transaction has been deleted."
 msgstr "Giao dịch định kỳ đã được xóa."
 
 #: actions/recurring.actions.ts
+#: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
 msgctxt "9p5fYg"
 msgid "Failed to delete recurring transaction! Please try again later."
 msgstr "Xóa giao dịch định kỳ thất bại! Vui lòng thử lại sau."
@@ -310,14 +310,14 @@ msgid "Failed to load recurring transactions! Please try again later."
 msgstr "Tải danh sách giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
 #: actions/transaction.actions.ts
-msgctxt "v-aP8j"
-msgid "This transaction has already been created today!"
-msgstr "Giao dịch này đã được tạo hôm nay!"
-
-#: actions/transaction.actions.ts
 msgctxt "pU1r4y"
 msgid "Transaction has been added."
 msgstr "Giao dịch đã được thêm."
+
+#: actions/transaction.actions.ts
+msgctxt "f4KSX1"
+msgid "This transaction already exists!"
+msgstr "Giao dịch này đã tồn tại!"
 
 #: actions/transaction.actions.ts
 msgctxt "zb35o3"
@@ -355,6 +355,7 @@ msgid "Transaction has been deleted."
 msgstr "Giao dịch đã được xóa."
 
 #: actions/transaction.actions.ts
+#: components/transactions/delete-transaction-dialog.tsx
 msgctxt "DcqDur"
 msgid "Failed to delete transaction! Please try again later."
 msgstr "Xóa giao dịch thất bại! Vui lòng thử lại sau."
@@ -1024,6 +1025,19 @@ msgctxt "ZTYUJe"
 msgid "Update Password"
 msgstr "Cập nhật mật khẩu"
 
+#: components/auth/language-selector.tsx
+#: components/settings/language-selector.tsx
+msgctxt "Ax3Nmj"
+msgid "Failed to update language! Please try again later."
+msgstr "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau."
+
+#: components/auth/language-selector.tsx
+#: components/settings/language-selector.tsx
+#: components/settings/settings-page.tsx
+msgctxt "y1Z3or"
+msgid "Language"
+msgstr "Ngôn ngữ"
+
 #: components/auth/signin-form.tsx
 msgctxt "ExP2LI"
 msgid "CAPTCHA verification failed! Please try again later."
@@ -1050,6 +1064,8 @@ msgid "Your account has been banned. Please contact support if you believe this 
 msgstr "Tài khoản của bạn đã bị cấm. Vui lòng liên hệ với bộ phận hỗ trợ nếu bạn cho rằng đây là một sự nhầm lẫn."
 
 #: components/auth/signin-form.tsx
+#: components/settings/change-password-dialog.tsx
+#: components/settings/two-factor-manager-dialog.tsx
 msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "Quá giới hạn tần suất yêu cầu! Vui lòng thử lại sau {seconds} giây."
@@ -1059,6 +1075,21 @@ msgstr "Quá giới hạn tần suất yêu cầu! Vui lòng thử lại sau {se
 msgctxt "FCVHwe"
 msgid "Invalid authentication code!"
 msgstr "Mã xác thực không hợp lệ!"
+
+#: components/auth/two-factor-form.tsx
+msgctxt "HtVpsQ"
+msgid "Too many attempts. Please sign in again."
+msgstr "Quá nhiều lần thử. Vui lòng đăng nhập lại."
+
+#: components/auth/two-factor-form.tsx
+msgctxt "j_5SEQ"
+msgid "Two-factor session has expired. Please sign in again."
+msgstr "Phiên xác thực hai yếu tố đã hết hạn. Vui lòng đăng nhập lại."
+
+#: components/auth/two-factor-form.tsx
+msgctxt "H5i_uh"
+msgid "Your account is temporarily locked due to too many failed attempts. Please try again later."
+msgstr "Tài khoản của bạn tạm thời bị khóa do có quá nhiều lần thử thất bại. Vui lòng thử lại sau."
 
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
@@ -2170,17 +2201,6 @@ msgctxt "d6wGcQ"
 msgid "Failed to update currency! Please try again later."
 msgstr "Cập nhật tiền tệ thất bại! Vui lòng thử lại sau."
 
-#: components/settings/language-selector.tsx
-msgctxt "Ax3Nmj"
-msgid "Failed to update language! Please try again later."
-msgstr "Cập nhật ngôn ngữ thất bại! Vui lòng thử lại sau."
-
-#: components/settings/language-selector.tsx
-#: components/settings/settings-page.tsx
-msgctxt "y1Z3or"
-msgid "Language"
-msgstr "Ngôn ngữ"
-
 #: components/settings/settings-page.tsx
 msgctxt "1iEPTM"
 msgid "General"
@@ -2380,14 +2400,9 @@ msgid "Failed to export data! Please try again later."
 msgstr "Xuất dữ liệu thất bại! Vui lòng thử lại sau."
 
 #: components/transactions/export-button.tsx
-msgctxt "hTOF-7"
-msgid "Export Transactions"
-msgstr "Xuất giao dịch"
-
-#: components/transactions/export-button.tsx
-msgctxt "0S1jq_"
-msgid "Export transactions with current filters applied"
-msgstr "Xuất các giao dịch với các bộ lọc hiện tại được áp dụng"
+msgctxt "GGrENy"
+msgid "Export transactions with current filters applied."
+msgstr "Xuất các giao dịch với các bộ lọc hiện tại được áp dụng."
 
 #: components/transactions/transaction-dialog.tsx
 msgctxt "P5C72A"

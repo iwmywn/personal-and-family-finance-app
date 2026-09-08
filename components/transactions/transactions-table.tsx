@@ -34,6 +34,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
+import { ExportButton } from "@/components/transactions/export-button"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
 import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
@@ -86,7 +87,11 @@ export function TransactionsTable({
                     <TableHead>{t("Type")}</TableHead>
                     <TableHead>{t("Category")}</TableHead>
                     <TableHead>{t("Amount")}</TableHead>
-                    <TableHead></TableHead>
+                    <TableHead>
+                      <ExportButton
+                        filteredTransactions={filteredTransactions}
+                      />
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

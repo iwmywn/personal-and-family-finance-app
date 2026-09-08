@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useExtracted } from "next-intl"
 import { toast } from "sonner"
@@ -30,26 +30,26 @@ export function DeleteUserDialog({
 }) {
   const t = useExtracted()
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isPending, startTransition] = useTransition()
 
-  async function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
 
-    if (isLoading) return
+    startTransition(async () => {
+      try {
+        const { success, error } = await deleteUser(user.id)
 
-    setIsLoading(true)
-
-    const { success, error } = await deleteUser(user.id)
-
-    if (error || !success) {
-      toast.error(error)
-    } else {
-      setOpen(false)
-      toast.success(success)
-      router.refresh()
-    }
-
-    setIsLoading(false)
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
+      } catch {
+        toast.error(t("Failed to delete user! Please try again later."))
+      }
+    })
   }
 
   return (
@@ -71,15 +71,15 @@ export function DeleteUserDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>
+          <AlertDialogCancel disabled={isPending}>
             {t("Cancel")}
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
             onClick={handleDelete}
-            disabled={isLoading}
+            disabled={isPending}
           >
-            {isLoading && <Spinner className="size-4" />}
+            {isPending && <Spinner className="size-4" />}
             {t("Delete")}
           </AlertDialogAction>
         </AlertDialogFooter>

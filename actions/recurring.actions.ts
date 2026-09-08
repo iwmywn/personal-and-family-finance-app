@@ -1,15 +1,12 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import type { Filter } from "mongodb"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getRecurringTransactionsCollection } from "@/lib/collections"
-import type {
-  DBRecurringTransaction,
-  RecurringTransaction,
-} from "@/lib/definitions"
+import type { RecurringTransaction } from "@/lib/definitions"
+import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
@@ -42,26 +39,6 @@ export async function createRecurringTransaction(
 
     const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
-    const query: Filter<DBRecurringTransaction> = {
-      userId: new ObjectId(userId),
-      type: parsedValues.data.type,
-      categoryKey: parsedValues.data.categoryKey,
-      amount: toDecimal128(parsedValues.data.amount),
-      currency: parsedValues.data.currency,
-      description: parsedValues.data.description,
-      frequency: parsedValues.data.frequency,
-      startDate: parsedValues.data.startDate,
-    }
-
-    if (parsedValues.data.frequency === "random") {
-      query.randomEveryXDays = parsedValues.data.randomEveryXDays
-    }
-
-    const existingRecurring = await recurringCollection.findOne(query)
-
-    if (existingRecurring) {
-      return { error: t("This recurring transaction already exists!") }
-    }
 
     await recurringCollection.insertOne({
       userId: new ObjectId(userId),
@@ -74,7 +51,7 @@ export async function createRecurringTransaction(
       randomEveryXDays: parsedValues.data.randomEveryXDays,
       startDate: parsedValues.data.startDate,
       endDate: parsedValues.data.endDate,
-      lastGenerated: undefined,
+      lastGeneratedDate: undefined,
       isActive: parsedValues.data.isActive,
     })
 
@@ -84,6 +61,9 @@ export async function createRecurringTransaction(
       error: undefined,
     }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This recurring transaction already exists!") }
+    }
     console.error("Error creating recurring transaction:", error)
     return {
       error: t("Failed to add recurring transaction! Please try again later."),
@@ -124,20 +104,7 @@ export async function updateRecurringTransaction(
 
     const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
-    const existingRecurring = await recurringCollection.findOne({
-      _id: new ObjectId(recurringId),
-      userId: new ObjectId(userId),
-    })
-
-    if (!existingRecurring) {
-      return {
-        error: t(
-          "Recurring transaction not found or you don't have permission to edit."
-        ),
-      }
-    }
-
-    await recurringCollection.updateOne(
+    const result = await recurringCollection.updateOne(
       { _id: new ObjectId(recurringId), userId: new ObjectId(userId) },
       {
         $set: {
@@ -155,12 +122,23 @@ export async function updateRecurringTransaction(
       }
     )
 
+    if (result.matchedCount === 0) {
+      return {
+        error: t(
+          "Recurring transaction not found or you don't have permission to edit."
+        ),
+      }
+    }
+
     updateTag(`recurringTransactions-${userId}`)
     return {
       success: t("Recurring transaction has been updated."),
       error: undefined,
     }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This recurring transaction already exists!") }
+    }
     console.error("Error updating recurring transaction:", error)
     return {
       error: t(
@@ -193,23 +171,18 @@ export async function deleteRecurringTransaction(recurringId: string): Promise<{
 
     const userId = session.user.id
     const recurringCollection = await getRecurringTransactionsCollection()
-    const existingRecurring = await recurringCollection.findOne({
+    const result = await recurringCollection.deleteOne({
       _id: new ObjectId(recurringId),
       userId: new ObjectId(userId),
     })
 
-    if (!existingRecurring) {
+    if (result.deletedCount === 0) {
       return {
         error: t(
           "Recurring transaction not found or you don't have permission to delete!"
         ),
       }
     }
-
-    await recurringCollection.deleteOne({
-      _id: new ObjectId(recurringId),
-      userId: new ObjectId(userId),
-    })
 
     updateTag(`recurringTransactions-${userId}`)
     return { success: t("Recurring transaction has been deleted.") }

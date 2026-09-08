@@ -53,9 +53,7 @@ describe("Transactions", async () => {
       expect(firstResult.success).toBe("Transaction has been added.")
       expect(firstResult.error).toBeUndefined()
       expect(duplicateResult.success).toBeUndefined()
-      expect(duplicateResult.error).toBe(
-        "This transaction has already been created today!"
-      )
+      expect(duplicateResult.error).toBe("This transaction already exists!")
     })
 
     it("should successfully create transaction", async () => {
@@ -88,6 +86,26 @@ describe("Transactions", async () => {
       expect(result.error).toBe(
         "Failed to add transaction! Please try again later."
       )
+    })
+
+    it("should prevent race condition when creating duplicate transactions concurrently", async () => {
+      mockAuthenticatedUser()
+
+      const [firstResult, secondResult] = await Promise.all([
+        createTransaction(mockValidTransactionValues),
+        createTransaction(mockValidTransactionValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Transaction has been added."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This transaction already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
     })
   })
 
@@ -170,6 +188,7 @@ describe("Transactions", async () => {
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          description: "pizza",
         }),
       ])
       mockAuthenticatedUser()
@@ -200,9 +219,74 @@ describe("Transactions", async () => {
       expect(unrelatedTransaction?.type).toBe("outflow")
       expect(unrelatedTransaction?.categoryKey).toBe("food_beverage")
       expect(unrelatedTransaction?.amount.toString()).toBe("50000")
-      expect(unrelatedTransaction?.description).toBe("hamburger")
+      expect(unrelatedTransaction?.description).toBe("pizza")
       expect(result.success).toBe("Transaction has been updated.")
       expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when updating transaction causes duplicate key collision", async () => {
+      await Promise.all([
+        insertTestTransaction(mockTransaction),
+        insertTestTransaction({
+          ...mockTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          description: "pizza",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await updateTransaction("690d2e5f7d5c36bf6c82ff1f", {
+        type: mockTransaction.type,
+        categoryKey: mockTransaction.categoryKey,
+        amount: mockTransaction.amount.toString(),
+        currency: mockTransaction.currency,
+        description: mockTransaction.description,
+        date: mockTransaction.date,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("This transaction already exists!")
+    })
+
+    it("should prevent race condition when updating duplicate transactions concurrently", async () => {
+      await Promise.all([
+        insertTestTransaction({
+          ...mockTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1e"),
+          description: "pizza 1",
+        }),
+        insertTestTransaction({
+          ...mockTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          description: "pizza 2",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const targetValues = {
+        type: mockTransaction.type,
+        categoryKey: mockTransaction.categoryKey,
+        amount: mockTransaction.amount.toString(),
+        currency: mockTransaction.currency,
+        description: "target pizza",
+        date: mockTransaction.date,
+      }
+
+      const [firstResult, secondResult] = await Promise.all([
+        updateTransaction("690d2e5f7d5c36bf6c82ff1e", targetValues),
+        updateTransaction("690d2e5f7d5c36bf6c82ff1f", targetValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Transaction has been updated."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This transaction already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
     })
 
     it("should return error when database operation throws error", async () => {
@@ -335,16 +419,19 @@ describe("Transactions", async () => {
       const transaction1 = {
         ...mockTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8106"),
+        description: "hamburger 1",
         date: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const transaction2 = {
         ...mockTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8107"),
+        description: "hamburger 2",
         date: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const transaction3 = {
         ...mockTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8108"),
+        description: "hamburger 3",
         date: localDateToUTCMidnight(new Date("2024-02-15")),
       }
 

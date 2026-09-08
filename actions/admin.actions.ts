@@ -14,6 +14,7 @@ import {
   getTransactionsCollection,
   getUsersCollection,
 } from "@/lib/collections"
+import { withTransaction } from "@/lib/db"
 import type { User } from "@/lib/definitions"
 import { ADMIN_ROLES, isAdminRole, isSuperAdminRole } from "@/lib/role"
 
@@ -159,13 +160,28 @@ export async function deleteUser(userId: string): Promise<{
       getRecurringTransactionsCollection(),
     ])
 
-    await Promise.all([
-      transactionsCollection.deleteMany({ userId: userObjectId }),
-      categoriesCollection.deleteMany({ userId: userObjectId }),
-      budgetsCollection.deleteMany({ userId: userObjectId }),
-      goalsCollection.deleteMany({ userId: userObjectId }),
-      recurringCollection.deleteMany({ userId: userObjectId }),
-    ])
+    await withTransaction(async (dbSession) => {
+      await transactionsCollection.deleteMany(
+        { userId: userObjectId },
+        { session: dbSession }
+      )
+      await categoriesCollection.deleteMany(
+        { userId: userObjectId },
+        { session: dbSession }
+      )
+      await budgetsCollection.deleteMany(
+        { userId: userObjectId },
+        { session: dbSession }
+      )
+      await goalsCollection.deleteMany(
+        { userId: userObjectId },
+        { session: dbSession }
+      )
+      await recurringCollection.deleteMany(
+        { userId: userObjectId },
+        { session: dbSession }
+      )
+    })
 
     await auth.api.removeUser({
       headers: await headers(),

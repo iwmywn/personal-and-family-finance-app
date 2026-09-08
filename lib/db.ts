@@ -1,7 +1,14 @@
 import { MongoClient } from "mongodb"
-import type { Collection, Db, MongoClientOptions, OptionalId } from "mongodb"
+import type {
+  ClientSession,
+  Collection,
+  Db,
+  MongoClientOptions,
+  OptionalId,
+} from "mongodb"
 
 import { serverEnv } from "@/env/server"
+import { initIndexes, resetIndexes } from "@/lib/indexes"
 
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined
@@ -30,6 +37,8 @@ export async function connect(): Promise<Db> {
   db = client.db(serverEnv.DB_NAME)
   globalThis._mongoClient = client
 
+  await initIndexes(db)
+
   return db
 }
 
@@ -39,6 +48,7 @@ export async function disconnect(): Promise<void> {
     globalThis._mongoClientPromise = undefined
     globalThis._mongoClient = undefined
     db = undefined
+    resetIndexes()
   }
 }
 
@@ -47,4 +57,17 @@ export async function collection<T>(
 ): Promise<Collection<OptionalId<T>>> {
   const db = await connect()
   return db.collection<OptionalId<T>>(collectionName)
+}
+
+export async function withTransaction<T>(
+  callback: (session: ClientSession) => Promise<T>
+): Promise<T> {
+  const client = await getClientPromise()
+  const session = client.startSession()
+
+  try {
+    return await session.withTransaction(() => callback(session))
+  } finally {
+    await session.endSession()
+  }
 }

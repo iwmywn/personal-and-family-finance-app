@@ -174,7 +174,7 @@ export function StatisticsFilters() {
                       autoFocus
                       mode="single"
                       selected={dateRange.from}
-                      defaultMonth={dateRange.from || new Date()}
+                      defaultMonth={dateRange.from}
                       captionLayout="dropdown"
                       onSelect={(date) => {
                         setDateRange((prev) => ({
@@ -193,7 +193,7 @@ export function StatisticsFilters() {
                       autoFocus
                       mode="single"
                       selected={dateRange.to}
-                      defaultMonth={dateRange.to || new Date()}
+                      defaultMonth={dateRange.to}
                       captionLayout="dropdown"
                       onSelect={(date) => {
                         if (date && dateRange.from && date >= dateRange.from) {

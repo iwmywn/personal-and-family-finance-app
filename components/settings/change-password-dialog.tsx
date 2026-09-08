@@ -31,6 +31,7 @@ import {
 import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
+import type { AuthErrorCode } from "@/lib/definitions"
 import type { PasswordFormValues } from "@/schemas/types"
 
 export function ChangePasswordDialog() {
@@ -55,10 +56,24 @@ export function ChangePasswordDialog() {
       revokeOtherSessions: values.revokeOtherSessions,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.code === "INVALID_PASSWORD")
-            toast.error(t("Current password is incorrect!"))
-          else
-            toast.error(t("Failed to update password! Please try again later."))
+          switch (ctx.error.code as AuthErrorCode) {
+            case "INVALID_PASSWORD":
+              toast.error(t("Current password is incorrect!"))
+              break
+            default:
+              if (ctx.response.status === 429) {
+                toast.error(
+                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
+                  })
+                )
+              } else {
+                toast.error(
+                  t("Failed to update password! Please try again later.")
+                )
+              }
+              break
+          }
         },
         onSuccess: () => {
           setIsOpen(false)

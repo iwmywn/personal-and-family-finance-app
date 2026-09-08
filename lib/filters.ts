@@ -227,31 +227,27 @@ export function filterBudgets(
       transactions
     )
 
-    filteredBudgets = budgetsWithStats
-      .filter((budget) => {
-        const matchesStatus =
-          filterStatus === "all" || budget.status === filterStatus
+    filteredBudgets = budgetsWithStats.filter((budget) => {
+      const matchesStatus =
+        filterStatus === "all" || budget.status === filterStatus
 
-        let matchesProgress = true
-        if (filterProgress === "gray") {
-          matchesProgress =
-            budget.progressColorClass === progressColorClass.gray
-        }
-        if (filterProgress === "green") {
-          matchesProgress =
-            budget.progressColorClass === progressColorClass.green
-        }
-        if (filterProgress === "yellow") {
-          matchesProgress =
-            budget.progressColorClass === progressColorClass.yellow
-        }
-        if (filterProgress === "red") {
-          matchesProgress = budget.progressColorClass === progressColorClass.red
-        }
+      let matchesProgress = true
+      if (filterProgress === "gray") {
+        matchesProgress = budget.progressColorClass === progressColorClass.gray
+      }
+      if (filterProgress === "green") {
+        matchesProgress = budget.progressColorClass === progressColorClass.green
+      }
+      if (filterProgress === "yellow") {
+        matchesProgress =
+          budget.progressColorClass === progressColorClass.yellow
+      }
+      if (filterProgress === "red") {
+        matchesProgress = budget.progressColorClass === progressColorClass.red
+      }
 
-        return matchesStatus && matchesProgress
-      })
-      .map((budget) => budget)
+      return matchesStatus && matchesProgress
+    })
   }
 
   return filteredBudgets
@@ -300,26 +296,23 @@ export function filterGoals(
   if (filterStatus !== "all" || filterProgress !== "all") {
     const goalsWithStats = calculateGoalsStats(filteredGoals, transactions)
 
-    filteredGoals = goalsWithStats
-      .filter((goal) => {
-        const matchesStatus =
-          filterStatus === "all" || goal.status === filterStatus
+    filteredGoals = goalsWithStats.filter((goal) => {
+      const matchesStatus =
+        filterStatus === "all" || goal.status === filterStatus
 
-        let matchesProgress = true
-        if (filterProgress === "gray") {
-          matchesProgress = goal.progressColorClass === progressColorClass.gray
-        } else if (filterProgress === "green") {
-          matchesProgress = goal.progressColorClass === progressColorClass.green
-        } else if (filterProgress === "yellow") {
-          matchesProgress =
-            goal.progressColorClass === progressColorClass.yellow
-        } else if (filterProgress === "red") {
-          matchesProgress = goal.progressColorClass === progressColorClass.red
-        }
+      let matchesProgress = true
+      if (filterProgress === "gray") {
+        matchesProgress = goal.progressColorClass === progressColorClass.gray
+      } else if (filterProgress === "green") {
+        matchesProgress = goal.progressColorClass === progressColorClass.green
+      } else if (filterProgress === "yellow") {
+        matchesProgress = goal.progressColorClass === progressColorClass.yellow
+      } else if (filterProgress === "red") {
+        matchesProgress = goal.progressColorClass === progressColorClass.red
+      }
 
-        return matchesStatus && matchesProgress
-      })
-      .map((goal) => goal)
+      return matchesStatus && matchesProgress
+    })
   }
 
   return filteredGoals

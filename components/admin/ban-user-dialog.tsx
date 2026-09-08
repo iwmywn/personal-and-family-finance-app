@@ -35,6 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
+import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
 import type { User } from "@/lib/definitions"
@@ -49,6 +50,7 @@ interface BanUserDialogProps {
 export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
   const t = useExtracted()
   const router = useRouter()
+  const formatDate = useFormatDate()
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const isBanned = Boolean(user.banned)
   const { createAdminBanSchema } = useSchemas()
@@ -63,21 +65,27 @@ export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
   async function handleUnban() {
     setIsSubmitting(true)
 
-    await authClient.admin.unbanUser({
-      userId: user.id,
-      fetchOptions: {
-        onError: () => {
-          toast.error(t("Failed to update ban status! Please try again later."))
+    try {
+      await authClient.admin.unbanUser({
+        userId: user.id,
+        fetchOptions: {
+          onError: () => {
+            toast.error(
+              t("Failed to update ban status! Please try again later.")
+            )
+          },
+          onSuccess: () => {
+            router.refresh()
+            toast.success(t("User has been unbanned."))
+            setOpen(false)
+          },
         },
-        onSuccess: () => {
-          router.refresh()
-          toast.success(t("User has been unbanned."))
-          setOpen(false)
-        },
-      },
-    })
-
-    setIsSubmitting(false)
+      })
+      setIsSubmitting(false)
+    } catch {
+      setIsSubmitting(false)
+      toast.error(t("Failed to update ban status! Please try again later."))
+    }
   }
 
   async function onSubmit(values: AdminBanFormValues) {
@@ -86,24 +94,28 @@ export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
 
     setIsSubmitting(true)
 
-    await authClient.admin.banUser({
-      userId: user.id,
-      banReason: values.banReason?.trim() || undefined,
-      banExpiresIn: expiresInSeconds,
-      fetchOptions: {
-        onError: () => {
-          toast.error(t("Failed to ban user! Please try again later."))
+    try {
+      await authClient.admin.banUser({
+        userId: user.id,
+        banReason: values.banReason?.trim() || undefined,
+        banExpiresIn: expiresInSeconds,
+        fetchOptions: {
+          onError: () => {
+            toast.error(t("Failed to ban user! Please try again later."))
+          },
+          onSuccess: () => {
+            setOpen(false)
+            toast.success(t("User has been banned."))
+            router.refresh()
+            form.reset()
+          },
         },
-        onSuccess: () => {
-          setOpen(false)
-          toast.success(t("User has been banned."))
-          router.refresh()
-          form.reset()
-        },
-      },
-    })
-
-    setIsSubmitting(false)
+      })
+      setIsSubmitting(false)
+    } catch {
+      setIsSubmitting(false)
+      toast.error(t("Failed to ban user! Please try again later."))
+    }
   }
 
   return (
@@ -135,7 +147,7 @@ export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
                 <p className="text-muted-foreground mt-1">
                   {t("Expires on")}:{" "}
                   <strong className="text-foreground">
-                    {new Date(user.banExpires).toLocaleString()}
+                    {formatDate(user.banExpires)}
                   </strong>
                 </p>
               )}

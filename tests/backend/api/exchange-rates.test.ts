@@ -4,10 +4,11 @@ import { insertTestExchangeRate } from "@/tests/backend/helpers/database"
 import { mockExchangeRates } from "@/tests/shared/data"
 import { GET } from "@/app/api/(cronjobs)/exchange-rates/route"
 import { normalizeToUTCMidnight } from "@/app/api/(cronjobs)/exchange-rates/utils"
+import { clientEnv } from "@/env/client"
 import { getExchangeRatesCollection } from "@/lib/collections"
 
 const cronSecret = "test-cron-secret"
-const cronEndpoint = "http://localhost/api/exchange-rates"
+const cronEndpoint = `${clientEnv.NEXT_PUBLIC_URL}/api/exchange-rates`
 
 const mockCurrencyAPIResponse = [
   {

@@ -1,19 +1,19 @@
-import type { AppLocale } from "@/i18n/config"
+import type { Locale } from "@/i18n/config"
 
 export const CURRENCIES = ["USD", "CNY", "JPY", "KRW", "VND"] as const
 
-export type AppCurrency = (typeof CURRENCIES)[number]
+export type Currency = (typeof CURRENCIES)[number]
 
-export const DEFAULT_CURRENCY: AppCurrency = "VND"
+export const DEFAULT_CURRENCY: Currency = "VND"
 
-type CurrencyConfigType = {
-  [K in AppCurrency]: {
+type CurrencyConfig = {
+  [K in Currency]: {
     displayName: string
-    locale: AppLocale
+    locale: Locale
   }
 }
 
-export const CURRENCY_CONFIG: CurrencyConfigType = {
+export const CURRENCY_CONFIG: CurrencyConfig = {
   USD: {
     displayName: "US Dollar ($)",
     locale: "en-US",

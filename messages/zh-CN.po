@@ -42,6 +42,7 @@ msgid "User has been deleted."
 msgstr "用户已删除。"
 
 #: actions/admin.actions.ts
+#: components/admin/delete-user-dialog.tsx
 msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "删除用户失败！请稍后再试。"
@@ -65,14 +66,14 @@ msgid "Access denied! Please refresh the page and try again."
 msgstr "访问被拒绝！请刷新页面并重试。"
 
 #: actions/budget.actions.ts
-msgctxt "kwvIdb"
-msgid "This budget already exists!"
-msgstr "此预算已存在！"
-
-#: actions/budget.actions.ts
 msgctxt "hcutYI"
 msgid "Budget has been added."
 msgstr "预算已添加。"
+
+#: actions/budget.actions.ts
+msgctxt "kwvIdb"
+msgid "This budget already exists!"
+msgstr "此预算已存在！"
 
 #: actions/budget.actions.ts
 msgctxt "ge_1ga"
@@ -110,6 +111,7 @@ msgid "Budget has been deleted."
 msgstr "预算已删除。"
 
 #: actions/budget.actions.ts
+#: components/budgets/delete-budget-dialog.tsx
 msgctxt "niO8qC"
 msgid "Failed to delete budget! Please try again later."
 msgstr "删除预算失败！请稍后再试。"
@@ -120,19 +122,14 @@ msgid "Failed to load budgets! Please try again later."
 msgstr "加载预算失败！请稍后再试。"
 
 #: actions/category.actions.ts
-msgctxt "LzesyV"
-msgid "This category already exists!"
-msgstr "此分类已存在！"
-
-#: actions/category.actions.ts
-msgctxt "G0Twr1"
-msgid "Error creating category key! Please try again later."
-msgstr "创建分类键时出错！请稍后再试。"
-
-#: actions/category.actions.ts
 msgctxt "Jfen4M"
 msgid "Category has been added."
 msgstr "分类已添加。"
+
+#: actions/category.actions.ts
+msgctxt "LzesyV"
+msgid "This category already exists!"
+msgstr "此分类已存在！"
 
 #: actions/category.actions.ts
 msgctxt "OQ79b6"
@@ -190,6 +187,7 @@ msgid "Category has been deleted."
 msgstr "分类已删除。"
 
 #: actions/category.actions.ts
+#: components/categories/delete-category-dialog.tsx
 msgctxt "XWfgXI"
 msgid "Failed to delete category! Please try again later."
 msgstr "删除分类失败！请稍后再试。"
@@ -200,14 +198,14 @@ msgid "Failed to load custom categories! Please try again later."
 msgstr "加载自定义分类失败！请稍后再试。"
 
 #: actions/goal.actions.ts
-msgctxt "3SCa_T"
-msgid "This goal already exists!"
-msgstr "此目标已存在！"
-
-#: actions/goal.actions.ts
 msgctxt "J-nrjG"
 msgid "Goal has been added."
 msgstr "目标已添加。"
+
+#: actions/goal.actions.ts
+msgctxt "3SCa_T"
+msgid "This goal already exists!"
+msgstr "此目标已存在！"
 
 #: actions/goal.actions.ts
 msgctxt "9Buhj_"
@@ -245,6 +243,7 @@ msgid "Goal has been deleted."
 msgstr "目标已删除。"
 
 #: actions/goal.actions.ts
+#: components/goals/delete-goal-dialog.tsx
 msgctxt "uwewg6"
 msgid "Failed to delete goal! Please try again later."
 msgstr "删除目标失败！请稍后再试。"
@@ -255,14 +254,14 @@ msgid "Failed to load goals! Please try again later."
 msgstr "加载目标失败！请稍后再试。"
 
 #: actions/recurring.actions.ts
-msgctxt "-HBMWc"
-msgid "This recurring transaction already exists!"
-msgstr "此定期交易已存在！"
-
-#: actions/recurring.actions.ts
 msgctxt "5Mtoe5"
 msgid "Recurring transaction has been added."
 msgstr "定期交易已添加。"
+
+#: actions/recurring.actions.ts
+msgctxt "-HBMWc"
+msgid "This recurring transaction already exists!"
+msgstr "此定期交易已存在！"
 
 #: actions/recurring.actions.ts
 msgctxt "FLPmpu"
@@ -300,6 +299,7 @@ msgid "Recurring transaction has been deleted."
 msgstr "定期交易已删除。"
 
 #: actions/recurring.actions.ts
+#: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
 msgctxt "9p5fYg"
 msgid "Failed to delete recurring transaction! Please try again later."
 msgstr "删除定期交易失败！请稍后再试。"
@@ -310,14 +310,14 @@ msgid "Failed to load recurring transactions! Please try again later."
 msgstr "加载定期交易失败！请稍后再试。"
 
 #: actions/transaction.actions.ts
-msgctxt "v-aP8j"
-msgid "This transaction has already been created today!"
-msgstr "今天已创建此交易！"
-
-#: actions/transaction.actions.ts
 msgctxt "pU1r4y"
 msgid "Transaction has been added."
 msgstr "交易已添加。"
+
+#: actions/transaction.actions.ts
+msgctxt "f4KSX1"
+msgid "This transaction already exists!"
+msgstr "该交易已存在！"
 
 #: actions/transaction.actions.ts
 msgctxt "zb35o3"
@@ -355,6 +355,7 @@ msgid "Transaction has been deleted."
 msgstr "交易已删除。"
 
 #: actions/transaction.actions.ts
+#: components/transactions/delete-transaction-dialog.tsx
 msgctxt "DcqDur"
 msgid "Failed to delete transaction! Please try again later."
 msgstr "删除交易失败！请稍后再试。"
@@ -1024,6 +1025,19 @@ msgctxt "ZTYUJe"
 msgid "Update Password"
 msgstr "更新密码"
 
+#: components/auth/language-selector.tsx
+#: components/settings/language-selector.tsx
+msgctxt "Ax3Nmj"
+msgid "Failed to update language! Please try again later."
+msgstr "更新语言失败！请稍后再试。"
+
+#: components/auth/language-selector.tsx
+#: components/settings/language-selector.tsx
+#: components/settings/settings-page.tsx
+msgctxt "y1Z3or"
+msgid "Language"
+msgstr "语言"
+
 #: components/auth/signin-form.tsx
 msgctxt "ExP2LI"
 msgid "CAPTCHA verification failed! Please try again later."
@@ -1050,6 +1064,8 @@ msgid "Your account has been banned. Please contact support if you believe this 
 msgstr "您的账户已被封禁。如果您认为这是一个错误，请联系支持团队。"
 
 #: components/auth/signin-form.tsx
+#: components/settings/change-password-dialog.tsx
+#: components/settings/two-factor-manager-dialog.tsx
 msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
@@ -1059,6 +1075,21 @@ msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
 msgctxt "FCVHwe"
 msgid "Invalid authentication code!"
 msgstr "身份验证码无效！"
+
+#: components/auth/two-factor-form.tsx
+msgctxt "HtVpsQ"
+msgid "Too many attempts. Please sign in again."
+msgstr "尝试次数过多。请重新登录。"
+
+#: components/auth/two-factor-form.tsx
+msgctxt "j_5SEQ"
+msgid "Two-factor session has expired. Please sign in again."
+msgstr "双重身份验证会话已过期。请重新登录。"
+
+#: components/auth/two-factor-form.tsx
+msgctxt "H5i_uh"
+msgid "Your account is temporarily locked due to too many failed attempts. Please try again later."
+msgstr "由于尝试失败次数过多，您的账户已被暂时锁定。请稍后再试。"
 
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
@@ -2170,17 +2201,6 @@ msgctxt "d6wGcQ"
 msgid "Failed to update currency! Please try again later."
 msgstr "更新货币失败！请稍后再试。"
 
-#: components/settings/language-selector.tsx
-msgctxt "Ax3Nmj"
-msgid "Failed to update language! Please try again later."
-msgstr "更新语言失败！请稍后再试。"
-
-#: components/settings/language-selector.tsx
-#: components/settings/settings-page.tsx
-msgctxt "y1Z3or"
-msgid "Language"
-msgstr "语言"
-
 #: components/settings/settings-page.tsx
 msgctxt "1iEPTM"
 msgid "General"
@@ -2380,14 +2400,9 @@ msgid "Failed to export data! Please try again later."
 msgstr "导出数据失败！请稍后再试。"
 
 #: components/transactions/export-button.tsx
-msgctxt "hTOF-7"
-msgid "Export Transactions"
-msgstr "导出交易"
-
-#: components/transactions/export-button.tsx
-msgctxt "0S1jq_"
-msgid "Export transactions with current filters applied"
-msgstr "导出应用当前筛选条件的交易"
+msgctxt "GGrENy"
+msgid "Export transactions with current filters applied."
+msgstr "导出应用当前筛选条件的交易。"
 
 #: components/transactions/transaction-dialog.tsx
 msgctxt "P5C72A"

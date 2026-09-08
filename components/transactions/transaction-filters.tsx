@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 import { parseAsString, useQueryState } from "nuqs"
@@ -34,18 +34,11 @@ import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
-import type { Transaction } from "@/lib/definitions"
 import { filterTransactions } from "@/lib/filters"
 import { parseAsLocalDate } from "@/lib/parsers"
 import { getUniqueYears } from "@/lib/utils"
 
-interface TransactionFiltersProps {
-  onFilteredTransactionsChange: (transactions: Transaction[]) => void
-}
-
-export function TransactionFilters({
-  onFilteredTransactionsChange,
-}: TransactionFiltersProps) {
+export function TransactionFilters() {
   const { transactions } = useTransactions()
   const t = useExtracted()
   const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false)
@@ -176,10 +169,6 @@ export function TransactionFilters({
     filterCategoryKey,
   })
 
-  useEffect(() => {
-    onFilteredTransactionsChange(filteredTransactions)
-  }, [onFilteredTransactionsChange, filteredTransactions])
-
   return (
     <>
       <Card>
@@ -271,7 +260,7 @@ export function TransactionFilters({
                       autoFocus
                       mode="single"
                       selected={dateRange.from}
-                      defaultMonth={dateRange.from || new Date()}
+                      defaultMonth={dateRange.from}
                       captionLayout="dropdown"
                       onSelect={(date) => {
                         setDateRange({
@@ -290,7 +279,7 @@ export function TransactionFilters({
                       autoFocus
                       mode="single"
                       selected={dateRange.to}
-                      defaultMonth={dateRange.to || new Date()}
+                      defaultMonth={dateRange.to}
                       captionLayout="dropdown"
                       onSelect={(date) => {
                         if (date && dateRange.from && date >= dateRange.from) {

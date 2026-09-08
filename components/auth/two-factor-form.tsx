@@ -1,11 +1,13 @@
 "use client"
 
+import type { Route } from "next"
 import { useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { signInRoute } from "@/routes"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
@@ -19,9 +21,10 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useSchemas } from "@/hooks/use-schemas"
-import type { AppLocale } from "@/i18n/config"
+import type { Locale } from "@/i18n/config"
 import { setUserLocale } from "@/i18n/locale"
 import { authClient } from "@/lib/auth-client"
+import type { AuthErrorCode } from "@/lib/definitions"
 import { getSafeCallbackUrl } from "@/lib/utils"
 import type { TwoFactorCodeFormValues } from "@/schemas/types"
 
@@ -41,10 +44,41 @@ export function TwoFactorVerificationForm() {
       trustDevice: values.trustDevice,
       fetchOptions: {
         onError: (ctx) => {
-          if (ctx.error.code === "INVALID_CODE") {
-            toast.error(t("Invalid authentication code!"))
-          } else {
-            toast.error(t("Failed to verify 2FA code! Please try again later."))
+          const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
+          const signInUrl: Route = searchParams.has("next")
+            ? `${signInRoute}?${new URLSearchParams({ next: callbackUrl }).toString()}`
+            : signInRoute
+
+          switch (ctx.error.code as AuthErrorCode) {
+            case "INVALID_CODE":
+              toast.error(t("Invalid authentication code!"))
+              break
+            case "TOO_MANY_ATTEMPTS_REQUEST_NEW_CODE":
+              toast.error(t("Too many attempts. Please sign in again."))
+              router.replace(signInUrl)
+              form.reset()
+              break
+            case "INVALID_TWO_FACTOR_COOKIE":
+              toast.error(
+                t("Two-factor session has expired. Please sign in again.")
+              )
+              router.replace(signInUrl)
+              form.reset()
+              break
+            case "ACCOUNT_TEMPORARILY_LOCKED":
+              toast.error(
+                t(
+                  "Your account is temporarily locked due to too many failed attempts. Please try again later."
+                )
+              )
+              router.replace(signInUrl)
+              form.reset()
+              break
+            default:
+              toast.error(
+                t("Failed to verify 2FA code! Please try again later.")
+              )
+              break
           }
         },
         onSuccess: async () => {
@@ -57,7 +91,7 @@ export function TwoFactorVerificationForm() {
           await authClient.getSession({
             fetchOptions: {
               onSuccess: async (ctx) => {
-                await setUserLocale(ctx.data.user.locale as AppLocale)
+                await setUserLocale(ctx.data.user.locale as Locale)
               },
             },
           })

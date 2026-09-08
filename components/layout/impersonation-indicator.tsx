@@ -30,7 +30,7 @@ export function ImpersonationIndicator() {
   const router = useRouter()
   const userContext = useUser()
 
-  if (!userContext.currentSession.impersonatedBy) {
+  if (!userContext.session.impersonatedBy) {
     return null
   }
 
@@ -56,6 +56,7 @@ export function ImpersonationIndicator() {
             <Button
               size="icon"
               variant="ghost"
+              aria-label={t("Impersonating") + " " + user.name}
               className="relative size-8 cursor-pointer text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
             >
               <ShieldAlertIcon className="size-4" />

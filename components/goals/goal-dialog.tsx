@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { cn } from "cn"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
@@ -48,9 +49,9 @@ import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
-import type { AppCurrency } from "@/lib/currency"
+import type { Currency } from "@/lib/currency"
 import type { Goal } from "@/lib/definitions"
-import { cn, localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 import type { GoalFormValues } from "@/schemas/types"
 
 interface GoalDialogProps {
@@ -72,7 +73,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
     defaultValues: {
       categoryKey: goal?.categoryKey || "",
       name: goal?.name || "",
-      currency: goal?.currency ?? (user.currency as AppCurrency),
+      currency: goal?.currency ?? (user.currency as Currency),
       targetAmount: goal?.targetAmount ?? "",
       startDate: goal?.startDate ? new Date(goal.startDate) : undefined,
       endDate: goal?.endDate ? new Date(goal.endDate) : undefined,
@@ -251,10 +252,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                           field.onChange(date)
                           setStartCalendarOpen(false)
                         }}
-                        disabled={(date) =>
-                          (endDate && date > endDate) ||
-                          date < new Date(2025, 8, 1)
-                        }
+                        disabled={(date) => endDate && date > endDate}
                       />
                     </PopoverContent>
                   </Popover>
@@ -304,10 +302,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
                           field.onChange(date)
                           setEndCalendarOpen(false)
                         }}
-                        disabled={(date) =>
-                          (startDate && date <= startDate) ||
-                          date < new Date(2025, 8, 1)
-                        }
+                        disabled={(date) => startDate && date <= startDate}
                       />
                     </PopoverContent>
                   </Popover>

@@ -1,22 +1,15 @@
 import type { Route } from "next"
-import { DEFAULT_SIGNIN_REDIRECT } from "@/routes"
-import { clsx } from "clsx"
-import type { ClassValue } from "clsx"
 import Decimal from "decimal.js"
-import { twMerge } from "tailwind-merge"
 
-import type { AppLocale } from "@/i18n/config"
-import type { AppCurrency } from "@/lib/currency"
+import { DEFAULT_SIGNIN_REDIRECT } from "@/routes"
+import type { Locale } from "@/i18n/config"
+import type { Currency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
 
 export function formatCurrency(
   amount: string,
-  locale: AppLocale,
-  currency: AppCurrency
+  locale: Locale,
+  currency: Currency
 ): string {
   return new Intl.NumberFormat(locale, {
     style: "currency",
@@ -24,7 +17,7 @@ export function formatCurrency(
   }).format(parseFloat(amount))
 }
 
-export function formatDate(date: Date, locale: AppLocale): string {
+export function formatDate(date: Date, locale: Locale): string {
   return new Intl.DateTimeFormat(locale, {
     weekday: "short",
     day: "2-digit",
@@ -56,9 +49,9 @@ export function toDecimal(value: string): Decimal {
 
 export function convertAmountWithRates(
   amount: Decimal | string | number,
-  from: AppCurrency,
-  to: AppCurrency,
-  rates?: Record<AppCurrency, Decimal | string | number>
+  from: Currency,
+  to: Currency,
+  rates?: Record<Currency, Decimal | string | number>
 ): Decimal {
   const decAmount = new Decimal(amount)
   if (from === to || !rates) return decAmount
@@ -74,7 +67,7 @@ export function convertAmountWithRates(
 
 export function getSafeCallbackUrl(
   url: string | null | undefined,
-  fallback: Route = DEFAULT_SIGNIN_REDIRECT as Route
+  fallback: Route = DEFAULT_SIGNIN_REDIRECT
 ): Route {
   if (!url) return fallback
 

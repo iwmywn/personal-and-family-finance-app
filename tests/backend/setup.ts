@@ -2,14 +2,14 @@ import "@/tests/shared/mocks/translations.mock"
 import "@/tests/backend/mocks/env.mock"
 import "@/tests/backend/mocks/cache.mock"
 
-import { MongoMemoryServer } from "mongodb-memory-server"
+import { MongoMemoryReplSet } from "mongodb-memory-server"
 
 import { connect, disconnect } from "@/lib/db"
 
-let mongoServer: MongoMemoryServer
+let mongoServer: MongoMemoryReplSet
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create()
+  mongoServer = await MongoMemoryReplSet.create()
   const mongoUri = mongoServer.getUri()
 
   process.env.DB_URI = mongoUri

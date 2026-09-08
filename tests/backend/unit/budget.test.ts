@@ -88,6 +88,26 @@ describe("Budgets", async () => {
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Failed to add budget! Please try again later.")
     })
+
+    it("should prevent race condition when creating duplicate budgets concurrently", async () => {
+      mockAuthenticatedUser()
+
+      const [firstResult, secondResult] = await Promise.all([
+        createBudget(mockValidBudgetValues),
+        createBudget(mockValidBudgetValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Budget has been added."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This budget already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
+    })
   })
 
   describe("updateBudget", () => {
@@ -165,6 +185,7 @@ describe("Budgets", async () => {
         insertTestBudget({
           ...mockBudget,
           _id: new ObjectId("690ec0c23f50e19549bd7e52"),
+          currency: "USD",
         }),
       ])
       mockAuthenticatedUser()
@@ -202,6 +223,69 @@ describe("Budgets", async () => {
       )
       expect(result.success).toBe("Budget has been updated.")
       expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when updating budget causes duplicate key collision", async () => {
+      await Promise.all([
+        insertTestBudget(mockBudget),
+        insertTestBudget({
+          ...mockBudget,
+          _id: new ObjectId("690ec0c23f50e19549bd7e52"),
+          currency: "USD",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await updateBudget("690ec0c23f50e19549bd7e52", {
+        categoryKey: mockBudget.categoryKey,
+        currency: "VND",
+        allocatedAmount: mockBudget.allocatedAmount.toString(),
+        startDate: mockBudget.startDate,
+        endDate: mockBudget.endDate,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("This budget already exists!")
+    })
+
+    it("should prevent race condition when updating duplicate budgets concurrently", async () => {
+      await Promise.all([
+        insertTestBudget({
+          ...mockBudget,
+          _id: new ObjectId("690ec0c23f50e19549bd7e51"),
+          currency: "USD",
+        }),
+        insertTestBudget({
+          ...mockBudget,
+          _id: new ObjectId("690ec0c23f50e19549bd7e52"),
+          currency: "JPY",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const targetValues = {
+        categoryKey: mockBudget.categoryKey,
+        currency: "VND" as const,
+        allocatedAmount: mockBudget.allocatedAmount.toString(),
+        startDate: mockBudget.startDate,
+        endDate: mockBudget.endDate,
+      }
+
+      const [firstResult, secondResult] = await Promise.all([
+        updateBudget("690ec0c23f50e19549bd7e51", targetValues),
+        updateBudget("690ec0c23f50e19549bd7e52", targetValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Budget has been updated."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This budget already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
     })
 
     it("should return error when database operation throws error", async () => {
@@ -339,6 +423,7 @@ describe("Budgets", async () => {
       const budget2 = {
         ...mockBudget,
         _id: new ObjectId("68f795d4bdcc3c9a30717989"),
+        categoryKey: "transportation",
         startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const budget3 = {

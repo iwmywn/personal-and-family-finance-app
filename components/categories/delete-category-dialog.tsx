@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { useExtracted } from "next-intl"
 import { toast } from "sonner"
@@ -31,25 +31,26 @@ export function DeleteCategoryDialog({
 }: DeleteCategoryDialogProps) {
   const t = useExtracted()
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isPending, startTransition] = useTransition()
 
-  async function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
 
-    if (isLoading) return
+    startTransition(async () => {
+      try {
+        const { success, error } = await deleteCustomCategory(categoryId)
 
-    setIsLoading(true)
-
-    const { success, error } = await deleteCustomCategory(categoryId)
-
-    if (error || !success) {
-      toast.error(error)
-    } else {
-      setOpen(false)
-      toast.success(success)
-      router.refresh()
-    }
-    setIsLoading(false)
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
+      } catch {
+        toast.error(t("Failed to delete category! Please try again later."))
+      }
+    })
   }
 
   return (
@@ -64,9 +65,11 @@ export function DeleteCategoryDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete} disabled={isLoading}>
-            {isLoading && <Spinner />} {t("Delete")}
+          <AlertDialogCancel disabled={isPending}>
+            {t("Cancel")}
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete} disabled={isPending}>
+            {isPending && <Spinner />} {t("Delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

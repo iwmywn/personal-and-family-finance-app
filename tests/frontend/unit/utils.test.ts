@@ -1,5 +1,5 @@
 import { mockTransactions } from "@/tests/shared/data"
-import type { AppLocale } from "@/i18n/config"
+import type { Locale } from "@/i18n/config"
 import {
   formatCurrency,
   formatDate,
@@ -83,13 +83,13 @@ describe("Utils", () => {
   describe("formatDate", () => {
     it("should formats in Vietnamese (vi) correctly", () => {
       const date = new Date("2024-01-15T00:00:00.000Z")
-      const result = formatDate(date, "vi" as AppLocale)
+      const result = formatDate(date, "vi" as Locale)
       expect(result).toBe("Thứ 2, 15/01/2024")
     })
 
     it("should formats in English (en) correctly", () => {
       const date = new Date("2024-01-15T00:00:00.000Z")
-      const result = formatDate(date, "en" as AppLocale)
+      const result = formatDate(date, "en" as Locale)
       expect(result).toBe("Mon, 01/15/2024")
     })
 
@@ -97,7 +97,7 @@ describe("Utils", () => {
       const date = new Date(
         "Mon Jan 15 2024 00:00:00 GMT+0700 (Indochina Time)"
       )
-      const result = formatDate(date, "vi" as AppLocale)
+      const result = formatDate(date, "vi" as Locale)
       expect(result).toBe("Thứ 2, 15/01/2024")
     })
   })

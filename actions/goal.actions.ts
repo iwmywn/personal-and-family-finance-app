@@ -6,6 +6,7 @@ import { getExtracted } from "next-intl/server"
 
 import { getGoalsCollection } from "@/lib/collections"
 import type { Goal } from "@/lib/definitions"
+import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { GoalFormValues } from "@/schemas/types"
 
@@ -36,17 +37,6 @@ export async function createGoal(values: GoalFormValues): Promise<{
 
     const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
-    const existingGoal = await goalsCollection.findOne({
-      userId: new ObjectId(userId),
-      categoryKey: parsedValues.data.categoryKey,
-      currency: parsedValues.data.currency,
-      startDate: parsedValues.data.startDate,
-      endDate: parsedValues.data.endDate,
-    })
-
-    if (existingGoal) {
-      return { error: t("This goal already exists!") }
-    }
 
     await goalsCollection.insertOne({
       userId: new ObjectId(userId),
@@ -61,6 +51,9 @@ export async function createGoal(values: GoalFormValues): Promise<{
     updateTag(`goals-${userId}`)
     return { success: t("Goal has been added."), error: undefined }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This goal already exists!") }
+    }
     console.error("Error creating goal:", error)
     return { error: t("Failed to add goal! Please try again later.") }
   }
@@ -99,18 +92,7 @@ export async function updateGoal(
 
     const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
-    const existingGoal = await goalsCollection.findOne({
-      _id: new ObjectId(goalId),
-      userId: new ObjectId(userId),
-    })
-
-    if (!existingGoal) {
-      return {
-        error: t("Goal not found or you don't have permission to edit!"),
-      }
-    }
-
-    await goalsCollection.updateOne(
+    const result = await goalsCollection.updateOne(
       { _id: new ObjectId(goalId), userId: new ObjectId(userId) },
       {
         $set: {
@@ -124,9 +106,18 @@ export async function updateGoal(
       }
     )
 
+    if (result.matchedCount === 0) {
+      return {
+        error: t("Goal not found or you don't have permission to edit!"),
+      }
+    }
+
     updateTag(`goals-${userId}`)
     return { success: t("Goal has been updated."), error: undefined }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This goal already exists!") }
+    }
     console.error("Error updating goal:", error)
     return { error: t("Failed to update goal! Please try again later.") }
   }
@@ -155,21 +146,16 @@ export async function deleteGoal(goalId: string): Promise<{
 
     const userId = session.user.id
     const goalsCollection = await getGoalsCollection()
-    const existingGoal = await goalsCollection.findOne({
+    const result = await goalsCollection.deleteOne({
       _id: new ObjectId(goalId),
       userId: new ObjectId(userId),
     })
 
-    if (!existingGoal) {
+    if (result.deletedCount === 0) {
       return {
         error: t("Goal not found or you don't have permission to delete!"),
       }
     }
-
-    await goalsCollection.deleteOne({
-      _id: new ObjectId(goalId),
-      userId: new ObjectId(userId),
-    })
 
     updateTag(`goals-${userId}`)
     return { success: t("Goal has been deleted.") }

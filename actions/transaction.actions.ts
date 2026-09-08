@@ -6,8 +6,9 @@ import { getExtracted } from "next-intl/server"
 
 import { convertTransactionsToCurrency } from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
-import type { AppCurrency } from "@/lib/currency"
+import type { Currency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
+import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { TransactionFormValues } from "@/schemas/types"
 
@@ -40,7 +41,8 @@ export async function createTransaction(
 
     const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
-    const data = {
+
+    await transactionsCollection.insertOne({
       userId: new ObjectId(userId),
       type: parsedValues.data.type,
       categoryKey: parsedValues.data.categoryKey,
@@ -48,19 +50,14 @@ export async function createTransaction(
       currency: parsedValues.data.currency,
       description: parsedValues.data.description,
       date: parsedValues.data.date,
-    }
-
-    const existingTransaction = await transactionsCollection.findOne(data)
-
-    if (existingTransaction) {
-      return { error: t("This transaction has already been created today!") }
-    }
-
-    await transactionsCollection.insertOne(data)
+    })
 
     updateTag(`transactions-${userId}`)
     return { success: t("Transaction has been added."), error: undefined }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This transaction already exists!") }
+    }
     console.error("Error creating transaction:", error)
     return { error: t("Failed to add transaction! Please try again later.") }
   }
@@ -99,18 +96,7 @@ export async function updateTransaction(
 
     const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
-    const existingTransaction = await transactionsCollection.findOne({
-      _id: new ObjectId(transactionId),
-      userId: new ObjectId(userId),
-    })
-
-    if (!existingTransaction) {
-      return {
-        error: t("Transaction not found or you don't have permission to edit!"),
-      }
-    }
-
-    await transactionsCollection.updateOne(
+    const result = await transactionsCollection.updateOne(
       {
         _id: new ObjectId(transactionId),
         userId: new ObjectId(userId),
@@ -127,12 +113,21 @@ export async function updateTransaction(
       }
     )
 
+    if (result.matchedCount === 0) {
+      return {
+        error: t("Transaction not found or you don't have permission to edit!"),
+      }
+    }
+
     updateTag(`transactions-${userId}`)
     return {
       success: t("Transaction has been updated."),
       error: undefined,
     }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This transaction already exists!") }
+    }
     console.error("Error updating transaction:", error)
     return { error: t("Failed to update transaction! Please try again later.") }
   }
@@ -161,23 +156,18 @@ export async function deleteTransaction(transactionId: string): Promise<{
 
     const userId = session.user.id
     const transactionsCollection = await getTransactionsCollection()
-    const existingTransaction = await transactionsCollection.findOne({
+    const result = await transactionsCollection.deleteOne({
       _id: new ObjectId(transactionId),
       userId: new ObjectId(userId),
     })
 
-    if (!existingTransaction) {
+    if (result.deletedCount === 0) {
       return {
         error: t(
           "Transaction not found or you don't have permission to delete!"
         ),
       }
     }
-
-    await transactionsCollection.deleteOne({
-      _id: new ObjectId(transactionId),
-      userId: new ObjectId(userId),
-    })
 
     updateTag(`transactions-${userId}`)
     return { success: t("Transaction has been deleted.") }
@@ -202,14 +192,11 @@ export async function getTransactions(): Promise<{
 
   return getCachedTransactions(
     session.user.id,
-    session.user.currency as AppCurrency
+    session.user.currency as Currency
   )
 }
 
-async function getCachedTransactions(
-  userId: string,
-  targetCurrency: AppCurrency
-) {
+async function getCachedTransactions(userId: string, targetCurrency: Currency) {
   "use cache: private"
   cacheTag(`transactions-${userId}`)
 

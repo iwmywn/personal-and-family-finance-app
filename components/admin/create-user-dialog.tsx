@@ -37,6 +37,7 @@ import { PasswordInput } from "@/components/password-input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
+import type { AuthErrorCode } from "@/lib/definitions"
 import { DEFAULT_ROLE, isSuperAdminRole } from "@/lib/role"
 import type { AdminUserFormValues } from "@/schemas/types"
 
@@ -85,9 +86,14 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
         },
         fetchOptions: {
           onError: (ctx) => {
-            if (ctx.error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL")
-              toast.error(t("This email is already in use."))
-            else toast.error(t("Failed to sign in! Please try again later."))
+            switch (ctx.error.code as AuthErrorCode) {
+              case "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL":
+                toast.error(t("This email is already in use."))
+                break
+              default:
+                toast.error(t("Failed to sign in! Please try again later."))
+                break
+            }
           },
           onSuccess: () => {
             setOpen(false)

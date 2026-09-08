@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { cn } from "cn"
 import { CalendarIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
 import { useForm, useWatch } from "react-hook-form"
@@ -58,9 +59,9 @@ import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
-import type { AppCurrency } from "@/lib/currency"
+import type { Currency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
-import { cn, localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/utils"
 import type { TransactionFormValues } from "@/schemas/types"
 
 interface TransactionDialogProps {
@@ -85,7 +86,7 @@ export function TransactionDialog({
     resolver: zodResolver(createTransactionSchema()),
     defaultValues: {
       type: transaction?.type || "inflow",
-      currency: transaction?.currency ?? (user.currency as AppCurrency),
+      currency: transaction?.currency ?? (user.currency as Currency),
       amount: transaction?.amount ?? "",
       description: transaction?.description || "",
       categoryKey: transaction?.categoryKey || "",
@@ -299,9 +300,7 @@ export function TransactionDialog({
                           field.onChange(date)
                           setCalendarOpen(false)
                         }}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date(2025, 8, 1)
-                        }
+                        disabled={(date) => date > new Date()}
                       />
                     </PopoverContent>
                   </Popover>

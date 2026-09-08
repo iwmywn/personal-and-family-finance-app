@@ -1,6 +1,5 @@
 "use server"
 
-import { randomBytes } from "crypto"
 import { cacheTag, updateTag } from "next/cache"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
@@ -12,7 +11,9 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
+import { withTransaction } from "@/lib/db"
 import type { Category } from "@/lib/definitions"
+import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { CategoryFormValues } from "@/schemas/types"
 
@@ -44,31 +45,9 @@ export async function createCustomCategory(
 
     const userId = session.user.id
     const categoriesCollection = await getCategoriesCollection()
-    const existingCategory = await categoriesCollection.findOne({
-      userId: new ObjectId(userId),
-      label: parsedValues.data.label,
-      type: parsedValues.data.type,
-    })
-
-    if (existingCategory) {
-      return { error: t("This category already exists!") }
-    }
-
-    const categoryKey = randomBytes(4).toString("hex")
-
-    const duplicateCategoryKey = await categoriesCollection.findOne({
-      categoryKey,
-    })
-
-    if (duplicateCategoryKey) {
-      return {
-        error: t("Error creating category key! Please try again later."),
-      }
-    }
 
     await categoriesCollection.insertOne({
       userId: new ObjectId(userId),
-      categoryKey,
       type: parsedValues.data.type,
       label: parsedValues.data.label,
       description: parsedValues.data.description,
@@ -77,6 +56,9 @@ export async function createCustomCategory(
     updateTag(`categories-${userId}`)
     return { success: t("Category has been added."), error: undefined }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This category already exists!") }
+    }
     console.error("Error creating custom category:", error)
     return { error: t("Failed to add category! Please try again later.") }
   }
@@ -118,30 +100,11 @@ export async function updateCustomCategory(
       getCategoriesCollection(),
       getTransactionsCollection(),
     ])
-    const existingCategory = await categoriesCollection.findOne({
-      _id: new ObjectId(categoryId),
-      userId: new ObjectId(userId),
-    })
 
-    if (!existingCategory) {
-      return {
-        error: t("Category not found or you don't have permission to edit!"),
-      }
-    }
+    let notFound = false
 
-    const duplicateCategory = await categoriesCollection.findOne({
-      userId: new ObjectId(userId),
-      label: parsedValues.data.label,
-      type: parsedValues.data.type,
-      _id: { $ne: new ObjectId(categoryId) },
-    })
-
-    if (duplicateCategory) {
-      return { error: t("This category already exists!") }
-    }
-
-    await Promise.all([
-      categoriesCollection.updateOne(
+    await withTransaction(async (dbSession) => {
+      const result = await categoriesCollection.updateOne(
         { _id: new ObjectId(categoryId), userId: new ObjectId(userId) },
         {
           $set: {
@@ -149,25 +112,42 @@ export async function updateCustomCategory(
             label: parsedValues.data.label,
             description: parsedValues.data.description,
           },
-        }
-      ),
-      transactionsCollection.updateMany(
+        },
+        { session: dbSession }
+      )
+
+      if (result.matchedCount === 0) {
+        notFound = true
+        return
+      }
+
+      await transactionsCollection.updateMany(
         {
           userId: new ObjectId(userId),
-          categoryKey: existingCategory.categoryKey,
+          categoryKey: categoryId,
         },
         {
           $set: {
             type: parsedValues.data.type,
           },
-        }
-      ),
-    ])
+        },
+        { session: dbSession }
+      )
+    })
+
+    if (notFound) {
+      return {
+        error: t("Category not found or you don't have permission to edit!"),
+      }
+    }
 
     updateTag(`categories-${userId}`)
     updateTag(`transactions-${userId}`)
     return { success: t("Category has been updated."), error: undefined }
   } catch (error) {
+    if (isDuplicateKeyError(error)) {
+      return { error: t("This category already exists!") }
+    }
     console.error("Error updating custom category:", error)
     return { error: t("Failed to update category! Please try again later.") }
   }
@@ -227,19 +207,19 @@ export async function deleteCustomCategory(categoryId: string): Promise<{
     ] = await Promise.all([
       transactionsCollection.countDocuments({
         userId: new ObjectId(userId),
-        categoryKey: existingCategory.categoryKey,
+        categoryKey: categoryId,
       }),
       budgetsCollection.countDocuments({
         userId: new ObjectId(userId),
-        categoryKey: existingCategory.categoryKey,
+        categoryKey: categoryId,
       }),
       goalsCollection.countDocuments({
         userId: new ObjectId(userId),
-        categoryKey: existingCategory.categoryKey,
+        categoryKey: categoryId,
       }),
       recurringTransactionsCollection.countDocuments({
         userId: new ObjectId(userId),
-        categoryKey: existingCategory.categoryKey,
+        categoryKey: categoryId,
       }),
     ])
 

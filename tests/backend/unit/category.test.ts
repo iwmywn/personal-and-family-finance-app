@@ -36,12 +36,6 @@ import {
   getTransactionsCollection,
 } from "@/lib/collections"
 
-vi.mock("crypto", () => ({
-  randomBytes: () => ({
-    toString: () => "abcdef12",
-  }),
-}))
-
 describe("Categories", async () => {
   describe("createCustomCategory", () => {
     it("should return error when data is invalid", async () => {
@@ -77,22 +71,6 @@ describe("Categories", async () => {
       expect(result.error).toBe("This category already exists!")
     })
 
-    it("should return error when duplicate categoryKey exists", async () => {
-      await insertTestCategory(mockCustomCategory)
-      mockAuthenticatedUser()
-
-      const result = await createCustomCategory({
-        type: "outflow",
-        label: "Dupe Key",
-        description: "desc",
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Error creating category key! Please try again later."
-      )
-    })
-
     it("should successfully create custom category", async () => {
       mockAuthenticatedUser()
 
@@ -119,6 +97,28 @@ describe("Categories", async () => {
       expect(result.error).toBe(
         "Failed to add category! Please try again later."
       )
+    })
+
+    it("should prevent race condition when creating duplicate categories concurrently", async () => {
+      mockAuthenticatedUser()
+
+      const [firstResult, secondResult] = await Promise.all([
+        createCustomCategory(mockValidCategoryValues),
+        createCustomCategory(mockValidCategoryValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Category has been added."
+      ).length
+      const errorCount = results.filter(
+        (r) =>
+          r.error === "This category already exists!" ||
+          r.error === "Error creating category key! Please try again later."
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
     })
   })
 
@@ -179,7 +179,6 @@ describe("Categories", async () => {
       await insertTestCategory({
         ...mockCustomCategory,
         _id: new ObjectId("68f795d4bdcc3c9a30717977"),
-        categoryKey: "abcdef34",
         label: "Different Label",
       })
       mockAuthenticatedUser()
@@ -228,26 +227,28 @@ describe("Categories", async () => {
           ...mockCustomCategory,
           _id: new ObjectId("68f795d4bdcc3c9a30717977"),
           userId: new ObjectId("690d2cdc200d6a719f9a438e"),
-          categoryKey: "abcdef34",
           type: "outflow",
           label: "Updated Label",
         }),
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("6900f0887465621be45e8d30"),
-          categoryKey: mockCustomCategory.categoryKey,
+          categoryKey: mockCustomCategory._id.toString(),
           type: "inflow",
+          description: "Transaction 1",
         }),
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("6900f0af8a1c0865ef9429c3"),
-          categoryKey: mockCustomCategory.categoryKey,
+          categoryKey: mockCustomCategory._id.toString(),
           type: "inflow",
+          description: "Transaction 2",
         }),
         insertTestTransaction({
           ...mockTransaction,
           _id: new ObjectId("6900f0b298e321c264864402"),
           type: "inflow",
+          description: "Transaction 3",
         }),
       ])
       mockAuthenticatedUser()
@@ -271,7 +272,7 @@ describe("Categories", async () => {
           transactionsCollection
             .find({
               userId: mockUser._id,
-              categoryKey: mockCustomCategory.categoryKey,
+              categoryKey: mockCustomCategory._id.toString(),
             })
             .toArray(),
           transactionsCollection.findOne({
@@ -279,7 +280,6 @@ describe("Categories", async () => {
           }),
         ])
 
-      expect(updatedCategory?.categoryKey).toBe("abcdef12")
       expect(updatedCategory?.type).toBe("outflow")
       expect(updatedCategory?.label).toBe("Updated Label")
       expect(updatedCategory?.description).toBe("Updated description")
@@ -288,6 +288,65 @@ describe("Categories", async () => {
       expect(unrelatedTransaction?.type).toBe("inflow")
       expect(result.success).toBe("Category has been updated.")
       expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when updating category causes duplicate key collision", async () => {
+      await Promise.all([
+        insertTestCategory(mockCustomCategory),
+        insertTestCategory({
+          ...mockCustomCategory,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          label: "Unique Category",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await updateCustomCategory("690d2e5f7d5c36bf6c82ff1f", {
+        type: mockCustomCategory.type,
+        label: mockCustomCategory.label,
+        description: "Colliding label",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("This category already exists!")
+    })
+
+    it("should prevent race condition when updating duplicate categories concurrently", async () => {
+      await Promise.all([
+        insertTestCategory({
+          ...mockCustomCategory,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1e"),
+          label: "Unique Category 1",
+        }),
+        insertTestCategory({
+          ...mockCustomCategory,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          label: "Unique Category 2",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const targetValues = {
+        type: mockCustomCategory.type,
+        label: "Same Target Label",
+        description: "Target description",
+      }
+
+      const [firstResult, secondResult] = await Promise.all([
+        updateCustomCategory("690d2e5f7d5c36bf6c82ff1e", targetValues),
+        updateCustomCategory("690d2e5f7d5c36bf6c82ff1f", targetValues),
+      ])
+
+      const results = [firstResult, secondResult]
+      const successCount = results.filter(
+        (r) => r.success === "Category has been updated."
+      ).length
+      const errorCount = results.filter(
+        (r) => r.error === "This category already exists!"
+      ).length
+
+      expect(successCount).toBe(1)
+      expect(errorCount).toBe(1)
     })
 
     it("should return error when database operation throws error", async () => {
@@ -361,22 +420,22 @@ describe("Categories", async () => {
       const category1 = {
         ...mockCustomCategory,
         _id: new ObjectId("691ac8b98629369bb1da9214"),
-        categoryKey: "abcdef12",
+        label: "Entertainment 1",
       }
       const category2 = {
         ...mockCustomCategory,
         _id: new ObjectId("691ac8c4fb168bfba59615c8"),
-        categoryKey: "abcdef13",
+        label: "Entertainment 2",
       }
       const category3 = {
         ...mockCustomCategory,
         _id: new ObjectId("691ac8cd3cf60fa9f018a37c"),
-        categoryKey: "abcdef14",
+        label: "Entertainment 3",
       }
       const category4 = {
         ...mockCustomCategory,
         _id: new ObjectId("691da72dc1d54fad20174ab6"),
-        categoryKey: "abcdef15",
+        label: "Entertainment 4",
       }
 
       await Promise.all([
@@ -387,19 +446,19 @@ describe("Categories", async () => {
 
         insertTestTransaction({
           ...mockTransaction,
-          categoryKey: category1.categoryKey,
+          categoryKey: category1._id.toString(),
         }),
         insertTestBudget({
           ...mockBudget,
-          categoryKey: category2.categoryKey,
+          categoryKey: category2._id.toString(),
         }),
         insertTestGoal({
           ...mockGoal,
-          categoryKey: category3.categoryKey,
+          categoryKey: category3._id.toString(),
         }),
         insertTestRecurringTransaction({
           ...mockRecurringTransaction,
-          categoryKey: category4.categoryKey,
+          categoryKey: category4._id.toString(),
         }),
       ])
 
@@ -522,17 +581,17 @@ describe("Categories", async () => {
       const category1 = {
         ...mockCustomCategory,
         _id: new ObjectId("68f732914e63e5aa249cc173"),
-        categoryKey: "abcdef12",
+        label: "Entertainment 1",
       }
       const category2 = {
         ...mockCustomCategory,
         _id: new ObjectId("68f732914e63e5aa249cc174"),
-        categoryKey: "abcdef13",
+        label: "Entertainment 2",
       }
       const category3 = {
         ...mockCustomCategory,
         _id: new ObjectId("68f732914e63e5aa249cc175"),
-        categoryKey: "abcdef14",
+        label: "Entertainment 3",
       }
 
       await Promise.all([
