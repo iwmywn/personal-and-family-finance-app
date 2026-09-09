@@ -65,7 +65,7 @@ export function SetPasswordDialog({
         form.reset()
       }
     } catch {
-      t("Failed to set user password! Please try again later.")
+      toast.error(t("Failed to set user password! Please try again later."))
     }
   }
 
