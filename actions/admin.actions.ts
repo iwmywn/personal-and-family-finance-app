@@ -16,7 +16,10 @@ import {
 } from "@/lib/collections"
 import { withTransaction } from "@/lib/db"
 import type { User } from "@/lib/definitions"
-import { ADMIN_ROLES, isAdminRole, isSuperAdminRole } from "@/lib/role"
+import { ADMIN_ROLES, isAdminRole } from "@/lib/role"
+import type { AssignableRole } from "@/lib/role"
+import { getSchemas } from "@/schemas/server"
+import type { AdminPasswordFormValues } from "@/schemas/types"
 
 export type AdminStats = {
   totalUsers: number
@@ -142,7 +145,7 @@ export async function deleteUser(userId: string): Promise<{
       return { error: t("User not found!") }
     }
 
-    if (session.user.role === "admin" && isSuperAdminRole(targetUser.role)) {
+    if (session.user.role === "admin" && isAdminRole(targetUser.role)) {
       return { error: t("Access denied! Admin privileges required.") }
     }
 
@@ -194,5 +197,126 @@ export async function deleteUser(userId: string): Promise<{
   } catch (error) {
     console.error("Error deleting user:", error)
     return { error: t("Failed to delete user! Please try again later.") }
+  }
+}
+
+export async function updateUserRole(
+  userId: string,
+  role: AssignableRole
+): Promise<{
+  error?: string
+  success?: string
+}> {
+  const t = await getExtracted()
+
+  try {
+    const session = await verifyAdmin()
+
+    if (!session) {
+      return { error: t("Access denied! Admin privileges required.") }
+    }
+
+    if (!ObjectId.isValid(userId)) {
+      return {
+        error: t("Invalid user ID!"),
+      }
+    }
+
+    const { createAdminRoleSchema } = await getSchemas()
+    const parsed = createAdminRoleSchema().safeParse({ role })
+
+    if (!parsed.success) {
+      return { error: t("Invalid data!") }
+    }
+
+    if (session.user.id === userId) {
+      return { error: t("You cannot change your own role!") }
+    }
+
+    const usersCollection = await getUsersCollection()
+    const targetUser = await usersCollection.findOne({
+      _id: new ObjectId(userId),
+    })
+
+    if (!targetUser) {
+      return { error: t("User not found!") }
+    }
+
+    if (
+      session.user.role === "admin" &&
+      (isAdminRole(targetUser.role) || role === "admin")
+    ) {
+      return { error: t("Access denied! Admin privileges required.") }
+    }
+
+    await auth.api.setRole({
+      headers: await headers(),
+      body: {
+        userId,
+        role,
+      },
+    })
+
+    return { success: t("User role has been updated.") }
+  } catch (error) {
+    console.error("Error updating user role:", error)
+    return { error: t("Failed to update user role! Please try again later.") }
+  }
+}
+
+export async function setUserPassword(
+  userId: string,
+  values: AdminPasswordFormValues
+): Promise<{
+  error?: string
+  success?: string
+}> {
+  const t = await getExtracted()
+
+  try {
+    const session = await verifyAdmin()
+
+    if (!session) {
+      return { error: t("Access denied! Admin privileges required.") }
+    }
+
+    if (!ObjectId.isValid(userId)) {
+      return {
+        error: t("Invalid user ID!"),
+      }
+    }
+
+    const { createAdminPasswordSchema } = await getSchemas()
+    const parsed = createAdminPasswordSchema().safeParse(values)
+
+    if (!parsed.success) {
+      return { error: t("Invalid data!") }
+    }
+
+    const usersCollection = await getUsersCollection()
+    const targetUser = await usersCollection.findOne({
+      _id: new ObjectId(userId),
+    })
+
+    if (!targetUser) {
+      return { error: t("User not found!") }
+    }
+
+    if (session.user.role === "admin" && isAdminRole(targetUser.role)) {
+      return { error: t("Access denied! Admin privileges required.") }
+    }
+
+    await auth.api.setUserPassword({
+      headers: await headers(),
+      body: {
+        userId,
+        newPassword: parsed.data.password,
+      },
+    })
+
+    return { success: t("Password has been updated.") }
+  } catch (error) {
+    console.error("Error setting user password:", error)
+    return { error: t("Failed to set user password! Please try again later.") }
   }
 }

@@ -47,6 +47,7 @@ msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "ユーザーの削除に失敗しました！後でもう一度お試しください。"
 
+#: actions/admin.actions.ts
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -56,6 +57,33 @@ msgctxt "5GmpFA"
 msgid "Invalid data!"
 msgstr "無効なデータです！"
 
+#: actions/admin.actions.ts
+msgctxt "y3epBO"
+msgid "You cannot change your own role!"
+msgstr "自分のロールを変更することはできません！"
+
+#: actions/admin.actions.ts
+msgctxt "ayfthF"
+msgid "User role has been updated."
+msgstr "ユーザーロールが更新されました。"
+
+#: actions/admin.actions.ts
+#: components/admin/change-role-dialog.tsx
+msgctxt "jNvbw7"
+msgid "Failed to update user role! Please try again later."
+msgstr "ユーザーロールの更新に失敗しました！後でもう一度お試しください。"
+
+#: actions/admin.actions.ts
+msgctxt "ygB8SA"
+msgid "Password has been updated."
+msgstr "パスワードが更新されました。"
+
+#: actions/admin.actions.ts
+#: components/admin/set-password-dialog.tsx
+msgctxt "VvoQv7"
+msgid "Failed to set user password! Please try again later."
+msgstr "ユーザーパスワードの設定に失敗しました！後でもう一度お試しください。"
+
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -64,6 +92,14 @@ msgstr "無効なデータです！"
 msgctxt "QWvB5t"
 msgid "Access denied! Please refresh the page and try again."
 msgstr "アクセスが拒否されました！ページを更新してもう一度お試しください。"
+
+#: actions/budget.actions.ts
+#: actions/goal.actions.ts
+#: actions/recurring.actions.ts
+#: actions/transaction.actions.ts
+msgctxt "IViGC5"
+msgid "Invalid category!"
+msgstr "カテゴリが無効です！"
 
 #: actions/budget.actions.ts
 msgctxt "hcutYI"
@@ -874,16 +910,6 @@ msgid "30 Days"
 msgstr "30日間"
 
 #: components/admin/change-role-dialog.tsx
-msgctxt "jNvbw7"
-msgid "Failed to update user role! Please try again later."
-msgstr "ユーザーロールの更新に失敗しました！後でもう一度お試しください。"
-
-#: components/admin/change-role-dialog.tsx
-msgctxt "ayfthF"
-msgid "User role has been updated."
-msgstr "ユーザーロールが更新されました。"
-
-#: components/admin/change-role-dialog.tsx
 msgctxt "ho_b8x"
 msgid "Change User Role"
 msgstr "ユーザーロールの変更"
@@ -993,16 +1019,6 @@ msgstr "このユーザーアカウントを完全に削除してもよろしい
 msgctxt "uon94C"
 msgid "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
 msgstr "取引、予算、目標を含むすべての関連データが完全に削除されます。この操作は元に戻せません。"
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "VvoQv7"
-msgid "Failed to set user password! Please try again later."
-msgstr "ユーザーパスワードの設定に失敗しました！後でもう一度お試しください。"
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "ygB8SA"
-msgid "Password has been updated."
-msgstr "パスワードが更新されました。"
 
 #: components/admin/set-password-dialog.tsx
 msgctxt "ArEJTr"

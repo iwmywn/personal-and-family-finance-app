@@ -1,6 +1,11 @@
 import { insertTestExchangeRates } from "@/tests/backend/helpers/database"
 import { mockExchangeRates, mockTransactions } from "@/tests/shared/data"
-import { convertTransactionsToCurrency } from "@/actions/exchange-rates.actions"
+import {
+  convertTransactionsToCurrency,
+  ensureExchangeRateForDate,
+} from "@/actions/exchange-rates.actions"
+import { normalizeToUTCMidnight, toDecimal128 } from "@/actions/utils"
+import { getExchangeRatesCollection } from "@/lib/collections"
 import type { Transaction } from "@/lib/definitions"
 
 describe("convertTransactionsToCurrency", () => {
@@ -247,5 +252,96 @@ describe("convertTransactionsToCurrency", () => {
       expect(result[0].currency).toBe("VND")
       expect(result[0].amount).toBe("5000000")
     })
+  })
+})
+
+describe("ensureExchangeRateForDate", () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it("should not call fetch when exchange rate already exists with all currencies", async () => {
+    await insertTestExchangeRates(mockExchangeRates)
+    const fetchSpy = vi.spyOn(globalThis, "fetch")
+
+    await ensureExchangeRateForDate(mockExchangeRates[0].date)
+
+    expect(fetchSpy).not.toHaveBeenCalled()
+  })
+
+  it("should fetch rates from Frankfurter and insert into database when date does not exist", async () => {
+    const testDate = new Date("2024-03-10T00:00:00Z")
+    const mockRatesResponse = [
+      { date: "2024-03-10", base: "USD", quote: "CNY", rate: 7.18 },
+      { date: "2024-03-10", base: "USD", quote: "JPY", rate: 147.2 },
+      { date: "2024-03-10", base: "USD", quote: "KRW", rate: 1320.5 },
+      { date: "2024-03-10", base: "USD", quote: "VND", rate: 24600 },
+    ]
+
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockRatesResponse,
+    } as Response)
+
+    await ensureExchangeRateForDate(testDate)
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.stringContaining("https://api.frankfurter.dev/v2/rates?base=USD")
+    )
+
+    const collection = await getExchangeRatesCollection()
+    const saved = await collection.findOne({
+      date: normalizeToUTCMidnight(testDate),
+    })
+
+    expect(saved).not.toBeNull()
+    expect(saved?.rates.VND?.toString()).toBe("24600")
+    expect(saved?.rates.CNY?.toString()).toBe("7.18")
+  })
+
+  it("should fetch missing currencies and update document when partial rates exist", async () => {
+    const testDate = normalizeToUTCMidnight(new Date("2024-04-10T00:00:00Z"))
+    const collection = await getExchangeRatesCollection()
+    await collection.insertOne({
+      date: testDate,
+      rates: {
+        CNY: toDecimal128("7.18"),
+        JPY: toDecimal128("147.2"),
+        KRW: toDecimal128("1320.5"),
+        // VND is missing
+      },
+    })
+
+    const mockRatesResponse = [
+      { date: "2024-04-10", base: "USD", quote: "VND", rate: 24700 },
+    ]
+
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockRatesResponse,
+    } as Response)
+
+    await ensureExchangeRateForDate(testDate)
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
+    expect(fetchSpy).toHaveBeenCalledWith(expect.stringContaining("quotes=VND"))
+
+    const updated = await collection.findOne({ date: testDate })
+    expect(updated?.rates.VND?.toString()).toBe("24700")
+    expect(updated?.rates.CNY?.toString()).toBe("7.18")
+  })
+
+  it("should throw error when Frankfurter API returns non-ok status", async () => {
+    const testDate = new Date("2024-05-10T00:00:00Z")
+
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+    } as Response)
+
+    await expect(ensureExchangeRateForDate(testDate)).rejects.toThrow(
+      "Frankfurter API returned status 500"
+    )
   })
 })

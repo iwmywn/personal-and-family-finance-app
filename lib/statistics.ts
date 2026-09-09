@@ -12,9 +12,9 @@ import {
 export function getCurrentMonthTransactions(
   transactions: Transaction[]
 ): Transaction[] {
-  const now = new Date()
-  const currentMonth = now.getUTCMonth()
-  const currentYear = now.getUTCFullYear()
+  const todayUTC = localDateToUTCMidnight(new Date())
+  const currentMonth = todayUTC.getUTCMonth()
+  const currentYear = todayUTC.getUTCFullYear()
 
   return transactions.filter((t) => {
     const date = new Date(t.date)

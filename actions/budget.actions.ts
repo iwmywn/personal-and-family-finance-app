@@ -10,6 +10,7 @@ import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { BudgetFormValues } from "@/schemas/types"
 
+import { isValidUserCategory } from "./category.actions"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
@@ -36,6 +37,16 @@ export async function createBudget(values: BudgetFormValues): Promise<{
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      "outflow"
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const budgetsCollection = await getBudgetsCollection()
 
     await budgetsCollection.insertOne({
@@ -90,6 +101,16 @@ export async function updateBudget(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      "outflow"
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const budgetsCollection = await getBudgetsCollection()
     const result = await budgetsCollection.updateOne(
       { _id: new ObjectId(budgetId), userId: new ObjectId(userId) },

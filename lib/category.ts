@@ -1,7 +1,7 @@
 export const CATEGORY_TYPES = ["inflow", "outflow"] as const
 export type CategoryType = (typeof CATEGORY_TYPES)[number]
 
-const INFLOW_CATEGORIES_KEY = [
+export const INFLOW_CATEGORIES_KEY = [
   "salary_bonus",
   "business_freelance",
   "investment_passive",
@@ -10,7 +10,7 @@ const INFLOW_CATEGORIES_KEY = [
   "other_inflow",
 ] as const
 
-const OUTFLOW_CATEGORIES_KEY = [
+export const OUTFLOW_CATEGORIES_KEY = [
   "food_beverage",
   "transportation",
   "personal_care",
@@ -26,17 +26,23 @@ const OUTFLOW_CATEGORIES_KEY = [
   "other_outflow",
 ] as const
 
-const _ALL_CATEGORIES_KEY = [
+export const ALL_PREDEFINED_CATEGORIES_KEY = [
   ...INFLOW_CATEGORIES_KEY,
   ...OUTFLOW_CATEGORIES_KEY,
 ] as const
-export type CategoryKey = (typeof _ALL_CATEGORIES_KEY)[number] | string
+export type PredefinedCategoryKey =
+  (typeof ALL_PREDEFINED_CATEGORIES_KEY)[number]
+export type CategoryKey = PredefinedCategoryKey | string
 
 export type CategoryConfig = {
   [K in CategoryKey]: {
     label: string
     description: string
   }
+}
+
+export function isPredefinedCategoryKey(key: string): boolean {
+  return (ALL_PREDEFINED_CATEGORIES_KEY as readonly string[]).includes(key)
 }
 
 export function getCategoryType(key: CategoryKey): CategoryType {

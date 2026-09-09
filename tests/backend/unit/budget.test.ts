@@ -58,6 +58,30 @@ describe("Budgets", async () => {
       expect(result.error).toBe("This budget already exists!")
     })
 
+    it("should return error when categoryKey is invalid or does not belong to user", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createBudget({
+        ...mockValidBudgetValues,
+        categoryKey: "non-existent-or-invalid-key",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when budget category is not an outflow category", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createBudget({
+        ...mockValidBudgetValues,
+        categoryKey: "salary_bonus",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
     it("should successfully create budget", async () => {
       mockAuthenticatedUser()
 

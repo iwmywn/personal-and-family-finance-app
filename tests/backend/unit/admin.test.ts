@@ -13,7 +13,13 @@ import {
   mockSuperAdminUser,
   mockUser,
 } from "@/tests/shared/data"
-import { deleteUser, getAdminStats, listUsers } from "@/actions/admin.actions"
+import {
+  deleteUser,
+  getAdminStats,
+  listUsers,
+  setUserPassword,
+  updateUserRole,
+} from "@/actions/admin.actions"
 
 vi.mock("next/headers", () => ({
   headers: vi.fn().mockResolvedValue(new Headers()),
@@ -23,6 +29,8 @@ vi.mock("@/lib/auth", () => ({
   auth: {
     api: {
       removeUser: vi.fn().mockResolvedValue({ status: true }),
+      setRole: vi.fn().mockResolvedValue({ status: true }),
+      setUserPassword: vi.fn().mockResolvedValue({ status: true }),
     },
   },
 }))
@@ -160,6 +168,110 @@ describe("Admin Actions", () => {
       expect(adminResult.success).toBe("User has been deleted.")
       expect(userResult.error).toBeUndefined()
       expect(userResult.success).toBe("User has been deleted.")
+    })
+  })
+
+  describe("updateUserRole", () => {
+    it("should return error for non-admin user", async () => {
+      mockAuthenticatedUser()
+
+      const result = await updateUserRole(
+        mockAnotherUser._id.toString(),
+        "user"
+      )
+
+      expect(result.error).toBe("Access denied! Admin privileges required.")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should return error when trying to change own role", async () => {
+      mockAuthenticatedAdmin()
+
+      const result = await updateUserRole(mockAdminUser._id.toString(), "user")
+
+      expect(result.error).toBe("You cannot change your own role!")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should prevent regular admin from modifying role of another admin", async () => {
+      mockAuthenticatedAdmin()
+
+      await insertTestUser(mockSuperAdminUser)
+
+      const result = await updateUserRole(
+        mockSuperAdminUser._id.toString(),
+        "user"
+      )
+
+      expect(result.error).toBe("Access denied! Admin privileges required.")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should prevent regular admin from promoting user to admin", async () => {
+      mockAuthenticatedAdmin()
+
+      await insertTestUser(mockAnotherUser)
+
+      const result = await updateUserRole(
+        mockAnotherUser._id.toString(),
+        "admin"
+      )
+
+      expect(result.error).toBe("Access denied! Admin privileges required.")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should allow superadmin to change user role to admin", async () => {
+      mockAuthenticatedSuperAdmin()
+
+      await insertTestUser(mockAnotherUser)
+
+      const result = await updateUserRole(
+        mockAnotherUser._id.toString(),
+        "admin"
+      )
+
+      expect(result.error).toBeUndefined()
+      expect(result.success).toBe("User role has been updated.")
+    })
+  })
+
+  describe("setUserPassword", () => {
+    it("should return error for non-admin user", async () => {
+      mockAuthenticatedUser()
+
+      const result = await setUserPassword(mockAnotherUser._id.toString(), {
+        password: "NewPassword123!",
+      })
+
+      expect(result.error).toBe("Access denied! Admin privileges required.")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should prevent regular admin from resetting password of another admin", async () => {
+      mockAuthenticatedAdmin()
+
+      await insertTestUser(mockSuperAdminUser)
+
+      const result = await setUserPassword(mockSuperAdminUser._id.toString(), {
+        password: "NewPassword123!",
+      })
+
+      expect(result.error).toBe("Access denied! Admin privileges required.")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should allow admin to reset password of regular user", async () => {
+      mockAuthenticatedAdmin()
+
+      await insertTestUser(mockAnotherUser)
+
+      const result = await setUserPassword(mockAnotherUser._id.toString(), {
+        password: "NewPassword123!",
+      })
+
+      expect(result.error).toBeUndefined()
+      expect(result.success).toBe("Password has been updated.")
     })
   })
 })

@@ -7,10 +7,7 @@ import {
   insertTestRecurringTransaction,
   insertTestTransaction,
 } from "@/tests/backend/helpers/database"
-import {
-  mockCategoryCollectionError,
-  mockTransactionCollectionError,
-} from "@/tests/backend/mocks/collections.mock"
+import { mockCategoryCollectionError } from "@/tests/backend/mocks/collections.mock"
 import {
   mockAuthenticatedAsAnotherUser,
   mockAuthenticatedUser,
@@ -29,12 +26,10 @@ import {
   createCustomCategory,
   deleteCustomCategory,
   getCustomCategories,
+  isValidUserCategory,
   updateCustomCategory,
 } from "@/actions/category.actions"
-import {
-  getCategoriesCollection,
-  getTransactionsCollection,
-} from "@/lib/collections"
+import { getCategoriesCollection } from "@/lib/collections"
 
 describe("Categories", async () => {
   describe("createCustomCategory", () => {
@@ -221,71 +216,25 @@ describe("Categories", async () => {
     })
 
     it("should successfully update custom category", async () => {
-      await Promise.all([
-        insertTestCategory(mockCustomCategory),
-        insertTestCategory({
-          ...mockCustomCategory,
-          _id: new ObjectId("68f795d4bdcc3c9a30717977"),
-          userId: new ObjectId("690d2cdc200d6a719f9a438e"),
-          type: "outflow",
-          label: "Updated Label",
-        }),
-        insertTestTransaction({
-          ...mockTransaction,
-          _id: new ObjectId("6900f0887465621be45e8d30"),
-          categoryKey: mockCustomCategory._id.toString(),
-          type: "inflow",
-          description: "Transaction 1",
-        }),
-        insertTestTransaction({
-          ...mockTransaction,
-          _id: new ObjectId("6900f0af8a1c0865ef9429c3"),
-          categoryKey: mockCustomCategory._id.toString(),
-          type: "inflow",
-          description: "Transaction 2",
-        }),
-        insertTestTransaction({
-          ...mockTransaction,
-          _id: new ObjectId("6900f0b298e321c264864402"),
-          type: "inflow",
-          description: "Transaction 3",
-        }),
-      ])
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
         {
-          type: "outflow",
+          type: mockCustomCategory.type,
           label: "Updated Label",
           description: "Updated description",
         }
       )
-      const [categoriesTransaction, transactionsCollection] = await Promise.all(
-        [getCategoriesCollection(), getTransactionsCollection()]
-      )
-      const [updatedCategory, relatedTransactions, unrelatedTransaction] =
-        await Promise.all([
-          categoriesTransaction.findOne({
-            _id: mockCustomCategory._id,
-          }),
-          transactionsCollection
-            .find({
-              userId: mockUser._id,
-              categoryKey: mockCustomCategory._id.toString(),
-            })
-            .toArray(),
-          transactionsCollection.findOne({
-            _id: new ObjectId("6900f0b298e321c264864402"),
-          }),
-        ])
+      const categoriesCollection = await getCategoriesCollection()
+      const updatedCategory = await categoriesCollection.findOne({
+        _id: mockCustomCategory._id,
+      })
 
-      expect(updatedCategory?.type).toBe("outflow")
+      expect(updatedCategory?.type).toBe(mockCustomCategory.type)
       expect(updatedCategory?.label).toBe("Updated Label")
       expect(updatedCategory?.description).toBe("Updated description")
-      expect(relatedTransactions).toHaveLength(2)
-      expect(relatedTransactions.every((t) => t.type === "outflow")).toBe(true)
-      expect(unrelatedTransaction?.type).toBe("inflow")
       expect(result.success).toBe("Category has been updated.")
       expect(result.error).toBeUndefined()
     })
@@ -364,19 +313,93 @@ describe("Categories", async () => {
       )
     })
 
-    it("should return error when database operation throws error", async () => {
+    it("should return error when attempting to change category type", async () => {
+      await insertTestCategory(mockCustomCategory)
       mockAuthenticatedUser()
-      mockTransactionCollectionError()
 
       const result = await updateCustomCategory(
         mockCustomCategory._id.toString(),
-        mockValidCategoryValues
+        {
+          type: "inflow",
+          label: "Updated Label",
+          description: "Updated description",
+        }
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to update category! Please try again later."
+      expect(result.error).toBe("Category type cannot be changed!")
+    })
+  })
+
+  describe("isValidUserCategory", () => {
+    it("should return true for valid predefined categories with matching type", async () => {
+      expect(
+        await isValidUserCategory(
+          mockUser._id.toString(),
+          "salary_bonus",
+          "inflow"
+        )
+      ).toBe(true)
+      expect(
+        await isValidUserCategory(
+          mockUser._id.toString(),
+          "food_beverage",
+          "outflow"
+        )
+      ).toBe(true)
+      expect(
+        await isValidUserCategory(mockUser._id.toString(), "salary_bonus")
+      ).toBe(true)
+    })
+
+    it("should return false for predefined categories with mismatched type", async () => {
+      expect(
+        await isValidUserCategory(
+          mockUser._id.toString(),
+          "salary_bonus",
+          "outflow"
+        )
+      ).toBe(false)
+      expect(
+        await isValidUserCategory(
+          mockUser._id.toString(),
+          "food_beverage",
+          "inflow"
+        )
+      ).toBe(false)
+    })
+
+    it("should return false for invalid category format or non-existent key", async () => {
+      expect(
+        await isValidUserCategory(mockUser._id.toString(), "non_existent_key")
+      ).toBe(false)
+      expect(await isValidUserCategory(mockUser._id.toString(), "12345")).toBe(
+        false
       )
+    })
+
+    it("should return true for custom category owned by user with matching type", async () => {
+      await insertTestCategory(mockCustomCategory)
+      expect(
+        await isValidUserCategory(
+          mockUser._id.toString(),
+          mockCustomCategory._id.toString(),
+          mockCustomCategory.type
+        )
+      ).toBe(true)
+    })
+
+    it("should return false for custom category owned by another user", async () => {
+      await insertTestCategory({
+        ...mockCustomCategory,
+        userId: new ObjectId("690d2cdc200d6a719f9a438e"),
+      })
+      expect(
+        await isValidUserCategory(
+          mockUser._id.toString(),
+          mockCustomCategory._id.toString()
+        )
+      ).toBe(false)
     })
   })
 

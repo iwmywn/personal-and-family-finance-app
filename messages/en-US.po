@@ -47,6 +47,7 @@ msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "Failed to delete user! Please try again later."
 
+#: actions/admin.actions.ts
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -56,6 +57,33 @@ msgctxt "5GmpFA"
 msgid "Invalid data!"
 msgstr "Invalid data!"
 
+#: actions/admin.actions.ts
+msgctxt "y3epBO"
+msgid "You cannot change your own role!"
+msgstr "You cannot change your own role!"
+
+#: actions/admin.actions.ts
+msgctxt "ayfthF"
+msgid "User role has been updated."
+msgstr "User role has been updated."
+
+#: actions/admin.actions.ts
+#: components/admin/change-role-dialog.tsx
+msgctxt "jNvbw7"
+msgid "Failed to update user role! Please try again later."
+msgstr "Failed to update user role! Please try again later."
+
+#: actions/admin.actions.ts
+msgctxt "ygB8SA"
+msgid "Password has been updated."
+msgstr "Password has been updated."
+
+#: actions/admin.actions.ts
+#: components/admin/set-password-dialog.tsx
+msgctxt "VvoQv7"
+msgid "Failed to set user password! Please try again later."
+msgstr "Failed to set user password! Please try again later."
+
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -64,6 +92,14 @@ msgstr "Invalid data!"
 msgctxt "QWvB5t"
 msgid "Access denied! Please refresh the page and try again."
 msgstr "Access denied! Please refresh the page and try again."
+
+#: actions/budget.actions.ts
+#: actions/goal.actions.ts
+#: actions/recurring.actions.ts
+#: actions/transaction.actions.ts
+msgctxt "IViGC5"
+msgid "Invalid category!"
+msgstr "Invalid category!"
 
 #: actions/budget.actions.ts
 msgctxt "hcutYI"
@@ -874,16 +910,6 @@ msgid "30 Days"
 msgstr "30 Days"
 
 #: components/admin/change-role-dialog.tsx
-msgctxt "jNvbw7"
-msgid "Failed to update user role! Please try again later."
-msgstr "Failed to update user role! Please try again later."
-
-#: components/admin/change-role-dialog.tsx
-msgctxt "ayfthF"
-msgid "User role has been updated."
-msgstr "User role has been updated."
-
-#: components/admin/change-role-dialog.tsx
 msgctxt "ho_b8x"
 msgid "Change User Role"
 msgstr "Change User Role"
@@ -993,16 +1019,6 @@ msgstr "Are you sure you want to permanently delete this user account?"
 msgctxt "uon94C"
 msgid "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
 msgstr "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "VvoQv7"
-msgid "Failed to set user password! Please try again later."
-msgstr "Failed to set user password! Please try again later."
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "ygB8SA"
-msgid "Password has been updated."
-msgstr "Password has been updated."
 
 #: components/admin/set-password-dialog.tsx
 msgctxt "ArEJTr"

@@ -1,9 +1,12 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
+import type { ClientSession } from "mongodb"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
+import { getCategoryType, isPredefinedCategoryKey } from "@/lib/category"
+import type { CategoryType } from "@/lib/category"
 import {
   getBudgetsCollection,
   getCategoriesCollection,
@@ -18,6 +21,43 @@ import { getSchemas } from "@/schemas/server"
 import type { CategoryFormValues } from "@/schemas/types"
 
 import { getCurrentSession } from "./session.actions"
+
+export async function isValidUserCategory(
+  userId: string,
+  categoryKey: string,
+  expectedType?: CategoryType,
+  dbSession?: ClientSession
+): Promise<boolean> {
+  if (isPredefinedCategoryKey(categoryKey)) {
+    if (expectedType && getCategoryType(categoryKey) !== expectedType) {
+      return false
+    }
+    return true
+  }
+
+  if (!ObjectId.isValid(categoryKey)) {
+    return false
+  }
+
+  const categoriesCollection = await getCategoriesCollection()
+  const customCategory = await categoriesCollection.findOne(
+    {
+      _id: new ObjectId(categoryKey),
+      userId: new ObjectId(userId),
+    },
+    dbSession ? { session: dbSession } : undefined
+  )
+
+  if (!customCategory) {
+    return false
+  }
+
+  if (expectedType && customCategory.type !== expectedType) {
+    return false
+  }
+
+  return true
+}
 
 export async function createCustomCategory(
   values: CategoryFormValues
@@ -96,53 +136,29 @@ export async function updateCustomCategory(
     }
 
     const userId = session.user.id
-    const [categoriesCollection, transactionsCollection] = await Promise.all([
-      getCategoriesCollection(),
-      getTransactionsCollection(),
-    ])
+    const categoriesCollection = await getCategoriesCollection()
 
-    let notFound = false
-
-    await withTransaction(async (dbSession) => {
-      const result = await categoriesCollection.updateOne(
-        { _id: new ObjectId(categoryId), userId: new ObjectId(userId) },
-        {
-          $set: {
-            type: parsedValues.data.type,
-            label: parsedValues.data.label,
-            description: parsedValues.data.description,
-          },
+    const result = await categoriesCollection.updateOne(
+      {
+        _id: new ObjectId(categoryId),
+        userId: new ObjectId(userId),
+        type: parsedValues.data.type,
+      },
+      {
+        $set: {
+          label: parsedValues.data.label,
+          description: parsedValues.data.description,
         },
-        { session: dbSession }
-      )
-
-      if (result.matchedCount === 0) {
-        notFound = true
-        return
       }
+    )
 
-      await transactionsCollection.updateMany(
-        {
-          userId: new ObjectId(userId),
-          categoryKey: categoryId,
-        },
-        {
-          $set: {
-            type: parsedValues.data.type,
-          },
-        },
-        { session: dbSession }
-      )
-    })
-
-    if (notFound) {
+    if (result.matchedCount === 0) {
       return {
         error: t("Category not found or you don't have permission to edit!"),
       }
     }
 
     updateTag(`categories-${userId}`)
-    updateTag(`transactions-${userId}`)
     return { success: t("Category has been updated."), error: undefined }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
@@ -188,92 +204,120 @@ export async function deleteCustomCategory(categoryId: string): Promise<{
       getGoalsCollection(),
       getRecurringTransactionsCollection(),
     ])
-    const existingCategory = await categoriesCollection.findOne({
-      _id: new ObjectId(categoryId),
-      userId: new ObjectId(userId),
+
+    const result = await withTransaction(async (dbSession) => {
+      const existingCategory = await categoriesCollection.findOne(
+        {
+          _id: new ObjectId(categoryId),
+          userId: new ObjectId(userId),
+        },
+        { session: dbSession }
+      )
+
+      if (!existingCategory) {
+        return {
+          error: t(
+            "Category not found or you don't have permission to delete!"
+          ),
+        }
+      }
+
+      const [
+        transactionCount,
+        budgetCount,
+        goalCount,
+        recurringTransactionCount,
+      ] = await Promise.all([
+        transactionsCollection.countDocuments(
+          {
+            userId: new ObjectId(userId),
+            categoryKey: categoryId,
+          },
+          { session: dbSession }
+        ),
+        budgetsCollection.countDocuments(
+          {
+            userId: new ObjectId(userId),
+            categoryKey: categoryId,
+          },
+          { session: dbSession }
+        ),
+        goalsCollection.countDocuments(
+          {
+            userId: new ObjectId(userId),
+            categoryKey: categoryId,
+          },
+          { session: dbSession }
+        ),
+        recurringTransactionsCollection.countDocuments(
+          {
+            userId: new ObjectId(userId),
+            categoryKey: categoryId,
+          },
+          { session: dbSession }
+        ),
+      ])
+
+      if (transactionCount > 0) {
+        return {
+          error: t(
+            "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first.",
+            {
+              count: transactionCount.toString(),
+            }
+          ),
+        }
+      }
+
+      if (budgetCount > 0) {
+        return {
+          error: t(
+            "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first.",
+            {
+              count: budgetCount.toString(),
+            }
+          ),
+        }
+      }
+
+      if (goalCount > 0) {
+        return {
+          error: t(
+            "Cannot delete category. There are {count} goals using this category. Please delete those goals first.",
+            {
+              count: goalCount.toString(),
+            }
+          ),
+        }
+      }
+
+      if (recurringTransactionCount > 0) {
+        return {
+          error: t(
+            "Cannot delete category. There are {count} recurring transactions using this category. Please delete those recurring transactions first.",
+            {
+              count: recurringTransactionCount.toString(),
+            }
+          ),
+        }
+      }
+
+      await categoriesCollection.deleteOne(
+        {
+          _id: new ObjectId(categoryId),
+          userId: new ObjectId(userId),
+        },
+        { session: dbSession }
+      )
+
+      return { success: t("Category has been deleted.") }
     })
 
-    if (!existingCategory) {
-      return {
-        error: t("Category not found or you don't have permission to delete!"),
-      }
+    if (result.success) {
+      updateTag(`categories-${userId}`)
     }
 
-    const [
-      transactionCount,
-      budgetCount,
-      goalCount,
-      recurringTransactionCount,
-    ] = await Promise.all([
-      transactionsCollection.countDocuments({
-        userId: new ObjectId(userId),
-        categoryKey: categoryId,
-      }),
-      budgetsCollection.countDocuments({
-        userId: new ObjectId(userId),
-        categoryKey: categoryId,
-      }),
-      goalsCollection.countDocuments({
-        userId: new ObjectId(userId),
-        categoryKey: categoryId,
-      }),
-      recurringTransactionsCollection.countDocuments({
-        userId: new ObjectId(userId),
-        categoryKey: categoryId,
-      }),
-    ])
-
-    if (transactionCount > 0) {
-      return {
-        error: t(
-          "Cannot delete category. There are {count} transactions using this category. Please delete those transactions first.",
-          {
-            count: transactionCount.toString(),
-          }
-        ),
-      }
-    }
-
-    if (budgetCount > 0) {
-      return {
-        error: t(
-          "Cannot delete category. There are {count} budgets using this category. Please delete those budgets first.",
-          {
-            count: budgetCount.toString(),
-          }
-        ),
-      }
-    }
-
-    if (goalCount > 0) {
-      return {
-        error: t(
-          "Cannot delete category. There are {count} goals using this category. Please delete those goals first.",
-          {
-            count: goalCount.toString(),
-          }
-        ),
-      }
-    }
-
-    if (recurringTransactionCount > 0) {
-      return {
-        error: t(
-          "Cannot delete category. There are {count} recurring transactions using this category. Please delete those recurring transactions first.",
-          {
-            count: recurringTransactionCount.toString(),
-          }
-        ),
-      }
-    }
-
-    await categoriesCollection.deleteOne({
-      _id: new ObjectId(categoryId),
-      userId: new ObjectId(userId),
-    })
-
-    updateTag(`categories-${userId}`)
-    return { success: t("Category has been deleted.") }
+    return result
   } catch (error) {
     console.error("Error deleting custom category:", error)
     return { error: t("Failed to delete category! Please try again later.") }

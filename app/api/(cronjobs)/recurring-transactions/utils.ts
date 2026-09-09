@@ -19,10 +19,7 @@ function addDays(lastGeneratedDateUTC: Date, days: number): Date {
 function nextMonthlyDate(lastGeneratedDateUTC: Date, startDateUTC: Date): Date {
   const y = lastGeneratedDateUTC.getUTCFullYear()
   const m = lastGeneratedDateUTC.getUTCMonth() + 1
-  const targetDay = Math.max(
-    startDateUTC.getUTCDate(),
-    lastGeneratedDateUTC.getUTCDate()
-  )
+  const targetDay = startDateUTC.getUTCDate()
   return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
 }
 
@@ -32,20 +29,14 @@ function nextQuarterlyDate(
 ): Date {
   const y = lastGeneratedDateUTC.getUTCFullYear()
   const m = lastGeneratedDateUTC.getUTCMonth() + 3
-  const targetDay = Math.max(
-    startDateUTC.getUTCDate(),
-    lastGeneratedDateUTC.getUTCDate()
-  )
+  const targetDay = startDateUTC.getUTCDate()
   return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
 }
 
 function nextYearlyDate(lastGeneratedDateUTC: Date, startDateUTC: Date): Date {
   const y = lastGeneratedDateUTC.getUTCFullYear() + 1
   const targetMonth = startDateUTC.getUTCMonth()
-  const targetDay = Math.max(
-    startDateUTC.getUTCDate(),
-    lastGeneratedDateUTC.getUTCDate()
-  )
+  const targetDay = startDateUTC.getUTCDate()
   return new Date(
     Date.UTC(y, targetMonth, normalizeDay(y, targetMonth, targetDay))
   )

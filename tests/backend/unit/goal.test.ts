@@ -38,14 +38,14 @@ describe("Goals", async () => {
       )
     })
 
-    it("should return error when budget already exists", async () => {
+    it("should return error when goal already exists", async () => {
       await insertTestGoal(mockGoal)
       mockAuthenticatedUser()
 
       const result = await createGoal({
         categoryKey: mockGoal.categoryKey,
         currency: mockGoal.currency,
-        name: "Valid",
+        name: mockGoal.name,
         targetAmount: "2000000",
         startDate: localDateToUTCMidnight(mockGoal.startDate),
         endDate: localDateToUTCMidnight(mockGoal.endDate),
@@ -53,6 +53,35 @@ describe("Goals", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("This goal already exists!")
+    })
+
+    it("should allow creating multiple goals in same category and timeframe with different names", async () => {
+      await insertTestGoal(mockGoal)
+      mockAuthenticatedUser()
+
+      const result = await createGoal({
+        categoryKey: mockGoal.categoryKey,
+        currency: mockGoal.currency,
+        name: "buy a second vehicle",
+        targetAmount: "30000000",
+        startDate: localDateToUTCMidnight(mockGoal.startDate),
+        endDate: localDateToUTCMidnight(mockGoal.endDate),
+      })
+
+      expect(result.success).toBe("Goal has been added.")
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when categoryKey is invalid or does not belong to user", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createGoal({
+        ...mockValidGoalValues,
+        categoryKey: "non-existent-or-invalid-key",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
     })
 
     it("should successfully create goal", async () => {

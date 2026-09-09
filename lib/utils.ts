@@ -18,11 +18,18 @@ export function formatCurrency(
 }
 
 export function formatDate(date: Date, locale: Locale): string {
+  const isUTCMidnight =
+    date.getUTCHours() === 0 &&
+    date.getUTCMinutes() === 0 &&
+    date.getUTCSeconds() === 0 &&
+    date.getUTCMilliseconds() === 0
+
   return new Intl.DateTimeFormat(locale, {
     weekday: "short",
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
+    timeZone: isUTCMidnight ? "UTC" : undefined,
   }).format(date)
 }
 
@@ -32,7 +39,7 @@ export function localDateToUTCMidnight(date: Date): Date {
 
 export function getUniqueYears(transactions: Transaction[]): number[] {
   return Array.from(
-    new Set(transactions.map((t) => new Date(t.date).getFullYear()))
+    new Set(transactions.map((t) => new Date(t.date).getUTCFullYear()))
   ).sort((a, b) => b - a)
 }
 
@@ -44,7 +51,7 @@ export const progressColorClass = {
 } as const
 
 export function toDecimal(value: string): Decimal {
-  return new Decimal(value.toString())
+  return new Decimal(value)
 }
 
 export function convertAmountWithRates(
@@ -56,8 +63,12 @@ export function convertAmountWithRates(
   const decAmount = new Decimal(amount)
   if (from === to || !rates) return decAmount
 
-  const rateFrom = new Decimal(rates[from])
-  const rateTo = new Decimal(rates[to])
+  const rateFromVal = rates[from]
+  const rateToVal = rates[to]
+  if (!rateFromVal || !rateToVal) return decAmount
+
+  const rateFrom = new Decimal(rateFromVal)
+  const rateTo = new Decimal(rateToVal)
 
   const amountInUSD = from === "USD" ? decAmount : decAmount.dividedBy(rateFrom)
   const result = to === "USD" ? amountInUSD : amountInUSD.mul(rateTo)

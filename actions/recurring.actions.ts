@@ -10,6 +10,7 @@ import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
+import { isValidUserCategory } from "./category.actions"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
@@ -38,6 +39,16 @@ export async function createRecurringTransaction(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      parsedValues.data.type
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const recurringCollection = await getRecurringTransactionsCollection()
 
     await recurringCollection.insertOne({
@@ -103,6 +114,16 @@ export async function updateRecurringTransaction(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      parsedValues.data.type
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const recurringCollection = await getRecurringTransactionsCollection()
     const result = await recurringCollection.updateOne(
       { _id: new ObjectId(recurringId), userId: new ObjectId(userId) },

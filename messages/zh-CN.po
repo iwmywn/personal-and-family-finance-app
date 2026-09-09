@@ -47,6 +47,7 @@ msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "删除用户失败！请稍后再试。"
 
+#: actions/admin.actions.ts
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -56,6 +57,33 @@ msgctxt "5GmpFA"
 msgid "Invalid data!"
 msgstr "无效数据！"
 
+#: actions/admin.actions.ts
+msgctxt "y3epBO"
+msgid "You cannot change your own role!"
+msgstr "您不能更改自己的角色！"
+
+#: actions/admin.actions.ts
+msgctxt "ayfthF"
+msgid "User role has been updated."
+msgstr "用户角色已更新。"
+
+#: actions/admin.actions.ts
+#: components/admin/change-role-dialog.tsx
+msgctxt "jNvbw7"
+msgid "Failed to update user role! Please try again later."
+msgstr "更新用户角色失败！请稍后再试。"
+
+#: actions/admin.actions.ts
+msgctxt "ygB8SA"
+msgid "Password has been updated."
+msgstr "密码已更新。"
+
+#: actions/admin.actions.ts
+#: components/admin/set-password-dialog.tsx
+msgctxt "VvoQv7"
+msgid "Failed to set user password! Please try again later."
+msgstr "设置用户密码失败！请稍后再试。"
+
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -64,6 +92,14 @@ msgstr "无效数据！"
 msgctxt "QWvB5t"
 msgid "Access denied! Please refresh the page and try again."
 msgstr "访问被拒绝！请刷新页面并重试。"
+
+#: actions/budget.actions.ts
+#: actions/goal.actions.ts
+#: actions/recurring.actions.ts
+#: actions/transaction.actions.ts
+msgctxt "IViGC5"
+msgid "Invalid category!"
+msgstr "分类无效！"
 
 #: actions/budget.actions.ts
 msgctxt "hcutYI"
@@ -874,16 +910,6 @@ msgid "30 Days"
 msgstr "30天"
 
 #: components/admin/change-role-dialog.tsx
-msgctxt "jNvbw7"
-msgid "Failed to update user role! Please try again later."
-msgstr "更新用户角色失败！请稍后再试。"
-
-#: components/admin/change-role-dialog.tsx
-msgctxt "ayfthF"
-msgid "User role has been updated."
-msgstr "用户角色已更新。"
-
-#: components/admin/change-role-dialog.tsx
 msgctxt "ho_b8x"
 msgid "Change User Role"
 msgstr "更改用户角色"
@@ -993,16 +1019,6 @@ msgstr "您确定要永久删除此用户账户吗？"
 msgctxt "uon94C"
 msgid "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
 msgstr "所有关联数据（包括交易、预算和目标）都将被永久删除。此操作无法撤消。"
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "VvoQv7"
-msgid "Failed to set user password! Please try again later."
-msgstr "设置用户密码失败！请稍后再试。"
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "ygB8SA"
-msgid "Password has been updated."
-msgstr "密码已更新。"
 
 #: components/admin/set-password-dialog.tsx
 msgctxt "ArEJTr"

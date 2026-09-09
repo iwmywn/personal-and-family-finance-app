@@ -124,8 +124,12 @@ export function CategoryDialog({
               onValueChange={(value) => handleTypeChange(value as CategoryType)}
             >
               <TabsList className="w-full">
-                <TabsTrigger value="inflow">{t("Inflow")}</TabsTrigger>
-                <TabsTrigger value="outflow">{t("Outflow")}</TabsTrigger>
+                <TabsTrigger value="inflow" disabled={Boolean(category)}>
+                  {t("Inflow")}
+                </TabsTrigger>
+                <TabsTrigger value="outflow" disabled={Boolean(category)}>
+                  {t("Outflow")}
+                </TabsTrigger>
               </TabsList>
             </Tabs>
 

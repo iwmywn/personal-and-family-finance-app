@@ -20,6 +20,14 @@ interface ExportButtonProps {
   filteredTransactions: Transaction[]
 }
 
+export function sanitizeCSVField(value: string): string {
+  let sanitized = value
+  if (/^[=+\-@\t\r]/.test(sanitized)) {
+    sanitized = `'${sanitized}`
+  }
+  return `"${sanitized.replace(/"/g, '""')}"`
+}
+
 export function ExportButton({ filteredTransactions }: ExportButtonProps) {
   const [isPending, startTransition] = useTransition()
   const t = useExtracted()
@@ -37,17 +45,14 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
       t("Description"),
     ]
     const rows = filteredTransactions.map((ft) => {
-      const date = `"${formatDate(ft.date)}"`
-      const type = ft.type === "inflow" ? t("Inflow") : t("Outflow")
+      const date = sanitizeCSVField(formatDate(ft.date))
+      const type = sanitizeCSVField(
+        ft.type === "inflow" ? t("Inflow") : t("Outflow")
+      )
+      const category = sanitizeCSVField(getCategoryLabel(ft.categoryKey))
       const amount = ft.amount.toString()
-      const description = ft.description.replace(/"/g, '""')
-      return [
-        date,
-        type,
-        getCategoryLabel(ft.categoryKey),
-        amount,
-        `"${description}"`,
-      ]
+      const description = sanitizeCSVField(ft.description)
+      return [date, type, category, amount, description]
     })
 
     return [headers.join(","), ...rows.map((row) => row.join(","))].join("\n")
@@ -66,13 +71,15 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
 
         if (filteredTransactions.length === 1) {
           dateStr = formatDate(filteredTransactions[0].date)
-        }
-        if (filteredTransactions.length > 1) {
-          const firstDate = formatDate(
-            filteredTransactions[filteredTransactions.length - 1].date
+        } else if (filteredTransactions.length > 1) {
+          const timestamps = filteredTransactions.map((t) =>
+            new Date(t.date).getTime()
           )
-          const lastDate = formatDate(filteredTransactions[0].date)
-          dateStr = `${t("From")}_${firstDate}_${t("To")}_${lastDate}`
+          const minDate = new Date(Math.min(...timestamps))
+          const maxDate = new Date(Math.max(...timestamps))
+          const fromDateStr = formatDate(minDate)
+          const toDateStr = formatDate(maxDate)
+          dateStr = `${t("From")}_${fromDateStr}_${t("To")}_${toDateStr}`
         }
 
         const filename = `${t("transactions")}_${dateStr}.csv`

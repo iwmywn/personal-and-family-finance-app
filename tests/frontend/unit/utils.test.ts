@@ -1,4 +1,5 @@
 import { mockTransactions } from "@/tests/shared/data"
+import { sanitizeCSVField } from "@/components/transactions/export-button"
 import type { Locale } from "@/i18n/config"
 import {
   formatCurrency,
@@ -149,6 +150,24 @@ describe("Utils", () => {
     it("should reject backslash bypasses", () => {
       expect(getSafeCallbackUrl("/\\evil.com")).toBe("/home")
       expect(getSafeCallbackUrl("/evil.com\\test")).toBe("/home")
+    })
+  })
+
+  describe("sanitizeCSVField", () => {
+    it("should quote normal fields and escape double quotes", () => {
+      expect(sanitizeCSVField("Grocery")).toBe('"Grocery"')
+      expect(sanitizeCSVField('Dinner "with" friends')).toBe(
+        '"Dinner ""with"" friends"'
+      )
+    })
+
+    it("should prefix formulas with single quote to prevent CSV injection", () => {
+      expect(sanitizeCSVField("=SUM(A1:A10)")).toBe('"\'=SUM(A1:A10)"')
+      expect(sanitizeCSVField("+12345")).toBe('"\' +12345"'.replace(" ", ""))
+      expect(sanitizeCSVField("-100")).toBe('"\' -100"'.replace(" ", ""))
+      expect(sanitizeCSVField("@SUM")).toBe('"\'@SUM"')
+      expect(sanitizeCSVField("\tCMD")).toBe('"\'\tCMD"')
+      expect(sanitizeCSVField("\rCMD")).toBe('"\'\rCMD"')
     })
   })
 })

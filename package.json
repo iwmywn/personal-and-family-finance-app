@@ -17,7 +17,9 @@
     "react-doctor": "react-doctor",
     "test": "vitest",
     "test:fe": "vitest --project frontend",
-    "test:be": "vitest --project backend"
+    "test:be": "vitest --project backend",
+    "check:po": "node scripts/check-po.js",
+    "migrate:currency": "node --env-file=.env scripts/migrate-currency.ts"
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "1.7.3",

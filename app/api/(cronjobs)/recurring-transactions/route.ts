@@ -2,6 +2,7 @@
 
 import type { NextRequest } from "next/server"
 
+import { ensureExchangeRateForDate } from "@/actions/exchange-rates.actions"
 import { serverEnv } from "@/env/server"
 import {
   getRecurringTransactionsCollection,
@@ -32,6 +33,8 @@ export async function GET(request: NextRequest) {
     const todayUTC = new Date(
       Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
     )
+
+    await ensureExchangeRateForDate(todayUTC)
 
     const deactivatedResult = await recurringCollection.updateMany(
       {

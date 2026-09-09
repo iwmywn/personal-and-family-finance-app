@@ -6,6 +6,7 @@ import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { updateUserRole } from "@/actions/admin.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -32,9 +33,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
-import { authClient } from "@/lib/auth-client"
 import type { User } from "@/lib/definitions"
+import { isSuperAdminRole } from "@/lib/role"
 import type { AssignableRole } from "@/lib/role"
 import type { AdminRoleFormValues } from "@/schemas/types"
 
@@ -50,6 +52,8 @@ export function ChangeRoleDialog({
   setOpen,
 }: ChangeRoleDialogProps) {
   const t = useExtracted()
+  const { user: currentUser } = useUser()
+  const isCurrentSuperAdmin = isSuperAdminRole(currentUser.role)
   const { createAdminRoleSchema } = useSchemas()
   const router = useRouter()
   const form = useForm<AdminRoleFormValues>({
@@ -60,23 +64,20 @@ export function ChangeRoleDialog({
   })
 
   async function onSubmit(values: AdminRoleFormValues) {
-    await authClient.admin.updateUser({
-      userId: user.id,
-      data: {
-        role: values.role,
-      },
-      fetchOptions: {
-        onError: () => {
-          toast.error(t("Failed to update user role! Please try again later."))
-        },
-        onSuccess: () => {
-          setOpen(false)
-          toast.success(t("User role has been updated."))
-          router.refresh()
-          form.reset()
-        },
-      },
-    })
+    try {
+      const { success, error } = await updateUserRole(user.id, values.role)
+
+      if (error || !success) {
+        toast.error(error)
+      } else {
+        setOpen(false)
+        toast.success(success)
+        router.refresh()
+        form.reset()
+      }
+    } catch {
+      toast.error(t("Failed to update user role! Please try again later."))
+    }
   }
 
   return (
@@ -106,7 +107,9 @@ export function ChangeRoleDialog({
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="user">{t("User")}</SelectItem>
-                      <SelectItem value="admin">{t("Admin")}</SelectItem>
+                      {isCurrentSuperAdmin && (
+                        <SelectItem value="admin">{t("Admin")}</SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

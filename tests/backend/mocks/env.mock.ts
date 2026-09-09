@@ -32,9 +32,6 @@ vi.mock("@/env/server", () => {
       get DB_NAME() {
         return "test-db-name"
       },
-      get CURRENCY_API_SECRET() {
-        return "test-currency-api-secret"
-      },
     },
   }
 })

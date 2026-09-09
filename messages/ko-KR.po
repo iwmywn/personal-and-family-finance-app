@@ -47,6 +47,7 @@ msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "사용자 삭제에 실패했습니다! 나중에 다시 시도해주세요."
 
+#: actions/admin.actions.ts
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -56,6 +57,33 @@ msgctxt "5GmpFA"
 msgid "Invalid data!"
 msgstr "잘못된 데이터입니다!"
 
+#: actions/admin.actions.ts
+msgctxt "y3epBO"
+msgid "You cannot change your own role!"
+msgstr "본인의 역할은 변경할 수 없습니다!"
+
+#: actions/admin.actions.ts
+msgctxt "ayfthF"
+msgid "User role has been updated."
+msgstr "사용자 역할이 업데이트되었습니다."
+
+#: actions/admin.actions.ts
+#: components/admin/change-role-dialog.tsx
+msgctxt "jNvbw7"
+msgid "Failed to update user role! Please try again later."
+msgstr "사용자 역할 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/admin.actions.ts
+msgctxt "ygB8SA"
+msgid "Password has been updated."
+msgstr "비밀번호가 업데이트되었습니다."
+
+#: actions/admin.actions.ts
+#: components/admin/set-password-dialog.tsx
+msgctxt "VvoQv7"
+msgid "Failed to set user password! Please try again later."
+msgstr "사용자 비밀번호 설정에 실패했습니다! 나중에 다시 시도해주세요."
+
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -64,6 +92,14 @@ msgstr "잘못된 데이터입니다!"
 msgctxt "QWvB5t"
 msgid "Access denied! Please refresh the page and try again."
 msgstr "접근이 거부되었습니다! 페이지를 새로고침하고 다시 시도해주세요."
+
+#: actions/budget.actions.ts
+#: actions/goal.actions.ts
+#: actions/recurring.actions.ts
+#: actions/transaction.actions.ts
+msgctxt "IViGC5"
+msgid "Invalid category!"
+msgstr "잘못된 카테고리입니다!"
 
 #: actions/budget.actions.ts
 msgctxt "hcutYI"
@@ -874,16 +910,6 @@ msgid "30 Days"
 msgstr "30일"
 
 #: components/admin/change-role-dialog.tsx
-msgctxt "jNvbw7"
-msgid "Failed to update user role! Please try again later."
-msgstr "사용자 역할 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: components/admin/change-role-dialog.tsx
-msgctxt "ayfthF"
-msgid "User role has been updated."
-msgstr "사용자 역할이 업데이트되었습니다."
-
-#: components/admin/change-role-dialog.tsx
 msgctxt "ho_b8x"
 msgid "Change User Role"
 msgstr "사용자 역할 변경"
@@ -993,16 +1019,6 @@ msgstr "이 사용자 계정을 영구적으로 삭제하시겠습니까?"
 msgctxt "uon94C"
 msgid "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
 msgstr "거래, 예산, 목표를 포함한 모든 관련 데이터가 영구적으로 삭제됩니다. 이 작업은 취소할 수 없습니다."
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "VvoQv7"
-msgid "Failed to set user password! Please try again later."
-msgstr "사용자 비밀번호 설정에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: components/admin/set-password-dialog.tsx
-msgctxt "ygB8SA"
-msgid "Password has been updated."
-msgstr "비밀번호가 업데이트되었습니다."
 
 #: components/admin/set-password-dialog.tsx
 msgctxt "ArEJTr"

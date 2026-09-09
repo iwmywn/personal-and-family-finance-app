@@ -88,6 +88,34 @@ describe("Transactions", async () => {
       )
     })
 
+    it("should return error and not save transaction when fetching exchange rate fails", async () => {
+      mockAuthenticatedUser()
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        statusText: "Internal Server Error",
+      } as Response)
+
+      const testDate = localDateToUTCMidnight(new Date("2026-03-01"))
+      const result = await createTransaction({
+        ...mockValidTransactionValues,
+        date: testDate,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Failed to add transaction! Please try again later."
+      )
+
+      const transactionsCollection = await getTransactionsCollection()
+      const found = await transactionsCollection.findOne({
+        date: testDate,
+      })
+      expect(found).toBeNull()
+
+      fetchSpy.mockRestore()
+    })
+
     it("should prevent race condition when creating duplicate transactions concurrently", async () => {
       mockAuthenticatedUser()
 
@@ -106,6 +134,31 @@ describe("Transactions", async () => {
 
       expect(successCount).toBe(1)
       expect(errorCount).toBe(1)
+    })
+
+    it("should return error when categoryKey is invalid or does not belong to user", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createTransaction({
+        ...mockValidTransactionValues,
+        categoryKey: "non-existent-or-invalid-key",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when transaction type does not match category type", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createTransaction({
+        ...mockValidTransactionValues,
+        type: "outflow",
+        categoryKey: "business_freelance",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
     })
   })
 
@@ -302,6 +355,43 @@ describe("Transactions", async () => {
       expect(result.error).toBe(
         "Failed to update transaction! Please try again later."
       )
+    })
+
+    it("should return error and not update transaction when fetching exchange rate fails", async () => {
+      await insertTestTransaction(mockTransaction)
+      mockAuthenticatedUser()
+
+      const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        statusText: "Internal Server Error",
+      } as Response)
+
+      const newDate = localDateToUTCMidnight(new Date("2026-03-01"))
+      const result = await updateTransaction(mockTransaction._id.toString(), {
+        type: mockTransaction.type,
+        categoryKey: mockTransaction.categoryKey,
+        amount: mockTransaction.amount.toString(),
+        currency: mockTransaction.currency,
+        description: "attempted new description",
+        date: newDate,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Failed to update transaction! Please try again later."
+      )
+
+      const transactionsCollection = await getTransactionsCollection()
+      const current = await transactionsCollection.findOne({
+        _id: mockTransaction._id,
+      })
+      expect(current?.description).toBe(mockTransaction.description)
+      expect(current?.date.toISOString()).toBe(
+        mockTransaction.date.toISOString()
+      )
+
+      fetchSpy.mockRestore()
     })
   })
 

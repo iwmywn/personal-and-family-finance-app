@@ -75,6 +75,31 @@ describe("Recurring Transactions", async () => {
       expect(result.error).toBe("This recurring transaction already exists!")
     })
 
+    it("should return error when categoryKey is invalid or does not belong to user", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createRecurringTransaction({
+        ...mockValidRecurringTransactionValues,
+        categoryKey: "non-existent-or-invalid-key",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when recurring transaction type does not match category type", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createRecurringTransaction({
+        ...mockValidRecurringTransactionValues,
+        type: "outflow",
+        categoryKey: "business_freelance",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
     it("should successfully create recurring transaction with monthly frequency", async () => {
       mockAuthenticatedUser()
 

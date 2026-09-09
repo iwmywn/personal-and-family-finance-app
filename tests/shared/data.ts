@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb"
 
-import { toDecimal128 } from "@/actions/utils"
-import { normalizeToUTCMidnight } from "@/app/api/(cronjobs)/exchange-rates/utils"
+import { normalizeToUTCMidnight, toDecimal128 } from "@/actions/utils"
 import type { CategoryType } from "@/lib/category"
 import type { Currency } from "@/lib/currency"
 import type {

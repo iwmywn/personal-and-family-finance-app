@@ -161,6 +161,20 @@ export function AdminTable({
                     const canDelete =
                       !isSelf && (isCurrentSuperAdmin || !isTargetAdmin)
 
+                    const canChangeRole =
+                      !isSelf &&
+                      (isCurrentSuperAdmin ||
+                        (isCurrentAdmin &&
+                          !isTargetAdmin &&
+                          !isTargetSuperAdmin))
+
+                    const canSetPassword =
+                      !isSelf &&
+                      (isCurrentSuperAdmin ||
+                        (isCurrentAdmin &&
+                          !isTargetAdmin &&
+                          !isTargetSuperAdmin))
+
                     return (
                       <TableRow key={u.id} className="[&>td]:text-center">
                         <TableCell>
@@ -289,6 +303,7 @@ export function AdminTable({
                                     setSelectedUser(u)
                                     setIsRoleOpen(true)
                                   }}
+                                  disabled={!canChangeRole}
                                 >
                                   {t("Change Role")}
                                 </DropdownMenuItem>
@@ -299,6 +314,7 @@ export function AdminTable({
                                     setSelectedUser(u)
                                     setIsPasswordOpen(true)
                                   }}
+                                  disabled={!canSetPassword}
                                 >
                                   {t("Reset Password")}
                                 </DropdownMenuItem>

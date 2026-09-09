@@ -42,12 +42,16 @@ async function ensureIndexes(db: Db) {
     db.collection("goals").createIndex(
       {
         userId: 1,
+        name: 1,
         categoryKey: 1,
         currency: 1,
         startDate: 1,
         endDate: 1,
       },
-      { unique: true, name: "userId_categoryKey_currency_startDate_endDate" }
+      {
+        unique: true,
+        name: "userId_name_categoryKey_currency_startDate_endDate",
+      }
     ),
 
     db.collection("recurringTransactions").createIndex(

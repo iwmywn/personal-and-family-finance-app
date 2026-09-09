@@ -174,7 +174,7 @@ describe("Recurring Transactions Cron Job", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
         }
         const today = localDateToUTCMidnight(new Date("2024-02-15"))
@@ -198,7 +198,7 @@ describe("Recurring Transactions Cron Job", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "monthly",
-          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
         }
         const today = localDateToUTCMidnight(new Date("2024-02-14"))
@@ -230,6 +230,30 @@ describe("Recurring Transactions Cron Job", () => {
         // Should generate on Feb 29 (last day) when lastGeneratedDate was Jan 31
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
+
+      it("should maintain anchor day from startDate even if previous month normalized to shorter day", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockRecurringTransaction,
+          frequency: "monthly",
+          startDate: localDateToUTCMidnight(new Date("2024-01-31")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-02-29")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-03-31"))
+
+        expect(shouldGenerateToday(rec, today)).toBe(true)
+      })
+
+      it("should not drift day if lastGeneratedDate differs from startDate day", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockRecurringTransaction,
+          frequency: "monthly",
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-20")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-02-10"))
+
+        expect(shouldGenerateToday(rec, today)).toBe(true)
+      })
     })
 
     describe("quarterly frequency", () => {
@@ -237,7 +261,7 @@ describe("Recurring Transactions Cron Job", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "quarterly",
-          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
         }
         const today = localDateToUTCMidnight(new Date("2024-04-15"))
@@ -249,7 +273,7 @@ describe("Recurring Transactions Cron Job", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "quarterly",
-          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
         }
         const today = localDateToUTCMidnight(new Date("2024-02-15"))
@@ -263,7 +287,7 @@ describe("Recurring Transactions Cron Job", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "yearly",
-          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
           endDate: undefined,
         }
@@ -276,7 +300,7 @@ describe("Recurring Transactions Cron Job", () => {
         const rec: DBRecurringTransaction = {
           ...mockRecurringTransaction,
           frequency: "yearly",
-          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
         }
         const today = localDateToUTCMidnight(new Date("2024-07-15"))

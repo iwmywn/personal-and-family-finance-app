@@ -4,7 +4,10 @@ import { cacheTag, updateTag } from "next/cache"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
-import { convertTransactionsToCurrency } from "@/actions/exchange-rates.actions"
+import {
+  convertTransactionsToCurrency,
+  ensureExchangeRateForDate,
+} from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
 import type { Currency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
@@ -12,6 +15,7 @@ import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { TransactionFormValues } from "@/schemas/types"
 
+import { isValidUserCategory } from "./category.actions"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
@@ -40,7 +44,19 @@ export async function createTransaction(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      parsedValues.data.type
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const transactionsCollection = await getTransactionsCollection()
+
+    await ensureExchangeRateForDate(parsedValues.data.date)
 
     await transactionsCollection.insertOne({
       userId: new ObjectId(userId),
@@ -95,7 +111,20 @@ export async function updateTransaction(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      parsedValues.data.type
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const transactionsCollection = await getTransactionsCollection()
+
+    await ensureExchangeRateForDate(parsedValues.data.date)
+
     const result = await transactionsCollection.updateOne(
       {
         _id: new ObjectId(transactionId),

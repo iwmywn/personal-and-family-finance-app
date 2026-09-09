@@ -10,6 +10,7 @@ import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { GoalFormValues } from "@/schemas/types"
 
+import { isValidUserCategory } from "./category.actions"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
@@ -36,6 +37,15 @@ export async function createGoal(values: GoalFormValues): Promise<{
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const goalsCollection = await getGoalsCollection()
 
     await goalsCollection.insertOne({
@@ -91,6 +101,15 @@ export async function updateGoal(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const goalsCollection = await getGoalsCollection()
     const result = await goalsCollection.updateOne(
       { _id: new ObjectId(goalId), userId: new ObjectId(userId) },
