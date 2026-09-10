@@ -42,6 +42,7 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
       t("Type"),
       t("Category"),
       t("Amount"),
+      t("Currency"),
       t("Description"),
     ]
     const rows = filteredTransactions.map((ft) => {
@@ -51,8 +52,9 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
       )
       const category = sanitizeCSVField(getCategoryLabel(ft.categoryKey))
       const amount = ft.amount.toString()
+      const currency = sanitizeCSVField(ft.currency)
       const description = sanitizeCSVField(ft.description)
-      return [date, type, category, amount, description]
+      return [date, type, category, amount, currency, description]
     })
 
     return [headers.join(","), ...rows.map((row) => row.join(","))].join("\n")

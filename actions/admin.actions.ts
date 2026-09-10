@@ -16,10 +16,18 @@ import {
 } from "@/lib/collections"
 import { withTransaction } from "@/lib/db"
 import type { User } from "@/lib/definitions"
-import { ADMIN_ROLES, isAdminRole } from "@/lib/role"
+import {
+  ADMIN_ROLES,
+  DEFAULT_ROLE,
+  isAdminRole,
+  isSuperAdminRole,
+} from "@/lib/role"
 import type { AssignableRole } from "@/lib/role"
 import { getSchemas } from "@/schemas/server"
-import type { AdminPasswordFormValues } from "@/schemas/types"
+import type {
+  AdminPasswordFormValues,
+  AdminUserFormValues,
+} from "@/schemas/types"
 
 export type AdminStats = {
   totalUsers: number
@@ -36,6 +44,57 @@ async function verifyAdmin() {
   }
 
   return session
+}
+
+export async function createAdminUser(values: AdminUserFormValues): Promise<{
+  error?: string
+  success?: string
+}> {
+  const t = await getExtracted()
+
+  try {
+    const session = await verifyAdmin()
+
+    if (!session) {
+      return { error: t("Access denied! Admin privileges required.") }
+    }
+
+    const { createAdminUserSchema } = await getSchemas()
+    const parsed = createAdminUserSchema().safeParse(values)
+
+    if (!parsed.success) {
+      return { error: t("Invalid data!") }
+    }
+
+    const isCurrentSuperAdmin = isSuperAdminRole(session.user.role)
+    const assignedRole = isCurrentSuperAdmin ? parsed.data.role : DEFAULT_ROLE
+
+    await auth.api.createUser({
+      headers: await headers(),
+      body: {
+        email: parsed.data.email,
+        password: parsed.data.password,
+        name: parsed.data.name,
+        role: assignedRole,
+        data: {
+          username: parsed.data.username,
+        },
+      },
+    })
+
+    return { success: t("User has been created.") }
+  } catch (error) {
+    console.error("Error creating user:", error)
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL"
+    ) {
+      return { error: t("This email is already in use.") }
+    }
+    return { error: t("Failed to sign in! Please try again later.") }
+  }
 }
 
 export async function getAdminStats(): Promise<{

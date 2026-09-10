@@ -62,7 +62,6 @@ import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 interface RecurringDialogProps {
@@ -121,18 +120,10 @@ export function RecurringTransactionDialog({
   })
 
   async function onSubmit(values: RecurringTransactionFormValues) {
-    const data = {
-      ...values,
-      startDate: localDateToUTCMidnight(values.startDate),
-      endDate: values.endDate
-        ? localDateToUTCMidnight(values.endDate)
-        : undefined,
-    }
-
     if (recurring) {
       const { success, error } = await updateRecurringTransaction(
         recurring._id,
-        data
+        values
       )
 
       if (error || !success) {
@@ -143,7 +134,7 @@ export function RecurringTransactionDialog({
         router.refresh()
       }
     } else {
-      const { success, error } = await createRecurringTransaction(data)
+      const { success, error } = await createRecurringTransaction(values)
 
       if (error || !success) {
         toast.error(error)

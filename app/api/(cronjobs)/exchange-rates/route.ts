@@ -1,5 +1,4 @@
-"use server"
-
+import crypto from "crypto"
 import type { NextRequest } from "next/server"
 
 import { ensureExchangeRateForDate } from "@/actions/exchange-rates.actions"
@@ -16,9 +15,18 @@ import { CURRENCIES } from "@/lib/currency"
 
 const MAX_DATES_PER_RUN = 10
 
+function verifyCronSecret(authHeader: string | null): boolean {
+  if (!authHeader) return false
+  const expected = `Bearer ${serverEnv.CRON_SECRET}`
+  const expectedBuf = Buffer.from(expected)
+  const actualBuf = Buffer.from(authHeader)
+  if (expectedBuf.length !== actualBuf.length) return false
+  return crypto.timingSafeEqual(expectedBuf, actualBuf)
+}
+
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization")
-  if (authHeader !== `Bearer ${serverEnv.CRON_SECRET}`) {
+  if (!verifyCronSecret(authHeader)) {
     return new Response("Unauthorized", { status: 401 })
   }
 
@@ -70,20 +78,30 @@ export async function GET(request: NextRequest) {
     missingDates.sort((a, b) => a.getTime() - b.getTime())
     const datesToSync = missingDates.slice(0, MAX_DATES_PER_RUN)
 
+    const results = await Promise.allSettled(
+      datesToSync.map(async (d) => {
+        await ensureExchangeRateForDate(d)
+        return d
+      })
+    )
+
     let syncedCount = 0
     const errors: { date: string; error: string }[] = []
 
-    for (const d of datesToSync) {
-      try {
-        await ensureExchangeRateForDate(d)
+    results.forEach((res, index) => {
+      if (res.status === "fulfilled") {
         syncedCount++
-      } catch (err) {
+      } else {
+        const d = datesToSync[index]
         errors.push({
           date: d.toISOString().split("T")[0],
-          error: err instanceof Error ? err.message : String(err),
+          error:
+            res.reason instanceof Error
+              ? res.reason.message
+              : String(res.reason),
         })
       }
-    }
+    })
 
     return Response.json({
       success: true,

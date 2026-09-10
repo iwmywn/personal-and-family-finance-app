@@ -12,6 +12,32 @@ msgid "Access denied! Admin privileges required."
 msgstr "Access denied! Admin privileges required."
 
 #: actions/admin.actions.ts
+#: actions/budget.actions.ts
+#: actions/category.actions.ts
+#: actions/goal.actions.ts
+#: actions/recurring.actions.ts
+#: actions/transaction.actions.ts
+msgctxt "5GmpFA"
+msgid "Invalid data!"
+msgstr "Invalid data!"
+
+#: actions/admin.actions.ts
+msgctxt "wUmmPh"
+msgid "User has been created."
+msgstr "User has been created."
+
+#: actions/admin.actions.ts
+msgctxt "-OyBM6"
+msgid "This email is already in use."
+msgstr "This email is already in use."
+
+#: actions/admin.actions.ts
+#: components/auth/signin-form.tsx
+msgctxt "b8-mgZ"
+msgid "Failed to sign in! Please try again later."
+msgstr "Failed to sign in! Please try again later."
+
+#: actions/admin.actions.ts
 msgctxt "gREMXx"
 msgid "Failed to fetch admin stats! Please try again later."
 msgstr "Failed to fetch admin stats! Please try again later."
@@ -46,16 +72,6 @@ msgstr "User has been deleted."
 msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "Failed to delete user! Please try again later."
-
-#: actions/admin.actions.ts
-#: actions/budget.actions.ts
-#: actions/category.actions.ts
-#: actions/goal.actions.ts
-#: actions/recurring.actions.ts
-#: actions/transaction.actions.ts
-msgctxt "5GmpFA"
-msgid "Invalid data!"
-msgstr "Invalid data!"
 
 #: actions/admin.actions.ts
 msgctxt "y3epBO"
@@ -951,22 +967,6 @@ msgid "This username is already taken."
 msgstr "This username is already taken."
 
 #: components/admin/create-user-dialog.tsx
-msgctxt "-OyBM6"
-msgid "This email is already in use."
-msgstr "This email is already in use."
-
-#: components/admin/create-user-dialog.tsx
-#: components/auth/signin-form.tsx
-msgctxt "b8-mgZ"
-msgid "Failed to sign in! Please try again later."
-msgstr "Failed to sign in! Please try again later."
-
-#: components/admin/create-user-dialog.tsx
-msgctxt "wUmmPh"
-msgid "User has been created."
-msgstr "User has been created."
-
-#: components/admin/create-user-dialog.tsx
 msgctxt "xWI3D2"
 msgid "Create New User"
 msgstr "Create New User"
@@ -1165,6 +1165,7 @@ msgstr "Create a budget for a category to track your spending."
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/settings/currency-selector.tsx
 #: components/settings/settings-page.tsx
+#: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 msgctxt "55hdQy"
 msgid "Currency"

@@ -1,9 +1,10 @@
+import Decimal from "decimal.js"
 import * as z from "zod"
 
 import { CATEGORY_TYPES } from "@/lib/category"
 import { CURRENCIES } from "@/lib/currency"
+import { parseToUTCMidnight } from "@/lib/parsers"
 import { ASSIGNABLE_ROLES } from "@/lib/role"
-import { localDateToUTCMidnight } from "@/lib/utils"
 import type { SchemaMessages } from "@/schemas/messages"
 
 export function buildSchemas(messages: SchemaMessages) {
@@ -30,14 +31,38 @@ export function buildSchemas(messages: SchemaMessages) {
       .regex(/^\d+(\.\d+)?$/, {
         message: messages.amountInvalidNumber,
       })
-      .transform((val) => parseFloat(val))
-      .refine((num) => num >= 0.01, {
-        message: messages.amountMin,
-      })
-      .refine((num) => num <= 100000000000, {
-        message: messages.amountMax,
-      })
-      .transform((num) => num.toString())
+      .refine(
+        (val) => {
+          try {
+            return new Decimal(val).gte("0.01")
+          } catch {
+            return false
+          }
+        },
+        { message: messages.amountMin }
+      )
+      .refine(
+        (val) => {
+          try {
+            return new Decimal(val).lte("100000000000")
+          } catch {
+            return false
+          }
+        },
+        { message: messages.amountMax }
+      )
+      .transform((val) => new Decimal(val).toString())
+
+  const baseDateSchema = (requiredMessage: string) =>
+    z
+      .date({ message: requiredMessage })
+      .transform((date) => parseToUTCMidnight(date) ?? date)
+
+  const baseOptionalDateSchema = () =>
+    z
+      .date()
+      .transform((date) => parseToUTCMidnight(date) ?? date)
+      .optional()
 
   const createSignInSchema = () =>
     z.object({
@@ -120,9 +145,7 @@ export function buildSchemas(messages: SchemaMessages) {
         .max(200, {
           message: messages.descriptionMaxLength,
         }),
-      date: z.date({
-        message: messages.dateRequired,
-      }),
+      date: baseDateSchema(messages.dateRequired),
     })
 
   const createCategorySchema = () =>
@@ -152,12 +175,8 @@ export function buildSchemas(messages: SchemaMessages) {
           message: messages.currencyRequired,
         }),
         allocatedAmount: baseAmount(),
-        startDate: z.date({
-          message: messages.startDateRequired,
-        }),
-        endDate: z.date({
-          message: messages.endDateRequired,
-        }),
+        startDate: baseDateSchema(messages.startDateRequired),
+        endDate: baseDateSchema(messages.endDateRequired),
       })
       .superRefine((data, ctx) => {
         if (data.endDate <= data.startDate) {
@@ -183,12 +202,8 @@ export function buildSchemas(messages: SchemaMessages) {
           message: messages.currencyRequired,
         }),
         targetAmount: baseAmount(),
-        startDate: z.date({
-          message: messages.startDateRequired,
-        }),
-        endDate: z.date({
-          message: messages.endDateRequired,
-        }),
+        startDate: baseDateSchema(messages.startDateRequired),
+        endDate: baseDateSchema(messages.endDateRequired),
       })
       .superRefine((data, ctx) => {
         if (data.endDate <= data.startDate) {
@@ -242,14 +257,20 @@ export function buildSchemas(messages: SchemaMessages) {
             message: messages.randomDaysMax,
           })
           .optional(),
-        startDate: z.date({
-          message: messages.startDateRequired,
-        }),
-        endDate: z.date().optional(),
-        lastGeneratedDate: z.date().optional(),
+        startDate: baseDateSchema(messages.startDateRequired),
+        endDate: baseOptionalDateSchema(),
+        lastGeneratedDate: baseOptionalDateSchema(),
         isActive: z.boolean(),
       })
       .superRefine((data, ctx) => {
+        if (data.frequency === "random" && !data.randomEveryXDays) {
+          ctx.addIssue({
+            path: ["randomEveryXDays"],
+            message: messages.randomDaysRequired,
+            code: "custom",
+          })
+        }
+
         if (data.endDate && data.endDate <= data.startDate) {
           ctx.addIssue({
             path: ["endDate"],
@@ -261,8 +282,7 @@ export function buildSchemas(messages: SchemaMessages) {
         if (
           data.isActive &&
           data.endDate &&
-          localDateToUTCMidnight(data.endDate) <
-            localDateToUTCMidnight(new Date())
+          parseToUTCMidnight(data.endDate)! < parseToUTCMidnight(new Date())!
         ) {
           ctx.addIssue({
             path: ["isActive"],

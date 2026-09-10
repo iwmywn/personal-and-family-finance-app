@@ -12,6 +12,32 @@ msgid "Access denied! Admin privileges required."
 msgstr "アクセスが拒否されました！管理者権限が必要です。"
 
 #: actions/admin.actions.ts
+#: actions/budget.actions.ts
+#: actions/category.actions.ts
+#: actions/goal.actions.ts
+#: actions/recurring.actions.ts
+#: actions/transaction.actions.ts
+msgctxt "5GmpFA"
+msgid "Invalid data!"
+msgstr "無効なデータです！"
+
+#: actions/admin.actions.ts
+msgctxt "wUmmPh"
+msgid "User has been created."
+msgstr "ユーザーが作成されました。"
+
+#: actions/admin.actions.ts
+msgctxt "-OyBM6"
+msgid "This email is already in use."
+msgstr "このメールアドレスはすでに使用されています。"
+
+#: actions/admin.actions.ts
+#: components/auth/signin-form.tsx
+msgctxt "b8-mgZ"
+msgid "Failed to sign in! Please try again later."
+msgstr "サインインに失敗しました！後でもう一度お試しください。"
+
+#: actions/admin.actions.ts
 msgctxt "gREMXx"
 msgid "Failed to fetch admin stats! Please try again later."
 msgstr "管理者統計情報の取得に失敗しました！後でもう一度お試しください。"
@@ -46,16 +72,6 @@ msgstr "ユーザーが削除されました。"
 msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "ユーザーの削除に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-#: actions/budget.actions.ts
-#: actions/category.actions.ts
-#: actions/goal.actions.ts
-#: actions/recurring.actions.ts
-#: actions/transaction.actions.ts
-msgctxt "5GmpFA"
-msgid "Invalid data!"
-msgstr "無効なデータです！"
 
 #: actions/admin.actions.ts
 msgctxt "y3epBO"
@@ -951,22 +967,6 @@ msgid "This username is already taken."
 msgstr "このユーザー名は既に使用されています。"
 
 #: components/admin/create-user-dialog.tsx
-msgctxt "-OyBM6"
-msgid "This email is already in use."
-msgstr "このメールアドレスはすでに使用されています。"
-
-#: components/admin/create-user-dialog.tsx
-#: components/auth/signin-form.tsx
-msgctxt "b8-mgZ"
-msgid "Failed to sign in! Please try again later."
-msgstr "サインインに失敗しました！後でもう一度お試しください。"
-
-#: components/admin/create-user-dialog.tsx
-msgctxt "wUmmPh"
-msgid "User has been created."
-msgstr "ユーザーが作成されました。"
-
-#: components/admin/create-user-dialog.tsx
 msgctxt "xWI3D2"
 msgid "Create New User"
 msgstr "新しいユーザーを作成"
@@ -1165,6 +1165,7 @@ msgstr "支出を追跡するために、カテゴリの予算を作成します
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/settings/currency-selector.tsx
 #: components/settings/settings-page.tsx
+#: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 msgctxt "55hdQy"
 msgid "Currency"

@@ -101,6 +101,11 @@ describe("Utils", () => {
       const result = formatDate(date, "vi" as Locale)
       expect(result).toBe("Thứ 2, 15/01/2024")
     })
+
+    it("should return empty string for invalid date", () => {
+      const result = formatDate(new Date("invalid"), "vi" as Locale)
+      expect(result).toBe("")
+    })
   })
 
   describe("getUniqueYears", () => {

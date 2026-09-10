@@ -88,7 +88,7 @@ export const auth = betterAuth({
     captcha({
       provider: "google-recaptcha",
       secretKey: serverEnv.RECAPTCHA_SECRET,
-      endpoints: ["/sign-in/username"],
+      endpoints: ["/sign-in/username", "/sign-in/email"],
       minScore: 0.5,
     }),
     twoFactor({
@@ -113,6 +113,10 @@ export const auth = betterAuth({
     enabled: clientEnv.NEXT_PUBLIC_NODE_ENV === "production",
     customRules: {
       "/sign-in/username": {
+        window: 60,
+        max: 5,
+      },
+      "/sign-in/email": {
         window: 60,
         max: 5,
       },

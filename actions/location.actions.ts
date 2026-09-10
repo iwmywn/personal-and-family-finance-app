@@ -2,10 +2,15 @@
 
 import { cacheLife, cacheTag } from "next/cache"
 
+import { getCurrentSession } from "./session.actions"
+
 export async function getLocationFromIP(ipAddress: string | null | undefined) {
   "use cache: remote"
   cacheTag(`location-${ipAddress}`)
   cacheLife({ expire: 120 })
+
+  const session = await getCurrentSession()
+  if (!session) return null
 
   if (!ipAddress) return null
   if (ipAddress === "0000:0000:0000:0000:0000:0000:0000:0000") {
@@ -14,7 +19,7 @@ export async function getLocationFromIP(ipAddress: string | null | undefined) {
 
   try {
     const response = await fetch(
-      `http://ip-api.com/json/${ipAddress}?fields=status,regionName,country`
+      `https://ip-api.com/json/${encodeURIComponent(ipAddress)}?fields=status,regionName,country`
     )
     if (!response.ok) return null
     const data = await response.json()

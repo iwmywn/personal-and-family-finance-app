@@ -18,6 +18,8 @@ export function formatCurrency(
 }
 
 export function formatDate(date: Date, locale: Locale): string {
+  if (!date || isNaN(date.getTime())) return ""
+
   const isUTCMidnight =
     date.getUTCHours() === 0 &&
     date.getUTCMinutes() === 0 &&

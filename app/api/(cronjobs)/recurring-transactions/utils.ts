@@ -85,9 +85,14 @@ export function getNextDate(
       nextDate = nextYearlyDate(lastGeneratedDateUTC, startDate)
       break
 
-    case "random":
-      nextDate = addDays(lastGeneratedDateUTC, rec.randomEveryXDays!)
+    case "random": {
+      const days =
+        typeof rec.randomEveryXDays === "number" && rec.randomEveryXDays >= 1
+          ? rec.randomEveryXDays
+          : 1
+      nextDate = addDays(lastGeneratedDateUTC, days)
       break
+    }
   }
 
   // if we've missed the next date, return today

@@ -18,6 +18,7 @@
     "test": "vitest",
     "test:fe": "vitest --project frontend",
     "test:be": "vitest --project backend",
+    "test:doctor": "vitest doctor",
     "check:po": "node scripts/check-po.js",
     "migrate:currency": "node --env-file=.env scripts/migrate-currency.ts"
   },

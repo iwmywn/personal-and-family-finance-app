@@ -243,7 +243,7 @@ export const mockValidBudgetValues = {
 }
 
 export const mockValidGoalValues = {
-  categoryKey: "food_beverage",
+  categoryKey: "salary_bonus",
   currency: "VND" as Currency,
   name: "buy a motorbike",
   targetAmount: "50000000",

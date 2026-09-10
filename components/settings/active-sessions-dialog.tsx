@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Laptop, Smartphone } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -38,36 +38,46 @@ export function ActiveSessionsDialog() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [locations, setLocations] = useState<Record<string, string | null>>({})
 
-  const allSessions = activeSessions.some((s) => s.id === currentSession.id)
-    ? activeSessions
-    : [currentSession, ...activeSessions]
+  const sortedSessions = useMemo(() => {
+    const allSessions = activeSessions.some((s) => s.id === currentSession.id)
+      ? activeSessions
+      : [currentSession, ...activeSessions]
 
-  const sortedSessions = allSessions
-    .filter((session) => session.userAgent)
-    .sort((a, b) => {
-      const aIsCurrent = a.id === currentSession.id
-      const bIsCurrent = b.id === currentSession.id
-      if (aIsCurrent === bIsCurrent) return 0
-      return aIsCurrent ? -1 : 1
-    })
+    return allSessions
+      .filter((session) => session.userAgent)
+      .sort((a, b) => {
+        const aIsCurrent = a.id === currentSession.id
+        const bIsCurrent = b.id === currentSession.id
+        if (aIsCurrent === bIsCurrent) return 0
+        return aIsCurrent ? -1 : 1
+      })
+  }, [activeSessions, currentSession])
 
   useEffect(() => {
     let isCancelled = false
 
     if (isOpen && sortedSessions.length > 0) {
+      const sessionsToFetch = sortedSessions.filter(
+        (session) => session.ipAddress && locations[session.id] === undefined
+      )
+
+      if (sessionsToFetch.length === 0) return
+
       const fetchLocations = async () => {
-        const locationPromises = sortedSessions.map(async (session) => {
+        const locationPromises = sessionsToFetch.map(async (session) => {
           const location = await getLocationFromIP(session.ipAddress)
-          return { id: session.id, location: location }
+          return { id: session.id, location }
         })
 
         const results = await Promise.all(locationPromises)
         if (!isCancelled) {
-          const locationMap: Record<string, string | null> = {}
-          results.forEach(({ id, location }) => {
-            locationMap[id] = location
+          setLocations((prev) => {
+            const next = { ...prev }
+            results.forEach(({ id, location }) => {
+              next[id] = location
+            })
+            return next
           })
-          setLocations(locationMap)
         }
       }
 
@@ -77,7 +87,7 @@ export function ActiveSessionsDialog() {
     return () => {
       isCancelled = true
     }
-  }, [isOpen, sortedSessions])
+  }, [isOpen, sortedSessions, locations])
 
   async function handleRevokeSession(token: string) {
     setIsTerminating(token)

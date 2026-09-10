@@ -47,6 +47,7 @@
 - **Format Code**: `pnpm format`
 - **Audit React Code**: `pnpm react-doctor`
 - **Test**: `pnpm test` (or `test:fe`, `test:be` for specific suites)
+- **Diagnose Vitest Performance**: `pnpm test:doctor`
 
 ## 5. Notes / Constraints
 

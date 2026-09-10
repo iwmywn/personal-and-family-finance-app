@@ -1,6 +1,7 @@
 import "@/tests/shared/mocks/translations.mock"
 import "@/tests/backend/mocks/env.mock"
 import "@/tests/backend/mocks/cache.mock"
+import "@/tests/backend/mocks/server.mock"
 
 import { MongoMemoryReplSet } from "mongodb-memory-server"
 

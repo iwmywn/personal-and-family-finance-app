@@ -12,6 +12,32 @@ msgid "Access denied! Admin privileges required."
 msgstr "액세스가 거부되었습니다! 관리자 권한이 필요합니다."
 
 #: actions/admin.actions.ts
+#: actions/budget.actions.ts
+#: actions/category.actions.ts
+#: actions/goal.actions.ts
+#: actions/recurring.actions.ts
+#: actions/transaction.actions.ts
+msgctxt "5GmpFA"
+msgid "Invalid data!"
+msgstr "잘못된 데이터입니다!"
+
+#: actions/admin.actions.ts
+msgctxt "wUmmPh"
+msgid "User has been created."
+msgstr "사용자가 생성되었습니다."
+
+#: actions/admin.actions.ts
+msgctxt "-OyBM6"
+msgid "This email is already in use."
+msgstr "이 이메일은 이미 사용 중입니다."
+
+#: actions/admin.actions.ts
+#: components/auth/signin-form.tsx
+msgctxt "b8-mgZ"
+msgid "Failed to sign in! Please try again later."
+msgstr "로그인에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/admin.actions.ts
 msgctxt "gREMXx"
 msgid "Failed to fetch admin stats! Please try again later."
 msgstr "관리자 통계를 가져오지 못했습니다! 나중에 다시 시도해주세요."
@@ -46,16 +72,6 @@ msgstr "사용자가 삭제되었습니다."
 msgctxt "xkkfdF"
 msgid "Failed to delete user! Please try again later."
 msgstr "사용자 삭제에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: actions/admin.actions.ts
-#: actions/budget.actions.ts
-#: actions/category.actions.ts
-#: actions/goal.actions.ts
-#: actions/recurring.actions.ts
-#: actions/transaction.actions.ts
-msgctxt "5GmpFA"
-msgid "Invalid data!"
-msgstr "잘못된 데이터입니다!"
 
 #: actions/admin.actions.ts
 msgctxt "y3epBO"
@@ -951,22 +967,6 @@ msgid "This username is already taken."
 msgstr "이 사용자 이름은 이미 사용 중입니다."
 
 #: components/admin/create-user-dialog.tsx
-msgctxt "-OyBM6"
-msgid "This email is already in use."
-msgstr "이 이메일은 이미 사용 중입니다."
-
-#: components/admin/create-user-dialog.tsx
-#: components/auth/signin-form.tsx
-msgctxt "b8-mgZ"
-msgid "Failed to sign in! Please try again later."
-msgstr "로그인에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: components/admin/create-user-dialog.tsx
-msgctxt "wUmmPh"
-msgid "User has been created."
-msgstr "사용자가 생성되었습니다."
-
-#: components/admin/create-user-dialog.tsx
 msgctxt "xWI3D2"
 msgid "Create New User"
 msgstr "새 사용자 만들기"
@@ -1165,6 +1165,7 @@ msgstr "지출을 추적하기 위해 카테고리에 대한 예산을 만드세
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/settings/currency-selector.tsx
 #: components/settings/settings-page.tsx
+#: components/transactions/export-button.tsx
 #: components/transactions/transaction-dialog.tsx
 msgctxt "55hdQy"
 msgid "Currency"

@@ -93,7 +93,7 @@ describe("Goals", async () => {
         userId: mockUser._id,
       })
 
-      expect(addedGoal?.categoryKey).toBe("food_beverage")
+      expect(addedGoal?.categoryKey).toBe("salary_bonus")
       expect(addedGoal?.name).toBe("buy a motorbike")
       expect(addedGoal?.targetAmount.toString()).toBe("50000000")
       expect(addedGoal?.startDate.toISOString()).toBe(
@@ -102,6 +102,18 @@ describe("Goals", async () => {
       expect(addedGoal?.endDate.toISOString()).toBe("2024-12-31T00:00:00.000Z")
       expect(result.success).toBe("Goal has been added.")
       expect(result.error).toBeUndefined()
+    })
+
+    it("should reject goal creation with outflow category", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createGoal({
+        ...mockValidGoalValues,
+        categoryKey: "food_beverage",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
     })
 
     it("should return error when database operation throws error", async () => {
@@ -186,7 +198,7 @@ describe("Goals", async () => {
       mockAuthenticatedAsAnotherUser()
 
       const result = await updateGoal(mockGoal._id.toString(), {
-        categoryKey: "housing",
+        categoryKey: "salary_bonus",
         name: "Hacked goal",
         targetAmount: "9999999",
         currency: "VND",
@@ -217,7 +229,7 @@ describe("Goals", async () => {
       mockAuthenticatedUser()
 
       const result = await updateGoal(mockGoal._id.toString(), {
-        categoryKey: "housing",
+        categoryKey: "investment_passive",
         name: "Mua nhà",
         targetAmount: "2000000000",
         currency: "VND",
@@ -232,7 +244,7 @@ describe("Goals", async () => {
         _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
       })
 
-      expect(updatedGoal?.categoryKey).toBe("housing")
+      expect(updatedGoal?.categoryKey).toBe("investment_passive")
       expect(updatedGoal?.name).toBe("Mua nhà")
       expect(updatedGoal?.targetAmount.toString()).toBe("2000000000")
       expect(updatedGoal?.startDate.toISOString()).toBe(
@@ -245,6 +257,18 @@ describe("Goals", async () => {
       expect(unrelatedGoal?.name).toBe("buy a motorbike")
       expect(result.success).toBe("Goal has been updated.")
       expect(result.error).toBeUndefined()
+    })
+
+    it("should reject goal update with outflow category", async () => {
+      mockAuthenticatedUser()
+
+      const result = await updateGoal(mockGoal._id.toString(), {
+        ...mockValidGoalValues,
+        categoryKey: "housing",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
     })
 
     it("should return error when updating goal causes duplicate key collision", async () => {

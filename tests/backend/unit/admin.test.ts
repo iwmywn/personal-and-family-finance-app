@@ -14,6 +14,7 @@ import {
   mockUser,
 } from "@/tests/shared/data"
 import {
+  createAdminUser,
   deleteUser,
   getAdminStats,
   listUsers,
@@ -28,6 +29,7 @@ vi.mock("next/headers", () => ({
 vi.mock("@/lib/auth", () => ({
   auth: {
     api: {
+      createUser: vi.fn().mockResolvedValue({ status: true }),
       removeUser: vi.fn().mockResolvedValue({ status: true }),
       setRole: vi.fn().mockResolvedValue({ status: true }),
       setUserPassword: vi.fn().mockResolvedValue({ status: true }),
@@ -272,6 +274,53 @@ describe("Admin Actions", () => {
 
       expect(result.error).toBeUndefined()
       expect(result.success).toBe("Password has been updated.")
+    })
+  })
+
+  describe("createAdminUser", () => {
+    it("should return error when not authenticated", async () => {
+      mockUnauthenticatedUser()
+
+      const result = await createAdminUser({
+        name: "Test User",
+        username: "testuser",
+        email: "test@example.com",
+        password: "Password123!",
+        role: "user",
+      })
+
+      expect(result.error).toBe("Access denied! Admin privileges required.")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should force role to user when created by regular admin", async () => {
+      mockAuthenticatedAdmin()
+
+      const result = await createAdminUser({
+        name: "Test User",
+        username: "testuser",
+        email: "test@example.com",
+        password: "Password123!",
+        role: "admin",
+      })
+
+      expect(result.error).toBeUndefined()
+      expect(result.success).toBe("User has been created.")
+    })
+
+    it("should allow superadmin to create user with specified role", async () => {
+      mockAuthenticatedSuperAdmin()
+
+      const result = await createAdminUser({
+        name: "Test User",
+        username: "testuser",
+        email: "test@example.com",
+        password: "Password123!",
+        role: "admin",
+      })
+
+      expect(result.error).toBeUndefined()
+      expect(result.success).toBe("User has been created.")
     })
   })
 })

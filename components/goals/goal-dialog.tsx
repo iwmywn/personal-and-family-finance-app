@@ -51,7 +51,6 @@ import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
 import type { Goal } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 import type { GoalFormValues } from "@/schemas/types"
 
 interface GoalDialogProps {
@@ -91,14 +90,8 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   })
 
   async function onSubmit(values: GoalFormValues) {
-    const data = {
-      ...values,
-      startDate: localDateToUTCMidnight(values.startDate),
-      endDate: localDateToUTCMidnight(values.endDate),
-    }
-
     if (goal) {
-      const { success, error } = await updateGoal(goal._id, data)
+      const { success, error } = await updateGoal(goal._id, values)
 
       if (error || !success) {
         toast.error(error)
@@ -108,7 +101,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
         router.refresh()
       }
     } else {
-      const { success, error } = await createGoal(data)
+      const { success, error } = await createGoal(values)
 
       if (error || !success) {
         toast.error(error)

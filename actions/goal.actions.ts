@@ -39,7 +39,8 @@ export async function createGoal(values: GoalFormValues): Promise<{
     const userId = session.user.id
     const isValidCategory = await isValidUserCategory(
       userId,
-      parsedValues.data.categoryKey
+      parsedValues.data.categoryKey,
+      "inflow"
     )
 
     if (!isValidCategory) {
@@ -103,7 +104,8 @@ export async function updateGoal(
     const userId = session.user.id
     const isValidCategory = await isValidUserCategory(
       userId,
-      parsedValues.data.categoryKey
+      parsedValues.data.categoryKey,
+      "inflow"
     )
 
     if (!isValidCategory) {

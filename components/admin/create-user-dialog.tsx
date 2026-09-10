@@ -6,6 +6,7 @@ import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
+import { createAdminUser } from "@/actions/admin.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -37,7 +38,6 @@ import { PasswordInput } from "@/components/password-input"
 import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
-import type { AuthErrorCode } from "@/lib/definitions"
 import { DEFAULT_ROLE, isSuperAdminRole } from "@/lib/role"
 import type { AdminUserFormValues } from "@/schemas/types"
 
@@ -65,44 +65,32 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
   })
 
   async function onSubmit(values: AdminUserFormValues) {
-    const { data: response, error } = await authClient.isUsernameAvailable({
-      username: values.username,
-    })
+    const { data: response, error: usernameError } =
+      await authClient.isUsernameAvailable({
+        username: values.username,
+      })
 
-    if (error || !response) {
+    if (usernameError || !response) {
       toast.error(
         t("Failed to check username availability! Please try again later.")
       )
-    } else if (!response.available) {
+      return
+    }
+
+    if (!response.available) {
       toast.error(t("This username is already taken."))
+      return
+    }
+
+    const { success, error } = await createAdminUser(values)
+
+    if (error || !success) {
+      toast.error(error)
     } else {
-      await authClient.admin.createUser({
-        email: values.email,
-        password: values.password,
-        name: values.name,
-        role: isCurrentSuperAdmin ? values.role : DEFAULT_ROLE,
-        data: {
-          username: values.username,
-        },
-        fetchOptions: {
-          onError: (ctx) => {
-            switch (ctx.error.code as AuthErrorCode) {
-              case "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL":
-                toast.error(t("This email is already in use."))
-                break
-              default:
-                toast.error(t("Failed to sign in! Please try again later."))
-                break
-            }
-          },
-          onSuccess: () => {
-            setOpen(false)
-            toast.success(t("User has been created."))
-            router.refresh()
-            form.reset()
-          },
-        },
-      })
+      setOpen(false)
+      toast.success(success)
+      router.refresh()
+      form.reset()
     }
   }
 

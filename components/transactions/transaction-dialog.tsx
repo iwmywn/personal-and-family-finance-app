@@ -61,7 +61,6 @@ import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
 import type { Transaction } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 import type { TransactionFormValues } from "@/schemas/types"
 
 interface TransactionDialogProps {
@@ -100,13 +99,11 @@ export function TransactionDialog({
   })
 
   async function onSubmit(values: TransactionFormValues) {
-    const data = {
-      ...values,
-      date: localDateToUTCMidnight(values.date),
-    }
-
     if (transaction) {
-      const { success, error } = await updateTransaction(transaction._id, data)
+      const { success, error } = await updateTransaction(
+        transaction._id,
+        values
+      )
 
       if (error || !success) {
         toast.error(error)
@@ -116,7 +113,7 @@ export function TransactionDialog({
         router.refresh()
       }
     } else {
-      const { success, error } = await createTransaction(data)
+      const { success, error } = await createTransaction(values)
 
       if (error || !success) {
         toast.error(error)

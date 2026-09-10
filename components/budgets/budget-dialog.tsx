@@ -50,7 +50,6 @@ import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
 import type { Budget } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 import type { BudgetFormValues } from "@/schemas/types"
 
 interface BudgetDialogProps {
@@ -89,14 +88,8 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   })
 
   async function onSubmit(values: BudgetFormValues) {
-    const data = {
-      ...values,
-      startDate: localDateToUTCMidnight(values.startDate),
-      endDate: localDateToUTCMidnight(values.endDate),
-    }
-
     if (budget) {
-      const { success, error } = await updateBudget(budget._id, data)
+      const { success, error } = await updateBudget(budget._id, values)
 
       if (error || !success) {
         toast.error(error)
@@ -106,7 +99,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         router.refresh()
       }
     } else {
-      const { success, error } = await createBudget(data)
+      const { success, error } = await createBudget(values)
 
       if (error || !success) {
         toast.error(error)

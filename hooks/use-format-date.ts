@@ -7,7 +7,5 @@ import { formatDate } from "@/lib/utils"
 export function useFormatDate() {
   const locale = useLocale()
 
-  return (date: Date) => {
-    return formatDate(date, locale)
-  }
+  return (date: Date) => formatDate(date, locale)
 }
