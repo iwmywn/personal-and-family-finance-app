@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
       timestamp: new Date().toISOString(),
     })
   } catch (error) {
-    console.error("CRON ERROR:", error)
-    return new Response("Cron failed", { status: 500 })
+    console.error("RECURRING TRANSACTIONS CRON ERROR:", error)
+    return new Response("Recurring transactions cron failed", { status: 500 })
   }
 }
