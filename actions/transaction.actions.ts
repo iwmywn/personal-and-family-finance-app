@@ -56,7 +56,14 @@ export async function createTransaction(
 
     const transactionsCollection = await getTransactionsCollection()
 
-    await ensureExchangeRateForDate(parsedValues.data.date)
+    try {
+      await ensureExchangeRateForDate(parsedValues.data.date)
+    } catch (error) {
+      console.warn(
+        "Could not ensure exchange rate for transaction date:",
+        error
+      )
+    }
 
     await transactionsCollection.insertOne({
       userId: new ObjectId(userId),
@@ -123,7 +130,14 @@ export async function updateTransaction(
 
     const transactionsCollection = await getTransactionsCollection()
 
-    await ensureExchangeRateForDate(parsedValues.data.date)
+    try {
+      await ensureExchangeRateForDate(parsedValues.data.date)
+    } catch (error) {
+      console.warn(
+        "Could not ensure exchange rate for transaction date:",
+        error
+      )
+    }
 
     const result = await transactionsCollection.updateOne(
       {

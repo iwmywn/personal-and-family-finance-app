@@ -153,6 +153,23 @@ export async function updateCustomCategory(
     )
 
     if (result.matchedCount === 0) {
+      const existingCategory = await categoriesCollection.findOne(
+        {
+          _id: new ObjectId(categoryId),
+          userId: new ObjectId(userId),
+        },
+        { projection: { type: 1 } }
+      )
+
+      if (
+        existingCategory &&
+        existingCategory.type !== parsedValues.data.type
+      ) {
+        return {
+          error: t("Category type cannot be changed!"),
+        }
+      }
+
       return {
         error: t("Category not found or you don't have permission to edit!"),
       }

@@ -178,6 +178,11 @@ msgid "Invalid category ID!"
 msgstr "无效的分类 ID！"
 
 #: actions/category.actions.ts
+msgctxt "cLveqK"
+msgid "Category type cannot be changed!"
+msgstr "分类类型不能更改！"
+
+#: actions/category.actions.ts
 msgctxt "Jau5xo"
 msgid "Category not found or you don't have permission to edit!"
 msgstr "未找到分类或您没有权限编辑！"

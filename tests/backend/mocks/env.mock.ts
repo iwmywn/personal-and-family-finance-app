@@ -26,6 +26,9 @@ vi.mock("@/env/server", () => {
       get BETTER_AUTH_SECRET() {
         return "test-better-auth-secret"
       },
+      get CURRENCY_API_SECRET() {
+        return "test-currency-api-secret"
+      },
       get DB_URI() {
         return process.env.DB_URI
       },

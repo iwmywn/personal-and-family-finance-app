@@ -178,6 +178,11 @@ msgid "Invalid category ID!"
 msgstr "ID danh mục không hợp lệ!"
 
 #: actions/category.actions.ts
+msgctxt "cLveqK"
+msgid "Category type cannot be changed!"
+msgstr "Không thể thay đổi loại danh mục!"
+
+#: actions/category.actions.ts
 msgctxt "Jau5xo"
 msgid "Category not found or you don't have permission to edit!"
 msgstr "Không tìm thấy danh mục hoặc bạn không có quyền chỉnh sửa!"

@@ -88,7 +88,7 @@ describe("Transactions", async () => {
       )
     })
 
-    it("should return error and not save transaction when fetching exchange rate fails", async () => {
+    it("should still save transaction when fetching exchange rate fails", async () => {
       mockAuthenticatedUser()
       const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
         ok: false,
@@ -102,16 +102,14 @@ describe("Transactions", async () => {
         date: testDate,
       })
 
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to add transaction! Please try again later."
-      )
+      expect(result.error).toBeUndefined()
+      expect(result.success).toBe("Transaction has been added.")
 
       const transactionsCollection = await getTransactionsCollection()
       const found = await transactionsCollection.findOne({
         date: testDate,
       })
-      expect(found).toBeNull()
+      expect(found).not.toBeNull()
 
       fetchSpy.mockRestore()
     })
@@ -357,7 +355,7 @@ describe("Transactions", async () => {
       )
     })
 
-    it("should return error and not update transaction when fetching exchange rate fails", async () => {
+    it("should still update transaction when fetching exchange rate fails", async () => {
       await insertTestTransaction(mockTransaction)
       mockAuthenticatedUser()
 
@@ -377,19 +375,15 @@ describe("Transactions", async () => {
         date: newDate,
       })
 
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to update transaction! Please try again later."
-      )
+      expect(result.error).toBeUndefined()
+      expect(result.success).toBe("Transaction has been updated.")
 
       const transactionsCollection = await getTransactionsCollection()
       const current = await transactionsCollection.findOne({
         _id: mockTransaction._id,
       })
-      expect(current?.description).toBe(mockTransaction.description)
-      expect(current?.date.toISOString()).toBe(
-        mockTransaction.date.toISOString()
-      )
+      expect(current?.description).toBe("attempted new description")
+      expect(current?.date.toISOString()).toBe(newDate.toISOString())
 
       fetchSpy.mockRestore()
     })

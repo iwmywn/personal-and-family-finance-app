@@ -178,6 +178,11 @@ msgid "Invalid category ID!"
 msgstr "Invalid category ID!"
 
 #: actions/category.actions.ts
+msgctxt "cLveqK"
+msgid "Category type cannot be changed!"
+msgstr "Category type cannot be changed!"
+
+#: actions/category.actions.ts
 msgctxt "Jau5xo"
 msgid "Category not found or you don't have permission to edit!"
 msgstr "Category not found or you don't have permission to edit!"

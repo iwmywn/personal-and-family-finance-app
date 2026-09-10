@@ -34,8 +34,6 @@ export async function GET(request: NextRequest) {
       Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
     )
 
-    await ensureExchangeRateForDate(todayUTC)
-
     const deactivatedResult = await recurringCollection.updateMany(
       {
         isActive: true,
@@ -94,6 +92,17 @@ export async function GET(request: NextRequest) {
           }
         })
       )
+    }
+
+    if (createdCount > 0) {
+      try {
+        await ensureExchangeRateForDate(todayUTC)
+      } catch (error) {
+        console.warn(
+          "Could not ensure exchange rate for generated transactions:",
+          error
+        )
+      }
     }
 
     return Response.json({

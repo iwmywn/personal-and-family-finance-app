@@ -178,6 +178,11 @@ msgid "Invalid category ID!"
 msgstr "カテゴリIDが無効です！"
 
 #: actions/category.actions.ts
+msgctxt "cLveqK"
+msgid "Category type cannot be changed!"
+msgstr "カテゴリのタイプは変更できません！"
+
+#: actions/category.actions.ts
 msgctxt "Jau5xo"
 msgid "Category not found or you don't have permission to edit!"
 msgstr "カテゴリが見つからないか、編集権限がありません！"

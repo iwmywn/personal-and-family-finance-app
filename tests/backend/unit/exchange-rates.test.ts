@@ -252,6 +252,114 @@ describe("convertTransactionsToCurrency", () => {
       expect(result[0].currency).toBe("VND")
       expect(result[0].amount).toBe("5000000")
     })
+
+    it("should convert transaction using nearest previous rate when transaction date is after all rates in database", async () => {
+      // Transaction date is 2024-03-01, but mockExchangeRates only has up to 2024-02-20 (VND: 25200)
+      const transactions: Transaction[] = [
+        {
+          ...mockTransactions[0],
+          amount: "25200",
+          currency: "VND",
+          date: new Date("2024-03-01"),
+        },
+      ]
+
+      const result = await convertTransactionsToCurrency(transactions, "USD")
+
+      expect(result).toHaveLength(1)
+      expect(result[0].currency).toBe("USD")
+      expect(result[0].amount).toBe("1")
+      expect(result[0].rates?.VND).toBe("25200")
+    })
+
+    it("should convert transaction using nearest future rate when transaction date is before all rates in database", async () => {
+      // Transaction date is 2024-01-01, but mockExchangeRates starts from 2024-01-15 (VND: 25000)
+      const transactions: Transaction[] = [
+        {
+          ...mockTransactions[0],
+          amount: "25000",
+          currency: "VND",
+          date: new Date("2024-01-01"),
+        },
+      ]
+
+      const result = await convertTransactionsToCurrency(transactions, "USD")
+
+      expect(result).toHaveLength(1)
+      expect(result[0].currency).toBe("USD")
+      expect(result[0].amount).toBe("1")
+      expect(result[0].rates?.VND).toBe("25000")
+    })
+
+    it("should pick the closer future date when closer to future than previous rate", async () => {
+      // 2024-01-24 is 1 day away from 2024-01-25 (VND: 25100) and 9 days away from 2024-01-15 (VND: 25000)
+      const transactions: Transaction[] = [
+        {
+          ...mockTransactions[0],
+          amount: "25100",
+          currency: "VND",
+          date: new Date("2024-01-24"),
+        },
+      ]
+
+      const result = await convertTransactionsToCurrency(transactions, "USD")
+
+      expect(result).toHaveLength(1)
+      expect(result[0].currency).toBe("USD")
+      expect(result[0].amount).toBe("1")
+      expect(result[0].rates?.VND).toBe("25100")
+    })
+
+    it("should pick the closer previous date when closer to previous than future rate", async () => {
+      // 2024-01-16 is 1 day away from 2024-01-15 (VND: 25000) and 9 days away from 2024-01-25 (VND: 25100)
+      const transactions: Transaction[] = [
+        {
+          ...mockTransactions[0],
+          amount: "25000",
+          currency: "VND",
+          date: new Date("2024-01-16"),
+        },
+      ]
+
+      const result = await convertTransactionsToCurrency(transactions, "USD")
+
+      expect(result).toHaveLength(1)
+      expect(result[0].currency).toBe("USD")
+      expect(result[0].amount).toBe("1")
+      expect(result[0].rates?.VND).toBe("25000")
+    })
+
+    it("should independently assign the closest rate to each transaction in a batch", async () => {
+      // Tx1 on 2024-01-16 (closest to 2024-01-15, VND: 25000)
+      // Tx2 on 2024-01-24 (closest to 2024-01-25, VND: 25100)
+      const transactions: Transaction[] = [
+        {
+          ...mockTransactions[0],
+          _id: "tx-1",
+          amount: "25000",
+          currency: "VND",
+          date: new Date("2024-01-16"),
+        },
+        {
+          ...mockTransactions[1],
+          _id: "tx-2",
+          amount: "25100",
+          currency: "VND",
+          date: new Date("2024-01-24"),
+        },
+      ]
+
+      const result = await convertTransactionsToCurrency(transactions, "USD")
+
+      expect(result).toHaveLength(2)
+      expect(result[0]._id).toBe("tx-1")
+      expect(result[0].rates?.VND).toBe("25000")
+      expect(result[0].amount).toBe("1")
+
+      expect(result[1]._id).toBe("tx-2")
+      expect(result[1].rates?.VND).toBe("25100")
+      expect(result[1].amount).toBe("1")
+    })
   })
 })
 
@@ -269,14 +377,18 @@ describe("ensureExchangeRateForDate", () => {
     expect(fetchSpy).not.toHaveBeenCalled()
   })
 
-  it("should fetch rates from Frankfurter and insert into database when date does not exist", async () => {
+  it("should fetch rates from Currency API and insert into database when date does not exist", async () => {
     const testDate = new Date("2024-03-10T00:00:00Z")
-    const mockRatesResponse = [
-      { date: "2024-03-10", base: "USD", quote: "CNY", rate: 7.18 },
-      { date: "2024-03-10", base: "USD", quote: "JPY", rate: 147.2 },
-      { date: "2024-03-10", base: "USD", quote: "KRW", rate: 1320.5 },
-      { date: "2024-03-10", base: "USD", quote: "VND", rate: 24600 },
-    ]
+    const mockRatesResponse = {
+      meta: { last_updated_at: "2024-03-10T23:59:59Z" },
+      data: {
+        CNY: { code: "CNY", value: 7.18 },
+        JPY: { code: "JPY", value: 147.2 },
+        KRW: { code: "KRW", value: 1320.5 },
+        USD: { code: "USD", value: 1 },
+        VND: { code: "VND", value: 24600 },
+      },
+    }
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
       ok: true,
@@ -287,7 +399,7 @@ describe("ensureExchangeRateForDate", () => {
 
     expect(fetchSpy).toHaveBeenCalledTimes(1)
     expect(fetchSpy).toHaveBeenCalledWith(
-      expect.stringContaining("https://api.frankfurter.dev/v2/rates?base=USD")
+      expect.stringContaining("https://api.currencyapi.com/v3/historical")
     )
 
     const collection = await getExchangeRatesCollection()
@@ -313,9 +425,16 @@ describe("ensureExchangeRateForDate", () => {
       },
     })
 
-    const mockRatesResponse = [
-      { date: "2024-04-10", base: "USD", quote: "VND", rate: 24700 },
-    ]
+    const mockRatesResponse = {
+      meta: { last_updated_at: "2024-04-10T23:59:59Z" },
+      data: {
+        CNY: { code: "CNY", value: 7.18 },
+        JPY: { code: "JPY", value: 147.2 },
+        KRW: { code: "KRW", value: 1320.5 },
+        USD: { code: "USD", value: 1 },
+        VND: { code: "VND", value: 24700 },
+      },
+    }
 
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
       ok: true,
@@ -325,14 +444,16 @@ describe("ensureExchangeRateForDate", () => {
     await ensureExchangeRateForDate(testDate)
 
     expect(fetchSpy).toHaveBeenCalledTimes(1)
-    expect(fetchSpy).toHaveBeenCalledWith(expect.stringContaining("quotes=VND"))
+    expect(fetchSpy).toHaveBeenCalledWith(
+      expect.stringContaining("https://api.currencyapi.com/v3/historical")
+    )
 
     const updated = await collection.findOne({ date: testDate })
     expect(updated?.rates.VND?.toString()).toBe("24700")
     expect(updated?.rates.CNY?.toString()).toBe("7.18")
   })
 
-  it("should throw error when Frankfurter API returns non-ok status", async () => {
+  it("should throw error when Currency API returns non-ok status", async () => {
     const testDate = new Date("2024-05-10T00:00:00Z")
 
     vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
@@ -341,7 +462,7 @@ describe("ensureExchangeRateForDate", () => {
     } as Response)
 
     await expect(ensureExchangeRateForDate(testDate)).rejects.toThrow(
-      "Frankfurter API returned status 500"
+      "Currency API returned status 500"
     )
   })
 })
