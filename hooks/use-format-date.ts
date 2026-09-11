@@ -2,7 +2,7 @@
 
 import { useLocale } from "next-intl"
 
-import { formatDate } from "@/lib/utils"
+import { formatDate } from "@/lib/date"
 
 export function useFormatDate() {
   const locale = useLocale()

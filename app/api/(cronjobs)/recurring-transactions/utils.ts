@@ -1,26 +1,14 @@
+import { addDays, clampDayToMonth, isSameUTCDate } from "@/lib/date"
 import type {
   DBRecurringTransaction,
   RecurringTransaction,
 } from "@/lib/definitions"
 
-function getLastDayOfMonth(year: number, month: number): number {
-  return new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
-}
-
-function normalizeDay(year: number, month: number, day: number): number {
-  const last = getLastDayOfMonth(year, month)
-  return Math.min(day, last)
-}
-
-function addDays(lastGeneratedDateUTC: Date, days: number): Date {
-  return new Date(lastGeneratedDateUTC.getTime() + days * 86400000)
-}
-
 function nextMonthlyDate(lastGeneratedDateUTC: Date, startDateUTC: Date): Date {
   const y = lastGeneratedDateUTC.getUTCFullYear()
   const m = lastGeneratedDateUTC.getUTCMonth() + 1
   const targetDay = startDateUTC.getUTCDate()
-  return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
+  return new Date(Date.UTC(y, m, clampDayToMonth(y, m + 1, targetDay)))
 }
 
 function nextQuarterlyDate(
@@ -30,7 +18,7 @@ function nextQuarterlyDate(
   const y = lastGeneratedDateUTC.getUTCFullYear()
   const m = lastGeneratedDateUTC.getUTCMonth() + 3
   const targetDay = startDateUTC.getUTCDate()
-  return new Date(Date.UTC(y, m, normalizeDay(y, m, targetDay)))
+  return new Date(Date.UTC(y, m, clampDayToMonth(y, m + 1, targetDay)))
 }
 
 function nextYearlyDate(lastGeneratedDateUTC: Date, startDateUTC: Date): Date {
@@ -38,7 +26,7 @@ function nextYearlyDate(lastGeneratedDateUTC: Date, startDateUTC: Date): Date {
   const targetMonth = startDateUTC.getUTCMonth()
   const targetDay = startDateUTC.getUTCDate()
   return new Date(
-    Date.UTC(y, targetMonth, normalizeDay(y, targetMonth, targetDay))
+    Date.UTC(y, targetMonth, clampDayToMonth(y, targetMonth + 1, targetDay))
   )
 }
 
@@ -104,14 +92,6 @@ export function getNextDate(
   return nextDate
 }
 
-function isSameDate(a: Date, b: Date): boolean {
-  return (
-    a.getUTCFullYear() === b.getUTCFullYear() &&
-    a.getUTCMonth() === b.getUTCMonth() &&
-    a.getUTCDate() === b.getUTCDate()
-  )
-}
-
 export function shouldGenerateToday(
   rec: DBRecurringTransaction,
   todayUTC: Date
@@ -125,5 +105,5 @@ export function shouldGenerateToday(
 
   const nextDate = getNextDate(rec, todayUTC)
 
-  return isSameDate(nextDate, todayUTC)
+  return isSameUTCDate(nextDate, todayUTC)
 }

@@ -37,8 +37,8 @@ import {
 import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
+import { serializeLocalDate } from "@/lib/date"
 import type { Transaction } from "@/lib/definitions"
-import { serializeLocalDate } from "@/lib/parsers"
 import { calculateCategoriesStats } from "@/lib/statistics"
 
 interface TransactionBreakdownTableProps {

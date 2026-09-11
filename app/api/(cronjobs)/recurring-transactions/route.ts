@@ -1,11 +1,15 @@
 import type { NextRequest } from "next/server"
 
-import { ensureExchangeRateForDate } from "@/actions/exchange-rates.actions"
+import {
+  enqueueMissingExchangeRateDate,
+  ensureExchangeRateForDate,
+} from "@/actions/exchange-rates.actions"
 import { serverEnv } from "@/env/server"
 import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
+import { normalizeToUTCMidnight } from "@/lib/date"
 import { isDuplicateKeyError } from "@/lib/indexes"
 
 import { shouldGenerateToday } from "./utils"
@@ -27,10 +31,7 @@ export async function GET(request: NextRequest) {
       getRecurringTransactionsCollection(),
     ])
 
-    const now = new Date()
-    const todayUTC = new Date(
-      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
-    )
+    const todayUTC = normalizeToUTCMidnight(new Date())
 
     const deactivatedResult = await recurringCollection.updateMany(
       {
@@ -97,9 +98,10 @@ export async function GET(request: NextRequest) {
         await ensureExchangeRateForDate(todayUTC)
       } catch (error) {
         console.warn(
-          "Could not ensure exchange rate for generated transactions:",
+          "Could not ensure exchange rate for generated transactions, enqueuing retry:",
           error
         )
+        await enqueueMissingExchangeRateDate(todayUTC, error)
       }
     }
 

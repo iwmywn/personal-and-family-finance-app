@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import { UAParser } from "ua-parser-js"
 
 import { getLocationFromIP } from "@/actions/location.actions"
+import { revokeSessionById } from "@/actions/session.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -89,10 +90,10 @@ export function ActiveSessionsDialog() {
     }
   }, [isOpen, sortedSessions, locations])
 
-  async function handleRevokeSession(token: string) {
-    setIsTerminating(token)
+  async function handleRevokeSession(sessionId: string) {
+    setIsTerminating(sessionId)
 
-    if (token === currentSession.token && currentSession.impersonatedBy) {
+    if (sessionId === currentSession.id && currentSession.impersonatedBy) {
       toast.promise(authClient.admin.stopImpersonating(), {
         loading: t("Stopping impersonation..."),
         success: () => {
@@ -106,18 +107,14 @@ export function ActiveSessionsDialog() {
       return
     }
 
-    await authClient.revokeSession({
-      token,
-      fetchOptions: {
-        onError: () => {
-          toast.error(t("Failed to terminate session! Please try again later."))
-        },
-        onSuccess: () => {
-          toast.success(t("Session terminated."))
-          router.refresh()
-        },
-      },
-    })
+    const { error } = await revokeSessionById(sessionId)
+
+    if (error) {
+      toast.error(t("Failed to terminate session! Please try again later."))
+    } else {
+      toast.success(t("Session terminated."))
+      router.refresh()
+    }
 
     setIsTerminating(undefined)
   }
@@ -222,10 +219,10 @@ export function ActiveSessionsDialog() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleRevokeSession(session.token)}
-                    disabled={isTerminating === session.token || isRevokingAll}
+                    onClick={() => handleRevokeSession(session.id)}
+                    disabled={isTerminating === session.id || isRevokingAll}
                   >
-                    {isTerminating === session.token && <Spinner />}
+                    {isTerminating === session.id && <Spinner />}
                     {t("Terminate")}
                   </Button>
                 </ItemActions>

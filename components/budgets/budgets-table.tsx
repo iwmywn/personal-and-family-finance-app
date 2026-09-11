@@ -42,8 +42,8 @@ import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { serializeUTCDate } from "@/lib/date"
 import type { Budget } from "@/lib/definitions"
-import { serializeLocalDate } from "@/lib/parsers"
 import { calculateBudgetsStats } from "@/lib/statistics"
 import { toDecimal } from "@/lib/utils"
 
@@ -177,7 +177,7 @@ export function BudgetsTable({ filteredBudgets }: BudgetsTableProps) {
                           <DropdownMenuContent>
                             <DropdownMenuItem asChild>
                               <Link
-                                href={`/transactions?from=${serializeLocalDate(new Date(budget.startDate))}&to=${serializeLocalDate(new Date(budget.endDate))}&category=${budget.categoryKey}`}
+                                href={`/transactions?from=${serializeUTCDate(budget.startDate)}&to=${serializeUTCDate(budget.endDate)}&category=${budget.categoryKey}`}
                                 className="cursor-pointer"
                               >
                                 {t("View")}

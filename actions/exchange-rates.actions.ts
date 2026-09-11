@@ -5,7 +5,10 @@ import type { Decimal128 } from "mongodb"
 
 import { normalizeToUTCMidnight, toDecimal128 } from "@/actions/utils"
 import { serverEnv } from "@/env/server"
-import { getExchangeRatesCollection } from "@/lib/collections"
+import {
+  getExchangeRatesCollection,
+  getMissingExchangeRatesCollection,
+} from "@/lib/collections"
 import { CURRENCIES } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
 import type {
@@ -79,6 +82,26 @@ export async function ensureExchangeRateForDate(date: Date): Promise<void> {
       { upsert: true }
     )
   }
+}
+
+export async function enqueueMissingExchangeRateDate(
+  date: Date,
+  error?: unknown
+): Promise<void> {
+  const collection = await getMissingExchangeRatesCollection()
+  const normalizedDate = normalizeToUTCMidnight(date)
+  await collection.updateOne(
+    { date: normalizedDate },
+    {
+      $setOnInsert: { createdAt: new Date() },
+      $inc: { retryCount: 1 },
+      $set: {
+        lastError: error instanceof Error ? error.message : String(error ?? ""),
+        updatedAt: new Date(),
+      },
+    },
+    { upsert: true }
+  )
 }
 
 function toExchangeRate(doc: DBExchangeRate): ExchangeRate {

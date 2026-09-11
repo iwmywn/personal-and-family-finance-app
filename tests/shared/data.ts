@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb"
 import { normalizeToUTCMidnight, toDecimal128 } from "@/actions/utils"
 import type { CategoryType } from "@/lib/category"
 import type { Currency } from "@/lib/currency"
+import { localDateToUTCMidnight } from "@/lib/date"
 import type {
   Budget,
   Category,
@@ -18,7 +19,6 @@ import type {
   Transaction,
   User,
 } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 
 export const mockUser: DBUser = {
   _id: new ObjectId("68f712e4cda4897217a05a1c"),

@@ -13,7 +13,7 @@ import type { DayButton } from "react-day-picker"
 
 import { Button, buttonVariants } from "@/components/ui/button"
 import { LOCALE_CONFIG } from "@/i18n/config"
-import { serializeLocalDate } from "@/lib/parsers"
+import { serializeLocalDate } from "@/lib/date"
 
 function Calendar({
   className,

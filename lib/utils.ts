@@ -17,28 +17,6 @@ export function formatCurrency(
   }).format(parseFloat(amount))
 }
 
-export function formatDate(date: Date, locale: Locale): string {
-  if (!date || isNaN(date.getTime())) return ""
-
-  const isUTCMidnight =
-    date.getUTCHours() === 0 &&
-    date.getUTCMinutes() === 0 &&
-    date.getUTCSeconds() === 0 &&
-    date.getUTCMilliseconds() === 0
-
-  return new Intl.DateTimeFormat(locale, {
-    weekday: "short",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: isUTCMidnight ? "UTC" : undefined,
-  }).format(date)
-}
-
-export function localDateToUTCMidnight(date: Date): Date {
-  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
-}
-
 export function getUniqueYears(transactions: Transaction[]): number[] {
   return Array.from(
     new Set(transactions.map((t) => new Date(t.date).getUTCFullYear()))

@@ -12,8 +12,8 @@ import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
 } from "@/lib/collections"
+import { localDateToUTCMidnight } from "@/lib/date"
 import type { DBRecurringTransaction, DBTransaction } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 
 const cronSecret = "test-cron-secret"
 const cronEndpoint = "http://localhost/api/recurring-transactions"

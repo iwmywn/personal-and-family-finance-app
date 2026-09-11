@@ -61,6 +61,7 @@ import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
+import { parseToLocalDate } from "@/lib/date"
 import type { RecurringTransaction } from "@/lib/definitions"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
@@ -93,13 +94,9 @@ export function RecurringTransactionDialog({
       description: recurring?.description || "",
       frequency: recurring?.frequency || "monthly",
       randomEveryXDays: recurring?.randomEveryXDays || undefined,
-      startDate: recurring?.startDate
-        ? new Date(recurring.startDate)
-        : undefined,
-      endDate: recurring?.endDate ? new Date(recurring.endDate) : undefined,
-      lastGeneratedDate: recurring?.lastGeneratedDate
-        ? new Date(recurring.lastGeneratedDate)
-        : undefined,
+      startDate: parseToLocalDate(recurring?.startDate),
+      endDate: parseToLocalDate(recurring?.endDate),
+      lastGeneratedDate: parseToLocalDate(recurring?.lastGeneratedDate),
       isActive: recurring?.isActive ?? true,
     },
   })
@@ -392,9 +389,7 @@ export function RecurringTransactionDialog({
                           field.onChange(date)
                           setStartCalendarOpen(false)
                         }}
-                        disabled={(date) =>
-                          (endDate && date > endDate) || date <= new Date()
-                        }
+                        disabled={(date) => Boolean(endDate && date > endDate)}
                       />
                     </PopoverContent>
                   </Popover>
@@ -452,7 +447,7 @@ export function RecurringTransactionDialog({
                           setEndCalendarOpen(false)
                         }}
                         disabled={(date) =>
-                          (startDate && date <= startDate) || date <= new Date()
+                          Boolean(startDate && date <= startDate)
                         }
                       />
                     </PopoverContent>

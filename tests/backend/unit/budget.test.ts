@@ -19,7 +19,7 @@ import {
   updateBudget,
 } from "@/actions/budget.actions"
 import { getBudgetsCollection } from "@/lib/collections"
-import { localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/date"
 
 describe("Budgets", async () => {
   describe("createBudget", () => {

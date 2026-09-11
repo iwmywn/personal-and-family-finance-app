@@ -19,7 +19,7 @@ import {
   updateTransaction,
 } from "@/actions/transaction.actions"
 import { getTransactionsCollection } from "@/lib/collections"
-import { localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/date"
 
 describe("Transactions", async () => {
   describe("createTransaction", () => {

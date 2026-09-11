@@ -40,8 +40,8 @@ import { useRecurring } from "@/context/recurring-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { getTodayUTCMidnight } from "@/lib/date"
 import type { RecurringTransaction } from "@/lib/definitions"
-import { localDateToUTCMidnight } from "@/lib/utils"
 
 interface RecurringTableProps {
   filteredRecurring: RecurringTransaction[]
@@ -59,7 +59,7 @@ export function RecurringTransactionsTable({
   const { getCategoryLabel, getCategoryDescription } = useCategory()
   const formatDate = useFormatDate()
   const formatCurrency = useFormatCurrency()
-  const todayUTC = useMemo(() => localDateToUTCMidnight(new Date()), [])
+  const todayUTC = useMemo(() => getTodayUTCMidnight(), [])
 
   const getFrequencyLabel = (frequency: RecurringTransaction["frequency"]) => {
     switch (frequency) {

@@ -4,6 +4,7 @@ import type {
   DBCategory,
   DBExchangeRate,
   DBGoal,
+  DBMissingExchangeRate,
   DBRecurringTransaction,
   DBTransaction,
   DBUser,
@@ -35,4 +36,8 @@ export function getRecurringTransactionsCollection() {
 
 export function getExchangeRatesCollection() {
   return collection<DBExchangeRate>("exchangeRates")
+}
+
+export function getMissingExchangeRatesCollection() {
+  return collection<DBMissingExchangeRate>("missingExchangeRates")
 }

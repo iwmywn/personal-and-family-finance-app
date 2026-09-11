@@ -1,4 +1,9 @@
-import { parseAsLocalDate, parseToUTCMidnight } from "@/lib/parsers"
+import {
+  parseAsLocalDate,
+  parseToLocalDate,
+  parseToUTCMidnight,
+  serializeUTCDate,
+} from "@/lib/date"
 
 describe("Parsers", () => {
   describe("parseAsLocalDate", () => {
@@ -86,6 +91,47 @@ describe("Parsers", () => {
       expect(parseToUTCMidnight(null)).toBeNull()
       expect(parseToUTCMidnight(undefined)).toBeNull()
       expect(parseToUTCMidnight(new Date("invalid"))).toBeNull()
+    })
+  })
+
+  describe("serializeUTCDate", () => {
+    it("should serialize UTC Date to YYYY-MM-DD string regardless of local timezone", () => {
+      const utcDate = new Date("2026-03-15T00:00:00.000Z")
+      expect(serializeUTCDate(utcDate)).toBe("2026-03-15")
+    })
+
+    it("should serialize string date to YYYY-MM-DD string", () => {
+      expect(serializeUTCDate("2026-12-31T00:00:00.000Z")).toBe("2026-12-31")
+    })
+
+    it("should handle leap year dates properly", () => {
+      const leapDate = new Date("2024-02-29T00:00:00.000Z")
+      expect(serializeUTCDate(leapDate)).toBe("2024-02-29")
+    })
+  })
+
+  describe("parseToLocalDate", () => {
+    it("should convert UTC midnight date to local calendar date", () => {
+      const utcDate = new Date("2026-03-15T00:00:00.000Z")
+      const local = parseToLocalDate(utcDate)
+      expect(local).toBeDefined()
+      expect(local?.getFullYear()).toBe(2026)
+      expect(local?.getMonth()).toBe(2)
+      expect(local?.getDate()).toBe(15)
+    })
+
+    it("should parse string date to local calendar date", () => {
+      const local = parseToLocalDate("2026-09-11")
+      expect(local).toBeDefined()
+      expect(local?.getFullYear()).toBe(2026)
+      expect(local?.getMonth()).toBe(8)
+      expect(local?.getDate()).toBe(11)
+    })
+
+    it("should return undefined for null/undefined/invalid values", () => {
+      expect(parseToLocalDate(null)).toBeUndefined()
+      expect(parseToLocalDate(undefined)).toBeUndefined()
+      expect(parseToLocalDate("invalid")).toBeUndefined()
     })
   })
 })

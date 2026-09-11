@@ -372,9 +372,9 @@ msgid "Transaction has been added."
 msgstr "Giao dịch đã được thêm."
 
 #: actions/transaction.actions.ts
-msgctxt "f4KSX1"
-msgid "This transaction already exists!"
-msgstr "Giao dịch này đã tồn tại!"
+msgctxt "bN6KUb"
+msgid "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
+msgstr "Một giao dịch với các thông tin tương tự đã tồn tại vào ngày này. Vui lòng cộng dồn số tiền vào giao dịch hiện có."
 
 #: actions/transaction.actions.ts
 msgctxt "zb35o3"

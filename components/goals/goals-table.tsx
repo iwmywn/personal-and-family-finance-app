@@ -42,8 +42,8 @@ import { useTransactions } from "@/context/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"
+import { serializeUTCDate } from "@/lib/date"
 import type { Goal } from "@/lib/definitions"
-import { serializeLocalDate } from "@/lib/parsers"
 import { calculateGoalsStats } from "@/lib/statistics"
 
 interface GoalsTableProps {
@@ -166,7 +166,7 @@ export function GoalsTable({ filteredGoals }: GoalsTableProps) {
                           <DropdownMenuContent>
                             <DropdownMenuItem asChild>
                               <Link
-                                href={`/transactions?from=${serializeLocalDate(new Date(goal.startDate))}&to=${serializeLocalDate(new Date(goal.endDate))}&category=${goal.categoryKey}`}
+                                href={`/transactions?from=${serializeUTCDate(goal.startDate)}&to=${serializeUTCDate(goal.endDate)}&category=${goal.categoryKey}`}
                                 className="cursor-pointer"
                               >
                                 {t("View")}

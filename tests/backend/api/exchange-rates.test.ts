@@ -1,10 +1,13 @@
 import { NextRequest } from "next/server"
+import { ObjectId } from "mongodb"
 
-import { insertTestTransaction } from "@/tests/backend/helpers/database"
-import { mockTransaction } from "@/tests/shared/data"
+import { insertTestMissingExchangeRate } from "@/tests/backend/helpers/database"
 import { normalizeToUTCMidnight } from "@/actions/utils"
 import { GET } from "@/app/api/(cronjobs)/exchange-rates/route"
-import { getExchangeRatesCollection } from "@/lib/collections"
+import {
+  getExchangeRatesCollection,
+  getMissingExchangeRatesCollection,
+} from "@/lib/collections"
 
 const cronSecret = "test-cron-secret"
 const cronEndpoint = "http://localhost/api/exchange-rates"
@@ -82,11 +85,13 @@ describe("Exchange Rates Cron Job", () => {
       expect(saved?.rates.CNY?.toString()).toBe("7.18")
     })
 
-    it("should fetch missing rates for past transaction dates", async () => {
+    it("should fetch missing rates for queued dates from missingExchangeRates", async () => {
       const pastDate = new Date("2024-01-15T00:00:00Z")
-      await insertTestTransaction({
-        ...mockTransaction,
+      await insertTestMissingExchangeRate({
+        _id: new ObjectId(),
         date: pastDate,
+        createdAt: new Date(),
+        retryCount: 0,
       })
 
       const mockRatesResponse = {
@@ -124,6 +129,12 @@ describe("Exchange Rates Cron Job", () => {
 
       expect(savedPast).not.toBeNull()
       expect(savedPast?.rates.VND?.toString()).toBe("24500")
+
+      const missingRatesCollection = await getMissingExchangeRatesCollection()
+      const inQueue = await missingRatesCollection.findOne({
+        date: pastDate,
+      })
+      expect(inQueue).toBeNull()
     })
 
     it("should handle API failure gracefully without returning 500", async () => {

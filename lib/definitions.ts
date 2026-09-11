@@ -99,6 +99,15 @@ type BaseExchangeRate<
   rates: Rates
 }
 
+type BaseMissingExchangeRate<Id extends ValidId> = {
+  _id: Id
+  date: Date
+  createdAt: Date
+  updatedAt?: Date
+  retryCount?: number
+  lastError?: string
+}
+
 export type DBTransaction = BaseTransaction<ObjectId, Decimal128>
 export type Transaction = BaseTransaction<string, string>
 
@@ -119,3 +128,6 @@ export type RecurringTransaction = BaseRecurringTransaction<string, string>
 
 export type DBExchangeRate = BaseExchangeRate<ObjectId, DBRatesMap>
 export type ExchangeRate = BaseExchangeRate<string, RatesMap>
+
+export type DBMissingExchangeRate = BaseMissingExchangeRate<ObjectId>
+export type MissingExchangeRate = BaseMissingExchangeRate<string>

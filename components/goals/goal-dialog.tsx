@@ -50,6 +50,7 @@ import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
+import { parseToLocalDate } from "@/lib/date"
 import type { Goal } from "@/lib/definitions"
 import type { GoalFormValues } from "@/schemas/types"
 
@@ -74,8 +75,8 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
       name: goal?.name || "",
       currency: goal?.currency ?? (user.currency as Currency),
       targetAmount: goal?.targetAmount ?? "",
-      startDate: goal?.startDate ? new Date(goal.startDate) : undefined,
-      endDate: goal?.endDate ? new Date(goal.endDate) : undefined,
+      startDate: parseToLocalDate(goal?.startDate),
+      endDate: parseToLocalDate(goal?.endDate),
     },
   })
 

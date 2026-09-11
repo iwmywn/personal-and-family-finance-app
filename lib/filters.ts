@@ -1,5 +1,6 @@
 import MiniSearch from "minisearch"
 
+import { localDateToUTCMidnight } from "@/lib/date"
 import type {
   Budget,
   Category,
@@ -9,7 +10,7 @@ import type {
   User,
 } from "@/lib/definitions"
 import { calculateBudgetsStats, calculateGoalsStats } from "@/lib/statistics"
-import { localDateToUTCMidnight, progressColorClass } from "@/lib/utils"
+import { progressColorClass } from "@/lib/utils"
 
 interface Filters {
   searchTerm?: string

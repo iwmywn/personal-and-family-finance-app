@@ -3,6 +3,9 @@ import type { Db } from "mongodb"
 
 async function ensureIndexes(db: Db) {
   await Promise.all([
+    // Prevent duplicate transactions with identical details on the same date.
+    // This keeps the transaction history clean, concise, and easier for users
+    // to read and track, avoiding cluttered duplicate entries on the same day.
     db.collection("transactions").createIndex(
       {
         userId: 1,
@@ -74,6 +77,10 @@ async function ensureIndexes(db: Db) {
 
     db
       .collection("exchangeRates")
+      .createIndex({ date: 1 }, { unique: true, name: "date" }),
+
+    db
+      .collection("missingExchangeRates")
       .createIndex({ date: 1 }, { unique: true, name: "date" }),
   ])
 }

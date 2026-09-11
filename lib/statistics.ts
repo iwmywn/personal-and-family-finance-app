@@ -2,17 +2,14 @@ import Decimal from "decimal.js"
 
 import type { CategoryKey } from "@/lib/category"
 import type { Currency } from "@/lib/currency"
+import { getTodayUTCMidnight, normalizeToUTCMidnight } from "@/lib/date"
 import type { Budget, Goal, Transaction } from "@/lib/definitions"
-import {
-  convertAmountWithRates,
-  localDateToUTCMidnight,
-  progressColorClass,
-} from "@/lib/utils"
+import { convertAmountWithRates, progressColorClass } from "@/lib/utils"
 
 export function getCurrentMonthTransactions(
   transactions: Transaction[]
 ): Transaction[] {
-  const todayUTC = localDateToUTCMidnight(new Date())
+  const todayUTC = getTodayUTCMidnight()
   const currentMonth = todayUTC.getUTCMonth()
   const currentYear = todayUTC.getUTCFullYear()
 
@@ -202,14 +199,14 @@ function calculateStatsBase<TBase extends Budget | Goal>(
   transactions: Transaction[],
   config: StatBaseConfig<TBase, Transaction>
 ) {
-  const startDateOnly = localDateToUTCMidnight(new Date(base.startDate))
-  const endDateOnly = localDateToUTCMidnight(new Date(base.endDate))
-  const nowDateOnly = localDateToUTCMidnight(new Date())
+  const startDateOnly = normalizeToUTCMidnight(new Date(base.startDate))
+  const endDateOnly = normalizeToUTCMidnight(new Date(base.endDate))
+  const nowDateOnly = getTodayUTCMidnight()
 
   const filtered = transactions.filter((t) => {
     if (t.type !== config.type) return false
 
-    const transactionDateOnly = localDateToUTCMidnight(new Date(t.date))
+    const transactionDateOnly = normalizeToUTCMidnight(new Date(t.date))
 
     return (
       transactionDateOnly.getTime() >= startDateOnly.getTime() &&

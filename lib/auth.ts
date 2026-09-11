@@ -11,13 +11,14 @@ import { serverEnv } from "@/env/server"
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/config"
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/lib/currency"
 import { connect } from "@/lib/db"
-import { ADMIN_ROLES, DEFAULT_ROLE, ROLES } from "@/lib/role"
+import { ADMIN_ROLES, ASSIGNABLE_ROLES, DEFAULT_ROLE } from "@/lib/role"
 
 export const auth = betterAuth({
   appName: siteConfig.name,
   database: mongodbAdapter(await connect()),
   emailAndPassword: {
     enabled: true,
+    disableSignUp: true,
     requireEmailVerification: true,
   },
   account: {
@@ -37,7 +38,7 @@ export const auth = betterAuth({
         required: true,
         defaultValue: DEFAULT_ROLE,
         validator: {
-          input: z.enum(ROLES),
+          input: z.enum(ASSIGNABLE_ROLES),
         },
       },
       locale: {

@@ -73,7 +73,7 @@ export function TransactionSummary() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle>{t("Monthly Balance")}</CardTitle>
-          {toDecimal(balance).greaterThan(0) ? (
+          {toDecimal(balance).greaterThanOrEqualTo(0) ? (
             <TrendingUpIcon className="size-4 text-green-600" />
           ) : (
             <TrendingDownIcon className="size-4 text-red-600" />

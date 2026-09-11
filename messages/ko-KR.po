@@ -372,9 +372,9 @@ msgid "Transaction has been added."
 msgstr "거래가 추가되었습니다."
 
 #: actions/transaction.actions.ts
-msgctxt "f4KSX1"
-msgid "This transaction already exists!"
-msgstr "이 거래는 이미 존재합니다!"
+msgctxt "bN6KUb"
+msgid "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
+msgstr "이 날짜에 동일한 세부 정보를 가진 거래가 이미 존재합니다. 기존 거래에 금액을 합산해 주세요."
 
 #: actions/transaction.actions.ts
 msgctxt "zb35o3"

@@ -372,9 +372,9 @@ msgid "Transaction has been added."
 msgstr "交易已添加。"
 
 #: actions/transaction.actions.ts
-msgctxt "f4KSX1"
-msgid "This transaction already exists!"
-msgstr "该交易已存在！"
+msgctxt "bN6KUb"
+msgid "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
+msgstr "该日期已存在相同详细信息的交易。请将金额合并到现有交易中。"
 
 #: actions/transaction.actions.ts
 msgctxt "zb35o3"

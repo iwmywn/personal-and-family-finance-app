@@ -662,5 +662,75 @@ describe("Statistics", () => {
         expect(goalWithStats.progressColorClass).toBe(progressColorClass.gray)
       })
     })
+
+    it("should correctly mark budget as active on the exact endDate", () => {
+      vi.setSystemTime(new Date("2026-03-15T12:00:00.000Z"))
+      const budget = {
+        ...mockBudgets[0],
+        startDate: new Date("2026-03-01T00:00:00.000Z"),
+        endDate: new Date("2026-03-15T00:00:00.000Z"),
+      }
+      const transactions: Transaction[] = [
+        {
+          _id: "tx-end-boundary",
+          userId: budget.userId,
+          type: "outflow",
+          amount: "50000",
+          currency: budget.currency,
+          description: "End day transaction",
+          categoryKey: budget.categoryKey,
+          date: new Date("2026-03-15T00:00:00.000Z"),
+        },
+      ]
+      const [result] = calculateBudgetsStats([budget], transactions)
+      expect(result.status).toBe("active")
+      expect(result.spent).toBe("50000")
+    })
+
+    it("should correctly mark budget as active on the exact startDate", () => {
+      vi.setSystemTime(new Date("2026-03-01T12:00:00.000Z"))
+      const budget = {
+        ...mockBudgets[0],
+        startDate: new Date("2026-03-01T00:00:00.000Z"),
+        endDate: new Date("2026-03-31T00:00:00.000Z"),
+      }
+      const transactions: Transaction[] = [
+        {
+          _id: "tx-start-boundary",
+          userId: budget.userId,
+          type: "outflow",
+          amount: "30000",
+          currency: budget.currency,
+          description: "Start day transaction",
+          categoryKey: budget.categoryKey,
+          date: new Date("2026-03-01T00:00:00.000Z"),
+        },
+      ]
+      const [result] = calculateBudgetsStats([budget], transactions)
+      expect(result.status).toBe("active")
+      expect(result.spent).toBe("30000")
+    })
+
+    it("should mark budget as expired when today is strictly after endDate", () => {
+      vi.setSystemTime(new Date("2026-03-16T12:00:00.000Z"))
+      const budget = {
+        ...mockBudgets[0],
+        startDate: new Date("2026-03-01T00:00:00.000Z"),
+        endDate: new Date("2026-03-15T00:00:00.000Z"),
+      }
+      const [result] = calculateBudgetsStats([budget], [])
+      expect(result.status).toBe("expired")
+    })
+
+    it("should mark budget as upcoming when today is strictly before startDate", () => {
+      vi.setSystemTime(new Date("2026-02-28T12:00:00.000Z"))
+      const budget = {
+        ...mockBudgets[0],
+        startDate: new Date("2026-03-01T00:00:00.000Z"),
+        endDate: new Date("2026-03-15T00:00:00.000Z"),
+      }
+      const [result] = calculateBudgetsStats([budget], [])
+      expect(result.status).toBe("upcoming")
+    })
   })
 })

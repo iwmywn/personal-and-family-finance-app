@@ -7,6 +7,7 @@ import { getExtracted } from "next-intl/server"
 
 import {
   convertTransactionsToCurrency,
+  enqueueMissingExchangeRateDate,
   ensureExchangeRateForDate,
 } from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
@@ -72,9 +73,10 @@ export async function createTransaction(
         await ensureExchangeRateForDate(parsedValues.data.date)
       } catch (error) {
         console.warn(
-          "Could not ensure exchange rate for transaction date:",
+          "Could not ensure exchange rate for transaction date, enqueuing retry:",
           error
         )
+        await enqueueMissingExchangeRateDate(parsedValues.data.date, error)
       }
     })
 
@@ -165,9 +167,10 @@ export async function updateTransaction(
         await ensureExchangeRateForDate(parsedValues.data.date)
       } catch (error) {
         console.warn(
-          "Could not ensure exchange rate for transaction date:",
+          "Could not ensure exchange rate for transaction date, enqueuing retry:",
           error
         )
+        await enqueueMissingExchangeRateDate(parsedValues.data.date, error)
       }
     })
 

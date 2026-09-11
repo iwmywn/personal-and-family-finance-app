@@ -15,7 +15,7 @@ import {
   updateGoal,
 } from "@/actions/goal.actions"
 import { getGoalsCollection } from "@/lib/collections"
-import { localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/date"
 
 describe("Goals", async () => {
   describe("createGoal", () => {

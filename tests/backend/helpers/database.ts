@@ -3,6 +3,7 @@ import {
   getCategoriesCollection,
   getExchangeRatesCollection,
   getGoalsCollection,
+  getMissingExchangeRatesCollection,
   getRecurringTransactionsCollection,
   getTransactionsCollection,
   getUsersCollection,
@@ -12,6 +13,7 @@ import type {
   DBCategory,
   DBExchangeRate,
   DBGoal,
+  DBMissingExchangeRate,
   DBRecurringTransaction,
   DBTransaction,
   DBUser,
@@ -59,4 +61,11 @@ export const insertTestExchangeRates = async (
 ) => {
   const collection = await getExchangeRatesCollection()
   await collection.insertMany(exchangeRates)
+}
+
+export const insertTestMissingExchangeRate = async (
+  missingRate: DBMissingExchangeRate
+) => {
+  const collection = await getMissingExchangeRatesCollection()
+  await collection.insertOne(missingRate)
 }

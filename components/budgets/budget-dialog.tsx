@@ -49,6 +49,7 @@ import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
+import { parseToLocalDate } from "@/lib/date"
 import type { Budget } from "@/lib/definitions"
 import type { BudgetFormValues } from "@/schemas/types"
 
@@ -72,8 +73,8 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       categoryKey: budget?.categoryKey || "",
       currency: budget?.currency ?? (user.currency as Currency),
       allocatedAmount: budget?.allocatedAmount ?? "",
-      startDate: budget?.startDate ? new Date(budget.startDate) : undefined,
-      endDate: budget?.endDate ? new Date(budget.endDate) : undefined,
+      startDate: parseToLocalDate(budget?.startDate),
+      endDate: parseToLocalDate(budget?.endDate),
     },
   })
 

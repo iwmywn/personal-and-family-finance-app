@@ -19,7 +19,7 @@ import {
   updateRecurringTransaction,
 } from "@/actions/recurring.actions"
 import { getRecurringTransactionsCollection } from "@/lib/collections"
-import { localDateToUTCMidnight } from "@/lib/utils"
+import { localDateToUTCMidnight } from "@/lib/date"
 
 describe("Recurring Transactions", async () => {
   beforeEach(() => {

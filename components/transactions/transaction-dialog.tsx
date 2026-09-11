@@ -60,6 +60,7 @@ import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/category"
 import { CURRENCIES, CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
+import { parseToLocalDate } from "@/lib/date"
 import type { Transaction } from "@/lib/definitions"
 import type { TransactionFormValues } from "@/schemas/types"
 
@@ -85,11 +86,14 @@ export function TransactionDialog({
     resolver: zodResolver(createTransactionSchema()),
     defaultValues: {
       type: transaction?.type || "inflow",
-      currency: transaction?.currency ?? (user.currency as Currency),
-      amount: transaction?.amount ?? "",
+      currency:
+        transaction?.originalCurrency ??
+        transaction?.currency ??
+        (user.currency as Currency),
+      amount: transaction?.originalAmount ?? transaction?.amount ?? "",
       description: transaction?.description || "",
       categoryKey: transaction?.categoryKey || "",
-      date: transaction?.date ? new Date(transaction.date) : undefined,
+      date: parseToLocalDate(transaction?.date),
     },
   })
 

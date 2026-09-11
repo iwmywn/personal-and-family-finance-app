@@ -1,13 +1,16 @@
 import type { NextRequest } from "next/server"
 
-import { ensureExchangeRateForDate } from "@/actions/exchange-rates.actions"
-import { normalizeToUTCMidnight } from "@/actions/utils"
+import {
+  enqueueMissingExchangeRateDate,
+  ensureExchangeRateForDate,
+} from "@/actions/exchange-rates.actions"
 import { serverEnv } from "@/env/server"
 import {
   getExchangeRatesCollection,
-  getTransactionsCollection,
+  getMissingExchangeRatesCollection,
 } from "@/lib/collections"
 import { CURRENCIES } from "@/lib/currency"
+import { addDays, normalizeToUTCMidnight } from "@/lib/date"
 
 // Vercel Cron Jobs only trigger HTTP GET requests.
 // [See official docs](https://vercel.com/docs/cron-jobs#how-cron-jobs-work)
@@ -21,24 +24,26 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const [transactionsCollection, exchangeRatesCollection] = await Promise.all(
-      [getTransactionsCollection(), getExchangeRatesCollection()]
+    const [missingRatesCollection, exchangeRatesCollection] = await Promise.all(
+      [getMissingExchangeRatesCollection(), getExchangeRatesCollection()]
     )
 
     const now = new Date()
     const todayUTC = normalizeToUTCMidnight(now)
-    const yesterdayUTC = new Date(todayUTC.getTime() - 24 * 60 * 60 * 1000)
+    const yesterdayUTC = addDays(todayUTC, -1)
 
     const datesToCheck = new Set<number>()
     datesToCheck.add(yesterdayUTC.getTime())
 
-    const txDates = (await transactionsCollection.distinct("date", {
-      date: { $lte: yesterdayUTC },
-    })) as Date[]
+    const queuedDocs = await missingRatesCollection
+      .find({})
+      .sort({ createdAt: 1 })
+      .limit(MAX_DATES_PER_RUN)
+      .toArray()
 
-    for (const d of txDates) {
-      if (d) {
-        datesToCheck.add(normalizeToUTCMidnight(new Date(d)).getTime())
+    for (const doc of queuedDocs) {
+      if (doc?.date) {
+        datesToCheck.add(normalizeToUTCMidnight(new Date(doc.date)).getTime())
       }
     }
 
@@ -71,27 +76,36 @@ export async function GET(request: NextRequest) {
     const results = await Promise.allSettled(
       datesToSync.map(async (d) => {
         await ensureExchangeRateForDate(d)
+        await missingRatesCollection.deleteOne({ date: d })
         return d
       })
     )
 
     let syncedCount = 0
     const errors: { date: string; error: string }[] = []
+    const errorUpdates: Promise<unknown>[] = []
 
-    results.forEach((res, index) => {
+    for (let index = 0; index < results.length; index++) {
+      const res = results[index]
+      const d = datesToSync[index]
       if (res.status === "fulfilled") {
         syncedCount++
       } else {
-        const d = datesToSync[index]
+        const errorMsg =
+          res.reason instanceof Error ? res.reason.message : String(res.reason)
         errors.push({
           date: d.toISOString().split("T")[0],
-          error:
-            res.reason instanceof Error
-              ? res.reason.message
-              : String(res.reason),
+          error: errorMsg,
         })
+        errorUpdates.push(enqueueMissingExchangeRateDate(d, res.reason))
       }
-    })
+    }
+
+    if (errorUpdates.length > 0) {
+      await Promise.allSettled(errorUpdates)
+    }
+
+    const remainingQueueCount = await missingRatesCollection.countDocuments()
 
     return Response.json({
       success: true,
@@ -99,7 +113,7 @@ export async function GET(request: NextRequest) {
       missingCount: missingDates.length,
       batchCount: datesToSync.length,
       syncedCount,
-      remainingCount: Math.max(0, missingDates.length - datesToSync.length),
+      remainingCount: remainingQueueCount,
       errors,
       timestamp: new Date().toISOString(),
     })

@@ -3,7 +3,7 @@ import * as z from "zod"
 
 import { CATEGORY_TYPES } from "@/lib/category"
 import { CURRENCIES } from "@/lib/currency"
-import { parseToUTCMidnight } from "@/lib/parsers"
+import { parseToUTCMidnight } from "@/lib/date"
 import { ASSIGNABLE_ROLES } from "@/lib/role"
 import type { SchemaMessages } from "@/schemas/messages"
 
