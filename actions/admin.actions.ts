@@ -46,7 +46,7 @@ async function verifyAdmin() {
   return session
 }
 
-export async function createAdminUser(values: AdminUserFormValues): Promise<{
+export async function createUser(values: AdminUserFormValues): Promise<{
   error?: string
   success?: string
 }> {

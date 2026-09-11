@@ -14,7 +14,7 @@ import {
   mockUser,
 } from "@/tests/shared/data"
 import {
-  createAdminUser,
+  createUser,
   deleteUser,
   getAdminStats,
   listUsers,
@@ -281,7 +281,7 @@ describe("Admin Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await createAdminUser({
+      const result = await createUser({
         name: "Test User",
         username: "testuser",
         email: "test@example.com",
@@ -296,7 +296,7 @@ describe("Admin Actions", () => {
     it("should force role to user when created by regular admin", async () => {
       mockAuthenticatedAdmin()
 
-      const result = await createAdminUser({
+      const result = await createUser({
         name: "Test User",
         username: "testuser",
         email: "test@example.com",
@@ -311,7 +311,7 @@ describe("Admin Actions", () => {
     it("should allow superadmin to create user with specified role", async () => {
       mockAuthenticatedSuperAdmin()
 
-      const result = await createAdminUser({
+      const result = await createUser({
         name: "Test User",
         username: "testuser",
         email: "test@example.com",

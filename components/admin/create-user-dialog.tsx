@@ -6,7 +6,7 @@ import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { createAdminUser } from "@/actions/admin.actions"
+import { createUser } from "@/actions/admin.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -82,7 +82,7 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
       return
     }
 
-    const { success, error } = await createAdminUser(values)
+    const { success, error } = await createUser(values)
 
     if (error || !success) {
       toast.error(error)

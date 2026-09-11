@@ -53,7 +53,9 @@ describe("Transactions", async () => {
       expect(firstResult.success).toBe("Transaction has been added.")
       expect(firstResult.error).toBeUndefined()
       expect(duplicateResult.success).toBeUndefined()
-      expect(duplicateResult.error).toBe("This transaction already exists!")
+      expect(duplicateResult.error).toBe(
+        "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
+      )
     })
 
     it("should successfully create transaction", async () => {
@@ -127,7 +129,9 @@ describe("Transactions", async () => {
         (r) => r.success === "Transaction has been added."
       ).length
       const errorCount = results.filter(
-        (r) => r.error === "This transaction already exists!"
+        (r) =>
+          r.error ===
+          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
       ).length
 
       expect(successCount).toBe(1)
@@ -296,7 +300,9 @@ describe("Transactions", async () => {
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("This transaction already exists!")
+      expect(result.error).toBe(
+        "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
+      )
     })
 
     it("should prevent race condition when updating duplicate transactions concurrently", async () => {
@@ -333,7 +339,9 @@ describe("Transactions", async () => {
         (r) => r.success === "Transaction has been updated."
       ).length
       const errorCount = results.filter(
-        (r) => r.error === "This transaction already exists!"
+        (r) =>
+          r.error ===
+          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
       ).length
 
       expect(successCount).toBe(1)

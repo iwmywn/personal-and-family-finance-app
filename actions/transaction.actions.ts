@@ -82,7 +82,11 @@ export async function createTransaction(
     return { success: t("Transaction has been added."), error: undefined }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
-      return { error: t("This transaction already exists!") }
+      return {
+        error: t(
+          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
+        ),
+      }
     }
     console.error("Error creating transaction:", error)
     return { error: t("Failed to add transaction! Please try again later.") }
@@ -174,7 +178,11 @@ export async function updateTransaction(
     }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
-      return { error: t("This transaction already exists!") }
+      return {
+        error: t(
+          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
+        ),
+      }
     }
     console.error("Error updating transaction:", error)
     return { error: t("Failed to update transaction! Please try again later.") }
