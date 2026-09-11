@@ -11,7 +11,6 @@ import {
 } from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
 import type { Currency } from "@/lib/currency"
-import { withTransaction } from "@/lib/db"
 import type { Transaction } from "@/lib/definitions"
 import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
@@ -46,73 +45,42 @@ export async function createTransaction(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      parsedValues.data.type
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const transactionsCollection = await getTransactionsCollection()
 
-    try {
-      await ensureExchangeRateForDate(parsedValues.data.date)
-    } catch (error) {
-      after(() => {
+    await transactionsCollection.insertOne({
+      userId: new ObjectId(userId),
+      type: parsedValues.data.type,
+      categoryKey: parsedValues.data.categoryKey,
+      amount: toDecimal128(parsedValues.data.amount),
+      currency: parsedValues.data.currency,
+      description: parsedValues.data.description,
+      date: parsedValues.data.date,
+    })
+
+    after(async () => {
+      try {
+        await ensureExchangeRateForDate(parsedValues.data.date)
+      } catch (error) {
         console.warn(
           "Could not ensure exchange rate for transaction date:",
           error
         )
-      })
-    }
-
-    if (ObjectId.isValid(parsedValues.data.categoryKey)) {
-      await withTransaction(async (dbSession) => {
-        const isValidCategory = await isValidUserCategory(
-          userId,
-          parsedValues.data.categoryKey,
-          parsedValues.data.type,
-          dbSession
-        )
-
-        if (!isValidCategory) {
-          throw new Error("INVALID_CATEGORY")
-        }
-
-        await transactionsCollection.insertOne(
-          {
-            userId: new ObjectId(userId),
-            type: parsedValues.data.type,
-            categoryKey: parsedValues.data.categoryKey,
-            amount: toDecimal128(parsedValues.data.amount),
-            currency: parsedValues.data.currency,
-            description: parsedValues.data.description,
-            date: parsedValues.data.date,
-          },
-          { session: dbSession }
-        )
-      })
-    } else {
-      const isValidCategory = await isValidUserCategory(
-        userId,
-        parsedValues.data.categoryKey,
-        parsedValues.data.type
-      )
-
-      if (!isValidCategory) {
-        return { error: t("Invalid category!") }
       }
-
-      await transactionsCollection.insertOne({
-        userId: new ObjectId(userId),
-        type: parsedValues.data.type,
-        categoryKey: parsedValues.data.categoryKey,
-        amount: toDecimal128(parsedValues.data.amount),
-        currency: parsedValues.data.currency,
-        description: parsedValues.data.description,
-        date: parsedValues.data.date,
-      })
-    }
+    })
 
     updateTag(`transactions-${userId}`)
     return { success: t("Transaction has been added."), error: undefined }
   } catch (error) {
-    if (error instanceof Error && error.message === "INVALID_CATEGORY") {
-      return { error: t("Invalid category!") }
-    }
     if (isDuplicateKeyError(error)) {
       return { error: t("This transaction already exists!") }
     }
@@ -153,90 +121,51 @@ export async function updateTransaction(
     }
 
     const userId = session.user.id
+    const isValidCategory = await isValidUserCategory(
+      userId,
+      parsedValues.data.categoryKey,
+      parsedValues.data.type
+    )
+
+    if (!isValidCategory) {
+      return { error: t("Invalid category!") }
+    }
+
     const transactionsCollection = await getTransactionsCollection()
 
-    try {
-      await ensureExchangeRateForDate(parsedValues.data.date)
-    } catch (error) {
-      after(() => {
+    const result = await transactionsCollection.updateOne(
+      {
+        _id: new ObjectId(transactionId),
+        userId: new ObjectId(userId),
+      },
+      {
+        $set: {
+          type: parsedValues.data.type,
+          categoryKey: parsedValues.data.categoryKey,
+          amount: toDecimal128(parsedValues.data.amount),
+          currency: parsedValues.data.currency,
+          description: parsedValues.data.description,
+          date: parsedValues.data.date,
+        },
+      }
+    )
+
+    if (result.matchedCount === 0) {
+      return {
+        error: t("Transaction not found or you don't have permission to edit!"),
+      }
+    }
+
+    after(async () => {
+      try {
+        await ensureExchangeRateForDate(parsedValues.data.date)
+      } catch (error) {
         console.warn(
           "Could not ensure exchange rate for transaction date:",
           error
         )
-      })
-    }
-
-    if (ObjectId.isValid(parsedValues.data.categoryKey)) {
-      await withTransaction(async (dbSession) => {
-        const isValidCategory = await isValidUserCategory(
-          userId,
-          parsedValues.data.categoryKey,
-          parsedValues.data.type,
-          dbSession
-        )
-
-        if (!isValidCategory) {
-          throw new Error("INVALID_CATEGORY")
-        }
-
-        const result = await transactionsCollection.updateOne(
-          {
-            _id: new ObjectId(transactionId),
-            userId: new ObjectId(userId),
-          },
-          {
-            $set: {
-              type: parsedValues.data.type,
-              categoryKey: parsedValues.data.categoryKey,
-              amount: toDecimal128(parsedValues.data.amount),
-              currency: parsedValues.data.currency,
-              description: parsedValues.data.description,
-              date: parsedValues.data.date,
-            },
-          },
-          { session: dbSession }
-        )
-
-        if (result.matchedCount === 0) {
-          throw new Error("NOT_FOUND")
-        }
-      })
-    } else {
-      const isValidCategory = await isValidUserCategory(
-        userId,
-        parsedValues.data.categoryKey,
-        parsedValues.data.type
-      )
-
-      if (!isValidCategory) {
-        return { error: t("Invalid category!") }
       }
-
-      const result = await transactionsCollection.updateOne(
-        {
-          _id: new ObjectId(transactionId),
-          userId: new ObjectId(userId),
-        },
-        {
-          $set: {
-            type: parsedValues.data.type,
-            categoryKey: parsedValues.data.categoryKey,
-            amount: toDecimal128(parsedValues.data.amount),
-            currency: parsedValues.data.currency,
-            description: parsedValues.data.description,
-            date: parsedValues.data.date,
-          },
-        }
-      )
-
-      if (result.matchedCount === 0) {
-        return {
-          error: t(
-            "Transaction not found or you don't have permission to edit!"
-          ),
-        }
-      }
-    }
+    })
 
     updateTag(`transactions-${userId}`)
     return {
@@ -244,14 +173,6 @@ export async function updateTransaction(
       error: undefined,
     }
   } catch (error) {
-    if (error instanceof Error && error.message === "INVALID_CATEGORY") {
-      return { error: t("Invalid category!") }
-    }
-    if (error instanceof Error && error.message === "NOT_FOUND") {
-      return {
-        error: t("Transaction not found or you don't have permission to edit!"),
-      }
-    }
     if (isDuplicateKeyError(error)) {
       return { error: t("This transaction already exists!") }
     }

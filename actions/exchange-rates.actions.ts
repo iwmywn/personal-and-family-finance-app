@@ -34,7 +34,10 @@ export type CurrencyApiResponse = {
 
 async function fetchCurrencyApiRatesForDate(dateStr: string) {
   const apiUrl = `https://api.currencyapi.com/v3/historical?apikey=${serverEnv.CURRENCY_API_SECRET}&currencies=${CURRENCIES.join(",")}&date=${dateStr}`
-  const response = await fetch(apiUrl)
+
+  const response = await fetch(apiUrl, {
+    signal: AbortSignal.timeout(5000),
+  })
 
   if (!response.ok) {
     throw new Error(

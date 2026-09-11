@@ -399,7 +399,10 @@ describe("ensureExchangeRateForDate", () => {
 
     expect(fetchSpy).toHaveBeenCalledTimes(1)
     expect(fetchSpy).toHaveBeenCalledWith(
-      expect.stringContaining("https://api.currencyapi.com/v3/historical")
+      expect.stringContaining("https://api.currencyapi.com/v3/historical"),
+      expect.objectContaining({
+        signal: expect.any(AbortSignal),
+      })
     )
 
     const collection = await getExchangeRatesCollection()
@@ -445,7 +448,10 @@ describe("ensureExchangeRateForDate", () => {
 
     expect(fetchSpy).toHaveBeenCalledTimes(1)
     expect(fetchSpy).toHaveBeenCalledWith(
-      expect.stringContaining("https://api.currencyapi.com/v3/historical")
+      expect.stringContaining("https://api.currencyapi.com/v3/historical"),
+      expect.objectContaining({
+        signal: expect.any(AbortSignal),
+      })
     )
 
     const updated = await collection.findOne({ date: testDate })
