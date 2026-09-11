@@ -1,16 +1,9 @@
+import { Suspense } from "react"
 import type { Metadata } from "next"
+import { connection } from "next/server"
 import { getExtracted } from "next-intl/server"
 
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { LanguageSelector } from "@/components/auth/language-selector"
-import { SignInForm } from "@/components/auth/signin-form"
+import { SignInPage } from "@/components/auth/signin-page"
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getExtracted()
@@ -18,23 +11,18 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("Sign In") }
 }
 
-export default async function page() {
-  const t = await getExtracted()
+async function DynamicMarker() {
+  await connection()
+  return null
+}
 
+export default function page() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t("Sign In")}</CardTitle>
-        <CardDescription>
-          {t("Enter your username and password to sign in to your account.")}
-        </CardDescription>
-        <CardAction>
-          <LanguageSelector />
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <SignInForm />
-      </CardContent>
-    </Card>
+    <>
+      <SignInPage />
+      <Suspense>
+        <DynamicMarker />
+      </Suspense>
+    </>
   )
 }

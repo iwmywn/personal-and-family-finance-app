@@ -424,47 +424,23 @@ msgstr "Tải danh sách giao dịch thất bại! Vui lòng thử lại sau."
 
 #: app/(auth)/signin/page.tsx
 #: components/auth/signin-form.tsx
+#: components/auth/signin-page.tsx
 msgctxt "Ub-AGc"
 msgid "Sign In"
 msgstr "Đăng nhập"
 
-#: app/(auth)/signin/page.tsx
-msgctxt "gvGdmL"
-msgid "Enter your username and password to sign in to your account."
-msgstr "Nhập tên đăng nhập và mật khẩu để đăng nhập vào tài khoản của bạn."
-
 #: app/(auth)/two-factor/page.tsx
+#: components/auth/two-factor-page.tsx
 #: components/settings/settings-page.tsx
 msgctxt "AJyYQz"
 msgid "Two-Factor Authentication"
 msgstr "Xác thực hai yếu tố"
-
-#: app/(auth)/two-factor/page.tsx
-msgctxt "PsYaj1"
-msgid "Enter the code from your authenticator app."
-msgstr "Nhập mã từ ứng dụng xác thực của bạn."
 
 #: app/(core)/[...not-found]/page.tsx
 #: components/layout/header.tsx
 msgctxt "k1s9UW"
 msgid "Not Found"
 msgstr "Không tìm thấy"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "QRccCM"
-msgid "Page not found"
-msgstr "Trang không tìm thấy"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "yAbaof"
-msgid "The page you are looking for does not exist."
-msgstr "Trang bạn đang tìm kiếm không tồn tại."
-
-#: app/(core)/[...not-found]/page.tsx
-#: app/error.tsx
-msgctxt "kfoc7z"
-msgid "Back to Home"
-msgstr "Về trang chủ"
 
 #: app/(core)/admin/page.tsx
 #: components/admin/admin-page.tsx
@@ -539,6 +515,12 @@ msgstr "Giao dịch"
 msgctxt "_WMCDd"
 msgid "Something went wrong!"
 msgstr "Đã xảy ra lỗi!"
+
+#: app/error.tsx
+#: components/layout/not-found-page.tsx
+msgctxt "kfoc7z"
+msgid "Back to Home"
+msgstr "Về trang chủ"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
@@ -1091,6 +1073,11 @@ msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "Quá giới hạn tần suất yêu cầu! Vui lòng thử lại sau {seconds} giây."
 
+#: components/auth/signin-page.tsx
+msgctxt "gvGdmL"
+msgid "Enter your username and password to sign in to your account."
+msgstr "Nhập tên đăng nhập và mật khẩu để đăng nhập vào tài khoản của bạn."
+
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
 msgctxt "FCVHwe"
@@ -1139,6 +1126,11 @@ msgstr "Không hỏi mã 2FA trên thiết bị này trong 30 ngày."
 msgctxt "q5Xl0M"
 msgid "Verify"
 msgstr "Xác minh"
+
+#: components/auth/two-factor-page.tsx
+msgctxt "PsYaj1"
+msgid "Enter the code from your authenticator app."
+msgstr "Nhập mã từ ứng dụng xác thực của bạn."
 
 #: components/budgets/budget-dialog.tsx
 msgctxt "2g82CP"
@@ -1843,6 +1835,16 @@ msgstr "Việc dừng lại sẽ khôi phục phiên quản trị viên của b�
 msgctxt "d0A6B0"
 msgid "Stop Impersonating"
 msgstr "Dừng đóng vai"
+
+#: components/layout/not-found-page.tsx
+msgctxt "QRccCM"
+msgid "Page not found"
+msgstr "Trang không tìm thấy"
+
+#: components/layout/not-found-page.tsx
+msgctxt "yAbaof"
+msgid "The page you are looking for does not exist."
+msgstr "Trang bạn đang tìm kiếm không tồn tại."
 
 #: components/layout/offline-indicator.tsx
 msgctxt "tm_VW-"

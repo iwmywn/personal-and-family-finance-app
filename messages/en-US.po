@@ -424,47 +424,23 @@ msgstr "Failed to load transactions! Please try again later."
 
 #: app/(auth)/signin/page.tsx
 #: components/auth/signin-form.tsx
+#: components/auth/signin-page.tsx
 msgctxt "Ub-AGc"
 msgid "Sign In"
 msgstr "Sign In"
 
-#: app/(auth)/signin/page.tsx
-msgctxt "gvGdmL"
-msgid "Enter your username and password to sign in to your account."
-msgstr "Enter your username and password to sign in to your account."
-
 #: app/(auth)/two-factor/page.tsx
+#: components/auth/two-factor-page.tsx
 #: components/settings/settings-page.tsx
 msgctxt "AJyYQz"
 msgid "Two-Factor Authentication"
 msgstr "Two-Factor Authentication"
-
-#: app/(auth)/two-factor/page.tsx
-msgctxt "PsYaj1"
-msgid "Enter the code from your authenticator app."
-msgstr "Enter the code from your authenticator app."
 
 #: app/(core)/[...not-found]/page.tsx
 #: components/layout/header.tsx
 msgctxt "k1s9UW"
 msgid "Not Found"
 msgstr "Not Found"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "QRccCM"
-msgid "Page not found"
-msgstr "Page not found"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "yAbaof"
-msgid "The page you are looking for does not exist."
-msgstr "The page you are looking for does not exist."
-
-#: app/(core)/[...not-found]/page.tsx
-#: app/error.tsx
-msgctxt "kfoc7z"
-msgid "Back to Home"
-msgstr "Back to Home"
 
 #: app/(core)/admin/page.tsx
 #: components/admin/admin-page.tsx
@@ -539,6 +515,12 @@ msgstr "Transactions"
 msgctxt "_WMCDd"
 msgid "Something went wrong!"
 msgstr "Something went wrong!"
+
+#: app/error.tsx
+#: components/layout/not-found-page.tsx
+msgctxt "kfoc7z"
+msgid "Back to Home"
+msgstr "Back to Home"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
@@ -1091,6 +1073,11 @@ msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "Rate limit exceeded! Retry after {seconds} seconds."
 
+#: components/auth/signin-page.tsx
+msgctxt "gvGdmL"
+msgid "Enter your username and password to sign in to your account."
+msgstr "Enter your username and password to sign in to your account."
+
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
 msgctxt "FCVHwe"
@@ -1139,6 +1126,11 @@ msgstr "Don't ask for 2FA code on this device for 30 days."
 msgctxt "q5Xl0M"
 msgid "Verify"
 msgstr "Verify"
+
+#: components/auth/two-factor-page.tsx
+msgctxt "PsYaj1"
+msgid "Enter the code from your authenticator app."
+msgstr "Enter the code from your authenticator app."
 
 #: components/budgets/budget-dialog.tsx
 msgctxt "2g82CP"
@@ -1843,6 +1835,16 @@ msgstr "Stopping will restore your admin session and redirect you back to the ad
 msgctxt "d0A6B0"
 msgid "Stop Impersonating"
 msgstr "Stop Impersonating"
+
+#: components/layout/not-found-page.tsx
+msgctxt "QRccCM"
+msgid "Page not found"
+msgstr "Page not found"
+
+#: components/layout/not-found-page.tsx
+msgctxt "yAbaof"
+msgid "The page you are looking for does not exist."
+msgstr "The page you are looking for does not exist."
 
 #: components/layout/offline-indicator.tsx
 msgctxt "tm_VW-"

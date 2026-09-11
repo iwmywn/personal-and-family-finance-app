@@ -424,47 +424,23 @@ msgstr "加载交易失败！请稍后再试。"
 
 #: app/(auth)/signin/page.tsx
 #: components/auth/signin-form.tsx
+#: components/auth/signin-page.tsx
 msgctxt "Ub-AGc"
 msgid "Sign In"
 msgstr "登录"
 
-#: app/(auth)/signin/page.tsx
-msgctxt "gvGdmL"
-msgid "Enter your username and password to sign in to your account."
-msgstr "输入您的用户名和密码以登录您的帐户。"
-
 #: app/(auth)/two-factor/page.tsx
+#: components/auth/two-factor-page.tsx
 #: components/settings/settings-page.tsx
 msgctxt "AJyYQz"
 msgid "Two-Factor Authentication"
 msgstr "双重身份验证"
-
-#: app/(auth)/two-factor/page.tsx
-msgctxt "PsYaj1"
-msgid "Enter the code from your authenticator app."
-msgstr "输入您的身份验证器应用中的代码。"
 
 #: app/(core)/[...not-found]/page.tsx
 #: components/layout/header.tsx
 msgctxt "k1s9UW"
 msgid "Not Found"
 msgstr "未找到"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "QRccCM"
-msgid "Page not found"
-msgstr "页面未找到"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "yAbaof"
-msgid "The page you are looking for does not exist."
-msgstr "您正在查找的页面不存在。"
-
-#: app/(core)/[...not-found]/page.tsx
-#: app/error.tsx
-msgctxt "kfoc7z"
-msgid "Back to Home"
-msgstr "返回首页"
 
 #: app/(core)/admin/page.tsx
 #: components/admin/admin-page.tsx
@@ -539,6 +515,12 @@ msgstr "交易"
 msgctxt "_WMCDd"
 msgid "Something went wrong!"
 msgstr "出了点问题！"
+
+#: app/error.tsx
+#: components/layout/not-found-page.tsx
+msgctxt "kfoc7z"
+msgid "Back to Home"
+msgstr "返回首页"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
@@ -1091,6 +1073,11 @@ msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
 
+#: components/auth/signin-page.tsx
+msgctxt "gvGdmL"
+msgid "Enter your username and password to sign in to your account."
+msgstr "输入您的用户名和密码以登录您的帐户。"
+
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
 msgctxt "FCVHwe"
@@ -1139,6 +1126,11 @@ msgstr "30 天内不再在此设备上询问 2FA 代码。"
 msgctxt "q5Xl0M"
 msgid "Verify"
 msgstr "验证"
+
+#: components/auth/two-factor-page.tsx
+msgctxt "PsYaj1"
+msgid "Enter the code from your authenticator app."
+msgstr "输入您的身份验证器应用中的代码。"
 
 #: components/budgets/budget-dialog.tsx
 msgctxt "2g82CP"
@@ -1843,6 +1835,16 @@ msgstr "停止后将恢复您的管理员会话，并将您重定向回管理面
 msgctxt "d0A6B0"
 msgid "Stop Impersonating"
 msgstr "停止模拟"
+
+#: components/layout/not-found-page.tsx
+msgctxt "QRccCM"
+msgid "Page not found"
+msgstr "页面未找到"
+
+#: components/layout/not-found-page.tsx
+msgctxt "yAbaof"
+msgid "The page you are looking for does not exist."
+msgstr "您正在查找的页面不存在。"
 
 #: components/layout/offline-indicator.tsx
 msgctxt "tm_VW-"

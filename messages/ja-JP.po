@@ -424,47 +424,23 @@ msgstr "取引の読み込みに失敗しました！後でもう一度お試し
 
 #: app/(auth)/signin/page.tsx
 #: components/auth/signin-form.tsx
+#: components/auth/signin-page.tsx
 msgctxt "Ub-AGc"
 msgid "Sign In"
 msgstr "サインイン"
 
-#: app/(auth)/signin/page.tsx
-msgctxt "gvGdmL"
-msgid "Enter your username and password to sign in to your account."
-msgstr "アカウントにサインインするには、ユーザー名とパスワードを入力してください。"
-
 #: app/(auth)/two-factor/page.tsx
+#: components/auth/two-factor-page.tsx
 #: components/settings/settings-page.tsx
 msgctxt "AJyYQz"
 msgid "Two-Factor Authentication"
 msgstr "二要素認証"
-
-#: app/(auth)/two-factor/page.tsx
-msgctxt "PsYaj1"
-msgid "Enter the code from your authenticator app."
-msgstr "認証アプリからコードを入力してください。"
 
 #: app/(core)/[...not-found]/page.tsx
 #: components/layout/header.tsx
 msgctxt "k1s9UW"
 msgid "Not Found"
 msgstr "見つかりません"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "QRccCM"
-msgid "Page not found"
-msgstr "ページが見つかりません"
-
-#: app/(core)/[...not-found]/page.tsx
-msgctxt "yAbaof"
-msgid "The page you are looking for does not exist."
-msgstr "お探しのページは存在しません。"
-
-#: app/(core)/[...not-found]/page.tsx
-#: app/error.tsx
-msgctxt "kfoc7z"
-msgid "Back to Home"
-msgstr "ホームに戻る"
 
 #: app/(core)/admin/page.tsx
 #: components/admin/admin-page.tsx
@@ -539,6 +515,12 @@ msgstr "取引"
 msgctxt "_WMCDd"
 msgid "Something went wrong!"
 msgstr "問題が発生しました！"
+
+#: app/error.tsx
+#: components/layout/not-found-page.tsx
+msgctxt "kfoc7z"
+msgid "Back to Home"
+msgstr "ホームに戻る"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
@@ -1091,6 +1073,11 @@ msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "レート制限を超えました！{seconds}秒後に再試行してください。"
 
+#: components/auth/signin-page.tsx
+msgctxt "gvGdmL"
+msgid "Enter your username and password to sign in to your account."
+msgstr "アカウントにサインインするには、ユーザー名とパスワードを入力してください。"
+
 #: components/auth/two-factor-form.tsx
 #: components/settings/two-factor-manager-dialog.tsx
 msgctxt "FCVHwe"
@@ -1139,6 +1126,11 @@ msgstr "このデバイスでは30日間2FAコードを要求しない。"
 msgctxt "q5Xl0M"
 msgid "Verify"
 msgstr "確認"
+
+#: components/auth/two-factor-page.tsx
+msgctxt "PsYaj1"
+msgid "Enter the code from your authenticator app."
+msgstr "認証アプリからコードを入力してください。"
 
 #: components/budgets/budget-dialog.tsx
 msgctxt "2g82CP"
@@ -1843,6 +1835,16 @@ msgstr "停止すると管理者セッションが復元され、管理パネル
 msgctxt "d0A6B0"
 msgid "Stop Impersonating"
 msgstr "なりすましを停止"
+
+#: components/layout/not-found-page.tsx
+msgctxt "QRccCM"
+msgid "Page not found"
+msgstr "ページが見つかりません"
+
+#: components/layout/not-found-page.tsx
+msgctxt "yAbaof"
+msgid "The page you are looking for does not exist."
+msgstr "お探しのページは存在しません。"
 
 #: components/layout/offline-indicator.tsx
 msgctxt "tm_VW-"

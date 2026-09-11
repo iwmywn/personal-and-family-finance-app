@@ -11,6 +11,8 @@ import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
 import { UserProvider } from "@/context/user-context"
 
+// export const instant = false
+
 export default async function DashboardLayout({
   children,
 }: Readonly<{

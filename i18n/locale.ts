@@ -1,20 +1,14 @@
 "use server"
 
 import { cache } from "react"
-import { cookies, headers } from "next/headers"
+import { cookies } from "next/headers"
 
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/config"
 import type { Locale } from "@/i18n/config"
-import { auth } from "@/lib/auth"
 
 const COOKIE_NAME = "locale"
 
 export const getUserLocale = cache(async (): Promise<Locale> => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
-  if (session?.user.locale) return session.user.locale as Locale
-
   const cookieLocale = (await cookies()).get(COOKIE_NAME)?.value
   if (cookieLocale && LOCALES.includes(cookieLocale as Locale))
     return cookieLocale as Locale
@@ -29,10 +23,10 @@ const fourHundredDays = 400 * 24 * 60 * 60
 export async function setUserLocale(locale: Locale): Promise<void> {
   if (!LOCALES.includes(locale)) return
 
-  const store = await cookies()
-  if (store.get(COOKIE_NAME)?.value === locale) return
+  const cookieStore = await cookies()
+  if (cookieStore.get(COOKIE_NAME)?.value === locale) return
 
-  store.set(COOKIE_NAME, locale, {
+  cookieStore.set(COOKIE_NAME, locale, {
     sameSite: "lax",
     path: "/",
     maxAge: fourHundredDays,
