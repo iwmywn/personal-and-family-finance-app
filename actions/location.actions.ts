@@ -4,15 +4,20 @@ import { cacheLife, cacheTag } from "next/cache"
 
 import { getCurrentSession } from "./session.actions"
 
-export async function getLocationFromIP(ipAddress: string | null | undefined) {
-  "use cache: remote"
-  cacheTag(`location-${ipAddress}`)
-  cacheLife({ expire: 120 })
-
+export async function getLocationFromIP(ipAddress?: string | null) {
   const session = await getCurrentSession()
   if (!session) return null
 
   if (!ipAddress) return null
+
+  return getCachedLocationFromIP(ipAddress)
+}
+
+async function getCachedLocationFromIP(ipAddress: string) {
+  "use cache: remote"
+  cacheTag(`location-${ipAddress}`)
+  cacheLife({ expire: 120 })
+
   if (ipAddress === "0000:0000:0000:0000:0000:0000:0000:0000") {
     return "Local"
   }
