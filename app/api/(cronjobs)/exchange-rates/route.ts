@@ -1,4 +1,3 @@
-import crypto from "crypto"
 import type { NextRequest } from "next/server"
 
 import { ensureExchangeRateForDate } from "@/actions/exchange-rates.actions"
@@ -15,18 +14,9 @@ import { CURRENCIES } from "@/lib/currency"
 
 const MAX_DATES_PER_RUN = 10
 
-function verifyCronSecret(authHeader: string | null): boolean {
-  if (!authHeader) return false
-  const expected = `Bearer ${serverEnv.CRON_SECRET}`
-  const expectedBuf = Buffer.from(expected)
-  const actualBuf = Buffer.from(authHeader)
-  if (expectedBuf.length !== actualBuf.length) return false
-  return crypto.timingSafeEqual(expectedBuf, actualBuf)
-}
-
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization")
-  if (!verifyCronSecret(authHeader)) {
+  if (authHeader !== `Bearer ${serverEnv.CRON_SECRET}`) {
     return new Response("Unauthorized", { status: 401 })
   }
 
