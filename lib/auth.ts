@@ -105,6 +105,7 @@ export const auth = betterAuth({
     cookiePrefix: siteConfig.name,
     database: {
       generateId: false,
+      joins: true,
     },
   },
   rateLimit: {
