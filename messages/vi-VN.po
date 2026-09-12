@@ -32,10 +32,9 @@ msgid "This email is already in use."
 msgstr "Email này đã được sử dụng."
 
 #: actions/admin.actions.ts
-#: components/auth/signin-form.tsx
-msgctxt "b8-mgZ"
-msgid "Failed to sign in! Please try again later."
-msgstr "Đăng nhập thất bại! Vui lòng thử lại sau."
+msgctxt "74JxeG"
+msgid "Failed to create user! Please try again later."
+msgstr "Tạo người dùng thất bại! Vui lòng thử lại sau."
 
 #: actions/admin.actions.ts
 msgctxt "gREMXx"
@@ -1072,6 +1071,11 @@ msgstr "Tài khoản của bạn đã bị cấm. Vui lòng liên hệ với b�
 msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "Quá giới hạn tần suất yêu cầu! Vui lòng thử lại sau {seconds} giây."
+
+#: components/auth/signin-form.tsx
+msgctxt "b8-mgZ"
+msgid "Failed to sign in! Please try again later."
+msgstr "Đăng nhập thất bại! Vui lòng thử lại sau."
 
 #: components/auth/signin-page.tsx
 msgctxt "gvGdmL"

@@ -32,10 +32,9 @@ msgid "This email is already in use."
 msgstr "このメールアドレスはすでに使用されています。"
 
 #: actions/admin.actions.ts
-#: components/auth/signin-form.tsx
-msgctxt "b8-mgZ"
-msgid "Failed to sign in! Please try again later."
-msgstr "サインインに失敗しました！後でもう一度お試しください。"
+msgctxt "74JxeG"
+msgid "Failed to create user! Please try again later."
+msgstr "ユーザーの作成に失敗しました！後でもう一度お試しください。"
 
 #: actions/admin.actions.ts
 msgctxt "gREMXx"
@@ -1072,6 +1071,11 @@ msgstr "アカウントがBANされました。誤りと思われる場合はサ
 msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "レート制限を超えました！{seconds}秒後に再試行してください。"
+
+#: components/auth/signin-form.tsx
+msgctxt "b8-mgZ"
+msgid "Failed to sign in! Please try again later."
+msgstr "サインインに失敗しました！後でもう一度お試しください。"
 
 #: components/auth/signin-page.tsx
 msgctxt "gvGdmL"

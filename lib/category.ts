@@ -1,7 +1,7 @@
 export const CATEGORY_TYPES = ["inflow", "outflow"] as const
 export type CategoryType = (typeof CATEGORY_TYPES)[number]
 
-export const INFLOW_CATEGORIES_KEY = [
+const INFLOW_CATEGORIES_KEY = [
   "salary_bonus",
   "business_freelance",
   "investment_passive",
@@ -10,7 +10,7 @@ export const INFLOW_CATEGORIES_KEY = [
   "other_inflow",
 ] as const
 
-export const OUTFLOW_CATEGORIES_KEY = [
+const OUTFLOW_CATEGORIES_KEY = [
   "food_beverage",
   "transportation",
   "personal_care",
@@ -26,7 +26,7 @@ export const OUTFLOW_CATEGORIES_KEY = [
   "other_outflow",
 ] as const
 
-export const ALL_PREDEFINED_CATEGORIES_KEY = [
+const ALL_PREDEFINED_CATEGORIES_KEY = [
   ...INFLOW_CATEGORIES_KEY,
   ...OUTFLOW_CATEGORIES_KEY,
 ] as const

@@ -5,7 +5,6 @@ import {
   formatDate,
   formatDateParts,
   getDaysInMonth,
-  getTodayUTCMidnight,
   isSameUTCDate,
   localDateToUTCMidnight,
   normalizeToUTCMidnight,
@@ -120,7 +119,7 @@ describe("lib/date.ts Unified Date Module", () => {
     })
   })
 
-  describe("localDateToUTCMidnight & getTodayUTCMidnight", () => {
+  describe("localDateToUTCMidnight", () => {
     it("should convert local date to UTC midnight of local calendar day", () => {
       const local = new Date(2026, 2, 15, 14, 0, 0) // March 15, 2026 local
       const utc = localDateToUTCMidnight(local)
@@ -128,13 +127,6 @@ describe("lib/date.ts Unified Date Module", () => {
       expect(utc.getUTCMonth()).toBe(2)
       expect(utc.getUTCDate()).toBe(15)
       expect(utc.getUTCHours()).toBe(0)
-    })
-
-    it("should return today's UTC midnight date", () => {
-      vi.setSystemTime(new Date("2026-09-11T15:30:00.000Z"))
-      const todayUTC = getTodayUTCMidnight()
-      expect(todayUTC.getUTCHours()).toBe(0)
-      expect(todayUTC.getUTCMinutes()).toBe(0)
     })
   })
 

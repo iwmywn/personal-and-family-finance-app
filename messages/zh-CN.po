@@ -32,10 +32,9 @@ msgid "This email is already in use."
 msgstr "该邮箱已被使用。"
 
 #: actions/admin.actions.ts
-#: components/auth/signin-form.tsx
-msgctxt "b8-mgZ"
-msgid "Failed to sign in! Please try again later."
-msgstr "登录失败！请稍后再试。"
+msgctxt "74JxeG"
+msgid "Failed to create user! Please try again later."
+msgstr "创建用户失败！请稍后再试。"
 
 #: actions/admin.actions.ts
 msgctxt "gREMXx"
@@ -1072,6 +1071,11 @@ msgstr "您的账户已被封禁。如果您认为这是一个错误，请联系
 msgctxt "zR1TB7"
 msgid "Rate limit exceeded! Retry after {seconds} seconds."
 msgstr "已超出频率限制！请在 {seconds} 秒后重试。"
+
+#: components/auth/signin-form.tsx
+msgctxt "b8-mgZ"
+msgid "Failed to sign in! Please try again later."
+msgstr "登录失败！请稍后再试。"
 
 #: components/auth/signin-page.tsx
 msgctxt "gvGdmL"

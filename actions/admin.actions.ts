@@ -93,7 +93,7 @@ export async function createUser(values: AdminUserFormValues): Promise<{
     ) {
       return { error: t("This email is already in use.") }
     }
-    return { error: t("Failed to sign in! Please try again later.") }
+    return { error: t("Failed to create user! Please try again later.") }
   }
 }
 

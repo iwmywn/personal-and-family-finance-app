@@ -112,13 +112,6 @@ export function localDateToUTCMidnight(date: Date): Date {
 }
 
 /**
- * Returns today's calendar date normalized to UTC Midnight based on the user's current local clock.
- */
-export function getTodayUTCMidnight(): Date {
-  return localDateToUTCMidnight(new Date())
-}
-
-/**
  * Converts a Date or string into a UTC Midnight Date.
  * Handles strings (YYYY-MM-DD or ISO) and Date objects.
  */
@@ -236,7 +229,3 @@ export function formatDate(
     timeZone: isUTCMidnight ? "UTC" : undefined,
   }).format(d)
 }
-
-// Backward-compatibility aliases
-export const extractValidDateParts = parseDateParts
-export const parseUTCToLocalDate = parseToLocalDate
