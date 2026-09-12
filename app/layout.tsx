@@ -12,7 +12,7 @@ import { ClientLang } from "@/components/layout/client-lang"
 import { OfflineIndicator } from "@/components/layout/offline-indicator"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
-import { SchemaMessagesProvider } from "@/context/schema-messages-context"
+import { SchemaMessagesContext } from "@/context/schema-messages-context"
 import { clientEnv } from "@/env/client"
 import { getSchemaMessages } from "@/schemas/messages"
 
@@ -90,7 +90,7 @@ async function AppLayout({
 
   return (
     <NextIntlClientProvider>
-      <SchemaMessagesProvider messages={schemaMessages}>
+      <SchemaMessagesContext value={schemaMessages}>
         <ClientLang />
         <OfflineIndicator />
         <Toaster richColors closeButton />
@@ -103,7 +103,7 @@ async function AppLayout({
         >
           {children}
         </Suspense>
-      </SchemaMessagesProvider>
+      </SchemaMessagesContext>
     </NextIntlClientProvider>
   )
 }

@@ -9,7 +9,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
-import { UserProvider } from "@/context/user-context"
+import { UserContext } from "@/context/user-context"
 
 // export const instant = false
 
@@ -34,10 +34,12 @@ export default async function DashboardLayout({
   return (
     <NuqsAdapter>
       <TooltipProvider>
-        <UserProvider
-          user={session.user}
-          session={session.session}
-          activeSessions={sessions}
+        <UserContext
+          value={{
+            user: session.user,
+            session: session.session,
+            activeSessions: sessions,
+          }}
         >
           <SidebarProvider defaultOpen={defaultOpen}>
             <AppSidebar />
@@ -50,7 +52,7 @@ export default async function DashboardLayout({
               </div>
             </SidebarInset>
           </SidebarProvider>
-        </UserProvider>
+        </UserContext>
       </TooltipProvider>
     </NuqsAdapter>
   )

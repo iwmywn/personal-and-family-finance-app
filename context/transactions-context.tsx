@@ -8,33 +8,13 @@ type TransactionsContextValue = {
   transactions: Transaction[]
 }
 
-const TransactionsContext =
+export const TransactionsContext =
   React.createContext<TransactionsContextValue | null>(null)
-
-export function TransactionsProvider({
-  children,
-  transactions,
-}: {
-  children: React.ReactNode
-  transactions: Transaction[]
-}) {
-  return (
-    <TransactionsContext.Provider
-      value={{
-        transactions,
-      }}
-    >
-      {children}
-    </TransactionsContext.Provider>
-  )
-}
 
 export function useTransactions() {
   const context = React.useContext(TransactionsContext)
   if (!context) {
-    throw new Error(
-      "useTransactions must be used within a TransactionsProvider"
-    )
+    throw new Error("useTransactions must be used within a TransactionsContext")
   }
   return context
 }

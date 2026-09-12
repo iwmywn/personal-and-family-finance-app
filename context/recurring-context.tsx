@@ -8,30 +8,13 @@ type RecurringContextValue = {
   recurringTransactions: RecurringTransaction[]
 }
 
-const RecurringContext = React.createContext<RecurringContextValue | null>(null)
-
-export function RecurringProvider({
-  children,
-  recurringTransactions,
-}: {
-  children: React.ReactNode
-  recurringTransactions: RecurringTransaction[]
-}) {
-  return (
-    <RecurringContext.Provider
-      value={{
-        recurringTransactions,
-      }}
-    >
-      {children}
-    </RecurringContext.Provider>
-  )
-}
+export const RecurringContext =
+  React.createContext<RecurringContextValue | null>(null)
 
 export function useRecurring() {
   const context = React.useContext(RecurringContext)
   if (!context) {
-    throw new Error("useRecurring must be used within a RecurringProvider")
+    throw new Error("useRecurring must be used within a RecurringContext")
   }
   return context
 }
