@@ -1,14 +1,11 @@
 "use server"
 
 import { headers } from "next/headers"
-import { connection } from "next/server"
 import { getTranslations } from "next-intl/server"
 
 import { auth } from "@/lib/auth"
 
 export async function getCurrentSession() {
-  await connection()
-
   try {
     const session = await auth.api.getSession({
       headers: await headers(),
@@ -22,8 +19,6 @@ export async function getCurrentSession() {
 }
 
 export async function getActiveSessions() {
-  await connection()
-
   try {
     const activeSessions = await auth.api.listSessions({
       headers: await headers(),
