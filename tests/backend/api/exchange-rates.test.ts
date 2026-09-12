@@ -2,12 +2,12 @@ import { NextRequest } from "next/server"
 import { ObjectId } from "mongodb"
 
 import { insertTestMissingExchangeRate } from "@/tests/backend/helpers/database"
-import { normalizeToUTCMidnight } from "@/actions/utils"
 import { GET } from "@/app/api/(cronjobs)/exchange-rates/route"
 import {
   getExchangeRatesCollection,
   getMissingExchangeRatesCollection,
 } from "@/lib/collections"
+import { normalizeToUTCMidnight } from "@/lib/date"
 
 const cronSecret = "test-cron-secret"
 const cronEndpoint = "http://localhost/api/exchange-rates"

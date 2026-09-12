@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getBudgetsCollection } from "@/lib/collections"
-import type { Budget } from "@/lib/definitions"
+import type { ActionResponse, Budget } from "@/lib/definitions"
 import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { BudgetFormValues } from "@/schemas/types"
@@ -14,10 +14,9 @@ import { isValidUserCategory } from "./category.actions"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
-export async function createBudget(values: BudgetFormValues): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function createBudget(
+  values: BudgetFormValues
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -72,10 +71,7 @@ export async function createBudget(values: BudgetFormValues): Promise<{
 export async function updateBudget(
   budgetId: string,
   values: BudgetFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -142,10 +138,7 @@ export async function updateBudget(
   }
 }
 
-export async function deleteBudget(budgetId: string): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function deleteBudget(budgetId: string): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {

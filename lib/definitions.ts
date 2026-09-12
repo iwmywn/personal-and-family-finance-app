@@ -5,12 +5,17 @@ import type { auth } from "@/lib/auth"
 import type { CategoryKey, CategoryType } from "@/lib/category"
 import type { Currency } from "@/lib/currency"
 
+export type ActionResponse = {
+  error?: string
+  success?: string
+}
+
+export type AuthErrorCode = keyof (typeof auth)["$ERROR_CODES"]
+
 export type DBUser = { _id: ObjectId } & Omit<User, "id">
 export type User = typeof auth.$Infer.Session.user
 
 export type Session = typeof auth.$Infer.Session.session
-
-export type AuthErrorCode = keyof (typeof auth)["$ERROR_CODES"]
 
 type ValidId = string | ObjectId
 type ValidAmount = string | Decimal128

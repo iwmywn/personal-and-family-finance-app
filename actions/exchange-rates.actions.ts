@@ -3,7 +3,6 @@
 import Decimal from "decimal.js"
 import type { Decimal128 } from "mongodb"
 
-import { normalizeToUTCMidnight, toDecimal128 } from "@/actions/utils"
 import { serverEnv } from "@/env/server"
 import {
   getExchangeRatesCollection,
@@ -11,12 +10,15 @@ import {
 } from "@/lib/collections"
 import { CURRENCIES } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
+import { normalizeToUTCMidnight } from "@/lib/date"
 import type {
   DBExchangeRate,
   ExchangeRate,
   Transaction,
 } from "@/lib/definitions"
 import { convertAmountWithRates, toDecimal } from "@/lib/utils"
+
+import { toDecimal128 } from "./utils"
 
 export type DBRatesMap = Partial<Record<Exclude<Currency, "USD">, Decimal128>> &
   Record<string, Decimal128>

@@ -1,9 +1,9 @@
 import { ObjectId } from "mongodb"
 
-import { normalizeToUTCMidnight, toDecimal128 } from "@/actions/utils"
+import { toDecimal128 } from "@/actions/utils"
 import type { CategoryType } from "@/lib/category"
 import type { Currency } from "@/lib/currency"
-import { localDateToUTCMidnight } from "@/lib/date"
+import { localDateToUTCMidnight, normalizeToUTCMidnight } from "@/lib/date"
 import type {
   Budget,
   Category,

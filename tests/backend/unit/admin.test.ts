@@ -19,7 +19,7 @@ import {
   getAdminStats,
   listUsers,
   setUserPassword,
-  updateUserRole,
+  setUserRole,
 } from "@/actions/admin.actions"
 
 vi.mock("next/headers", () => ({
@@ -177,10 +177,7 @@ describe("Admin Actions", () => {
     it("should return error for non-admin user", async () => {
       mockAuthenticatedUser()
 
-      const result = await updateUserRole(
-        mockAnotherUser._id.toString(),
-        "user"
-      )
+      const result = await setUserRole(mockAnotherUser._id.toString(), "user")
 
       expect(result.error).toBe("Access denied! Admin privileges required.")
       expect(result.success).toBeUndefined()
@@ -189,7 +186,7 @@ describe("Admin Actions", () => {
     it("should return error when trying to change own role", async () => {
       mockAuthenticatedAdmin()
 
-      const result = await updateUserRole(mockAdminUser._id.toString(), "user")
+      const result = await setUserRole(mockAdminUser._id.toString(), "user")
 
       expect(result.error).toBe("You cannot change your own role!")
       expect(result.success).toBeUndefined()
@@ -200,7 +197,7 @@ describe("Admin Actions", () => {
 
       await insertTestUser(mockSuperAdminUser)
 
-      const result = await updateUserRole(
+      const result = await setUserRole(
         mockSuperAdminUser._id.toString(),
         "user"
       )
@@ -214,10 +211,7 @@ describe("Admin Actions", () => {
 
       await insertTestUser(mockAnotherUser)
 
-      const result = await updateUserRole(
-        mockAnotherUser._id.toString(),
-        "admin"
-      )
+      const result = await setUserRole(mockAnotherUser._id.toString(), "admin")
 
       expect(result.error).toBe("Access denied! Admin privileges required.")
       expect(result.success).toBeUndefined()
@@ -228,10 +222,7 @@ describe("Admin Actions", () => {
 
       await insertTestUser(mockAnotherUser)
 
-      const result = await updateUserRole(
-        mockAnotherUser._id.toString(),
-        "admin"
-      )
+      const result = await setUserRole(mockAnotherUser._id.toString(), "admin")
 
       expect(result.error).toBeUndefined()
       expect(result.success).toBe("User role has been updated.")

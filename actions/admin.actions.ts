@@ -15,7 +15,7 @@ import {
   getUsersCollection,
 } from "@/lib/collections"
 import { withTransaction } from "@/lib/db"
-import type { User } from "@/lib/definitions"
+import type { ActionResponse, User } from "@/lib/definitions"
 import {
   ADMIN_ROLES,
   DEFAULT_ROLE,
@@ -46,11 +46,10 @@ async function verifyAdmin() {
   return session
 }
 
-export async function createUser(values: AdminUserFormValues): Promise<{
-  error?: string
-  success?: string
-}> {
-  const [t, headersList] = await Promise.all([getExtracted(), headers()])
+export async function createUser(
+  values: AdminUserFormValues
+): Promise<ActionResponse> {
+  const t = await getExtracted()
 
   try {
     const session = await verifyAdmin()
@@ -70,7 +69,6 @@ export async function createUser(values: AdminUserFormValues): Promise<{
     const assignedRole = isCurrentSuperAdmin ? parsed.data.role : DEFAULT_ROLE
 
     await auth.api.createUser({
-      headers: headersList,
       body: {
         email: parsed.data.email,
         password: parsed.data.password,
@@ -78,6 +76,7 @@ export async function createUser(values: AdminUserFormValues): Promise<{
         role: assignedRole,
         data: {
           username: parsed.data.username,
+          emailVerified: true,
         },
       },
     })
@@ -173,10 +172,7 @@ export async function listUsers(): Promise<{
   }
 }
 
-export async function deleteUser(userId: string): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function deleteUser(userId: string): Promise<ActionResponse> {
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
@@ -246,10 +242,10 @@ export async function deleteUser(userId: string): Promise<{
     })
 
     await auth.api.removeUser({
-      headers: headersList,
       body: {
         userId,
       },
+      headers: headersList,
     })
 
     return { success: t("User has been deleted.") }
@@ -259,13 +255,10 @@ export async function deleteUser(userId: string): Promise<{
   }
 }
 
-export async function updateUserRole(
+export async function setUserRole(
   userId: string,
   role: AssignableRole
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
@@ -309,11 +302,11 @@ export async function updateUserRole(
     }
 
     await auth.api.setRole({
-      headers: headersList,
       body: {
         userId,
         role,
       },
+      headers: headersList,
     })
 
     return { success: t("User role has been updated.") }
@@ -326,10 +319,7 @@ export async function updateUserRole(
 export async function setUserPassword(
   userId: string,
   values: AdminPasswordFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
@@ -366,11 +356,11 @@ export async function setUserPassword(
     }
 
     await auth.api.setUserPassword({
-      headers: headersList,
       body: {
         userId,
         newPassword: parsed.data.password,
       },
+      headers: headersList,
     })
 
     return { success: t("Password has been updated.") }

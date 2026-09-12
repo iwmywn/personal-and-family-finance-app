@@ -5,28 +5,25 @@ import { after } from "next/server"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
-import {
-  convertTransactionsToCurrency,
-  enqueueMissingExchangeRateDate,
-  ensureExchangeRateForDate,
-} from "@/actions/exchange-rates.actions"
 import { getTransactionsCollection } from "@/lib/collections"
 import type { Currency } from "@/lib/currency"
-import type { Transaction } from "@/lib/definitions"
+import type { ActionResponse, Transaction } from "@/lib/definitions"
 import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { TransactionFormValues } from "@/schemas/types"
 
 import { isValidUserCategory } from "./category.actions"
+import {
+  convertTransactionsToCurrency,
+  enqueueMissingExchangeRateDate,
+  ensureExchangeRateForDate,
+} from "./exchange-rates.actions"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
 export async function createTransaction(
   values: TransactionFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -98,10 +95,7 @@ export async function createTransaction(
 export async function updateTransaction(
   transactionId: string,
   values: TransactionFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -192,10 +186,9 @@ export async function updateTransaction(
   }
 }
 
-export async function deleteTransaction(transactionId: string): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function deleteTransaction(
+  transactionId: string
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {

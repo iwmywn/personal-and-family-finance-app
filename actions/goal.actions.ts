@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getGoalsCollection } from "@/lib/collections"
-import type { Goal } from "@/lib/definitions"
+import type { ActionResponse, Goal } from "@/lib/definitions"
 import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { GoalFormValues } from "@/schemas/types"
@@ -14,10 +14,9 @@ import { isValidUserCategory } from "./category.actions"
 import { getCurrentSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
-export async function createGoal(values: GoalFormValues): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function createGoal(
+  values: GoalFormValues
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -73,10 +72,7 @@ export async function createGoal(values: GoalFormValues): Promise<{
 export async function updateGoal(
   goalId: string,
   values: GoalFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -144,10 +140,7 @@ export async function updateGoal(
   }
 }
 
-export async function deleteGoal(goalId: string): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function deleteGoal(goalId: string): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {

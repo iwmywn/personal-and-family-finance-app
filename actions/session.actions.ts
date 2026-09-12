@@ -5,7 +5,7 @@ import { headers } from "next/headers"
 import { getTranslations } from "next-intl/server"
 
 import { auth } from "@/lib/auth"
-import type { Session, User } from "@/lib/definitions"
+import type { ActionResponse, Session, User } from "@/lib/definitions"
 
 export const getCurrentSession = cache(
   async (): Promise<{ user: User; session: Session } | null> => {
@@ -44,10 +44,9 @@ export const getActiveSessions = cache(async (): Promise<Session[] | null> => {
   }
 })
 
-export async function revokeSessionById(sessionId: string): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function revokeSessionById(
+  sessionId: string
+): Promise<ActionResponse> {
   const [t, headersList] = await Promise.all([getTranslations(), headers()])
 
   try {
@@ -61,10 +60,10 @@ export async function revokeSessionById(sessionId: string): Promise<{
     }
 
     await auth.api.revokeSession({
-      headers: headersList,
       body: {
         token: targetSession.token,
       },
+      headers: headersList,
     })
 
     return { success: t("Session terminated.") }

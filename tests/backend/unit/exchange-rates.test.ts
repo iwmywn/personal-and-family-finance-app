@@ -4,8 +4,9 @@ import {
   convertTransactionsToCurrency,
   ensureExchangeRateForDate,
 } from "@/actions/exchange-rates.actions"
-import { normalizeToUTCMidnight, toDecimal128 } from "@/actions/utils"
+import { toDecimal128 } from "@/actions/utils"
 import { getExchangeRatesCollection } from "@/lib/collections"
+import { normalizeToUTCMidnight } from "@/lib/date"
 import type { Transaction } from "@/lib/definitions"
 
 describe("convertTransactionsToCurrency", () => {

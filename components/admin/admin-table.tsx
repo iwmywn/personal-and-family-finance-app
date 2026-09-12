@@ -43,9 +43,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { BanUserDialog } from "@/components/admin/ban-user-dialog"
-import { ChangeRoleDialog } from "@/components/admin/change-role-dialog"
 import { DeleteUserDialog } from "@/components/admin/delete-user-dialog"
-import { SetPasswordDialog } from "@/components/admin/set-password-dialog"
+import { SetUserPasswordDialog } from "@/components/admin/set-user-password-dialog"
+import { SetUserRoleDialog } from "@/components/admin/set-user-role-dialog"
 import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { authClient } from "@/lib/auth-client"
@@ -359,7 +359,7 @@ export function AdminTable({
 
       {selectedUser && (
         <>
-          <ChangeRoleDialog
+          <SetUserRoleDialog
             key={selectedUser.id + "ChangeRoleDialog"}
             user={selectedUser}
             open={isRoleOpen}
@@ -371,7 +371,7 @@ export function AdminTable({
             open={isBanOpen}
             setOpen={setIsBanOpen}
           />
-          <SetPasswordDialog
+          <SetUserPasswordDialog
             key={selectedUser.id + "SetPasswordDialog"}
             user={selectedUser}
             open={isPasswordOpen}

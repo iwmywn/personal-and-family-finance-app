@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getRecurringTransactionsCollection } from "@/lib/collections"
-import type { RecurringTransaction } from "@/lib/definitions"
+import type { ActionResponse, RecurringTransaction } from "@/lib/definitions"
 import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
@@ -16,10 +16,7 @@ import { toDecimal128 } from "./utils"
 
 export async function createRecurringTransaction(
   values: RecurringTransactionFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -85,10 +82,7 @@ export async function createRecurringTransaction(
 export async function updateRecurringTransaction(
   recurringId: string,
   values: RecurringTransactionFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -169,10 +163,9 @@ export async function updateRecurringTransaction(
   }
 }
 
-export async function deleteRecurringTransaction(recurringId: string): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function deleteRecurringTransaction(
+  recurringId: string
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {

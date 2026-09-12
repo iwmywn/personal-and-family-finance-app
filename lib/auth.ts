@@ -62,20 +62,6 @@ export const auth = betterAuth({
   verification: {
     modelName: "verifications",
   },
-  databaseHooks: {
-    user: {
-      create: {
-        async before(user) {
-          return {
-            data: {
-              ...user,
-              emailVerified: true,
-            },
-          }
-        },
-      },
-    },
-  },
   plugins: [
     admin({
       defaultRole: DEFAULT_ROLE,

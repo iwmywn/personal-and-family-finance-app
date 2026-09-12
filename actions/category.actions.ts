@@ -15,7 +15,7 @@ import {
   getTransactionsCollection,
 } from "@/lib/collections"
 import { withTransaction } from "@/lib/db"
-import type { Category } from "@/lib/definitions"
+import type { ActionResponse, Category } from "@/lib/definitions"
 import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { CategoryFormValues } from "@/schemas/types"
@@ -61,10 +61,7 @@ export async function isValidUserCategory(
 
 export async function createCustomCategory(
   values: CategoryFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -107,10 +104,7 @@ export async function createCustomCategory(
 export async function updateCustomCategory(
   categoryId: string,
   values: CategoryFormValues
-): Promise<{
-  error?: string
-  success?: string
-}> {
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {
@@ -186,10 +180,9 @@ export async function updateCustomCategory(
   }
 }
 
-export async function deleteCustomCategory(categoryId: string): Promise<{
-  error?: string
-  success?: string
-}> {
+export async function deleteCustomCategory(
+  categoryId: string
+): Promise<ActionResponse> {
   const t = await getExtracted()
 
   try {

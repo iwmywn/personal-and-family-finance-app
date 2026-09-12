@@ -83,7 +83,7 @@ msgid "User role has been updated."
 msgstr "Vai trò người dùng đã được cập nhật."
 
 #: actions/admin.actions.ts
-#: components/admin/change-role-dialog.tsx
+#: components/admin/set-user-role-dialog.tsx
 msgctxt "jNvbw7"
 msgid "Failed to update user role! Please try again later."
 msgstr "Cập nhật vai trò người dùng thất bại! Vui lòng thử lại sau."
@@ -94,7 +94,7 @@ msgid "Password has been updated."
 msgstr "Mật khẩu đã được cập nhật."
 
 #: actions/admin.actions.ts
-#: components/admin/set-password-dialog.tsx
+#: components/admin/set-user-password-dialog.tsx
 msgctxt "VvoQv7"
 msgid "Failed to set user password! Please try again later."
 msgstr "Đặt mật khẩu người dùng thất bại! Vui lòng thử lại sau."
@@ -534,8 +534,8 @@ msgstr "Tìm kiếm theo tên, email hoặc tên đăng nhập..."
 
 #: components/admin/admin-filters.tsx
 #: components/admin/admin-table.tsx
-#: components/admin/change-role-dialog.tsx
 #: components/admin/create-user-dialog.tsx
+#: components/admin/set-user-role-dialog.tsx
 msgctxt "1ZgrhW"
 msgid "Role"
 msgstr "Vai trò"
@@ -553,8 +553,8 @@ msgstr "Quản trị viên cấp cao"
 
 #: components/admin/admin-filters.tsx
 #: components/admin/admin-table.tsx
-#: components/admin/change-role-dialog.tsx
 #: components/admin/create-user-dialog.tsx
+#: components/admin/set-user-role-dialog.tsx
 #: hooks/use-nav.ts
 msgctxt "iHN12u"
 msgid "Admin"
@@ -562,8 +562,8 @@ msgstr "Quản trị viên"
 
 #: components/admin/admin-filters.tsx
 #: components/admin/admin-table.tsx
-#: components/admin/change-role-dialog.tsx
 #: components/admin/create-user-dialog.tsx
+#: components/admin/set-user-role-dialog.tsx
 msgctxt "EwRIOm"
 msgid "User"
 msgstr "Người dùng"
@@ -848,10 +848,10 @@ msgid "Expires on"
 msgstr "Hết hạn vào"
 
 #: components/admin/ban-user-dialog.tsx
-#: components/admin/change-role-dialog.tsx
 #: components/admin/create-user-dialog.tsx
 #: components/admin/delete-user-dialog.tsx
-#: components/admin/set-password-dialog.tsx
+#: components/admin/set-user-password-dialog.tsx
+#: components/admin/set-user-role-dialog.tsx
 #: components/budgets/budget-dialog.tsx
 #: components/budgets/delete-budget-dialog.tsx
 #: components/categories/category-dialog.tsx
@@ -911,30 +911,6 @@ msgctxt "vgJsLx"
 msgid "30 Days"
 msgstr "30 ngày"
 
-#: components/admin/change-role-dialog.tsx
-msgctxt "ho_b8x"
-msgid "Change User Role"
-msgstr "Đổi vai trò người dùng"
-
-#: components/admin/change-role-dialog.tsx
-msgctxt "EK8gb2"
-msgid "Assign a new system role to"
-msgstr "Gán vai trò hệ thống mới cho"
-
-#: components/admin/change-role-dialog.tsx
-#: components/admin/create-user-dialog.tsx
-msgctxt "iaCoRs"
-msgid "Select role"
-msgstr "Chọn vai trò"
-
-#: components/admin/change-role-dialog.tsx
-#: components/settings/change-name-dialog.tsx
-#: components/settings/change-password-dialog.tsx
-#: components/settings/change-username-dialog.tsx
-msgctxt "jvo0vs"
-msgid "Save"
-msgstr "Lưu"
-
 #: components/admin/create-user-dialog.tsx
 #: components/settings/change-username-dialog.tsx
 msgctxt "K3OKU5"
@@ -991,6 +967,12 @@ msgctxt "5sg7KC"
 msgid "Password"
 msgstr "Mật khẩu"
 
+#: components/admin/create-user-dialog.tsx
+#: components/admin/set-user-role-dialog.tsx
+msgctxt "iaCoRs"
+msgid "Select role"
+msgstr "Chọn vai trò"
+
 #: components/admin/delete-user-dialog.tsx
 msgctxt "6z5Ebr"
 msgid "Delete User Account"
@@ -1006,26 +988,44 @@ msgctxt "uon94C"
 msgid "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
 msgstr "Tất cả dữ liệu liên quan bao gồm giao dịch, ngân sách và mục tiêu sẽ bị xóa vĩnh viễn. Hành động này không thể hoàn tác."
 
-#: components/admin/set-password-dialog.tsx
+#: components/admin/set-user-password-dialog.tsx
 msgctxt "ArEJTr"
 msgid "Reset User Password"
 msgstr "Đặt lại mật khẩu người dùng"
 
-#: components/admin/set-password-dialog.tsx
+#: components/admin/set-user-password-dialog.tsx
 msgctxt "SxSUYZ"
 msgid "Set a new password for"
 msgstr "Đặt mật khẩu mới cho"
 
-#: components/admin/set-password-dialog.tsx
+#: components/admin/set-user-password-dialog.tsx
 #: components/settings/change-password-dialog.tsx
 msgctxt "Ev6SEF"
 msgid "New Password"
 msgstr "Mật khẩu mới"
 
-#: components/admin/set-password-dialog.tsx
+#: components/admin/set-user-password-dialog.tsx
 msgctxt "ZTYUJe"
 msgid "Update Password"
 msgstr "Cập nhật mật khẩu"
+
+#: components/admin/set-user-role-dialog.tsx
+msgctxt "ho_b8x"
+msgid "Change User Role"
+msgstr "Đổi vai trò người dùng"
+
+#: components/admin/set-user-role-dialog.tsx
+msgctxt "EK8gb2"
+msgid "Assign a new system role to"
+msgstr "Gán vai trò hệ thống mới cho"
+
+#: components/admin/set-user-role-dialog.tsx
+#: components/settings/change-name-dialog.tsx
+#: components/settings/change-password-dialog.tsx
+#: components/settings/change-username-dialog.tsx
+msgctxt "jvo0vs"
+msgid "Save"
+msgstr "Lưu"
 
 #: components/auth/language-selector.tsx
 #: components/settings/language-selector.tsx

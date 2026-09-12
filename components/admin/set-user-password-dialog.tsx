@@ -6,7 +6,7 @@ import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { updateUserRole } from "@/actions/admin.actions"
+import { setUserPassword } from "@/actions/admin.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -26,46 +26,35 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { useUser } from "@/context/user-context"
+import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { User } from "@/lib/definitions"
-import { isSuperAdminRole } from "@/lib/role"
-import type { AssignableRole } from "@/lib/role"
-import type { AdminRoleFormValues } from "@/schemas/types"
+import type { AdminPasswordFormValues } from "@/schemas/types"
 
-interface ChangeRoleDialogProps {
+interface SetPasswordDialogProps {
   user: User
   open: boolean
   setOpen: (open: boolean) => void
 }
 
-export function ChangeRoleDialog({
+export function SetUserPasswordDialog({
   user,
   open,
   setOpen,
-}: ChangeRoleDialogProps) {
+}: SetPasswordDialogProps) {
   const t = useExtracted()
-  const { user: currentUser } = useUser()
-  const isCurrentSuperAdmin = isSuperAdminRole(currentUser.role)
-  const { createAdminRoleSchema } = useSchemas()
   const router = useRouter()
-  const form = useForm<AdminRoleFormValues>({
-    resolver: zodResolver(createAdminRoleSchema()),
+  const { createAdminPasswordSchema } = useSchemas()
+  const form = useForm<AdminPasswordFormValues>({
+    resolver: zodResolver(createAdminPasswordSchema()),
     defaultValues: {
-      role: user.role as AssignableRole,
+      password: "",
     },
   })
 
-  async function onSubmit(values: AdminRoleFormValues) {
+  async function onSubmit(values: AdminPasswordFormValues) {
     try {
-      const { success, error } = await updateUserRole(user.id, values.role)
+      const { success, error } = await setUserPassword(user.id, values)
 
       if (error || !success) {
         toast.error(error)
@@ -76,7 +65,7 @@ export function ChangeRoleDialog({
         form.reset()
       }
     } catch {
-      toast.error(t("Failed to update user role! Please try again later."))
+      toast.error(t("Failed to set user password! Please try again later."))
     }
   }
 
@@ -84,9 +73,9 @@ export function ChangeRoleDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("Change User Role")}</DialogTitle>
+          <DialogTitle>{t("Reset User Password")}</DialogTitle>
           <DialogDescription>
-            {t("Assign a new system role to")} <strong>{user.name}</strong> (
+            {t("Set a new password for")} <strong>{user.name}</strong> (
             {user.email}).
           </DialogDescription>
         </DialogHeader>
@@ -95,23 +84,20 @@ export function ChangeRoleDialog({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="role"
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor="form-role">{t("Role")}</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger id="form-role" className="w-full">
-                        <SelectValue placeholder={t("Select role")} />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="user">{t("User")}</SelectItem>
-                      {isCurrentSuperAdmin && (
-                        <SelectItem value="admin">{t("Admin")}</SelectItem>
-                      )}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel htmlFor="form-password">
+                    {t("New Password")}
+                  </FormLabel>
+                  <FormControl>
+                    <PasswordInput
+                      id="form-password"
+                      placeholder="********"
+                      autoComplete="new-password"
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -122,7 +108,7 @@ export function ChangeRoleDialog({
                 <Button variant="outline">{t("Cancel")}</Button>
               </DialogClose>
               <FormButton isSubmitting={form.formState.isSubmitting}>
-                {t("Save")}
+                {t("Update Password")}
               </FormButton>
             </DialogFooter>
           </form>
