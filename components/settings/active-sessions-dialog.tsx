@@ -93,27 +93,37 @@ export function ActiveSessionsDialog() {
   async function handleRevokeSession(sessionId: string) {
     setIsTerminating(sessionId)
 
-    if (sessionId === currentSession.id && currentSession.impersonatedBy) {
-      toast.promise(authClient.admin.stopImpersonating(), {
-        loading: t("Stopping impersonation..."),
-        success: () => {
-          router.push("/admin")
-          router.refresh()
-          return t("Stopped impersonation session.")
-        },
-        error: () => t("Failed to stop impersonating! Please try again later."),
-      })
-      setIsTerminating(undefined)
-      return
-    }
+    try {
+      if (sessionId === currentSession.id && currentSession.impersonatedBy) {
+        await authClient.admin.stopImpersonating({
+          fetchOptions: {
+            onError: () => {
+              toast.error(
+                t("Failed to terminate session! Please try again later.")
+              )
+            },
+            onSuccess: () => {
+              toast.success(t("Session terminated."))
+              router.push("/admin")
+              router.refresh()
+            },
+          },
+        })
 
-    const { error } = await revokeSessionById(sessionId)
+        setIsTerminating(undefined)
+        return
+      }
 
-    if (error) {
+      const { error, success } = await revokeSessionById(sessionId)
+
+      if (error || !success) {
+        toast.error(error)
+      } else {
+        toast.success(success)
+        router.refresh()
+      }
+    } catch {
       toast.error(t("Failed to terminate session! Please try again later."))
-    } else {
-      toast.success(t("Session terminated."))
-      router.refresh()
     }
 
     setIsTerminating(undefined)
@@ -122,44 +132,55 @@ export function ActiveSessionsDialog() {
   async function handleRevokeAllSessions() {
     setIsRevokingAll(true)
 
-    if (currentSession.impersonatedBy) {
-      await authClient.revokeOtherSessions({
+    try {
+      if (currentSession.impersonatedBy) {
+        await authClient.revokeOtherSessions({
+          fetchOptions: {
+            onError: () => {
+              toast.error(
+                t("Failed to terminate all sessions! Please try again later.")
+              )
+            },
+          },
+        })
+
+        await authClient.admin.stopImpersonating({
+          fetchOptions: {
+            onError: () => {
+              toast.error(
+                t("Failed to terminate all sessions! Please try again later.")
+              )
+            },
+            onSuccess: () => {
+              toast.success(t("All sessions terminated."))
+              router.push("/admin")
+              router.refresh()
+            },
+          },
+        })
+
+        setIsRevokingAll(false)
+        return
+      }
+
+      await authClient.revokeSessions({
         fetchOptions: {
           onError: () => {
             toast.error(
               t("Failed to terminate all sessions! Please try again later.")
             )
           },
+          onSuccess: () => {
+            toast.success(t("All sessions terminated."))
+            router.refresh()
+          },
         },
       })
-
-      toast.promise(authClient.admin.stopImpersonating(), {
-        loading: t("Stopping impersonation..."),
-        success: () => {
-          router.push("/admin")
-          router.refresh()
-          return t("All sessions terminated.")
-        },
-        error: () => t("Failed to stop impersonating! Please try again later."),
-      })
-
-      setIsRevokingAll(false)
-      return
+    } catch {
+      toast.error(
+        t("Failed to terminate all sessions! Please try again later.")
+      )
     }
-
-    await authClient.revokeSessions({
-      fetchOptions: {
-        onError: () => {
-          toast.error(
-            t("Failed to terminate all sessions! Please try again later.")
-          )
-        },
-        onSuccess: () => {
-          toast.success(t("All sessions terminated."))
-          router.refresh()
-        },
-      },
-    })
 
     setIsRevokingAll(false)
   }

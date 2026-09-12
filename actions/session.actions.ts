@@ -16,7 +16,15 @@ export const getCurrentSession = cache(
         headers: headersList,
       })
 
-      return session
+      if (!session) return null
+
+      return {
+        user: session.user,
+        session: {
+          ...session.session,
+          token: "",
+        },
+      }
     } catch (error) {
       console.error("Error getting session: ", error)
       return null

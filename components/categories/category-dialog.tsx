@@ -69,31 +69,39 @@ export function CategoryDialog({
 
   async function onSubmit(values: CategoryFormValues) {
     if (category) {
-      const { success, error } = await updateCustomCategory(
-        category._id,
-        values
-      )
+      try {
+        const { success, error } = await updateCustomCategory(
+          category._id,
+          values
+        )
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
+      } catch {
+        toast.error(t("Failed to update category! Please try again later."))
       }
     } else {
-      const { success, error } = await createCustomCategory(values)
+      try {
+        const { success, error } = await createCustomCategory(values)
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
-        form.reset({
-          ...form.formState.defaultValues,
-          type,
-        })
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+          form.reset({
+            ...form.formState.defaultValues,
+            type,
+          })
+        }
+      } catch {
+        toast.error(t("Failed to create category! Please try again later."))
       }
     }
   }

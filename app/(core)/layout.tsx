@@ -21,11 +21,9 @@ export default async function DashboardLayout({
   ])
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
 
-  if (!session) {
+  if (!session || !activeSessions) {
     redirect("/signin")
   }
-
-  const sessions = activeSessions ?? [session.session]
 
   return (
     <NuqsAdapter>
@@ -34,7 +32,7 @@ export default async function DashboardLayout({
           value={{
             user: session.user,
             session: session.session,
-            activeSessions: sessions,
+            activeSessions,
           }}
         >
           <SidebarProvider defaultOpen={defaultOpen}>

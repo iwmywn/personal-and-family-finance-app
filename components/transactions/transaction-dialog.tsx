@@ -104,31 +104,39 @@ export function TransactionDialog({
 
   async function onSubmit(values: TransactionFormValues) {
     if (transaction) {
-      const { success, error } = await updateTransaction(
-        transaction._id,
-        values
-      )
+      try {
+        const { success, error } = await updateTransaction(
+          transaction._id,
+          values
+        )
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
+      } catch {
+        toast.error(t("Failed to update transaction! Please try again later."))
       }
     } else {
-      const { success, error } = await createTransaction(values)
+      try {
+        const { success, error } = await createTransaction(values)
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
-        form.reset({
-          ...form.formState.defaultValues,
-          type,
-        })
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+          form.reset({
+            ...form.formState.defaultValues,
+            type,
+          })
+        }
+      } catch {
+        toast.error(t("Failed to create transaction! Please try again later."))
       }
     }
   }

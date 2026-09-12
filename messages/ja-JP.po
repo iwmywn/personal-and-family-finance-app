@@ -32,6 +32,7 @@ msgid "This email is already in use."
 msgstr "このメールアドレスはすでに使用されています。"
 
 #: actions/admin.actions.ts
+#: components/admin/create-user-dialog.tsx
 msgctxt "74JxeG"
 msgid "Failed to create user! Please try again later."
 msgstr "ユーザーの作成に失敗しました！後でもう一度お試しください。"
@@ -117,9 +118,9 @@ msgid "Invalid category!"
 msgstr "カテゴリが無効です！"
 
 #: actions/budget.actions.ts
-msgctxt "hcutYI"
-msgid "Budget has been added."
-msgstr "予算が追加されました。"
+msgctxt "sW3_mQ"
+msgid "Budget has been created."
+msgstr "予算が作成されました。"
 
 #: actions/budget.actions.ts
 msgctxt "kwvIdb"
@@ -127,9 +128,10 @@ msgid "This budget already exists!"
 msgstr "この予算は既に存在します！"
 
 #: actions/budget.actions.ts
-msgctxt "ge_1ga"
-msgid "Failed to add budget! Please try again later."
-msgstr "予算の追加に失敗しました！後でもう一度お試しください。"
+#: components/budgets/budget-dialog.tsx
+msgctxt "LiEvhU"
+msgid "Failed to create budget! Please try again later."
+msgstr "予算の作成に失敗しました！後でもう一度お試しください。"
 
 #: actions/budget.actions.ts
 msgctxt "3pMkv5"
@@ -147,6 +149,7 @@ msgid "Budget has been updated."
 msgstr "予算が更新されました。"
 
 #: actions/budget.actions.ts
+#: components/budgets/budget-dialog.tsx
 msgctxt "ZUfwUz"
 msgid "Failed to update budget! Please try again later."
 msgstr "予算の更新に失敗しました！後でもう一度お試しください。"
@@ -173,9 +176,9 @@ msgid "Failed to load budgets! Please try again later."
 msgstr "予算の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/category.actions.ts
-msgctxt "Jfen4M"
-msgid "Category has been added."
-msgstr "カテゴリが追加されました。"
+msgctxt "L2hi0Y"
+msgid "Category has been created."
+msgstr "カテゴリが作成されました。"
 
 #: actions/category.actions.ts
 msgctxt "LzesyV"
@@ -183,9 +186,10 @@ msgid "This category already exists!"
 msgstr "このカテゴリは既に存在します！"
 
 #: actions/category.actions.ts
-msgctxt "OQ79b6"
-msgid "Failed to add category! Please try again later."
-msgstr "カテゴリの追加に失敗しました！後でもう一度お試しください。"
+#: components/categories/category-dialog.tsx
+msgctxt "mFVjx4"
+msgid "Failed to create category! Please try again later."
+msgstr "カテゴリの作成に失敗しました！後でもう一度お試しください。"
 
 #: actions/category.actions.ts
 msgctxt "TgxdcM"
@@ -208,6 +212,7 @@ msgid "Category has been updated."
 msgstr "カテゴリが更新されました。"
 
 #: actions/category.actions.ts
+#: components/categories/category-dialog.tsx
 msgctxt "PoUgbk"
 msgid "Failed to update category! Please try again later."
 msgstr "カテゴリの更新に失敗しました！後でもう一度お試しください。"
@@ -254,9 +259,9 @@ msgid "Failed to load custom categories! Please try again later."
 msgstr "カスタムカテゴリの読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/goal.actions.ts
-msgctxt "J-nrjG"
-msgid "Goal has been added."
-msgstr "目標が追加されました。"
+msgctxt "lUO2O7"
+msgid "Goal has been created."
+msgstr "目標が作成されました。"
 
 #: actions/goal.actions.ts
 msgctxt "3SCa_T"
@@ -264,9 +269,10 @@ msgid "This goal already exists!"
 msgstr "この目標は既に存在します！"
 
 #: actions/goal.actions.ts
-msgctxt "9Buhj_"
-msgid "Failed to add goal! Please try again later."
-msgstr "目標の追加に失敗しました！後でもう一度お試しください。"
+#: components/goals/goal-dialog.tsx
+msgctxt "2Csc1b"
+msgid "Failed to create goal! Please try again later."
+msgstr "目標の作成に失敗しました！後でもう一度お試しください。"
 
 #: actions/goal.actions.ts
 msgctxt "7UB8uM"
@@ -284,6 +290,7 @@ msgid "Goal has been updated."
 msgstr "目標が更新されました。"
 
 #: actions/goal.actions.ts
+#: components/goals/goal-dialog.tsx
 msgctxt "Lmu8yS"
 msgid "Failed to update goal! Please try again later."
 msgstr "目標の更新に失敗しました！後でもう一度お試しください。"
@@ -310,9 +317,9 @@ msgid "Failed to load goals! Please try again later."
 msgstr "目標の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/recurring.actions.ts
-msgctxt "5Mtoe5"
-msgid "Recurring transaction has been added."
-msgstr "定期取引が追加されました。"
+msgctxt "vgquXw"
+msgid "Recurring transaction has been created."
+msgstr "定期取引が作成されました。"
 
 #: actions/recurring.actions.ts
 msgctxt "-HBMWc"
@@ -320,9 +327,10 @@ msgid "This recurring transaction already exists!"
 msgstr "この定期取引は既に存在します！"
 
 #: actions/recurring.actions.ts
-msgctxt "FLPmpu"
-msgid "Failed to add recurring transaction! Please try again later."
-msgstr "定期取引の追加に失敗しました！後でもう一度お試しください。"
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
+msgctxt "zQczG6"
+msgid "Failed to create recurring transaction! Please try again later."
+msgstr "定期取引の作成に失敗しました！後でもう一度お試しください。"
 
 #: actions/recurring.actions.ts
 msgctxt "Yamhgo"
@@ -340,6 +348,7 @@ msgid "Recurring transaction has been updated."
 msgstr "定期取引が更新されました。"
 
 #: actions/recurring.actions.ts
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
 msgctxt "qlYMTi"
 msgid "Failed to update recurring transaction! Please try again later."
 msgstr "定期取引の更新に失敗しました！後でもう一度お試しください。"
@@ -366,9 +375,9 @@ msgid "Failed to load recurring transactions! Please try again later."
 msgstr "定期取引の読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
-msgctxt "pU1r4y"
-msgid "Transaction has been added."
-msgstr "取引が追加されました。"
+msgctxt "JSmQV_"
+msgid "Transaction has been created."
+msgstr "取引が作成されました。"
 
 #: actions/transaction.actions.ts
 msgctxt "bN6KUb"
@@ -376,9 +385,10 @@ msgid "A transaction with the same details already exists on this date. Please c
 msgstr "この日付には同じ詳細の取引が既に存在します。既存の取引に金額を合算してください。"
 
 #: actions/transaction.actions.ts
-msgctxt "zb35o3"
-msgid "Failed to add transaction! Please try again later."
-msgstr "取引の追加に失敗しました！後でもう一度お試しください。"
+#: components/transactions/transaction-dialog.tsx
+msgctxt "8rBc81"
+msgid "Failed to create transaction! Please try again later."
+msgstr "取引の作成に失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
 msgctxt "w_J6M7"
@@ -396,6 +406,7 @@ msgid "Transaction has been updated."
 msgstr "取引が更新されました。"
 
 #: actions/transaction.actions.ts
+#: components/transactions/transaction-dialog.tsx
 msgctxt "A9rBEo"
 msgid "Failed to update transaction! Please try again later."
 msgstr "取引の更新に失敗しました！後でもう一度お試しください。"
@@ -1798,19 +1809,6 @@ msgid "Please try again later."
 msgstr "後でもう一度お試しください。"
 
 #: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "hLR6s0"
-msgid "Stopping impersonation..."
-msgstr "なりすましを停止しています..."
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "IF-3KJ"
-msgid "Stopped impersonation session."
-msgstr "なりすましセッションを停止しました。"
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
 msgctxt "H1m7wl"
 msgid "Failed to stop impersonating! Please try again later."
 msgstr "なりすましの停止に失敗しました！後でもう一度お試しください。"
@@ -1851,9 +1849,9 @@ msgid "The page you are looking for does not exist."
 msgstr "お探しのページは存在しません。"
 
 #: components/layout/offline-indicator.tsx
-msgctxt "tm_VW-"
-msgid "You are offline. Requests will be retried automatically when your connection is restored."
-msgstr "オフラインです。接続が復元されると、リクエストは自動的に再試行されます。"
+msgctxt "W-XYsV"
+msgid "You are currently offline."
+msgstr "現在オフラインです。"
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1881,19 +1879,14 @@ msgid "CANNOT FETCH RECURRING TRANSACTIONS DATA"
 msgstr "定期取引データを取得できません"
 
 #: components/layout/secondary-nav.tsx
-msgctxt "oj0aXj"
-msgid "Signing out..."
-msgstr "サインアウト中..."
+msgctxt "XuxYAf"
+msgid "Failed to sign out! Please try again later."
+msgstr "サインアウトに失敗しました！後でもう一度お試しください。"
 
 #: components/layout/secondary-nav.tsx
 msgctxt "hlp8qc"
 msgid "Signed out."
 msgstr "サインアウトしました。"
-
-#: components/layout/secondary-nav.tsx
-msgctxt "XuxYAf"
-msgid "Failed to sign out! Please try again later."
-msgstr "サインアウトに失敗しました！後でもう一度お試しください。"
 
 #: components/layout/secondary-nav.tsx
 msgctxt "F62y-K"

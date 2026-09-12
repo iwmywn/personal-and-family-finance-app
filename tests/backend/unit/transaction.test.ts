@@ -50,7 +50,7 @@ describe("Transactions", async () => {
         mockValidTransactionValues
       )
 
-      expect(firstResult.success).toBe("Transaction has been added.")
+      expect(firstResult.success).toBe("Transaction has been created.")
       expect(firstResult.error).toBeUndefined()
       expect(duplicateResult.success).toBeUndefined()
       expect(duplicateResult.error).toBe(
@@ -74,7 +74,7 @@ describe("Transactions", async () => {
       expect(addedTransaction?.date.toISOString()).toBe(
         "2024-02-05T00:00:00.000Z"
       )
-      expect(result.success).toBe("Transaction has been added.")
+      expect(result.success).toBe("Transaction has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -86,7 +86,7 @@ describe("Transactions", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        "Failed to add transaction! Please try again later."
+        "Failed to create transaction! Please try again later."
       )
     })
 
@@ -105,7 +105,7 @@ describe("Transactions", async () => {
       })
 
       expect(result.error).toBeUndefined()
-      expect(result.success).toBe("Transaction has been added.")
+      expect(result.success).toBe("Transaction has been created.")
 
       const transactionsCollection = await getTransactionsCollection()
       const found = await transactionsCollection.findOne({
@@ -126,7 +126,7 @@ describe("Transactions", async () => {
 
       const results = [firstResult, secondResult]
       const successCount = results.filter(
-        (r) => r.success === "Transaction has been added."
+        (r) => r.success === "Transaction has been created."
       ).length
       const errorCount = results.filter(
         (r) =>

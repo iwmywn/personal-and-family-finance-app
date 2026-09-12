@@ -118,31 +118,43 @@ export function RecurringTransactionDialog({
 
   async function onSubmit(values: RecurringTransactionFormValues) {
     if (recurring) {
-      const { success, error } = await updateRecurringTransaction(
-        recurring._id,
-        values
-      )
+      try {
+        const { success, error } = await updateRecurringTransaction(
+          recurring._id,
+          values
+        )
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
+      } catch {
+        toast.error(
+          t("Failed to update recurring transaction! Please try again later.")
+        )
       }
     } else {
-      const { success, error } = await createRecurringTransaction(values)
+      try {
+        const { success, error } = await createRecurringTransaction(values)
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
-        form.reset({
-          ...form.formState.defaultValues,
-          type,
-        })
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+          form.reset({
+            ...form.formState.defaultValues,
+            type,
+          })
+        }
+      } catch {
+        toast.error(
+          t("Failed to create recurring transaction! Please try again later.")
+        )
       }
     }
   }

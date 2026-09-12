@@ -58,13 +58,13 @@ export async function createBudget(
     })
 
     updateTag(`budgets-${userId}`)
-    return { success: t("Budget has been added."), error: undefined }
+    return { success: t("Budget has been created.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return { error: t("This budget already exists!") }
     }
     console.error("Error creating budget:", error)
-    return { error: t("Failed to add budget! Please try again later.") }
+    return { error: t("Failed to create budget! Please try again later.") }
   }
 }
 
@@ -128,7 +128,7 @@ export async function updateBudget(
     }
 
     updateTag(`budgets-${userId}`)
-    return { success: t("Budget has been updated."), error: undefined }
+    return { success: t("Budget has been updated.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return { error: t("This budget already exists!") }

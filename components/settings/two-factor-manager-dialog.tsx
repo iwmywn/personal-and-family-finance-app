@@ -116,33 +116,40 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    await authClient.twoFactor.enable({
-      password: values.password,
-      fetchOptions: {
-        onError: (ctx) => {
-          switch (ctx.error.code as AuthErrorCode) {
-            case "INVALID_PASSWORD":
-              toast.error(t("Invalid password."))
-              break
-            default:
-              if (ctx.response.status === 429) {
-                toast.error(
-                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
-                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
-                  })
-                )
-              } else {
-                toast.error(t("Failed to enable 2FA! Please try again later."))
-              }
-              break
-          }
+    try {
+      await authClient.twoFactor.enable({
+        password: values.password,
+        fetchOptions: {
+          onError: (ctx) => {
+            switch (ctx.error.code as AuthErrorCode) {
+              case "INVALID_PASSWORD":
+                toast.error(t("Invalid password."))
+                break
+              default:
+                if (ctx.response.status === 429) {
+                  toast.error(
+                    t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                      seconds:
+                        ctx.response.headers.get("X-Retry-After") ?? "10",
+                    })
+                  )
+                } else {
+                  toast.error(
+                    t("Failed to enable 2FA! Please try again later.")
+                  )
+                }
+                break
+            }
+          },
+          onSuccess: (ctx) => {
+            setTotpURI(ctx.data.totpURI)
+            form.reset()
+          },
         },
-        onSuccess: (ctx) => {
-          setTotpURI(ctx.data.totpURI)
-          form.reset()
-        },
-      },
-    })
+      })
+    } catch {
+      toast.error(t("Failed to enable 2FA! Please try again later."))
+    }
   }
 
   return (
@@ -196,38 +203,43 @@ function VerifyTwoFactorForm({
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    await authClient.twoFactor.verifyTotp({
-      code: values.code,
-      fetchOptions: {
-        onError: (ctx) => {
-          switch (ctx.error.code as AuthErrorCode) {
-            case "INVALID_CODE":
-              toast.error(t("Invalid authentication code!"))
-              break
-            default:
-              if (ctx.response.status === 429) {
-                toast.error(
-                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
-                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
-                  })
-                )
-              } else {
-                toast.error(
-                  t("Failed to verify 2FA code! Please try again later.")
-                )
-              }
-              break
-          }
+    try {
+      await authClient.twoFactor.verifyTotp({
+        code: values.code,
+        fetchOptions: {
+          onError: (ctx) => {
+            switch (ctx.error.code as AuthErrorCode) {
+              case "INVALID_CODE":
+                toast.error(t("Invalid authentication code!"))
+                break
+              default:
+                if (ctx.response.status === 429) {
+                  toast.error(
+                    t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                      seconds:
+                        ctx.response.headers.get("X-Retry-After") ?? "10",
+                    })
+                  )
+                } else {
+                  toast.error(
+                    t("Failed to verify 2FA code! Please try again later.")
+                  )
+                }
+                break
+            }
+          },
+          onSuccess: () => {
+            setOpen(false)
+            toast.success(t("Two-factor authentication is now enabled."))
+            router.refresh()
+            setTotpURI(null)
+            form.reset()
+          },
         },
-        onSuccess: () => {
-          setOpen(false)
-          toast.success(t("Two-factor authentication is now enabled."))
-          router.refresh()
-          setTotpURI(null)
-          form.reset()
-        },
-      },
-    })
+      })
+    } catch {
+      toast.error(t("Failed to verify 2FA code! Please try again later."))
+    }
   }
 
   return (
@@ -280,35 +292,42 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
   })
 
   async function onSubmit(values: TwoFactorPasswordFormValues) {
-    await authClient.twoFactor.disable({
-      password: values.password,
-      fetchOptions: {
-        onError: (ctx) => {
-          switch (ctx.error.code as AuthErrorCode) {
-            case "INVALID_PASSWORD":
-              toast.error(t("Invalid password."))
-              break
-            default:
-              if (ctx.response.status === 429) {
-                toast.error(
-                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
-                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
-                  })
-                )
-              } else {
-                toast.error(t("Failed to disable 2FA! Please try again later."))
+    try {
+      await authClient.twoFactor.disable({
+        password: values.password,
+        fetchOptions: {
+          onError: (ctx) => {
+            switch (ctx.error.code as AuthErrorCode) {
+              case "INVALID_PASSWORD":
+                toast.error(t("Invalid password."))
                 break
-              }
-          }
+              default:
+                if (ctx.response.status === 429) {
+                  toast.error(
+                    t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                      seconds:
+                        ctx.response.headers.get("X-Retry-After") ?? "10",
+                    })
+                  )
+                } else {
+                  toast.error(
+                    t("Failed to disable 2FA! Please try again later.")
+                  )
+                  break
+                }
+            }
+          },
+          onSuccess: () => {
+            setOpen(false)
+            toast.success(t("Two-factor authentication is now disabled."))
+            router.refresh()
+            form.reset()
+          },
         },
-        onSuccess: () => {
-          setOpen(false)
-          toast.success(t("Two-factor authentication is now disabled."))
-          router.refresh()
-          form.reset()
-        },
-      },
-    })
+      })
+    } catch {
+      toast.error(t("Failed to disable 2FA! Please try again later."))
+    }
   }
 
   return (

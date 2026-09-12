@@ -32,6 +32,7 @@ msgid "This email is already in use."
 msgstr "이 이메일은 이미 사용 중입니다."
 
 #: actions/admin.actions.ts
+#: components/admin/create-user-dialog.tsx
 msgctxt "74JxeG"
 msgid "Failed to create user! Please try again later."
 msgstr "사용자 생성에 실패했습니다! 나중에 다시 시도해주세요."
@@ -117,9 +118,9 @@ msgid "Invalid category!"
 msgstr "잘못된 카테고리입니다!"
 
 #: actions/budget.actions.ts
-msgctxt "hcutYI"
-msgid "Budget has been added."
-msgstr "예산이 추가되었습니다."
+msgctxt "sW3_mQ"
+msgid "Budget has been created."
+msgstr "예산이 생성되었습니다."
 
 #: actions/budget.actions.ts
 msgctxt "kwvIdb"
@@ -127,9 +128,10 @@ msgid "This budget already exists!"
 msgstr "이 예산이 이미 존재합니다!"
 
 #: actions/budget.actions.ts
-msgctxt "ge_1ga"
-msgid "Failed to add budget! Please try again later."
-msgstr "예산 추가에 실패했습니다! 나중에 다시 시도해주세요."
+#: components/budgets/budget-dialog.tsx
+msgctxt "LiEvhU"
+msgid "Failed to create budget! Please try again later."
+msgstr "예산 생성에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/budget.actions.ts
 msgctxt "3pMkv5"
@@ -147,6 +149,7 @@ msgid "Budget has been updated."
 msgstr "예산이 업데이트되었습니다."
 
 #: actions/budget.actions.ts
+#: components/budgets/budget-dialog.tsx
 msgctxt "ZUfwUz"
 msgid "Failed to update budget! Please try again later."
 msgstr "예산 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
@@ -173,9 +176,9 @@ msgid "Failed to load budgets! Please try again later."
 msgstr "예산을 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/category.actions.ts
-msgctxt "Jfen4M"
-msgid "Category has been added."
-msgstr "카테고리가 추가되었습니다."
+msgctxt "L2hi0Y"
+msgid "Category has been created."
+msgstr "카테고리가 생성되었습니다."
 
 #: actions/category.actions.ts
 msgctxt "LzesyV"
@@ -183,9 +186,10 @@ msgid "This category already exists!"
 msgstr "이 카테고리가 이미 존재합니다!"
 
 #: actions/category.actions.ts
-msgctxt "OQ79b6"
-msgid "Failed to add category! Please try again later."
-msgstr "카테고리 추가에 실패했습니다! 나중에 다시 시도해주세요."
+#: components/categories/category-dialog.tsx
+msgctxt "mFVjx4"
+msgid "Failed to create category! Please try again later."
+msgstr "카테고리 생성에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/category.actions.ts
 msgctxt "TgxdcM"
@@ -208,6 +212,7 @@ msgid "Category has been updated."
 msgstr "카테고리가 업데이트되었습니다."
 
 #: actions/category.actions.ts
+#: components/categories/category-dialog.tsx
 msgctxt "PoUgbk"
 msgid "Failed to update category! Please try again later."
 msgstr "카테고리 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
@@ -254,9 +259,9 @@ msgid "Failed to load custom categories! Please try again later."
 msgstr "사용자 정의 카테고리를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/goal.actions.ts
-msgctxt "J-nrjG"
-msgid "Goal has been added."
-msgstr "목표가 추가되었습니다."
+msgctxt "lUO2O7"
+msgid "Goal has been created."
+msgstr "목표가 생성되었습니다."
 
 #: actions/goal.actions.ts
 msgctxt "3SCa_T"
@@ -264,9 +269,10 @@ msgid "This goal already exists!"
 msgstr "이 목표가 이미 존재합니다!"
 
 #: actions/goal.actions.ts
-msgctxt "9Buhj_"
-msgid "Failed to add goal! Please try again later."
-msgstr "목표 추가에 실패했습니다! 나중에 다시 시도해주세요."
+#: components/goals/goal-dialog.tsx
+msgctxt "2Csc1b"
+msgid "Failed to create goal! Please try again later."
+msgstr "목표 생성에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/goal.actions.ts
 msgctxt "7UB8uM"
@@ -284,6 +290,7 @@ msgid "Goal has been updated."
 msgstr "목표가 업데이트되었습니다."
 
 #: actions/goal.actions.ts
+#: components/goals/goal-dialog.tsx
 msgctxt "Lmu8yS"
 msgid "Failed to update goal! Please try again later."
 msgstr "목표 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
@@ -310,9 +317,9 @@ msgid "Failed to load goals! Please try again later."
 msgstr "목표를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/recurring.actions.ts
-msgctxt "5Mtoe5"
-msgid "Recurring transaction has been added."
-msgstr "반복 거래가 추가되었습니다."
+msgctxt "vgquXw"
+msgid "Recurring transaction has been created."
+msgstr "반복 거래가 생성되었습니다."
 
 #: actions/recurring.actions.ts
 msgctxt "-HBMWc"
@@ -320,9 +327,10 @@ msgid "This recurring transaction already exists!"
 msgstr "이 반복 거래가 이미 존재합니다!"
 
 #: actions/recurring.actions.ts
-msgctxt "FLPmpu"
-msgid "Failed to add recurring transaction! Please try again later."
-msgstr "반복 거래 추가에 실패했습니다! 나중에 다시 시도해주세요."
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
+msgctxt "zQczG6"
+msgid "Failed to create recurring transaction! Please try again later."
+msgstr "반복 거래 생성에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/recurring.actions.ts
 msgctxt "Yamhgo"
@@ -340,6 +348,7 @@ msgid "Recurring transaction has been updated."
 msgstr "반복 거래가 업데이트되었습니다."
 
 #: actions/recurring.actions.ts
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
 msgctxt "qlYMTi"
 msgid "Failed to update recurring transaction! Please try again later."
 msgstr "반복 거래 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
@@ -366,9 +375,9 @@ msgid "Failed to load recurring transactions! Please try again later."
 msgstr "반복 거래를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/transaction.actions.ts
-msgctxt "pU1r4y"
-msgid "Transaction has been added."
-msgstr "거래가 추가되었습니다."
+msgctxt "JSmQV_"
+msgid "Transaction has been created."
+msgstr "거래가 생성되었습니다."
 
 #: actions/transaction.actions.ts
 msgctxt "bN6KUb"
@@ -376,9 +385,10 @@ msgid "A transaction with the same details already exists on this date. Please c
 msgstr "이 날짜에 동일한 세부 정보를 가진 거래가 이미 존재합니다. 기존 거래에 금액을 합산해 주세요."
 
 #: actions/transaction.actions.ts
-msgctxt "zb35o3"
-msgid "Failed to add transaction! Please try again later."
-msgstr "거래 추가에 실패했습니다! 나중에 다시 시도해주세요."
+#: components/transactions/transaction-dialog.tsx
+msgctxt "8rBc81"
+msgid "Failed to create transaction! Please try again later."
+msgstr "거래 생성에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/transaction.actions.ts
 msgctxt "w_J6M7"
@@ -396,6 +406,7 @@ msgid "Transaction has been updated."
 msgstr "거래가 업데이트되었습니다."
 
 #: actions/transaction.actions.ts
+#: components/transactions/transaction-dialog.tsx
 msgctxt "A9rBEo"
 msgid "Failed to update transaction! Please try again later."
 msgstr "거래 업데이트에 실패했습니다! 나중에 다시 시도해주세요."
@@ -1798,19 +1809,6 @@ msgid "Please try again later."
 msgstr "나중에 다시 시도해 주세요."
 
 #: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "hLR6s0"
-msgid "Stopping impersonation..."
-msgstr "가장을 중지하는 중..."
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "IF-3KJ"
-msgid "Stopped impersonation session."
-msgstr "가장 세션이 중지되었습니다."
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
 msgctxt "H1m7wl"
 msgid "Failed to stop impersonating! Please try again later."
 msgstr "가장 중지에 실패했습니다! 나중에 다시 시도해주세요."
@@ -1851,9 +1849,9 @@ msgid "The page you are looking for does not exist."
 msgstr "찾고 계신 페이지가 존재하지 않습니다."
 
 #: components/layout/offline-indicator.tsx
-msgctxt "tm_VW-"
-msgid "You are offline. Requests will be retried automatically when your connection is restored."
-msgstr "오프라인 상태입니다. 연결이 복원되면 요청이 자동으로 재시도됩니다."
+msgctxt "W-XYsV"
+msgid "You are currently offline."
+msgstr "현재 오프라인 상태입니다."
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1881,19 +1879,14 @@ msgid "CANNOT FETCH RECURRING TRANSACTIONS DATA"
 msgstr "반복 거래 데이터를 가져올 수 없습니다"
 
 #: components/layout/secondary-nav.tsx
-msgctxt "oj0aXj"
-msgid "Signing out..."
-msgstr "로그아웃 중..."
+msgctxt "XuxYAf"
+msgid "Failed to sign out! Please try again later."
+msgstr "로그아웃에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/layout/secondary-nav.tsx
 msgctxt "hlp8qc"
 msgid "Signed out."
 msgstr "로그아웃되었습니다."
-
-#: components/layout/secondary-nav.tsx
-msgctxt "XuxYAf"
-msgid "Failed to sign out! Please try again later."
-msgstr "로그아웃에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: components/layout/secondary-nav.tsx
 msgctxt "F62y-K"

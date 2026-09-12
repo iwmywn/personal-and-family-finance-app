@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { ShieldAlertIcon } from "lucide-react"
 import { useExtracted } from "next-intl"
@@ -17,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 import {
   Tooltip,
   TooltipContent,
@@ -29,6 +31,8 @@ export function ImpersonationIndicator() {
   const t = useExtracted()
   const router = useRouter()
   const userContext = useUser()
+  const [isPending, startTransition] = useTransition()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   if (!userContext.session.impersonatedBy) {
     return null
@@ -36,20 +40,34 @@ export function ImpersonationIndicator() {
 
   const { user } = userContext
 
-  async function onStopImpersonating() {
-    toast.promise(authClient.admin.stopImpersonating(), {
-      loading: t("Stopping impersonation..."),
-      success: () => {
-        router.push("/admin")
-        router.refresh()
-        return t("Stopped impersonation session.")
-      },
-      error: () => t("Failed to stop impersonating! Please try again later."),
+  async function onStopImpersonating(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault()
+
+    startTransition(async () => {
+      try {
+        await authClient.admin.stopImpersonating({
+          fetchOptions: {
+            onError: () => {
+              toast.error(
+                t("Failed to stop impersonating! Please try again later.")
+              )
+            },
+            onSuccess: () => {
+              setIsOpen(false)
+              toast.success("Stopped impersonation session.")
+              router.push("/admin")
+              router.refresh()
+            },
+          },
+        })
+      } catch {
+        toast.error(t("Failed to stop impersonating! Please try again later."))
+      }
     })
   }
 
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <Tooltip>
         <TooltipTrigger asChild>
           <AlertDialogTrigger asChild>
@@ -85,9 +103,11 @@ export function ImpersonationIndicator() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
+          <AlertDialogCancel disabled={isPending}>
+            {t("Cancel")}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={onStopImpersonating}>
-            {t("Stop Impersonating")}
+            {isPending && <Spinner />} {t("Stop Impersonating")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

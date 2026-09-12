@@ -92,25 +92,33 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
 
   async function onSubmit(values: GoalFormValues) {
     if (goal) {
-      const { success, error } = await updateGoal(goal._id, values)
+      try {
+        const { success, error } = await updateGoal(goal._id, values)
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
+      } catch {
+        toast.error(t("Failed to update goal! Please try again later."))
       }
     } else {
-      const { success, error } = await createGoal(values)
+      try {
+        const { success, error } = await createGoal(values)
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
-        form.reset()
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+          form.reset()
+        }
+      } catch {
+        toast.error(t("Failed to create goal! Please try again later."))
       }
     }
   }

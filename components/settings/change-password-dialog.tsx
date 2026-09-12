@@ -50,39 +50,44 @@ export function ChangePasswordDialog() {
   })
 
   async function onSubmit(values: PasswordFormValues) {
-    await authClient.changePassword({
-      newPassword: values.newPassword,
-      currentPassword: values.currentPassword,
-      revokeOtherSessions: values.revokeOtherSessions,
-      fetchOptions: {
-        onError: (ctx) => {
-          switch (ctx.error.code as AuthErrorCode) {
-            case "INVALID_PASSWORD":
-              toast.error(t("Current password is incorrect!"))
-              break
-            default:
-              if (ctx.response.status === 429) {
-                toast.error(
-                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
-                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
-                  })
-                )
-              } else {
-                toast.error(
-                  t("Failed to update password! Please try again later.")
-                )
-              }
-              break
-          }
+    try {
+      await authClient.changePassword({
+        newPassword: values.newPassword,
+        currentPassword: values.currentPassword,
+        revokeOtherSessions: values.revokeOtherSessions,
+        fetchOptions: {
+          onError: (ctx) => {
+            switch (ctx.error.code as AuthErrorCode) {
+              case "INVALID_PASSWORD":
+                toast.error(t("Current password is incorrect!"))
+                break
+              default:
+                if (ctx.response.status === 429) {
+                  toast.error(
+                    t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                      seconds:
+                        ctx.response.headers.get("X-Retry-After") ?? "10",
+                    })
+                  )
+                } else {
+                  toast.error(
+                    t("Failed to update password! Please try again later.")
+                  )
+                }
+                break
+            }
+          },
+          onSuccess: () => {
+            setIsOpen(false)
+            toast.success(t("Your password has been changed."))
+            router.refresh()
+            form.reset()
+          },
         },
-        onSuccess: () => {
-          setIsOpen(false)
-          toast.success(t("Your password has been changed."))
-          router.refresh()
-          form.reset()
-        },
-      },
-    })
+      })
+    } catch {
+      toast.error(t("Failed to update password! Please try again later."))
+    }
   }
 
   return (

@@ -43,77 +43,82 @@ export function SignInForm() {
   const { executeRecaptcha } = useGoogleReCaptcha()
 
   async function onSubmit(values: SignInFormValues) {
-    if (!executeRecaptcha) {
-      toast.error(t("CAPTCHA verification failed! Please try again later."))
-      return
-    }
+    try {
+      if (!executeRecaptcha) {
+        toast.error(t("CAPTCHA verification failed! Please try again later."))
+        return
+      }
 
-    const token = await executeRecaptcha("sign_in")
+      const token = await executeRecaptcha("sign_in")
 
-    await authClient.signIn.username({
-      username: values.username,
-      password: values.password,
-      fetchOptions: {
-        headers: {
-          "x-captcha-response": token,
-        },
-        onError: (ctx) => {
-          switch (ctx.error.code as AuthErrorCode) {
-            case "VERIFICATION_FAILED":
-              toast.error(t("CAPTCHA verification failed!"))
-              break
-            case "INVALID_USERNAME_OR_PASSWORD":
-              toast.error(t("Invalid username or password!"))
-              break
-            case "EMAIL_NOT_VERIFIED":
-              toast.error(t("Email not verified!"))
-              break
-            case "BANNED_USER":
-              toast.error(
-                t(
-                  "Your account has been banned. Please contact support if you believe this is an error."
-                )
-              )
-              break
-            default:
-              if (ctx.response.status === 429) {
+      await authClient.signIn.username({
+        username: values.username,
+        password: values.password,
+        fetchOptions: {
+          headers: {
+            "x-captcha-response": token,
+          },
+          onError: (ctx) => {
+            switch (ctx.error.code as AuthErrorCode) {
+              case "VERIFICATION_FAILED":
+                toast.error(t("CAPTCHA verification failed!"))
+                break
+              case "INVALID_USERNAME_OR_PASSWORD":
+                toast.error(t("Invalid username or password!"))
+                break
+              case "EMAIL_NOT_VERIFIED":
+                toast.error(t("Email not verified!"))
+                break
+              case "BANNED_USER":
                 toast.error(
-                  t("Rate limit exceeded! Retry after {seconds} seconds.", {
-                    seconds: ctx.response.headers.get("X-Retry-After") ?? "10",
-                  })
+                  t(
+                    "Your account has been banned. Please contact support if you believe this is an error."
+                  )
                 )
-              } else {
-                toast.error(t("Failed to sign in! Please try again later."))
-              }
-              break
-          }
-        },
-        onSuccess: async (ctx) => {
-          const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
+                break
+              default:
+                if (ctx.response.status === 429) {
+                  toast.error(
+                    t("Rate limit exceeded! Retry after {seconds} seconds.", {
+                      seconds:
+                        ctx.response.headers.get("X-Retry-After") ?? "10",
+                    })
+                  )
+                } else {
+                  toast.error(t("Failed to sign in! Please try again later."))
+                }
+                break
+            }
+          },
+          onSuccess: async (ctx) => {
+            const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
 
-          if (ctx.data.twoFactorRedirect) {
-            const twoFactorUrl: Route = searchParams.has("next")
-              ? `${twoFactorRoute}?${new URLSearchParams({ next: callbackUrl }).toString()}`
-              : twoFactorRoute
-            router.push(twoFactorUrl)
+            if (ctx.data.twoFactorRedirect) {
+              const twoFactorUrl: Route = searchParams.has("next")
+                ? `${twoFactorRoute}?${new URLSearchParams({ next: callbackUrl }).toString()}`
+                : twoFactorRoute
+              router.push(twoFactorUrl)
+              form.reset()
+              return
+            }
+
+            router.push(callbackUrl)
+            router.refresh()
             form.reset()
-            return
-          }
 
-          router.push(callbackUrl)
-          router.refresh()
-          form.reset()
-
-          await authClient.getSession({
-            fetchOptions: {
-              onSuccess: async (ctx) => {
-                await setUserLocale(ctx.data.user.locale as Locale)
+            await authClient.getSession({
+              fetchOptions: {
+                onSuccess: async (ctx) => {
+                  await setUserLocale(ctx.data.user.locale as Locale)
+                },
               },
-            },
-          })
+            })
+          },
         },
-      },
-    })
+      })
+    } catch {
+      toast.error(t("Failed to sign in! Please try again later."))
+    }
   }
 
   return (

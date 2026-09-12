@@ -39,65 +39,69 @@ export function TwoFactorVerificationForm() {
   })
 
   async function onSubmit(values: TwoFactorCodeFormValues) {
-    await authClient.twoFactor.verifyTotp({
-      code: values.code,
-      trustDevice: values.trustDevice,
-      fetchOptions: {
-        onError: (ctx) => {
-          const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
-          const signInUrl: Route = searchParams.has("next")
-            ? `${signInRoute}?${new URLSearchParams({ next: callbackUrl }).toString()}`
-            : signInRoute
+    try {
+      await authClient.twoFactor.verifyTotp({
+        code: values.code,
+        trustDevice: values.trustDevice,
+        fetchOptions: {
+          onError: (ctx) => {
+            const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
+            const signInUrl: Route = searchParams.has("next")
+              ? `${signInRoute}?${new URLSearchParams({ next: callbackUrl }).toString()}`
+              : signInRoute
 
-          switch (ctx.error.code as AuthErrorCode) {
-            case "INVALID_CODE":
-              toast.error(t("Invalid authentication code!"))
-              break
-            case "TOO_MANY_ATTEMPTS_REQUEST_NEW_CODE":
-              toast.error(t("Too many attempts. Please sign in again."))
-              router.replace(signInUrl)
-              form.reset()
-              break
-            case "INVALID_TWO_FACTOR_COOKIE":
-              toast.error(
-                t("Two-factor session has expired. Please sign in again.")
-              )
-              router.replace(signInUrl)
-              form.reset()
-              break
-            case "ACCOUNT_TEMPORARILY_LOCKED":
-              toast.error(
-                t(
-                  "Your account is temporarily locked due to too many failed attempts. Please try again later."
+            switch (ctx.error.code as AuthErrorCode) {
+              case "INVALID_CODE":
+                toast.error(t("Invalid authentication code!"))
+                break
+              case "TOO_MANY_ATTEMPTS_REQUEST_NEW_CODE":
+                toast.error(t("Too many attempts. Please sign in again."))
+                router.replace(signInUrl)
+                form.reset()
+                break
+              case "INVALID_TWO_FACTOR_COOKIE":
+                toast.error(
+                  t("Two-factor session has expired. Please sign in again.")
                 )
-              )
-              router.replace(signInUrl)
-              form.reset()
-              break
-            default:
-              toast.error(
-                t("Failed to verify 2FA code! Please try again later.")
-              )
-              break
-          }
-        },
-        onSuccess: async () => {
-          const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
+                router.replace(signInUrl)
+                form.reset()
+                break
+              case "ACCOUNT_TEMPORARILY_LOCKED":
+                toast.error(
+                  t(
+                    "Your account is temporarily locked due to too many failed attempts. Please try again later."
+                  )
+                )
+                router.replace(signInUrl)
+                form.reset()
+                break
+              default:
+                toast.error(
+                  t("Failed to verify 2FA code! Please try again later.")
+                )
+                break
+            }
+          },
+          onSuccess: async () => {
+            const callbackUrl = getSafeCallbackUrl(searchParams.get("next"))
 
-          router.replace(callbackUrl)
-          router.refresh()
-          form.reset()
+            router.replace(callbackUrl)
+            router.refresh()
+            form.reset()
 
-          await authClient.getSession({
-            fetchOptions: {
-              onSuccess: async (ctx) => {
-                await setUserLocale(ctx.data.user.locale as Locale)
+            await authClient.getSession({
+              fetchOptions: {
+                onSuccess: async (ctx) => {
+                  await setUserLocale(ctx.data.user.locale as Locale)
+                },
               },
-            },
-          })
+            })
+          },
         },
-      },
-    })
+      })
+    } catch {
+      toast.error(t("Failed to verify 2FA code! Please try again later."))
+    }
   }
 
   return (

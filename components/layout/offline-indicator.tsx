@@ -12,14 +12,9 @@ export function OfflineIndicator() {
 
   useEffect(() => {
     if (isOffline) {
-      toastId.current = toast.error(
-        t(
-          "You are offline. Requests will be retried automatically when your connection is restored."
-        ),
-        {
-          duration: Infinity,
-        }
-      )
+      toastId.current = toast.error(t("You are currently offline."), {
+        duration: Infinity,
+      })
     } else if (toastId.current !== undefined) {
       toast.dismiss(toastId.current)
       toastId.current = undefined

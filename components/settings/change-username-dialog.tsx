@@ -47,31 +47,37 @@ export function ChangeUsernameDialog() {
   })
 
   async function onSubmit(values: UsernameFormValues) {
-    const { data: response, error } = await authClient.isUsernameAvailable({
-      username: values.username,
-    })
-
-    if (error || !response) {
-      toast.error(
-        t("Failed to check username availability! Please try again later.")
-      )
-    } else if (!response.available && user.username !== values.username) {
-      toast.error(t("This username is already taken."))
-    } else {
-      await authClient.updateUser({
+    try {
+      const { data: response, error } = await authClient.isUsernameAvailable({
         username: values.username,
-        fetchOptions: {
-          onError: () => {
-            toast.error(t("Failed to update username! Please try again later."))
-          },
-          onSuccess: () => {
-            setIsOpen(false)
-            toast.success(t("Your username has been changed."))
-            router.refresh()
-            form.reset({ username: values.username })
-          },
-        },
       })
+
+      if (error || !response) {
+        toast.error(
+          t("Failed to check username availability! Please try again later.")
+        )
+      } else if (!response.available && user.username !== values.username) {
+        toast.error(t("This username is already taken."))
+      } else {
+        await authClient.updateUser({
+          username: values.username,
+          fetchOptions: {
+            onError: () => {
+              toast.error(
+                t("Failed to update username! Please try again later.")
+              )
+            },
+            onSuccess: () => {
+              setIsOpen(false)
+              toast.success(t("Your username has been changed."))
+              router.refresh()
+              form.reset({ username: values.username })
+            },
+          },
+        })
+      }
+    } catch {
+      toast.error(t("Failed to update username! Please try again later."))
     }
   }
 

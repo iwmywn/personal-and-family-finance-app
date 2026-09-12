@@ -78,7 +78,7 @@ export async function createTransaction(
     })
 
     updateTag(`transactions-${userId}`)
-    return { success: t("Transaction has been added."), error: undefined }
+    return { success: t("Transaction has been created.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return {
@@ -88,7 +88,7 @@ export async function createTransaction(
       }
     }
     console.error("Error creating transaction:", error)
-    return { error: t("Failed to add transaction! Please try again later.") }
+    return { error: t("Failed to create transaction! Please try again later.") }
   }
 }
 
@@ -171,7 +171,6 @@ export async function updateTransaction(
     updateTag(`transactions-${userId}`)
     return {
       success: t("Transaction has been updated."),
-      error: undefined,
     }
   } catch (error) {
     if (isDuplicateKeyError(error)) {

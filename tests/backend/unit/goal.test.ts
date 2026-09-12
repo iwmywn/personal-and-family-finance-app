@@ -68,7 +68,7 @@ describe("Goals", async () => {
         endDate: localDateToUTCMidnight(mockGoal.endDate),
       })
 
-      expect(result.success).toBe("Goal has been added.")
+      expect(result.success).toBe("Goal has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -100,7 +100,7 @@ describe("Goals", async () => {
         "2024-01-01T00:00:00.000Z"
       )
       expect(addedGoal?.endDate.toISOString()).toBe("2024-12-31T00:00:00.000Z")
-      expect(result.success).toBe("Goal has been added.")
+      expect(result.success).toBe("Goal has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -123,7 +123,9 @@ describe("Goals", async () => {
       const result = await createGoal(mockValidGoalValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Failed to add goal! Please try again later.")
+      expect(result.error).toBe(
+        "Failed to create goal! Please try again later."
+      )
     })
 
     it("should prevent race condition when creating duplicate goals concurrently", async () => {
@@ -136,7 +138,7 @@ describe("Goals", async () => {
 
       const results = [firstResult, secondResult]
       const successCount = results.filter(
-        (r) => r.success === "Goal has been added."
+        (r) => r.success === "Goal has been created."
       ).length
       const errorCount = results.filter(
         (r) => r.error === "This goal already exists!"

@@ -32,6 +32,7 @@ msgid "This email is already in use."
 msgstr "Email này đã được sử dụng."
 
 #: actions/admin.actions.ts
+#: components/admin/create-user-dialog.tsx
 msgctxt "74JxeG"
 msgid "Failed to create user! Please try again later."
 msgstr "Tạo người dùng thất bại! Vui lòng thử lại sau."
@@ -117,9 +118,9 @@ msgid "Invalid category!"
 msgstr "Danh mục không hợp lệ!"
 
 #: actions/budget.actions.ts
-msgctxt "hcutYI"
-msgid "Budget has been added."
-msgstr "Ngân sách đã được thêm."
+msgctxt "sW3_mQ"
+msgid "Budget has been created."
+msgstr "Ngân sách đã được tạo."
 
 #: actions/budget.actions.ts
 msgctxt "kwvIdb"
@@ -127,9 +128,10 @@ msgid "This budget already exists!"
 msgstr "Ngân sách này đã tồn tại!"
 
 #: actions/budget.actions.ts
-msgctxt "ge_1ga"
-msgid "Failed to add budget! Please try again later."
-msgstr "Thêm ngân sách thất bại! Vui lòng thử lại sau."
+#: components/budgets/budget-dialog.tsx
+msgctxt "LiEvhU"
+msgid "Failed to create budget! Please try again later."
+msgstr "Tạo ngân sách thất bại! Vui lòng thử lại sau."
 
 #: actions/budget.actions.ts
 msgctxt "3pMkv5"
@@ -147,6 +149,7 @@ msgid "Budget has been updated."
 msgstr "Ngân sách đã được cập nhật."
 
 #: actions/budget.actions.ts
+#: components/budgets/budget-dialog.tsx
 msgctxt "ZUfwUz"
 msgid "Failed to update budget! Please try again later."
 msgstr "Cập nhật ngân sách thất bại! Vui lòng thử lại sau."
@@ -173,9 +176,9 @@ msgid "Failed to load budgets! Please try again later."
 msgstr "Tải danh sách ngân sách thất bại! Vui lòng thử lại sau."
 
 #: actions/category.actions.ts
-msgctxt "Jfen4M"
-msgid "Category has been added."
-msgstr "Danh mục đã được thêm."
+msgctxt "L2hi0Y"
+msgid "Category has been created."
+msgstr "Danh mục đã được tạo."
 
 #: actions/category.actions.ts
 msgctxt "LzesyV"
@@ -183,9 +186,10 @@ msgid "This category already exists!"
 msgstr "Danh mục này đã tồn tại!"
 
 #: actions/category.actions.ts
-msgctxt "OQ79b6"
-msgid "Failed to add category! Please try again later."
-msgstr "Thêm danh mục thất bại! Vui lòng thử lại sau."
+#: components/categories/category-dialog.tsx
+msgctxt "mFVjx4"
+msgid "Failed to create category! Please try again later."
+msgstr "Tạo danh mục thất bại! Vui lòng thử lại sau."
 
 #: actions/category.actions.ts
 msgctxt "TgxdcM"
@@ -208,6 +212,7 @@ msgid "Category has been updated."
 msgstr "Danh mục đã được cập nhật."
 
 #: actions/category.actions.ts
+#: components/categories/category-dialog.tsx
 msgctxt "PoUgbk"
 msgid "Failed to update category! Please try again later."
 msgstr "Cập nhật danh mục thất bại! Vui lòng thử lại sau."
@@ -254,9 +259,9 @@ msgid "Failed to load custom categories! Please try again later."
 msgstr "Tải danh mục tùy chỉnh thất bại! Vui lòng thử lại sau."
 
 #: actions/goal.actions.ts
-msgctxt "J-nrjG"
-msgid "Goal has been added."
-msgstr "Mục tiêu đã được thêm."
+msgctxt "lUO2O7"
+msgid "Goal has been created."
+msgstr "Mục tiêu đã được tạo."
 
 #: actions/goal.actions.ts
 msgctxt "3SCa_T"
@@ -264,9 +269,10 @@ msgid "This goal already exists!"
 msgstr "Mục tiêu này đã tồn tại!"
 
 #: actions/goal.actions.ts
-msgctxt "9Buhj_"
-msgid "Failed to add goal! Please try again later."
-msgstr "Thêm mục tiêu thất bại! Vui lòng thử lại sau."
+#: components/goals/goal-dialog.tsx
+msgctxt "2Csc1b"
+msgid "Failed to create goal! Please try again later."
+msgstr "Tạo mục tiêu thất bại! Vui lòng thử lại sau."
 
 #: actions/goal.actions.ts
 msgctxt "7UB8uM"
@@ -284,6 +290,7 @@ msgid "Goal has been updated."
 msgstr "Mục tiêu đã được cập nhật."
 
 #: actions/goal.actions.ts
+#: components/goals/goal-dialog.tsx
 msgctxt "Lmu8yS"
 msgid "Failed to update goal! Please try again later."
 msgstr "Cập nhật mục tiêu thất bại! Vui lòng thử lại sau."
@@ -310,9 +317,9 @@ msgid "Failed to load goals! Please try again later."
 msgstr "Tải danh sách mục tiêu thất bại! Vui lòng thử lại sau."
 
 #: actions/recurring.actions.ts
-msgctxt "5Mtoe5"
-msgid "Recurring transaction has been added."
-msgstr "Giao dịch định kỳ đã được thêm."
+msgctxt "vgquXw"
+msgid "Recurring transaction has been created."
+msgstr "Giao dịch định kỳ đã được tạo."
 
 #: actions/recurring.actions.ts
 msgctxt "-HBMWc"
@@ -320,9 +327,10 @@ msgid "This recurring transaction already exists!"
 msgstr "Giao dịch định kỳ này đã tồn tại!"
 
 #: actions/recurring.actions.ts
-msgctxt "FLPmpu"
-msgid "Failed to add recurring transaction! Please try again later."
-msgstr "Thêm giao dịch định kỳ thất bại! Vui lòng thử lại sau."
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
+msgctxt "zQczG6"
+msgid "Failed to create recurring transaction! Please try again later."
+msgstr "Tạo giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
 #: actions/recurring.actions.ts
 msgctxt "Yamhgo"
@@ -340,6 +348,7 @@ msgid "Recurring transaction has been updated."
 msgstr "Giao dịch định kỳ đã được cập nhật."
 
 #: actions/recurring.actions.ts
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
 msgctxt "qlYMTi"
 msgid "Failed to update recurring transaction! Please try again later."
 msgstr "Cập nhật giao dịch định kỳ thất bại! Vui lòng thử lại sau."
@@ -366,9 +375,9 @@ msgid "Failed to load recurring transactions! Please try again later."
 msgstr "Tải danh sách giao dịch định kỳ thất bại! Vui lòng thử lại sau."
 
 #: actions/transaction.actions.ts
-msgctxt "pU1r4y"
-msgid "Transaction has been added."
-msgstr "Giao dịch đã được thêm."
+msgctxt "JSmQV_"
+msgid "Transaction has been created."
+msgstr "Giao dịch đã được tạo."
 
 #: actions/transaction.actions.ts
 msgctxt "bN6KUb"
@@ -376,9 +385,10 @@ msgid "A transaction with the same details already exists on this date. Please c
 msgstr "Một giao dịch với các thông tin tương tự đã tồn tại vào ngày này. Vui lòng cộng dồn số tiền vào giao dịch hiện có."
 
 #: actions/transaction.actions.ts
-msgctxt "zb35o3"
-msgid "Failed to add transaction! Please try again later."
-msgstr "Thêm giao dịch thất bại! Vui lòng thử lại sau."
+#: components/transactions/transaction-dialog.tsx
+msgctxt "8rBc81"
+msgid "Failed to create transaction! Please try again later."
+msgstr "Tạo giao dịch thất bại! Vui lòng thử lại sau."
 
 #: actions/transaction.actions.ts
 msgctxt "w_J6M7"
@@ -396,6 +406,7 @@ msgid "Transaction has been updated."
 msgstr "Giao dịch đã được cập nhật."
 
 #: actions/transaction.actions.ts
+#: components/transactions/transaction-dialog.tsx
 msgctxt "A9rBEo"
 msgid "Failed to update transaction! Please try again later."
 msgstr "Cập nhật giao dịch thất bại! Vui lòng thử lại sau."
@@ -1798,19 +1809,6 @@ msgid "Please try again later."
 msgstr "Vui lòng thử lại sau."
 
 #: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "hLR6s0"
-msgid "Stopping impersonation..."
-msgstr "Đang dừng đóng vai..."
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "IF-3KJ"
-msgid "Stopped impersonation session."
-msgstr "Đã dừng phiên đóng vai."
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
 msgctxt "H1m7wl"
 msgid "Failed to stop impersonating! Please try again later."
 msgstr "Dừng đóng vai thất bại! Vui lòng thử lại sau."
@@ -1851,9 +1849,9 @@ msgid "The page you are looking for does not exist."
 msgstr "Trang bạn đang tìm kiếm không tồn tại."
 
 #: components/layout/offline-indicator.tsx
-msgctxt "tm_VW-"
-msgid "You are offline. Requests will be retried automatically when your connection is restored."
-msgstr "Bạn đang ngoại tuyến. Các yêu cầu sẽ được tự động thử lại khi kết nối được khôi phục."
+msgctxt "W-XYsV"
+msgid "You are currently offline."
+msgstr "Bạn hiện đang ngoại tuyến."
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1881,19 +1879,14 @@ msgid "CANNOT FETCH RECURRING TRANSACTIONS DATA"
 msgstr "KHÔNG THỂ TẢI DỮ LIỆU GIAO DỊCH ĐỊNH KỲ"
 
 #: components/layout/secondary-nav.tsx
-msgctxt "oj0aXj"
-msgid "Signing out..."
-msgstr "Đang đăng xuất..."
+msgctxt "XuxYAf"
+msgid "Failed to sign out! Please try again later."
+msgstr "Đăng xuất thất bại! Vui lòng thử lại sau."
 
 #: components/layout/secondary-nav.tsx
 msgctxt "hlp8qc"
 msgid "Signed out."
 msgstr "Đã đăng xuất."
-
-#: components/layout/secondary-nav.tsx
-msgctxt "XuxYAf"
-msgid "Failed to sign out! Please try again later."
-msgstr "Đăng xuất thất bại! Vui lòng thử lại sau."
 
 #: components/layout/secondary-nav.tsx
 msgctxt "F62y-K"

@@ -99,7 +99,7 @@ describe("Budgets", async () => {
       expect(addedBudget?.endDate.toISOString()).toBe(
         "2024-01-31T00:00:00.000Z"
       )
-      expect(result.success).toBe("Budget has been added.")
+      expect(result.success).toBe("Budget has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -110,7 +110,9 @@ describe("Budgets", async () => {
       const result = await createBudget(mockValidBudgetValues)
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Failed to add budget! Please try again later.")
+      expect(result.error).toBe(
+        "Failed to create budget! Please try again later."
+      )
     })
 
     it("should prevent race condition when creating duplicate budgets concurrently", async () => {
@@ -123,7 +125,7 @@ describe("Budgets", async () => {
 
       const results = [firstResult, secondResult]
       const successCount = results.filter(
-        (r) => r.success === "Budget has been added."
+        (r) => r.success === "Budget has been created."
       ).length
       const errorCount = results.filter(
         (r) => r.error === "This budget already exists!"

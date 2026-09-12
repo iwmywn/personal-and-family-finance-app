@@ -65,32 +65,36 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
   })
 
   async function onSubmit(values: AdminUserFormValues) {
-    const { data: response, error: usernameError } =
-      await authClient.isUsernameAvailable({
-        username: values.username,
-      })
+    try {
+      const { data: response, error: usernameError } =
+        await authClient.isUsernameAvailable({
+          username: values.username,
+        })
 
-    if (usernameError || !response) {
-      toast.error(
-        t("Failed to check username availability! Please try again later.")
-      )
-      return
-    }
+      if (usernameError || !response) {
+        toast.error(
+          t("Failed to check username availability! Please try again later.")
+        )
+        return
+      }
 
-    if (!response.available) {
-      toast.error(t("This username is already taken."))
-      return
-    }
+      if (!response.available) {
+        toast.error(t("This username is already taken."))
+        return
+      }
 
-    const { success, error } = await createUser(values)
+      const { success, error } = await createUser(values)
 
-    if (error || !success) {
-      toast.error(error)
-    } else {
-      setOpen(false)
-      toast.success(success)
-      router.refresh()
-      form.reset()
+      if (error || !success) {
+        toast.error(error)
+      } else {
+        setOpen(false)
+        toast.success(success)
+        router.refresh()
+        form.reset()
+      }
+    } catch {
+      toast.error(t("Failed to create user! Please try again later."))
     }
   }
 

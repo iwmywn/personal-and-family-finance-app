@@ -47,20 +47,24 @@ export function ChangeNameDialog() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   async function onSubmit(values: NameFormValues) {
-    await authClient.updateUser({
-      name: values.name,
-      fetchOptions: {
-        onError: () => {
-          toast.error(t("Failed to update name! Please try again later."))
+    try {
+      await authClient.updateUser({
+        name: values.name,
+        fetchOptions: {
+          onError: () => {
+            toast.error(t("Failed to update name! Please try again later."))
+          },
+          onSuccess: () => {
+            setIsOpen(false)
+            toast.success(t("Your name has been updated."))
+            router.refresh()
+            form.reset({ name: values.name })
+          },
         },
-        onSuccess: () => {
-          setIsOpen(false)
-          toast.success(t("Your name has been updated."))
-          router.refresh()
-          form.reset({ name: values.name })
-        },
-      },
-    })
+      })
+    } catch {
+      toast.error(t("Failed to update name! Please try again later."))
+    }
   }
 
   return (

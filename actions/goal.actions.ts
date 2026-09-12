@@ -59,13 +59,13 @@ export async function createGoal(
     })
 
     updateTag(`goals-${userId}`)
-    return { success: t("Goal has been added."), error: undefined }
+    return { success: t("Goal has been created.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return { error: t("This goal already exists!") }
     }
     console.error("Error creating goal:", error)
-    return { error: t("Failed to add goal! Please try again later.") }
+    return { error: t("Failed to create goal! Please try again later.") }
   }
 }
 
@@ -130,7 +130,7 @@ export async function updateGoal(
     }
 
     updateTag(`goals-${userId}`)
-    return { success: t("Goal has been updated."), error: undefined }
+    return { success: t("Goal has been updated.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return { error: t("This goal already exists!") }

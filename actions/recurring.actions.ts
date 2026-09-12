@@ -65,8 +65,7 @@ export async function createRecurringTransaction(
 
     updateTag(`recurringTransactions-${userId}`)
     return {
-      success: t("Recurring transaction has been added."),
-      error: undefined,
+      success: t("Recurring transaction has been created."),
     }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
@@ -74,7 +73,9 @@ export async function createRecurringTransaction(
     }
     console.error("Error creating recurring transaction:", error)
     return {
-      error: t("Failed to add recurring transaction! Please try again later."),
+      error: t(
+        "Failed to create recurring transaction! Please try again later."
+      ),
     }
   }
 }
@@ -148,7 +149,6 @@ export async function updateRecurringTransaction(
     updateTag(`recurringTransactions-${userId}`)
     return {
       success: t("Recurring transaction has been updated."),
-      error: undefined,
     }
   } catch (error) {
     if (isDuplicateKeyError(error)) {

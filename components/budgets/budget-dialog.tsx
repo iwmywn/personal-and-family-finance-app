@@ -90,25 +90,33 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
 
   async function onSubmit(values: BudgetFormValues) {
     if (budget) {
-      const { success, error } = await updateBudget(budget._id, values)
+      try {
+        const { success, error } = await updateBudget(budget._id, values)
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
+      } catch {
+        toast.error(t("Failed to update budget! Please try again later."))
       }
     } else {
-      const { success, error } = await createBudget(values)
+      try {
+        const { success, error } = await createBudget(values)
 
-      if (error || !success) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
-        form.reset()
+        if (error || !success) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+          form.reset()
+        }
+      } catch {
+        toast.error(t("Failed to create budget! Please try again later."))
       }
     }
   }

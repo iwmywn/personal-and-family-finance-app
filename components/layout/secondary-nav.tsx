@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useTransition } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { LogOutIcon } from "lucide-react"
@@ -24,6 +25,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { Spinner } from "@/components/ui/spinner"
 import { useUser } from "@/context/user-context"
 import { useNav } from "@/hooks/use-nav"
 import { authClient } from "@/lib/auth-client"
@@ -34,25 +36,33 @@ export function SecondaryNav() {
   const t = useExtracted()
   const { secondaryNav } = useNav()
   const { session } = useUser()
+  const [isPending, startTransition] = useTransition()
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
-  async function onSignOut() {
-    toast.promise(
-      async () => {
+  async function onSignOut(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault()
+
+    startTransition(async () => {
+      try {
         if (session.impersonatedBy) {
           await authClient.admin.stopImpersonating()
         }
-        await authClient.signOut()
-      },
-      {
-        loading: t("Signing out..."),
-        success: () => {
-          router.push("/signin")
-          router.refresh()
-          return t("Signed out.")
-        },
-        error: () => t("Failed to sign out! Please try again later."),
+        await authClient.signOut({
+          fetchOptions: {
+            onError: () => {
+              toast.error(t("Failed to sign out! Please try again later."))
+            },
+            onSuccess: () => {
+              toast.success(t("Signed out."))
+              router.push("/signin")
+              router.refresh()
+            },
+          },
+        })
+      } catch {
+        toast.error(t("Failed to sign out! Please try again later."))
       }
-    )
+    })
   }
 
   return (
@@ -74,7 +84,7 @@ export function SecondaryNav() {
             </SidebarMenuItem>
           ))}
           <SidebarMenuItem>
-            <AlertDialog>
+            <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
               <AlertDialogTrigger asChild>
                 <SidebarMenuButton tooltip={t("Sign Out")}>
                   <LogOutIcon />
@@ -93,8 +103,11 @@ export function SecondaryNav() {
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
+                  <AlertDialogCancel disabled={isPending}>
+                    {t("Cancel")}
+                  </AlertDialogCancel>
                   <AlertDialogAction onClick={onSignOut}>
+                    {isPending && <Spinner />}
                     {t("Sign Out")}
                   </AlertDialogAction>
                 </AlertDialogFooter>

@@ -78,7 +78,7 @@ describe("Categories", async () => {
       expect(addedCategory?.type).toBe("inflow")
       expect(addedCategory?.label).toBe("Salary")
       expect(addedCategory?.description).toBe("Monthly job inflow")
-      expect(result.success).toBe("Category has been added.")
+      expect(result.success).toBe("Category has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -90,7 +90,7 @@ describe("Categories", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        "Failed to add category! Please try again later."
+        "Failed to create category! Please try again later."
       )
     })
 
@@ -104,7 +104,7 @@ describe("Categories", async () => {
 
       const results = [firstResult, secondResult]
       const successCount = results.filter(
-        (r) => r.success === "Category has been added."
+        (r) => r.success === "Category has been created."
       ).length
       const errorCount = results.filter(
         (r) =>

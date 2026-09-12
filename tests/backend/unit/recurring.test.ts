@@ -123,7 +123,7 @@ describe("Recurring Transactions", async () => {
         "2024-12-31T00:00:00.000Z"
       )
       expect(addedRecurring?.isActive).toBe(true)
-      expect(result.success).toBe("Recurring transaction has been added.")
+      expect(result.success).toBe("Recurring transaction has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -141,7 +141,7 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(addedRecurring?.frequency).toBe("weekly")
-      expect(result.success).toBe("Recurring transaction has been added.")
+      expect(result.success).toBe("Recurring transaction has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -159,7 +159,7 @@ describe("Recurring Transactions", async () => {
       })
 
       expect(addedRecurring?.frequency).toBe("bi-weekly")
-      expect(result.success).toBe("Recurring transaction has been added.")
+      expect(result.success).toBe("Recurring transaction has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -179,7 +179,7 @@ describe("Recurring Transactions", async () => {
 
       expect(addedRecurring?.frequency).toBe("random")
       expect(addedRecurring?.randomEveryXDays).toBe(3)
-      expect(result.success).toBe("Recurring transaction has been added.")
+      expect(result.success).toBe("Recurring transaction has been created.")
       expect(result.error).toBeUndefined()
     })
 
@@ -193,7 +193,7 @@ describe("Recurring Transactions", async () => {
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
-        "Failed to add recurring transaction! Please try again later."
+        "Failed to create recurring transaction! Please try again later."
       )
     })
 
@@ -207,7 +207,7 @@ describe("Recurring Transactions", async () => {
 
       const results = [firstResult, secondResult]
       const successCount = results.filter(
-        (r) => r.success === "Recurring transaction has been added."
+        (r) => r.success === "Recurring transaction has been created."
       ).length
       const errorCount = results.filter(
         (r) => r.error === "This recurring transaction already exists!"

@@ -32,6 +32,7 @@ msgid "This email is already in use."
 msgstr "This email is already in use."
 
 #: actions/admin.actions.ts
+#: components/admin/create-user-dialog.tsx
 msgctxt "74JxeG"
 msgid "Failed to create user! Please try again later."
 msgstr "Failed to create user! Please try again later."
@@ -117,9 +118,9 @@ msgid "Invalid category!"
 msgstr "Invalid category!"
 
 #: actions/budget.actions.ts
-msgctxt "hcutYI"
-msgid "Budget has been added."
-msgstr "Budget has been added."
+msgctxt "sW3_mQ"
+msgid "Budget has been created."
+msgstr "Budget has been created."
 
 #: actions/budget.actions.ts
 msgctxt "kwvIdb"
@@ -127,9 +128,10 @@ msgid "This budget already exists!"
 msgstr "This budget already exists!"
 
 #: actions/budget.actions.ts
-msgctxt "ge_1ga"
-msgid "Failed to add budget! Please try again later."
-msgstr "Failed to add budget! Please try again later."
+#: components/budgets/budget-dialog.tsx
+msgctxt "LiEvhU"
+msgid "Failed to create budget! Please try again later."
+msgstr "Failed to create budget! Please try again later."
 
 #: actions/budget.actions.ts
 msgctxt "3pMkv5"
@@ -147,6 +149,7 @@ msgid "Budget has been updated."
 msgstr "Budget has been updated."
 
 #: actions/budget.actions.ts
+#: components/budgets/budget-dialog.tsx
 msgctxt "ZUfwUz"
 msgid "Failed to update budget! Please try again later."
 msgstr "Failed to update budget! Please try again later."
@@ -173,9 +176,9 @@ msgid "Failed to load budgets! Please try again later."
 msgstr "Failed to load budgets! Please try again later."
 
 #: actions/category.actions.ts
-msgctxt "Jfen4M"
-msgid "Category has been added."
-msgstr "Category has been added."
+msgctxt "L2hi0Y"
+msgid "Category has been created."
+msgstr "Category has been created."
 
 #: actions/category.actions.ts
 msgctxt "LzesyV"
@@ -183,9 +186,10 @@ msgid "This category already exists!"
 msgstr "This category already exists!"
 
 #: actions/category.actions.ts
-msgctxt "OQ79b6"
-msgid "Failed to add category! Please try again later."
-msgstr "Failed to add category! Please try again later."
+#: components/categories/category-dialog.tsx
+msgctxt "mFVjx4"
+msgid "Failed to create category! Please try again later."
+msgstr "Failed to create category! Please try again later."
 
 #: actions/category.actions.ts
 msgctxt "TgxdcM"
@@ -208,6 +212,7 @@ msgid "Category has been updated."
 msgstr "Category has been updated."
 
 #: actions/category.actions.ts
+#: components/categories/category-dialog.tsx
 msgctxt "PoUgbk"
 msgid "Failed to update category! Please try again later."
 msgstr "Failed to update category! Please try again later."
@@ -254,9 +259,9 @@ msgid "Failed to load custom categories! Please try again later."
 msgstr "Failed to load custom categories! Please try again later."
 
 #: actions/goal.actions.ts
-msgctxt "J-nrjG"
-msgid "Goal has been added."
-msgstr "Goal has been added."
+msgctxt "lUO2O7"
+msgid "Goal has been created."
+msgstr "Goal has been created."
 
 #: actions/goal.actions.ts
 msgctxt "3SCa_T"
@@ -264,9 +269,10 @@ msgid "This goal already exists!"
 msgstr "This goal already exists!"
 
 #: actions/goal.actions.ts
-msgctxt "9Buhj_"
-msgid "Failed to add goal! Please try again later."
-msgstr "Failed to add goal! Please try again later."
+#: components/goals/goal-dialog.tsx
+msgctxt "2Csc1b"
+msgid "Failed to create goal! Please try again later."
+msgstr "Failed to create goal! Please try again later."
 
 #: actions/goal.actions.ts
 msgctxt "7UB8uM"
@@ -284,6 +290,7 @@ msgid "Goal has been updated."
 msgstr "Goal has been updated."
 
 #: actions/goal.actions.ts
+#: components/goals/goal-dialog.tsx
 msgctxt "Lmu8yS"
 msgid "Failed to update goal! Please try again later."
 msgstr "Failed to update goal! Please try again later."
@@ -310,9 +317,9 @@ msgid "Failed to load goals! Please try again later."
 msgstr "Failed to load goals! Please try again later."
 
 #: actions/recurring.actions.ts
-msgctxt "5Mtoe5"
-msgid "Recurring transaction has been added."
-msgstr "Recurring transaction has been added."
+msgctxt "vgquXw"
+msgid "Recurring transaction has been created."
+msgstr "Recurring transaction has been created."
 
 #: actions/recurring.actions.ts
 msgctxt "-HBMWc"
@@ -320,9 +327,10 @@ msgid "This recurring transaction already exists!"
 msgstr "This recurring transaction already exists!"
 
 #: actions/recurring.actions.ts
-msgctxt "FLPmpu"
-msgid "Failed to add recurring transaction! Please try again later."
-msgstr "Failed to add recurring transaction! Please try again later."
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
+msgctxt "zQczG6"
+msgid "Failed to create recurring transaction! Please try again later."
+msgstr "Failed to create recurring transaction! Please try again later."
 
 #: actions/recurring.actions.ts
 msgctxt "Yamhgo"
@@ -340,6 +348,7 @@ msgid "Recurring transaction has been updated."
 msgstr "Recurring transaction has been updated."
 
 #: actions/recurring.actions.ts
+#: components/recurring-transactions/recurring-transaction-dialog.tsx
 msgctxt "qlYMTi"
 msgid "Failed to update recurring transaction! Please try again later."
 msgstr "Failed to update recurring transaction! Please try again later."
@@ -366,9 +375,9 @@ msgid "Failed to load recurring transactions! Please try again later."
 msgstr "Failed to load recurring transactions! Please try again later."
 
 #: actions/transaction.actions.ts
-msgctxt "pU1r4y"
-msgid "Transaction has been added."
-msgstr "Transaction has been added."
+msgctxt "JSmQV_"
+msgid "Transaction has been created."
+msgstr "Transaction has been created."
 
 #: actions/transaction.actions.ts
 msgctxt "bN6KUb"
@@ -376,9 +385,10 @@ msgid "A transaction with the same details already exists on this date. Please c
 msgstr "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
 
 #: actions/transaction.actions.ts
-msgctxt "zb35o3"
-msgid "Failed to add transaction! Please try again later."
-msgstr "Failed to add transaction! Please try again later."
+#: components/transactions/transaction-dialog.tsx
+msgctxt "8rBc81"
+msgid "Failed to create transaction! Please try again later."
+msgstr "Failed to create transaction! Please try again later."
 
 #: actions/transaction.actions.ts
 msgctxt "w_J6M7"
@@ -396,6 +406,7 @@ msgid "Transaction has been updated."
 msgstr "Transaction has been updated."
 
 #: actions/transaction.actions.ts
+#: components/transactions/transaction-dialog.tsx
 msgctxt "A9rBEo"
 msgid "Failed to update transaction! Please try again later."
 msgstr "Failed to update transaction! Please try again later."
@@ -1798,19 +1809,6 @@ msgid "Please try again later."
 msgstr "Please try again later."
 
 #: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "hLR6s0"
-msgid "Stopping impersonation..."
-msgstr "Stopping impersonation..."
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "IF-3KJ"
-msgid "Stopped impersonation session."
-msgstr "Stopped impersonation session."
-
-#: components/layout/impersonation-indicator.tsx
-#: components/settings/active-sessions-dialog.tsx
 msgctxt "H1m7wl"
 msgid "Failed to stop impersonating! Please try again later."
 msgstr "Failed to stop impersonating! Please try again later."
@@ -1851,9 +1849,9 @@ msgid "The page you are looking for does not exist."
 msgstr "The page you are looking for does not exist."
 
 #: components/layout/offline-indicator.tsx
-msgctxt "tm_VW-"
-msgid "You are offline. Requests will be retried automatically when your connection is restored."
-msgstr "You are offline. Requests will be retried automatically when your connection is restored."
+msgctxt "W-XYsV"
+msgid "You are currently offline."
+msgstr "You are currently offline."
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1881,19 +1879,14 @@ msgid "CANNOT FETCH RECURRING TRANSACTIONS DATA"
 msgstr "CANNOT FETCH RECURRING TRANSACTIONS DATA"
 
 #: components/layout/secondary-nav.tsx
-msgctxt "oj0aXj"
-msgid "Signing out..."
-msgstr "Signing out..."
+msgctxt "XuxYAf"
+msgid "Failed to sign out! Please try again later."
+msgstr "Failed to sign out! Please try again later."
 
 #: components/layout/secondary-nav.tsx
 msgctxt "hlp8qc"
 msgid "Signed out."
 msgstr "Signed out."
-
-#: components/layout/secondary-nav.tsx
-msgctxt "XuxYAf"
-msgid "Failed to sign out! Please try again later."
-msgstr "Failed to sign out! Please try again later."
 
 #: components/layout/secondary-nav.tsx
 msgctxt "F62y-K"

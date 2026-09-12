@@ -91,13 +91,13 @@ export async function createCustomCategory(
     })
 
     updateTag(`categories-${userId}`)
-    return { success: t("Category has been added."), error: undefined }
+    return { success: t("Category has been created.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return { error: t("This category already exists!") }
     }
     console.error("Error creating custom category:", error)
-    return { error: t("Failed to add category! Please try again later.") }
+    return { error: t("Failed to create category! Please try again later.") }
   }
 }
 
@@ -170,7 +170,7 @@ export async function updateCustomCategory(
     }
 
     updateTag(`categories-${userId}`)
-    return { success: t("Category has been updated."), error: undefined }
+    return { success: t("Category has been updated.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
       return { error: t("This category already exists!") }
