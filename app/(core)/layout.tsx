@@ -1,10 +1,8 @@
-import { Suspense } from "react"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
 import { getActiveSessions, getCurrentSession } from "@/actions/session.actions"
-import Loading from "@/app/(core)/loading"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AppSidebar } from "@/components/layout/app-sidebar"
@@ -45,7 +43,7 @@ export default async function DashboardLayout({
               <div className="bg-primary-foreground border-border h-full max-h-[calc(100vh-1rem)] overflow-y-auto border p-2 pt-0 shadow-sm">
                 <Header />
                 <section className="md:h-full md:max-h-[calc(100vh-4.375rem)]">
-                  <Suspense fallback={<Loading />}>{children}</Suspense>
+                  {children}
                 </section>
               </div>
             </SidebarInset>
