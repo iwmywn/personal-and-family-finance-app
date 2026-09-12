@@ -50,7 +50,7 @@ export async function createUser(values: AdminUserFormValues): Promise<{
   error?: string
   success?: string
 }> {
-  const t = await getExtracted()
+  const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
     const session = await verifyAdmin()
@@ -70,7 +70,7 @@ export async function createUser(values: AdminUserFormValues): Promise<{
     const assignedRole = isCurrentSuperAdmin ? parsed.data.role : DEFAULT_ROLE
 
     await auth.api.createUser({
-      headers: await headers(),
+      headers: headersList,
       body: {
         email: parsed.data.email,
         password: parsed.data.password,
@@ -177,7 +177,7 @@ export async function deleteUser(userId: string): Promise<{
   error?: string
   success?: string
 }> {
-  const t = await getExtracted()
+  const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
     const session = await verifyAdmin()
@@ -246,7 +246,7 @@ export async function deleteUser(userId: string): Promise<{
     })
 
     await auth.api.removeUser({
-      headers: await headers(),
+      headers: headersList,
       body: {
         userId,
       },
@@ -266,7 +266,7 @@ export async function updateUserRole(
   error?: string
   success?: string
 }> {
-  const t = await getExtracted()
+  const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
     const session = await verifyAdmin()
@@ -309,7 +309,7 @@ export async function updateUserRole(
     }
 
     await auth.api.setRole({
-      headers: await headers(),
+      headers: headersList,
       body: {
         userId,
         role,
@@ -330,7 +330,7 @@ export async function setUserPassword(
   error?: string
   success?: string
 }> {
-  const t = await getExtracted()
+  const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
     const session = await verifyAdmin()
@@ -366,7 +366,7 @@ export async function setUserPassword(
     }
 
     await auth.api.setUserPassword({
-      headers: await headers(),
+      headers: headersList,
       body: {
         userId,
         newPassword: parsed.data.password,
