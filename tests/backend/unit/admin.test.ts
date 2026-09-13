@@ -16,7 +16,7 @@ import {
 import {
   createUser,
   deleteUser,
-  getAdminStats,
+  getStats,
   listUsers,
   setUserPassword,
   setUserRole,
@@ -42,7 +42,7 @@ describe("Admin Actions", () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await getAdminStats()
+      const result = await getStats()
 
       expect(result.stats).toBeUndefined()
       expect(result.error).toBe("Access denied! Admin privileges required.")
@@ -51,7 +51,7 @@ describe("Admin Actions", () => {
     it("should return error when user is not an admin", async () => {
       mockAuthenticatedUser()
 
-      const result = await getAdminStats()
+      const result = await getStats()
 
       expect(result.stats).toBeUndefined()
       expect(result.error).toBe("Access denied! Admin privileges required.")
@@ -65,7 +65,7 @@ describe("Admin Actions", () => {
         insertTestUser(mockAnotherUser),
       ])
 
-      const result = await getAdminStats()
+      const result = await getStats()
 
       expect(result.error).toBeUndefined()
       expect(result.stats).toBeDefined()
@@ -284,7 +284,7 @@ describe("Admin Actions", () => {
       expect(result.success).toBeUndefined()
     })
 
-    it("should force role to user when created by regular admin", async () => {
+    it("should return error when regular admin tries to create user with admin role", async () => {
       mockAuthenticatedAdmin()
 
       const result = await createUser({
@@ -293,6 +293,21 @@ describe("Admin Actions", () => {
         email: "test@example.com",
         password: "Password123!",
         role: "admin",
+      })
+
+      expect(result.error).toBe("You cannot assign this role!")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should allow regular admin to create user with user role", async () => {
+      mockAuthenticatedAdmin()
+
+      const result = await createUser({
+        name: "Test User",
+        username: "testuser",
+        email: "test@example.com",
+        password: "Password123!",
+        role: "user",
       })
 
       expect(result.error).toBeUndefined()
