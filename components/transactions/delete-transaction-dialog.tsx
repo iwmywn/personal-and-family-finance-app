@@ -38,9 +38,9 @@ export function DeleteTransactionDialog({
 
     startTransition(async () => {
       try {
-        const { success, error } = await deleteTransaction(transactionId)
+        const { error, success } = await deleteTransaction(transactionId)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

@@ -38,9 +38,9 @@ export function DeleteBudgetDialog({
 
     startTransition(async () => {
       try {
-        const { success, error } = await deleteBudget(budgetId)
+        const { error, success } = await deleteBudget(budgetId)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

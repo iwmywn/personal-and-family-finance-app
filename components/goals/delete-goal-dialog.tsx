@@ -38,9 +38,9 @@ export function DeleteGoalDialog({
 
     startTransition(async () => {
       try {
-        const { success, error } = await deleteGoal(goalId)
+        const { error, success } = await deleteGoal(goalId)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

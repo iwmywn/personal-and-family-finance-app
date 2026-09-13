@@ -18,7 +18,9 @@ vi.mock("@/actions/session.actions", () => ({
 describe("Proxy (Middleware)", () => {
   describe("Unauthenticated User", () => {
     beforeEach(() => {
-      vi.mocked(getCurrentSession).mockResolvedValue(null)
+      vi.mocked(getCurrentSession).mockResolvedValue({
+        error: "Access denied! Please refresh the page and try again.",
+      })
     })
 
     it("should redirect to sign in page with next parameter when accessing a protected route without query params", async () => {

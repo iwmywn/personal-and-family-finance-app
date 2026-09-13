@@ -65,9 +65,9 @@ export function SetUserRoleDialog({
 
   async function onSubmit(values: AdminRoleFormValues) {
     try {
-      const { success, error } = await setUserRole(user.id, values.role)
+      const { error, success } = await setUserRole(user.id, values.role)
 
-      if (error || !success) {
+      if (success === undefined) {
         toast.error(error)
       } else {
         setOpen(false)

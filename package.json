@@ -10,17 +10,17 @@
     "start": "next start",
     "preview": "next build && next start",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint-fix": "eslint --fix",
     "prepare": "husky",
     "format": "prettier --write .",
     "release": "iwmywn-release",
     "react-doctor": "react-doctor",
     "test": "vitest",
-    "test:fe": "vitest --project frontend",
-    "test:be": "vitest --project backend",
-    "test:doctor": "vitest doctor",
-    "check:po": "node scripts/check-po.js",
-    "migrate:currency": "node --env-file=.env scripts/migrate-currency.ts"
+    "test-fe": "vitest --project frontend",
+    "test-be": "vitest --project backend",
+    "test-doctor": "vitest doctor",
+    "check-po": "node scripts/check-po.js",
+    "migrate-currency": "node --env-file=.env scripts/migrate-currency.ts"
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "1.7.4",
@@ -45,6 +45,7 @@
     "react-google-recaptcha-v3": "1.11.0",
     "react-hook-form": "7.88.0",
     "react-qr-code": "2.2.0",
+    "server-only": "0.0.1",
     "sonner": "2.0.8",
     "ua-parser-js": "2.0.10",
     "zod": "4.6.2"

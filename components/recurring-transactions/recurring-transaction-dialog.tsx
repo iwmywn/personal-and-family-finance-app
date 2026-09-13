@@ -119,12 +119,12 @@ export function RecurringTransactionDialog({
   async function onSubmit(values: RecurringTransactionFormValues) {
     if (recurring) {
       try {
-        const { success, error } = await updateRecurringTransaction(
+        const { error, success } = await updateRecurringTransaction(
           recurring._id,
           values
         )
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)
@@ -138,9 +138,9 @@ export function RecurringTransactionDialog({
       }
     } else {
       try {
-        const { success, error } = await createRecurringTransaction(values)
+        const { error, success } = await createRecurringTransaction(values)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

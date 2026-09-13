@@ -22,6 +22,11 @@ msgid "Invalid data!"
 msgstr "잘못된 데이터입니다!"
 
 #: actions/admin.actions.ts
+msgctxt "M5lqaZ"
+msgid "You cannot assign this role!"
+msgstr "이 역할을 할당할 수 없습니다!"
+
+#: actions/admin.actions.ts
 msgctxt "wUmmPh"
 msgid "User has been created."
 msgstr "사용자가 생성되었습니다."
@@ -38,45 +43,19 @@ msgid "Failed to create user! Please try again later."
 msgstr "사용자 생성에 실패했습니다! 나중에 다시 시도해주세요."
 
 #: actions/admin.actions.ts
-msgctxt "gREMXx"
-msgid "Failed to fetch admin stats! Please try again later."
-msgstr "관리자 통계를 가져오지 못했습니다! 나중에 다시 시도해주세요."
-
-#: actions/admin.actions.ts
-msgctxt "fVUGHi"
-msgid "Failed to load users! Please try again later."
-msgstr "사용자 목록을 불러오지 못했습니다! 나중에 다시 시도해주세요."
-
-#: actions/admin.actions.ts
 msgctxt "GBsD3h"
 msgid "Invalid user ID!"
 msgstr "잘못된 사용자 ID입니다!"
 
 #: actions/admin.actions.ts
-msgctxt "ScDYhZ"
-msgid "You cannot delete your own account!"
-msgstr "본인 계정은 삭제할 수 없습니다!"
+msgctxt "y3epBO"
+msgid "You cannot change your own role!"
+msgstr "본인의 역할은 변경할 수 없습니다!"
 
 #: actions/admin.actions.ts
 msgctxt "foC3a6"
 msgid "User not found!"
 msgstr "사용자를 찾을 수 없습니다!"
-
-#: actions/admin.actions.ts
-msgctxt "7l4h1s"
-msgid "User has been deleted."
-msgstr "사용자가 삭제되었습니다."
-
-#: actions/admin.actions.ts
-#: components/admin/delete-user-dialog.tsx
-msgctxt "xkkfdF"
-msgid "Failed to delete user! Please try again later."
-msgstr "사용자 삭제에 실패했습니다! 나중에 다시 시도해주세요."
-
-#: actions/admin.actions.ts
-msgctxt "y3epBO"
-msgid "You cannot change your own role!"
-msgstr "본인의 역할은 변경할 수 없습니다!"
 
 #: actions/admin.actions.ts
 msgctxt "ayfthF"
@@ -100,14 +79,31 @@ msgctxt "VvoQv7"
 msgid "Failed to set user password! Please try again later."
 msgstr "사용자 비밀번호 설정에 실패했습니다! 나중에 다시 시도해주세요."
 
-#: actions/budget.actions.ts
-#: actions/category.actions.ts
-#: actions/goal.actions.ts
-#: actions/recurring.actions.ts
-#: actions/transaction.actions.ts
-msgctxt "QWvB5t"
-msgid "Access denied! Please refresh the page and try again."
-msgstr "접근이 거부되었습니다! 페이지를 새로고침하고 다시 시도해주세요."
+#: actions/admin.actions.ts
+msgctxt "ScDYhZ"
+msgid "You cannot delete your own account!"
+msgstr "본인 계정은 삭제할 수 없습니다!"
+
+#: actions/admin.actions.ts
+msgctxt "7l4h1s"
+msgid "User has been deleted."
+msgstr "사용자가 삭제되었습니다."
+
+#: actions/admin.actions.ts
+#: components/admin/delete-user-dialog.tsx
+msgctxt "xkkfdF"
+msgid "Failed to delete user! Please try again later."
+msgstr "사용자 삭제에 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/admin.actions.ts
+msgctxt "gREMXx"
+msgid "Failed to fetch admin stats! Please try again later."
+msgstr "관리자 통계를 가져오지 못했습니다! 나중에 다시 시도해주세요."
+
+#: actions/admin.actions.ts
+msgctxt "fVUGHi"
+msgid "Failed to load users! Please try again later."
+msgstr "사용자 목록을 불러오지 못했습니다! 나중에 다시 시도해주세요."
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -373,6 +369,16 @@ msgstr "반복 거래 삭제에 실패했습니다! 나중에 다시 시도해�
 msgctxt "D92YlY"
 msgid "Failed to load recurring transactions! Please try again later."
 msgstr "반복 거래를 불러오는데 실패했습니다! 나중에 다시 시도해주세요."
+
+#: actions/session.actions.ts
+msgctxt "QWvB5t"
+msgid "Access denied! Please refresh the page and try again."
+msgstr "접근이 거부되었습니다! 페이지를 새로고침하고 다시 시도해주세요."
+
+#: actions/session.actions.ts
+msgctxt "sc5uVX"
+msgid "Failed to get session! Please try again later."
+msgstr "세션을 가져오지 못했습니다! 나중에 다시 시도해주세요."
 
 #: actions/transaction.actions.ts
 msgctxt "JSmQV_"

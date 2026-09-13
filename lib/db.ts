@@ -1,3 +1,5 @@
+import "server-only"
+
 import { MongoClient } from "mongodb"
 import type {
   ClientSession,
@@ -44,7 +46,11 @@ export async function connect(): Promise<Db> {
 
 export async function disconnect(): Promise<void> {
   if (globalThis._mongoClient) {
-    await globalThis._mongoClient.close()
+    try {
+      await globalThis._mongoClient.close()
+    } catch {
+      // Ignore connection close interruptions during teardown
+    }
     globalThis._mongoClientPromise = undefined
     globalThis._mongoClient = undefined
     db = undefined

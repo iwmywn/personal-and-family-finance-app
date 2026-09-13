@@ -83,9 +83,9 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
         return
       }
 
-      const { success, error } = await createUser(values)
+      const { error, success } = await createUser(values)
 
-      if (error || !success) {
+      if (success === undefined) {
         toast.error(error)
       } else {
         setOpen(false)

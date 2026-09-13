@@ -38,9 +38,9 @@ export function DeleteRecurringTransactionDialog({
 
     startTransition(async () => {
       try {
-        const { success, error } = await deleteRecurringTransaction(recurringId)
+        const { error, success } = await deleteRecurringTransaction(recurringId)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

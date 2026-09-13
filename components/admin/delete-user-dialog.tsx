@@ -37,9 +37,9 @@ export function DeleteUserDialog({
 
     startTransition(async () => {
       try {
-        const { success, error } = await deleteUser(user.id)
+        const { error, success } = await deleteUser(user.id)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

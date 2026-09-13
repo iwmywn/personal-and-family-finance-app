@@ -34,17 +34,14 @@ export async function createTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const session = await getCurrentSession()
+    const { error, user, session } = await getCurrentSession()
 
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
+    if (!user || !session) {
+      return { error }
     }
 
-    const userId = session.user.id
     const isValidCategory = await isValidUserCategory(
-      userId,
+      user.id,
       parsedValues.data.categoryKey,
       parsedValues.data.type
     )
@@ -56,7 +53,7 @@ export async function createTransaction(
     const transactionsCollection = await getTransactionsCollection()
 
     await transactionsCollection.insertOne({
-      userId: new ObjectId(userId),
+      userId: new ObjectId(user.id),
       type: parsedValues.data.type,
       categoryKey: parsedValues.data.categoryKey,
       amount: toDecimal128(parsedValues.data.amount),
@@ -77,7 +74,7 @@ export async function createTransaction(
       }
     })
 
-    updateTag(`transactions-${userId}`)
+    updateTag(`transactions-${user.id}`)
     return { success: t("Transaction has been created.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
@@ -99,6 +96,12 @@ export async function updateTransaction(
   const t = await getExtracted()
 
   try {
+    if (!ObjectId.isValid(transactionId)) {
+      return {
+        error: t("Invalid transaction ID!"),
+      }
+    }
+
     const { createTransactionSchema } = await getSchemas()
     const parsedValues = createTransactionSchema().safeParse(values)
 
@@ -106,23 +109,14 @@ export async function updateTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const session = await getCurrentSession()
+    const { error, user, session } = await getCurrentSession()
 
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
+    if (!user || !session) {
+      return { error }
     }
 
-    if (!ObjectId.isValid(transactionId)) {
-      return {
-        error: t("Invalid transaction ID!"),
-      }
-    }
-
-    const userId = session.user.id
     const isValidCategory = await isValidUserCategory(
-      userId,
+      user.id,
       parsedValues.data.categoryKey,
       parsedValues.data.type
     )
@@ -136,7 +130,7 @@ export async function updateTransaction(
     const result = await transactionsCollection.updateOne(
       {
         _id: new ObjectId(transactionId),
-        userId: new ObjectId(userId),
+        userId: new ObjectId(user.id),
       },
       {
         $set: {
@@ -168,7 +162,7 @@ export async function updateTransaction(
       }
     })
 
-    updateTag(`transactions-${userId}`)
+    updateTag(`transactions-${user.id}`)
     return {
       success: t("Transaction has been updated."),
     }
@@ -191,25 +185,22 @@ export async function deleteTransaction(
   const t = await getExtracted()
 
   try {
-    const session = await getCurrentSession()
-
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     if (!ObjectId.isValid(transactionId)) {
       return {
         error: t("Invalid transaction ID!"),
       }
     }
 
-    const userId = session.user.id
+    const { error, user, session } = await getCurrentSession()
+
+    if (!user || !session) {
+      return { error }
+    }
+
     const transactionsCollection = await getTransactionsCollection()
     const result = await transactionsCollection.deleteOne({
       _id: new ObjectId(transactionId),
-      userId: new ObjectId(userId),
+      userId: new ObjectId(user.id),
     })
 
     if (result.deletedCount === 0) {
@@ -220,7 +211,7 @@ export async function deleteTransaction(
       }
     }
 
-    updateTag(`transactions-${userId}`)
+    updateTag(`transactions-${user.id}`)
     return { success: t("Transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting transaction:", error)
@@ -232,19 +223,13 @@ export async function getTransactions(): Promise<{
   error?: string
   transactions?: Transaction[]
 }> {
-  const t = await getExtracted()
-  const session = await getCurrentSession()
+  const { error, user, session } = await getCurrentSession()
 
-  if (!session) {
-    return {
-      error: t("Access denied! Please refresh the page and try again."),
-    }
+  if (!user || !session) {
+    return { error }
   }
 
-  return getCachedTransactions(
-    session.user.id,
-    session.user.currency as Currency
-  )
+  return getCachedTransactions(user.id, user.currency as Currency)
 }
 
 async function getCachedTransactions(userId: string, targetCurrency: Currency) {

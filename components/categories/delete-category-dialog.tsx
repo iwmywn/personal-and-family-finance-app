@@ -38,9 +38,9 @@ export function DeleteCategoryDialog({
 
     startTransition(async () => {
       try {
-        const { success, error } = await deleteCustomCategory(categoryId)
+        const { error, success } = await deleteCustomCategory(categoryId)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

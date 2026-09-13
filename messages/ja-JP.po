@@ -22,6 +22,11 @@ msgid "Invalid data!"
 msgstr "無効なデータです！"
 
 #: actions/admin.actions.ts
+msgctxt "M5lqaZ"
+msgid "You cannot assign this role!"
+msgstr "この役割を割り当てることはできません！"
+
+#: actions/admin.actions.ts
 msgctxt "wUmmPh"
 msgid "User has been created."
 msgstr "ユーザーが作成されました。"
@@ -38,45 +43,19 @@ msgid "Failed to create user! Please try again later."
 msgstr "ユーザーの作成に失敗しました！後でもう一度お試しください。"
 
 #: actions/admin.actions.ts
-msgctxt "gREMXx"
-msgid "Failed to fetch admin stats! Please try again later."
-msgstr "管理者統計情報の取得に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-msgctxt "fVUGHi"
-msgid "Failed to load users! Please try again later."
-msgstr "ユーザーの読み込みに失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
 msgctxt "GBsD3h"
 msgid "Invalid user ID!"
 msgstr "ユーザーIDが無効です！"
 
 #: actions/admin.actions.ts
-msgctxt "ScDYhZ"
-msgid "You cannot delete your own account!"
-msgstr "自分のアカウントを削除することはできません！"
+msgctxt "y3epBO"
+msgid "You cannot change your own role!"
+msgstr "自分のロールを変更することはできません！"
 
 #: actions/admin.actions.ts
 msgctxt "foC3a6"
 msgid "User not found!"
 msgstr "ユーザーが見つかりません！"
-
-#: actions/admin.actions.ts
-msgctxt "7l4h1s"
-msgid "User has been deleted."
-msgstr "ユーザーが削除されました。"
-
-#: actions/admin.actions.ts
-#: components/admin/delete-user-dialog.tsx
-msgctxt "xkkfdF"
-msgid "Failed to delete user! Please try again later."
-msgstr "ユーザーの削除に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-msgctxt "y3epBO"
-msgid "You cannot change your own role!"
-msgstr "自分のロールを変更することはできません！"
 
 #: actions/admin.actions.ts
 msgctxt "ayfthF"
@@ -100,14 +79,31 @@ msgctxt "VvoQv7"
 msgid "Failed to set user password! Please try again later."
 msgstr "ユーザーパスワードの設定に失敗しました！後でもう一度お試しください。"
 
-#: actions/budget.actions.ts
-#: actions/category.actions.ts
-#: actions/goal.actions.ts
-#: actions/recurring.actions.ts
-#: actions/transaction.actions.ts
-msgctxt "QWvB5t"
-msgid "Access denied! Please refresh the page and try again."
-msgstr "アクセスが拒否されました！ページを更新してもう一度お試しください。"
+#: actions/admin.actions.ts
+msgctxt "ScDYhZ"
+msgid "You cannot delete your own account!"
+msgstr "自分のアカウントを削除することはできません！"
+
+#: actions/admin.actions.ts
+msgctxt "7l4h1s"
+msgid "User has been deleted."
+msgstr "ユーザーが削除されました。"
+
+#: actions/admin.actions.ts
+#: components/admin/delete-user-dialog.tsx
+msgctxt "xkkfdF"
+msgid "Failed to delete user! Please try again later."
+msgstr "ユーザーの削除に失敗しました！後でもう一度お試しください。"
+
+#: actions/admin.actions.ts
+msgctxt "gREMXx"
+msgid "Failed to fetch admin stats! Please try again later."
+msgstr "管理者統計情報の取得に失敗しました！後でもう一度お試しください。"
+
+#: actions/admin.actions.ts
+msgctxt "fVUGHi"
+msgid "Failed to load users! Please try again later."
+msgstr "ユーザーの読み込みに失敗しました！後でもう一度お試しください。"
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -373,6 +369,16 @@ msgstr "定期取引の削除に失敗しました！後でもう一度お試し
 msgctxt "D92YlY"
 msgid "Failed to load recurring transactions! Please try again later."
 msgstr "定期取引の読み込みに失敗しました！後でもう一度お試しください。"
+
+#: actions/session.actions.ts
+msgctxt "QWvB5t"
+msgid "Access denied! Please refresh the page and try again."
+msgstr "アクセスが拒否されました！ページを更新してもう一度お試しください。"
+
+#: actions/session.actions.ts
+msgctxt "sc5uVX"
+msgid "Failed to get session! Please try again later."
+msgstr "セッションの取得に失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
 msgctxt "JSmQV_"

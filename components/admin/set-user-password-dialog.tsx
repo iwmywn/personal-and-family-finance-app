@@ -54,9 +54,9 @@ export function SetUserPasswordDialog({
 
   async function onSubmit(values: AdminPasswordFormValues) {
     try {
-      const { success, error } = await setUserPassword(user.id, values)
+      const { error, success } = await setUserPassword(user.id, values)
 
-      if (error || !success) {
+      if (success === undefined) {
         toast.error(error)
       } else {
         setOpen(false)

@@ -94,5 +94,7 @@ export const mockAuthenticatedSuperAdmin = () => {
 }
 
 export const mockUnauthenticatedUser = () => {
-  mockGetCurrentSession.mockResolvedValue(null)
+  mockGetCurrentSession.mockResolvedValue({
+    error: "Access denied! Please refresh the page and try again.",
+  })
 }

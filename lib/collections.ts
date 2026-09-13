@@ -1,3 +1,5 @@
+import "server-only"
+
 import { collection } from "@/lib/db"
 import type {
   DBBudget,

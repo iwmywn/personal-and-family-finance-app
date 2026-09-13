@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { getExtracted } from "next-intl/server"
 
-import { getAdminStats, listUsers } from "@/actions/admin.actions"
+import { getStats, listUsers } from "@/actions/admin.actions"
 import AdminPage from "@/components/admin/admin-page"
 import { ErrorEmptyState } from "@/components/layout/error-empty-state"
 
@@ -17,7 +17,7 @@ export default async function page() {
   const t = await getExtracted()
 
   const [statsResult, usersResult] = await Promise.all([
-    getAdminStats(),
+    getStats(),
     listUsers(),
   ])
 

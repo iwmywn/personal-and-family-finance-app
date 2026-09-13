@@ -4,7 +4,6 @@ import { headers } from "next/headers"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
-import { getCurrentSession } from "@/actions/session.actions"
 import { auth } from "@/lib/auth"
 import {
   getBudgetsCollection,
@@ -29,6 +28,8 @@ import type {
   AdminUserFormValues,
 } from "@/schemas/types"
 
+import { getCurrentSession } from "./session.actions"
+
 export type AdminStats = {
   totalUsers: number
   activeUsers: number
@@ -37,13 +38,18 @@ export type AdminStats = {
 }
 
 async function verifyAdmin() {
-  const session = await getCurrentSession()
+  const [t, result] = await Promise.all([getExtracted(), getCurrentSession()])
 
-  if (!session || !isAdminRole(session.user.role)) {
-    return null
+  if (!result.user || !result.session || !isAdminRole(result.user.role)) {
+    return { error: t("Access denied! Admin privileges required.") }
   }
 
-  return session
+  return {
+    session: {
+      user: result.user,
+      session: result.session,
+    },
+  }
 }
 
 export async function createUser(
@@ -52,30 +58,33 @@ export async function createUser(
   const t = await getExtracted()
 
   try {
-    const session = await verifyAdmin()
-
-    if (!session) {
-      return { error: t("Access denied! Admin privileges required.") }
-    }
-
     const { createAdminUserSchema } = await getSchemas()
-    const parsed = createAdminUserSchema().safeParse(values)
+    const parsedValues = createAdminUserSchema().safeParse(values)
 
-    if (!parsed.success) {
+    if (!parsedValues.success) {
       return { error: t("Invalid data!") }
     }
 
+    const { error, session } = await verifyAdmin()
+
+    if (!session) {
+      return { error }
+    }
+
     const isCurrentSuperAdmin = isSuperAdminRole(session.user.role)
-    const assignedRole = isCurrentSuperAdmin ? parsed.data.role : DEFAULT_ROLE
+
+    if (!isCurrentSuperAdmin && parsedValues.data.role !== DEFAULT_ROLE) {
+      return { error: t("You cannot assign this role!") }
+    }
 
     await auth.api.createUser({
       body: {
-        email: parsed.data.email,
-        password: parsed.data.password,
-        name: parsed.data.name,
-        role: assignedRole,
+        email: parsedValues.data.email,
+        password: parsedValues.data.password,
+        name: parsedValues.data.name,
+        role: parsedValues.data.role,
         data: {
-          username: parsed.data.username,
+          username: parsedValues.data.username,
           emailVerified: true,
         },
       },
@@ -96,79 +105,118 @@ export async function createUser(
   }
 }
 
-export async function getAdminStats(): Promise<{
-  error?: string
-  stats?: {
-    totalUsers: number
-    activeUsers: number
-    bannedUsers: number
-    adminUsers: number
-  }
-}> {
-  const t = await getExtracted()
+export async function setUserRole(
+  userId: string,
+  role: AssignableRole
+): Promise<ActionResponse> {
+  const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const session = await verifyAdmin()
+    const { error, session } = await verifyAdmin()
 
     if (!session) {
-      return { error: t("Access denied! Admin privileges required.") }
+      return { error }
+    }
+
+    if (!ObjectId.isValid(userId)) {
+      return {
+        error: t("Invalid user ID!"),
+      }
+    }
+
+    const { createAdminRoleSchema } = await getSchemas()
+    const parsed = createAdminRoleSchema().safeParse({ role })
+
+    if (!parsed.success) {
+      return { error: t("Invalid data!") }
+    }
+
+    if (session.user.id === userId) {
+      return { error: t("You cannot change your own role!") }
     }
 
     const usersCollection = await getUsersCollection()
-    const [totalUsers, bannedUsers, adminUsers] = await Promise.all([
-      usersCollection.countDocuments(),
-      usersCollection.countDocuments({ banned: true }),
-      usersCollection.countDocuments({
-        role: { $in: [...ADMIN_ROLES] },
-      }),
-    ])
+    const targetUser = await usersCollection.findOne({
+      _id: new ObjectId(userId),
+    })
 
-    const activeUsers = Math.max(0, totalUsers - bannedUsers)
-
-    return {
-      stats: {
-        totalUsers,
-        activeUsers,
-        bannedUsers,
-        adminUsers,
-      },
+    if (!targetUser) {
+      return { error: t("User not found!") }
     }
+
+    if (
+      session.user.role === "admin" &&
+      (isAdminRole(targetUser.role) || role === "admin")
+    ) {
+      return { error: t("Access denied! Admin privileges required.") }
+    }
+
+    await auth.api.setRole({
+      body: {
+        userId,
+        role,
+      },
+      headers: headersList,
+    })
+
+    return { success: t("User role has been updated.") }
   } catch (error) {
-    console.error("Error fetching admin stats:", error)
-    return { error: t("Failed to fetch admin stats! Please try again later.") }
+    console.error("Error updating user role:", error)
+    return { error: t("Failed to update user role! Please try again later.") }
   }
 }
 
-export async function listUsers(): Promise<{
-  error?: string
-  users?: User[]
-  total?: number
-}> {
-  const t = await getExtracted()
+export async function setUserPassword(
+  userId: string,
+  values: AdminPasswordFormValues
+): Promise<ActionResponse> {
+  const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const session = await verifyAdmin()
+    const { error, session } = await verifyAdmin()
 
     if (!session) {
-      return { error: t("Access denied! Admin privileges required.") }
+      return { error }
+    }
+
+    if (!ObjectId.isValid(userId)) {
+      return {
+        error: t("Invalid user ID!"),
+      }
+    }
+
+    const { createAdminPasswordSchema } = await getSchemas()
+    const parsed = createAdminPasswordSchema().safeParse(values)
+
+    if (!parsed.success) {
+      return { error: t("Invalid data!") }
     }
 
     const usersCollection = await getUsersCollection()
-    const users = await usersCollection
-      .find({})
-      .sort({ createdAt: -1 })
-      .toArray()
+    const targetUser = await usersCollection.findOne({
+      _id: new ObjectId(userId),
+    })
 
-    return {
-      users: users.map(({ _id, ...user }) => ({
-        ...user,
-        id: _id.toString(),
-      })),
-      total: users.length,
+    if (!targetUser) {
+      return { error: t("User not found!") }
     }
+
+    if (session.user.role === "admin" && isAdminRole(targetUser.role)) {
+      return { error: t("Access denied! Admin privileges required.") }
+    }
+
+    await auth.api.setUserPassword({
+      body: {
+        userId,
+        newPassword: parsed.data.password,
+      },
+      headers: headersList,
+    })
+
+    return { success: t("Password has been updated.") }
   } catch (error) {
-    console.error("Error listing users:", error)
-    return { error: t("Failed to load users! Please try again later.") }
+    console.error("Error setting user password:", error)
+    return { error: t("Failed to set user password! Please try again later.") }
   }
 }
 
@@ -176,10 +224,10 @@ export async function deleteUser(userId: string): Promise<ActionResponse> {
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const session = await verifyAdmin()
+    const { error, session } = await verifyAdmin()
 
     if (!session) {
-      return { error: t("Access denied! Admin privileges required.") }
+      return { error }
     }
 
     if (!ObjectId.isValid(userId)) {
@@ -255,117 +303,78 @@ export async function deleteUser(userId: string): Promise<ActionResponse> {
   }
 }
 
-export async function setUserRole(
-  userId: string,
-  role: AssignableRole
-): Promise<ActionResponse> {
-  const [t, headersList] = await Promise.all([getExtracted(), headers()])
+export async function getStats(): Promise<{
+  error?: string
+  stats?: {
+    totalUsers: number
+    activeUsers: number
+    bannedUsers: number
+    adminUsers: number
+  }
+}> {
+  const t = await getExtracted()
 
   try {
-    const session = await verifyAdmin()
+    const { error, session } = await verifyAdmin()
 
     if (!session) {
-      return { error: t("Access denied! Admin privileges required.") }
-    }
-
-    if (!ObjectId.isValid(userId)) {
-      return {
-        error: t("Invalid user ID!"),
-      }
-    }
-
-    const { createAdminRoleSchema } = await getSchemas()
-    const parsed = createAdminRoleSchema().safeParse({ role })
-
-    if (!parsed.success) {
-      return { error: t("Invalid data!") }
-    }
-
-    if (session.user.id === userId) {
-      return { error: t("You cannot change your own role!") }
+      return { error }
     }
 
     const usersCollection = await getUsersCollection()
-    const targetUser = await usersCollection.findOne({
-      _id: new ObjectId(userId),
-    })
+    const [totalUsers, bannedUsers, adminUsers] = await Promise.all([
+      usersCollection.countDocuments(),
+      usersCollection.countDocuments({ banned: true }),
+      usersCollection.countDocuments({
+        role: { $in: [...ADMIN_ROLES] },
+      }),
+    ])
 
-    if (!targetUser) {
-      return { error: t("User not found!") }
-    }
+    const activeUsers = Math.max(0, totalUsers - bannedUsers)
 
-    if (
-      session.user.role === "admin" &&
-      (isAdminRole(targetUser.role) || role === "admin")
-    ) {
-      return { error: t("Access denied! Admin privileges required.") }
-    }
-
-    await auth.api.setRole({
-      body: {
-        userId,
-        role,
+    return {
+      stats: {
+        totalUsers,
+        activeUsers,
+        bannedUsers,
+        adminUsers,
       },
-      headers: headersList,
-    })
-
-    return { success: t("User role has been updated.") }
+    }
   } catch (error) {
-    console.error("Error updating user role:", error)
-    return { error: t("Failed to update user role! Please try again later.") }
+    console.error("Error fetching admin stats:", error)
+    return { error: t("Failed to fetch admin stats! Please try again later.") }
   }
 }
 
-export async function setUserPassword(
-  userId: string,
-  values: AdminPasswordFormValues
-): Promise<ActionResponse> {
-  const [t, headersList] = await Promise.all([getExtracted(), headers()])
+export async function listUsers(): Promise<{
+  error?: string
+  users?: User[]
+  total?: number
+}> {
+  const t = await getExtracted()
 
   try {
-    const session = await verifyAdmin()
+    const { error, session } = await verifyAdmin()
 
     if (!session) {
-      return { error: t("Access denied! Admin privileges required.") }
-    }
-
-    if (!ObjectId.isValid(userId)) {
-      return {
-        error: t("Invalid user ID!"),
-      }
-    }
-
-    const { createAdminPasswordSchema } = await getSchemas()
-    const parsed = createAdminPasswordSchema().safeParse(values)
-
-    if (!parsed.success) {
-      return { error: t("Invalid data!") }
+      return { error }
     }
 
     const usersCollection = await getUsersCollection()
-    const targetUser = await usersCollection.findOne({
-      _id: new ObjectId(userId),
-    })
+    const users = await usersCollection
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray()
 
-    if (!targetUser) {
-      return { error: t("User not found!") }
+    return {
+      users: users.map(({ _id, ...user }) => ({
+        ...user,
+        id: _id.toString(),
+      })),
+      total: users.length,
     }
-
-    if (session.user.role === "admin" && isAdminRole(targetUser.role)) {
-      return { error: t("Access denied! Admin privileges required.") }
-    }
-
-    await auth.api.setUserPassword({
-      body: {
-        userId,
-        newPassword: parsed.data.password,
-      },
-      headers: headersList,
-    })
-
-    return { success: t("Password has been updated.") }
   } catch (error) {
-    console.error("Error setting user password:", error)
-    return { error: t("Failed to set user password! Please try again later.") }
+    console.error("Error listing users:", error)
+    return { error: t("Failed to load users! Please try again later.") }
   }
 }

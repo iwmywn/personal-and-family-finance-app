@@ -93,9 +93,9 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   async function onSubmit(values: GoalFormValues) {
     if (goal) {
       try {
-        const { success, error } = await updateGoal(goal._id, values)
+        const { error, success } = await updateGoal(goal._id, values)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)
@@ -107,9 +107,9 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
       }
     } else {
       try {
-        const { success, error } = await createGoal(values)
+        const { error, success } = await createGoal(values)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

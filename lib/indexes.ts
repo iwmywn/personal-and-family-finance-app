@@ -1,3 +1,5 @@
+import "server-only"
+
 import { MongoServerError } from "mongodb"
 import type { Db } from "mongodb"
 

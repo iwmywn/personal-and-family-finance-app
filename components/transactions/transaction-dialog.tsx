@@ -105,12 +105,12 @@ export function TransactionDialog({
   async function onSubmit(values: TransactionFormValues) {
     if (transaction) {
       try {
-        const { success, error } = await updateTransaction(
+        const { error, success } = await updateTransaction(
           transaction._id,
           values
         )
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)
@@ -122,9 +122,9 @@ export function TransactionDialog({
       }
     } else {
       try {
-        const { success, error } = await createTransaction(values)
+        const { error, success } = await createTransaction(values)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

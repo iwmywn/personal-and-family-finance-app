@@ -2,21 +2,27 @@
 
 import { cache } from "react"
 import { headers } from "next/headers"
-import { getTranslations } from "next-intl/server"
+import { getExtracted, getTranslations } from "next-intl/server"
 
 import { auth } from "@/lib/auth"
 import type { ActionResponse, Session, User } from "@/lib/definitions"
 
 export const getCurrentSession = cache(
-  async (): Promise<{ user: User; session: Session } | null> => {
-    const headersList = await headers()
+  async (): Promise<
+    | { error: string; user?: never; session?: never }
+    | { error?: never; user: User; session: Session }
+  > => {
+    const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
     try {
       const session = await auth.api.getSession({
         headers: headersList,
       })
 
-      if (!session) return null
+      if (!session)
+        return {
+          error: t("Access denied! Please refresh the page and try again."),
+        }
 
       return {
         user: session.user,
@@ -27,7 +33,7 @@ export const getCurrentSession = cache(
       }
     } catch (error) {
       console.error("Error getting session: ", error)
-      return null
+      return { error: t("Failed to get session! Please try again later.") }
     }
   }
 )

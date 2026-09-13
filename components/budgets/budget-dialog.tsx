@@ -91,9 +91,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   async function onSubmit(values: BudgetFormValues) {
     if (budget) {
       try {
-        const { success, error } = await updateBudget(budget._id, values)
+        const { error, success } = await updateBudget(budget._id, values)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)
@@ -105,9 +105,9 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
       }
     } else {
       try {
-        const { success, error } = await createBudget(values)
+        const { error, success } = await createBudget(values)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

@@ -42,9 +42,9 @@ export default async function proxy(request: NextRequest) {
   const { nextUrl } = request
   const { pathname } = nextUrl
 
-  const session = await getCurrentSession()
+  const { user, session } = await getCurrentSession()
 
-  if (!session) {
+  if (!user || !session) {
     return redirectIfProtectedRoute(request)
   }
 
@@ -55,7 +55,7 @@ export default async function proxy(request: NextRequest) {
     return redirectTo(routes.DEFAULT_SIGNIN_REDIRECT, nextUrl)
   }
 
-  if (pathname.startsWith("/admin") && !isAdminRole(session.user.role)) {
+  if (pathname.startsWith("/admin") && !isAdminRole(user.role)) {
     return redirectTo(routes.DEFAULT_SIGNIN_REDIRECT, nextUrl)
   }
 

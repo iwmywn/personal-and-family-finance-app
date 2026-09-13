@@ -70,12 +70,12 @@ export function CategoryDialog({
   async function onSubmit(values: CategoryFormValues) {
     if (category) {
       try {
-        const { success, error } = await updateCustomCategory(
+        const { error, success } = await updateCustomCategory(
           category._id,
           values
         )
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)
@@ -87,9 +87,9 @@ export function CategoryDialog({
       }
     } else {
       try {
-        const { success, error } = await createCustomCategory(values)
+        const { error, success } = await createCustomCategory(values)
 
-        if (error || !success) {
+        if (success === undefined) {
           toast.error(error)
         } else {
           setOpen(false)

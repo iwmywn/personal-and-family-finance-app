@@ -116,7 +116,7 @@ export function ActiveSessionsDialog() {
 
       const { error, success } = await revokeSessionById(sessionId)
 
-      if (error || !success) {
+      if (success === undefined) {
         toast.error(error)
       } else {
         toast.success(success)

@@ -22,6 +22,11 @@ msgid "Invalid data!"
 msgstr "无效数据！"
 
 #: actions/admin.actions.ts
+msgctxt "M5lqaZ"
+msgid "You cannot assign this role!"
+msgstr "您不能分配此角色！"
+
+#: actions/admin.actions.ts
 msgctxt "wUmmPh"
 msgid "User has been created."
 msgstr "用户已创建。"
@@ -38,45 +43,19 @@ msgid "Failed to create user! Please try again later."
 msgstr "创建用户失败！请稍后再试。"
 
 #: actions/admin.actions.ts
-msgctxt "gREMXx"
-msgid "Failed to fetch admin stats! Please try again later."
-msgstr "获取管理员统计数据失败！请稍后再试。"
-
-#: actions/admin.actions.ts
-msgctxt "fVUGHi"
-msgid "Failed to load users! Please try again later."
-msgstr "加载用户失败！请稍后再试。"
-
-#: actions/admin.actions.ts
 msgctxt "GBsD3h"
 msgid "Invalid user ID!"
 msgstr "用户 ID 无效！"
 
 #: actions/admin.actions.ts
-msgctxt "ScDYhZ"
-msgid "You cannot delete your own account!"
-msgstr "您不能删除自己的账户！"
+msgctxt "y3epBO"
+msgid "You cannot change your own role!"
+msgstr "您不能更改自己的角色！"
 
 #: actions/admin.actions.ts
 msgctxt "foC3a6"
 msgid "User not found!"
 msgstr "未找到用户！"
-
-#: actions/admin.actions.ts
-msgctxt "7l4h1s"
-msgid "User has been deleted."
-msgstr "用户已删除。"
-
-#: actions/admin.actions.ts
-#: components/admin/delete-user-dialog.tsx
-msgctxt "xkkfdF"
-msgid "Failed to delete user! Please try again later."
-msgstr "删除用户失败！请稍后再试。"
-
-#: actions/admin.actions.ts
-msgctxt "y3epBO"
-msgid "You cannot change your own role!"
-msgstr "您不能更改自己的角色！"
 
 #: actions/admin.actions.ts
 msgctxt "ayfthF"
@@ -100,14 +79,31 @@ msgctxt "VvoQv7"
 msgid "Failed to set user password! Please try again later."
 msgstr "设置用户密码失败！请稍后再试。"
 
-#: actions/budget.actions.ts
-#: actions/category.actions.ts
-#: actions/goal.actions.ts
-#: actions/recurring.actions.ts
-#: actions/transaction.actions.ts
-msgctxt "QWvB5t"
-msgid "Access denied! Please refresh the page and try again."
-msgstr "访问被拒绝！请刷新页面并重试。"
+#: actions/admin.actions.ts
+msgctxt "ScDYhZ"
+msgid "You cannot delete your own account!"
+msgstr "您不能删除自己的账户！"
+
+#: actions/admin.actions.ts
+msgctxt "7l4h1s"
+msgid "User has been deleted."
+msgstr "用户已删除。"
+
+#: actions/admin.actions.ts
+#: components/admin/delete-user-dialog.tsx
+msgctxt "xkkfdF"
+msgid "Failed to delete user! Please try again later."
+msgstr "删除用户失败！请稍后再试。"
+
+#: actions/admin.actions.ts
+msgctxt "gREMXx"
+msgid "Failed to fetch admin stats! Please try again later."
+msgstr "获取管理员统计数据失败！请稍后再试。"
+
+#: actions/admin.actions.ts
+msgctxt "fVUGHi"
+msgid "Failed to load users! Please try again later."
+msgstr "加载用户失败！请稍后再试。"
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -373,6 +369,16 @@ msgstr "删除定期交易失败！请稍后再试。"
 msgctxt "D92YlY"
 msgid "Failed to load recurring transactions! Please try again later."
 msgstr "加载定期交易失败！请稍后再试。"
+
+#: actions/session.actions.ts
+msgctxt "QWvB5t"
+msgid "Access denied! Please refresh the page and try again."
+msgstr "访问被拒绝！请刷新页面并重试。"
+
+#: actions/session.actions.ts
+msgctxt "sc5uVX"
+msgid "Failed to get session! Please try again later."
+msgstr "获取会话失败！请稍后再试。"
 
 #: actions/transaction.actions.ts
 msgctxt "JSmQV_"

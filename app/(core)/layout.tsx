@@ -14,14 +14,14 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const [cookieStore, session, activeSessions] = await Promise.all([
+  const [cookieStore, result, activeSessions] = await Promise.all([
     cookies(),
     getCurrentSession(),
     getActiveSessions(),
   ])
   const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
 
-  if (!session || !activeSessions) {
+  if (!result.user || !result.session || !activeSessions) {
     redirect("/signin")
   }
 
@@ -30,8 +30,8 @@ export default async function DashboardLayout({
       <TooltipProvider>
         <UserContext
           value={{
-            user: session.user,
-            session: session.session,
+            user: result.user,
+            session: result.session,
             activeSessions,
           }}
         >

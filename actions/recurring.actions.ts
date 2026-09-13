@@ -27,17 +27,14 @@ export async function createRecurringTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const session = await getCurrentSession()
+    const { error, user, session } = await getCurrentSession()
 
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
+    if (!user || !session) {
+      return { error }
     }
 
-    const userId = session.user.id
     const isValidCategory = await isValidUserCategory(
-      userId,
+      user.id,
       parsedValues.data.categoryKey,
       parsedValues.data.type
     )
@@ -49,7 +46,7 @@ export async function createRecurringTransaction(
     const recurringCollection = await getRecurringTransactionsCollection()
 
     await recurringCollection.insertOne({
-      userId: new ObjectId(userId),
+      userId: new ObjectId(user.id),
       type: parsedValues.data.type,
       categoryKey: parsedValues.data.categoryKey,
       amount: toDecimal128(parsedValues.data.amount),
@@ -63,7 +60,7 @@ export async function createRecurringTransaction(
       isActive: parsedValues.data.isActive,
     })
 
-    updateTag(`recurringTransactions-${userId}`)
+    updateTag(`recurringTransactions-${user.id}`)
     return {
       success: t("Recurring transaction has been created."),
     }
@@ -87,6 +84,12 @@ export async function updateRecurringTransaction(
   const t = await getExtracted()
 
   try {
+    if (!ObjectId.isValid(recurringId)) {
+      return {
+        error: t("Invalid recurring transaction ID!"),
+      }
+    }
+
     const { createRecurringTransactionSchema } = await getSchemas()
     const parsedValues = createRecurringTransactionSchema().safeParse(values)
 
@@ -94,23 +97,14 @@ export async function updateRecurringTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const session = await getCurrentSession()
+    const { error, user, session } = await getCurrentSession()
 
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
+    if (!user || !session) {
+      return { error }
     }
 
-    if (!ObjectId.isValid(recurringId)) {
-      return {
-        error: t("Invalid recurring transaction ID!"),
-      }
-    }
-
-    const userId = session.user.id
     const isValidCategory = await isValidUserCategory(
-      userId,
+      user.id,
       parsedValues.data.categoryKey,
       parsedValues.data.type
     )
@@ -121,7 +115,7 @@ export async function updateRecurringTransaction(
 
     const recurringCollection = await getRecurringTransactionsCollection()
     const result = await recurringCollection.updateOne(
-      { _id: new ObjectId(recurringId), userId: new ObjectId(userId) },
+      { _id: new ObjectId(recurringId), userId: new ObjectId(user.id) },
       {
         $set: {
           type: parsedValues.data.type,
@@ -146,7 +140,7 @@ export async function updateRecurringTransaction(
       }
     }
 
-    updateTag(`recurringTransactions-${userId}`)
+    updateTag(`recurringTransactions-${user.id}`)
     return {
       success: t("Recurring transaction has been updated."),
     }
@@ -169,25 +163,22 @@ export async function deleteRecurringTransaction(
   const t = await getExtracted()
 
   try {
-    const session = await getCurrentSession()
-
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     if (!ObjectId.isValid(recurringId)) {
       return {
         error: t("Invalid recurring transaction ID!"),
       }
     }
 
-    const userId = session.user.id
+    const { error, user, session } = await getCurrentSession()
+
+    if (!user || !session) {
+      return { error }
+    }
+
     const recurringCollection = await getRecurringTransactionsCollection()
     const result = await recurringCollection.deleteOne({
       _id: new ObjectId(recurringId),
-      userId: new ObjectId(userId),
+      userId: new ObjectId(user.id),
     })
 
     if (result.deletedCount === 0) {
@@ -198,7 +189,7 @@ export async function deleteRecurringTransaction(
       }
     }
 
-    updateTag(`recurringTransactions-${userId}`)
+    updateTag(`recurringTransactions-${user.id}`)
     return { success: t("Recurring transaction has been deleted.") }
   } catch (error) {
     console.error("Error deleting recurring transaction:", error)
@@ -214,16 +205,13 @@ export async function getRecurringTransactions(): Promise<{
   error?: string
   recurringTransactions?: RecurringTransaction[]
 }> {
-  const t = await getExtracted()
-  const session = await getCurrentSession()
+  const { error, user, session } = await getCurrentSession()
 
-  if (!session) {
-    return {
-      error: t("Access denied! Please refresh the page and try again."),
-    }
+  if (!user || !session) {
+    return { error }
   }
 
-  return getCachedRecurringTransactions(session.user.id)
+  return getCachedRecurringTransactions(user.id)
 }
 
 async function getCachedRecurringTransactions(userId: string) {

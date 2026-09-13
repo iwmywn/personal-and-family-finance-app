@@ -1,7 +1,6 @@
 "use server"
 
 import { cacheTag, updateTag } from "next/cache"
-import type { ClientSession } from "mongodb"
 import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
@@ -25,8 +24,7 @@ import { getCurrentSession } from "./session.actions"
 export async function isValidUserCategory(
   userId: string,
   categoryKey: string,
-  expectedType?: CategoryType,
-  dbSession?: ClientSession
+  expectedType?: CategoryType
 ): Promise<boolean> {
   if (isPredefinedCategoryKey(categoryKey)) {
     if (expectedType && getCategoryType(categoryKey) !== expectedType) {
@@ -40,13 +38,10 @@ export async function isValidUserCategory(
   }
 
   const categoriesCollection = await getCategoriesCollection()
-  const customCategory = await categoriesCollection.findOne(
-    {
-      _id: new ObjectId(categoryKey),
-      userId: new ObjectId(userId),
-    },
-    dbSession ? { session: dbSession } : undefined
-  )
+  const customCategory = await categoriesCollection.findOne({
+    _id: new ObjectId(categoryKey),
+    userId: new ObjectId(userId),
+  })
 
   if (!customCategory) {
     return false
@@ -72,25 +67,22 @@ export async function createCustomCategory(
       return { error: t("Invalid data!") }
     }
 
-    const session = await getCurrentSession()
+    const { error, user, session } = await getCurrentSession()
 
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
+    if (!user || !session) {
+      return { error }
     }
 
-    const userId = session.user.id
     const categoriesCollection = await getCategoriesCollection()
 
     await categoriesCollection.insertOne({
-      userId: new ObjectId(userId),
+      userId: new ObjectId(user.id),
       type: parsedValues.data.type,
       label: parsedValues.data.label,
       description: parsedValues.data.description,
     })
 
-    updateTag(`categories-${userId}`)
+    updateTag(`categories-${user.id}`)
     return { success: t("Category has been created.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
@@ -108,6 +100,12 @@ export async function updateCustomCategory(
   const t = await getExtracted()
 
   try {
+    if (!ObjectId.isValid(categoryId)) {
+      return {
+        error: t("Invalid category ID!"),
+      }
+    }
+
     const { createCategorySchema } = await getSchemas()
     const parsedValues = createCategorySchema().safeParse(values)
 
@@ -115,27 +113,18 @@ export async function updateCustomCategory(
       return { error: t("Invalid data!") }
     }
 
-    const session = await getCurrentSession()
+    const { error, user, session } = await getCurrentSession()
 
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
+    if (!user || !session) {
+      return { error }
     }
 
-    if (!ObjectId.isValid(categoryId)) {
-      return {
-        error: t("Invalid category ID!"),
-      }
-    }
-
-    const userId = session.user.id
     const categoriesCollection = await getCategoriesCollection()
 
     const result = await categoriesCollection.updateOne(
       {
         _id: new ObjectId(categoryId),
-        userId: new ObjectId(userId),
+        userId: new ObjectId(user.id),
         type: parsedValues.data.type,
       },
       {
@@ -150,7 +139,7 @@ export async function updateCustomCategory(
       const existingCategory = await categoriesCollection.findOne(
         {
           _id: new ObjectId(categoryId),
-          userId: new ObjectId(userId),
+          userId: new ObjectId(user.id),
         },
         { projection: { type: 1 } }
       )
@@ -169,7 +158,7 @@ export async function updateCustomCategory(
       }
     }
 
-    updateTag(`categories-${userId}`)
+    updateTag(`categories-${user.id}`)
     return { success: t("Category has been updated.") }
   } catch (error) {
     if (isDuplicateKeyError(error)) {
@@ -186,21 +175,18 @@ export async function deleteCustomCategory(
   const t = await getExtracted()
 
   try {
-    const session = await getCurrentSession()
-
-    if (!session) {
-      return {
-        error: t("Access denied! Please refresh the page and try again."),
-      }
-    }
-
     if (!ObjectId.isValid(categoryId)) {
       return {
         error: t("Invalid category ID!"),
       }
     }
 
-    const userId = session.user.id
+    const { error, user, session } = await getCurrentSession()
+
+    if (!user || !session) {
+      return { error }
+    }
+
     const [
       categoriesCollection,
       transactionsCollection,
@@ -219,7 +205,7 @@ export async function deleteCustomCategory(
       const existingCategory = await categoriesCollection.findOne(
         {
           _id: new ObjectId(categoryId),
-          userId: new ObjectId(userId),
+          userId: new ObjectId(user.id),
         },
         { session: dbSession }
       )
@@ -240,28 +226,28 @@ export async function deleteCustomCategory(
       ] = await Promise.all([
         transactionsCollection.countDocuments(
           {
-            userId: new ObjectId(userId),
+            userId: new ObjectId(user.id),
             categoryKey: categoryId,
           },
           { session: dbSession }
         ),
         budgetsCollection.countDocuments(
           {
-            userId: new ObjectId(userId),
+            userId: new ObjectId(user.id),
             categoryKey: categoryId,
           },
           { session: dbSession }
         ),
         goalsCollection.countDocuments(
           {
-            userId: new ObjectId(userId),
+            userId: new ObjectId(user.id),
             categoryKey: categoryId,
           },
           { session: dbSession }
         ),
         recurringTransactionsCollection.countDocuments(
           {
-            userId: new ObjectId(userId),
+            userId: new ObjectId(user.id),
             categoryKey: categoryId,
           },
           { session: dbSession }
@@ -315,7 +301,7 @@ export async function deleteCustomCategory(
       await categoriesCollection.deleteOne(
         {
           _id: new ObjectId(categoryId),
-          userId: new ObjectId(userId),
+          userId: new ObjectId(user.id),
         },
         { session: dbSession }
       )
@@ -324,7 +310,7 @@ export async function deleteCustomCategory(
     })
 
     if (result.success) {
-      updateTag(`categories-${userId}`)
+      updateTag(`categories-${user.id}`)
     }
 
     return result
@@ -338,16 +324,13 @@ export async function getCustomCategories(): Promise<{
   error?: string
   customCategories?: Category[]
 }> {
-  const t = await getExtracted()
-  const session = await getCurrentSession()
+  const { error, user, session } = await getCurrentSession()
 
-  if (!session) {
-    return {
-      error: t("Access denied! Please refresh the page and try again."),
-    }
+  if (!user || !session) {
+    return { error }
   }
 
-  return getCachedCustomCategories(session.user.id)
+  return getCachedCustomCategories(user.id)
 }
 
 async function getCachedCustomCategories(userId: string) {
