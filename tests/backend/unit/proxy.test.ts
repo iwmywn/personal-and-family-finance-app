@@ -7,7 +7,7 @@ import {
 } from "@/tests/shared/data"
 import proxy from "@/proxy"
 import * as routes from "@/routes"
-import { getCurrentSession } from "@/actions/session.actions"
+import { getSession } from "@/actions/session.actions"
 import { siteConfig } from "@/app/pffa.config"
 import { clientEnv } from "@/env/client"
 
@@ -18,7 +18,7 @@ vi.mock("@/actions/session.actions", () => ({
 describe("Proxy (Middleware)", () => {
   describe("Unauthenticated User", () => {
     beforeEach(() => {
-      vi.mocked(getCurrentSession).mockResolvedValue({
+      vi.mocked(getSession).mockResolvedValue({
         error: "Access denied! Please refresh the page and try again.",
       })
     })
@@ -127,7 +127,7 @@ describe("Proxy (Middleware)", () => {
 
   describe("Authenticated Regular User (role: user)", () => {
     beforeEach(() => {
-      vi.mocked(getCurrentSession).mockResolvedValue({
+      vi.mocked(getSession).mockResolvedValue({
         user: {
           ...mockUser,
           id: mockUser._id.toString(),
@@ -202,7 +202,7 @@ describe("Proxy (Middleware)", () => {
     { role: "superadmin", user: mockSuperAdminUser },
   ])("Authenticated $role User (role: $role)", ({ role, user }) => {
     beforeEach(() => {
-      vi.mocked(getCurrentSession).mockResolvedValue({
+      vi.mocked(getSession).mockResolvedValue({
         user: {
           ...user,
           id: user._id.toString(),

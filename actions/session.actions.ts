@@ -2,12 +2,15 @@
 
 import { cache } from "react"
 import { headers } from "next/headers"
-import { getExtracted, getTranslations } from "next-intl/server"
+import { getExtracted } from "next-intl/server"
 
 import { auth } from "@/lib/auth"
 import type { ActionResponse, Session, User } from "@/lib/definitions"
 
-export const getCurrentSession = cache(
+/**
+ * Get current active session.
+ */
+export const getSession = cache(
   async (): Promise<
     | { error: string; user?: never; session?: never }
     | { error?: never; user: User; session: Session }
@@ -38,37 +41,47 @@ export const getCurrentSession = cache(
   }
 )
 
-export const getActiveSessions = cache(async (): Promise<Session[] | null> => {
-  const headersList = await headers()
+/**
+ * List all active sessions.
+ */
+export const getSessions = cache(
+  async (): Promise<
+    { error: string; sessions?: never } | { error?: never; sessions: Session[] }
+  > => {
+    const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
-  try {
-    const activeSessions = await auth.api.listSessions({
-      headers: headersList,
-    })
+    try {
+      const sessions = await auth.api.listSessions({
+        headers: headersList,
+      })
 
-    if (!activeSessions) return []
+      if (!sessions)
+        return {
+          error: t("Access denied! Please refresh the page and try again."),
+        }
 
-    return activeSessions.map((session) => ({
-      ...session,
-      token: "",
-    }))
-  } catch (error) {
-    console.error("Error getting session: ", error)
-    return null
+      return {
+        sessions: sessions.map((session) => ({
+          ...session,
+          token: "",
+        })),
+      }
+    } catch (error) {
+      console.error("Error getting sessions: ", error)
+      return { error: t("Failed to get session! Please try again later.") }
+    }
   }
-})
+)
 
 export async function revokeSessionById(
   sessionId: string
 ): Promise<ActionResponse> {
-  const [t, headersList] = await Promise.all([getTranslations(), headers()])
+  const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const activeSessions = await auth.api.listSessions({
-      headers: headersList,
-    })
+    const { sessions } = await getSessions()
 
-    const targetSession = activeSessions?.find((s) => s.id === sessionId)
+    const targetSession = sessions?.find((s) => s.id === sessionId)
     if (!targetSession) {
       return { error: t("Session not found.") }
     }

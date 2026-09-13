@@ -101,9 +101,9 @@ msgid "Failed to fetch admin stats! Please try again later."
 msgstr "管理者統計情報の取得に失敗しました！後でもう一度お試しください。"
 
 #: actions/admin.actions.ts
-msgctxt "fVUGHi"
-msgid "Failed to load users! Please try again later."
-msgstr "ユーザーの読み込みに失敗しました！後でもう一度お試しください。"
+msgctxt "gfVKAY"
+msgid "Failed to list users! Please try again later."
+msgstr "ユーザー一覧の取得に失敗しました！後でもう一度お試しください。"
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -379,6 +379,23 @@ msgstr "アクセスが拒否されました！ページを更新してもう一
 msgctxt "sc5uVX"
 msgid "Failed to get session! Please try again later."
 msgstr "セッションの取得に失敗しました！後でもう一度お試しください。"
+
+#: actions/session.actions.ts
+msgctxt "vra063"
+msgid "Session not found."
+msgstr "セッションが見つかりません。"
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "tNzaek"
+msgid "Session terminated."
+msgstr "セッションが終了しました。"
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "M3ZAZv"
+msgid "Failed to terminate session! Please try again later."
+msgstr "セッションの終了に失敗しました！後でもう一度お試しください。"
 
 #: actions/transaction.actions.ts
 msgctxt "JSmQV_"
@@ -875,8 +892,8 @@ msgstr "有効期限:"
 #: components/categories/delete-category-dialog.tsx
 #: components/goals/delete-goal-dialog.tsx
 #: components/goals/goal-dialog.tsx
-#: components/layout/impersonation-indicator.tsx
 #: components/layout/secondary-nav.tsx
+#: components/layout/stop-impersonation-dialog.tsx
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/settings/change-name-dialog.tsx
@@ -1814,36 +1831,6 @@ msgctxt "EjH-J3"
 msgid "Please try again later."
 msgstr "後でもう一度お試しください。"
 
-#: components/layout/impersonation-indicator.tsx
-msgctxt "H1m7wl"
-msgid "Failed to stop impersonating! Please try again later."
-msgstr "なりすましの停止に失敗しました！後でもう一度お試しください。"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "LKxCOb"
-msgid "Impersonating"
-msgstr "なりすまし中"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "fA8c13"
-msgid "Stop impersonating this user?"
-msgstr "このユーザーのなりすましを停止しますか？"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "AB6aDn"
-msgid "You are currently impersonating"
-msgstr "現在なりすましを行っています:"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "eybH_m"
-msgid "Stopping will restore your admin session and redirect you back to the admin panel."
-msgstr "停止すると管理者セッションが復元され、管理パネルにリダイレクトされます。"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "d0A6B0"
-msgid "Stop Impersonating"
-msgstr "なりすましを停止"
-
 #: components/layout/not-found-page.tsx
 msgctxt "QRccCM"
 msgid "Page not found"
@@ -1854,10 +1841,15 @@ msgctxt "yAbaof"
 msgid "The page you are looking for does not exist."
 msgstr "お探しのページは存在しません。"
 
-#: components/layout/offline-indicator.tsx
+#: components/layout/offline-notifier.tsx
 msgctxt "W-XYsV"
 msgid "You are currently offline."
 msgstr "現在オフラインです。"
+
+#: components/layout/offline-notifier.tsx
+msgctxt "f_mGkR"
+msgid "You are back online."
+msgstr "オンラインに戻りました。"
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1908,6 +1900,36 @@ msgstr "サインアウトしてもよろしいですか？"
 msgctxt "naYgGy"
 msgid "You will need to sign in again to access your account."
 msgstr "アカウントにアクセスするには、再度サインインする必要があります。"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "H1m7wl"
+msgid "Failed to stop impersonating! Please try again later."
+msgstr "なりすましの停止に失敗しました！後でもう一度お試しください。"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "LKxCOb"
+msgid "Impersonating"
+msgstr "なりすまし中"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "fA8c13"
+msgid "Stop impersonating this user?"
+msgstr "このユーザーのなりすましを停止しますか？"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "AB6aDn"
+msgid "You are currently impersonating"
+msgstr "現在なりすましを行っています:"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "eybH_m"
+msgid "Stopping will restore your admin session and redirect you back to the admin panel."
+msgstr "停止すると管理者セッションが復元され、管理パネルにリダイレクトされます。"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "d0A6B0"
+msgid "Stop Impersonating"
+msgstr "なりすましを停止"
 
 #: components/password-input.tsx
 msgctxt "K3fWTv"
@@ -2069,16 +2091,6 @@ msgstr "{days}日ごと"
 msgctxt "b-8NFf"
 msgid "Next: {date}"
 msgstr "次回：{date}"
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "M3ZAZv"
-msgid "Failed to terminate session! Please try again later."
-msgstr "セッションの終了に失敗しました！後でもう一度お試しください。"
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "tNzaek"
-msgid "Session terminated."
-msgstr "セッションが終了しました。"
 
 #: components/settings/active-sessions-dialog.tsx
 msgctxt "HuQudj"

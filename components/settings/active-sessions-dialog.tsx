@@ -33,7 +33,7 @@ import { authClient } from "@/lib/auth-client"
 export function ActiveSessionsDialog() {
   const t = useExtracted()
   const router = useRouter()
-  const { session: currentSession, activeSessions } = useUser()
+  const { session: currentSession, sessions: activeSessions } = useUser()
   const [isTerminating, setIsTerminating] = useState<string | undefined>()
   const [isRevokingAll, setIsRevokingAll] = useState<boolean>(false)
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -45,7 +45,7 @@ export function ActiveSessionsDialog() {
       : [currentSession, ...activeSessions]
 
     return allSessions
-      .filter((session) => session.userAgent)
+      .filter((s) => s.userAgent)
       .sort((a, b) => {
         const aIsCurrent = a.id === currentSession.id
         const bIsCurrent = b.id === currentSession.id
@@ -59,15 +59,15 @@ export function ActiveSessionsDialog() {
 
     if (isOpen && sortedSessions.length > 0) {
       const sessionsToFetch = sortedSessions.filter(
-        (session) => session.ipAddress && locations[session.id] === undefined
+        (s) => s.ipAddress && locations[s.id] === undefined
       )
 
       if (sessionsToFetch.length === 0) return
 
       const fetchLocations = async () => {
-        const locationPromises = sessionsToFetch.map(async (session) => {
-          const location = await getLocationFromIP(session.ipAddress)
-          return { id: session.id, location }
+        const locationPromises = sessionsToFetch.map(async (s) => {
+          const location = await getLocationFromIP(s.ipAddress)
+          return { id: s.id, location }
         })
 
         const results = await Promise.all(locationPromises)
@@ -198,16 +198,16 @@ export function ActiveSessionsDialog() {
           </DialogDescription>
         </DialogHeader>
         <div className="max-h-[60vh] space-y-3 overflow-y-auto">
-          {sortedSessions.map((session) => {
-            const parser = new UAParser(session.userAgent || "")
+          {sortedSessions.map((s) => {
+            const parser = new UAParser(s.userAgent || "")
             const device = parser.getDevice()
             const os = parser.getOS()
             const browser = parser.getBrowser()
-            const isCurrentSession = session.id === currentSession.id
-            const location = locations[session.id]
+            const isCurrentSession = s.id === currentSession.id
+            const location = locations[s.id]
 
             return (
-              <Item key={session.id} variant="outline">
+              <Item key={s.id} variant="outline">
                 <ItemMedia variant="icon">
                   {device.type === "mobile" ? (
                     <Smartphone className="text-muted-foreground h-5 w-5" />
@@ -218,7 +218,7 @@ export function ActiveSessionsDialog() {
                 <ItemContent>
                   <ItemTitle>
                     <div>
-                      {os.name || session.userAgent}
+                      {os.name || s.userAgent}
                       {browser.name && `, ${browser.name}`}
                     </div>
                     {isCurrentSession && (
@@ -240,10 +240,10 @@ export function ActiveSessionsDialog() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleRevokeSession(session.id)}
-                    disabled={isTerminating === session.id || isRevokingAll}
+                    onClick={() => handleRevokeSession(s.id)}
+                    disabled={isTerminating === s.id || isRevokingAll}
                   >
-                    {isTerminating === session.id && <Spinner />}
+                    {isTerminating === s.id && <Spinner />}
                     {t("Terminate")}
                   </Button>
                 </ItemActions>

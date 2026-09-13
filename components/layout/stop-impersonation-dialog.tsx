@@ -27,7 +27,7 @@ import {
 import { useUser } from "@/context/user-context"
 import { authClient } from "@/lib/auth-client"
 
-export function ImpersonationIndicator() {
+export function StopImpersonationDialog() {
   const t = useExtracted()
   const router = useRouter()
   const userContext = useUser()

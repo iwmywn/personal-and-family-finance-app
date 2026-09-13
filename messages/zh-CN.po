@@ -101,9 +101,9 @@ msgid "Failed to fetch admin stats! Please try again later."
 msgstr "获取管理员统计数据失败！请稍后再试。"
 
 #: actions/admin.actions.ts
-msgctxt "fVUGHi"
-msgid "Failed to load users! Please try again later."
-msgstr "加载用户失败！请稍后再试。"
+msgctxt "gfVKAY"
+msgid "Failed to list users! Please try again later."
+msgstr "获取用户列表失败！请稍后再试。"
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -379,6 +379,23 @@ msgstr "访问被拒绝！请刷新页面并重试。"
 msgctxt "sc5uVX"
 msgid "Failed to get session! Please try again later."
 msgstr "获取会话失败！请稍后再试。"
+
+#: actions/session.actions.ts
+msgctxt "vra063"
+msgid "Session not found."
+msgstr "未找到会话。"
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "tNzaek"
+msgid "Session terminated."
+msgstr "会话已终止。"
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "M3ZAZv"
+msgid "Failed to terminate session! Please try again later."
+msgstr "终止会话失败！请稍后再试。"
 
 #: actions/transaction.actions.ts
 msgctxt "JSmQV_"
@@ -875,8 +892,8 @@ msgstr "过期时间于"
 #: components/categories/delete-category-dialog.tsx
 #: components/goals/delete-goal-dialog.tsx
 #: components/goals/goal-dialog.tsx
-#: components/layout/impersonation-indicator.tsx
 #: components/layout/secondary-nav.tsx
+#: components/layout/stop-impersonation-dialog.tsx
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/settings/change-name-dialog.tsx
@@ -1814,36 +1831,6 @@ msgctxt "EjH-J3"
 msgid "Please try again later."
 msgstr "请稍后再试。"
 
-#: components/layout/impersonation-indicator.tsx
-msgctxt "H1m7wl"
-msgid "Failed to stop impersonating! Please try again later."
-msgstr "停止模拟失败！请稍后再试。"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "LKxCOb"
-msgid "Impersonating"
-msgstr "正在模拟"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "fA8c13"
-msgid "Stop impersonating this user?"
-msgstr "停止模拟此用户？"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "AB6aDn"
-msgid "You are currently impersonating"
-msgstr "您当前正在模拟"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "eybH_m"
-msgid "Stopping will restore your admin session and redirect you back to the admin panel."
-msgstr "停止后将恢复您的管理员会话，并将您重定向回管理面板。"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "d0A6B0"
-msgid "Stop Impersonating"
-msgstr "停止模拟"
-
 #: components/layout/not-found-page.tsx
 msgctxt "QRccCM"
 msgid "Page not found"
@@ -1854,10 +1841,15 @@ msgctxt "yAbaof"
 msgid "The page you are looking for does not exist."
 msgstr "您正在查找的页面不存在。"
 
-#: components/layout/offline-indicator.tsx
+#: components/layout/offline-notifier.tsx
 msgctxt "W-XYsV"
 msgid "You are currently offline."
 msgstr "您当前处于离线状态。"
+
+#: components/layout/offline-notifier.tsx
+msgctxt "f_mGkR"
+msgid "You are back online."
+msgstr "您已恢复在线状态。"
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1908,6 +1900,36 @@ msgstr "您确定要退出吗？"
 msgctxt "naYgGy"
 msgid "You will need to sign in again to access your account."
 msgstr "您需要重新登录才能访问您的帐户。"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "H1m7wl"
+msgid "Failed to stop impersonating! Please try again later."
+msgstr "停止模拟失败！请稍后再试。"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "LKxCOb"
+msgid "Impersonating"
+msgstr "正在模拟"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "fA8c13"
+msgid "Stop impersonating this user?"
+msgstr "停止模拟此用户？"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "AB6aDn"
+msgid "You are currently impersonating"
+msgstr "您当前正在模拟"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "eybH_m"
+msgid "Stopping will restore your admin session and redirect you back to the admin panel."
+msgstr "停止后将恢复您的管理员会话，并将您重定向回管理面板。"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "d0A6B0"
+msgid "Stop Impersonating"
+msgstr "停止模拟"
 
 #: components/password-input.tsx
 msgctxt "K3fWTv"
@@ -2069,16 +2091,6 @@ msgstr "每 {days} 天"
 msgctxt "b-8NFf"
 msgid "Next: {date}"
 msgstr "下次：{date}"
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "M3ZAZv"
-msgid "Failed to terminate session! Please try again later."
-msgstr "终止会话失败！请稍后再试。"
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "tNzaek"
-msgid "Session terminated."
-msgstr "会话已终止。"
 
 #: components/settings/active-sessions-dialog.tsx
 msgctxt "HuQudj"

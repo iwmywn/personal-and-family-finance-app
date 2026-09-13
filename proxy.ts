@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server"
 import { getSessionCookie } from "better-auth/cookies"
 
 import * as routes from "@/routes"
-import { getCurrentSession } from "@/actions/session.actions"
+import { getSession } from "@/actions/session.actions"
 import { siteConfig } from "@/app/pffa.config"
 import { isAdminRole } from "@/lib/role"
 
@@ -42,7 +42,7 @@ export default async function proxy(request: NextRequest) {
   const { nextUrl } = request
   const { pathname } = nextUrl
 
-  const { user, session } = await getCurrentSession()
+  const { user, session } = await getSession()
 
   if (!user || !session) {
     return redirectIfProtectedRoute(request)

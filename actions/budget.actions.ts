@@ -11,7 +11,7 @@ import { getSchemas } from "@/schemas/server"
 import type { BudgetFormValues } from "@/schemas/types"
 
 import { isValidUserCategory } from "./category.actions"
-import { getCurrentSession } from "./session.actions"
+import { getSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
 export async function createBudget(
@@ -27,7 +27,7 @@ export async function createBudget(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -85,7 +85,7 @@ export async function updateBudget(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -142,7 +142,7 @@ export async function deleteBudget(budgetId: string): Promise<ActionResponse> {
       }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -172,7 +172,7 @@ export async function getBudgets(): Promise<{
   error?: string
   budgets?: Budget[]
 }> {
-  const { error, user, session } = await getCurrentSession()
+  const { error, user, session } = await getSession()
 
   if (!user || !session) {
     return { error }

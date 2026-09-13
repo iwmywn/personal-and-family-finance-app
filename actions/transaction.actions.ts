@@ -18,7 +18,7 @@ import {
   enqueueMissingExchangeRateDate,
   ensureExchangeRateForDate,
 } from "./exchange-rates.actions"
-import { getCurrentSession } from "./session.actions"
+import { getSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
 export async function createTransaction(
@@ -34,7 +34,7 @@ export async function createTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -109,7 +109,7 @@ export async function updateTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -191,7 +191,7 @@ export async function deleteTransaction(
       }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -223,7 +223,7 @@ export async function getTransactions(): Promise<{
   error?: string
   transactions?: Transaction[]
 }> {
-  const { error, user, session } = await getCurrentSession()
+  const { error, user, session } = await getSession()
 
   if (!user || !session) {
     return { error }

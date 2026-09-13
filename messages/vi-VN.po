@@ -101,9 +101,9 @@ msgid "Failed to fetch admin stats! Please try again later."
 msgstr "Lấy số liệu thống kê quản trị thất bại! Vui lòng thử lại sau."
 
 #: actions/admin.actions.ts
-msgctxt "fVUGHi"
-msgid "Failed to load users! Please try again later."
-msgstr "Tải danh sách người dùng thất bại! Vui lòng thử lại sau."
+msgctxt "gfVKAY"
+msgid "Failed to list users! Please try again later."
+msgstr "Lấy danh sách người dùng thất bại! Vui lòng thử lại sau."
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -379,6 +379,23 @@ msgstr "Truy cập bị từ chối! Vui lòng tải lại trang và thử lại
 msgctxt "sc5uVX"
 msgid "Failed to get session! Please try again later."
 msgstr "Lấy thông tin phiên thất bại! Vui lòng thử lại sau."
+
+#: actions/session.actions.ts
+msgctxt "vra063"
+msgid "Session not found."
+msgstr "Không tìm thấy phiên."
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "tNzaek"
+msgid "Session terminated."
+msgstr "Phiên đã bị chấm dứt."
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "M3ZAZv"
+msgid "Failed to terminate session! Please try again later."
+msgstr "Chấm dứt phiên thất bại! Vui lòng thử lại sau."
 
 #: actions/transaction.actions.ts
 msgctxt "JSmQV_"
@@ -875,8 +892,8 @@ msgstr "Hết hạn vào"
 #: components/categories/delete-category-dialog.tsx
 #: components/goals/delete-goal-dialog.tsx
 #: components/goals/goal-dialog.tsx
-#: components/layout/impersonation-indicator.tsx
 #: components/layout/secondary-nav.tsx
+#: components/layout/stop-impersonation-dialog.tsx
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/settings/change-name-dialog.tsx
@@ -1814,36 +1831,6 @@ msgctxt "EjH-J3"
 msgid "Please try again later."
 msgstr "Vui lòng thử lại sau."
 
-#: components/layout/impersonation-indicator.tsx
-msgctxt "H1m7wl"
-msgid "Failed to stop impersonating! Please try again later."
-msgstr "Dừng đóng vai thất bại! Vui lòng thử lại sau."
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "LKxCOb"
-msgid "Impersonating"
-msgstr "Đang đóng vai"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "fA8c13"
-msgid "Stop impersonating this user?"
-msgstr "Dừng đóng vai người dùng này?"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "AB6aDn"
-msgid "You are currently impersonating"
-msgstr "Bạn hiện đang đóng vai"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "eybH_m"
-msgid "Stopping will restore your admin session and redirect you back to the admin panel."
-msgstr "Việc dừng lại sẽ khôi phục phiên quản trị viên của bạn và chuyển hướng bạn trở lại bảng quản trị."
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "d0A6B0"
-msgid "Stop Impersonating"
-msgstr "Dừng đóng vai"
-
 #: components/layout/not-found-page.tsx
 msgctxt "QRccCM"
 msgid "Page not found"
@@ -1854,10 +1841,15 @@ msgctxt "yAbaof"
 msgid "The page you are looking for does not exist."
 msgstr "Trang bạn đang tìm kiếm không tồn tại."
 
-#: components/layout/offline-indicator.tsx
+#: components/layout/offline-notifier.tsx
 msgctxt "W-XYsV"
 msgid "You are currently offline."
 msgstr "Bạn hiện đang ngoại tuyến."
+
+#: components/layout/offline-notifier.tsx
+msgctxt "f_mGkR"
+msgid "You are back online."
+msgstr "Bạn đã trực tuyến trở lại."
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1908,6 +1900,36 @@ msgstr "Bạn có chắc chắn muốn đăng xuất không?"
 msgctxt "naYgGy"
 msgid "You will need to sign in again to access your account."
 msgstr "Bạn sẽ cần đăng nhập lại để truy cập tài khoản của mình."
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "H1m7wl"
+msgid "Failed to stop impersonating! Please try again later."
+msgstr "Dừng đóng vai thất bại! Vui lòng thử lại sau."
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "LKxCOb"
+msgid "Impersonating"
+msgstr "Đang đóng vai"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "fA8c13"
+msgid "Stop impersonating this user?"
+msgstr "Dừng đóng vai người dùng này?"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "AB6aDn"
+msgid "You are currently impersonating"
+msgstr "Bạn hiện đang đóng vai"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "eybH_m"
+msgid "Stopping will restore your admin session and redirect you back to the admin panel."
+msgstr "Việc dừng lại sẽ khôi phục phiên quản trị viên của bạn và chuyển hướng bạn trở lại bảng quản trị."
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "d0A6B0"
+msgid "Stop Impersonating"
+msgstr "Dừng đóng vai"
 
 #: components/password-input.tsx
 msgctxt "K3fWTv"
@@ -2069,16 +2091,6 @@ msgstr "Mỗi {days} ngày"
 msgctxt "b-8NFf"
 msgid "Next: {date}"
 msgstr "Tiếp theo: {date}"
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "M3ZAZv"
-msgid "Failed to terminate session! Please try again later."
-msgstr "Chấm dứt phiên thất bại! Vui lòng thử lại sau."
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "tNzaek"
-msgid "Session terminated."
-msgstr "Phiên đã bị chấm dứt."
 
 #: components/settings/active-sessions-dialog.tsx
 msgctxt "HuQudj"

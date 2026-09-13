@@ -9,7 +9,7 @@ import { nunito } from "@/app/fonts"
 import { siteConfig } from "@/app/pffa.config"
 import { Toaster } from "@/components/ui/sonner"
 import { ClientLang } from "@/components/layout/client-lang"
-import { OfflineIndicator } from "@/components/layout/offline-indicator"
+import { OfflineNotifier } from "@/components/layout/offline-notifier"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
 import { SchemaMessagesContext } from "@/context/schema-messages-context"
@@ -92,7 +92,7 @@ async function AppLayout({
     <NextIntlClientProvider>
       <SchemaMessagesContext value={schemaMessages}>
         <ClientLang />
-        <OfflineIndicator />
+        <OfflineNotifier />
         <Toaster richColors closeButton />
         <Suspense
           fallback={

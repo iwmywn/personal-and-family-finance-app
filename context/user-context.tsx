@@ -7,7 +7,7 @@ import type { Session, User } from "@/lib/definitions"
 type UserContextValue = {
   user: User
   session: Session
-  activeSessions: Session[]
+  sessions: Session[]
 }
 
 export const UserContext = React.createContext<UserContextValue | null>(null)

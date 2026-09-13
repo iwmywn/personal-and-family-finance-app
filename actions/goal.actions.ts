@@ -11,7 +11,7 @@ import { getSchemas } from "@/schemas/server"
 import type { GoalFormValues } from "@/schemas/types"
 
 import { isValidUserCategory } from "./category.actions"
-import { getCurrentSession } from "./session.actions"
+import { getSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
 export async function createGoal(
@@ -27,7 +27,7 @@ export async function createGoal(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -86,7 +86,7 @@ export async function updateGoal(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -144,7 +144,7 @@ export async function deleteGoal(goalId: string): Promise<ActionResponse> {
       }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -174,7 +174,7 @@ export async function getGoals(): Promise<{
   error?: string
   goals?: Goal[]
 }> {
-  const { error, user, session } = await getCurrentSession()
+  const { error, user, session } = await getSession()
 
   if (!user || !session) {
     return { error }

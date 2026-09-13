@@ -11,7 +11,7 @@ import { getSchemas } from "@/schemas/server"
 import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 import { isValidUserCategory } from "./category.actions"
-import { getCurrentSession } from "./session.actions"
+import { getSession } from "./session.actions"
 import { toDecimal128 } from "./utils"
 
 export async function createRecurringTransaction(
@@ -27,7 +27,7 @@ export async function createRecurringTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -97,7 +97,7 @@ export async function updateRecurringTransaction(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -169,7 +169,7 @@ export async function deleteRecurringTransaction(
       }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -205,7 +205,7 @@ export async function getRecurringTransactions(): Promise<{
   error?: string
   recurringTransactions?: RecurringTransaction[]
 }> {
-  const { error, user, session } = await getCurrentSession()
+  const { error, user, session } = await getSession()
 
   if (!user || !session) {
     return { error }

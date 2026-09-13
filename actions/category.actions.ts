@@ -19,7 +19,7 @@ import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { CategoryFormValues } from "@/schemas/types"
 
-import { getCurrentSession } from "./session.actions"
+import { getSession } from "./session.actions"
 
 export async function isValidUserCategory(
   userId: string,
@@ -67,7 +67,7 @@ export async function createCustomCategory(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -113,7 +113,7 @@ export async function updateCustomCategory(
       return { error: t("Invalid data!") }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -181,7 +181,7 @@ export async function deleteCustomCategory(
       }
     }
 
-    const { error, user, session } = await getCurrentSession()
+    const { error, user, session } = await getSession()
 
     if (!user || !session) {
       return { error }
@@ -324,7 +324,7 @@ export async function getCustomCategories(): Promise<{
   error?: string
   customCategories?: Category[]
 }> {
-  const { error, user, session } = await getCurrentSession()
+  const { error, user, session } = await getSession()
 
   if (!user || !session) {
     return { error }

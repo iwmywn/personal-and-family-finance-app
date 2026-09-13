@@ -28,7 +28,7 @@ import type {
   AdminUserFormValues,
 } from "@/schemas/types"
 
-import { getCurrentSession } from "./session.actions"
+import { getSession } from "./session.actions"
 
 export type AdminStats = {
   totalUsers: number
@@ -38,17 +38,18 @@ export type AdminStats = {
 }
 
 async function verifyAdmin() {
-  const [t, result] = await Promise.all([getExtracted(), getCurrentSession()])
+  const [t, { user, session }] = await Promise.all([
+    getExtracted(),
+    getSession(),
+  ])
 
-  if (!result.user || !result.session || !isAdminRole(result.user.role)) {
+  if (!user || !session || !isAdminRole(user.role)) {
     return { error: t("Access denied! Admin privileges required.") }
   }
 
   return {
-    session: {
-      user: result.user,
-      session: result.session,
-    },
+    user,
+    session,
   }
 }
 
@@ -65,13 +66,13 @@ export async function createUser(
       return { error: t("Invalid data!") }
     }
 
-    const { error, session } = await verifyAdmin()
+    const { error, user, session } = await verifyAdmin()
 
-    if (!session) {
+    if (!user || !session) {
       return { error }
     }
 
-    const isCurrentSuperAdmin = isSuperAdminRole(session.user.role)
+    const isCurrentSuperAdmin = isSuperAdminRole(user.role)
 
     if (!isCurrentSuperAdmin && parsedValues.data.role !== DEFAULT_ROLE) {
       return { error: t("You cannot assign this role!") }
@@ -112,12 +113,6 @@ export async function setUserRole(
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const { error, session } = await verifyAdmin()
-
-    if (!session) {
-      return { error }
-    }
-
     if (!ObjectId.isValid(userId)) {
       return {
         error: t("Invalid user ID!"),
@@ -131,7 +126,13 @@ export async function setUserRole(
       return { error: t("Invalid data!") }
     }
 
-    if (session.user.id === userId) {
+    const { error, user, session } = await verifyAdmin()
+
+    if (!user || !session) {
+      return { error }
+    }
+
+    if (user.id === userId) {
       return { error: t("You cannot change your own role!") }
     }
 
@@ -145,7 +146,7 @@ export async function setUserRole(
     }
 
     if (
-      session.user.role === "admin" &&
+      user.role === "admin" &&
       (isAdminRole(targetUser.role) || role === "admin")
     ) {
       return { error: t("Access denied! Admin privileges required.") }
@@ -173,12 +174,6 @@ export async function setUserPassword(
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const { error, session } = await verifyAdmin()
-
-    if (!session) {
-      return { error }
-    }
-
     if (!ObjectId.isValid(userId)) {
       return {
         error: t("Invalid user ID!"),
@@ -192,6 +187,12 @@ export async function setUserPassword(
       return { error: t("Invalid data!") }
     }
 
+    const { error, user, session } = await verifyAdmin()
+
+    if (!user || !session) {
+      return { error }
+    }
+
     const usersCollection = await getUsersCollection()
     const targetUser = await usersCollection.findOne({
       _id: new ObjectId(userId),
@@ -201,7 +202,7 @@ export async function setUserPassword(
       return { error: t("User not found!") }
     }
 
-    if (session.user.role === "admin" && isAdminRole(targetUser.role)) {
+    if (user.role === "admin" && isAdminRole(targetUser.role)) {
       return { error: t("Access denied! Admin privileges required.") }
     }
 
@@ -224,19 +225,19 @@ export async function deleteUser(userId: string): Promise<ActionResponse> {
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const { error, session } = await verifyAdmin()
-
-    if (!session) {
-      return { error }
-    }
-
     if (!ObjectId.isValid(userId)) {
       return {
         error: t("Invalid user ID!"),
       }
     }
 
-    if (session.user.id === userId) {
+    const { error, user, session } = await verifyAdmin()
+
+    if (!user || !session) {
+      return { error }
+    }
+
+    if (user.id === userId) {
       return { error: t("You cannot delete your own account!") }
     }
 
@@ -248,7 +249,7 @@ export async function deleteUser(userId: string): Promise<ActionResponse> {
       return { error: t("User not found!") }
     }
 
-    if (session.user.role === "admin" && isAdminRole(targetUser.role)) {
+    if (user.role === "admin" && isAdminRole(targetUser.role)) {
       return { error: t("Access denied! Admin privileges required.") }
     }
 
@@ -375,6 +376,6 @@ export async function listUsers(): Promise<{
     }
   } catch (error) {
     console.error("Error listing users:", error)
-    return { error: t("Failed to load users! Please try again later.") }
+    return { error: t("Failed to list users! Please try again later.") }
   }
 }

@@ -101,9 +101,9 @@ msgid "Failed to fetch admin stats! Please try again later."
 msgstr "Failed to fetch admin stats! Please try again later."
 
 #: actions/admin.actions.ts
-msgctxt "fVUGHi"
-msgid "Failed to load users! Please try again later."
-msgstr "Failed to load users! Please try again later."
+msgctxt "gfVKAY"
+msgid "Failed to list users! Please try again later."
+msgstr "Failed to list users! Please try again later."
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -379,6 +379,23 @@ msgstr "Access denied! Please refresh the page and try again."
 msgctxt "sc5uVX"
 msgid "Failed to get session! Please try again later."
 msgstr "Failed to get session! Please try again later."
+
+#: actions/session.actions.ts
+msgctxt "vra063"
+msgid "Session not found."
+msgstr "Session not found."
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "tNzaek"
+msgid "Session terminated."
+msgstr "Session terminated."
+
+#: actions/session.actions.ts
+#: components/settings/active-sessions-dialog.tsx
+msgctxt "M3ZAZv"
+msgid "Failed to terminate session! Please try again later."
+msgstr "Failed to terminate session! Please try again later."
 
 #: actions/transaction.actions.ts
 msgctxt "JSmQV_"
@@ -875,8 +892,8 @@ msgstr "Expires on"
 #: components/categories/delete-category-dialog.tsx
 #: components/goals/delete-goal-dialog.tsx
 #: components/goals/goal-dialog.tsx
-#: components/layout/impersonation-indicator.tsx
 #: components/layout/secondary-nav.tsx
+#: components/layout/stop-impersonation-dialog.tsx
 #: components/recurring-transactions/delete-recurring-transaction-dialog.tsx
 #: components/recurring-transactions/recurring-transaction-dialog.tsx
 #: components/settings/change-name-dialog.tsx
@@ -1814,36 +1831,6 @@ msgctxt "EjH-J3"
 msgid "Please try again later."
 msgstr "Please try again later."
 
-#: components/layout/impersonation-indicator.tsx
-msgctxt "H1m7wl"
-msgid "Failed to stop impersonating! Please try again later."
-msgstr "Failed to stop impersonating! Please try again later."
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "LKxCOb"
-msgid "Impersonating"
-msgstr "Impersonating"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "fA8c13"
-msgid "Stop impersonating this user?"
-msgstr "Stop impersonating this user?"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "AB6aDn"
-msgid "You are currently impersonating"
-msgstr "You are currently impersonating"
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "eybH_m"
-msgid "Stopping will restore your admin session and redirect you back to the admin panel."
-msgstr "Stopping will restore your admin session and redirect you back to the admin panel."
-
-#: components/layout/impersonation-indicator.tsx
-msgctxt "d0A6B0"
-msgid "Stop Impersonating"
-msgstr "Stop Impersonating"
-
 #: components/layout/not-found-page.tsx
 msgctxt "QRccCM"
 msgid "Page not found"
@@ -1854,10 +1841,15 @@ msgctxt "yAbaof"
 msgid "The page you are looking for does not exist."
 msgstr "The page you are looking for does not exist."
 
-#: components/layout/offline-indicator.tsx
+#: components/layout/offline-notifier.tsx
 msgctxt "W-XYsV"
 msgid "You are currently offline."
 msgstr "You are currently offline."
+
+#: components/layout/offline-notifier.tsx
+msgctxt "f_mGkR"
+msgid "You are back online."
+msgstr "You are back online."
 
 #: components/layout/page-data-provider.tsx
 msgctxt "iKuJb1"
@@ -1908,6 +1900,36 @@ msgstr "Are you sure you want to sign out?"
 msgctxt "naYgGy"
 msgid "You will need to sign in again to access your account."
 msgstr "You will need to sign in again to access your account."
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "H1m7wl"
+msgid "Failed to stop impersonating! Please try again later."
+msgstr "Failed to stop impersonating! Please try again later."
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "LKxCOb"
+msgid "Impersonating"
+msgstr "Impersonating"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "fA8c13"
+msgid "Stop impersonating this user?"
+msgstr "Stop impersonating this user?"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "AB6aDn"
+msgid "You are currently impersonating"
+msgstr "You are currently impersonating"
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "eybH_m"
+msgid "Stopping will restore your admin session and redirect you back to the admin panel."
+msgstr "Stopping will restore your admin session and redirect you back to the admin panel."
+
+#: components/layout/stop-impersonation-dialog.tsx
+msgctxt "d0A6B0"
+msgid "Stop Impersonating"
+msgstr "Stop Impersonating"
 
 #: components/password-input.tsx
 msgctxt "K3fWTv"
@@ -2069,16 +2091,6 @@ msgstr "Every {days} days"
 msgctxt "b-8NFf"
 msgid "Next: {date}"
 msgstr "Next: {date}"
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "M3ZAZv"
-msgid "Failed to terminate session! Please try again later."
-msgstr "Failed to terminate session! Please try again later."
-
-#: components/settings/active-sessions-dialog.tsx
-msgctxt "tNzaek"
-msgid "Session terminated."
-msgstr "Session terminated."
 
 #: components/settings/active-sessions-dialog.tsx
 msgctxt "HuQudj"
