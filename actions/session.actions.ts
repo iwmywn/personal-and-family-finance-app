@@ -79,7 +79,9 @@ export async function revokeSessionById(
   const [t, headersList] = await Promise.all([getExtracted(), headers()])
 
   try {
-    const { sessions } = await getSessions()
+    const sessions = await auth.api.listSessions({
+      headers: headersList,
+    })
 
     const targetSession = sessions?.find((s) => s.id === sessionId)
     if (!targetSession) {
