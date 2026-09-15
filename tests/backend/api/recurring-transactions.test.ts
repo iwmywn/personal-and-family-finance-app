@@ -5,7 +5,7 @@ import {
   insertTestRecurringTransaction,
   insertTestTransaction,
 } from "@/tests/backend/helpers/database"
-import { mockRecurringTransaction } from "@/tests/shared/data"
+import { mockDBRecurringTransaction } from "@/tests/shared/data"
 import { GET } from "@/app/api/(cronjobs)/recurring-transactions/route"
 import { shouldGenerateToday } from "@/app/api/(cronjobs)/recurring-transactions/utils"
 import {
@@ -23,7 +23,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("daily frequency", () => {
       it("should return false when today is before start date", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
         }
@@ -34,7 +34,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return true when today is start date with no lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           lastGeneratedDate: undefined,
@@ -46,7 +46,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return true when today is next day after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -58,7 +58,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is same as lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -70,7 +70,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is after end date", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           endDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -84,7 +84,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("weekly frequency", () => {
       it("should return true when today is exactly 7 days after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "weekly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-08")),
@@ -96,7 +96,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return true when today is 7 days after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "weekly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-08")),
@@ -108,7 +108,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is not 7 days after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "weekly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -120,7 +120,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is same as lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "weekly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -134,7 +134,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("bi-weekly frequency", () => {
       it("should return true when today is exactly 14 days after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "bi-weekly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-05")),
@@ -146,7 +146,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is only 7 days after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "bi-weekly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-05")),
@@ -158,7 +158,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return true when today is exactly 14 days after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "bi-weekly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-01")),
@@ -172,7 +172,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("monthly frequency", () => {
       it("should return true when today is the same day in the next month", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -184,7 +184,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return true when today is the same day in next month after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -196,7 +196,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is not the same day in next month", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -208,7 +208,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should handle day 31 in months with fewer days (normalize to last day)", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-31")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-31")),
@@ -220,7 +220,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should handle day 31 in February (normalize to 28/29)", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-31")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-31")),
@@ -233,7 +233,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should maintain anchor day from startDate even if previous month normalized to shorter day", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-31")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-02-29")),
@@ -245,7 +245,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should not drift day if lastGeneratedDate differs from startDate day", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-20")),
@@ -259,7 +259,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("quarterly frequency", () => {
       it("should return true when today is the same day 3 months after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "quarterly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -271,7 +271,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is only 1 month after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "quarterly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -285,7 +285,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("yearly frequency", () => {
       it("should return true when today is the same day 1 year after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "yearly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -298,7 +298,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is only 6 months after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "yearly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -310,7 +310,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should handle leap year correctly", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "yearly",
           startDate: localDateToUTCMidnight(new Date("2024-02-29")), // Leap year
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-02-29")),
@@ -325,7 +325,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("random frequency", () => {
       it("should return true when today is exactly randomEveryXDays after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "random",
           randomEveryXDays: 5,
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
@@ -338,7 +338,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is less than randomEveryXDays after lastGeneratedDate", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "random",
           randomEveryXDays: 5,
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
@@ -353,7 +353,7 @@ describe("Recurring Transactions Cron Job", () => {
     describe("edge cases", () => {
       it("should return false when today is exactly on end date", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           endDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -367,7 +367,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should return false when today is one day after end date", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           endDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -380,7 +380,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should handle recurring transaction without end date", () => {
         const rec: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "daily",
           startDate: localDateToUTCMidnight(new Date("2024-01-10")),
           endDate: undefined,
@@ -440,7 +440,7 @@ describe("Recurring Transactions Cron Job", () => {
         const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
 
         const recurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: lastMonthUTC,
@@ -495,7 +495,7 @@ describe("Recurring Transactions Cron Job", () => {
         const yesterdayUTC = localDateToUTCMidnight(new Date("2024-02-01"))
 
         const recurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: yesterdayUTC,
@@ -541,7 +541,7 @@ describe("Recurring Transactions Cron Job", () => {
         const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
 
         const recurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: lastMonthUTC,
@@ -610,14 +610,14 @@ describe("Recurring Transactions Cron Job", () => {
         const yesterdayUTC = localDateToUTCMidnight(new Date("2024-01-31"))
 
         const recurringTransaction1: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: lastMonthUTC, // Will generate on 2024-02-01
         }
 
         const recurringTransaction2: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           _id: new ObjectId("691d58b68a6aa5c9e69aad22"),
           frequency: "daily",
           categoryKey: "business_freelance", // Different category to avoid duplicate check
@@ -626,7 +626,7 @@ describe("Recurring Transactions Cron Job", () => {
         }
 
         const recurringTransaction3: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-15")),
@@ -673,14 +673,14 @@ describe("Recurring Transactions Cron Job", () => {
         const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
 
         const activeRecurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           lastGeneratedDate: lastMonthUTC, // Will generate on 2024-02-01
         }
 
         const inactiveRecurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           _id: new ObjectId(),
           description: "Inactive Monthly Salary",
           frequency: "monthly",
@@ -747,7 +747,7 @@ describe("Recurring Transactions Cron Job", () => {
         const yesterdayUTC = localDateToUTCMidnight(new Date("2024-01-31"))
 
         const expiredRecurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           _id: new ObjectId("691d58b68a6aa5c9e69aad22"),
           description: "Expired Monthly Salary",
           frequency: "monthly",
@@ -757,7 +757,7 @@ describe("Recurring Transactions Cron Job", () => {
         }
 
         const activeRecurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
@@ -800,7 +800,7 @@ describe("Recurring Transactions Cron Job", () => {
 
       it("should not deactivate recurring transactions without end date", async () => {
         const activeRecurringTransaction: DBRecurringTransaction = {
-          ...mockRecurringTransaction,
+          ...mockDBRecurringTransaction,
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),

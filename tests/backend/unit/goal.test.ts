@@ -7,7 +7,11 @@ import {
   mockAuthenticatedUser,
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
-import { mockGoal, mockUser, mockValidGoalValues } from "@/tests/shared/data"
+import {
+  mockDBGoal,
+  mockDBUser,
+  mockValidGoalValues,
+} from "@/tests/shared/data"
 import {
   createGoal,
   deleteGoal,
@@ -39,16 +43,16 @@ describe("Goals", async () => {
     })
 
     it("should return error when goal already exists", async () => {
-      await insertTestGoal(mockGoal)
+      await insertTestGoal(mockDBGoal)
       mockAuthenticatedUser()
 
       const result = await createGoal({
-        categoryKey: mockGoal.categoryKey,
-        currency: mockGoal.currency,
-        name: mockGoal.name,
+        categoryKey: mockDBGoal.categoryKey,
+        currency: mockDBGoal.currency,
+        name: mockDBGoal.name,
         targetAmount: "2000000",
-        startDate: localDateToUTCMidnight(mockGoal.startDate),
-        endDate: localDateToUTCMidnight(mockGoal.endDate),
+        startDate: localDateToUTCMidnight(mockDBGoal.startDate),
+        endDate: localDateToUTCMidnight(mockDBGoal.endDate),
       })
 
       expect(result.success).toBeUndefined()
@@ -56,16 +60,16 @@ describe("Goals", async () => {
     })
 
     it("should allow creating multiple goals in same category and timeframe with different names", async () => {
-      await insertTestGoal(mockGoal)
+      await insertTestGoal(mockDBGoal)
       mockAuthenticatedUser()
 
       const result = await createGoal({
-        categoryKey: mockGoal.categoryKey,
-        currency: mockGoal.currency,
+        categoryKey: mockDBGoal.categoryKey,
+        currency: mockDBGoal.currency,
         name: "buy a second vehicle",
         targetAmount: "30000000",
-        startDate: localDateToUTCMidnight(mockGoal.startDate),
-        endDate: localDateToUTCMidnight(mockGoal.endDate),
+        startDate: localDateToUTCMidnight(mockDBGoal.startDate),
+        endDate: localDateToUTCMidnight(mockDBGoal.endDate),
       })
 
       expect(result.success).toBe("Goal has been created.")
@@ -90,7 +94,7 @@ describe("Goals", async () => {
       const result = await createGoal(mockValidGoalValues)
       const goalsCollection = await getGoalsCollection()
       const addedGoal = await goalsCollection.findOne({
-        userId: mockUser._id,
+        userId: mockDBUser._id,
       })
 
       expect(addedGoal?.categoryKey).toBe("salary_bonus")
@@ -152,7 +156,7 @@ describe("Goals", async () => {
   describe("updateGoal", () => {
     it("should return error when data is invalid", async () => {
       // @ts-expect-error - Testing invalid data
-      const result = await updateGoal(mockGoal._id.toString(), {})
+      const result = await updateGoal(mockDBGoal._id.toString(), {})
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Invalid data!")
@@ -162,7 +166,7 @@ describe("Goals", async () => {
       mockUnauthenticatedUser()
 
       const result = await updateGoal(
-        mockGoal._id.toString(),
+        mockDBGoal._id.toString(),
         mockValidGoalValues
       )
 
@@ -185,7 +189,7 @@ describe("Goals", async () => {
       mockAuthenticatedUser()
 
       const result = await updateGoal(
-        mockGoal._id.toString(),
+        mockDBGoal._id.toString(),
         mockValidGoalValues
       )
 
@@ -196,10 +200,10 @@ describe("Goals", async () => {
     })
 
     it("should return error when another user tries to update", async () => {
-      await insertTestGoal(mockGoal)
+      await insertTestGoal(mockDBGoal)
       mockAuthenticatedAsAnotherUser()
 
-      const result = await updateGoal(mockGoal._id.toString(), {
+      const result = await updateGoal(mockDBGoal._id.toString(), {
         categoryKey: "salary_bonus",
         name: "Hacked goal",
         targetAmount: "9999999",
@@ -209,7 +213,7 @@ describe("Goals", async () => {
       })
       const goalsCollection = await getGoalsCollection()
       const unchangedGoal = await goalsCollection.findOne({
-        _id: mockGoal._id,
+        _id: mockDBGoal._id,
       })
 
       expect(result.success).toBeUndefined()
@@ -221,16 +225,16 @@ describe("Goals", async () => {
 
     it("should successfully update goal", async () => {
       await Promise.all([
-        insertTestGoal(mockGoal),
+        insertTestGoal(mockDBGoal),
         insertTestGoal({
-          ...mockGoal,
+          ...mockDBGoal,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
           currency: "USD",
         }),
       ])
       mockAuthenticatedUser()
 
-      const result = await updateGoal(mockGoal._id.toString(), {
+      const result = await updateGoal(mockDBGoal._id.toString(), {
         categoryKey: "investment_passive",
         name: "Mua nhà",
         targetAmount: "2000000000",
@@ -240,7 +244,7 @@ describe("Goals", async () => {
       })
       const goalsCollection = await getGoalsCollection()
       const updatedGoal = await goalsCollection.findOne({
-        _id: mockGoal._id,
+        _id: mockDBGoal._id,
       })
       const unrelatedGoal = await goalsCollection.findOne({
         _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
@@ -264,7 +268,7 @@ describe("Goals", async () => {
     it("should reject goal update with outflow category", async () => {
       mockAuthenticatedUser()
 
-      const result = await updateGoal(mockGoal._id.toString(), {
+      const result = await updateGoal(mockDBGoal._id.toString(), {
         ...mockValidGoalValues,
         categoryKey: "housing",
       })
@@ -275,9 +279,9 @@ describe("Goals", async () => {
 
     it("should return error when updating goal causes duplicate key collision", async () => {
       await Promise.all([
-        insertTestGoal(mockGoal),
+        insertTestGoal(mockDBGoal),
         insertTestGoal({
-          ...mockGoal,
+          ...mockDBGoal,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
           currency: "USD",
         }),
@@ -285,12 +289,12 @@ describe("Goals", async () => {
       mockAuthenticatedUser()
 
       const result = await updateGoal("690d2e5f7d5c36bf6c82ff1f", {
-        categoryKey: mockGoal.categoryKey,
-        name: mockGoal.name,
+        categoryKey: mockDBGoal.categoryKey,
+        name: mockDBGoal.name,
         currency: "VND",
-        targetAmount: mockGoal.targetAmount.toString(),
-        startDate: mockGoal.startDate,
-        endDate: mockGoal.endDate,
+        targetAmount: mockDBGoal.targetAmount.toString(),
+        startDate: mockDBGoal.startDate,
+        endDate: mockDBGoal.endDate,
       })
 
       expect(result.success).toBeUndefined()
@@ -300,12 +304,12 @@ describe("Goals", async () => {
     it("should prevent race condition when updating duplicate goals concurrently", async () => {
       await Promise.all([
         insertTestGoal({
-          ...mockGoal,
+          ...mockDBGoal,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1e"),
           currency: "USD",
         }),
         insertTestGoal({
-          ...mockGoal,
+          ...mockDBGoal,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
           currency: "JPY",
         }),
@@ -313,12 +317,12 @@ describe("Goals", async () => {
       mockAuthenticatedUser()
 
       const targetValues = {
-        categoryKey: mockGoal.categoryKey,
+        categoryKey: mockDBGoal.categoryKey,
         name: "Target Goal",
         currency: "VND" as const,
-        targetAmount: mockGoal.targetAmount.toString(),
-        startDate: mockGoal.startDate,
-        endDate: mockGoal.endDate,
+        targetAmount: mockDBGoal.targetAmount.toString(),
+        startDate: mockDBGoal.startDate,
+        endDate: mockDBGoal.endDate,
       }
 
       const [firstResult, secondResult] = await Promise.all([
@@ -343,7 +347,7 @@ describe("Goals", async () => {
       mockGoalCollectionError()
 
       const result = await updateGoal(
-        mockGoal._id.toString(),
+        mockDBGoal._id.toString(),
         mockValidGoalValues
       )
 
@@ -358,7 +362,7 @@ describe("Goals", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await deleteGoal(mockGoal._id.toString())
+      const result = await deleteGoal(mockDBGoal._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -378,7 +382,7 @@ describe("Goals", async () => {
     it("should return error when goal not found", async () => {
       mockAuthenticatedUser()
 
-      const result = await deleteGoal(mockGoal._id.toString())
+      const result = await deleteGoal(mockDBGoal._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -387,13 +391,13 @@ describe("Goals", async () => {
     })
 
     it("should return error when another user tries to delete", async () => {
-      await insertTestGoal(mockGoal)
+      await insertTestGoal(mockDBGoal)
       mockAuthenticatedAsAnotherUser()
 
-      const result = await deleteGoal(mockGoal._id.toString())
+      const result = await deleteGoal(mockDBGoal._id.toString())
       const goalsCollection = await getGoalsCollection()
       const unchangedGoal = await goalsCollection.findOne({
-        _id: mockGoal._id,
+        _id: mockDBGoal._id,
       })
 
       expect(result.success).toBeUndefined()
@@ -404,13 +408,13 @@ describe("Goals", async () => {
     })
 
     it("should successfully delete goal", async () => {
-      await insertTestGoal(mockGoal)
+      await insertTestGoal(mockDBGoal)
       mockAuthenticatedUser()
 
-      const result = await deleteGoal(mockGoal._id.toString())
+      const result = await deleteGoal(mockDBGoal._id.toString())
       const goalsCollection = await getGoalsCollection()
       const deletedGoal = await goalsCollection.findOne({
-        _id: mockGoal._id,
+        _id: mockDBGoal._id,
       })
 
       expect(deletedGoal).toBe(null)
@@ -422,7 +426,7 @@ describe("Goals", async () => {
       mockAuthenticatedUser()
       mockGoalCollectionError()
 
-      const result = await deleteGoal(mockGoal._id.toString())
+      const result = await deleteGoal(mockDBGoal._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -453,7 +457,7 @@ describe("Goals", async () => {
     })
 
     it("should return goals list", async () => {
-      await insertTestGoal(mockGoal)
+      await insertTestGoal(mockDBGoal)
       mockAuthenticatedUser()
 
       const result = await getGoals()
@@ -467,18 +471,18 @@ describe("Goals", async () => {
 
     it("should return goals sorted by startDate and _id descending", async () => {
       const goal1 = {
-        ...mockGoal,
+        ...mockDBGoal,
         _id: new ObjectId("68f896e5cda4897217a05a2d"),
         startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const goal2 = {
-        ...mockGoal,
+        ...mockDBGoal,
         _id: new ObjectId("68f896e5cda4897217a05a2e"),
         categoryKey: "business_freelance",
         startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const goal3 = {
-        ...mockGoal,
+        ...mockDBGoal,
         _id: new ObjectId("68f896e5cda4897217a05a2f"),
         startDate: localDateToUTCMidnight(new Date("2024-02-01")),
       }

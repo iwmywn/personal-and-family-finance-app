@@ -6,18 +6,22 @@ import { getExtracted } from "next-intl/server"
 
 import { auth } from "@/lib/auth"
 import type { ActionResponse, Session, User } from "@/lib/definitions"
+import { isAdminRole } from "@/lib/role"
 
 /**
  * Get current active session.
  */
 export const getSession = cache(
-  async (): Promise<
+  async (
+    requireAdmin: boolean = false
+  ): Promise<
     | { error: string; user?: never; session?: never }
     | { error?: never; user: User; session: Session }
   > => {
-    const [t, headersList] = await Promise.all([getExtracted(), headers()])
+    const t = await getExtracted()
 
     try {
+      const headersList = await headers()
       const session = await auth.api.getSession({
         headers: headersList,
       })
@@ -26,6 +30,12 @@ export const getSession = cache(
         return {
           error: t("Access denied! Please refresh the page and try again."),
         }
+
+      if (requireAdmin && !isAdminRole(session.user.role)) {
+        return {
+          error: t("Access denied! Admin privileges required."),
+        }
+      }
 
       return {
         user: session.user,
@@ -48,9 +58,10 @@ export const getSessions = cache(
   async (): Promise<
     { error: string; sessions?: never } | { error?: never; sessions: Session[] }
   > => {
-    const [t, headersList] = await Promise.all([getExtracted(), headers()])
+    const t = await getExtracted()
 
     try {
+      const headersList = await headers()
       const sessions = await auth.api.listSessions({
         headers: headersList,
       })
@@ -76,9 +87,10 @@ export const getSessions = cache(
 export async function revokeSessionById(
   sessionId: string
 ): Promise<ActionResponse> {
-  const [t, headersList] = await Promise.all([getExtracted(), headers()])
+  const t = await getExtracted()
 
   try {
+    const headersList = await headers()
     const sessions = await auth.api.listSessions({
       headers: headersList,
     })

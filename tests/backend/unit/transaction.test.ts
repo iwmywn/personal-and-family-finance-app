@@ -8,8 +8,8 @@ import {
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
 import {
-  mockTransaction,
-  mockUser,
+  mockDBTransaction,
+  mockDBUser,
   mockValidTransactionValues,
 } from "@/tests/shared/data"
 import {
@@ -64,7 +64,7 @@ describe("Transactions", async () => {
       const result = await createTransaction(mockValidTransactionValues)
       const transactionsCollection = await getTransactionsCollection()
       const addedTransaction = await transactionsCollection.findOne({
-        userId: mockUser._id,
+        userId: mockDBUser._id,
       })
 
       expect(addedTransaction?.type).toBe("inflow")
@@ -166,8 +166,11 @@ describe("Transactions", async () => {
 
   describe("updateTransaction", () => {
     it("should return error when data is invalid", async () => {
-      // @ts-expect-error - Testing invalid data
-      const result = await updateTransaction(mockTransaction._id.toString(), {})
+      const result = await updateTransaction(
+        mockDBTransaction._id.toString(),
+        // @ts-expect-error - Testing invalid data
+        {}
+      )
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Invalid data!")
@@ -177,7 +180,7 @@ describe("Transactions", async () => {
       mockUnauthenticatedUser()
 
       const result = await updateTransaction(
-        mockTransaction._id.toString(),
+        mockDBTransaction._id.toString(),
         mockValidTransactionValues
       )
 
@@ -203,7 +206,7 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
 
       const result = await updateTransaction(
-        mockTransaction._id.toString(),
+        mockDBTransaction._id.toString(),
         mockValidTransactionValues
       )
 
@@ -214,10 +217,10 @@ describe("Transactions", async () => {
     })
 
     it("should return error when another user tries to update", async () => {
-      await insertTestTransaction(mockTransaction)
+      await insertTestTransaction(mockDBTransaction)
       mockAuthenticatedAsAnotherUser()
 
-      const result = await updateTransaction(mockTransaction._id.toString(), {
+      const result = await updateTransaction(mockDBTransaction._id.toString(), {
         type: "outflow",
         categoryKey: "personal_care",
         amount: "100000",
@@ -227,7 +230,7 @@ describe("Transactions", async () => {
       })
       const transactionsCollection = await getTransactionsCollection()
       const unchangedTransaction = await transactionsCollection.findOne({
-        _id: mockTransaction._id,
+        _id: mockDBTransaction._id,
       })
 
       expect(result.success).toBeUndefined()
@@ -239,16 +242,16 @@ describe("Transactions", async () => {
 
     it("should successfully update transaction", async () => {
       await Promise.all([
-        insertTestTransaction(mockTransaction),
+        insertTestTransaction(mockDBTransaction),
         insertTestTransaction({
-          ...mockTransaction,
+          ...mockDBTransaction,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
           description: "pizza",
         }),
       ])
       mockAuthenticatedUser()
 
-      const result = await updateTransaction(mockTransaction._id.toString(), {
+      const result = await updateTransaction(mockDBTransaction._id.toString(), {
         type: "outflow",
         categoryKey: "personal_care",
         amount: "100000",
@@ -258,7 +261,7 @@ describe("Transactions", async () => {
       })
       const transactionsCollection = await getTransactionsCollection()
       const updatedTransaction = await transactionsCollection.findOne({
-        _id: mockTransaction._id,
+        _id: mockDBTransaction._id,
       })
       const unrelatedTransaction = await transactionsCollection.findOne({
         _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
@@ -281,9 +284,9 @@ describe("Transactions", async () => {
 
     it("should return error when updating transaction causes duplicate key collision", async () => {
       await Promise.all([
-        insertTestTransaction(mockTransaction),
+        insertTestTransaction(mockDBTransaction),
         insertTestTransaction({
-          ...mockTransaction,
+          ...mockDBTransaction,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
           description: "pizza",
         }),
@@ -291,12 +294,12 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
 
       const result = await updateTransaction("690d2e5f7d5c36bf6c82ff1f", {
-        type: mockTransaction.type,
-        categoryKey: mockTransaction.categoryKey,
-        amount: mockTransaction.amount.toString(),
-        currency: mockTransaction.currency,
-        description: mockTransaction.description,
-        date: mockTransaction.date,
+        type: mockDBTransaction.type,
+        categoryKey: mockDBTransaction.categoryKey,
+        amount: mockDBTransaction.amount.toString(),
+        currency: mockDBTransaction.currency,
+        description: mockDBTransaction.description,
+        date: mockDBTransaction.date,
       })
 
       expect(result.success).toBeUndefined()
@@ -308,12 +311,12 @@ describe("Transactions", async () => {
     it("should prevent race condition when updating duplicate transactions concurrently", async () => {
       await Promise.all([
         insertTestTransaction({
-          ...mockTransaction,
+          ...mockDBTransaction,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1e"),
           description: "pizza 1",
         }),
         insertTestTransaction({
-          ...mockTransaction,
+          ...mockDBTransaction,
           _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
           description: "pizza 2",
         }),
@@ -321,12 +324,12 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
 
       const targetValues = {
-        type: mockTransaction.type,
-        categoryKey: mockTransaction.categoryKey,
-        amount: mockTransaction.amount.toString(),
-        currency: mockTransaction.currency,
+        type: mockDBTransaction.type,
+        categoryKey: mockDBTransaction.categoryKey,
+        amount: mockDBTransaction.amount.toString(),
+        currency: mockDBTransaction.currency,
         description: "target pizza",
-        date: mockTransaction.date,
+        date: mockDBTransaction.date,
       }
 
       const [firstResult, secondResult] = await Promise.all([
@@ -353,7 +356,7 @@ describe("Transactions", async () => {
       mockTransactionCollectionError()
 
       const result = await updateTransaction(
-        mockTransaction._id.toString(),
+        mockDBTransaction._id.toString(),
         mockValidTransactionValues
       )
 
@@ -364,7 +367,7 @@ describe("Transactions", async () => {
     })
 
     it("should still update transaction when fetching exchange rate fails", async () => {
-      await insertTestTransaction(mockTransaction)
+      await insertTestTransaction(mockDBTransaction)
       mockAuthenticatedUser()
 
       const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
@@ -374,11 +377,11 @@ describe("Transactions", async () => {
       } as Response)
 
       const newDate = localDateToUTCMidnight(new Date("2026-03-01"))
-      const result = await updateTransaction(mockTransaction._id.toString(), {
-        type: mockTransaction.type,
-        categoryKey: mockTransaction.categoryKey,
-        amount: mockTransaction.amount.toString(),
-        currency: mockTransaction.currency,
+      const result = await updateTransaction(mockDBTransaction._id.toString(), {
+        type: mockDBTransaction.type,
+        categoryKey: mockDBTransaction.categoryKey,
+        amount: mockDBTransaction.amount.toString(),
+        currency: mockDBTransaction.currency,
         description: "attempted new description",
         date: newDate,
       })
@@ -388,7 +391,7 @@ describe("Transactions", async () => {
 
       const transactionsCollection = await getTransactionsCollection()
       const current = await transactionsCollection.findOne({
-        _id: mockTransaction._id,
+        _id: mockDBTransaction._id,
       })
       expect(current?.description).toBe("attempted new description")
       expect(current?.date.toISOString()).toBe(newDate.toISOString())
@@ -401,7 +404,7 @@ describe("Transactions", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await deleteTransaction(mockTransaction._id.toString())
+      const result = await deleteTransaction(mockDBTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -421,7 +424,7 @@ describe("Transactions", async () => {
     it("should return error when transaction not found", async () => {
       mockAuthenticatedUser()
 
-      const result = await deleteTransaction(mockTransaction._id.toString())
+      const result = await deleteTransaction(mockDBTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -430,13 +433,13 @@ describe("Transactions", async () => {
     })
 
     it("should return error when another user tries to delete", async () => {
-      await insertTestTransaction(mockTransaction)
+      await insertTestTransaction(mockDBTransaction)
       mockAuthenticatedAsAnotherUser()
 
-      const result = await deleteTransaction(mockTransaction._id.toString())
+      const result = await deleteTransaction(mockDBTransaction._id.toString())
       const transactionsCollection = await getTransactionsCollection()
       const unchangedTransaction = await transactionsCollection.findOne({
-        _id: mockTransaction._id,
+        _id: mockDBTransaction._id,
       })
 
       expect(result.success).toBeUndefined()
@@ -447,13 +450,13 @@ describe("Transactions", async () => {
     })
 
     it("should successfully delete transaction", async () => {
-      await insertTestTransaction(mockTransaction)
+      await insertTestTransaction(mockDBTransaction)
       mockAuthenticatedUser()
 
-      const result = await deleteTransaction(mockTransaction._id.toString())
+      const result = await deleteTransaction(mockDBTransaction._id.toString())
       const transactionsCollection = await getTransactionsCollection()
       const deletedTransaction = await transactionsCollection.findOne({
-        _id: mockTransaction._id,
+        _id: mockDBTransaction._id,
       })
 
       expect(deletedTransaction).toBe(null)
@@ -465,7 +468,7 @@ describe("Transactions", async () => {
       mockAuthenticatedUser()
       mockTransactionCollectionError()
 
-      const result = await deleteTransaction(mockTransaction._id.toString())
+      const result = await deleteTransaction(mockDBTransaction._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -496,7 +499,7 @@ describe("Transactions", async () => {
     })
 
     it("should return transactions list", async () => {
-      await insertTestTransaction(mockTransaction)
+      await insertTestTransaction(mockDBTransaction)
       mockAuthenticatedUser()
 
       const result = await getTransactions()
@@ -509,19 +512,19 @@ describe("Transactions", async () => {
 
     it("should return transactions sorted by date and _id descending", async () => {
       const transaction1 = {
-        ...mockTransaction,
+        ...mockDBTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8106"),
         description: "hamburger 1",
         date: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const transaction2 = {
-        ...mockTransaction,
+        ...mockDBTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8107"),
         description: "hamburger 2",
         date: localDateToUTCMidnight(new Date("2024-01-15")),
       }
       const transaction3 = {
-        ...mockTransaction,
+        ...mockDBTransaction,
         _id: new ObjectId("68f73357357d93dcbaae8108"),
         description: "hamburger 3",
         date: localDateToUTCMidnight(new Date("2024-02-15")),

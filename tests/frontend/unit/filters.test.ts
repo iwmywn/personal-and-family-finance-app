@@ -881,7 +881,7 @@ describe("Filters", () => {
   describe("filterUsers", () => {
     it("should return all users when filters are default", () => {
       const result = filterUsers(mockUsers, {})
-      expect(result).toHaveLength(5)
+      expect(result).toHaveLength(4)
     })
 
     it("should search users by name", () => {
@@ -899,9 +899,9 @@ describe("Filters", () => {
     })
 
     it("should search users by username", () => {
-      const result = filterUsers(mockUsers, { searchTerm: "superadmin" })
+      const result = filterUsers(mockUsers, { searchTerm: "admin" })
       expect(result).toHaveLength(1)
-      expect(result[0].id).toBe(mockUsers[3].id)
+      expect(result[0].id).toBe(mockUsers[2].id)
     })
 
     it("should filter users by role", () => {
@@ -909,33 +909,27 @@ describe("Filters", () => {
       expect(adminResult).toHaveLength(1)
       expect(adminResult[0].id).toBe(mockUsers[2].id)
 
-      const superadminResult = filterUsers(mockUsers, {
-        filterRole: "superadmin",
-      })
-      expect(superadminResult).toHaveLength(1)
-      expect(superadminResult[0].id).toBe(mockUsers[3].id)
-
       const userResult = filterUsers(mockUsers, { filterRole: "user" })
       expect(userResult).toHaveLength(3)
     })
 
     it("should filter users by status", () => {
       const activeResult = filterUsers(mockUsers, { filterStatus: "active" })
-      expect(activeResult).toHaveLength(4)
+      expect(activeResult).toHaveLength(3)
 
       const bannedResult = filterUsers(mockUsers, { filterStatus: "banned" })
       expect(bannedResult).toHaveLength(1)
-      expect(bannedResult[0].id).toBe(mockUsers[4].id)
+      expect(bannedResult[0].id).toBe(mockUsers[3].id)
     })
 
     it("should combine search, role, and status filters", () => {
       const result = filterUsers(mockUsers, {
-        searchTerm: "Super",
-        filterRole: "superadmin",
+        searchTerm: "Admin",
+        filterRole: "admin",
         filterStatus: "active",
       })
       expect(result).toHaveLength(1)
-      expect(result[0].id).toBe(mockUsers[3].id)
+      expect(result[0].id).toBe(mockUsers[2].id)
     })
 
     it("should return empty array when no matches found", () => {

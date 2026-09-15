@@ -139,16 +139,11 @@ export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
             <div className="bg-muted/50 rounded-lg p-3 text-sm">
               <p className="text-muted-foreground">
                 {t("Current ban reason")}:{" "}
-                <strong className="text-foreground">
-                  {user.banReason || t("No reason specified")}
-                </strong>
+                {user.banReason || t("No reason specified")}
               </p>
               {user.banExpires && (
                 <p className="text-muted-foreground mt-1">
-                  {t("Expires on")}:{" "}
-                  <strong className="text-foreground">
-                    {formatDate(user.banExpires)}
-                  </strong>
+                  {t("Expires on")}: {formatDate(user.banExpires)}
                 </p>
               )}
             </div>

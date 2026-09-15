@@ -8,8 +8,8 @@ import {
   mockUnauthenticatedUser,
 } from "@/tests/backend/mocks/session.mock"
 import {
-  mockBudget,
-  mockUser,
+  mockDBBudget,
+  mockDBUser,
   mockValidBudgetValues,
 } from "@/tests/shared/data"
 import {
@@ -43,15 +43,15 @@ describe("Budgets", async () => {
     })
 
     it("should return error when budget already exists", async () => {
-      await insertTestBudget(mockBudget)
+      await insertTestBudget(mockDBBudget)
       mockAuthenticatedUser()
 
       const result = await createBudget({
-        categoryKey: mockBudget.categoryKey,
-        currency: mockBudget.currency,
+        categoryKey: mockDBBudget.categoryKey,
+        currency: mockDBBudget.currency,
         allocatedAmount: "2000000",
-        startDate: localDateToUTCMidnight(mockBudget.startDate),
-        endDate: localDateToUTCMidnight(mockBudget.endDate),
+        startDate: localDateToUTCMidnight(mockDBBudget.startDate),
+        endDate: localDateToUTCMidnight(mockDBBudget.endDate),
       })
 
       expect(result.success).toBeUndefined()
@@ -88,7 +88,7 @@ describe("Budgets", async () => {
       const result = await createBudget(mockValidBudgetValues)
       const budgetsCollection = await getBudgetsCollection()
       const addedBudget = await budgetsCollection.findOne({
-        userId: mockUser._id,
+        userId: mockDBUser._id,
       })
 
       expect(addedBudget?.categoryKey).toBe("food_beverage")
@@ -139,7 +139,7 @@ describe("Budgets", async () => {
   describe("updateBudget", () => {
     it("should return error when data is invalid", async () => {
       // @ts-expect-error - Testing invalid data
-      const result = await updateBudget(mockBudget._id.toString(), {})
+      const result = await updateBudget(mockDBBudget._id.toString(), {})
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe("Invalid data!")
@@ -149,7 +149,7 @@ describe("Budgets", async () => {
       mockUnauthenticatedUser()
 
       const result = await updateBudget(
-        mockBudget._id.toString(),
+        mockDBBudget._id.toString(),
         mockValidBudgetValues
       )
 
@@ -172,7 +172,7 @@ describe("Budgets", async () => {
       mockAuthenticatedUser()
 
       const result = await updateBudget(
-        mockBudget._id.toString(),
+        mockDBBudget._id.toString(),
         mockValidBudgetValues
       )
 
@@ -183,10 +183,10 @@ describe("Budgets", async () => {
     })
 
     it("should return error when another user tries to update", async () => {
-      await insertTestBudget(mockBudget)
+      await insertTestBudget(mockDBBudget)
       mockAuthenticatedAsAnotherUser()
 
-      const result = await updateBudget(mockBudget._id.toString(), {
+      const result = await updateBudget(mockDBBudget._id.toString(), {
         categoryKey: "transportation",
         allocatedAmount: "9999999",
         currency: "VND",
@@ -195,7 +195,7 @@ describe("Budgets", async () => {
       })
       const budgetsCollection = await getBudgetsCollection()
       const unchangedBudget = await budgetsCollection.findOne({
-        _id: mockBudget._id,
+        _id: mockDBBudget._id,
       })
 
       expect(result.success).toBeUndefined()
@@ -207,16 +207,16 @@ describe("Budgets", async () => {
 
     it("should successfully update budget", async () => {
       await Promise.all([
-        insertTestBudget(mockBudget),
+        insertTestBudget(mockDBBudget),
         insertTestBudget({
-          ...mockBudget,
+          ...mockDBBudget,
           _id: new ObjectId("690ec0c23f50e19549bd7e52"),
           currency: "USD",
         }),
       ])
       mockAuthenticatedUser()
 
-      const result = await updateBudget(mockBudget._id.toString(), {
+      const result = await updateBudget(mockDBBudget._id.toString(), {
         categoryKey: "transportation",
         allocatedAmount: "2000000",
         currency: "VND",
@@ -225,7 +225,7 @@ describe("Budgets", async () => {
       })
       const budgetsCollection = await getBudgetsCollection()
       const updatedBudget = await budgetsCollection.findOne({
-        _id: mockBudget._id,
+        _id: mockDBBudget._id,
       })
       const unrelatedBudget = await budgetsCollection.findOne({
         _id: new ObjectId("690ec0c23f50e19549bd7e52"),
@@ -253,9 +253,9 @@ describe("Budgets", async () => {
 
     it("should return error when updating budget causes duplicate key collision", async () => {
       await Promise.all([
-        insertTestBudget(mockBudget),
+        insertTestBudget(mockDBBudget),
         insertTestBudget({
-          ...mockBudget,
+          ...mockDBBudget,
           _id: new ObjectId("690ec0c23f50e19549bd7e52"),
           currency: "USD",
         }),
@@ -263,11 +263,11 @@ describe("Budgets", async () => {
       mockAuthenticatedUser()
 
       const result = await updateBudget("690ec0c23f50e19549bd7e52", {
-        categoryKey: mockBudget.categoryKey,
+        categoryKey: mockDBBudget.categoryKey,
         currency: "VND",
-        allocatedAmount: mockBudget.allocatedAmount.toString(),
-        startDate: mockBudget.startDate,
-        endDate: mockBudget.endDate,
+        allocatedAmount: mockDBBudget.allocatedAmount.toString(),
+        startDate: mockDBBudget.startDate,
+        endDate: mockDBBudget.endDate,
       })
 
       expect(result.success).toBeUndefined()
@@ -277,12 +277,12 @@ describe("Budgets", async () => {
     it("should prevent race condition when updating duplicate budgets concurrently", async () => {
       await Promise.all([
         insertTestBudget({
-          ...mockBudget,
+          ...mockDBBudget,
           _id: new ObjectId("690ec0c23f50e19549bd7e51"),
           currency: "USD",
         }),
         insertTestBudget({
-          ...mockBudget,
+          ...mockDBBudget,
           _id: new ObjectId("690ec0c23f50e19549bd7e52"),
           currency: "JPY",
         }),
@@ -290,11 +290,11 @@ describe("Budgets", async () => {
       mockAuthenticatedUser()
 
       const targetValues = {
-        categoryKey: mockBudget.categoryKey,
+        categoryKey: mockDBBudget.categoryKey,
         currency: "VND" as const,
-        allocatedAmount: mockBudget.allocatedAmount.toString(),
-        startDate: mockBudget.startDate,
-        endDate: mockBudget.endDate,
+        allocatedAmount: mockDBBudget.allocatedAmount.toString(),
+        startDate: mockDBBudget.startDate,
+        endDate: mockDBBudget.endDate,
       }
 
       const [firstResult, secondResult] = await Promise.all([
@@ -319,7 +319,7 @@ describe("Budgets", async () => {
       mockBudgetCollectionError()
 
       const result = await updateBudget(
-        mockBudget._id.toString(),
+        mockDBBudget._id.toString(),
         mockValidBudgetValues
       )
 
@@ -334,7 +334,7 @@ describe("Budgets", async () => {
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
-      const result = await deleteBudget(mockBudget._id.toString())
+      const result = await deleteBudget(mockDBBudget._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -354,7 +354,7 @@ describe("Budgets", async () => {
     it("should return error when budget not found", async () => {
       mockAuthenticatedUser()
 
-      const result = await deleteBudget(mockBudget._id.toString())
+      const result = await deleteBudget(mockDBBudget._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -363,13 +363,13 @@ describe("Budgets", async () => {
     })
 
     it("should return error when another user tries to delete", async () => {
-      await insertTestBudget(mockBudget)
+      await insertTestBudget(mockDBBudget)
       mockAuthenticatedAsAnotherUser()
 
-      const result = await deleteBudget(mockBudget._id.toString())
+      const result = await deleteBudget(mockDBBudget._id.toString())
       const budgetsCollection = await getBudgetsCollection()
       const unchangedBudget = await budgetsCollection.findOne({
-        _id: mockBudget._id,
+        _id: mockDBBudget._id,
       })
 
       expect(result.success).toBeUndefined()
@@ -380,13 +380,13 @@ describe("Budgets", async () => {
     })
 
     it("should successfully delete budget", async () => {
-      await insertTestBudget(mockBudget)
+      await insertTestBudget(mockDBBudget)
       mockAuthenticatedUser()
 
-      const result = await deleteBudget(mockBudget._id.toString())
+      const result = await deleteBudget(mockDBBudget._id.toString())
       const budgetsCollection = await getBudgetsCollection()
       const deletedBudget = await budgetsCollection.findOne({
-        _id: mockBudget._id,
+        _id: mockDBBudget._id,
       })
 
       expect(deletedBudget).toBe(null)
@@ -398,7 +398,7 @@ describe("Budgets", async () => {
       mockAuthenticatedUser()
       mockBudgetCollectionError()
 
-      const result = await deleteBudget(mockBudget._id.toString())
+      const result = await deleteBudget(mockDBBudget._id.toString())
 
       expect(result.success).toBeUndefined()
       expect(result.error).toBe(
@@ -429,7 +429,7 @@ describe("Budgets", async () => {
     })
 
     it("should return budgets list", async () => {
-      await insertTestBudget(mockBudget)
+      await insertTestBudget(mockDBBudget)
       mockAuthenticatedUser()
 
       const result = await getBudgets()
@@ -442,18 +442,18 @@ describe("Budgets", async () => {
 
     it("should return budgets sorted by startDate and _id descending", async () => {
       const budget1 = {
-        ...mockBudget,
+        ...mockDBBudget,
         _id: new ObjectId("68f795d4bdcc3c9a30717988"),
         startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const budget2 = {
-        ...mockBudget,
+        ...mockDBBudget,
         _id: new ObjectId("68f795d4bdcc3c9a30717989"),
         categoryKey: "transportation",
         startDate: localDateToUTCMidnight(new Date("2024-01-01")),
       }
       const budget3 = {
-        ...mockBudget,
+        ...mockDBBudget,
         _id: new ObjectId("68f795d4bdcc3c9a30717990"),
         startDate: localDateToUTCMidnight(new Date("2024-02-01")),
       }

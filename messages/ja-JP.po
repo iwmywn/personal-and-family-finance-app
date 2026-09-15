@@ -7,11 +7,10 @@ msgstr ""
 "X-Message-Key: msgctxt\n"
 
 #: actions/admin.actions.ts
-msgctxt "fyjUn0"
-msgid "Access denied! Admin privileges required."
-msgstr "アクセスが拒否されました！管理者権限が必要です。"
+msgctxt "gfVKAY"
+msgid "Failed to list users! Please try again later."
+msgstr "ユーザー一覧の取得に失敗しました！後でもう一度お試しください。"
 
-#: actions/admin.actions.ts
 #: actions/budget.actions.ts
 #: actions/category.actions.ts
 #: actions/goal.actions.ts
@@ -20,90 +19,6 @@ msgstr "アクセスが拒否されました！管理者権限が必要です。
 msgctxt "5GmpFA"
 msgid "Invalid data!"
 msgstr "無効なデータです！"
-
-#: actions/admin.actions.ts
-msgctxt "M5lqaZ"
-msgid "You cannot assign this role!"
-msgstr "この役割を割り当てることはできません！"
-
-#: actions/admin.actions.ts
-msgctxt "wUmmPh"
-msgid "User has been created."
-msgstr "ユーザーが作成されました。"
-
-#: actions/admin.actions.ts
-msgctxt "-OyBM6"
-msgid "This email is already in use."
-msgstr "このメールアドレスはすでに使用されています。"
-
-#: actions/admin.actions.ts
-#: components/admin/create-user-dialog.tsx
-msgctxt "74JxeG"
-msgid "Failed to create user! Please try again later."
-msgstr "ユーザーの作成に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-msgctxt "GBsD3h"
-msgid "Invalid user ID!"
-msgstr "ユーザーIDが無効です！"
-
-#: actions/admin.actions.ts
-msgctxt "y3epBO"
-msgid "You cannot change your own role!"
-msgstr "自分のロールを変更することはできません！"
-
-#: actions/admin.actions.ts
-msgctxt "foC3a6"
-msgid "User not found!"
-msgstr "ユーザーが見つかりません！"
-
-#: actions/admin.actions.ts
-msgctxt "ayfthF"
-msgid "User role has been updated."
-msgstr "ユーザーロールが更新されました。"
-
-#: actions/admin.actions.ts
-#: components/admin/set-user-role-dialog.tsx
-msgctxt "jNvbw7"
-msgid "Failed to update user role! Please try again later."
-msgstr "ユーザーロールの更新に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-msgctxt "ygB8SA"
-msgid "Password has been updated."
-msgstr "パスワードが更新されました。"
-
-#: actions/admin.actions.ts
-#: components/admin/set-user-password-dialog.tsx
-msgctxt "VvoQv7"
-msgid "Failed to set user password! Please try again later."
-msgstr "ユーザーパスワードの設定に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-msgctxt "ScDYhZ"
-msgid "You cannot delete your own account!"
-msgstr "自分のアカウントを削除することはできません！"
-
-#: actions/admin.actions.ts
-msgctxt "7l4h1s"
-msgid "User has been deleted."
-msgstr "ユーザーが削除されました。"
-
-#: actions/admin.actions.ts
-#: components/admin/delete-user-dialog.tsx
-msgctxt "xkkfdF"
-msgid "Failed to delete user! Please try again later."
-msgstr "ユーザーの削除に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-msgctxt "gREMXx"
-msgid "Failed to fetch admin stats! Please try again later."
-msgstr "管理者統計情報の取得に失敗しました！後でもう一度お試しください。"
-
-#: actions/admin.actions.ts
-msgctxt "gfVKAY"
-msgid "Failed to list users! Please try again later."
-msgstr "ユーザー一覧の取得に失敗しました！後でもう一度お試しください。"
 
 #: actions/budget.actions.ts
 #: actions/goal.actions.ts
@@ -376,6 +291,11 @@ msgid "Access denied! Please refresh the page and try again."
 msgstr "アクセスが拒否されました！ページを更新してもう一度お試しください。"
 
 #: actions/session.actions.ts
+msgctxt "fyjUn0"
+msgid "Access denied! Admin privileges required."
+msgstr "アクセスが拒否されました！管理者権限が必要です。"
+
+#: actions/session.actions.ts
 msgctxt "sc5uVX"
 msgid "Failed to get session! Please try again later."
 msgstr "セッションの取得に失敗しました！後でもう一度お試しください。"
@@ -482,11 +402,6 @@ msgid "Admin Management"
 msgstr "管理者管理"
 
 #: app/(core)/admin/page.tsx
-msgctxt "tt-u4j"
-msgid "CANNOT FETCH ADMIN STATS DATA"
-msgstr "管理者統計データを取得できません"
-
-#: app/(core)/admin/page.tsx
 msgctxt "8O4Aqk"
 msgid "CANNOT FETCH USERS DATA"
 msgstr "ユーザーデータを取得できません"
@@ -568,8 +483,6 @@ msgstr "名前、メールアドレス、ユーザー名で検索..."
 
 #: components/admin/admin-filters.tsx
 #: components/admin/admin-table.tsx
-#: components/admin/create-user-dialog.tsx
-#: components/admin/set-user-role-dialog.tsx
 msgctxt "1ZgrhW"
 msgid "Role"
 msgstr "ロール"
@@ -581,14 +494,6 @@ msgstr "すべてのロール"
 
 #: components/admin/admin-filters.tsx
 #: components/admin/admin-table.tsx
-msgctxt "MipOkg"
-msgid "Superadmin"
-msgstr "スーパー管理者"
-
-#: components/admin/admin-filters.tsx
-#: components/admin/admin-table.tsx
-#: components/admin/create-user-dialog.tsx
-#: components/admin/set-user-role-dialog.tsx
 #: hooks/use-nav.ts
 msgctxt "iHN12u"
 msgid "Admin"
@@ -596,8 +501,6 @@ msgstr "管理者"
 
 #: components/admin/admin-filters.tsx
 #: components/admin/admin-table.tsx
-#: components/admin/create-user-dialog.tsx
-#: components/admin/set-user-role-dialog.tsx
 msgctxt "EwRIOm"
 msgid "User"
 msgstr "ユーザー"
@@ -789,11 +692,6 @@ msgid "Impersonate"
 msgstr "なりすまし"
 
 #: components/admin/admin-table.tsx
-msgctxt "RXkfY1"
-msgid "Change Role"
-msgstr "ロールを変更"
-
-#: components/admin/admin-table.tsx
 msgctxt "xl27nc"
 msgid "Reset Password"
 msgstr "パスワードをリセット"
@@ -885,7 +783,6 @@ msgstr "有効期限:"
 #: components/admin/create-user-dialog.tsx
 #: components/admin/delete-user-dialog.tsx
 #: components/admin/set-user-password-dialog.tsx
-#: components/admin/set-user-role-dialog.tsx
 #: components/budgets/budget-dialog.tsx
 #: components/budgets/delete-budget-dialog.tsx
 #: components/categories/category-dialog.tsx
@@ -958,14 +855,29 @@ msgid "This username is already taken."
 msgstr "このユーザー名は既に使用されています。"
 
 #: components/admin/create-user-dialog.tsx
+msgctxt "-OyBM6"
+msgid "This email is already in use."
+msgstr "このメールアドレスはすでに使用されています。"
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "74JxeG"
+msgid "Failed to create user! Please try again later."
+msgstr "ユーザーの作成に失敗しました！後でもう一度お試しください。"
+
+#: components/admin/create-user-dialog.tsx
+msgctxt "wUmmPh"
+msgid "User has been created."
+msgstr "ユーザーが作成されました。"
+
+#: components/admin/create-user-dialog.tsx
 msgctxt "xWI3D2"
 msgid "Create New User"
 msgstr "新しいユーザーを作成"
 
 #: components/admin/create-user-dialog.tsx
-msgctxt "xWyHPB"
-msgid "Add a new user account with credentials and role."
-msgstr "認証情報とロールを持つ新しいユーザーアカウントを追加します。"
+msgctxt "k30S3R"
+msgid "Add a new user account with credentials."
+msgstr "認証情報を持つ新しいユーザーアカウントを追加します。"
 
 #: components/admin/create-user-dialog.tsx
 msgctxt "TemVby"
@@ -1001,11 +913,15 @@ msgctxt "5sg7KC"
 msgid "Password"
 msgstr "パスワード"
 
-#: components/admin/create-user-dialog.tsx
-#: components/admin/set-user-role-dialog.tsx
-msgctxt "iaCoRs"
-msgid "Select role"
-msgstr "ロールを選択"
+#: components/admin/delete-user-dialog.tsx
+msgctxt "xkkfdF"
+msgid "Failed to delete user! Please try again later."
+msgstr "ユーザーの削除に失敗しました！後でもう一度お試しください。"
+
+#: components/admin/delete-user-dialog.tsx
+msgctxt "7l4h1s"
+msgid "User has been deleted."
+msgstr "ユーザーが削除されました。"
 
 #: components/admin/delete-user-dialog.tsx
 msgctxt "6z5Ebr"
@@ -1018,9 +934,19 @@ msgid "Are you sure you want to permanently delete this user account?"
 msgstr "このユーザーアカウントを完全に削除してもよろしいですか？"
 
 #: components/admin/delete-user-dialog.tsx
-msgctxt "uon94C"
-msgid "All associated data including transactions, budgets, and goals will be permanently deleted. This action cannot be undone."
-msgstr "取引、予算、目標を含むすべての関連データが完全に削除されます。この操作は元に戻せません。"
+msgctxt "qSy-Lo"
+msgid "All associated data will be permanently deleted. This action cannot be undone."
+msgstr "関連するすべてのデータは完全に削除されます。この操作は元に戻せません。"
+
+#: components/admin/set-user-password-dialog.tsx
+msgctxt "VvoQv7"
+msgid "Failed to set user password! Please try again later."
+msgstr "ユーザーパスワードの設定に失敗しました！後でもう一度お試しください。"
+
+#: components/admin/set-user-password-dialog.tsx
+msgctxt "ygB8SA"
+msgid "Password has been updated."
+msgstr "パスワードが更新されました。"
 
 #: components/admin/set-user-password-dialog.tsx
 msgctxt "ArEJTr"
@@ -1042,24 +968,6 @@ msgstr "新しいパスワード"
 msgctxt "ZTYUJe"
 msgid "Update Password"
 msgstr "パスワードを更新"
-
-#: components/admin/set-user-role-dialog.tsx
-msgctxt "ho_b8x"
-msgid "Change User Role"
-msgstr "ユーザーロールの変更"
-
-#: components/admin/set-user-role-dialog.tsx
-msgctxt "EK8gb2"
-msgid "Assign a new system role to"
-msgstr "新しいシステムロールを割り当て:"
-
-#: components/admin/set-user-role-dialog.tsx
-#: components/settings/change-name-dialog.tsx
-#: components/settings/change-password-dialog.tsx
-#: components/settings/change-username-dialog.tsx
-msgctxt "jvo0vs"
-msgid "Save"
-msgstr "保存"
 
 #: components/auth/language-selector.tsx
 #: components/settings/language-selector.tsx
@@ -2170,6 +2078,13 @@ msgstr "名前"
 msgctxt "g4FbZ5"
 msgid "Enter your name..."
 msgstr "名前を入力..."
+
+#: components/settings/change-name-dialog.tsx
+#: components/settings/change-password-dialog.tsx
+#: components/settings/change-username-dialog.tsx
+msgctxt "jvo0vs"
+msgid "Save"
+msgstr "保存"
 
 #: components/settings/change-password-dialog.tsx
 msgctxt "UR3aU3"

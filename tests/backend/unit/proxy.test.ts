@@ -1,26 +1,19 @@
 import { NextRequest } from "next/server"
 
 import {
-  mockAdminUser,
-  mockSuperAdminUser,
-  mockUser,
-} from "@/tests/shared/data"
+  mockAuthenticatedAdmin,
+  mockAuthenticatedUser,
+  mockUnauthenticatedUser,
+} from "@/tests/backend/mocks/session.mock"
 import proxy from "@/proxy"
 import * as routes from "@/routes"
-import { getSession } from "@/actions/session.actions"
 import { siteConfig } from "@/app/pffa.config"
 import { clientEnv } from "@/env/client"
-
-vi.mock("@/actions/session.actions", () => ({
-  getCurrentSession: vi.fn(),
-}))
 
 describe("Proxy (Middleware)", () => {
   describe("Unauthenticated User", () => {
     beforeEach(() => {
-      vi.mocked(getSession).mockResolvedValue({
-        error: "Access denied! Please refresh the page and try again.",
-      })
+      mockUnauthenticatedUser()
     })
 
     it("should redirect to sign in page with next parameter when accessing a protected route without query params", async () => {
@@ -125,16 +118,9 @@ describe("Proxy (Middleware)", () => {
     })
   })
 
-  describe("Authenticated Regular User (role: user)", () => {
+  describe("Authenticated Regular User", () => {
     beforeEach(() => {
-      vi.mocked(getSession).mockResolvedValue({
-        user: {
-          ...mockUser,
-          id: mockUser._id.toString(),
-          role: "user",
-        },
-        session: {} as never,
-      })
+      mockAuthenticatedUser()
     })
 
     it("should allow access to protected routes", async () => {
@@ -197,22 +183,12 @@ describe("Proxy (Middleware)", () => {
     })
   })
 
-  describe.each([
-    { role: "admin", user: mockAdminUser },
-    { role: "superadmin", user: mockSuperAdminUser },
-  ])("Authenticated $role User (role: $role)", ({ role, user }) => {
+  describe("Authenticated Admin User", () => {
     beforeEach(() => {
-      vi.mocked(getSession).mockResolvedValue({
-        user: {
-          ...user,
-          id: user._id.toString(),
-          role,
-        },
-        session: {} as never,
-      })
+      mockAuthenticatedAdmin()
     })
 
-    it(`should allow ${role} access to /admin`, async () => {
+    it(`should allow admin access to /admin`, async () => {
       const request = new NextRequest(`${clientEnv.NEXT_PUBLIC_URL}/admin`)
 
       const response = await proxy(request)
@@ -221,7 +197,7 @@ describe("Proxy (Middleware)", () => {
       expect(response.headers.get("x-middleware-next")).toBe("1")
     })
 
-    it(`should allow ${role} access to /admin subroutes`, async () => {
+    it(`should allow admin access to /admin subroutes`, async () => {
       const request = new NextRequest(
         `${clientEnv.NEXT_PUBLIC_URL}/admin/analytics`
       )

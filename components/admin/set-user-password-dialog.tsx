@@ -6,7 +6,6 @@ import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { setUserPassword } from "@/actions/admin.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -28,6 +27,7 @@ import {
 } from "@/components/ui/form"
 import { PasswordInput } from "@/components/password-input"
 import { useSchemas } from "@/hooks/use-schemas"
+import { authClient } from "@/lib/auth-client"
 import type { User } from "@/lib/definitions"
 import type { AdminPasswordFormValues } from "@/schemas/types"
 
@@ -54,16 +54,23 @@ export function SetUserPasswordDialog({
 
   async function onSubmit(values: AdminPasswordFormValues) {
     try {
-      const { error, success } = await setUserPassword(user.id, values)
-
-      if (success === undefined) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
-        form.reset()
-      }
+      await authClient.admin.setUserPassword({
+        userId: user.id,
+        newPassword: values.password,
+        fetchOptions: {
+          onError: () => {
+            toast.error(
+              t("Failed to set user password! Please try again later.")
+            )
+          },
+          onSuccess: () => {
+            setOpen(false)
+            toast.success(t("Password has been updated."))
+            router.refresh()
+            form.reset()
+          },
+        },
+      })
     } catch {
       toast.error(t("Failed to set user password! Please try again later."))
     }

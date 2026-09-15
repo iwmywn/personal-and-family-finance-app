@@ -6,7 +6,6 @@ import { useExtracted } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-import { createUser } from "@/actions/admin.actions"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -27,18 +26,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { PasswordInput } from "@/components/password-input"
-import { useUser } from "@/context/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
-import { DEFAULT_ROLE, isSuperAdminRole } from "@/lib/role"
+import type { AuthErrorCode } from "@/lib/definitions"
+import { DEFAULT_ROLE } from "@/lib/role"
 import type { AdminUserFormValues } from "@/schemas/types"
 
 interface CreateUserDialogProps {
@@ -49,8 +41,6 @@ interface CreateUserDialogProps {
 export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
   const t = useExtracted()
   const router = useRouter()
-  const { user: currentUser } = useUser()
-  const isCurrentSuperAdmin = isSuperAdminRole(currentUser.role)
   const { createAdminUserSchema } = useSchemas()
 
   const form = useForm<AdminUserFormValues>({
@@ -83,16 +73,34 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
         return
       }
 
-      const { error, success } = await createUser(values)
-
-      if (success === undefined) {
-        toast.error(error)
-      } else {
-        setOpen(false)
-        toast.success(success)
-        router.refresh()
-        form.reset()
-      }
+      await authClient.admin.createUser({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        role: "user",
+        data: {
+          username: values.username,
+          emailVerified: true,
+        },
+        fetchOptions: {
+          onError: (ctx) => {
+            switch (ctx.error.code as AuthErrorCode) {
+              case "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL":
+                toast.error(t("This email is already in use."))
+                break
+              default:
+                toast.error(t("Failed to create user! Please try again later."))
+                break
+            }
+          },
+          onSuccess: () => {
+            setOpen(false)
+            toast.success(t("User has been created."))
+            router.refresh()
+            form.reset()
+          },
+        },
+      })
     } catch {
       toast.error(t("Failed to create user! Please try again later."))
     }
@@ -104,7 +112,7 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
         <DialogHeader>
           <DialogTitle>{t("Create New User")}</DialogTitle>
           <DialogDescription>
-            {t("Add a new user account with credentials and role.")}
+            {t("Add a new user account with credentials.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -184,34 +192,6 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="form-role">{t("Role")}</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    disabled={!isCurrentSuperAdmin}
-                  >
-                    <FormControl>
-                      <SelectTrigger id="form-role" className="w-full">
-                        <SelectValue placeholder={t("Select role")} />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="user">{t("User")}</SelectItem>
-                      {isCurrentSuperAdmin && (
-                        <SelectItem value="admin">{t("Admin")}</SelectItem>
-                      )}
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

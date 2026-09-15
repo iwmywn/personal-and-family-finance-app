@@ -1,5 +1,5 @@
 import { insertTestExchangeRates } from "@/tests/backend/helpers/database"
-import { mockExchangeRates, mockTransactions } from "@/tests/shared/data"
+import { mockDBExchangeRates, mockTransactions } from "@/tests/shared/data"
 import {
   convertTransactionsToCurrency,
   ensureExchangeRateForDate,
@@ -30,7 +30,7 @@ describe("convertTransactionsToCurrency", () => {
 
   describe("Currency conversion", () => {
     beforeEach(async () => {
-      await insertTestExchangeRates(mockExchangeRates)
+      await insertTestExchangeRates(mockDBExchangeRates)
     })
 
     it("should convert VND to USD using the correct exchange rate", async () => {
@@ -100,7 +100,7 @@ describe("convertTransactionsToCurrency", () => {
 
   describe("Multiple transactions with different dates", () => {
     beforeEach(async () => {
-      await insertTestExchangeRates(mockExchangeRates)
+      await insertTestExchangeRates(mockDBExchangeRates)
     })
 
     it("should use correct exchange rates based on transaction dates", async () => {
@@ -148,7 +148,7 @@ describe("convertTransactionsToCurrency", () => {
 
   describe("Multiple currencies in single batch", () => {
     beforeEach(async () => {
-      await insertTestExchangeRates(mockExchangeRates)
+      await insertTestExchangeRates(mockDBExchangeRates)
     })
 
     it("should convert transactions with different source currencies to same target", async () => {
@@ -197,7 +197,7 @@ describe("convertTransactionsToCurrency", () => {
 
   describe("Edge cases", () => {
     beforeEach(async () => {
-      await insertTestExchangeRates(mockExchangeRates)
+      await insertTestExchangeRates(mockDBExchangeRates)
     })
 
     it("should handle decimal amounts", async () => {
@@ -370,10 +370,10 @@ describe("ensureExchangeRateForDate", () => {
   })
 
   it("should not call fetch when exchange rate already exists with all currencies", async () => {
-    await insertTestExchangeRates(mockExchangeRates)
+    await insertTestExchangeRates(mockDBExchangeRates)
     const fetchSpy = vi.spyOn(globalThis, "fetch")
 
-    await ensureExchangeRateForDate(mockExchangeRates[0].date)
+    await ensureExchangeRateForDate(mockDBExchangeRates[0].date)
 
     expect(fetchSpy).not.toHaveBeenCalled()
   })

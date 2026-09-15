@@ -4,7 +4,6 @@ import { mongodbAdapter } from "@better-auth/mongo-adapter"
 import { betterAuth } from "better-auth/minimal"
 import { nextCookies } from "better-auth/next-js"
 import { admin, captcha, twoFactor, username } from "better-auth/plugins"
-import { adminAc, defaultAc, userAc } from "better-auth/plugins/admin/access"
 import * as z from "zod"
 
 import { siteConfig } from "@/app/pffa.config"
@@ -13,7 +12,7 @@ import { serverEnv } from "@/env/server"
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/config"
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/lib/currency"
 import { connect } from "@/lib/db"
-import { ADMIN_ROLES, ASSIGNABLE_ROLES, DEFAULT_ROLE } from "@/lib/role"
+import { ASSIGNABLE_ROLES, DEFAULT_ROLE } from "@/lib/role"
 
 export const auth = betterAuth({
   appName: siteConfig.name,
@@ -65,15 +64,7 @@ export const auth = betterAuth({
     modelName: "verifications",
   },
   plugins: [
-    admin({
-      defaultRole: DEFAULT_ROLE,
-      adminRoles: [...ADMIN_ROLES],
-      roles: {
-        user: userAc,
-        admin: adminAc,
-        superadmin: defaultAc.newRole(defaultAc.statements),
-      },
-    }),
+    admin(),
     captcha({
       provider: "google-recaptcha",
       secretKey: serverEnv.RECAPTCHA_SECRET,

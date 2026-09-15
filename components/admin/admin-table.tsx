@@ -45,12 +45,10 @@ import {
 import { BanUserDialog } from "@/components/admin/ban-user-dialog"
 import { DeleteUserDialog } from "@/components/admin/delete-user-dialog"
 import { SetUserPasswordDialog } from "@/components/admin/set-user-password-dialog"
-import { SetUserRoleDialog } from "@/components/admin/set-user-role-dialog"
 import { useUser } from "@/context/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { authClient } from "@/lib/auth-client"
 import type { AuthErrorCode, User } from "@/lib/definitions"
-import { isSuperAdminRole } from "@/lib/role"
 
 interface AdminTableProps {
   filteredUsers: User[]
@@ -67,7 +65,6 @@ export function AdminTable({
   const formatDate = useFormatDate()
   const [impersonatingId, setImpersonatingId] = useState<string | null>(null)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [isRoleOpen, setIsRoleOpen] = useState<boolean>(false)
   const [isBanOpen, setIsBanOpen] = useState<boolean>(false)
   const [isPasswordOpen, setIsPasswordOpen] = useState<boolean>(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false)
@@ -136,44 +133,16 @@ export function AdminTable({
                   {filteredUsers.map((u) => {
                     const isSelf = u.id === currentUser.id
                     const isBanned = Boolean(u.banned)
-                    const isCurrentSuperAdmin = isSuperAdminRole(
-                      currentUser.role
-                    )
-                    const isCurrentAdmin = currentUser.role === "admin"
-                    const isTargetSuperAdmin = isSuperAdminRole(u.role)
                     const isTargetAdmin = u.role === "admin"
 
-                    const hideMenu =
-                      (isCurrentSuperAdmin && isSelf) ||
-                      (isCurrentAdmin && isTargetSuperAdmin)
+                    const hideMenu = isSelf || isTargetAdmin
 
                     const canImpersonate =
-                      !isSelf &&
-                      impersonatingId !== u.id &&
-                      (isCurrentSuperAdmin ||
-                        (isCurrentAdmin &&
-                          !isTargetAdmin &&
-                          !isTargetSuperAdmin))
+                      !isSelf && !isTargetAdmin && impersonatingId !== u.id
 
-                    const canBan =
-                      !isSelf && (isCurrentSuperAdmin || !isTargetAdmin)
-
-                    const canDelete =
-                      !isSelf && (isCurrentSuperAdmin || !isTargetAdmin)
-
-                    const canChangeRole =
-                      !isSelf &&
-                      (isCurrentSuperAdmin ||
-                        (isCurrentAdmin &&
-                          !isTargetAdmin &&
-                          !isTargetSuperAdmin))
-
-                    const canSetPassword =
-                      !isSelf &&
-                      (isCurrentSuperAdmin ||
-                        (isCurrentAdmin &&
-                          !isTargetAdmin &&
-                          !isTargetSuperAdmin))
+                    const canBan = !isSelf && !isTargetAdmin
+                    const canDelete = !isSelf && !isTargetAdmin
+                    const canSetPassword = !isSelf && !isTargetAdmin
 
                     return (
                       <TableRow key={u.id} className="[&>td]:text-center">
@@ -224,12 +193,7 @@ export function AdminTable({
                         </TableCell>
 
                         <TableCell>
-                          {isSuperAdminRole(u.role) ? (
-                            <Badge className="border-amber-600/40 bg-amber-600/15 text-amber-700 dark:text-amber-300">
-                              <ShieldAlertIcon className="mr-1 size-3" />
-                              {t("Superadmin")}
-                            </Badge>
-                          ) : u.role === "admin" ? (
+                          {u.role === "admin" ? (
                             <Badge className="border-purple-600/40 bg-purple-600/15 text-purple-700 dark:text-purple-300">
                               <ShieldAlertIcon className="mr-1 size-3" />
                               {t("Admin")}
@@ -301,17 +265,6 @@ export function AdminTable({
                                   className="cursor-pointer"
                                   onClick={() => {
                                     setSelectedUser(u)
-                                    setIsRoleOpen(true)
-                                  }}
-                                  disabled={!canChangeRole}
-                                >
-                                  {t("Change Role")}
-                                </DropdownMenuItem>
-
-                                <DropdownMenuItem
-                                  className="cursor-pointer"
-                                  onClick={() => {
-                                    setSelectedUser(u)
                                     setIsPasswordOpen(true)
                                   }}
                                   disabled={!canSetPassword}
@@ -359,12 +312,6 @@ export function AdminTable({
 
       {selectedUser && (
         <>
-          <SetUserRoleDialog
-            key={selectedUser.id + "ChangeRoleDialog"}
-            user={selectedUser}
-            open={isRoleOpen}
-            setOpen={setIsRoleOpen}
-          />
           <BanUserDialog
             key={selectedUser.id + "BanUserDialog"}
             user={selectedUser}

@@ -1,332 +1,155 @@
-import { ObjectId } from "mongodb"
+import { headers } from "next/headers"
 
-import { insertTestUser } from "@/tests/backend/helpers/database"
-import {
-  mockAuthenticatedAdmin,
-  mockAuthenticatedSuperAdmin,
-  mockAuthenticatedUser,
-  mockUnauthenticatedUser,
-} from "@/tests/backend/mocks/session.mock"
 import {
   mockAdminUser,
-  mockAnotherUser,
-  mockSuperAdminUser,
+  mockBannedUser,
   mockUser,
+  mockUsers,
 } from "@/tests/shared/data"
-import {
-  createUser,
-  deleteUser,
-  getStats,
-  listUsers,
-  setUserPassword,
-  setUserRole,
-} from "@/actions/admin.actions"
+import { getAdminData } from "@/actions/admin.actions"
+import { auth } from "@/lib/auth"
+import type { User } from "@/lib/definitions"
 
 vi.mock("next/headers", () => ({
-  headers: vi.fn().mockResolvedValue(new Headers()),
+  headers: vi.fn(),
 }))
 
 vi.mock("@/lib/auth", () => ({
   auth: {
     api: {
-      createUser: vi.fn().mockResolvedValue({ status: true }),
-      removeUser: vi.fn().mockResolvedValue({ status: true }),
-      setRole: vi.fn().mockResolvedValue({ status: true }),
-      setUserPassword: vi.fn().mockResolvedValue({ status: true }),
+      listUsers: vi.fn(),
     },
   },
 }))
 
-describe("Admin Actions", () => {
-  describe("getAdminStats", () => {
-    it("should return error when not authenticated", async () => {
-      mockUnauthenticatedUser()
+type UserWithRole = NonNullable<
+  Awaited<ReturnType<typeof auth.api.listUsers>>
+>["users"][number]
 
-      const result = await getStats()
+const toUserWithRole = (u: User): UserWithRole => ({
+  ...u,
+  banned: u.banned ?? null,
+})
 
-      expect(result.stats).toBeUndefined()
-      expect(result.error).toBe("Access denied! Admin privileges required.")
+describe("Admin Actions - getAdminData", () => {
+  beforeEach(() => {
+    vi.mocked(headers).mockResolvedValue(new Headers())
+  })
+
+  it("should handle error when headers() throws", async () => {
+    vi.mocked(headers).mockRejectedValueOnce(new Error("Headers unavailable"))
+
+    const result = await getAdminData()
+
+    expect(result.users).toBeUndefined()
+    expect(result.stats).toBeUndefined()
+    expect(result.error).toBe("Failed to list users! Please try again later.")
+    expect(auth.api.listUsers).not.toHaveBeenCalled()
+  })
+
+  it("should handle error when auth.api.listUsers throws", async () => {
+    vi.mocked(auth.api.listUsers).mockRejectedValueOnce(
+      new Error("Better Auth service error")
+    )
+
+    const result = await getAdminData()
+
+    expect(result.users).toBeUndefined()
+    expect(result.stats).toBeUndefined()
+    expect(result.error).toBe("Failed to list users! Please try again later.")
+  })
+
+  it("should handle null result from auth.api.listUsers", async () => {
+    // @ts-expect-error - Testing null response
+    vi.mocked(auth.api.listUsers).mockResolvedValueOnce(null)
+
+    const result = await getAdminData()
+
+    expect(result.users).toBeUndefined()
+    expect(result.stats).toBeUndefined()
+    expect(result.error).toBe("Failed to list users! Please try again later.")
+  })
+
+  it("should successfully return users and calculated admin stats", async () => {
+    vi.mocked(auth.api.listUsers).mockResolvedValueOnce({
+      users: mockUsers.map(toUserWithRole),
+      total: mockUsers.length,
     })
 
-    it("should return error when user is not an admin", async () => {
-      mockAuthenticatedUser()
+    const result = await getAdminData()
 
-      const result = await getStats()
-
-      expect(result.stats).toBeUndefined()
-      expect(result.error).toBe("Access denied! Admin privileges required.")
+    expect(result.error).toBeUndefined()
+    expect(result.users).toEqual(mockUsers)
+    expect(result.stats).toEqual({
+      totalUsers: 4,
+      activeUsers: 3,
+      bannedUsers: 1,
+      adminUsers: 1,
     })
-
-    it("should return correct stats when admin is authenticated", async () => {
-      mockAuthenticatedAdmin()
-
-      await Promise.all([
-        insertTestUser(mockUser),
-        insertTestUser(mockAnotherUser),
-      ])
-
-      const result = await getStats()
-
-      expect(result.error).toBeUndefined()
-      expect(result.stats).toBeDefined()
-      expect(result.stats?.totalUsers).toBeGreaterThanOrEqual(2)
-      expect(result.stats?.activeUsers).toBeGreaterThanOrEqual(2)
+    expect(auth.api.listUsers).toHaveBeenCalledWith({
+      headers: expect.any(Headers),
+      query: {
+        sortBy: "createdAt",
+        sortDirection: "desc",
+      },
     })
   })
 
-  describe("listUsers", () => {
-    it("should return error for non-admin user", async () => {
-      mockAuthenticatedUser()
-
-      const result = await listUsers()
-
-      expect(result.users).toBeUndefined()
-      expect(result.error).toBe("Access denied! Admin privileges required.")
+  it("should correctly calculate stats when all users are active", async () => {
+    const activeUsers = [mockUser, mockAdminUser]
+    vi.mocked(auth.api.listUsers).mockResolvedValueOnce({
+      users: activeUsers.map(toUserWithRole),
+      total: activeUsers.length,
     })
 
-    it("should return list of users for admin", async () => {
-      mockAuthenticatedAdmin()
+    const result = await getAdminData()
 
-      await insertTestUser(mockUser)
-
-      const result = await listUsers()
-
-      expect(result.error).toBeUndefined()
-      expect(result.users).toBeDefined()
-      expect(Array.isArray(result.users)).toBe(true)
-      expect(result.total).toBeGreaterThanOrEqual(1)
-      expect(result.users?.some((u) => u.name === "Test User")).toBe(true)
-
-      const foundUser = result.users?.find((u) => u.name === "Test User")
-
-      expect(foundUser).toHaveProperty("id")
-      expect(foundUser).not.toHaveProperty("_id")
+    expect(result.error).toBeUndefined()
+    expect(result.users).toEqual(activeUsers)
+    expect(result.stats).toEqual({
+      totalUsers: 2,
+      activeUsers: 2,
+      bannedUsers: 0,
+      adminUsers: 1,
     })
   })
 
-  describe("deleteUser", () => {
-    it("should return error for invalid user ID", async () => {
-      mockAuthenticatedAdmin()
-
-      const result = await deleteUser("invalid-id")
-
-      expect(result.error).toBe("Invalid user ID!")
-      expect(result.success).toBeUndefined()
+  it("should correctly calculate stats when all users are banned", async () => {
+    const bannedUsers: User[] = [
+      mockBannedUser,
+      { ...mockUser, id: "user-banned-2", banned: true },
+    ]
+    vi.mocked(auth.api.listUsers).mockResolvedValueOnce({
+      users: bannedUsers.map(toUserWithRole),
+      total: bannedUsers.length,
     })
 
-    it("should return error when target user is not found", async () => {
-      mockAuthenticatedAdmin()
+    const result = await getAdminData()
 
-      const nonExistentId = new ObjectId().toString()
-      const result = await deleteUser(nonExistentId)
-
-      expect(result.error).toBe("User not found!")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should prevent admin from deleting themselves", async () => {
-      mockAuthenticatedAdmin()
-
-      const result = await deleteUser("68f712e4cda4897217a05a99")
-
-      expect(result.error).toBe("You cannot delete your own account!")
-    })
-
-    it("should prevent admin from deleting superadmin account", async () => {
-      mockAuthenticatedAdmin()
-
-      await insertTestUser(mockSuperAdminUser)
-
-      const result = await deleteUser(mockSuperAdminUser._id.toString())
-      expect(result.error).toBe("Access denied! Admin privileges required.")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should successfully delete target user", async () => {
-      mockAuthenticatedAdmin()
-
-      await insertTestUser(mockAnotherUser)
-
-      const result = await deleteUser(mockAnotherUser._id.toString())
-
-      expect(result.error).toBeUndefined()
-      expect(result.success).toBe("User has been deleted.")
-    })
-
-    it("should allow superadmin to delete an admin or user account", async () => {
-      mockAuthenticatedSuperAdmin()
-
-      await Promise.all([
-        insertTestUser(mockAdminUser),
-        insertTestUser(mockAnotherUser),
-      ])
-
-      const [adminResult, userResult] = await Promise.all([
-        deleteUser(mockAdminUser._id.toString()),
-        deleteUser(mockAnotherUser._id.toString()),
-      ])
-
-      expect(adminResult.error).toBeUndefined()
-      expect(adminResult.success).toBe("User has been deleted.")
-      expect(userResult.error).toBeUndefined()
-      expect(userResult.success).toBe("User has been deleted.")
+    expect(result.error).toBeUndefined()
+    expect(result.stats).toEqual({
+      totalUsers: 2,
+      activeUsers: 0,
+      bannedUsers: 2,
+      adminUsers: 0,
     })
   })
 
-  describe("updateUserRole", () => {
-    it("should return error for non-admin user", async () => {
-      mockAuthenticatedUser()
-
-      const result = await setUserRole(mockAnotherUser._id.toString(), "user")
-
-      expect(result.error).toBe("Access denied! Admin privileges required.")
-      expect(result.success).toBeUndefined()
+  it("should return empty stats when users array is empty", async () => {
+    vi.mocked(auth.api.listUsers).mockResolvedValueOnce({
+      users: [],
+      total: 0,
     })
 
-    it("should return error when trying to change own role", async () => {
-      mockAuthenticatedAdmin()
+    const result = await getAdminData()
 
-      const result = await setUserRole(mockAdminUser._id.toString(), "user")
-
-      expect(result.error).toBe("You cannot change your own role!")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should prevent regular admin from modifying role of another admin", async () => {
-      mockAuthenticatedAdmin()
-
-      await insertTestUser(mockSuperAdminUser)
-
-      const result = await setUserRole(
-        mockSuperAdminUser._id.toString(),
-        "user"
-      )
-
-      expect(result.error).toBe("Access denied! Admin privileges required.")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should prevent regular admin from promoting user to admin", async () => {
-      mockAuthenticatedAdmin()
-
-      await insertTestUser(mockAnotherUser)
-
-      const result = await setUserRole(mockAnotherUser._id.toString(), "admin")
-
-      expect(result.error).toBe("Access denied! Admin privileges required.")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should allow superadmin to change user role to admin", async () => {
-      mockAuthenticatedSuperAdmin()
-
-      await insertTestUser(mockAnotherUser)
-
-      const result = await setUserRole(mockAnotherUser._id.toString(), "admin")
-
-      expect(result.error).toBeUndefined()
-      expect(result.success).toBe("User role has been updated.")
-    })
-  })
-
-  describe("setUserPassword", () => {
-    it("should return error for non-admin user", async () => {
-      mockAuthenticatedUser()
-
-      const result = await setUserPassword(mockAnotherUser._id.toString(), {
-        password: "NewPassword123!",
-      })
-
-      expect(result.error).toBe("Access denied! Admin privileges required.")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should prevent regular admin from resetting password of another admin", async () => {
-      mockAuthenticatedAdmin()
-
-      await insertTestUser(mockSuperAdminUser)
-
-      const result = await setUserPassword(mockSuperAdminUser._id.toString(), {
-        password: "NewPassword123!",
-      })
-
-      expect(result.error).toBe("Access denied! Admin privileges required.")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should allow admin to reset password of regular user", async () => {
-      mockAuthenticatedAdmin()
-
-      await insertTestUser(mockAnotherUser)
-
-      const result = await setUserPassword(mockAnotherUser._id.toString(), {
-        password: "NewPassword123!",
-      })
-
-      expect(result.error).toBeUndefined()
-      expect(result.success).toBe("Password has been updated.")
-    })
-  })
-
-  describe("createAdminUser", () => {
-    it("should return error when not authenticated", async () => {
-      mockUnauthenticatedUser()
-
-      const result = await createUser({
-        name: "Test User",
-        username: "testuser",
-        email: "test@example.com",
-        password: "Password123!",
-        role: "user",
-      })
-
-      expect(result.error).toBe("Access denied! Admin privileges required.")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should return error when regular admin tries to create user with admin role", async () => {
-      mockAuthenticatedAdmin()
-
-      const result = await createUser({
-        name: "Test User",
-        username: "testuser",
-        email: "test@example.com",
-        password: "Password123!",
-        role: "admin",
-      })
-
-      expect(result.error).toBe("You cannot assign this role!")
-      expect(result.success).toBeUndefined()
-    })
-
-    it("should allow regular admin to create user with user role", async () => {
-      mockAuthenticatedAdmin()
-
-      const result = await createUser({
-        name: "Test User",
-        username: "testuser",
-        email: "test@example.com",
-        password: "Password123!",
-        role: "user",
-      })
-
-      expect(result.error).toBeUndefined()
-      expect(result.success).toBe("User has been created.")
-    })
-
-    it("should allow superadmin to create user with specified role", async () => {
-      mockAuthenticatedSuperAdmin()
-
-      const result = await createUser({
-        name: "Test User",
-        username: "testuser",
-        email: "test@example.com",
-        password: "Password123!",
-        role: "admin",
-      })
-
-      expect(result.error).toBeUndefined()
-      expect(result.success).toBe("User has been created.")
+    expect(result.error).toBeUndefined()
+    expect(result.users).toEqual([])
+    expect(result.stats).toEqual({
+      totalUsers: 0,
+      activeUsers: 0,
+      bannedUsers: 0,
+      adminUsers: 0,
     })
   })
 })
