@@ -1,3 +1,4 @@
+import { updateTag } from "next/cache"
 import type { NextRequest } from "next/server"
 
 import {
@@ -48,6 +49,7 @@ export async function GET(request: NextRequest) {
     let createdCount = 0
     const createdIds: string[] = []
     const skippedReason: { id: string; reason: "notToday" | "existing" }[] = []
+    const affectedUserIds = new Set<string>()
 
     for (let i = 0; i < activeRecurringTransactions.length; i += BATCH_SIZE) {
       const batch = activeRecurringTransactions.slice(i, i + BATCH_SIZE)
@@ -77,6 +79,7 @@ export async function GET(request: NextRequest) {
 
             createdCount++
             createdIds.push(insertResult.insertedId.toString())
+            affectedUserIds.add(rec.userId.toString())
           } catch (error) {
             if (isDuplicateKeyError(error)) {
               // skip creating duplicate, but still update lastGeneratedDate to avoid repeated attempts
@@ -91,6 +94,10 @@ export async function GET(request: NextRequest) {
           }
         })
       )
+    }
+
+    for (const userId of affectedUserIds) {
+      updateTag(`transactions-${userId}`)
     }
 
     if (createdCount > 0) {

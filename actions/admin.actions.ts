@@ -6,6 +6,8 @@ import { getExtracted } from "next-intl/server"
 import { auth } from "@/lib/auth"
 import type { User } from "@/lib/definitions"
 
+import { getSession } from "./session.actions"
+
 export type AdminStats = {
   totalUsers: number
   activeUsers: number
@@ -22,6 +24,10 @@ export async function getAdminData(): Promise<{
 
   try {
     const headersList = await headers()
+    const { error, user, session } = await getSession(true)
+
+    if (!user || !session) return { error }
+
     const result = await auth.api.listUsers({
       headers: headersList,
       query: {
@@ -34,7 +40,7 @@ export async function getAdminData(): Promise<{
       return { error: t("Failed to list users! Please try again later.") }
 
     const users = (result.users ?? []) as unknown as User[]
-    const totalUsers = users.length
+    const totalUsers = result.total
     const bannedUsers = users.filter((u) => Boolean(u.banned)).length
     const adminUsers = users.filter((u) => u.role === "admin").length
     const activeUsers = Math.max(0, totalUsers - bannedUsers)

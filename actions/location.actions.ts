@@ -1,5 +1,6 @@
 "use server"
 
+import { isIP } from "node:net"
 import { cacheLife, cacheTag } from "next/cache"
 
 export async function getLocationFromIP(ipAddress: string | null | undefined) {
@@ -8,20 +9,27 @@ export async function getLocationFromIP(ipAddress: string | null | undefined) {
   cacheLife({ expire: 120 })
 
   if (!ipAddress) return null
-  if (ipAddress === "0000:0000:0000:0000:0000:0000:0000:0000") {
+  if (
+    ipAddress === "0000:0000:0000:0000:0000:0000:0000:0000" ||
+    ipAddress === "::1" ||
+    ipAddress === "127.0.0.1"
+  ) {
     return "Local"
   }
 
+  if (!isIP(ipAddress)) return null
+
   try {
     const response = await fetch(
-      `http://ip-api.com/json/${ipAddress}?fields=status,regionName,country`
+      `https://ipwho.is/${encodeURIComponent(ipAddress)}`,
+      { signal: AbortSignal.timeout(4000) }
     )
     if (!response.ok) return null
     const data = await response.json()
 
-    if (data.status === "success") {
+    if (data.success) {
       const parts: string[] = []
-      if (data.regionName) parts.push(data.regionName)
+      if (data.region) parts.push(data.region)
       if (data.country) parts.push(data.country)
 
       return parts.length > 0 ? parts.join(", ") : null

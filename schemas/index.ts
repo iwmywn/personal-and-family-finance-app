@@ -139,6 +139,7 @@ export function buildSchemas(messages: SchemaMessages) {
       amount: baseAmount(),
       description: z
         .string()
+        .trim()
         .min(1, {
           message: messages.descriptionRequired,
         })
@@ -155,12 +156,14 @@ export function buildSchemas(messages: SchemaMessages) {
       }),
       label: z
         .string()
+        .trim()
         .min(1, { message: messages.categoryNameRequired })
         .max(50, {
           message: messages.categoryNameMaxLength,
         }),
       description: z
         .string()
+        .trim()
         .min(1, { message: messages.descriptionRequired })
         .max(200, {
           message: messages.descriptionMaxLength,
@@ -193,6 +196,7 @@ export function buildSchemas(messages: SchemaMessages) {
       .object({
         name: z
           .string()
+          .trim()
           .min(1, { message: messages.goalNameRequired })
           .max(100, {
             message: messages.goalNameMaxLength,
@@ -228,6 +232,7 @@ export function buildSchemas(messages: SchemaMessages) {
         amount: baseAmount(),
         description: z
           .string()
+          .trim()
           .min(1, {
             message: messages.descriptionRequired,
           })
