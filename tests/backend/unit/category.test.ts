@@ -32,6 +32,89 @@ import {
 import { getCategoriesCollection } from "@/lib/collections"
 
 describe("Categories", async () => {
+  describe("isValidUserCategory", () => {
+    it("should return true for valid predefined categories with matching type", async () => {
+      expect(
+        await isValidUserCategory(
+          mockDBUser._id.toString(),
+          "salary_bonus",
+          "inflow"
+        )
+      ).toBe(true)
+      expect(
+        await isValidUserCategory(
+          mockDBUser._id.toString(),
+          "food_beverage",
+          "outflow"
+        )
+      ).toBe(true)
+      expect(
+        await isValidUserCategory(mockDBUser._id.toString(), "salary_bonus")
+      ).toBe(true)
+    })
+
+    it("should return false for predefined categories with mismatched type", async () => {
+      expect(
+        await isValidUserCategory(
+          mockDBUser._id.toString(),
+          "salary_bonus",
+          "outflow"
+        )
+      ).toBe(false)
+      expect(
+        await isValidUserCategory(
+          mockDBUser._id.toString(),
+          "food_beverage",
+          "inflow"
+        )
+      ).toBe(false)
+    })
+
+    it("should return false for invalid category format or non-existent key", async () => {
+      expect(
+        await isValidUserCategory(mockDBUser._id.toString(), "non_existent_key")
+      ).toBe(false)
+      expect(
+        await isValidUserCategory(mockDBUser._id.toString(), "12345")
+      ).toBe(false)
+    })
+
+    it("should return false for custom category owned by another user", async () => {
+      await insertTestCategory({
+        ...mockDBCustomCategory,
+        userId: new ObjectId("690d2cdc200d6a719f9a438e"),
+      })
+      expect(
+        await isValidUserCategory(
+          mockDBUser._id.toString(),
+          mockDBCustomCategory._id.toString()
+        )
+      ).toBe(false)
+    })
+
+    it("should return false for custom category with mismatched type", async () => {
+      await insertTestCategory(mockDBCustomCategory)
+      expect(
+        await isValidUserCategory(
+          mockDBUser._id.toString(),
+          mockDBCustomCategory._id.toString(),
+          "inflow"
+        )
+      ).toBe(false)
+    })
+
+    it("should return true for custom category owned by user with matching type", async () => {
+      await insertTestCategory(mockDBCustomCategory)
+      expect(
+        await isValidUserCategory(
+          mockDBUser._id.toString(),
+          mockDBCustomCategory._id.toString(),
+          mockDBCustomCategory.type
+        )
+      ).toBe(true)
+    })
+  })
+
   describe("createCustomCategory", () => {
     it("should return error when data is invalid", async () => {
       // @ts-expect-error - Testing invalid data
@@ -52,20 +135,6 @@ describe("Categories", async () => {
       )
     })
 
-    it("should return error when category with same name exists", async () => {
-      await insertTestCategory(mockDBCustomCategory)
-      mockAuthenticatedUser()
-
-      const result = await createCustomCategory({
-        type: mockDBCustomCategory.type,
-        label: mockDBCustomCategory.label,
-        description: "Different description",
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("This category already exists!")
-    })
-
     it("should successfully create custom category", async () => {
       mockAuthenticatedUser()
 
@@ -82,16 +151,18 @@ describe("Categories", async () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should return error when database operation throws error", async () => {
+    it("should return error when category with same name exists", async () => {
+      await insertTestCategory(mockDBCustomCategory)
       mockAuthenticatedUser()
-      mockCategoryCollectionError()
 
-      const result = await createCustomCategory(mockValidCategoryValues)
+      const result = await createCustomCategory({
+        type: mockDBCustomCategory.type,
+        label: mockDBCustomCategory.label,
+        description: "Different description",
+      })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to create category! Please try again later."
-      )
+      expect(result.error).toBe("This category already exists!")
     })
 
     it("should prevent race condition when creating duplicate categories concurrently", async () => {
@@ -107,17 +178,39 @@ describe("Categories", async () => {
         (r) => r.success === "Category has been created."
       ).length
       const errorCount = results.filter(
-        (r) =>
-          r.error === "This category already exists!" ||
-          r.error === "Error creating category key! Please try again later."
+        (r) => r.error === "This category already exists!"
       ).length
 
       expect(successCount).toBe(1)
       expect(errorCount).toBe(1)
     })
+
+    it("should return error when database operation throws error", async () => {
+      mockAuthenticatedUser()
+      mockCategoryCollectionError()
+
+      const result = await createCustomCategory(mockValidCategoryValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Failed to create category! Please try again later."
+      )
+    })
   })
 
   describe("updateCustomCategory", () => {
+    it("should return error with invalid category ID", async () => {
+      mockAuthenticatedUser()
+
+      const result = await updateCustomCategory(
+        "invalid-id",
+        mockValidCategoryValues
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category ID!")
+    })
+
     it("should return error when data is invalid", async () => {
       const result = await updateCustomCategory(
         mockDBCustomCategory._id.toString(),
@@ -143,16 +236,21 @@ describe("Categories", async () => {
       )
     })
 
-    it("should return error with invalid category ID", async () => {
+    it("should return error when attempting to change category type", async () => {
+      await insertTestCategory(mockDBCustomCategory)
       mockAuthenticatedUser()
 
       const result = await updateCustomCategory(
-        "invalid-id",
-        mockValidCategoryValues
+        mockDBCustomCategory._id.toString(),
+        {
+          type: "inflow",
+          label: "Updated Label",
+          description: "Updated description",
+        }
       )
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid category ID!")
+      expect(result.error).toBe("Category type cannot be changed!")
     })
 
     it("should return error when category not found", async () => {
@@ -169,28 +267,6 @@ describe("Categories", async () => {
       )
     })
 
-    it("should return error when duplicate category name exists", async () => {
-      await insertTestCategory(mockDBCustomCategory)
-      await insertTestCategory({
-        ...mockDBCustomCategory,
-        _id: new ObjectId("68f795d4bdcc3c9a30717977"),
-        label: "Different Label",
-      })
-      mockAuthenticatedUser()
-
-      const result = await updateCustomCategory(
-        mockDBCustomCategory._id.toString(),
-        {
-          type: mockDBCustomCategory.type,
-          label: "Different Label",
-          description: "Different description",
-        }
-      )
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("This category already exists!")
-    })
-
     it("should return error when another user tries to update", async () => {
       await insertTestCategory(mockDBCustomCategory)
       mockAuthenticatedAsAnotherUser()
@@ -198,7 +274,7 @@ describe("Categories", async () => {
       const result = await updateCustomCategory(
         mockDBCustomCategory._id.toString(),
         {
-          type: "inflow",
+          type: "outflow",
           label: "Hacked Label",
           description: "Hacked description",
         }
@@ -312,98 +388,18 @@ describe("Categories", async () => {
         "Failed to update category! Please try again later."
       )
     })
-
-    it("should return error when attempting to change category type", async () => {
-      await insertTestCategory(mockDBCustomCategory)
-      mockAuthenticatedUser()
-
-      const result = await updateCustomCategory(
-        mockDBCustomCategory._id.toString(),
-        {
-          type: "inflow",
-          label: "Updated Label",
-          description: "Updated description",
-        }
-      )
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Category type cannot be changed!")
-    })
-  })
-
-  describe("isValidUserCategory", () => {
-    it("should return true for valid predefined categories with matching type", async () => {
-      expect(
-        await isValidUserCategory(
-          mockDBUser._id.toString(),
-          "salary_bonus",
-          "inflow"
-        )
-      ).toBe(true)
-      expect(
-        await isValidUserCategory(
-          mockDBUser._id.toString(),
-          "food_beverage",
-          "outflow"
-        )
-      ).toBe(true)
-      expect(
-        await isValidUserCategory(mockDBUser._id.toString(), "salary_bonus")
-      ).toBe(true)
-    })
-
-    it("should return false for predefined categories with mismatched type", async () => {
-      expect(
-        await isValidUserCategory(
-          mockDBUser._id.toString(),
-          "salary_bonus",
-          "outflow"
-        )
-      ).toBe(false)
-      expect(
-        await isValidUserCategory(
-          mockDBUser._id.toString(),
-          "food_beverage",
-          "inflow"
-        )
-      ).toBe(false)
-    })
-
-    it("should return false for invalid category format or non-existent key", async () => {
-      expect(
-        await isValidUserCategory(mockDBUser._id.toString(), "non_existent_key")
-      ).toBe(false)
-      expect(
-        await isValidUserCategory(mockDBUser._id.toString(), "12345")
-      ).toBe(false)
-    })
-
-    it("should return true for custom category owned by user with matching type", async () => {
-      await insertTestCategory(mockDBCustomCategory)
-      expect(
-        await isValidUserCategory(
-          mockDBUser._id.toString(),
-          mockDBCustomCategory._id.toString(),
-          mockDBCustomCategory.type
-        )
-      ).toBe(true)
-    })
-
-    it("should return false for custom category owned by another user", async () => {
-      await insertTestCategory({
-        ...mockDBCustomCategory,
-        userId: new ObjectId("690d2cdc200d6a719f9a438e"),
-      })
-      expect(
-        await isValidUserCategory(
-          mockDBUser._id.toString(),
-          mockDBCustomCategory._id.toString()
-        )
-      ).toBe(false)
-    })
   })
 
   describe("deleteCustomCategory", () => {
+    it("should return error with invalid category ID", async () => {
+      mockAuthenticatedUser()
+
+      const result = await deleteCustomCategory("invalid-id")
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category ID!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
@@ -417,15 +413,6 @@ describe("Categories", async () => {
       )
     })
 
-    it("should return error with invalid category ID", async () => {
-      mockAuthenticatedUser()
-
-      const result = await deleteCustomCategory("invalid-id")
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid category ID!")
-    })
-
     it("should return error when category not found", async () => {
       mockAuthenticatedUser()
 
@@ -437,6 +424,25 @@ describe("Categories", async () => {
       expect(result.error).toBe(
         "Category not found or you don't have permission to delete!"
       )
+    })
+
+    it("should return error when another user tries to delete", async () => {
+      await insertTestCategory(mockDBCustomCategory)
+      mockAuthenticatedAsAnotherUser()
+
+      const result = await deleteCustomCategory(
+        mockDBCustomCategory._id.toString()
+      )
+      const categoriesCollection = await getCategoriesCollection()
+      const unchangedCategory = await categoriesCollection.findOne({
+        _id: mockDBCustomCategory._id,
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Category not found or you don't have permission to delete!"
+      )
+      expect(unchangedCategory).not.toBe(null)
     })
 
     it("should return error when categories have associated transactions, budgets, or goals", async () => {
@@ -513,25 +519,6 @@ describe("Categories", async () => {
       expect(result4.error).toBe(
         "Cannot delete category. There are 1 recurring transactions using this category. Please delete those recurring transactions first."
       )
-    })
-
-    it("should return error when another user tries to delete", async () => {
-      await insertTestCategory(mockDBCustomCategory)
-      mockAuthenticatedAsAnotherUser()
-
-      const result = await deleteCustomCategory(
-        mockDBCustomCategory._id.toString()
-      )
-      const categoriesCollection = await getCategoriesCollection()
-      const unchangedCategory = await categoriesCollection.findOne({
-        _id: mockDBCustomCategory._id,
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Category not found or you don't have permission to delete!"
-      )
-      expect(unchangedCategory).not.toBe(null)
     })
 
     it("should successfully delete custom category", async () => {

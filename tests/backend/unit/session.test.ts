@@ -32,7 +32,7 @@ vi.mock("react", async (importOriginal) => {
   }
 })
 
-describe("Session Actions", () => {
+describe("Session", () => {
   beforeEach(() => {
     vi.mocked(headers).mockResolvedValue(
       new Headers({ "user-agent": "test-agent" })

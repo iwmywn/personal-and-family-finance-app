@@ -42,46 +42,24 @@ describe("Goals", async () => {
       )
     })
 
-    it("should return error when goal already exists", async () => {
-      await insertTestGoal(mockDBGoal)
-      mockAuthenticatedUser()
-
-      const result = await createGoal({
-        categoryKey: mockDBGoal.categoryKey,
-        currency: mockDBGoal.currency,
-        name: mockDBGoal.name,
-        targetAmount: "2000000",
-        startDate: localDateToUTCMidnight(mockDBGoal.startDate),
-        endDate: localDateToUTCMidnight(mockDBGoal.endDate),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("This goal already exists!")
-    })
-
-    it("should allow creating multiple goals in same category and timeframe with different names", async () => {
-      await insertTestGoal(mockDBGoal)
-      mockAuthenticatedUser()
-
-      const result = await createGoal({
-        categoryKey: mockDBGoal.categoryKey,
-        currency: mockDBGoal.currency,
-        name: "buy a second vehicle",
-        targetAmount: "30000000",
-        startDate: localDateToUTCMidnight(mockDBGoal.startDate),
-        endDate: localDateToUTCMidnight(mockDBGoal.endDate),
-      })
-
-      expect(result.success).toBe("Goal has been created.")
-      expect(result.error).toBeUndefined()
-    })
-
     it("should return error when categoryKey is invalid or does not belong to user", async () => {
       mockAuthenticatedUser()
 
       const result = await createGoal({
         ...mockValidGoalValues,
         categoryKey: "non-existent-or-invalid-key",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when goal category is not an inflow category", async () => {
+      mockAuthenticatedUser()
+
+      const result = await createGoal({
+        ...mockValidGoalValues,
+        categoryKey: "food_beverage",
       })
 
       expect(result.success).toBeUndefined()
@@ -108,28 +86,38 @@ describe("Goals", async () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should reject goal creation with outflow category", async () => {
+    it("should allow creating multiple goals in same category and timeframe with different names", async () => {
+      await insertTestGoal(mockDBGoal)
       mockAuthenticatedUser()
 
       const result = await createGoal({
-        ...mockValidGoalValues,
-        categoryKey: "food_beverage",
+        categoryKey: mockDBGoal.categoryKey,
+        currency: mockDBGoal.currency,
+        name: "buy a second vehicle",
+        targetAmount: "30000000",
+        startDate: mockDBGoal.startDate,
+        endDate: mockDBGoal.endDate,
+      })
+
+      expect(result.success).toBe("Goal has been created.")
+      expect(result.error).toBeUndefined()
+    })
+
+    it("should return error when goal already exists", async () => {
+      await insertTestGoal(mockDBGoal)
+      mockAuthenticatedUser()
+
+      const result = await createGoal({
+        categoryKey: mockDBGoal.categoryKey,
+        currency: mockDBGoal.currency,
+        name: mockDBGoal.name,
+        targetAmount: "2000000",
+        startDate: mockDBGoal.startDate,
+        endDate: mockDBGoal.endDate,
       })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid category!")
-    })
-
-    it("should return error when database operation throws error", async () => {
-      mockAuthenticatedUser()
-      mockGoalCollectionError()
-
-      const result = await createGoal(mockValidGoalValues)
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to create goal! Please try again later."
-      )
+      expect(result.error).toBe("This goal already exists!")
     })
 
     it("should prevent race condition when creating duplicate goals concurrently", async () => {
@@ -151,9 +139,30 @@ describe("Goals", async () => {
       expect(successCount).toBe(1)
       expect(errorCount).toBe(1)
     })
+
+    it("should return error when database operation throws error", async () => {
+      mockAuthenticatedUser()
+      mockGoalCollectionError()
+
+      const result = await createGoal(mockValidGoalValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Failed to create goal! Please try again later."
+      )
+    })
   })
 
   describe("updateGoal", () => {
+    it("should return error with invalid goal ID", async () => {
+      mockAuthenticatedUser()
+
+      const result = await updateGoal("invalid-id", mockValidGoalValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid goal ID!")
+    })
+
     it("should return error when data is invalid", async () => {
       // @ts-expect-error - Testing invalid data
       const result = await updateGoal(mockDBGoal._id.toString(), {})
@@ -176,13 +185,28 @@ describe("Goals", async () => {
       )
     })
 
-    it("should return error with invalid goal ID", async () => {
+    it("should return error when categoryKey is invalid or does not belong to user", async () => {
       mockAuthenticatedUser()
 
-      const result = await updateGoal("invalid-id", mockValidGoalValues)
+      const result = await updateGoal(mockDBGoal._id.toString(), {
+        ...mockValidGoalValues,
+        categoryKey: "non-existent-or-invalid-key",
+      })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid goal ID!")
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when goal category is not an inflow category", async () => {
+      mockAuthenticatedUser()
+
+      const result = await updateGoal(mockDBGoal._id.toString(), {
+        ...mockValidGoalValues,
+        categoryKey: "housing",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
     })
 
     it("should return error when goal not found", async () => {
@@ -263,18 +287,6 @@ describe("Goals", async () => {
       expect(unrelatedGoal?.name).toBe("buy a motorbike")
       expect(result.success).toBe("Goal has been updated.")
       expect(result.error).toBeUndefined()
-    })
-
-    it("should reject goal update with outflow category", async () => {
-      mockAuthenticatedUser()
-
-      const result = await updateGoal(mockDBGoal._id.toString(), {
-        ...mockValidGoalValues,
-        categoryKey: "housing",
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid category!")
     })
 
     it("should return error when updating goal causes duplicate key collision", async () => {
@@ -359,6 +371,15 @@ describe("Goals", async () => {
   })
 
   describe("deleteGoal", () => {
+    it("should return error with invalid goal ID", async () => {
+      mockAuthenticatedUser()
+
+      const result = await deleteGoal("invalid-id")
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid goal ID!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
@@ -368,15 +389,6 @@ describe("Goals", async () => {
       expect(result.error).toBe(
         "Access denied! Please refresh the page and try again."
       )
-    })
-
-    it("should return error with invalid goal ID", async () => {
-      mockAuthenticatedUser()
-
-      const result = await deleteGoal("invalid-id")
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid goal ID!")
     })
 
     it("should return error when goal not found", async () => {

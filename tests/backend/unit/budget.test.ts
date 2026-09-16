@@ -42,22 +42,6 @@ describe("Budgets", async () => {
       )
     })
 
-    it("should return error when budget already exists", async () => {
-      await insertTestBudget(mockDBBudget)
-      mockAuthenticatedUser()
-
-      const result = await createBudget({
-        categoryKey: mockDBBudget.categoryKey,
-        currency: mockDBBudget.currency,
-        allocatedAmount: "2000000",
-        startDate: localDateToUTCMidnight(mockDBBudget.startDate),
-        endDate: localDateToUTCMidnight(mockDBBudget.endDate),
-      })
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("This budget already exists!")
-    })
-
     it("should return error when categoryKey is invalid or does not belong to user", async () => {
       mockAuthenticatedUser()
 
@@ -103,16 +87,20 @@ describe("Budgets", async () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should return error when database operation throws error", async () => {
+    it("should return error when budget already exists", async () => {
+      await insertTestBudget(mockDBBudget)
       mockAuthenticatedUser()
-      mockBudgetCollectionError()
 
-      const result = await createBudget(mockValidBudgetValues)
+      const result = await createBudget({
+        categoryKey: mockDBBudget.categoryKey,
+        currency: mockDBBudget.currency,
+        allocatedAmount: "2000000",
+        startDate: mockDBBudget.startDate,
+        endDate: mockDBBudget.endDate,
+      })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to create budget! Please try again later."
-      )
+      expect(result.error).toBe("This budget already exists!")
     })
 
     it("should prevent race condition when creating duplicate budgets concurrently", async () => {
@@ -134,9 +122,30 @@ describe("Budgets", async () => {
       expect(successCount).toBe(1)
       expect(errorCount).toBe(1)
     })
+
+    it("should return error when database operation throws error", async () => {
+      mockAuthenticatedUser()
+      mockBudgetCollectionError()
+
+      const result = await createBudget(mockValidBudgetValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Failed to create budget! Please try again later."
+      )
+    })
   })
 
   describe("updateBudget", () => {
+    it("should return error with invalid budget ID", async () => {
+      mockAuthenticatedUser()
+
+      const result = await updateBudget("invalid-id", mockValidBudgetValues)
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid budget ID!")
+    })
+
     it("should return error when data is invalid", async () => {
       // @ts-expect-error - Testing invalid data
       const result = await updateBudget(mockDBBudget._id.toString(), {})
@@ -159,13 +168,28 @@ describe("Budgets", async () => {
       )
     })
 
-    it("should return error with invalid budget ID", async () => {
+    it("should return error when categoryKey is invalid or does not belong to user", async () => {
       mockAuthenticatedUser()
 
-      const result = await updateBudget("invalid-id", mockValidBudgetValues)
+      const result = await updateBudget(mockDBBudget._id.toString(), {
+        ...mockValidBudgetValues,
+        categoryKey: "non-existent-or-invalid-key",
+      })
 
       expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid budget ID!")
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when budget category is not an outflow category", async () => {
+      mockAuthenticatedUser()
+
+      const result = await updateBudget(mockDBBudget._id.toString(), {
+        ...mockValidBudgetValues,
+        categoryKey: "salary_bonus",
+      })
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
     })
 
     it("should return error when budget not found", async () => {
@@ -331,6 +355,15 @@ describe("Budgets", async () => {
   })
 
   describe("deleteBudget", () => {
+    it("should return error with invalid budget ID", async () => {
+      mockAuthenticatedUser()
+
+      const result = await deleteBudget("invalid-id")
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid budget ID!")
+    })
+
     it("should return error when not authenticated", async () => {
       mockUnauthenticatedUser()
 
@@ -340,15 +373,6 @@ describe("Budgets", async () => {
       expect(result.error).toBe(
         "Access denied! Please refresh the page and try again."
       )
-    })
-
-    it("should return error with invalid budget ID", async () => {
-      mockAuthenticatedUser()
-
-      const result = await deleteBudget("invalid-id")
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe("Invalid budget ID!")
     })
 
     it("should return error when budget not found", async () => {
