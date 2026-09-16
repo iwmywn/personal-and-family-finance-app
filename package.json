@@ -81,12 +81,12 @@
     ],
     "*.{css,json,md}": "prettier --write"
   },
-  "packageManager": "pnpm@12.4.1",
   "engines": {
     "runtime": {
       "name": "node",
       "version": "24.19.0",
       "onFail": "error"
     }
-  }
+  },
+  "packageManager": "pnpm@12.4.1"
 }
