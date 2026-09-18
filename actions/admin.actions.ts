@@ -14,7 +14,7 @@ import {
   getTransactionsCollection,
   getUsersCollection,
 } from "@/lib/collections"
-import { withTransaction } from "@/lib/db"
+import { connect, withTransaction } from "@/lib/db"
 import type { ActionResponse, User } from "@/lib/definitions"
 
 import { getSession } from "./session.actions"
@@ -82,7 +82,6 @@ export async function deleteUser(userId: string): Promise<ActionResponse> {
       }
     }
 
-    const headersList = await headers()
     const { error, user, session } = await getSession(true)
 
     if (!user || !session) return { error }
@@ -138,13 +137,40 @@ export async function deleteUser(userId: string): Promise<ActionResponse> {
         { userId: userObjectId },
         { session: dbSession }
       )
-    })
 
-    await auth.api.removeUser({
-      body: {
-        userId,
-      },
-      headers: headersList,
+      const db = await connect()
+      const userFilter = {
+        $or: [{ userId: userObjectId }, { userId }],
+      }
+
+      await Promise.all([
+        db
+          .collection("sessions")
+          .deleteMany(userFilter, { session: dbSession }),
+        db
+          .collection("accounts")
+          .deleteMany(userFilter, { session: dbSession }),
+        db
+          .collection("twoFactors")
+          .deleteMany(userFilter, { session: dbSession }),
+        targetUser.email
+          ? db.collection("verifications").deleteMany(
+              {
+                $or: [
+                  { identifier: targetUser.email },
+                  { userId: userObjectId },
+                  { userId },
+                ],
+              },
+              { session: dbSession }
+            )
+          : Promise.resolve(),
+      ])
+
+      await usersCollection.deleteOne(
+        { _id: userObjectId },
+        { session: dbSession }
+      )
     })
 
     updateTag(`transactions-${userId}`)

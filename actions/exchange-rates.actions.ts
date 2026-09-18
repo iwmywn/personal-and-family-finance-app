@@ -134,7 +134,7 @@ async function fetchCandidateExchangeRates(
 
   return uniqueDocs.map((doc) => {
     const rates: RatesMap = { USD: toDecimal("1") }
-    for (const [curr, val] of Object.entries(doc.rates)) {
+    for (const [curr, val] of Object.entries(doc.rates ?? {})) {
       if (val) rates[curr] = toDecimal(val.toString())
     }
     return {
@@ -182,16 +182,33 @@ export async function convertTransactionsToCurrency(
   if (rates.length === 0) return transactions
 
   return transactions.map((transaction, idx) => {
+    const nearestRate = findNearestRate(rates, timestamps[idx])
+    const stringifiedRates = Object.fromEntries(
+      Object.entries(nearestRate.rates ?? {}).map(([curr, dec]) => [
+        curr,
+        dec.toString(),
+      ])
+    ) as Record<Currency, string>
+
     if (transaction.currency === targetCurrency) {
-      return transaction
+      return {
+        ...transaction,
+        originalAmount: transaction.originalAmount ?? transaction.amount,
+        originalCurrency: transaction.originalCurrency ?? transaction.currency,
+        rates: transaction.rates ?? stringifiedRates,
+      }
     }
 
-    const nearestRate = findNearestRate(rates, timestamps[idx])
     const rateFromVal = nearestRate.rates?.[transaction.currency]
     const rateToVal = nearestRate.rates?.[targetCurrency]
 
     if (!rateFromVal || !rateToVal) {
-      return transaction
+      return {
+        ...transaction,
+        originalAmount: transaction.originalAmount ?? transaction.amount,
+        originalCurrency: transaction.originalCurrency ?? transaction.currency,
+        rates: transaction.rates ?? stringifiedRates,
+      }
     }
 
     const convertedAmount = convertAmountWithRates(
@@ -201,19 +218,12 @@ export async function convertTransactionsToCurrency(
       nearestRate.rates
     )
 
-    const stringifiedRates = Object.fromEntries(
-      Object.entries(nearestRate.rates).map(([curr, dec]) => [
-        curr,
-        dec.toString(),
-      ])
-    ) as Record<Currency, string>
-
     return {
       ...transaction,
       amount: convertedAmount.toString(),
       currency: targetCurrency,
-      originalAmount: transaction.amount,
-      originalCurrency: transaction.currency,
+      originalAmount: transaction.originalAmount ?? transaction.amount,
+      originalCurrency: transaction.originalCurrency ?? transaction.currency,
       rates: stringifiedRates,
     }
   })

@@ -1,5 +1,5 @@
 import { headers } from "next/headers"
-import { ObjectId } from "mongodb"
+import { Collection, ObjectId } from "mongodb"
 
 import {
   insertTestBudget,
@@ -35,7 +35,9 @@ import {
   getGoalsCollection,
   getRecurringTransactionsCollection,
   getTransactionsCollection,
+  getUsersCollection,
 } from "@/lib/collections"
+import { connect } from "@/lib/db"
 import type { User } from "@/lib/definitions"
 
 vi.mock("next/headers", () => ({
@@ -278,10 +280,11 @@ describe("Admin", () => {
       expect(result.success).toBeUndefined()
     })
 
-    it("should cascade delete all user data and call auth.api.removeUser", async () => {
+    it("should cascade delete all user and auth data atomically", async () => {
       mockAuthenticatedAdmin()
 
       const targetUserId = new ObjectId()
+      const db = await connect()
 
       await Promise.all([
         insertTestUser({ ...mockDBUser, _id: targetUserId }),
@@ -305,12 +308,17 @@ describe("Admin", () => {
           ...mockDBRecurringTransaction,
           userId: targetUserId,
         }),
+        db.collection("sessions").insertOne({
+          userId: targetUserId.toString(),
+          token: "session-token-123",
+          expiresAt: new Date(),
+        }),
+        db.collection("accounts").insertOne({
+          userId: targetUserId.toString(),
+          providerId: "credential",
+          accountId: "account-123",
+        }),
       ])
-
-      vi.mocked(headers).mockResolvedValue(new Headers())
-      vi.mocked(auth.api.removeUser).mockResolvedValueOnce({
-        success: true,
-      })
 
       const result = await deleteUser(targetUserId.toString())
 
@@ -318,12 +326,14 @@ describe("Admin", () => {
       expect(result.success).toBe("User has been deleted.")
 
       const [
+        usersColl,
         transactionsColl,
         categoriesColl,
         budgetsColl,
         goalsColl,
         recurringColl,
       ] = await Promise.all([
+        getUsersCollection(),
         getTransactionsCollection(),
         getCategoriesCollection(),
         getBudgetsCollection(),
@@ -331,27 +341,76 @@ describe("Admin", () => {
         getRecurringTransactionsCollection(),
       ])
 
-      const [txCount, catCount, bgtCount, goalCount, recCount] =
-        await Promise.all([
-          transactionsColl.countDocuments({ userId: targetUserId }),
-          categoriesColl.countDocuments({ userId: targetUserId }),
-          budgetsColl.countDocuments({ userId: targetUserId }),
-          goalsColl.countDocuments({ userId: targetUserId }),
-          recurringColl.countDocuments({ userId: targetUserId }),
-        ])
+      const [
+        userCount,
+        txCount,
+        catCount,
+        bgtCount,
+        goalCount,
+        recCount,
+        sessionCount,
+        accountCount,
+      ] = await Promise.all([
+        usersColl.countDocuments({ _id: targetUserId }),
+        transactionsColl.countDocuments({ userId: targetUserId }),
+        categoriesColl.countDocuments({ userId: targetUserId }),
+        budgetsColl.countDocuments({ userId: targetUserId }),
+        goalsColl.countDocuments({ userId: targetUserId }),
+        recurringColl.countDocuments({ userId: targetUserId }),
+        db.collection("sessions").countDocuments({
+          $or: [{ userId: targetUserId }, { userId: targetUserId.toString() }],
+        }),
+        db.collection("accounts").countDocuments({
+          $or: [{ userId: targetUserId }, { userId: targetUserId.toString() }],
+        }),
+      ])
 
+      expect(userCount).toBe(0)
       expect(txCount).toBe(0)
       expect(catCount).toBe(0)
       expect(bgtCount).toBe(0)
       expect(goalCount).toBe(0)
       expect(recCount).toBe(0)
+      expect(sessionCount).toBe(0)
+      expect(accountCount).toBe(0)
+    })
 
-      expect(auth.api.removeUser).toHaveBeenCalledWith({
-        body: {
-          userId: targetUserId.toString(),
-        },
-        headers: expect.any(Headers),
+    it("should rollback all deletions if a failure occurs during transaction to prevent orphaned data", async () => {
+      mockAuthenticatedAdmin()
+
+      const targetUserId = new ObjectId()
+
+      await Promise.all([
+        insertTestUser({ ...mockDBUser, _id: targetUserId }),
+        insertTestTransaction({
+          ...mockDBTransaction,
+          userId: targetUserId,
+        }),
+      ])
+
+      const usersColl = await getUsersCollection()
+      const transactionsColl = await getTransactionsCollection()
+
+      const deleteOneSpy = vi
+        .spyOn(Collection.prototype, "deleteOne")
+        .mockRejectedValueOnce(new Error("Database connection interrupted"))
+
+      const result = await deleteUser(targetUserId.toString())
+
+      expect(result.error).toBe(
+        "Failed to delete user! Please try again later."
+      )
+      expect(result.success).toBeUndefined()
+
+      const userCount = await usersColl.countDocuments({ _id: targetUserId })
+      const txCount = await transactionsColl.countDocuments({
+        userId: targetUserId,
       })
+
+      expect(userCount).toBe(1)
+      expect(txCount).toBe(1)
+
+      deleteOneSpy.mockRestore()
     })
   })
 })

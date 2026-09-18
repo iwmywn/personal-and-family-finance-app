@@ -1,4 +1,4 @@
-my personal & family finance app
+[Work in Progress] my personal & family finance app
 
 ---
 

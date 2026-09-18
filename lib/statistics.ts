@@ -238,6 +238,10 @@ function calculateStatsBase<TBase extends Budget | Goal>(
       return sum.plus(new Decimal(amountToAdd))
     }
 
+    if (t.currency === targetCurrency) {
+      return sum.plus(new Decimal(config.getTransactionAmount(t)))
+    }
+
     return sum
   }, new Decimal(0))
 

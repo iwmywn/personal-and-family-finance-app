@@ -787,5 +787,40 @@ describe("Statistics", () => {
       const [result] = calculateBudgetsStats([budget], [])
       expect(result.status).toBe("upcoming")
     })
+
+    it("should correctly convert transaction amount to budget currency when transaction has rates (DEF-01)", () => {
+      vi.setSystemTime(new Date("2026-03-10T00:00:00.000Z"))
+      const budget = {
+        ...mockBudgets[0],
+        currency: "USD" as const,
+        allocatedAmount: "200",
+        startDate: new Date("2026-03-01T00:00:00.000Z"),
+        endDate: new Date("2026-03-31T00:00:00.000Z"),
+      }
+      const transactions: Transaction[] = [
+        {
+          _id: "tx-vnd-to-usd",
+          userId: budget.userId,
+          type: "outflow",
+          amount: "100",
+          currency: "USD",
+          originalAmount: "2500000",
+          originalCurrency: "VND",
+          rates: {
+            USD: "1",
+            VND: "25000",
+            CNY: "7.2",
+            JPY: "150",
+            KRW: "1350",
+          },
+          description: "Shopping",
+          categoryKey: budget.categoryKey,
+          date: new Date("2026-03-05T00:00:00.000Z"),
+        },
+      ]
+      const [result] = calculateBudgetsStats([budget], transactions)
+      expect(result.spent).toBe("100")
+      expect(result.percentage).toBe(50)
+    })
   })
 })

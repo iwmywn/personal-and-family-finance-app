@@ -188,12 +188,25 @@ export function StatisticsFilters() {
                       defaultMonth={dateRange.to}
                       captionLayout="dropdown"
                       onSelect={(date) => {
-                        if (date && dateRange.from && date >= dateRange.from) {
-                          handleDateRangeChange({
-                            from: dateRange.from,
-                            to: date,
+                        if (!date) return
+                        if (!dateRange.from) {
+                          setDateRange({
+                            from: date,
+                            to: undefined,
                           })
+                          return
                         }
+                        if (date < dateRange.from) {
+                          handleDateRangeChange({
+                            from: date,
+                            to: dateRange.from,
+                          })
+                          return
+                        }
+                        handleDateRangeChange({
+                          from: dateRange.from,
+                          to: date,
+                        })
                       }}
                     />
                   </div>

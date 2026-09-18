@@ -472,4 +472,27 @@ describe("ensureExchangeRateForDate", () => {
       "Currency API returned status 500"
     )
   })
+
+  it("should handle exchange rate documents with null or undefined rates defensively (DEF-03)", async () => {
+    const collection = await getExchangeRatesCollection()
+    // Insert document with null rates
+    await collection.insertOne({
+      date: new Date("2024-06-01T00:00:00Z"),
+      rates: null as never,
+    })
+
+    const transactions: Transaction[] = [
+      {
+        ...mockTransactions[0],
+        currency: "USD",
+        amount: "50",
+        date: new Date("2024-06-01T00:00:00Z"),
+      },
+    ]
+
+    // Should not throw TypeError: Cannot convert undefined or null to object
+    await expect(
+      convertTransactionsToCurrency(transactions, "USD")
+    ).resolves.not.toThrow()
+  })
 })

@@ -1,6 +1,10 @@
 import { updateTag } from "next/cache"
 import type { NextRequest } from "next/server"
 
+import {
+  enqueueMissingExchangeRateDate,
+  ensureExchangeRateForDate,
+} from "@/actions/exchange-rates.actions"
 import { serverEnv } from "@/env/server"
 import {
   getRecurringTransactionsCollection,
@@ -57,59 +61,69 @@ export async function GET(request: NextRequest) {
             return
           }
 
-          for (const targetDate of dueDates) {
-            const existingTransaction = await transactionsCollection.findOne({
-              recurringId: rec._id,
-              date: targetDate,
-            })
-
-            if (existingTransaction) {
-              await recurringCollection.updateOne(
-                { _id: rec._id },
-                { $set: { lastGeneratedDate: targetDate } }
-              )
-              skippedReason.push({ id: rec._id.toString(), reason: "existing" })
-              affectedUserIds.add(rec.userId.toString())
-              continue
-            }
-
-            try {
-              const insertResult = await transactionsCollection.insertOne({
-                userId: rec.userId,
-                type: rec.type,
-                categoryKey: rec.categoryKey,
-                amount: rec.amount,
-                currency: rec.currency,
-                description: rec.description,
-                date: targetDate,
+          await Promise.all(
+            dueDates.map(async (targetDate) => {
+              const existingTransaction = await transactionsCollection.findOne({
                 recurringId: rec._id,
+                date: targetDate,
               })
 
-              await recurringCollection.updateOne(
-                { _id: rec._id },
-                { $set: { lastGeneratedDate: targetDate } }
-              )
-
-              createdCount++
-              createdIds.push(insertResult.insertedId.toString())
-              affectedUserIds.add(rec.userId.toString())
-              datesToEnsure.add(targetDate.getTime())
-            } catch (error) {
-              if (isDuplicateKeyError(error)) {
-                // skip creating duplicate, but still update lastGeneratedDate to avoid repeated attempts
-                await recurringCollection.updateOne(
-                  { _id: rec._id },
-                  { $set: { lastGeneratedDate: targetDate } }
-                )
+              if (existingTransaction) {
                 skippedReason.push({
                   id: rec._id.toString(),
                   reason: "existing",
                 })
                 affectedUserIds.add(rec.userId.toString())
-                continue
+                return
               }
-              throw error
-            }
+
+              try {
+                const insertResult = await transactionsCollection.insertOne({
+                  userId: rec.userId,
+                  type: rec.type,
+                  categoryKey: rec.categoryKey,
+                  amount: rec.amount,
+                  currency: rec.currency,
+                  description: rec.description,
+                  date: targetDate,
+                  recurringId: rec._id,
+                })
+
+                createdCount++
+                createdIds.push(insertResult.insertedId.toString())
+                affectedUserIds.add(rec.userId.toString())
+                datesToEnsure.add(targetDate.getTime())
+              } catch (error) {
+                if (isDuplicateKeyError(error)) {
+                  skippedReason.push({
+                    id: rec._id.toString(),
+                    reason: "existing",
+                  })
+                  affectedUserIds.add(rec.userId.toString())
+                  return
+                }
+                throw error
+              }
+            })
+          )
+
+          const latestDate = dueDates[dueDates.length - 1]
+          await recurringCollection.updateOne(
+            { _id: rec._id },
+            { $set: { lastGeneratedDate: latestDate } }
+          )
+        })
+      )
+    }
+
+    if (datesToEnsure.size > 0) {
+      await Promise.allSettled(
+        Array.from(datesToEnsure).map(async (ms) => {
+          const d = new Date(ms)
+          try {
+            await ensureExchangeRateForDate(d)
+          } catch (error) {
+            await enqueueMissingExchangeRateDate(d, error)
           }
         })
       )
