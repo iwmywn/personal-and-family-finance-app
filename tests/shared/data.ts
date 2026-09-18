@@ -181,7 +181,6 @@ export const mockDBRecurringTransaction: DBRecurringTransaction = {
   startDate: localDateToUTCMidnight(new Date("2024-01-01")),
   endDate: localDateToUTCMidnight(new Date("2024-12-31")),
   lastGeneratedDate: undefined,
-  isActive: true,
 }
 
 export const mockDBExchangeRates: DBExchangeRate[] = [
@@ -261,7 +260,6 @@ export const mockValidRecurringTransactionValues = {
   startDate: localDateToUTCMidnight(new Date("2024-02-01")),
   endDate: localDateToUTCMidnight(new Date("2024-12-31")),
   lastGeneratedDate: undefined,
-  isActive: true,
 }
 
 export const mockTransactions: Transaction[] = [
@@ -511,7 +509,6 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     startDate: new Date("2024-01-01"),
     endDate: new Date("2024-12-31"),
     lastGeneratedDate: undefined,
-    isActive: true,
   },
   {
     _id: "2",
@@ -526,7 +523,6 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     startDate: new Date("2024-01-15"),
     endDate: new Date("2024-06-30"),
     lastGeneratedDate: undefined,
-    isActive: true,
   },
   {
     _id: "3",
@@ -539,7 +535,6 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     frequency: "monthly",
     startDate: new Date("2024-02-01"),
     endDate: undefined,
-    isActive: true,
   },
   {
     _id: "4",
@@ -554,7 +549,6 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     startDate: new Date("2024-03-01"),
     endDate: new Date("2024-03-31"),
     lastGeneratedDate: undefined,
-    isActive: false,
   },
   {
     _id: "5",
@@ -569,7 +563,6 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     startDate: new Date("2023-12-01"),
     endDate: new Date("2023-12-31"),
     lastGeneratedDate: undefined,
-    isActive: false,
   },
   {
     _id: "6",
@@ -582,9 +575,8 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     frequency: "daily",
     randomEveryXDays: undefined,
     startDate: new Date("2024-01-10"),
-    endDate: new Date("2024-02-29"),
+    endDate: new Date("2024-06-30"),
     lastGeneratedDate: undefined,
-    isActive: true,
   },
   {
     _id: "7",
@@ -599,7 +591,6 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     startDate: new Date("2024-04-01"),
     endDate: undefined,
     lastGeneratedDate: undefined,
-    isActive: true,
   },
   {
     _id: "8",
@@ -612,8 +603,7 @@ export const mockRecurringTransactions: RecurringTransaction[] = [
     frequency: "monthly",
     randomEveryXDays: undefined,
     startDate: new Date("2023-11-01"),
-    endDate: new Date("2024-03-31"),
+    endDate: new Date("2024-06-30"),
     lastGeneratedDate: undefined,
-    isActive: true,
   },
 ]

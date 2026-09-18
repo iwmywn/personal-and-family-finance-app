@@ -712,6 +712,15 @@ describe("Filters", () => {
   })
 
   describe("filterRecurringTransactions", () => {
+    beforeEach(() => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date("2024-04-15T00:00:00.000Z"))
+    })
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
     it("should filter by search term", () => {
       const result = filterRecurringTransactions(mockRecurringTransactions, {
         searchTerm: "salary",
@@ -747,7 +756,9 @@ describe("Filters", () => {
       })
 
       expect(result).toHaveLength(6)
-      expect(result.every((r) => r.isActive === true)).toBe(true)
+      expect(
+        result.every((r) => !r.endDate || new Date(r.endDate) >= new Date())
+      ).toBe(true)
       expect(result.map((r) => r._id)).toEqual(["1", "2", "3", "6", "7", "8"])
     })
 
@@ -757,7 +768,11 @@ describe("Filters", () => {
       })
 
       expect(result).toHaveLength(2)
-      expect(result.every((r) => r.isActive === false)).toBe(true)
+      expect(
+        result.every((r) =>
+          Boolean(r.endDate && new Date(r.endDate) < new Date())
+        )
+      ).toBe(true)
       expect(result.map((r) => r._id)).toEqual(["4", "5"])
     })
 
@@ -935,6 +950,84 @@ describe("Filters", () => {
     it("should return empty array when no matches found", () => {
       const result = filterUsers(mockUsers, { searchTerm: "nonexistent" })
       expect(result).toHaveLength(0)
+    })
+  })
+
+  describe("filterRecurringTransactions", () => {
+    const today = new Date("2026-06-15T12:00:00Z")
+
+    beforeEach(() => {
+      vi.useFakeTimers()
+      vi.setSystemTime(today)
+    })
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    const recurringList = [
+      {
+        _id: "rec-active-no-end",
+        userId: "user-1",
+        type: "outflow" as const,
+        categoryKey: "food_beverage" as const,
+        amount: "50000",
+        currency: "VND" as const,
+        description: "Lunch subscription",
+        frequency: "daily" as const,
+        startDate: new Date("2026-06-01T00:00:00Z"),
+      },
+      {
+        _id: "rec-active-ending-today",
+        userId: "user-1",
+        type: "outflow" as const,
+        categoryKey: "housing_utilities" as const,
+        amount: "100000",
+        currency: "VND" as const,
+        description: "Internet bill",
+        frequency: "monthly" as const,
+        startDate: new Date("2026-01-15T00:00:00Z"),
+        endDate: new Date("2026-06-15T00:00:00Z"), // Ends today
+      },
+      {
+        _id: "rec-expired-yesterday",
+        userId: "user-1",
+        type: "inflow" as const,
+        categoryKey: "salary_bonus" as const,
+        amount: "5000000",
+        currency: "VND" as const,
+        description: "Contract salary",
+        frequency: "monthly" as const,
+        startDate: new Date("2026-01-01T00:00:00Z"),
+        endDate: new Date("2026-06-14T00:00:00Z"), // Ended yesterday
+      },
+    ]
+
+    it("should consider a rule ending today as active and not inactive", () => {
+      const activeOnly = filterRecurringTransactions(recurringList, {
+        filterStatus: "active",
+      })
+      expect(activeOnly.map((r) => r._id)).toEqual([
+        "rec-active-no-end",
+        "rec-active-ending-today",
+      ])
+
+      const inactiveOnly = filterRecurringTransactions(recurringList, {
+        filterStatus: "inactive",
+      })
+      expect(inactiveOnly.map((r) => r._id)).toEqual(["rec-expired-yesterday"])
+    })
+
+    it("should filter recurring transactions by type and category", () => {
+      const inflowOnly = filterRecurringTransactions(recurringList, {
+        filterType: "inflow",
+      })
+      expect(inflowOnly.map((r) => r._id)).toEqual(["rec-expired-yesterday"])
+
+      const foodOnly = filterRecurringTransactions(recurringList, {
+        filterCategoryKey: "food_beverage",
+      })
+      expect(foodOnly.map((r) => r._id)).toEqual(["rec-active-no-end"])
     })
   })
 })

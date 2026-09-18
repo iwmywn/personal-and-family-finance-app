@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb"
 import { getExtracted } from "next-intl/server"
 
 import { getRecurringTransactionsCollection } from "@/lib/collections"
+import { normalizeToUTCMidnight } from "@/lib/date"
 import type { ActionResponse, RecurringTransaction } from "@/lib/definitions"
 import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
@@ -57,7 +58,6 @@ export async function createRecurringTransaction(
       startDate: parsedValues.data.startDate,
       endDate: parsedValues.data.endDate,
       lastGeneratedDate: undefined,
-      isActive: parsedValues.data.isActive,
     })
 
     updateTag(`recurringTransactions-${user.id}`)
@@ -114,7 +114,32 @@ export async function updateRecurringTransaction(
     }
 
     const recurringCollection = await getRecurringTransactionsCollection()
-    const result = await recurringCollection.updateOne(
+    const existing = await recurringCollection.findOne({
+      _id: new ObjectId(recurringId),
+      userId: new ObjectId(user.id),
+    })
+
+    if (!existing) {
+      return {
+        error: t(
+          "Recurring transaction not found or you don't have permission to edit."
+        ),
+      }
+    }
+
+    const todayUTC = normalizeToUTCMidnight(new Date())
+    const isEnded = Boolean(
+      existing.endDate && todayUTC > new Date(existing.endDate)
+    )
+    if (isEnded) {
+      return {
+        error: t(
+          "Cannot edit an expired recurring transaction. Please create a new one or duplicate."
+        ),
+      }
+    }
+
+    await recurringCollection.updateOne(
       { _id: new ObjectId(recurringId), userId: new ObjectId(user.id) },
       {
         $set: {
@@ -127,18 +152,17 @@ export async function updateRecurringTransaction(
           randomEveryXDays: parsedValues.data.randomEveryXDays,
           startDate: parsedValues.data.startDate,
           endDate: parsedValues.data.endDate,
-          isActive: parsedValues.data.isActive,
         },
       }
     )
 
-    if (result.matchedCount === 0) {
-      return {
-        error: t(
-          "Recurring transaction not found or you don't have permission to edit."
-        ),
-      }
-    }
+    // if (result.matchedCount === 0) {
+    //   return {
+    //     error: t(
+    //       "Recurring transaction not found or you don't have permission to edit."
+    //     ),
+    //   }
+    // }
 
     updateTag(`recurringTransactions-${user.id}`)
     return {

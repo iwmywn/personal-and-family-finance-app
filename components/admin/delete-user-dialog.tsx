@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useExtracted } from "next-intl"
 import { toast } from "sonner"
 
+import { deleteUser } from "@/actions/admin.actions"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,7 +17,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Spinner } from "@/components/ui/spinner"
-import { authClient } from "@/lib/auth-client"
 import type { User } from "@/lib/definitions"
 
 export function DeleteUserDialog({
@@ -37,19 +37,15 @@ export function DeleteUserDialog({
 
     startTransition(async () => {
       try {
-        await authClient.admin.removeUser({
-          userId: user.id,
-          fetchOptions: {
-            onError: () => {
-              toast.error(t("Failed to delete user! Please try again later."))
-            },
-            onSuccess: () => {
-              setOpen(false)
-              toast.success(t("User has been deleted."))
-              router.refresh()
-            },
-          },
-        })
+        const { error, success } = await deleteUser(user.id)
+
+        if (success === undefined) {
+          toast.error(error)
+        } else {
+          setOpen(false)
+          toast.success(success)
+          router.refresh()
+        }
       } catch {
         toast.error(t("Failed to delete user! Please try again later."))
       }

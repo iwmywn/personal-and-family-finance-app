@@ -113,23 +113,25 @@ describe("Transactions", async () => {
       fetchSpy.mockRestore()
     })
 
-    it("should return error when creating duplicate transaction on the same day", async () => {
+    it("should successfully create multiple transactions with identical details on the same day", async () => {
       mockAuthenticatedUser()
 
       const firstResult = await createTransaction(mockValidTransactionValues)
-      const duplicateResult = await createTransaction(
-        mockValidTransactionValues
-      )
+      const secondResult = await createTransaction(mockValidTransactionValues)
 
       expect(firstResult.success).toBe("Transaction has been created.")
       expect(firstResult.error).toBeUndefined()
-      expect(duplicateResult.success).toBeUndefined()
-      expect(duplicateResult.error).toBe(
-        "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
-      )
+      expect(secondResult.success).toBe("Transaction has been created.")
+      expect(secondResult.error).toBeUndefined()
+
+      const transactionsCollection = await getTransactionsCollection()
+      const count = await transactionsCollection.countDocuments({
+        userId: mockDBUser._id,
+      })
+      expect(count).toBe(2)
     })
 
-    it("should prevent race condition when creating duplicate transactions concurrently", async () => {
+    it("should successfully create duplicate transactions concurrently", async () => {
       mockAuthenticatedUser()
 
       const [firstResult, secondResult] = await Promise.all([
@@ -137,18 +139,16 @@ describe("Transactions", async () => {
         createTransaction(mockValidTransactionValues),
       ])
 
-      const results = [firstResult, secondResult]
-      const successCount = results.filter(
-        (r) => r.success === "Transaction has been created."
-      ).length
-      const errorCount = results.filter(
-        (r) =>
-          r.error ===
-          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
-      ).length
+      expect(firstResult.success).toBe("Transaction has been created.")
+      expect(firstResult.error).toBeUndefined()
+      expect(secondResult.success).toBe("Transaction has been created.")
+      expect(secondResult.error).toBeUndefined()
 
-      expect(successCount).toBe(1)
-      expect(errorCount).toBe(1)
+      const transactionsCollection = await getTransactionsCollection()
+      const count = await transactionsCollection.countDocuments({
+        userId: mockDBUser._id,
+      })
+      expect(count).toBe(2)
     })
 
     it("should return error when database operation throws error", async () => {
@@ -340,7 +340,7 @@ describe("Transactions", async () => {
       fetchSpy.mockRestore()
     })
 
-    it("should return error when updating transaction causes duplicate key collision", async () => {
+    it("should allow updating transaction to have identical details as another transaction on the same date", async () => {
       await Promise.all([
         insertTestTransaction(mockDBTransaction),
         insertTestTransaction({
@@ -360,13 +360,11 @@ describe("Transactions", async () => {
         date: mockDBTransaction.date,
       })
 
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
-      )
+      expect(result.success).toBe("Transaction has been updated.")
+      expect(result.error).toBeUndefined()
     })
 
-    it("should prevent race condition when updating duplicate transactions concurrently", async () => {
+    it("should allow concurrent updates resulting in identical transactions", async () => {
       await Promise.all([
         insertTestTransaction({
           ...mockDBTransaction,
@@ -395,18 +393,10 @@ describe("Transactions", async () => {
         updateTransaction("690d2e5f7d5c36bf6c82ff1f", targetValues),
       ])
 
-      const results = [firstResult, secondResult]
-      const successCount = results.filter(
-        (r) => r.success === "Transaction has been updated."
-      ).length
-      const errorCount = results.filter(
-        (r) =>
-          r.error ===
-          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
-      ).length
-
-      expect(successCount).toBe(1)
-      expect(errorCount).toBe(1)
+      expect(firstResult.success).toBe("Transaction has been updated.")
+      expect(firstResult.error).toBeUndefined()
+      expect(secondResult.success).toBe("Transaction has been updated.")
+      expect(secondResult.error).toBeUndefined()
     })
 
     it("should return error when database operation throws error", async () => {

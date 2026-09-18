@@ -265,7 +265,6 @@ export function buildSchemas(messages: SchemaMessages) {
         startDate: baseDateSchema(messages.startDateRequired),
         endDate: baseOptionalDateSchema(),
         lastGeneratedDate: baseOptionalDateSchema(),
-        isActive: z.boolean(),
       })
       .superRefine((data, ctx) => {
         if (data.frequency === "random" && !data.randomEveryXDays) {
@@ -280,18 +279,6 @@ export function buildSchemas(messages: SchemaMessages) {
           ctx.addIssue({
             path: ["endDate"],
             message: messages.endDateAfterStartDate,
-            code: "custom",
-          })
-        }
-
-        if (
-          data.isActive &&
-          data.endDate &&
-          parseToUTCMidnight(data.endDate)! < parseToUTCMidnight(new Date())!
-        ) {
-          ctx.addIssue({
-            path: ["isActive"],
-            message: messages.expiredRecurringActivation,
             code: "custom",
           })
         }

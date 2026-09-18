@@ -1,10 +1,6 @@
 import { updateTag } from "next/cache"
 import type { NextRequest } from "next/server"
 
-import {
-  enqueueMissingExchangeRateDate,
-  ensureExchangeRateForDate,
-} from "@/actions/exchange-rates.actions"
 import { serverEnv } from "@/env/server"
 import {
   getRecurringTransactionsCollection,
@@ -13,7 +9,7 @@ import {
 import { normalizeToUTCMidnight } from "@/lib/date"
 import { isDuplicateKeyError } from "@/lib/indexes"
 
-import { shouldGenerateToday } from "./utils"
+import { getDueDates } from "./utils"
 
 // Vercel Cron Jobs only trigger HTTP GET requests.
 // [See official docs](https://vercel.com/docs/cron-jobs#how-cron-jobs-work)
@@ -34,63 +30,86 @@ export async function GET(request: NextRequest) {
 
     const todayUTC = normalizeToUTCMidnight(new Date())
 
-    const deactivatedResult = await recurringCollection.updateMany(
-      {
-        isActive: true,
-        endDate: { $exists: true, $lt: todayUTC },
-      },
-      { $set: { isActive: false } }
-    )
-
     const activeRecurringTransactions = await recurringCollection
-      .find({ isActive: true })
+      .find({
+        $or: [
+          { endDate: { $exists: false } },
+          { endDate: null as unknown as Date },
+          { endDate: { $gte: todayUTC } },
+        ],
+      })
       .toArray()
 
     let createdCount = 0
     const createdIds: string[] = []
     const skippedReason: { id: string; reason: "notToday" | "existing" }[] = []
     const affectedUserIds = new Set<string>()
+    const datesToEnsure = new Set<number>()
 
     for (let i = 0; i < activeRecurringTransactions.length; i += BATCH_SIZE) {
       const batch = activeRecurringTransactions.slice(i, i + BATCH_SIZE)
 
       await Promise.all(
         batch.map(async (rec) => {
-          if (!shouldGenerateToday(rec, todayUTC)) {
+          const dueDates = getDueDates(rec, todayUTC)
+          if (dueDates.length === 0) {
             skippedReason.push({ id: rec._id.toString(), reason: "notToday" })
             return
           }
 
-          try {
-            const insertResult = await transactionsCollection.insertOne({
-              userId: rec.userId,
-              type: rec.type,
-              categoryKey: rec.categoryKey,
-              amount: rec.amount,
-              currency: rec.currency,
-              description: rec.description,
-              date: todayUTC,
+          for (const targetDate of dueDates) {
+            const existingTransaction = await transactionsCollection.findOne({
+              recurringId: rec._id,
+              date: targetDate,
             })
 
-            await recurringCollection.updateOne(
-              { _id: rec._id },
-              { $set: { lastGeneratedDate: todayUTC } }
-            )
-
-            createdCount++
-            createdIds.push(insertResult.insertedId.toString())
-            affectedUserIds.add(rec.userId.toString())
-          } catch (error) {
-            if (isDuplicateKeyError(error)) {
-              // skip creating duplicate, but still update lastGeneratedDate to avoid repeated attempts
+            if (existingTransaction) {
               await recurringCollection.updateOne(
                 { _id: rec._id },
-                { $set: { lastGeneratedDate: todayUTC } }
+                { $set: { lastGeneratedDate: targetDate } }
               )
               skippedReason.push({ id: rec._id.toString(), reason: "existing" })
-              return
+              affectedUserIds.add(rec.userId.toString())
+              continue
             }
-            throw error
+
+            try {
+              const insertResult = await transactionsCollection.insertOne({
+                userId: rec.userId,
+                type: rec.type,
+                categoryKey: rec.categoryKey,
+                amount: rec.amount,
+                currency: rec.currency,
+                description: rec.description,
+                date: targetDate,
+                recurringId: rec._id,
+              })
+
+              await recurringCollection.updateOne(
+                { _id: rec._id },
+                { $set: { lastGeneratedDate: targetDate } }
+              )
+
+              createdCount++
+              createdIds.push(insertResult.insertedId.toString())
+              affectedUserIds.add(rec.userId.toString())
+              datesToEnsure.add(targetDate.getTime())
+            } catch (error) {
+              if (isDuplicateKeyError(error)) {
+                // skip creating duplicate, but still update lastGeneratedDate to avoid repeated attempts
+                await recurringCollection.updateOne(
+                  { _id: rec._id },
+                  { $set: { lastGeneratedDate: targetDate } }
+                )
+                skippedReason.push({
+                  id: rec._id.toString(),
+                  reason: "existing",
+                })
+                affectedUserIds.add(rec.userId.toString())
+                continue
+              }
+              throw error
+            }
           }
         })
       )
@@ -98,18 +117,7 @@ export async function GET(request: NextRequest) {
 
     for (const userId of affectedUserIds) {
       updateTag(`transactions-${userId}`)
-    }
-
-    if (createdCount > 0) {
-      try {
-        await ensureExchangeRateForDate(todayUTC)
-      } catch (error) {
-        console.warn(
-          "Could not ensure exchange rate for generated transactions, enqueuing retry:",
-          error
-        )
-        await enqueueMissingExchangeRateDate(todayUTC, error)
-      }
+      updateTag(`recurringTransactions-${userId}`)
     }
 
     return Response.json({
@@ -118,7 +126,6 @@ export async function GET(request: NextRequest) {
       createdIds,
       skippedCount: skippedReason.length,
       skippedReason,
-      deactivated: deactivatedResult.modifiedCount,
       timestamp: new Date().toISOString(),
     })
   } catch (error) {

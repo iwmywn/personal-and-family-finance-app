@@ -67,15 +67,19 @@ import type { RecurringTransactionFormValues } from "@/schemas/types"
 
 interface RecurringDialogProps {
   recurring?: RecurringTransaction
+  mode?: "edit" | "duplicate"
   open: boolean
   setOpen: (open: boolean) => void
 }
 
 export function RecurringTransactionDialog({
   recurring,
+  mode = "edit",
   open,
   setOpen,
 }: RecurringDialogProps) {
+  const isDuplicate = mode === "duplicate"
+  const isEdit = Boolean(recurring && !isDuplicate)
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const [type, setType] = useState<CategoryType>(recurring?.type || "inflow")
@@ -94,10 +98,11 @@ export function RecurringTransactionDialog({
       description: recurring?.description || "",
       frequency: recurring?.frequency || "monthly",
       randomEveryXDays: recurring?.randomEveryXDays || undefined,
-      startDate: parseToLocalDate(recurring?.startDate),
-      endDate: parseToLocalDate(recurring?.endDate),
-      lastGeneratedDate: parseToLocalDate(recurring?.lastGeneratedDate),
-      isActive: recurring?.isActive ?? true,
+      startDate: isDuplicate
+        ? new Date()
+        : parseToLocalDate(recurring?.startDate),
+      endDate: isDuplicate ? undefined : parseToLocalDate(recurring?.endDate),
+      lastGeneratedDate: undefined,
     },
   })
 
@@ -117,7 +122,7 @@ export function RecurringTransactionDialog({
   })
 
   async function onSubmit(values: RecurringTransactionFormValues) {
-    if (recurring) {
+    if (isEdit && recurring) {
       try {
         const { error, success } = await updateRecurringTransaction(
           recurring._id,
@@ -170,14 +175,20 @@ export function RecurringTransactionDialog({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {recurring
-              ? t("Edit Recurring Transaction")
-              : t("Add Recurring Transaction")}
+            {isDuplicate
+              ? t("Duplicate Recurring Transaction")
+              : isEdit
+                ? t("Edit Recurring Transaction")
+                : t("Add Recurring Transaction")}
           </DialogTitle>
           <DialogDescription>
-            {recurring
-              ? t("Update recurring transaction information.")
-              : t("Create a recurring transaction.")}
+            {isDuplicate
+              ? t(
+                  "Create a new recurring transaction based on the selected one."
+                )
+              : isEdit
+                ? t("Update recurring transaction information.")
+                : t("Create a recurring transaction.")}
           </DialogDescription>
         </DialogHeader>
 
@@ -342,12 +353,12 @@ export function RecurringTransactionDialog({
                         id="form-every-x-days"
                         inputMode="numeric"
                         placeholder={t("e.g. 15")}
-                        value={
-                          field.value ? field.value.toLocaleString("vi-VN") : ""
-                        }
+                        value={field.value ?? ""}
                         onChange={(e) => {
-                          const rawValue = e.target.value.replace(/\./g, "")
-                          const numericValue = Number.parseInt(rawValue) || 0
+                          const rawValue = e.target.value.replace(/\D/g, "")
+                          const numericValue = rawValue
+                            ? Number.parseInt(rawValue, 10)
+                            : undefined
                           field.onChange(numericValue)
                         }}
                       />
@@ -464,31 +475,6 @@ export function RecurringTransactionDialog({
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="isActive"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="form-status">{t("Status")}</FormLabel>
-                  <Select
-                    onValueChange={(value) => field.onChange(value === "true")}
-                    value={field.value ? "true" : "false"}
-                  >
-                    <FormControl>
-                      <SelectTrigger id="form-status" className="w-full">
-                        <SelectValue />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="true">{t("Active")}</SelectItem>
-                      <SelectItem value="false">{t("Inactive")}</SelectItem>
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

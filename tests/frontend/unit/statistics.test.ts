@@ -92,6 +92,24 @@ describe("Statistics", () => {
       expect(result.savingsRate).toBeNull()
       expect(result.popularCategory).toEqual([])
     })
+
+    it("should calculate fractional savings rate without losing 1 decimal place precision", () => {
+      const transactions = [
+        {
+          ...mockTransactions[0],
+          type: "inflow" as const,
+          amount: "3000",
+        },
+        {
+          ...mockTransactions[1],
+          type: "outflow" as const,
+          amount: "2000",
+        },
+      ]
+      // (3000 - 2000) / 3000 * 100 = 1000 / 3000 * 100 = 33.3333...% -> "33.3"
+      const result = calculateQuickStats(transactions)
+      expect(result.savingsRate).toBe("33.3")
+    })
   })
 
   describe("calculateSummaryStats", () => {
@@ -404,6 +422,43 @@ describe("Statistics", () => {
         expect(budgetWithStats.percentage).toBe(0)
         expect(budgetWithStats.progressColorClass).toBe(progressColorClass.gray)
       })
+    })
+
+    it("should skip transactions with mismatched currency when exchange rates are missing", () => {
+      const budget = {
+        ...mockBudgets[0],
+        currency: "VND" as const,
+        categoryKey: "food_beverage" as const,
+        targetAmount: "1000000",
+        startDate: new Date("2024-01-01"),
+        endDate: new Date("2024-01-31"),
+      }
+
+      const transactions: Transaction[] = [
+        {
+          _id: "tx-usd",
+          userId: budget.userId,
+          type: "outflow",
+          categoryKey: "food_beverage",
+          amount: "50",
+          currency: "USD",
+          description: "Mismatched USD expense without rates",
+          date: new Date("2024-01-15"),
+        },
+        {
+          _id: "tx-vnd",
+          userId: budget.userId,
+          type: "outflow",
+          categoryKey: "food_beverage",
+          amount: "150000",
+          currency: "VND",
+          description: "Matching VND expense",
+          date: new Date("2024-01-16"),
+        },
+      ]
+
+      const result = calculateBudgetsStats([budget], transactions)
+      expect(result[0].spent).toBe("150000")
     })
   })
 

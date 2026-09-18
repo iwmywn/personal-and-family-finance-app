@@ -1,6 +1,6 @@
 import MiniSearch from "minisearch"
 
-import { localDateToUTCMidnight } from "@/lib/date"
+import { localDateToUTCMidnight, normalizeToUTCMidnight } from "@/lib/date"
 import type {
   Budget,
   Category,
@@ -339,6 +339,8 @@ export function filterRecurringTransactions(
     ? searchWithMiniSearch(recurringTransactions, searchTerm, ["description"])
     : null
 
+  const todayUTC = normalizeToUTCMidnight(new Date())
+
   return recurringTransactions.filter((recurring) => {
     const matchesSearch = matchingIds ? matchingIds.has(recurring._id) : true
 
@@ -357,10 +359,12 @@ export function filterRecurringTransactions(
     const matchesCategory =
       filterCategoryKey === "all" || recurring.categoryKey === filterCategoryKey
 
+    const isEnded = Boolean(endDateOnly && todayUTC > endDateOnly)
+
     const matchesStatus =
       filterStatus === "all" ||
-      (filterStatus === "active" && recurring.isActive) ||
-      (filterStatus === "inactive" && !recurring.isActive)
+      (filterStatus === "active" && !isEnded) ||
+      (filterStatus === "inactive" && isEnded)
 
     return (
       matchesSearch &&

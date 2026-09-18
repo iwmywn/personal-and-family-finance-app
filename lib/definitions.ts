@@ -29,6 +29,7 @@ type BaseTransaction<Id extends ValidId, Amount extends ValidAmount> = {
   currency: Currency
   description: string
   date: Date
+  recurringId?: Id
   // the following fields are appended on the client for currency conversion
   // and are NOT stored in the database.
   // They allow budgets/goals to convert amounts to their specific currencies
@@ -90,7 +91,6 @@ type BaseRecurringTransaction<
   startDate: Date
   endDate?: Date
   lastGeneratedDate?: Date
-  isActive: boolean
 }
 
 type BaseExchangeRate<

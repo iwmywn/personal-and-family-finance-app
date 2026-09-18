@@ -38,12 +38,12 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
     filteredTransactions: Transaction[]
   ): string {
     const headers = [
-      t("Date"),
-      t("Type"),
-      t("Category"),
-      t("Amount"),
-      t("Currency"),
-      t("Description"),
+      sanitizeCSVField(t("Date")),
+      sanitizeCSVField(t("Type")),
+      sanitizeCSVField(t("Category")),
+      sanitizeCSVField(t("Amount")),
+      sanitizeCSVField(t("Currency")),
+      sanitizeCSVField(t("Description")),
     ]
     const rows = filteredTransactions.map((ft) => {
       const date = sanitizeCSVField(formatDate(ft.date))
@@ -51,7 +51,7 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
         ft.type === "inflow" ? t("Inflow") : t("Outflow")
       )
       const category = sanitizeCSVField(getCategoryLabel(ft.categoryKey))
-      const amount = ft.amount.toString()
+      const amount = sanitizeCSVField(ft.amount.toString())
       const currency = sanitizeCSVField(ft.currency)
       const description = sanitizeCSVField(ft.description)
       return [date, type, category, amount, currency, description]
@@ -85,7 +85,7 @@ export function ExportButton({ filteredTransactions }: ExportButtonProps) {
         }
 
         const filename = `${t("transactions")}_${dateStr}.csv`
-          .replace(/[, ]+/g, "_")
+          .replace(/[/\\?%*:|"<> ]+/g, "_")
           .toLowerCase()
 
         // Add UTF-8 BOM for proper encoding in Excel

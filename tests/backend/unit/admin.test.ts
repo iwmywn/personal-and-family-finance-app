@@ -1,5 +1,14 @@
 import { headers } from "next/headers"
+import { ObjectId } from "mongodb"
 
+import {
+  insertTestBudget,
+  insertTestCategory,
+  insertTestGoal,
+  insertTestRecurringTransaction,
+  insertTestTransaction,
+  insertTestUser,
+} from "@/tests/backend/helpers/database"
 import {
   mockAuthenticatedAdmin,
   mockAuthenticatedUser,
@@ -8,11 +17,25 @@ import {
 import {
   mockAdminUser,
   mockBannedUser,
+  mockDBAdminUser,
+  mockDBBudget,
+  mockDBCustomCategory,
+  mockDBGoal,
+  mockDBRecurringTransaction,
+  mockDBTransaction,
+  mockDBUser,
   mockUser,
   mockUsers,
 } from "@/tests/shared/data"
-import { getAdminData } from "@/actions/admin.actions"
+import { deleteUser, getAdminData } from "@/actions/admin.actions"
 import { auth } from "@/lib/auth"
+import {
+  getBudgetsCollection,
+  getCategoriesCollection,
+  getGoalsCollection,
+  getRecurringTransactionsCollection,
+  getTransactionsCollection,
+} from "@/lib/collections"
 import type { User } from "@/lib/definitions"
 
 vi.mock("next/headers", () => ({
@@ -23,6 +46,7 @@ vi.mock("@/lib/auth", () => ({
   auth: {
     api: {
       listUsers: vi.fn(),
+      removeUser: vi.fn(),
     },
   },
 }))
@@ -74,6 +98,7 @@ describe("Admin", () => {
     })
 
     it("should handle error when auth.api.listUsers throws", async () => {
+      mockAuthenticatedAdmin()
       vi.mocked(auth.api.listUsers).mockRejectedValueOnce(
         new Error("Better Auth service error")
       )
@@ -86,6 +111,7 @@ describe("Admin", () => {
     })
 
     it("should handle null result from auth.api.listUsers", async () => {
+      mockAuthenticatedAdmin()
       // @ts-expect-error - Testing null response
       vi.mocked(auth.api.listUsers).mockResolvedValueOnce(null)
 
@@ -186,6 +212,145 @@ describe("Admin", () => {
         activeUsers: 0,
         bannedUsers: 0,
         adminUsers: 0,
+      })
+    })
+  })
+
+  describe("deleteUser", () => {
+    it("should return error when userId is invalid", async () => {
+      const result = await deleteUser("invalid-id")
+
+      expect(result.error).toBe("Invalid user ID!")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should return error when not authenticated", async () => {
+      mockUnauthenticatedUser()
+
+      const result = await deleteUser(new ObjectId().toString())
+
+      expect(result.error).toBe(
+        "Access denied! Please refresh the page and try again."
+      )
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should return error when user is not an admin", async () => {
+      mockAuthenticatedUser()
+
+      const result = await deleteUser(new ObjectId().toString())
+
+      expect(result.error).toBe("Access denied! Admin privileges required.")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should return error when admin attempts to delete own account", async () => {
+      mockAuthenticatedAdmin()
+
+      const result = await deleteUser(mockDBAdminUser._id.toString())
+
+      expect(result.error).toBe("You cannot delete your own account!")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should return error when target user is not found", async () => {
+      mockAuthenticatedAdmin()
+
+      const result = await deleteUser(new ObjectId().toString())
+
+      expect(result.error).toBe("User not found!")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should return error when admin attempts to delete another administrator account", async () => {
+      mockAuthenticatedAdmin()
+
+      const otherAdminId = new ObjectId()
+      await insertTestUser({
+        ...mockDBAdminUser,
+        _id: otherAdminId,
+        email: "otheradmin@gmail.com",
+      })
+
+      const result = await deleteUser(otherAdminId.toString())
+
+      expect(result.error).toBe("Cannot delete another administrator account!")
+      expect(result.success).toBeUndefined()
+    })
+
+    it("should cascade delete all user data and call auth.api.removeUser", async () => {
+      mockAuthenticatedAdmin()
+
+      const targetUserId = new ObjectId()
+
+      await Promise.all([
+        insertTestUser({ ...mockDBUser, _id: targetUserId }),
+        insertTestTransaction({
+          ...mockDBTransaction,
+          userId: targetUserId,
+        }),
+        insertTestCategory({
+          ...mockDBCustomCategory,
+          userId: targetUserId,
+        }),
+        insertTestBudget({
+          ...mockDBBudget,
+          userId: targetUserId,
+        }),
+        insertTestGoal({
+          ...mockDBGoal,
+          userId: targetUserId,
+        }),
+        insertTestRecurringTransaction({
+          ...mockDBRecurringTransaction,
+          userId: targetUserId,
+        }),
+      ])
+
+      vi.mocked(headers).mockResolvedValue(new Headers())
+      vi.mocked(auth.api.removeUser).mockResolvedValueOnce({
+        success: true,
+      })
+
+      const result = await deleteUser(targetUserId.toString())
+
+      expect(result.error).toBeUndefined()
+      expect(result.success).toBe("User has been deleted.")
+
+      const [
+        transactionsColl,
+        categoriesColl,
+        budgetsColl,
+        goalsColl,
+        recurringColl,
+      ] = await Promise.all([
+        getTransactionsCollection(),
+        getCategoriesCollection(),
+        getBudgetsCollection(),
+        getGoalsCollection(),
+        getRecurringTransactionsCollection(),
+      ])
+
+      const [txCount, catCount, bgtCount, goalCount, recCount] =
+        await Promise.all([
+          transactionsColl.countDocuments({ userId: targetUserId }),
+          categoriesColl.countDocuments({ userId: targetUserId }),
+          budgetsColl.countDocuments({ userId: targetUserId }),
+          goalsColl.countDocuments({ userId: targetUserId }),
+          recurringColl.countDocuments({ userId: targetUserId }),
+        ])
+
+      expect(txCount).toBe(0)
+      expect(catCount).toBe(0)
+      expect(bgtCount).toBe(0)
+      expect(goalCount).toBe(0)
+      expect(recCount).toBe(0)
+
+      expect(auth.api.removeUser).toHaveBeenCalledWith({
+        body: {
+          userId: targetUserId.toString(),
+        },
+        headers: expect.any(Headers),
       })
     })
   })

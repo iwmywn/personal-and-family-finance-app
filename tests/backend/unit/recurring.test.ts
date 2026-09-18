@@ -68,7 +68,6 @@ describe("Recurring Transactions", async () => {
         randomEveryXDays: mockDBRecurringTransaction.randomEveryXDays,
         startDate: mockDBRecurringTransaction.startDate,
         endDate: mockDBRecurringTransaction.endDate,
-        isActive: mockDBRecurringTransaction.isActive,
       })
 
       expect(result.success).toBeUndefined()
@@ -122,7 +121,6 @@ describe("Recurring Transactions", async () => {
       expect(addedRecurring?.endDate?.toISOString()).toBe(
         "2024-12-31T00:00:00.000Z"
       )
-      expect(addedRecurring?.isActive).toBe(true)
       expect(result.success).toBe("Recurring transaction has been created.")
       expect(result.error).toBeUndefined()
     })
@@ -183,20 +181,6 @@ describe("Recurring Transactions", async () => {
       expect(result.error).toBeUndefined()
     })
 
-    it("should return error when database operation throws error", async () => {
-      mockAuthenticatedUser()
-      mockRecurringTransactionCollectionError()
-
-      const result = await createRecurringTransaction(
-        mockValidRecurringTransactionValues
-      )
-
-      expect(result.success).toBeUndefined()
-      expect(result.error).toBe(
-        "Failed to create recurring transaction! Please try again later."
-      )
-    })
-
     it("should prevent race condition when creating duplicate recurring transactions concurrently", async () => {
       mockAuthenticatedUser()
 
@@ -215,6 +199,20 @@ describe("Recurring Transactions", async () => {
 
       expect(successCount).toBe(1)
       expect(errorCount).toBe(1)
+    })
+
+    it("should return error when database operation throws error", async () => {
+      mockAuthenticatedUser()
+      mockRecurringTransactionCollectionError()
+
+      const result = await createRecurringTransaction(
+        mockValidRecurringTransactionValues
+      )
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Failed to create recurring transaction! Please try again later."
+      )
     })
   })
 
@@ -286,7 +284,6 @@ describe("Recurring Transactions", async () => {
           randomEveryXDays: undefined,
           startDate: localDateToUTCMidnight(new Date("2024-02-04")),
           endDate: localDateToUTCMidnight(new Date("2024-12-31")),
-          isActive: false,
         }
       )
       const recurringCollection = await getRecurringTransactionsCollection()
@@ -301,57 +298,60 @@ describe("Recurring Transactions", async () => {
       expect(unchangedRecurring?.description).toBe("Monthly Salary")
     })
 
-    it("should successfully update recurring transaction", async () => {
-      await Promise.all([
-        insertTestRecurringTransaction(mockDBRecurringTransaction),
-        insertTestRecurringTransaction({
-          ...mockDBRecurringTransaction,
-          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
-          currency: "USD",
-        }),
-      ])
+    it("should return error when categoryKey is invalid or does not belong to user", async () => {
+      await insertTestRecurringTransaction(mockDBRecurringTransaction)
       mockAuthenticatedUser()
 
       const result = await updateRecurringTransaction(
         mockDBRecurringTransaction._id.toString(),
         {
-          type: "outflow",
-          categoryKey: "food_beverage",
-          amount: "100000",
-          currency: "VND",
-          description: "Updated description",
-          frequency: "weekly",
-          randomEveryXDays: undefined,
-          startDate: localDateToUTCMidnight(new Date("2024-02-04")),
-          endDate: localDateToUTCMidnight(new Date("2024-12-31")),
-          isActive: false,
+          ...mockValidRecurringTransactionValues,
+          categoryKey: "non-existent-or-invalid-key",
         }
       )
-      const recurringCollection = await getRecurringTransactionsCollection()
-      const updatedRecurring = await recurringCollection.findOne({
-        _id: mockDBRecurringTransaction._id,
-      })
-      const unrelatedRecurring = await recurringCollection.findOne({
-        _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
-      })
 
-      expect(updatedRecurring?.type).toBe("outflow")
-      expect(updatedRecurring?.categoryKey).toBe("food_beverage")
-      expect(updatedRecurring?.amount.toString()).toBe("100000")
-      expect(updatedRecurring?.description).toBe("Updated description")
-      expect(updatedRecurring?.frequency).toBe("weekly")
-      expect(updatedRecurring?.startDate.toISOString()).toBe(
-        "2024-02-04T00:00:00.000Z"
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when recurring transaction type does not match category type", async () => {
+      await insertTestRecurringTransaction(mockDBRecurringTransaction)
+      mockAuthenticatedUser()
+
+      const result = await updateRecurringTransaction(
+        mockDBRecurringTransaction._id.toString(),
+        {
+          ...mockValidRecurringTransactionValues,
+          type: "outflow",
+          categoryKey: "business_freelance",
+        }
       )
-      expect(updatedRecurring?.endDate?.toISOString()).toBe(
-        "2024-12-31T00:00:00.000Z"
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe("Invalid category!")
+    })
+
+    it("should return error when trying to update an expired recurring transaction", async () => {
+      const expiredRecurring = {
+        ...mockDBRecurringTransaction,
+        _id: new ObjectId("690d2e5f7d5c36bf6c82ff1a"),
+        endDate: localDateToUTCMidnight(new Date("2024-05-01")),
+      }
+      await insertTestRecurringTransaction(expiredRecurring)
+      mockAuthenticatedUser()
+
+      const result = await updateRecurringTransaction(
+        expiredRecurring._id.toString(),
+        {
+          ...mockValidRecurringTransactionValues,
+          endDate: localDateToUTCMidnight(new Date("2024-12-31")),
+        }
       )
-      expect(updatedRecurring?.isActive).toBe(false)
-      expect(unrelatedRecurring?.type).toBe("inflow")
-      expect(unrelatedRecurring?.categoryKey).toBe("salary_bonus")
-      expect(unrelatedRecurring?.amount.toString()).toBe("5000000")
-      expect(result.success).toBe("Recurring transaction has been updated.")
-      expect(result.error).toBeUndefined()
+
+      expect(result.success).toBeUndefined()
+      expect(result.error).toBe(
+        "Cannot edit an expired recurring transaction. Please create a new one or duplicate."
+      )
     })
 
     it("should return error when updating recurring transaction causes duplicate key collision", async () => {
@@ -376,7 +376,6 @@ describe("Recurring Transactions", async () => {
           frequency: mockDBRecurringTransaction.frequency,
           startDate: mockDBRecurringTransaction.startDate,
           endDate: mockDBRecurringTransaction.endDate,
-          isActive: mockDBRecurringTransaction.isActive,
         }
       )
 
@@ -408,7 +407,6 @@ describe("Recurring Transactions", async () => {
         frequency: mockDBRecurringTransaction.frequency,
         startDate: mockDBRecurringTransaction.startDate,
         endDate: mockDBRecurringTransaction.endDate,
-        isActive: mockDBRecurringTransaction.isActive,
       }
 
       const [firstResult, secondResult] = await Promise.all([
@@ -426,6 +424,57 @@ describe("Recurring Transactions", async () => {
 
       expect(successCount).toBe(1)
       expect(errorCount).toBe(1)
+    })
+
+    it("should successfully update recurring transaction", async () => {
+      await Promise.all([
+        insertTestRecurringTransaction(mockDBRecurringTransaction),
+        insertTestRecurringTransaction({
+          ...mockDBRecurringTransaction,
+          _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+          currency: "USD",
+        }),
+      ])
+      mockAuthenticatedUser()
+
+      const result = await updateRecurringTransaction(
+        mockDBRecurringTransaction._id.toString(),
+        {
+          type: "outflow",
+          categoryKey: "food_beverage",
+          amount: "100000",
+          currency: "VND",
+          description: "Updated description",
+          frequency: "weekly",
+          randomEveryXDays: undefined,
+          startDate: localDateToUTCMidnight(new Date("2024-02-04")),
+          endDate: localDateToUTCMidnight(new Date("2024-12-31")),
+        }
+      )
+      const recurringCollection = await getRecurringTransactionsCollection()
+      const updatedRecurring = await recurringCollection.findOne({
+        _id: mockDBRecurringTransaction._id,
+      })
+      const unrelatedRecurring = await recurringCollection.findOne({
+        _id: new ObjectId("690d2e5f7d5c36bf6c82ff1f"),
+      })
+
+      expect(updatedRecurring?.type).toBe("outflow")
+      expect(updatedRecurring?.categoryKey).toBe("food_beverage")
+      expect(updatedRecurring?.amount.toString()).toBe("100000")
+      expect(updatedRecurring?.description).toBe("Updated description")
+      expect(updatedRecurring?.frequency).toBe("weekly")
+      expect(updatedRecurring?.startDate.toISOString()).toBe(
+        "2024-02-04T00:00:00.000Z"
+      )
+      expect(updatedRecurring?.endDate?.toISOString()).toBe(
+        "2024-12-31T00:00:00.000Z"
+      )
+      expect(unrelatedRecurring?.type).toBe("inflow")
+      expect(unrelatedRecurring?.categoryKey).toBe("salary_bonus")
+      expect(unrelatedRecurring?.amount.toString()).toBe("5000000")
+      expect(result.success).toBe("Recurring transaction has been updated.")
+      expect(result.error).toBeUndefined()
     })
 
     it("should return error when database operation throws error", async () => {

@@ -92,6 +92,7 @@ export async function enqueueMissingExchangeRateDate(
 ): Promise<void> {
   const collection = await getMissingExchangeRatesCollection()
   const normalizedDate = normalizeToUTCMidnight(date)
+
   await collection.updateOne(
     { date: normalizedDate },
     {
@@ -104,18 +105,6 @@ export async function enqueueMissingExchangeRateDate(
     },
     { upsert: true }
   )
-}
-
-function toExchangeRate(doc: DBExchangeRate): ExchangeRate {
-  const rates: RatesMap = { USD: toDecimal("1") }
-  for (const [curr, val] of Object.entries(doc.rates)) {
-    if (val) rates[curr] = toDecimal(val.toString())
-  }
-  return {
-    ...doc,
-    _id: doc._id.toString(),
-    rates,
-  } as ExchangeRate
 }
 
 async function fetchCandidateExchangeRates(
@@ -143,7 +132,17 @@ async function fetchCandidateExchangeRates(
     new Map(rawRates.map((doc) => [doc.date.getTime(), doc])).values()
   ).sort((a, b) => a.date.getTime() - b.date.getTime())
 
-  return uniqueDocs.map(toExchangeRate)
+  return uniqueDocs.map((doc) => {
+    const rates: RatesMap = { USD: toDecimal("1") }
+    for (const [curr, val] of Object.entries(doc.rates)) {
+      if (val) rates[curr] = toDecimal(val.toString())
+    }
+    return {
+      ...doc,
+      _id: doc._id.toString(),
+      rates,
+    } as ExchangeRate
+  })
 }
 
 function findNearestRate(rates: ExchangeRate[], txTime: number): ExchangeRate {
@@ -167,32 +166,6 @@ function findNearestRate(rates: ExchangeRate[], txTime: number): ExchangeRate {
   return diffHigh <= diffLow ? rates[high] : rates[low]
 }
 
-function convertSingleTransaction(
-  transaction: Transaction,
-  targetCurrency: Currency,
-  rateDoc: ExchangeRate
-): Transaction {
-  const convertedAmount = convertAmountWithRates(
-    new Decimal(transaction.amount),
-    transaction.currency,
-    targetCurrency,
-    rateDoc.rates
-  )
-
-  const stringifiedRates = Object.fromEntries(
-    Object.entries(rateDoc.rates).map(([curr, dec]) => [curr, dec.toString()])
-  ) as Record<Currency, string>
-
-  return {
-    ...transaction,
-    amount: convertedAmount.toString(),
-    currency: targetCurrency,
-    originalAmount: transaction.amount,
-    originalCurrency: transaction.currency,
-    rates: stringifiedRates,
-  }
-}
-
 export async function convertTransactionsToCurrency(
   transactions: Transaction[],
   targetCurrency: Currency
@@ -208,8 +181,40 @@ export async function convertTransactionsToCurrency(
   const rates = await fetchCandidateExchangeRates(minDate, maxDate)
   if (rates.length === 0) return transactions
 
-  return transactions.map((t, idx) => {
+  return transactions.map((transaction, idx) => {
+    if (transaction.currency === targetCurrency) {
+      return transaction
+    }
+
     const nearestRate = findNearestRate(rates, timestamps[idx])
-    return convertSingleTransaction(t, targetCurrency, nearestRate)
+    const rateFromVal = nearestRate.rates?.[transaction.currency]
+    const rateToVal = nearestRate.rates?.[targetCurrency]
+
+    if (!rateFromVal || !rateToVal) {
+      return transaction
+    }
+
+    const convertedAmount = convertAmountWithRates(
+      new Decimal(transaction.amount),
+      transaction.currency,
+      targetCurrency,
+      nearestRate.rates
+    )
+
+    const stringifiedRates = Object.fromEntries(
+      Object.entries(nearestRate.rates).map(([curr, dec]) => [
+        curr,
+        dec.toString(),
+      ])
+    ) as Record<Currency, string>
+
+    return {
+      ...transaction,
+      amount: convertedAmount.toString(),
+      currency: targetCurrency,
+      originalAmount: transaction.amount,
+      originalCurrency: transaction.currency,
+      rates: stringifiedRates,
+    }
   })
 }

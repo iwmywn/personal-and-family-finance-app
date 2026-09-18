@@ -7,7 +7,10 @@ import {
 } from "@/tests/backend/helpers/database"
 import { mockDBRecurringTransaction } from "@/tests/shared/data"
 import { GET } from "@/app/api/(cronjobs)/recurring-transactions/route"
-import { shouldGenerateToday } from "@/app/api/(cronjobs)/recurring-transactions/utils"
+import {
+  getDueDates,
+  shouldGenerateToday,
+} from "@/app/api/(cronjobs)/recurring-transactions/utils"
 import {
   getRecurringTransactionsCollection,
   getTransactionsCollection,
@@ -251,6 +254,55 @@ describe("Recurring Transactions Cron Job", () => {
           lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-20")),
         }
         const today = localDateToUTCMidnight(new Date("2024-02-10"))
+
+        expect(shouldGenerateToday(rec, today)).toBe(true)
+      })
+
+      it("should catch up schedule when lastGeneratedDate is multiple months in the past", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "monthly",
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-10")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-04-10"))
+
+        expect(shouldGenerateToday(rec, today)).toBe(true)
+      })
+
+      it("should return false on non-cadence day even when lastGeneratedDate is multiple months in past", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "monthly",
+          startDate: localDateToUTCMidnight(new Date("2024-01-10")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-10")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-04-18"))
+
+        expect(shouldGenerateToday(rec, today)).toBe(false)
+      })
+
+      it("should handle year boundary transition from December to January", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "monthly",
+          startDate: localDateToUTCMidnight(new Date("2024-01-15")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-12-15")),
+          endDate: undefined,
+        }
+        const today = localDateToUTCMidnight(new Date("2025-01-15"))
+
+        expect(shouldGenerateToday(rec, today)).toBe(true)
+      })
+
+      it("should reset cycle to startDate if lastGeneratedDate is before updated startDate", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "monthly",
+          startDate: localDateToUTCMidnight(new Date("2024-06-01")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-01")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-06-01"))
 
         expect(shouldGenerateToday(rec, today)).toBe(true)
       })
@@ -558,6 +610,7 @@ describe("Recurring Transactions Cron Job", () => {
           currency: recurringTransaction.currency,
           description: recurringTransaction.description,
           date: todayUTC,
+          recurringId: recurringTransaction._id,
         }
 
         await insertTestTransaction(existingTransaction)
@@ -601,6 +654,61 @@ describe("Recurring Transactions Cron Job", () => {
         })
 
         expect(updatedRecurring?.lastGeneratedDate).toEqual(todayUTC)
+
+        vi.useRealTimers()
+      })
+
+      it("should not skip recurring transaction when user created a manual transaction with identical attributes", async () => {
+        const todayUTC = localDateToUTCMidnight(new Date("2024-02-01"))
+        const lastMonthUTC = localDateToUTCMidnight(new Date("2024-01-01"))
+
+        const recurringTransaction: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          _id: new ObjectId(),
+          frequency: "monthly",
+          startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGeneratedDate: lastMonthUTC,
+        }
+
+        await insertTestRecurringTransaction(recurringTransaction)
+
+        // Manual transaction with identical fields but without recurringId
+        const manualTransaction: DBTransaction = {
+          _id: new ObjectId(),
+          userId: recurringTransaction.userId,
+          type: recurringTransaction.type,
+          categoryKey: recurringTransaction.categoryKey,
+          amount: recurringTransaction.amount,
+          currency: recurringTransaction.currency,
+          description: recurringTransaction.description,
+          date: todayUTC,
+        }
+
+        await insertTestTransaction(manualTransaction)
+
+        vi.useFakeTimers()
+        vi.setSystemTime(new Date("2024-02-01T12:00:00.000Z"))
+
+        const request = new NextRequest(cronEndpoint, {
+          headers: {
+            authorization: `Bearer ${cronSecret}`,
+          },
+        })
+
+        const response = await GET(request)
+        const data = await response.json()
+
+        expect(response.status).toBe(200)
+        expect(data.success).toBe(true)
+        expect(data.created).toBe(1)
+        expect(data.skippedCount).toBe(0)
+
+        const transactionsCollection = await getTransactionsCollection()
+        const transactions = await transactionsCollection
+          .find({ userId: recurringTransaction.userId })
+          .toArray()
+
+        expect(transactions).toHaveLength(2)
 
         vi.useRealTimers()
       })
@@ -685,8 +793,8 @@ describe("Recurring Transactions Cron Job", () => {
           description: "Inactive Monthly Salary",
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          endDate: localDateToUTCMidnight(new Date("2024-01-15")), // Expired
           lastGeneratedDate: lastMonthUTC,
-          isActive: false,
         }
 
         await insertTestRecurringTransaction(activeRecurringTransaction)
@@ -743,7 +851,7 @@ describe("Recurring Transactions Cron Job", () => {
         )
       })
 
-      it("should deactivate expired recurring transactions", async () => {
+      it("should not process expired recurring transactions whose endDate has passed", async () => {
         const yesterdayUTC = localDateToUTCMidnight(new Date("2024-01-31"))
 
         const expiredRecurringTransaction: DBRecurringTransaction = {
@@ -753,7 +861,6 @@ describe("Recurring Transactions Cron Job", () => {
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
           endDate: yesterdayUTC, // Expired yesterday
-          isActive: true,
         }
 
         const activeRecurringTransaction: DBRecurringTransaction = {
@@ -761,8 +868,8 @@ describe("Recurring Transactions Cron Job", () => {
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-01")),
           endDate: localDateToUTCMidnight(new Date("2024-12-31")), // Still active
-          isActive: true,
         }
 
         await insertTestRecurringTransaction(expiredRecurringTransaction)
@@ -782,30 +889,30 @@ describe("Recurring Transactions Cron Job", () => {
 
         expect(response.status).toBe(200)
         expect(data.success).toBe(true)
-        expect(data.deactivated).toBe(1)
+        expect(data.created).toBe(1)
 
-        const recurringCollection = await getRecurringTransactionsCollection()
-        const expiredRecurring = await recurringCollection.findOne({
-          _id: expiredRecurringTransaction._id,
+        const transactionsCollection = await getTransactionsCollection()
+        const expiredTx = await transactionsCollection.findOne({
+          description: "Expired Monthly Salary",
         })
-        const activeRecurring = await recurringCollection.findOne({
-          _id: activeRecurringTransaction._id,
+        const activeTx = await transactionsCollection.findOne({
+          description: "Monthly Salary",
         })
 
-        expect(expiredRecurring?.isActive).toBe(false)
-        expect(activeRecurring?.isActive).toBe(true)
+        expect(expiredTx).toBeNull()
+        expect(activeTx).toBeDefined()
 
         vi.useRealTimers()
       })
 
-      it("should not deactivate recurring transactions without end date", async () => {
+      it("should process recurring transactions without end date", async () => {
         const activeRecurringTransaction: DBRecurringTransaction = {
           ...mockDBRecurringTransaction,
           _id: new ObjectId("691d58bfa688494d77dabe6d"),
           frequency: "monthly",
           startDate: localDateToUTCMidnight(new Date("2024-01-01")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-01-01")),
           endDate: undefined, // No end date
-          isActive: true,
         }
 
         await insertTestRecurringTransaction(activeRecurringTransaction)
@@ -824,16 +931,156 @@ describe("Recurring Transactions Cron Job", () => {
 
         expect(response.status).toBe(200)
         expect(data.success).toBe(true)
-        expect(data.deactivated).toBe(0)
-
-        const recurringCollection = await getRecurringTransactionsCollection()
-        const activeRecurring = await recurringCollection.findOne({
-          _id: activeRecurringTransaction._id,
-        })
-
-        expect(activeRecurring?.isActive).toBe(true)
+        expect(data.created).toBe(1)
 
         vi.useRealTimers()
+      })
+
+      it("should backfill missed occurrences and attach recurringId when cron was delayed", async () => {
+        const startDateUTC = localDateToUTCMidnight(new Date("2024-02-01"))
+        const lastGeneratedDateUTC = localDateToUTCMidnight(
+          new Date("2024-02-01")
+        )
+        const recurringTransaction: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          _id: new ObjectId("691d58bfa688494d77dabe7e"),
+          frequency: "daily",
+          startDate: startDateUTC,
+          lastGeneratedDate: lastGeneratedDateUTC,
+        }
+
+        await insertTestRecurringTransaction(recurringTransaction)
+
+        vi.useFakeTimers()
+        vi.setSystemTime(new Date("2024-02-03T12:00:00.000Z"))
+
+        const request = new NextRequest(cronEndpoint, {
+          headers: {
+            authorization: `Bearer ${cronSecret}`,
+          },
+        })
+
+        const response = await GET(request)
+        const data = await response.json()
+
+        expect(response.status).toBe(200)
+        expect(data.success).toBe(true)
+        expect(data.created).toBe(2)
+
+        const transactionsCollection = await getTransactionsCollection()
+        const createdTxs = await transactionsCollection
+          .find({ userId: recurringTransaction.userId })
+          .sort({ date: 1 })
+          .toArray()
+
+        expect(createdTxs).toHaveLength(2)
+        expect(createdTxs[0].recurringId?.toString()).toBe(
+          recurringTransaction._id.toString()
+        )
+        expect(createdTxs[1].recurringId?.toString()).toBe(
+          recurringTransaction._id.toString()
+        )
+        expect(createdTxs[0].date).toEqual(
+          localDateToUTCMidnight(new Date("2024-02-02"))
+        )
+        expect(createdTxs[1].date).toEqual(
+          localDateToUTCMidnight(new Date("2024-02-03"))
+        )
+
+        const recurringCollection = await getRecurringTransactionsCollection()
+        const updatedRec = await recurringCollection.findOne({
+          _id: recurringTransaction._id,
+        })
+        expect(updatedRec?.lastGeneratedDate).toEqual(
+          localDateToUTCMidnight(new Date("2024-02-03"))
+        )
+
+        vi.useRealTimers()
+      })
+    })
+
+    describe("getDueDates", () => {
+      it("should return empty array when today is before start date", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "daily",
+          startDate: localDateToUTCMidnight(new Date("2024-02-10")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-02-09"))
+        expect(getDueDates(rec, today)).toEqual([])
+      })
+
+      it("should return [todayUTC] when today is start date with no lastGeneratedDate", () => {
+        const today = localDateToUTCMidnight(new Date("2024-02-10"))
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "daily",
+          startDate: today,
+          lastGeneratedDate: undefined,
+        }
+        expect(getDueDates(rec, today)).toEqual([today])
+      })
+
+      it("should return empty array when lastGeneratedDate is already today", () => {
+        const today = localDateToUTCMidnight(new Date("2024-02-10"))
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "daily",
+          startDate: localDateToUTCMidnight(new Date("2024-02-01")),
+          lastGeneratedDate: today,
+        }
+        expect(getDueDates(rec, today)).toEqual([])
+      })
+
+      it("should backfill all missed daily occurrences up to today", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "daily",
+          startDate: localDateToUTCMidnight(new Date("2024-02-01")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-02-01")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-02-04"))
+        const dueDates = getDueDates(rec, today)
+
+        expect(dueDates).toEqual([
+          localDateToUTCMidnight(new Date("2024-02-02")),
+          localDateToUTCMidnight(new Date("2024-02-03")),
+          localDateToUTCMidnight(new Date("2024-02-04")),
+        ])
+      })
+
+      it("should not exceed endDate when backfilling", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "daily",
+          startDate: localDateToUTCMidnight(new Date("2024-02-01")),
+          lastGeneratedDate: localDateToUTCMidnight(new Date("2024-02-01")),
+          endDate: localDateToUTCMidnight(new Date("2024-02-02")),
+        }
+        const today = localDateToUTCMidnight(new Date("2024-02-04"))
+        const dueDates = getDueDates(rec, today)
+
+        expect(dueDates).toEqual([
+          localDateToUTCMidnight(new Date("2024-02-02")),
+        ])
+      })
+
+      it("should backfill from startDate when lastGeneratedDate is not set", () => {
+        const rec: DBRecurringTransaction = {
+          ...mockDBRecurringTransaction,
+          frequency: "daily",
+          startDate: localDateToUTCMidnight(new Date("2024-02-01")),
+          lastGeneratedDate: undefined,
+        }
+        const today = localDateToUTCMidnight(new Date("2024-02-04"))
+        const dueDates = getDueDates(rec, today)
+
+        expect(dueDates).toEqual([
+          localDateToUTCMidnight(new Date("2024-02-01")),
+          localDateToUTCMidnight(new Date("2024-02-02")),
+          localDateToUTCMidnight(new Date("2024-02-03")),
+          localDateToUTCMidnight(new Date("2024-02-04")),
+        ])
       })
     })
   })

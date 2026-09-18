@@ -85,7 +85,7 @@ export function calculateQuickStats(transactions: Transaction[]): QuickStats {
         .dividedBy(totalInflow)
         .mul(100)
         .toDecimalPlaces(1)
-        .toFixed(0)
+        .toString()
     : null
 
   const maxTotal = Object.values(categorySums).reduce(
@@ -232,7 +232,13 @@ function calculateStatsBase<TBase extends Budget | Goal>(
       return sum.plus(converted)
     }
 
-    return sum.plus(new Decimal(config.getTransactionAmount(t)))
+    const txCurrency = originalCurrency ?? t.currency
+    if (txCurrency === targetCurrency) {
+      const amountToAdd = originalAmount ?? config.getTransactionAmount(t)
+      return sum.plus(new Decimal(amountToAdd))
+    }
+
+    return sum
   }, new Decimal(0))
 
   const target = new Decimal(config.getBaseTargetAmount(base))

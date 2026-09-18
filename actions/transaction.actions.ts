@@ -8,7 +8,6 @@ import { getExtracted } from "next-intl/server"
 import { getTransactionsCollection } from "@/lib/collections"
 import type { Currency } from "@/lib/currency"
 import type { ActionResponse, Transaction } from "@/lib/definitions"
-import { isDuplicateKeyError } from "@/lib/indexes"
 import { getSchemas } from "@/schemas/server"
 import type { TransactionFormValues } from "@/schemas/types"
 
@@ -65,6 +64,7 @@ export async function createTransaction(
     after(async () => {
       try {
         await ensureExchangeRateForDate(parsedValues.data.date)
+        updateTag(`transactions-${user.id}`)
       } catch (error) {
         console.warn(
           "Could not ensure exchange rate for transaction date, enqueuing retry:",
@@ -77,13 +77,6 @@ export async function createTransaction(
     updateTag(`transactions-${user.id}`)
     return { success: t("Transaction has been created.") }
   } catch (error) {
-    if (isDuplicateKeyError(error)) {
-      return {
-        error: t(
-          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
-        ),
-      }
-    }
     console.error("Error creating transaction:", error)
     return { error: t("Failed to create transaction! Please try again later.") }
   }
@@ -153,6 +146,7 @@ export async function updateTransaction(
     after(async () => {
       try {
         await ensureExchangeRateForDate(parsedValues.data.date)
+        updateTag(`transactions-${user.id}`)
       } catch (error) {
         console.warn(
           "Could not ensure exchange rate for transaction date, enqueuing retry:",
@@ -167,13 +161,6 @@ export async function updateTransaction(
       success: t("Transaction has been updated."),
     }
   } catch (error) {
-    if (isDuplicateKeyError(error)) {
-      return {
-        error: t(
-          "A transaction with the same details already exists on this date. Please combine the amount into the existing transaction."
-        ),
-      }
-    }
     console.error("Error updating transaction:", error)
     return { error: t("Failed to update transaction! Please try again later.") }
   }
@@ -249,6 +236,9 @@ async function getCachedTransactions(userId: string, targetCurrency: Currency) {
       _id: transaction._id.toString(),
       userId: transaction.userId.toString(),
       amount: transaction.amount.toString(),
+      recurringId: transaction.recurringId
+        ? transaction.recurringId.toString()
+        : undefined,
     })) as Transaction[]
     const converted = await convertTransactionsToCurrency(
       mapped,

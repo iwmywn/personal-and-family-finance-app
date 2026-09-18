@@ -137,15 +137,7 @@ export function StatisticsFilters() {
               </PopoverContent>
             </Popover>
 
-            <Popover
-              open={isDateRangeOpen}
-              onOpenChange={(open) => {
-                if (!open && dateRange.from && !dateRange.to) {
-                  return
-                }
-                setIsDateRangeOpen(open)
-              }}
-            >
+            <Popover open={isDateRangeOpen} onOpenChange={setIsDateRangeOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
