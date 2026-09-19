@@ -53,6 +53,7 @@ export function SecondaryNav() {
               toast.error(t("Failed to sign out! Please try again later."))
             },
             onSuccess: () => {
+              setIsOpen(false)
               toast.success(t("Signed out."))
               router.push("/signin")
               router.refresh()
