@@ -315,20 +315,20 @@ export function AdminTable({
           <BanUserDialog
             key={selectedUser.id + "BanUserDialog"}
             user={selectedUser}
-            open={isBanOpen}
-            setOpen={setIsBanOpen}
+            isOpen={isBanOpen}
+            setIsOpen={setIsBanOpen}
           />
           <SetUserPasswordDialog
             key={selectedUser.id + "SetPasswordDialog"}
             user={selectedUser}
-            open={isPasswordOpen}
-            setOpen={setIsPasswordOpen}
+            isOpen={isPasswordOpen}
+            setIsOpen={setIsPasswordOpen}
           />
           <DeleteUserDialog
             key={selectedUser.id + "DeleteUserDialog"}
             user={selectedUser}
-            open={isDeleteOpen}
-            setOpen={setIsDeleteOpen}
+            isOpen={isDeleteOpen}
+            setIsOpen={setIsDeleteOpen}
           />
         </>
       )}

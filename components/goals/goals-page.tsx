@@ -27,7 +27,7 @@ export default function GoalsPage() {
         <GoalFilters />
       </div>
 
-      <GoalDialog open={isOpen} setOpen={setIsOpen} />
+      <GoalDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )
 }

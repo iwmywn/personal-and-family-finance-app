@@ -20,14 +20,14 @@ import { Spinner } from "@/components/ui/spinner"
 
 interface DeleteRecurringDialogProps {
   recurringId: string
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
 export function DeleteRecurringTransactionDialog({
   recurringId,
-  open,
-  setOpen,
+  isOpen,
+  setIsOpen,
 }: DeleteRecurringDialogProps) {
   const t = useExtracted()
   const router = useRouter()
@@ -43,7 +43,7 @@ export function DeleteRecurringTransactionDialog({
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
         }
@@ -56,7 +56,7 @@ export function DeleteRecurringTransactionDialog({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>

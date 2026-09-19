@@ -39,7 +39,7 @@ export default function AdminPage({
         <AdminFilters initialStats={initialStats} initialUsers={initialUsers} />
       </div>
 
-      <CreateUserDialog open={isOpen} setOpen={setIsOpen} />
+      <CreateUserDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )
 }

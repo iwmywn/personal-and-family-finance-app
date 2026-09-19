@@ -68,15 +68,15 @@ import type { RecurringTransactionFormValues } from "@/schemas/types"
 interface RecurringDialogProps {
   recurring?: RecurringTransaction
   mode?: "edit" | "duplicate"
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
 export function RecurringTransactionDialog({
   recurring,
   mode = "edit",
-  open,
-  setOpen,
+  isOpen,
+  setIsOpen,
 }: RecurringDialogProps) {
   const isDuplicate = mode === "duplicate"
   const isEdit = Boolean(recurring && !isDuplicate)
@@ -132,7 +132,7 @@ export function RecurringTransactionDialog({
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
         }
@@ -148,7 +148,7 @@ export function RecurringTransactionDialog({
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
           form.reset({
@@ -171,7 +171,7 @@ export function RecurringTransactionDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>

@@ -38,7 +38,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <TransactionDialog open={isOpen} setOpen={setIsOpen} />
+      <TransactionDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )
 }

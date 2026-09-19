@@ -20,14 +20,14 @@ import { Spinner } from "@/components/ui/spinner"
 
 interface DeleteTransactionDialogProps {
   transactionId: string
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
 export function DeleteTransactionDialog({
   transactionId,
-  open,
-  setOpen,
+  isOpen,
+  setIsOpen,
 }: DeleteTransactionDialogProps) {
   const t = useExtracted()
   const router = useRouter()
@@ -43,7 +43,7 @@ export function DeleteTransactionDialog({
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
         }
@@ -54,7 +54,7 @@ export function DeleteTransactionDialog({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("Delete Transaction")}</AlertDialogTitle>

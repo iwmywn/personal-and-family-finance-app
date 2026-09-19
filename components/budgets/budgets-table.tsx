@@ -219,14 +219,14 @@ export function BudgetsTable({ filteredBudgets }: BudgetsTableProps) {
           <BudgetDialog
             key={selectedBudget._id + "BudgetDialog"}
             budget={selectedBudget}
-            open={isEditOpen}
-            setOpen={setIsEditOpen}
+            isOpen={isEditOpen}
+            setIsOpen={setIsEditOpen}
           />
           <DeleteBudgetDialog
             key={selectedBudget._id + "DeleteBudgetDialog"}
             budgetId={selectedBudget._id}
-            open={isDeleteOpen}
-            setOpen={setIsDeleteOpen}
+            isOpen={isDeleteOpen}
+            setIsOpen={setIsDeleteOpen}
           />
         </>
       )}

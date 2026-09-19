@@ -19,15 +19,17 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import type { User } from "@/lib/definitions"
 
+interface DeleteUserDialogProps {
+  user: User
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}
+
 export function DeleteUserDialog({
   user,
-  open,
-  setOpen,
-}: {
-  user: User
-  open: boolean
-  setOpen: (open: boolean) => void
-}) {
+  isOpen,
+  setIsOpen,
+}: DeleteUserDialogProps) {
   const t = useExtracted()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -42,7 +44,7 @@ export function DeleteUserDialog({
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
         }
@@ -53,7 +55,7 @@ export function DeleteUserDialog({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("Delete User Account")}</AlertDialogTitle>

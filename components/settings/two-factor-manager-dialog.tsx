@@ -80,7 +80,7 @@ export function TwoFactorManagerDialog() {
 
                 <VerifyTwoFactorForm
                   setTotpURI={setTotpURI}
-                  setOpen={setIsOpen}
+                  setIsOpen={setIsOpen}
                 />
               </div>
             )}
@@ -95,7 +95,7 @@ export function TwoFactorManagerDialog() {
                 {t("Enter your password to disable 2FA.")}
               </DialogDescription>
             </DialogHeader>
-            <DisableTwoFactorForm setOpen={setIsOpen} />
+            <DisableTwoFactorForm setIsOpen={setIsOpen} />
           </>
         )}
       </DialogContent>
@@ -187,12 +187,12 @@ function EnableTwoFactorForm({ setTotpURI }: EnableTwoFactorFormProps) {
 
 interface VerifyTwoFactorFormProps {
   setTotpURI: (uri: string | null) => void
-  setOpen: (open: boolean) => void
+  setIsOpen: (isOpen: boolean) => void
 }
 
 function VerifyTwoFactorForm({
   setTotpURI,
-  setOpen,
+  setIsOpen,
 }: VerifyTwoFactorFormProps) {
   const t = useExtracted()
   const router = useRouter()
@@ -229,7 +229,7 @@ function VerifyTwoFactorForm({
             }
           },
           onSuccess: () => {
-            setOpen(false)
+            setIsOpen(false)
             toast.success(t("Two-factor authentication is now enabled."))
             router.refresh()
             setTotpURI(null)
@@ -279,10 +279,10 @@ function VerifyTwoFactorForm({
 }
 
 interface DisableTwoFactorFormProps {
-  setOpen: (open: boolean) => void
+  setIsOpen: (isOpen: boolean) => void
 }
 
-function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
+function DisableTwoFactorForm({ setIsOpen }: DisableTwoFactorFormProps) {
   const t = useExtracted()
   const router = useRouter()
   const { createTwoFactorPasswordSchema } = useSchemas()
@@ -318,7 +318,7 @@ function DisableTwoFactorForm({ setOpen }: DisableTwoFactorFormProps) {
             }
           },
           onSuccess: () => {
-            setOpen(false)
+            setIsOpen(false)
             toast.success(t("Two-factor authentication is now disabled."))
             router.refresh()
             form.reset()

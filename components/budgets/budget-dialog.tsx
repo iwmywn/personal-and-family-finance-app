@@ -55,11 +55,11 @@ import type { BudgetFormValues } from "@/schemas/types"
 
 interface BudgetDialogProps {
   budget?: Budget
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
-export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
+export function BudgetDialog({ budget, isOpen, setIsOpen }: BudgetDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
@@ -96,7 +96,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
         }
@@ -110,7 +110,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
           form.reset()
@@ -122,7 +122,7 @@ export function BudgetDialog({ budget, open, setOpen }: BudgetDialogProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>

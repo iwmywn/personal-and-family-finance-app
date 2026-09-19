@@ -208,14 +208,14 @@ export function GoalsTable({ filteredGoals }: GoalsTableProps) {
           <GoalDialog
             key={selectedGoal._id + "GoalDialog"}
             goal={selectedGoal}
-            open={isEditOpen}
-            setOpen={setIsEditOpen}
+            isOpen={isEditOpen}
+            setIsOpen={setIsEditOpen}
           />
           <DeleteGoalDialog
             key={selectedGoal._id + "DeleteGoalDialog"}
             goalId={selectedGoal._id}
-            open={isDeleteOpen}
-            setOpen={setIsDeleteOpen}
+            isOpen={isDeleteOpen}
+            setIsOpen={setIsDeleteOpen}
           />
         </>
       )}

@@ -33,14 +33,14 @@ import type { AdminPasswordFormValues } from "@/schemas/types"
 
 interface SetPasswordDialogProps {
   user: User
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
 export function SetUserPasswordDialog({
   user,
-  open,
-  setOpen,
+  isOpen,
+  setIsOpen,
 }: SetPasswordDialogProps) {
   const t = useExtracted()
   const router = useRouter()
@@ -64,7 +64,7 @@ export function SetUserPasswordDialog({
             )
           },
           onSuccess: () => {
-            setOpen(false)
+            setIsOpen(false)
             toast.success(t("Password has been updated."))
             router.refresh()
             form.reset()
@@ -77,7 +77,7 @@ export function SetUserPasswordDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("Reset User Password")}</DialogTitle>

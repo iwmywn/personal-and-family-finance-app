@@ -27,7 +27,7 @@ export default function RecurringTransactionsPage() {
         <RecurringTransactionsFilters />
       </div>
 
-      <RecurringTransactionDialog open={isOpen} setOpen={setIsOpen} />
+      <RecurringTransactionDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )
 }

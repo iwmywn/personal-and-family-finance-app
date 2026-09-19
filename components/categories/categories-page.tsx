@@ -27,7 +27,7 @@ export default function CategoriesPage() {
         <CategoryFilters />
       </div>
 
-      <CategoryDialog open={isOpen} setOpen={setIsOpen} />
+      <CategoryDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )
 }

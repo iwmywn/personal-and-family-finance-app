@@ -43,11 +43,11 @@ import type { AdminBanFormValues } from "@/schemas/types"
 
 interface BanUserDialogProps {
   user: User
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
-export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
+export function BanUserDialog({ user, isOpen, setIsOpen }: BanUserDialogProps) {
   const t = useExtracted()
   const router = useRouter()
   const formatDate = useFormatDate()
@@ -77,7 +77,7 @@ export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
           onSuccess: () => {
             router.refresh()
             toast.success(t("User has been unbanned."))
-            setOpen(false)
+            setIsOpen(false)
           },
         },
       })
@@ -104,7 +104,7 @@ export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
             toast.error(t("Failed to ban user! Please try again later."))
           },
           onSuccess: () => {
-            setOpen(false)
+            setIsOpen(false)
             toast.success(t("User has been banned."))
             router.refresh()
             form.reset()
@@ -119,7 +119,7 @@ export function BanUserDialog({ user, open, setOpen }: BanUserDialogProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>

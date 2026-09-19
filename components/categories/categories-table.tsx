@@ -146,14 +146,14 @@ export function CategoriesTable({ filteredCategories }: CategoriesTableProps) {
           <CategoryDialog
             key={selectedCategory._id + "CategoryDialog"}
             category={selectedCategory}
-            open={isEditOpen}
-            setOpen={setIsEditOpen}
+            isOpen={isEditOpen}
+            setIsOpen={setIsEditOpen}
           />
           <DeleteCategoryDialog
             key={selectedCategory._id + "DeleteCategoryDialog"}
             categoryId={selectedCategory._id}
-            open={isDeleteOpen}
-            setOpen={setIsDeleteOpen}
+            isOpen={isDeleteOpen}
+            setIsOpen={setIsDeleteOpen}
           />
         </>
       )}

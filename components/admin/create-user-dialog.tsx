@@ -34,11 +34,11 @@ import { DEFAULT_ROLE } from "@/lib/role"
 import type { AdminUserFormValues } from "@/schemas/types"
 
 interface CreateUserDialogProps {
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
-export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
+export function CreateUserDialog({ isOpen, setIsOpen }: CreateUserDialogProps) {
   const t = useExtracted()
   const router = useRouter()
   const { createAdminUserSchema } = useSchemas()
@@ -94,7 +94,7 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
             }
           },
           onSuccess: () => {
-            setOpen(false)
+            setIsOpen(false)
             toast.success(t("User has been created."))
             router.refresh()
             form.reset()
@@ -107,7 +107,7 @@ export function CreateUserDialog({ open, setOpen }: CreateUserDialogProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("Create New User")}</DialogTitle>

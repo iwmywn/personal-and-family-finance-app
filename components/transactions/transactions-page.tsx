@@ -29,7 +29,7 @@ export default function TransactionsPage() {
         <TransactionFilters />
       </div>
 
-      <TransactionDialog open={isOpen} setOpen={setIsOpen} />
+      <TransactionDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )
 }

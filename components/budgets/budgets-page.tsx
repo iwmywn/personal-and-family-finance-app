@@ -27,7 +27,7 @@ export default function BudgetsPage() {
         <BudgetFilters />
       </div>
 
-      <BudgetDialog open={isOpen} setOpen={setIsOpen} />
+      <BudgetDialog isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   )
 }

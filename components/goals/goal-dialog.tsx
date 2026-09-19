@@ -56,11 +56,11 @@ import type { GoalFormValues } from "@/schemas/types"
 
 interface GoalDialogProps {
   goal?: Goal
-  open: boolean
-  setOpen: (open: boolean) => void
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
-export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
+export function GoalDialog({ goal, isOpen, setIsOpen }: GoalDialogProps) {
   const [startCalendarOpen, setStartCalendarOpen] = useState<boolean>(false)
   const [endCalendarOpen, setEndCalendarOpen] = useState<boolean>(false)
   const t = useExtracted()
@@ -98,7 +98,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
         }
@@ -112,7 +112,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
         if (success === undefined) {
           toast.error(error)
         } else {
-          setOpen(false)
+          setIsOpen(false)
           toast.success(success)
           router.refresh()
           form.reset()
@@ -124,7 +124,7 @@ export function GoalDialog({ goal, open, setOpen }: GoalDialogProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{goal ? t("Edit Goal") : t("Add Goal")}</DialogTitle>

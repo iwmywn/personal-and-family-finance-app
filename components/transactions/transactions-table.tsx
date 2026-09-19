@@ -190,14 +190,14 @@ export function TransactionsTable({
           <TransactionDialog
             key={selectedTransaction._id + "TransactionDialog"}
             transaction={selectedTransaction}
-            open={isEditOpen}
-            setOpen={setIsEditOpen}
+            isOpen={isEditOpen}
+            setIsOpen={setIsEditOpen}
           />
           <DeleteTransactionDialog
             key={selectedTransaction._id + "DeleteTransactionDialog"}
             transactionId={selectedTransaction._id}
-            open={isDeleteOpen}
-            setOpen={setIsDeleteOpen}
+            isOpen={isDeleteOpen}
+            setIsOpen={setIsDeleteOpen}
           />
         </>
       )}

@@ -260,21 +260,21 @@ export function RecurringTransactionsTable({
             key={selectedRecurring._id + "EditRecurringDialog"}
             recurring={selectedRecurring}
             mode="edit"
-            open={isEditOpen}
-            setOpen={setIsEditOpen}
+            isOpen={isEditOpen}
+            setIsOpen={setIsEditOpen}
           />
           <RecurringTransactionDialog
             key={selectedRecurring._id + "DuplicateRecurringDialog"}
             recurring={selectedRecurring}
             mode="duplicate"
-            open={isDuplicateOpen}
-            setOpen={setIsDuplicateOpen}
+            isOpen={isDuplicateOpen}
+            setIsOpen={setIsDuplicateOpen}
           />
           <DeleteRecurringTransactionDialog
             key={selectedRecurring._id + "DeleteRecurringDialog"}
             recurringId={selectedRecurring._id}
-            open={isDeleteOpen}
-            setOpen={setIsDeleteOpen}
+            isOpen={isDeleteOpen}
+            setIsOpen={setIsDeleteOpen}
           />
         </>
       )}
