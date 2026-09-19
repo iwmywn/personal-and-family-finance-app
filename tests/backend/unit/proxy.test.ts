@@ -7,7 +7,7 @@ import {
 } from "@/tests/backend/mocks/session.mock"
 import proxy from "@/proxy"
 import * as routes from "@/routes"
-import { siteConfig } from "@/app/pffa.config"
+import { siteConfig } from "@/app/pfa.config"
 import { clientEnv } from "@/env/client"
 
 describe("Proxy (Middleware)", () => {

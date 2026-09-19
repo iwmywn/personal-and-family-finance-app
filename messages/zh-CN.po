@@ -503,9 +503,9 @@ msgstr "返回首页"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
-msgctxt "hyu_OZ"
-msgid "Personal & Family Finance App"
-msgstr "个人和家庭财务应用"
+msgctxt "r-TCHM"
+msgid "Personal Finance App"
+msgstr "个人财务应用"
 
 #: components/admin/admin-filters.tsx
 msgctxt "OhG9l2"

@@ -503,9 +503,9 @@ msgstr "Về trang chủ"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
-msgctxt "hyu_OZ"
-msgid "Personal & Family Finance App"
-msgstr "Ứng dụng Tài chính Cá nhân & Gia đình"
+msgctxt "r-TCHM"
+msgid "Personal Finance App"
+msgstr "Ứng dụng Tài chính Cá nhân"
 
 #: components/admin/admin-filters.tsx
 msgctxt "OhG9l2"

@@ -5,7 +5,7 @@ import { getSessionCookie } from "better-auth/cookies"
 
 import * as routes from "@/routes"
 import { getSession } from "@/actions/session.actions"
-import { siteConfig } from "@/app/pffa.config"
+import { siteConfig } from "@/app/pfa.config"
 import { isAdminRole } from "@/lib/role"
 
 function redirectIfProtectedRoute(request: NextRequest) {

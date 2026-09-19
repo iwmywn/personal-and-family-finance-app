@@ -6,7 +6,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { getExtracted, getLocale } from "next-intl/server"
 
 import { nunito } from "@/app/fonts"
-import { siteConfig } from "@/app/pffa.config"
+import { siteConfig } from "@/app/pfa.config"
 import { Toaster } from "@/components/ui/sonner"
 import { ClientLang } from "@/components/layout/client-lang"
 import { OfflineNotifier } from "@/components/layout/offline-notifier"
@@ -19,7 +19,7 @@ import { getSchemaMessages } from "@/schemas/messages"
 export async function generateMetadata(): Promise<Metadata> {
   const [locale, t] = await Promise.all([getLocale(), getExtracted()])
   const { name } = siteConfig
-  const description = t("Personal & Family Finance App")
+  const description = t("Personal Finance App")
 
   return {
     metadataBase: new URL(clientEnv.NEXT_PUBLIC_URL),

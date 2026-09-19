@@ -1,4 +1,4 @@
-[Work in Progress] my personal & family finance app
+[wip] my personal finance app
 
 ---
 

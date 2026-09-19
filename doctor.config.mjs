@@ -1,6 +1,6 @@
 /** @type {import('react-doctor/api').ReactDoctorConfig } */
 const reactDoctorConfig = {
-  projects: ["personal-and-family-finance-app"],
+  projects: ["personal-finance-app"],
   rules: {
     "react-doctor/only-export-components": "off",
     "react-doctor/prefer-tag-over-role": "off",

@@ -503,9 +503,9 @@ msgstr "Back to Home"
 
 #: app/layout.tsx
 #: components/layout/app-sidebar.tsx
-msgctxt "hyu_OZ"
-msgid "Personal & Family Finance App"
-msgstr "Personal & Family Finance App"
+msgctxt "r-TCHM"
+msgid "Personal Finance App"
+msgstr "Personal Finance App"
 
 #: components/admin/admin-filters.tsx
 msgctxt "OhG9l2"
