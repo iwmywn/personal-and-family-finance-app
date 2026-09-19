@@ -1,4 +1,4 @@
-import "./globals.css"
+﻿import "./globals.css"
 
 import { Suspense } from "react"
 import type { Metadata } from "next"
@@ -12,7 +12,7 @@ import { ClientLang } from "@/components/layout/client-lang"
 import { OfflineNotifier } from "@/components/layout/offline-notifier"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { Logo } from "@/components/logo"
-import { SchemaMessagesContext } from "@/context/schema-messages-context"
+import { SchemaMessagesContext } from "@/contexts/schema-messages-context"
 import { clientEnv } from "@/env/client"
 import { getSchemaMessages } from "@/schemas/messages"
 

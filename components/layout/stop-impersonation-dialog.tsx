@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
@@ -24,7 +24,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { authClient } from "@/lib/auth-client"
 
 export function StopImpersonationDialog() {

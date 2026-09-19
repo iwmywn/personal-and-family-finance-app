@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -27,7 +27,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import { Spinner } from "@/components/ui/spinner"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { authClient } from "@/lib/auth-client"
 
 export function ActiveSessionsDialog() {

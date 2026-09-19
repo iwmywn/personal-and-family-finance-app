@@ -17,7 +17,7 @@ const prettierConfig = {
     "^@/app/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",
-    "^@/context/(.*)$",
+    "^@/contexts/(.*)$",
     "^@/env/(.*)$",
     "^@/hooks/(.*)$",
     "^@/i18n/(.*)$",

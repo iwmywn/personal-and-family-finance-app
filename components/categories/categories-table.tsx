@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { MoreVerticalIcon, TagIcon } from "lucide-react"
@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/table"
 import { CategoryDialog } from "@/components/categories/category-dialog"
 import { DeleteCategoryDialog } from "@/components/categories/delete-category-dialog"
-import { useCategories } from "@/context/categories-context"
+import { useCategories } from "@/contexts/categories-context"
 import type { Category } from "@/lib/definitions"
 
 interface CategoriesTableProps {

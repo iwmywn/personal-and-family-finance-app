@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { MoreVerticalIcon, WalletIcon } from "lucide-react"
@@ -36,7 +36,7 @@ import {
 import { DeleteTransactionDialog } from "@/components/transactions/delete-transaction-dialog"
 import { ExportButton } from "@/components/transactions/export-button"
 import { TransactionDialog } from "@/components/transactions/transaction-dialog"
-import { useTransactions } from "@/context/transactions-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"

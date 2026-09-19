@@ -1,4 +1,4 @@
-import { cookies } from "next/headers"
+﻿import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 
@@ -7,7 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { Header } from "@/components/layout/header"
-import { UserContext } from "@/context/user-context"
+import { UserContext } from "@/contexts/user-context"
 
 export default async function DashboardLayout({
   children,

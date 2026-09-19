@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { ChevronDownIcon } from "lucide-react"
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { StatisticsSummary } from "@/components/statistics/statistics-summary"
 import { StatisticsTable } from "@/components/statistics/statistics-table"
-import { useTransactions } from "@/context/transactions-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useMonths } from "@/hooks/use-months"
 import { filterTransactions } from "@/lib/filters"

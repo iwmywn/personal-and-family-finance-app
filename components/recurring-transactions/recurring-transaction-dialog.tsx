@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -55,7 +55,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CategoryFormSelect } from "@/components/category-form-select"
 import { CurrencyInput } from "@/components/currency-input"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { useSchemas } from "@/hooks/use-schemas"
 import type { CategoryType } from "@/lib/category"

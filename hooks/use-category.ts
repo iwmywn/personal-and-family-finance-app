@@ -1,8 +1,8 @@
-"use client"
+﻿"use client"
 
 import { useExtracted } from "next-intl"
 
-import { useCategories } from "@/context/categories-context"
+import { useCategories } from "@/contexts/categories-context"
 import { getCategoryType } from "@/lib/category"
 import type { CategoryConfig, CategoryKey, CategoryType } from "@/lib/category"
 

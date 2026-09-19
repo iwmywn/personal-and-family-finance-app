@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import {
   ArrowDownIcon,
@@ -9,7 +9,7 @@ import {
 import { useExtracted } from "next-intl"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useTransactions } from "@/context/transactions-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import {
   calculateSummaryStats,

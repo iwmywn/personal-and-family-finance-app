@@ -1,4 +1,4 @@
-import { getExtracted } from "next-intl/server"
+﻿import { getExtracted } from "next-intl/server"
 
 import { getBudgets } from "@/actions/budget.actions"
 import { getCustomCategories } from "@/actions/category.actions"
@@ -6,11 +6,11 @@ import { getGoals } from "@/actions/goal.actions"
 import { getRecurringTransactions } from "@/actions/recurring.actions"
 import { getTransactions } from "@/actions/transaction.actions"
 import { ErrorEmptyState } from "@/components/layout/error-empty-state"
-import { BudgetsContext } from "@/context/budgets-context"
-import { CategoriesContext } from "@/context/categories-context"
-import { GoalsContext } from "@/context/goals-context"
-import { RecurringContext } from "@/context/recurring-context"
-import { TransactionsContext } from "@/context/transactions-context"
+import { BudgetsContext } from "@/contexts/budgets-context"
+import { CategoriesContext } from "@/contexts/categories-context"
+import { GoalsContext } from "@/contexts/goals-context"
+import { RecurringContext } from "@/contexts/recurring-context"
+import { TransactionsContext } from "@/contexts/transactions-context"
 
 export type PageDataProviderProps = {
   children: React.ReactNode

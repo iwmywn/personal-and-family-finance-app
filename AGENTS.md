@@ -18,7 +18,7 @@
 - `actions/`: Next.js Server Actions for backend data mutations.
 - `app/`: Next.js App Router pages, layouts, and API routes.
 - `components/`: Reusable React components (UI primitives and domain-specific).
-- `context/`: React context providers for global state.
+- `contexts/`: React context providers for global state.
 - `env/`: Environment variable validation.
 - `hooks/`: Custom React hooks.
 - `i18n/`: Internationalization config.

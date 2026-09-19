@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useTransition } from "react"
 import { useExtracted } from "next-intl"
@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { authClient } from "@/lib/auth-client"
 import { CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"

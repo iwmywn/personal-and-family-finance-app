@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
@@ -22,8 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { GoalsTable } from "@/components/goals/goals-table"
-import { useGoals } from "@/context/goals-context"
-import { useTransactions } from "@/context/transactions-context"
+import { useGoals } from "@/contexts/goals-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useMonths } from "@/hooks/use-months"
 import { filterGoals } from "@/lib/filters"

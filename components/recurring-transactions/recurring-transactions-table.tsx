@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useMemo, useState } from "react"
 import { MoreVerticalIcon, RepeatIcon } from "lucide-react"
@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteRecurringTransactionDialog } from "@/components/recurring-transactions/delete-recurring-transaction-dialog"
 import { RecurringTransactionDialog } from "@/components/recurring-transactions/recurring-transaction-dialog"
-import { useRecurring } from "@/context/recurring-context"
+import { useRecurring } from "@/contexts/recurring-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"

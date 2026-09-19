@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useTransition } from "react"
 import Link from "next/link"
@@ -26,7 +26,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Spinner } from "@/components/ui/spinner"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { useNav } from "@/hooks/use-nav"
 import { authClient } from "@/lib/auth-client"
 

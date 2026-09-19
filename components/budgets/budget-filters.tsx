@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { useExtracted } from "next-intl"
@@ -15,8 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { BudgetsTable } from "@/components/budgets/budgets-table"
-import { useBudgets } from "@/context/budgets-context"
-import { useTransactions } from "@/context/transactions-context"
+import { useBudgets } from "@/contexts/budgets-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useMonths } from "@/hooks/use-months"
 import { filterBudgets } from "@/lib/filters"

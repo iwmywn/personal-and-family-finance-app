@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import Link from "next/link"
@@ -37,8 +37,8 @@ import {
 } from "@/components/ui/tooltip"
 import { DeleteGoalDialog } from "@/components/goals/delete-goal-dialog"
 import { GoalDialog } from "@/components/goals/goal-dialog"
-import { useGoals } from "@/context/goals-context"
-import { useTransactions } from "@/context/transactions-context"
+import { useGoals } from "@/contexts/goals-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { useFormatDate } from "@/hooks/use-format-date"

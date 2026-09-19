@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { SearchIcon, XIcon } from "lucide-react"
@@ -23,8 +23,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { RecurringTransactionsTable } from "@/components/recurring-transactions/recurring-transactions-table"
-import { useRecurring } from "@/context/recurring-context"
-import { useTransactions } from "@/context/transactions-context"
+import { useRecurring } from "@/contexts/recurring-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useMonths } from "@/hooks/use-months"
 import { filterRecurringTransactions } from "@/lib/filters"

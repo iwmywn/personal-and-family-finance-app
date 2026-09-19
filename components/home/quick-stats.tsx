@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useExtracted } from "next-intl"
 
@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useTransactions } from "@/context/transactions-context"
+import { useTransactions } from "@/contexts/transactions-context"
 import { useCategory } from "@/hooks/use-category"
 import { useFormatCurrency } from "@/hooks/use-format-currency"
 import { calculateQuickStats } from "@/lib/statistics"

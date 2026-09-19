@@ -1,6 +1,6 @@
-"use client"
+﻿"use client"
 
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { CURRENCY_CONFIG } from "@/lib/currency"
 import type { Currency } from "@/lib/currency"
 import { formatCurrency } from "@/lib/utils"

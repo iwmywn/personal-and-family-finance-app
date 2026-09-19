@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -45,7 +45,7 @@ import {
 import { BanUserDialog } from "@/components/admin/ban-user-dialog"
 import { DeleteUserDialog } from "@/components/admin/delete-user-dialog"
 import { SetUserPasswordDialog } from "@/components/admin/set-user-password-dialog"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { useFormatDate } from "@/hooks/use-format-date"
 import { authClient } from "@/lib/auth-client"
 import type { AuthErrorCode, User } from "@/lib/definitions"

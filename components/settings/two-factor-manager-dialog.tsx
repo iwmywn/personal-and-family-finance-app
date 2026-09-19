@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -29,7 +29,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/password-input"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
 import type { AuthErrorCode } from "@/lib/definitions"

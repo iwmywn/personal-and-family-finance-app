@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
@@ -28,7 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useUser } from "@/context/user-context"
+import { useUser } from "@/contexts/user-context"
 import { useSchemas } from "@/hooks/use-schemas"
 import { authClient } from "@/lib/auth-client"
 import type { NameFormValues } from "@/schemas/types"
